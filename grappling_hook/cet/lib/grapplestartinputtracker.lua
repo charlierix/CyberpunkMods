@@ -1,3 +1,8 @@
+--TODO: Rewrite this.  Get rid of swing, so it's a grapple_forward and grapple_static
+--each action should take an array of keys to watch
+
+
+
 -- This keeps track of a few buttons and stores true if certain combinations are pressed down
 -- within a small window of time (considered to be simultaneously pressed)
 --
@@ -115,7 +120,7 @@ end
 function GrappleStartInputTracker:IsDown_Special(propName)
     if not self[propName] then
         -- The modifier key isn't currently pressed
-        return true
+        return false
     end
 
     if math.abs(self.downTime1 - self[propName]) > self.max_elapsed then

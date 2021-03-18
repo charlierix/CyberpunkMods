@@ -4,6 +4,7 @@ local pullInterval_camera = 12
 local pullInterval_teleport = 12
 local pullInterval_sense = 12
 local pullInterval_targeting = 12
+local pullInterval_mapPin = 12
 
 GameObjectAccessor = {}
 
@@ -21,6 +22,7 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_teleport = -(pullInterval_teleport * 2)
     obj.lastPulled_sense = -(pullInterval_sense * 2)
     obj.lastPulled_targeting = -(pullInterval_targeting * 2)
+    obj.lastPulled_mapPin = -(pullInterval_mapPin * 2)
 
     obj.lastGot_lookDir = -1
 
@@ -57,24 +59,6 @@ function GameObjectAccessor:Set_Custom_IsFlying(value)
 
     if self.player then
         self.wrappers.Set_Custom_IsFlying(self.player, value)
-    end
-end
-
--- Get/Set player.Custom_SuppressFalling (added in redscript.  Tells overridden functions to not do death fall animation)
-function GameObjectAccessor:Get_Custom_SuppressFalling()
-    self:EnsurePlayerLoaded()
-
-    if self.player then
-        return self.wrappers.Get_Custom_SuppressFalling(self.player)
-    else
-        return false
-    end
-end
-function GameObjectAccessor:Set_Custom_SuppressFalling(value)
-    self:EnsurePlayerLoaded()
-
-    if self.player then
-        self.wrappers.Set_Custom_SuppressFalling(self.player, value)
     end
 end
 
@@ -137,6 +121,69 @@ function GameObjectAccessor:IsPointVisible(fromPos, toPos)
     end
 end
 
+-- This is a proper ray cast
+function GameObjectAccessor:RayCast(fromPos, toPos, staticOnly)
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        local result = self.wrappers.RayCast(self.player, fromPos, toPos, staticOnly)
+
+        -- Result is empty string for a miss, or "x|y|z"
+
+        if result == "" then
+            return nil
+        end
+
+        local i0 = 0
+        local i1 = string.find(result, "|", i0)
+        local x = string.sub(result, i0, i1 - 1)
+
+        i0 = i1 + 1
+        i1 = string.find(result, "|", i0)
+        local y = string.sub(result, i0, i1 - 1)
+
+        local z = string.sub(result, i1 + 1, string.len(result))
+
+        return Vector4.new(tonumber(x), tonumber(y), tonumber(z), 1)
+    end
+end
+
+
+
+-- Copied from discord: cet-snips
+-- NonameNonumber — 02/14/2021
+-- Place a map pin at the player's current position: [shared credits with @b0kkr]
+-- https://github.com/WolvenKit/CyberCAT/blob/main/CyberCAT.Core/Enums/Dumped%20Enums/gamedataMappinVariant.cs
+function GameObjectAccessor:CreatePin(pos, variant)
+    self:EnsureMapPinLoaded()
+
+    if self.mapPin then
+        local data = NewObject("gamemappinsMappinData")
+        data.mappinType = TweakDBID.new("Mappins.DefaultStaticMappin")
+        data.variant = Enum.new("gamedataMappinVariant", variant)
+        data.visibleThroughWalls = true
+
+        return self.wrappers.RegisterMapPin(self.mapPin, data, pos)
+    end
+end
+function GameObjectAccessor:MovePin(id, pos)
+    self:EnsureMapPinLoaded()
+
+    if self.mapPin then
+        self.wrappers.SetMapPinPosition(self.mapPin, id, pos)
+    end
+end
+function GameObjectAccessor:RemovePin(id)
+    self:EnsureMapPinLoaded()
+
+    if self.mapPin then
+        self.wrappers.UnregisterMapPin(self.mapPin, id)
+    end
+end
+
+
+
+
 -- This is used to slow time
 --  0.00001 for near stop
 --  up to 1
@@ -149,24 +196,6 @@ end
 function GameObjectAccessor:HasHeadUnderwater()
     if self.player then
         return self.wrappers.HasHeadUnderwater(self.player)
-    end
-end
-
--- This will launch NPCs straight up (in theory, all around the player, but it seems to mostly
--- be the ones that are in front of the player)
-function GameObjectAccessor:RagdollNPCs_StraightUp(radius, force, randHorz, randVert)
-    self:EnsurePlayerLoaded()
-
-    if self.player then
-        self.wrappers.Ragdoll_Up(self.player, radius, force, randHorz, randVert)
-    end
-end
-
-function GameObjectAccessor:RagdollNPCs_ExplodeOut(radius, force, upForce)
-    self:EnsurePlayerLoaded()
-
-    if self.player then
-        self.wrappers.Ragdoll_Out(self.player, radius, force, upForce)
     end
 end
 
@@ -199,5 +228,13 @@ function GameObjectAccessor:EnsurePlayerLoaded()
         self.lastPulled_player = self.timer
 
         self.player = self.wrappers.GetPlayer()
+    end
+end
+
+function GameObjectAccessor:EnsureMapPinLoaded()
+    if (self.timer - self.lastPulled_mapPin) >= pullInterval_mapPin then
+        self.lastPulled_mapPin = self.timer
+
+        self.mapPin = self.wrappers.GetMapPinSystem()
     end
 end

@@ -12,7 +12,9 @@ require "lib/debug_code"
 require "lib/drawing"
 require "lib/gameobj_accessor"
 require "lib/grapplestartinputtracker"
+--require "lib/improved_raycast"        -- just comments
 require "lib/keys"
+--require "lib/map_pin"     -- it's just comments
 require "lib/math_basic"
 require "lib/math_raycast"
 require "lib/math_vector"
@@ -52,6 +54,14 @@ local state =
     sound_started = 0,
 }
 
+
+
+local lastDotTime = nil
+local lastDotID = nil
+
+local wrappers2 = {}
+
+
 --------------------------------------------------------------------
 
 registerForEvent("onInit", function()
@@ -61,10 +71,8 @@ registerForEvent("onInit", function()
 
     Observe('RadialWheelController', 'RegisterBlackboards', function(_, loaded)
         if loaded then
-            print("Game Session Started")
             isLoading = false
         else
-            print("Game Session Ended")
             isLoading = true
         end
     end)
@@ -86,16 +94,17 @@ registerForEvent("onInit", function()
     function wrappers.Teleport(teleport, player, pos, yaw) return teleport:Teleport(player, pos, EulerAngles.new(0, 0, yaw)) end
     function wrappers.GetSenseManager() return Game.GetSenseManager() end
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
+    function wrappers.RayCast(player, from, to, staticOnly) return player:GrapplingHook_RayCast_Position(from, to, staticOnly) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
     function wrappers.Get_Custom_IsFlying(player) return Get_Custom_IsFlying(player) end
     function wrappers.Set_Custom_IsFlying(player, value) Set_Custom_IsFlying(player, value) end
-    function wrappers.Get_Custom_SuppressFalling(player) return Get_Custom_SuppressFalling(player) end
-    function wrappers.Set_Custom_SuppressFalling(player, value) Set_Custom_SuppressFalling(player, value) end
-    function wrappers.Ragdoll_Up(player, radius, force, randHorz, randVert) player:RagdollNPCs_StraightUp(radius, force, randHorz, randVert) end
-    function wrappers.Ragdoll_Out(player, radius, force, upForce) player:RagdollNPCs_ExplodeOut(radius, force, upForce) end
     function wrappers.QueueSound(player, sound) player:GrapplingHook_QueueSound(sound) end
     function wrappers.StopQueuedSound(player, sound) player:GrapplingHook_StopQueuedSound(sound) end
+    function wrappers.GetMapPinSystem() return Game.GetMappinSystem() end
+    function wrappers.RegisterMapPin(mapPin, data, pos) return mapPin:RegisterMappin(data, pos) end
+    function wrappers.SetMapPinPosition(mapPin, id, pos) mapPin:SetMappinPosition(id, pos) end
+    function wrappers.UnregisterMapPin(mapPin, id) mapPin:UnregisterMappin(id) end
     o = GameObjectAccessor:new(wrappers)
 
     state.grappleStartTracker = GrappleStartInputTracker:new(o, keys, "left", "right", "forward", "backward")
@@ -129,7 +138,63 @@ registerForEvent("onUpdate", function(deltaTime)
         end
     end
 
+
+    -- Move to process_standard
+    --NOTE: If this gets called during active grappling, the results are meaningless.  They could start out pressing
+    --three buttons, but let off forward or backward, then it would look like something else
     state.grappleStartTracker:Tick()
+
+
+
+    if lastDotID and (o.timer - lastDotTime > 6) then
+        o:RemovePin(lastDotID)
+        lastDotID = nil
+    end
+
+
+
+    if state.grappleStartTracker.isDown_grapple or state.grappleStartTracker.isDown_polevault or state.grappleStartTracker.isDown_swing then
+
+        o:GetCamera()
+
+        local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + 1.5, 1)
+        --local to = AddVectors(from, MultiplyVector(o.lookdir_forward, 144))
+
+
+        -- This can't see certain objects, so it's only useful if normal is needed
+        --local result = o:RayCast(from, to, false)
+        --local result = o:
+
+
+
+        -- This can't see past 100.  It also sometimes can't buildings more than abs(zdiff) of 30 or 40
+        -- Expand the function to walk the ray if those conditions are hit
+        local result = RayCast_HitPoint(from, o.lookdir_forward, 144, 0.5, o)
+
+
+        if result then
+            -- only +30, need to test if -30
+            debug.zdiff = Round(result.z - from.z, 1)
+
+            if lastDotID then
+                o:MovePin(lastDotID, result)
+            else
+                lastDotID = o:CreatePin(result, "AimVariant")
+            end
+
+            lastDotTime = o.timer
+        end
+
+
+
+        -- print("from: " .. vec_str(from))
+        -- print("to:   " .. vec_str(to))
+        -- print("res:  " .. vec_str(result))
+
+
+    end
+
+
 
     if const.shouldShowDebugWindow then
         PopulateDebug(debug, o, keys, state)
