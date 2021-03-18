@@ -121,34 +121,51 @@ function GameObjectAccessor:IsPointVisible(fromPos, toPos)
     end
 end
 
--- This is a proper ray cast
+-- This ray cast also returns normal (but doesn't see quite as much as IsPointVisible)
 function GameObjectAccessor:RayCast(fromPos, toPos, staticOnly)
     self:EnsurePlayerLoaded()
 
     if self.player then
         local result = self.wrappers.RayCast(self.player, fromPos, toPos, staticOnly)
 
-        -- Result is empty string for a miss, or "x|y|z"
+        -- Result is empty string for a miss, or "px|py|pz|nx|ny|nz|mat"
 
         if result == "" then
             return nil
         end
 
+        -- position
         local i0 = 0
         local i1 = string.find(result, "|", i0)
-        local x = string.sub(result, i0, i1 - 1)
+        local px = string.sub(result, i0, i1 - 1)
 
         i0 = i1 + 1
         i1 = string.find(result, "|", i0)
-        local y = string.sub(result, i0, i1 - 1)
+        local py = string.sub(result, i0, i1 - 1)
 
-        local z = string.sub(result, i1 + 1, string.len(result))
+        i0 = i1 + 1
+        i1 = string.find(result, "|", i0)
+        local pz = string.sub(result, i0, i1 - 1)
 
-        return Vector4.new(tonumber(x), tonumber(y), tonumber(z), 1)
+        -- normal
+        i0 = i1 + 1
+        i1 = string.find(result, "|", i0)
+        local nx = string.sub(result, i0, i1 - 1)
+
+        i0 = i1 + 1
+        i1 = string.find(result, "|", i0)
+        local ny = string.sub(result, i0, i1 - 1)
+
+        i0 = i1 + 1
+        i1 = string.find(result, "|", i0)
+        local nz = string.sub(result, i0, i1 - 1)
+
+        -- material
+        local material = string.sub(result, i1 + 1, string.len(result))
+
+        return Vector4.new(tonumber(px), tonumber(py), tonumber(pz), 1), Vector4.new(tonumber(nx), tonumber(ny), tonumber(nz), 1), material
     end
 end
-
-
 
 -- Copied from discord: cet-snips
 -- NonameNonumber — 02/14/2021
@@ -180,9 +197,6 @@ function GameObjectAccessor:RemovePin(id)
         self.wrappers.UnregisterMapPin(self.mapPin, id)
     end
 end
-
-
-
 
 -- This is used to slow time
 --  0.00001 for near stop

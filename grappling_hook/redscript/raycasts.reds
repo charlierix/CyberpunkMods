@@ -1,4 +1,4 @@
-//NOTE: This sometimes can't see buildings above a zdiff of 30 (but sometimes it can).  So only use for shorter ranges
+//NOTE: Collision hulls don't reliably load in beyond about 50
 @addMethod(PlayerPuppet)
 public func GrapplingHook_RayCast(from: Vector4, to: Vector4, staticOnly: Bool) -> String {
     let spacialQuery: ref<SpatialQueriesSystem>;
@@ -15,6 +15,7 @@ public func GrapplingHook_RayCast(from: Vector4, to: Vector4, staticOnly: Bool) 
 
     let attemptDistSqr: Float;
 
+    // Concrete, buildings
     if spacialQuery.SyncRaycastByCollisionGroup(from, to, n"Static", attempt) {
         attemptDistSqr = GrapplingHook_LenSqr(from, attempt.position);
 
@@ -25,6 +26,8 @@ public func GrapplingHook_RayCast(from: Vector4, to: Vector4, staticOnly: Bool) 
         };
     };
 
+    // More objects, but it's not perfect.  The top part of street lights are seen, but the vertical
+    // part never is.  I don't think trees will register either.  People aren't seen by this either
     if !staticOnly && spacialQuery.SyncRaycastByCollisionGroup(from, to, n"Dynamic", attempt) {
         attemptDistSqr = GrapplingHook_LenSqr(from, attempt.position);
 
@@ -63,7 +66,6 @@ public func GrapplingHook_RayCast(from: Vector4, to: Vector4, staticOnly: Bool) 
         return result.position.X + "|" + result.position.Y + "|" + result.position.Z + "|" + result.normal.X + "|" + result.normal.Y + "|" + result.normal.Z + "|" + NameToString(result.material);
     };
 }
-
 
 func GrapplingHook_LenSqr(from: Vector4, to: Vector3) -> Float
 {

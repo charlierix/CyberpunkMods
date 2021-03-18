@@ -94,7 +94,7 @@ registerForEvent("onInit", function()
     function wrappers.Teleport(teleport, player, pos, yaw) return teleport:Teleport(player, pos, EulerAngles.new(0, 0, yaw)) end
     function wrappers.GetSenseManager() return Game.GetSenseManager() end
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
-    function wrappers.RayCast(player, from, to, staticOnly) return player:GrapplingHook_RayCast_Position(from, to, staticOnly) end
+    function wrappers.RayCast(player, from, to, staticOnly) return player:GrapplingHook_RayCast(from, to, staticOnly) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
     function wrappers.Get_Custom_IsFlying(player) return Get_Custom_IsFlying(player) end
@@ -158,23 +158,53 @@ registerForEvent("onUpdate", function(deltaTime)
         o:GetCamera()
 
         local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + 1.5, 1)
-        --local to = AddVectors(from, MultiplyVector(o.lookdir_forward, 144))
 
+        -- 144 is too far.  It's noticablly unreliable at that distance.  Something like 80 might be
+        -- better (actually, up to 120 should be good, anticipating collision hulls loading in later)
+        --
+        -- Grapple Initiated:
+        --  Start firing these raycasts
+        --      If miss, show one type of map pin
+        --      If hit, show another type of map pin
+        --      Once there is a hit, move on to the next phase
+        --
+        --  After a small amount of time or if there was a hit
+        --      Play a starting tone
+        --
+        --  After another small time
+        --      play a final tone
+        --      Start the actual grapple flight
+        --
+        --  Grapple Flight (if miss):
+        --      This is limited, going mostly straight
+        --      Keep firing ray traces along the initial line, in case collision hulls load in as the player gets closer (do this every X frames)
+        --          If there is a hit along that line segment:
+        --              Play a special tone
+        --              Switch to hit flight
+        --
+        --  Grapple Flight (if hit):
+        --      May need further ray casts along the initial line segment if it was beyond 80 (a collision hull could load in as the player gets closer)
 
-        -- This can't see certain objects, so it's only useful if normal is needed
-        --local result = o:RayCast(from, to, false)
-        --local result = o:
+        local result, tries = RayCast_HitPoint(from, o.lookdir_forward, 144, 0.5, o)
 
-
-
-        -- This can't see past 100.  It also sometimes can't buildings more than abs(zdiff) of 30 or 40
-        -- Expand the function to walk the ray if those conditions are hit
-        local result = RayCast_HitPoint(from, o.lookdir_forward, 144, 0.5, o)
+        -- local triedSecond = false
+        -- if not result then
+        --     triedSecond = true
+        --     result, tries = RayCast_HitPoint_Extended(from, o.lookdir_forward, 144, 0.5, o)
+        -- end
 
 
         if result then
-            -- only +30, need to test if -30
-            debug.zdiff = Round(result.z - from.z, 1)
+            -- only +30, negative seems more stable, but there was a roof that didn't register
+            --debug.zdiff = Round(result.z - from.z, 1)
+            --debug.neededSecond = triedSecond
+
+            debug.tries = tries
+            debug.hitDist = Round(math.sqrt(GetVectorDiffLengthSqr(from, result)), 1)
+
+            -- if triedSecond then
+            --     print("extended worked")
+            -- end
 
             if lastDotID then
                 o:MovePin(lastDotID, result)
@@ -184,13 +214,6 @@ registerForEvent("onUpdate", function(deltaTime)
 
             lastDotTime = o.timer
         end
-
-
-
-        -- print("from: " .. vec_str(from))
-        -- print("to:   " .. vec_str(to))
-        -- print("res:  " .. vec_str(result))
-
 
     end
 
