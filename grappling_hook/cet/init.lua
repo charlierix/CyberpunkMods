@@ -11,10 +11,8 @@ require "lib/customprops_wrapper"
 require "lib/debug_code"
 require "lib/drawing"
 require "lib/gameobj_accessor"
-require "lib/grapplestartinputtracker"
---require "lib/improved_raycast"        -- just comments
+require "lib/inputtracker_startstop"
 require "lib/keys"
---require "lib/map_pin"     -- it's just comments
 require "lib/math_basic"
 require "lib/math_raycast"
 require "lib/math_vector"
@@ -50,6 +48,8 @@ local state =
 {
     isInFlight = false,
 
+    --startStopTracker      -- this gets instantiated in init
+
     --sound_current = nil,      -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
     sound_started = 0,
 }
@@ -59,7 +59,6 @@ local state =
 local lastDotTime = nil
 local lastDotID = nil
 
-local wrappers2 = {}
 
 
 --------------------------------------------------------------------
@@ -107,7 +106,7 @@ registerForEvent("onInit", function()
     function wrappers.UnregisterMapPin(mapPin, id) mapPin:UnregisterMappin(id) end
     o = GameObjectAccessor:new(wrappers)
 
-    state.grappleStartTracker = GrappleStartInputTracker:new(o, keys, "left", "right", "forward", "backward")
+    InitializeKeyTrackers(state, keys, o)
 end)
 
 registerForEvent("onShutdown", function()
@@ -139,10 +138,7 @@ registerForEvent("onUpdate", function(deltaTime)
     end
 
 
-    -- Move to process_standard
-    --NOTE: If this gets called during active grappling, the results are meaningless.  They could start out pressing
-    --three buttons, but let off forward or backward, then it would look like something else
-    state.grappleStartTracker:Tick()
+    state.startStopTracker:Tick()
 
 
 
@@ -151,9 +147,7 @@ registerForEvent("onUpdate", function(deltaTime)
         lastDotID = nil
     end
 
-
-
-    if state.grappleStartTracker.isDown_grapple or state.grappleStartTracker.isDown_polevault or state.grappleStartTracker.isDown_swing then
+    if state.startStopTracker:ShouldStop() then
 
         o:GetCamera()
 
@@ -187,24 +181,10 @@ registerForEvent("onUpdate", function(deltaTime)
 
         local result, tries = RayCast_HitPoint(from, o.lookdir_forward, 144, 0.5, o)
 
-        -- local triedSecond = false
-        -- if not result then
-        --     triedSecond = true
-        --     result, tries = RayCast_HitPoint_Extended(from, o.lookdir_forward, 144, 0.5, o)
-        -- end
-
 
         if result then
-            -- only +30, negative seems more stable, but there was a roof that didn't register
-            --debug.zdiff = Round(result.z - from.z, 1)
-            --debug.neededSecond = triedSecond
-
             debug.tries = tries
             debug.hitDist = Round(math.sqrt(GetVectorDiffLengthSqr(from, result)), 1)
-
-            -- if triedSecond then
-            --     print("extended worked")
-            -- end
 
             if lastDotID then
                 o:MovePin(lastDotID, result)

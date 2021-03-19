@@ -52,3 +52,18 @@ function StopSound(o, state)
         state.sound_current = nil
     end
 end
+
+function InitializeKeyTrackers(state, keys, o)
+    --TODO: Get these mappings from config so people can map custom bindings (for controllers)
+    local pull = { "Left", "Right", "Forward" }
+    local rigid = { "Left", "Right", "Back" }
+    local stop = { "Left", "Right" }
+
+    state.startStopTracker = InputTracker_StartStop:new(o, keys, pull, rigid, stop)
+
+    keys:ClearActions()
+
+    for i=1, #state.startStopTracker.keynames do
+        keys:AddAction(state.startStopTracker.keynames[i])
+    end
+end

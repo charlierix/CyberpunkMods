@@ -7,6 +7,7 @@ function Keys:new()
 
     obj.cycleModes = false      --NOTE: This is a hotkey, and is set to true in init.lua
 
+    -- hardcoded keys (explicit propertes to make it easy to code against)
     obj.mouse_x = 0
 
     obj.forward = false
@@ -23,9 +24,39 @@ function Keys:new()
     obj.prev_jump = false
     obj.prev_rmb = false
 
+    -- key=ActionName value=isKeyDown
+    obj.actions = {}
+    obj.prev_actions = {}
+
+    -- This is a mapping between action name and the hardcoded properties above (the strings must match exactly)
+    obj.hardcodedMapping =
+    {
+        Forward = "forward",
+        Back = "backward",
+        Left = "left",
+        Right = "right",
+        Jump = "jump",
+        CameraAim = "rmb",      -- "CameraAim" "RangedADS" "MeleeBlock"
+    }
+
     return obj
 end
 
+-- These tell the class to track arbitrary action names
+function Keys:AddAction(actionName)
+    self.actions[actionName] = false
+    self.prev_actions[actionName] = false
+end
+function Keys:RemoveAction(actionName)
+    self.actions[actionName] = nil
+    self.prev_actions[actionName] = nil
+end
+function Keys:ClearActions()
+    self.actions = {}
+    self.prev_actions = {}
+end
+
+-- This gets called whenever an input action occurs (mouse movement, key press/release)
 function Keys:MapAction(action)
     local actionName = Game.NameToString(action:GetName(action))
     local actionType = action:GetType(action).value
@@ -34,67 +65,8 @@ function Keys:MapAction(action)
 
     --print("pressed: " .. tostring(pressed) .. ", released: " .. tostring(released))
 
-    if actionName == "CameraMouseX" then
-        self.mouse_x = tonumber(action:GetValue(action))
-    else
-        self.mouse_x = 0
-    end
-
-    if actionName == "Forward" then
-        if pressed then
-            self.forward = true
-        elseif released then
-            self.forward = false
-        -- else
-        --     print("Forward else: " .. actionType)
-        end
-
-    elseif actionName == "Back" then
-        if pressed then
-            self.backward = true
-        elseif released then
-            self.backward = false
-        -- else
-        --     print("Back else: " .. actionType)
-        end
-
-    elseif actionName == "Left" then
-        if pressed then
-            self.left = true
-        elseif released then
-            self.left = false
-        -- else
-        --     print("Left else: " .. actionType)
-        end
-
-    elseif actionName == "Right" then
-        if pressed then
-            self.right = true
-        elseif released then
-            self.right = false
-        -- else
-        --     print("Right else: " .. actionType)
-        end
-
-    elseif actionName == "Jump" then
-        if pressed then
-            self.jump = true
-        elseif released then
-            self.jump = false
-        -- else
-        --     print("Jump else: " .. actionType)
-        end
-
-    --elseif (actionName == "CameraAim") or (actionName == "RangedADS") or (actionName == "MeleeBlock") then
-    elseif actionName == "CameraAim" then
-        if pressed then
-            self.rmb = true
-        elseif released then
-            self.rmb = false
-        -- else
-        --     print("CameraAim else: " .. actionType)
-        end
-    end
+    self:MapAction_Fixed(action, actionName, pressed, released)
+    self:MapAction_List(actionName, pressed, released)
 end
 
 function Keys:Tick()
@@ -106,4 +78,47 @@ function Keys:Tick()
     self.prev_right = self.right
     self.prev_jump = self.jump
     self.prev_rmb = self.rmb
+
+    for key, value in pairs(self.actions) do
+        self.prev_actions[key] = value
+    end
+end
+
+----------------------------- Private Methods -----------------------------
+function Keys:MapAction_Fixed(action, actionName, pressed, released)
+    if actionName == "CameraMouseX" then
+        self.mouse_x = tonumber(action:GetValue(action))
+    else
+        self.mouse_x = 0
+    end
+
+    for key, value in pairs(self.hardcodedMapping) do
+        if actionName == key then
+            if pressed then
+                self[value] = true
+            elseif released then
+                self[value] = false
+            -- else
+            --     print(actionName .. " else: " .. actionType)
+            end
+
+            do return end
+        end
+    end
+end
+
+function Keys:MapAction_List(actionName, pressed, released)
+    for key, _ in pairs(self.actions) do
+        if key == actionName then
+            if pressed then
+                self.actions[key] = true
+            elseif released then
+                self.actions[key] = false
+            -- else
+            --     print(actionName .. " else: " .. actionType)
+            end
+
+            do return end       -- no need to loop through the rest of the list
+        end
+    end
 end

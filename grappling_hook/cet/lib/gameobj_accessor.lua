@@ -126,9 +126,8 @@ function GameObjectAccessor:RayCast(fromPos, toPos, staticOnly)
     self:EnsurePlayerLoaded()
 
     if self.player then
-        local result = self.wrappers.RayCast(self.player, fromPos, toPos, staticOnly)
-
         -- Result is empty string for a miss, or "px|py|pz|nx|ny|nz|mat"
+        local result = self.wrappers.RayCast(self.player, fromPos, toPos, staticOnly)
 
         if result == "" then
             return nil

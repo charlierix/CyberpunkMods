@@ -18,9 +18,24 @@ function PopulateDebug(debug, o, keys, state)
     -- debug.key_rmb = keys.rmb
     -- debug.mouse_x = keys.mouse_x
 
-    debug.isDown_grapple = state.grappleStartTracker.isDown_grapple
-    debug.isDown_polevault = state.grappleStartTracker.isDown_polevault
-    debug.isDown_swing = state.grappleStartTracker.isDown_swing
+    -- for key, value in pairs(keys.actions) do
+    --     debug["cur_" .. key] = value
+    -- end
+
+    -- for key, value in pairs(keys.prev_actions) do
+    --     debug["prev_" .. key] = value
+    -- end
+
+    -- for key, value in pairs(state.startStopTracker.downTimes) do
+    --     debug["down_" .. key] = value
+    -- end
+
+    -- debug.should_stop = state.startStopTracker:ShouldStop()
+
+    -- local shouldPull, shouldRigid = state.startStopTracker:ShouldGrapple()
+    -- debug.should_pull = shouldPull
+    -- debug.should_rigid = shouldRigid
+
 
     debug.timer = Round(o.timer, 1)
 end
