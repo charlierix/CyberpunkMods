@@ -48,6 +48,14 @@ function InputTracker_StartStop:Tick()
     end
 end
 
+-- This forgets that keys were pressed down.  Call this after an action is started so this class
+-- won't keep saying to start actions (forces the user to let go of the keys and repress them)
+function InputTracker_StartStop:ResetKeyDowns()
+    for key, _ in pairs(self.downTimes) do
+        self.downTimes[key] = nil
+    end
+end
+
 function InputTracker_StartStop:ShouldGrapple()
     return
         self:IsDown(self.keynames_pull),

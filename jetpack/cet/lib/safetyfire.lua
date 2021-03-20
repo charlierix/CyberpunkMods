@@ -50,3 +50,34 @@ function SafetyFire(o, groundPoint)
     -- these params was kind of fun and morbid :)
     o:Teleport(Vector4.new(o.pos.x, o.pos.y, groundPoint.z + 0.3, 1), o.yaw)
 end
+
+
+--NOTE: The way the game does it is precalculate what the speed would be at impact.  This avoids
+--raycasts, but doesn't allow for anything but simple parabolic flight
+-- protected final const func IsFallHeightAcceptable(stateContext: ref<StateContext>, scriptInterface: ref<StateGameScriptInterface>) -> Bool {
+--     let acceptableFallingSpeed: Float;
+--     let verticalSpeed: Float;
+--     acceptableFallingSpeed = this.GetFallingSpeedBasedOnHeight(scriptInterface, this.GetStaticFloatParameter("minFallHeight", 3.00));
+--     verticalSpeed = this.GetVerticalSpeed(scriptInterface);
+--     if verticalSpeed < acceptableFallingSpeed {
+--       return true;
+--     };
+--     return false;
+--   }
+
+-- protected final const func GetFallingSpeedBasedOnHeight(scriptInterface: ref<StateGameScriptInterface>, height: Float) -> Float {
+--     let speed: Float;
+--     let acc: Float;
+--     let locomotionParameters: ref<LocomotionParameters>;
+--     if height < 0.00 {
+--       return 0.00;
+--     };
+--     locomotionParameters = new LocomotionParameters();
+--     this.GetStateDefaultLocomotionParameters(scriptInterface, locomotionParameters);
+--     acc = AbsF(locomotionParameters.GetUpwardsGravity(this.GetStaticFloatParameter("defaultGravity", -16.00)));
+--     speed = 0.00;
+--     if acc != 0.00 {
+--       speed = acc * SqrtF(2.00 * height / acc);
+--     };
+--     return speed * -1.00;
+--   }

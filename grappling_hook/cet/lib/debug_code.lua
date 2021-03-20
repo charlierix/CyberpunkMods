@@ -1,5 +1,5 @@
 function PopulateDebug(debug, o, keys, state)
-    debug.inFlight = state.isInFlight
+    debug.flightMode = state.flightMode
     -- debug.inFlight_c = o:Get_Custom_IsFlying()
 
     debug.pos = vec_str(o.pos)

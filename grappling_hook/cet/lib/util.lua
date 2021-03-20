@@ -67,3 +67,20 @@ function InitializeKeyTrackers(state, keys, o)
         keys:AddAction(state.startStopTracker.keynames[i])
     end
 end
+
+-- This takes a table of names {1:"a", 2:"b", 3:"c"} and turns it into a key value table where the key and value are
+-- the same
+--
+-- Usage:
+-- local days = CreateEnum({"aday", "bday", "friday"})
+-- local specificDay = days.bday
+-- if specificDay == days.bday then print("yay") end
+function CreateEnum(names)
+    local enum = { }
+
+    for i=1, #names do
+        enum[names[i]] = names[i]
+    end
+
+    return enum
+end

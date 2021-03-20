@@ -10,6 +10,7 @@
 require "lib/customprops_wrapper"
 require "lib/debug_code"
 require "lib/drawing"
+require "lib/flightmode_transitions"
 require "lib/gameobj_accessor"
 require "lib/inputtracker_startstop"
 require "lib/keys"
@@ -17,8 +18,11 @@ require "lib/math_basic"
 require "lib/math_raycast"
 require "lib/math_vector"
 require "lib/math_yaw"
+require "lib/processing_aim"
+require "lib/processing_standard"
 require "lib/reporting"
 require "lib/safetyfire"
+require "lib/throwaway_code"
 require "lib/util"
 
 --------------------------------------------------------------------
@@ -27,7 +31,9 @@ require "lib/util"
 
 local const =
 {
-    maxSpeed = 120,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
+    flightModes = CreateEnum({ "standard", "aim_pull", "aim_rigid" }),
+
+    maxSpeed = 80,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
 
     shouldShowDebugWindow = true,      -- shows a window with extra debug info
 }
@@ -46,20 +52,13 @@ local debug = { }
 
 local state =
 {
-    isInFlight = false,
+    flightMode = const.flightModes.standard,
 
     --startStopTracker      -- this gets instantiated in init
 
     --sound_current = nil,      -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
     sound_started = 0,
 }
-
-
-
-local lastDotTime = nil
-local lastDotID = nil
-
-
 
 --------------------------------------------------------------------
 
@@ -115,7 +114,7 @@ end)
 
 registerForEvent("onUpdate", function(deltaTime)
     if isShutdown or isLoading or IsPlayerInAnyMenu() then
-        --ExitFlight(state, debug, o)
+        ExitFlight(state, const, debug, o)
         do return end
     end
 
@@ -123,7 +122,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
     if not o.player then
-        --ExitFlight(state, debug, o)
+        ExitFlight(state, const, debug, o)
         do return end
     end
 
@@ -132,70 +131,43 @@ registerForEvent("onUpdate", function(deltaTime)
     if not IsStandingStill(o.vel) then
         o:GetInWorkspot()       -- this crashes soon after loading a save.  So don't call if velocity is near zero.  Still got a crash when reloading after dying in a car shootout.  Hopefully this looser method keeps from crashing
         if o.isInWorkspot then
-            --ExitFlight(state, debug, o)
+            ExitFlight(state, const, debug, o)
             do return end
         end
     end
 
-
     state.startStopTracker:Tick()
 
+    Test_Raycast_Mappin(o, state, debug)
 
 
-    if lastDotID and (o.timer - lastDotTime > 6) then
-        o:RemovePin(lastDotID)
-        lastDotID = nil
-    end
-
-    if state.startStopTracker:ShouldStop() then
-
-        o:GetCamera()
-
-        local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + 1.5, 1)
-
-        -- 144 is too far.  It's noticablly unreliable at that distance.  Something like 80 might be
-        -- better (actually, up to 120 should be good, anticipating collision hulls loading in later)
-        --
-        -- Grapple Initiated:
-        --  Start firing these raycasts
-        --      If miss, show one type of map pin
-        --      If hit, show another type of map pin
-        --      Once there is a hit, move on to the next phase
-        --
-        --  After a small amount of time or if there was a hit
-        --      Play a starting tone
-        --
-        --  After another small time
-        --      play a final tone
-        --      Start the actual grapple flight
-        --
-        --  Grapple Flight (if miss):
-        --      This is limited, going mostly straight
-        --      Keep firing ray traces along the initial line, in case collision hulls load in as the player gets closer (do this every X frames)
-        --          If there is a hit along that line segment:
-        --              Play a special tone
-        --              Switch to hit flight
-        --
-        --  Grapple Flight (if hit):
-        --      May need further ray casts along the initial line segment if it was beyond 80 (a collision hull could load in as the player gets closer)
-
-        local result, tries = RayCast_HitPoint(from, o.lookdir_forward, 144, 0.5, o)
 
 
-        if result then
-            debug.tries = tries
-            debug.hitDist = Round(math.sqrt(GetVectorDiffLengthSqr(from, result)), 1)
-
-            if lastDotID then
-                o:MovePin(lastDotID, result)
-            else
-                lastDotID = o:CreatePin(result, "AimVariant")
-            end
-
-            lastDotTime = o.timer
-        end
-
-    end
+    -- 144 is too far.  It's noticablly unreliable at that distance.  Something like 80 might be
+    -- better (actually, up to 120 should be good, anticipating collision hulls loading in later)
+    --
+    -- Grapple Initiated:
+    --  Start firing these raycasts
+    --      If miss, show one type of map pin
+    --      If hit, show another type of map pin
+    --      Once there is a hit, move on to the next phase
+    --
+    --  After a small amount of time or if there was a hit
+    --      Play a starting tone
+    --
+    --  After another small time
+    --      play a final tone
+    --      Start the actual grapple flight
+    --
+    --  Grapple Flight (if miss):
+    --      This is limited, going mostly straight
+    --      Keep firing ray traces along the initial line, in case collision hulls load in as the player gets closer (do this every X frames)
+    --          If there is a hit along that line segment:
+    --              Play a special tone
+    --              Switch to hit flight
+    --
+    --  Grapple Flight (if hit):
+    --      May need further ray casts along the initial line segment if it was beyond 80 (a collision hull could load in as the player gets closer)
 
 
 
@@ -203,11 +175,22 @@ registerForEvent("onUpdate", function(deltaTime)
         PopulateDebug(debug, o, keys, state)
     end
 
-    if state.isInFlight then
-        -- In Flight
-    else
-        -- Standard (walking around)
-    end
+    -- if state.flightMode == const.flightModes.standard then
+    --     -- Standard (walking around)
+    --     Process_Standard(o, state, const, deltaTime)
+
+    -- elseif state.flightMode == const.flightModes.aim_pull then
+    --     -- Aiming the pull forward grapple
+    --     Process_Aim_Pull(o, state, const, debug)
+
+    -- elseif state.flightMode == const.flightModes.aim_rigid then
+    --     -- Aiming the rigid grapple
+    --     Process_Aim_Rigid(o, state, const, debug)
+
+    -- else
+    --     print("Grappling ERROR, unknown flightMode: " .. tostring(state.flightMode))
+    --     ExitFlight(state, const, debug, o)
+    -- end
 
     keys:Tick()
 end)
