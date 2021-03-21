@@ -55,6 +55,8 @@ end
 
 function InitializeKeyTrackers(state, keys, o)
     --TODO: Get these mappings from config so people can map custom bindings (for controllers)
+    --
+    -- These strings have to exactly match what comes from Observe('PlayerPuppet', 'OnAction'
     local pull = { "Left", "Right", "Forward" }
     local rigid = { "Left", "Right", "Back" }
     local stop = { "Left", "Right" }

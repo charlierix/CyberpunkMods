@@ -11,14 +11,17 @@ require "lib/customprops_wrapper"
 require "lib/debug_code"
 require "lib/drawing"
 require "lib/flightmode_transitions"
+require "lib/flightutil"
 require "lib/gameobj_accessor"
 require "lib/inputtracker_startstop"
 require "lib/keys"
+require "lib/mappinutil"
 require "lib/math_basic"
 require "lib/math_raycast"
 require "lib/math_vector"
 require "lib/math_yaw"
 require "lib/processing_aim"
+require "lib/processing_flight_rigid"
 require "lib/processing_standard"
 require "lib/reporting"
 require "lib/safetyfire"
@@ -31,9 +34,33 @@ require "lib/util"
 
 local const =
 {
-    flightModes = CreateEnum({ "standard", "aim_pull", "aim_rigid" }),
+    flightModes = CreateEnum({ "standard", "aim_pull", "aim_rigid", "air_dash", "flight_pull", "flight_rigid" }),
 
-    maxSpeed = 80,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
+    pull =
+    {
+        maxDistance = 130,
+        allowAirDash = true,
+        mappinName = "AimVariant",
+        flightMode = "flight_pull",         -- flightModes.flight_pull
+        minDot = 0,                         -- grapple will disengage when dot product of look direction and grapple line is less than this
+    },
+
+    rigid =
+    {
+        maxDistance = 70,
+        allowAirDash = false,
+        mappinName = "TakeControlVariant",
+        flightMode = "flight_rigid",        -- flightModes.flight_rigid
+        minDot = 0,                         -- grapple will disengage when dot product of look direction and grapple line is less than this
+    },
+
+    mappinName_aim = "CustomPositionVariant",
+    aim_duration = 1,           -- how long to aim before giving up and switching to airdash, or back to standard
+
+    grappleFrom_Z = 1.5,
+    grappleMinResolution = 0.5,
+
+    maxSpeed = 60,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
 
     shouldShowDebugWindow = true,      -- shows a window with extra debug info
 }
@@ -56,18 +83,28 @@ local state =
 
     --startStopTracker      -- this gets instantiated in init
 
-    --sound_current = nil,      -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
+    --sound_current = nil,  -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
     sound_started = 0,
+
+    --startTime      -- gets populated when transitioning into a new flight mode (into aim, into flight, etc) ---- doesn't get set when transitioning to standard
+
+    --mappinID      -- this will be populated while the map pin is visible (managed in mappinutil.lua)
+
+    --rayFrom       -- gets populated when transitioning to airdash or flight
+    --rayHit        -- gets populated when transitioning to flight
+    --rayDir        -- gets populated when transitioning to airdash
+    --rayLength     -- gets populated when transitioning to airdash
+
 }
 
 --------------------------------------------------------------------
 
 registerForEvent("onInit", function()
-    Observe('PlayerPuppet', 'OnAction', function(action)        -- observe must be inside init and before other code
+    Observe("PlayerPuppet", "OnAction", function(action)        -- observe must be inside init and before other code
         keys:MapAction(action)
     end)
 
-    Observe('RadialWheelController', 'RegisterBlackboards', function(_, loaded)
+    Observe("RadialWheelController", "RegisterBlackboards", function(_, loaded)
         if loaded then
             isLoading = false
         else
@@ -114,7 +151,7 @@ end)
 
 registerForEvent("onUpdate", function(deltaTime)
     if isShutdown or isLoading or IsPlayerInAnyMenu() then
-        ExitFlight(state, const, debug, o)
+        Transition_ToStandard(state, const, debug, o)
         do return end
     end
 
@@ -122,7 +159,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
     if not o.player then
-        ExitFlight(state, const, debug, o)
+        Transition_ToStandard(state, const, debug, o)
         do return end
     end
 
@@ -131,14 +168,14 @@ registerForEvent("onUpdate", function(deltaTime)
     if not IsStandingStill(o.vel) then
         o:GetInWorkspot()       -- this crashes soon after loading a save.  So don't call if velocity is near zero.  Still got a crash when reloading after dying in a car shootout.  Hopefully this looser method keeps from crashing
         if o.isInWorkspot then
-            ExitFlight(state, const, debug, o)
+            Transition_ToStandard(state, const, debug, o)
             do return end
         end
     end
 
     state.startStopTracker:Tick()
 
-    Test_Raycast_Mappin(o, state, debug)
+    --Test_Raycast_Mappin(o, state, debug)
 
 
 
@@ -175,22 +212,30 @@ registerForEvent("onUpdate", function(deltaTime)
         PopulateDebug(debug, o, keys, state)
     end
 
-    -- if state.flightMode == const.flightModes.standard then
-    --     -- Standard (walking around)
-    --     Process_Standard(o, state, const, deltaTime)
+    if state.flightMode == const.flightModes.standard then
+        -- Standard (walking around)
+        Process_Standard(o, state, const, deltaTime)
 
-    -- elseif state.flightMode == const.flightModes.aim_pull then
-    --     -- Aiming the pull forward grapple
-    --     Process_Aim_Pull(o, state, const, debug)
+    elseif state.flightMode == const.flightModes.aim_pull then
+        -- Aiming the pull forward grapple
+        Process_Aim_Pull(o, state, const, debug)
 
-    -- elseif state.flightMode == const.flightModes.aim_rigid then
-    --     -- Aiming the rigid grapple
-    --     Process_Aim_Rigid(o, state, const, debug)
+    elseif state.flightMode == const.flightModes.aim_rigid then
+        -- Aiming the rigid grapple
+        Process_Aim_Rigid(o, state, const, debug)
 
-    -- else
-    --     print("Grappling ERROR, unknown flightMode: " .. tostring(state.flightMode))
-    --     ExitFlight(state, const, debug, o)
-    -- end
+
+    -- elseif state.flightMode == const.flightModes.air_dash then
+    -- elseif state.flightMode == const.flightModes.flight_pull then
+
+
+    elseif state.flightMode == const.flightModes.flight_rigid then
+        Process_Flight_Rigid(o, state, const, debug, deltaTime)
+
+    else
+        print("Grappling ERROR, unknown flightMode: " .. tostring(state.flightMode))
+        Transition_ToStandard(state, const, debug, o)
+    end
 
     keys:Tick()
 end)
