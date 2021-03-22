@@ -31,6 +31,7 @@ function Transition_ToFlight(state, o, flightMode, rayFrom, rayHit)
 
     state.rayFrom = rayFrom
     state.rayHit = rayHit
+    state.distToHit = math.sqrt(GetVectorDiffLengthSqr(rayHit, rayFrom))
 end
 
 -- This happens when they aimed too long without a hit, moving into airdash flight

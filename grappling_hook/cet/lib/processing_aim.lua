@@ -32,10 +32,10 @@ function Process_Aim_Common(o, state, const, debug, args)
 
 
         -- Temp
-        if args.flightMode == const.flightModes.flight_rigid then
-            local jumpTo = AddVectors(o.pos, MultiplyVector(o.lookdir_forward, 2))
-            o:Teleport(jumpTo, o.yaw)
-        end
+        -- if args.flightMode == const.flightModes.flight_rigid then
+        --     local jumpTo = AddVectors(o.pos, MultiplyVector(o.lookdir_forward, 2))
+        --     o:Teleport(jumpTo, o.yaw)
+        -- end
 
 
 

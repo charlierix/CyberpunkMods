@@ -103,6 +103,52 @@ function Make2DUnit(vector)
     return Vector4.new(retVal.x / length, retVal.y / length, 0, 1)
 end
 
+-- This converts the vector into a unit vector (or leaves it zero length if zero length)
+function Normalize(vector)
+    local length = GetVectorLength(vector)
+
+    if IsNearZero(length) then
+        vector.x = 0        -- just making sure it's exactly zero
+        vector.y = 0
+        vector.z = 0
+    else
+        vector.x = vector.x / length
+        vector.y = vector.y / length
+        vector.z = vector.z / length
+    end
+end
+
+-- Returns the portion of this vector that lies along the other vector
+-- NOTE: The return will be the same direction as alongVector, but the length from zero to this vector's full length
+--
+-- Lookup "vector projection" to see the difference between this and dot product
+-- http://en.wikipedia.org/wiki/Vector_projection
+function GetProjectedVector_AlongVector(vector, alongVectorUnit, eitherDirection)
+    -- c = (a dot unit(b)) * unit(b)
+
+    if IsNearZero_vec4(vector) then
+        return Vector4.new(0, 0, 0, 1)
+    end
+
+    local length = DotProduct3D(vector, alongVectorUnit);
+
+    if (not eitherDirection) and (length < 0) then
+        -- It's in the opposite direction, and that isn't allowed
+        return Vector4.new(0, 0, 0, 1)
+    end
+
+    return alongVectorUnit * length;
+end
+function GetProjectedVector_AlongPlane(vector, alongPlanes_normal)
+    -- Get a line that is parallel to the plane, but along the direction of the vector
+    local alongLine = CrossProduct3D(alongPlanes_normal, CrossProduct3D(vector, alongPlanes_normal))
+
+    Normalize(alongLine)
+
+    -- Use the other overload to get the portion of the vector along this line
+    return GetProjectedVector_AlongVector(vector, alongLine)
+end
+
 ------------------------------------- Convert -------------------------------------
 
 function GetPoint(fromPos, unitDirection, length)

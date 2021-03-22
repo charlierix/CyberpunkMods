@@ -38,20 +38,31 @@ local const =
 
     pull =
     {
+        -- common prop names
         maxDistance = 130,
         allowAirDash = true,
         mappinName = "AimVariant",
         flightMode = "flight_pull",         -- flightModes.flight_pull
         minDot = 0,                         -- grapple will disengage when dot product of look direction and grapple line is less than this
+
+        -- pull specific properties
     },
 
     rigid =
     {
+        -- common prop names
         maxDistance = 70,
         allowAirDash = false,
         mappinName = "TakeControlVariant",
         flightMode = "flight_rigid",        -- flightModes.flight_rigid
         minDot = 0,                         -- grapple will disengage when dot product of look direction and grapple line is less than this
+
+        -- rigid specific properties
+        accelToRadius = 36,                 -- how hard to accelerate toward the desired radius (grapple length)
+        radiusDeadSpot = 2,               -- adding a dead zone keeps things from being jittery when very near the desired radius
+
+        velAway_accel = 16,                  -- extra acceleration to apply when velocity is moving away from the desired radius
+        velAway_deadSpot = 0.5,
     },
 
     mappinName_aim = "CustomPositionVariant",
@@ -94,6 +105,7 @@ local state =
     --rayHit        -- gets populated when transitioning to flight
     --rayDir        -- gets populated when transitioning to airdash
     --rayLength     -- gets populated when transitioning to airdash
+    --distToHit     -- len(rayHit-rayFrom)    populated when transitioning to flight
 
 }
 
