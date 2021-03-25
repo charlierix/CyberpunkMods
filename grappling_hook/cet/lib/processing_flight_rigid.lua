@@ -1,15 +1,32 @@
+--TODO: If the grapple point is fairly close to the player, hold the player in place.  If too much force is applied,
+--break it (but after the force was applied, so it at least slows down the player)
+
 function Process_Flight_Rigid(o, state, const, debug, deltaTime)
-    if state.startStopTracker:ShouldStop() then
-        -- told to stop swinging, back to standard
+    -- If they initiate a new pull or rigid, go straight to that
+    local shouldPull, shouldRigid = state.startStopTracker:ShouldGrapple()
+    if shouldPull then
+        Transition_ToStandard(state, const, debug, o)       -- calling standard to make sure everything is reset
+        Transition_ToAim(state, o, const.flightModes.aim_pull)
+        do return end
+
+    elseif shouldRigid then
+        Transition_ToStandard(state, const, debug, o)
+        Transition_ToAim(state, o, const.flightModes.aim_rigid)
+        do return end
+    end
+
+    if state.startStopTracker:ShouldStop() then     -- doing this after the pull/rigid check, because it likely uses fewer keys
+        -- Told to stop swinging, back to standard
         Transition_ToStandard(state, const, debug, o)
         do return end
     end
 
     --TODO: If standing on the ground, then cancel
+    --TODO: If near a wall, then cancel
 
     local args = const.rigid
 
-    local playerAnchor, grappleDir, grappleLen, grappleDirUnit = GetGrappleLine(o, state, const)
+    local _, grappleDir, grappleLen, grappleDirUnit = GetGrappleLine(o, state, const)
 
     o:GetCamera()
 
@@ -36,13 +53,13 @@ function Process_Flight_Rigid(o, state, const, debug, deltaTime)
     --debug.distToHit = state.distToHit
     debug.diffDist = Round(diffDist, 2)
 
-    local stand_x, stand_y, stand_z = Rigid_GetAccel_Standard(grappleDir, diffDist, args.accelToRadius, args.radiusDeadSpot)
+    local stand_x, stand_y, stand_z = Rigid_GetAccel_Standard(grappleDirUnit, diffDist, args.accelToRadius, args.radiusDeadSpot)
 
     -- Get the component of the velocity that's along the grapple line
     local velAlong = GetProjectedVector_AlongVector(o.vel, grappleDirUnit, true)
 
     -- Add extra acceleration if flying away (extra drag)
-    --local drag_x, drag_y, drag_z = Rigid_GetAccel_VelocityDrag(grappleDir, diffDist, velAlong, args.velAway_accel, args.velAway_deadSpot)
+    --local drag_x, drag_y, drag_z = Rigid_GetAccel_VelocityDrag(grappleDirUnit, diffDist, velAlong, args.velAway_accel, args.velAway_deadSpot)
     local drag_x = 0
     local drag_y = 0
     local drag_z = 0
@@ -59,7 +76,7 @@ function Process_Flight_Rigid(o, state, const, debug, deltaTime)
     o.player:Jetpack_AddImpulse(accelX, accelY, accelZ)
 end
 
-function Rigid_GetAccel_Standard(direction, diffDist, maxAccel, deadSpot)
+function Rigid_GetAccel_Standard(directionUnit, diffDist, maxAccel, deadSpot)
     local accel = GetAccel_Deadspot(diffDist, maxAccel, deadSpot)
 
     if diffDist < 0 then
@@ -67,13 +84,13 @@ function Rigid_GetAccel_Standard(direction, diffDist, maxAccel, deadSpot)
     end
 
     return
-        direction.x * accel,
-        direction.y * accel,
-        direction.z * accel
+        directionUnit.x * accel,
+        directionUnit.y * accel,
+        directionUnit.z * accel
 end
 
-function Rigid_GetAccel_VelocityDrag(grappleDir, diffDist, velAlong, maxAccel, deadSpot)
-    local dot = DotProduct3D(grappleDir, velAlong)
+function Rigid_GetAccel_VelocityDrag(grappleDirUnit, diffDist, velAlong, maxAccel, deadSpot)
+    local dot = DotProduct3D(grappleDirUnit, velAlong)
 
     -- diff = desired - actual
     -- A positive diff means the player is too close.  Negative is too far away

@@ -21,6 +21,7 @@ require "lib/math_raycast"
 require "lib/math_vector"
 require "lib/math_yaw"
 require "lib/processing_aim"
+require "lib/processing_flight_pull"
 require "lib/processing_flight_rigid"
 require "lib/processing_standard"
 require "lib/reporting"
@@ -46,6 +47,15 @@ local const =
         minDot = 0,                         -- grapple will disengage when dot product of look direction and grapple line is less than this
 
         -- pull specific properties
+        speed_towardAnchor = 10,            -- how fast to go toward the anchor point (if the speed is currently greater, there is no counter force to try to slow them down)
+        accel_towardAnchor = 12,
+        deadzone_dist_towardAnchor = 12,     -- accel drops to zero when near the target
+
+        speed_lookDir = 16,                   -- how fast to go in the look direction
+        accel_lookDir = 28,                   -- the acceleration to apply when under speed
+        deadzone_dist_lookDir = 4,
+
+        deadZone_speedDiff = 1,             -- accel will drop toward zero if the speed is within this dead zone
     },
 
     rigid =
@@ -59,9 +69,9 @@ local const =
 
         -- rigid specific properties
         accelToRadius = 36,                 -- how hard to accelerate toward the desired radius (grapple length)
-        radiusDeadSpot = 2,               -- adding a dead zone keeps things from being jittery when very near the desired radius
+        radiusDeadSpot = 2,                 -- adding a dead zone keeps things from being jittery when very near the desired radius
 
-        velAway_accel = 16,                  -- extra acceleration to apply when velocity is moving away from the desired radius
+        velAway_accel = 16,                 -- extra acceleration to apply when velocity is moving away from the desired radius
         velAway_deadSpot = 0.5,
     },
 
@@ -238,8 +248,10 @@ registerForEvent("onUpdate", function(deltaTime)
 
 
     -- elseif state.flightMode == const.flightModes.air_dash then
-    -- elseif state.flightMode == const.flightModes.flight_pull then
 
+
+    elseif state.flightMode == const.flightModes.flight_pull then
+        Process_Flight_Pull(o, state, const, debug, deltaTime)
 
     elseif state.flightMode == const.flightModes.flight_rigid then
         Process_Flight_Rigid(o, state, const, debug, deltaTime)

@@ -137,7 +137,7 @@ function GetProjectedVector_AlongVector(vector, alongVectorUnit, eitherDirection
         return Vector4.new(0, 0, 0, 1)
     end
 
-    return alongVectorUnit * length;
+    return MultiplyVector(alongVectorUnit, length);
 end
 function GetProjectedVector_AlongPlane(vector, alongPlanes_normal)
     -- Get a line that is parallel to the plane, but along the direction of the vector
