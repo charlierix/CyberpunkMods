@@ -1,7 +1,6 @@
 function PopulateDebug(debug, o, keys, state)
     debug.inFlight = state.isInFlight
-    -- debug.inFlight_c = o:Get_Custom_IsFlying()
-    -- debug.supressFall = o:Get_Custom_SuppressFalling()
+    debug.currentlyFlying = o:Custom_CurrentlyFlying_get()
 
     debug.pos = vec_str(o.pos)
     debug.vel = vec_str(o.vel)
@@ -18,6 +17,10 @@ function PopulateDebug(debug, o, keys, state)
     -- debug.key_jump = keys.jump
     -- debug.key_rmb = keys.rmb
     -- debug.mouse_x = keys.mouse_x
+
+    -- debug.thrust_isDown = state.thrust.isDown
+    -- debug.thrust_isDashing = state.thrust.isDashing
+    -- debug.thrust_downDuration = Round(state.thrust.downDuration, 1)
 
     debug.timer = Round(o.timer, 1)
 end

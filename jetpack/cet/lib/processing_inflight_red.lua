@@ -1,15 +1,6 @@
 function Process_InFlight_Red(o, state, const, mode, keys, debug, deltaTime)
     debug.time_flying_idle = o.timer - state.lastThrustTime
 
-    -- if ShouldSafetyFire(o, mode) then       -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
-    --     ExitFlight(state, debug, o)
-    --     if mode.explosiveLanding then
-    --         ExplosivelyLand(o, o.vel)
-    --     end
-    --     SafetyFire(o)
-    --     do return end
-    -- end
-
     local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, mode, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
     if safetyFireHit then
         local velZ = o.vel.z        -- saving this, because safety fire will set the velocity to zero

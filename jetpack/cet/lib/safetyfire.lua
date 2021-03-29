@@ -13,7 +13,7 @@ function GetSafetyFireHitPoint(o, pos, velZ, mode, deltaTime)
 
     -- Four Corners
 
-    -- Landing on screens and slats are the worst case scenario.  The direction down needs to go
+    -- Landing on screens and slats is the worst case scenario.  The direction down needs to go
     -- at a slight angle to increase the chance of seeing them
     --
     -- So, normalizing the vector (.1, .1, 1) becomes

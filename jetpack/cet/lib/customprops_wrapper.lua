@@ -1,12 +1,12 @@
--- These are wrappers to properties defined in redscript that aren't critical for jetpack
--- to function (more like nice to have).  So if the user didn't install redscript, these
--- functions silently fail and just pretend it's there
+-- These are accessors to custom properties that are shared by flight based mods.  They
+-- are a way for the mods to talk to each other so only one is performing flight at a time
 
 -- @addField(PlayerPuppet)
--- public let Custom_IsFlying: Bool;
-function Get_Custom_IsFlying(player)
+-- public let Custom_CurrentlyFlying: String;
+
+function Custom_CurrentlyFlying_get(player)
     local sucess, result = pcall(
-        function(p) return p.Custom_IsFlying end,
+        function(p) return p.Custom_CurrentlyFlying end,
         player)
 
     if sucess then
@@ -15,25 +15,26 @@ function Get_Custom_IsFlying(player)
         return false
     end
 end
-function Set_Custom_IsFlying(player, value)
-    pcall(function(p, v) p.Custom_IsFlying = v end,
-        player, value)
+
+-- function Custom_CurrentlyFlying_set(player, value)
+--     pcall(function(p, v) p.Custom_CurrentlyFlying = v end,
+--         player, value)
+-- end
+
+-- This will set the property to this jetpack mod's string
+function Custom_CurrentlyFlying_StartFlight(player, modNames)
+    pcall(function(p, mn)
+        p.Custom_CurrentlyFlying = mn.jetpack
+    end, player, modNames)
 end
 
--- @addField(PlayerPuppet)
--- public let Custom_SuppressFalling: Bool;
-function Get_Custom_SuppressFalling(player)
-    local sucess, result = pcall(
-        function(p) return p.Custom_SuppressFalling end,
-        player)
+-- This will clear the property only if jetpack is still current
+function Custom_CurrentlyFlying_Clear(player, modNames)
+    pcall(function(p, mn)
+        local current = p.Custom_CurrentlyFlying
 
-    if sucess then
-        return result
-    else
-        return false
-    end
-end
-function Set_Custom_SuppressFalling(player, value)
-    pcall(function(p, v) p.Custom_SuppressFalling = v end,
-        player, value)
+        if current == mn.jetpack then
+            p.Custom_CurrentlyFlying = ""
+        end
+    end, player, modNames)
 end

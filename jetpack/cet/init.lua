@@ -7,6 +7,7 @@
 --https://codeberg.org/adamsmasher/cyberpunk/src/branch/master
 --https://redscript.redmodding.org/
 
+require "lib/check_other_mods"
 require "lib/customprops_wrapper"
 require "lib/dal"
 require "lib/debug_code"
@@ -213,7 +214,9 @@ local const =
 {
     maxSpeed = 120,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
 
-    shouldShowDebugWindow = false,      -- shows a window with extra debug info
+    modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),
+
+    shouldShowDebugWindow = true,      -- shows a window with extra debug info
 }
 
 --------------------------------------------------------------------
@@ -276,10 +279,9 @@ registerForEvent("onInit", function()
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
-    function wrappers.Get_Custom_IsFlying(player) return Get_Custom_IsFlying(player) end
-    function wrappers.Set_Custom_IsFlying(player, value) Set_Custom_IsFlying(player, value) end
-    function wrappers.Get_Custom_SuppressFalling(player) return Get_Custom_SuppressFalling(player) end
-    function wrappers.Set_Custom_SuppressFalling(player, value) Set_Custom_SuppressFalling(player, value) end
+    function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
+    function wrappers.Custom_CurrentlyFlying_StartFlight(player) Custom_CurrentlyFlying_StartFlight(player, const.modNames) end
+    function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
     function wrappers.Ragdoll_Up(player, radius, force, randHorz, randVert) player:RagdollNPCs_StraightUp(radius, force, randHorz, randVert) end
     function wrappers.Ragdoll_Out(player, radius, force, upForce) player:RagdollNPCs_ExplodeOut(radius, force, upForce) end
     function wrappers.QueueSound(player, sound) player:Jetpack_QueueSound(sound) end
@@ -336,20 +338,23 @@ registerForEvent("onUpdate", function(deltaTime)
         ExitFlight()
     end
 
-    keys:Tick()
     state.thrust:Tick()     -- this is needed for flight and non flight
 
     if state.isInFlight then
         -- In Flight
-        if mode.useRedscript then
+        if not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
+            ExitFlight(state, debug, o)
+        elseif mode.useRedscript then
             Process_InFlight_Red(o, state, const, mode, keys, debug, deltaTime)
         else
             Process_InFlight_CET(o, state, const, mode, keys, debug, deltaTime)
         end
     else
         -- Standard (walking around)
-        Process_Standard(o, state, mode, keys, debug, deltaTime)
+        Process_Standard(o, state, mode, const, debug, deltaTime)
     end
+
+    keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
 registerHotkey("jetpackCycleModes", "Cycle Modes", function()

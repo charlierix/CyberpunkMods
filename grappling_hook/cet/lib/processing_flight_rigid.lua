@@ -2,44 +2,37 @@
 --break it (but after the force was applied, so it at least slows down the player)
 
 function Process_Flight_Rigid(o, state, const, debug, deltaTime)
-    -- If they initiate a new pull or rigid, go straight to that
-    local shouldPull, shouldRigid = state.startStopTracker:ShouldGrapple()
-    if shouldPull then
-        Transition_ToStandard(state, const, debug, o)       -- calling standard to make sure everything is reset
-        Transition_ToAim(state, o, const.flightModes.aim_pull)
-        do return end
-
-    elseif shouldRigid then
-        Transition_ToStandard(state, const, debug, o)
-        Transition_ToAim(state, o, const.flightModes.aim_rigid)
+    if SwitchedFlightMode(o, state, const) then
         do return end
     end
 
-    if state.startStopTracker:ShouldStop() then     -- doing this after the pull/rigid check, because it likely uses fewer keys
-        -- Told to stop swinging, back to standard
-        Transition_ToStandard(state, const, debug, o)
-        do return end
+
+
+    -- -- If standing on the ground, then cancel
+    if IsAirborne(o) then
+         state.isSafetyFireCandidate = true
+    -- else
+    --     print("rigid: stopping on ground")
+
+    --     Transition_ToStandard(state, const, debug, o)
+    --     do return end
+    -- end
+
+    -- -- If about to hit a wall, then cancel
+    -- if IsWallCollisionImminent(o, deltaTime) then
+    --     print("rigid: stopping on wall")
+
+    --     Transition_ToStandard(state, const, debug, o)
+    --     do return end
     end
 
-    --TODO: If standing on the ground, then cancel
-    --TODO: If near a wall, then cancel
+
 
     local args = const.rigid
 
-    local _, grappleDir, grappleLen, grappleDirUnit = GetGrappleLine(o, state, const)
+    local _, _, grappleLen, grappleDirUnit = GetGrappleLine(o, state, const)
 
     o:GetCamera()
-
-    --debug.playerAnchor = vec_str(playerAnchor)
-    --debug.rayHit = vec_str(state.rayHit)
-
-    -- debug.grappleDir = vec_str(grappleDir)
-    -- debug.grappleDirUnit = vec_str(grappleDirUnit)
-    debug.grappleLen = Round(grappleLen, 1)
-
-    --debug.grappleDirUnitLen = GetVectorLength(grappleDirUnit)
-    --debug.lookDirLen = GetVectorLength(o.lookdir_forward)
-    --debug.dot_look_grapple = Round(DotProduct3D(o.lookdir_forward, grappleDirUnit), 2)
 
     if DotProduct3D(o.lookdir_forward, grappleDirUnit) < args.minDot then
         -- They looked too far away
@@ -59,19 +52,12 @@ function Process_Flight_Rigid(o, state, const, debug, deltaTime)
     local velAlong = GetProjectedVector_AlongVector(o.vel, grappleDirUnit, true)
 
     -- Add extra acceleration if flying away (extra drag)
-    --local drag_x, drag_y, drag_z = Rigid_GetAccel_VelocityDrag(grappleDirUnit, diffDist, velAlong, args.velAway_accel, args.velAway_deadSpot)
-    local drag_x = 0
-    local drag_y = 0
-    local drag_z = 0
-
-    -- Cancel out the portion of gravity that's along the grapple line
-    --local antigrav_z = Rigid_GetAccel_AntiGravity(grappleDir)
-    local antigrav_z = 0
+    local drag_x, drag_y, drag_z = Rigid_GetAccel_VelocityDrag(debug, grappleDirUnit, diffDist, velAlong, args.velAway_accel_tension, args.velAway_accel_compress, args.velAway_deadSpot)
 
     -- Apply the acceleration
     local accelX = (stand_x + drag_x) * deltaTime
     local accelY = (stand_y + drag_y) * deltaTime
-    local accelZ = (stand_z + drag_z + antigrav_z) * deltaTime
+    local accelZ = (stand_z + drag_z) * deltaTime
 
     o.player:Jetpack_AddImpulse(accelX, accelY, accelZ)
 end
@@ -89,26 +75,33 @@ function Rigid_GetAccel_Standard(directionUnit, diffDist, maxAccel, deadSpot)
         directionUnit.z * accel
 end
 
-function Rigid_GetAccel_VelocityDrag(grappleDirUnit, diffDist, velAlong, maxAccel, deadSpot)
+function Rigid_GetAccel_VelocityDrag(debug, grappleDirUnit, diffDist, velAlong, maxAccel_tension, maxAccel_compress, deadSpot)
+    -- Positive: moving toward.  Negative: moving away
     local dot = DotProduct3D(grappleDirUnit, velAlong)
 
-    -- diff = desired - actual
-    -- A positive diff means the player is too close.  Negative is too far away
-    -- A positive dot means the player is moving toward the point (decreasing distance)
-    if ((diffDist > 0) and (dot < 0) or (diffDist < 0) and (dot > 0)) then
-        -- The player is already moving in the correct direction.  No extra acceleration needed
+    -- diff = actual - desired
+    if (diffDist < 0 and dot < 0) or    -- Compressed and moving away from point
+       (diffDist > 0 and dot > 0) then     -- Stretched and moving toward the point
+        debug.zzz_WTF = "skipping"
         return 0, 0, 0
     end
 
-    local accel = GetAccel_Deadspot(diffDist, maxAccel, deadSpot)
-    accel = -accel      -- it's a drag against current velocity
-
-    local velLen = GetVectorLength(velAlong)
+    local accel
+    if diffDist < 0 then
+        -- It's being compressed
+        accel = GetAccel_Deadspot(diffDist, maxAccel_compress, deadSpot)
+        accel = -accel
+        debug.zzz_WTF = "being compressed"
+    else
+        -- It's being stretched
+        accel = GetAccel_Deadspot(diffDist, maxAccel_tension, deadSpot)
+        debug.zzz_WTF = "being stretched"
+    end
 
     return
-        velAlong.x / velLen * accel,
-        velAlong.y / velLen * accel,
-        velAlong.z / velLen * accel
+        grappleDirUnit.x * accel,
+        grappleDirUnit.y * accel,
+        grappleDirUnit.z * accel
 end
 
 function GetAccel_Deadspot(diffDist, maxAccel, deadSpot)
@@ -121,11 +114,4 @@ function GetAccel_Deadspot(diffDist, maxAccel, deadSpot)
     end
 
     return accel
-end
-
-function Rigid_GetAccel_AntiGravity(grappleDir)
-    -- Take gravity dot grappleDir (can ignore x an y, because gravity is only along z)
-    local dotZ = grappleDir.z * -16      -- grappleDir is a unit vector.  gravity is 0,0,-16
-
-    return math.abs(dotZ)       -- make sure it's positive, since it needs to cancel out gravity
 end

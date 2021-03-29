@@ -44,21 +44,28 @@ function GameObjectAccessor:GetPlayerInfo()
     end
 end
 
--- Get/Set player.Custom_IsFlying (added in redscript.  Allows mods to talk to each other, so only one at a time will fly)
-function GameObjectAccessor:Get_Custom_IsFlying()
+-- Get/Set player.Custom_CurrentlyFlying (added in redscript.  Allows mods to talk to each other, so only one at a time will fly)
+function GameObjectAccessor:Custom_CurrentlyFlying_get()
     self:EnsurePlayerLoaded()
 
     if self.player then
-        return self.wrappers.Get_Custom_IsFlying(self.player)
+        return self.wrappers.Custom_CurrentlyFlying_get(self.player)
     else
         return false
     end
 end
-function GameObjectAccessor:Set_Custom_IsFlying(value)
+function GameObjectAccessor:Custom_CurrentlyFlying_StartFlight()
     self:EnsurePlayerLoaded()
 
     if self.player then
-        self.wrappers.Set_Custom_IsFlying(self.player, value)
+        self.wrappers.Custom_CurrentlyFlying_StartFlight(self.player)
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying_Clear()
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        self.wrappers.Custom_CurrentlyFlying_Clear(self.player)
     end
 end
 
@@ -187,6 +194,13 @@ function GameObjectAccessor:MovePin(id, pos)
 
     if self.mapPin then
         self.wrappers.SetMapPinPosition(self.mapPin, id, pos)
+    end
+end
+function GameObjectAccessor:ChangePinIcon(id, variant)
+    self:EnsureMapPinLoaded()
+
+    if self.mapPin then
+        self.wrappers.ChangeMappinVariant(self.mapPin, id, variant)
     end
 end
 function GameObjectAccessor:RemovePin(id)

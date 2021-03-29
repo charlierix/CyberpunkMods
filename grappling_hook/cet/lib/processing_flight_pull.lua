@@ -1,28 +1,48 @@
 function Process_Flight_Pull(o, state, const, debug, deltaTime)
-    -- If they initiate a new pull or rigid, go straight to that
-    local shouldPull, shouldRigid = state.startStopTracker:ShouldGrapple()
-    if shouldPull then
-        Transition_ToStandard(state, const, debug, o)       -- calling standard to make sure everything is reset
-        Transition_ToAim(state, o, const.flightModes.aim_pull)
-        do return end
-
-    elseif shouldRigid then
-        Transition_ToStandard(state, const, debug, o)
-        Transition_ToAim(state, o, const.flightModes.aim_rigid)
-        do return end
-    end
-
-    if state.startStopTracker:ShouldStop() then     -- doing this after the pull/rigid check, because it likely uses fewer keys
-        -- Told to stop swinging, back to standard
-        Transition_ToStandard(state, const, debug, o)
+    if SwitchedFlightMode(o, state, const) then
         do return end
     end
 
 
-    --TODO: If near a wall, then cancel
+
+    --TODO: These are far too sensitive.  Be airborne for a little bit first
 
 
-    
+    -- hasBeenAirborne
+    -- time of first airborne
+    -- reset if not airborne in that initial phase (sliding along the ground)
+
+    -- also don't do wall checks, because the tiniest obstacle can sometimes register as a wall (from is at height zero)
+
+
+
+
+    -- -- If standing on the ground after being airborne, then cancel
+    if IsAirborne(o) then
+    --     state.hasBeenAirborne = true
+         state.isSafetyFireCandidate = true
+    -- elseif state.hasBeenAirborne then
+    --     print("pull: stopping on ground")
+
+    --     Transition_ToStandard(state, const, debug, o)
+    --     do return end
+    -- end
+
+    -- -- If about to hit a wall, then cancel
+    -- if IsWallCollisionImminent(o, deltaTime) then
+    --     print("pull: stopping on wall")
+
+    --     Transition_ToStandard(state, const, debug, o)
+    --     do return end
+    end
+
+
+
+
+
+
+
+
     local args = const.pull
 
     local _, _, grappleLen, grappleDirUnit = GetGrappleLine(o, state, const)

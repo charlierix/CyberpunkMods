@@ -72,37 +72,3 @@ function Process_InFlight_CET(o, state, const, mode, keys, debug, deltaTime)
         end
     end
 end
-
-function ExitFlight(state, debug, o)
-    -- This gets called every frame when they are in the menu, driving, etc.  So it needs to be
-    -- safe and cheap
-    if (not state) or (not state.isInFlight) then
-        do return end
-    end
-
-    state.isInFlight = false
-    o:Set_Custom_IsFlying(false)
-    --o:Set_Custom_SuppressFalling(false)
-    state.lastThrustTime = 0
-    state.startThrustTime = 0
-    o:SetTimeDilation(0)        -- 0 is invalid, which fully sets time to normal
-
-    RemoveFlightDebug(debug)
-end
-
-function PopulateFlightDebug(state, debug, accelX, accelY, accelZ)
-    debug.accelX = Round(accelX, 1)
-    debug.accelY = Round(accelY, 1)
-    debug.accelZ = Round(accelZ, 1)
-
-    debug.vel2 = vec_str(state.vel)
-    debug.speed2 = Round(GetVectorLength(state.vel), 1)
-end
-function RemoveFlightDebug(debug)
-    debug.accelX = nil
-    debug.accelY = nil
-    debug.accelZ = nil
-    debug.vel2 = nil
-    debug.speed2 = nil
-    debug.time_flying_idle = nil
-end

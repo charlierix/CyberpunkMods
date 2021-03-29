@@ -1,5 +1,31 @@
-function GetSafetyFireHitPoint(o, pos, velZ, mode, deltaTime)
-    if (not mode.shouldSafetyFire) or (velZ > -16) then
+function PossiblySafetyFire(o, state, const, debug, deltaTime)
+    -- Only want to consider safety firing after grappling
+    if not state.isSafetyFireCandidate then
+        do return end
+    end
+
+    -- If another mod is flying, then don't interfere
+    if not CheckOtherModsFor_SafetyFire(o, const.modNames) then
+        do return end
+    end
+
+    local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
+
+    if safetyFireHit then
+        -- They're about to hit hard.  Teleport just above the ground, which sets velocity to zero
+        Transition_ToStandard(state, const, debug, o)
+        state.isSafetyFireCandidate = false
+
+        SafetyFire(o, safetyFireHit)
+
+    elseif not IsAirborne(o) then
+        -- They're on the ground.  Stopping doing the safety fire check
+        state.isSafetyFireCandidate = false
+    end
+end
+
+function GetSafetyFireHitPoint(o, pos, velZ, deltaTime)
+    if velZ > -16 then
         return nil
     end
 
@@ -13,7 +39,7 @@ function GetSafetyFireHitPoint(o, pos, velZ, mode, deltaTime)
 
     -- Four Corners
 
-    -- Landing on screens and slats are the worst case scenario.  The direction down needs to go
+    -- Landing on screens and slats is the worst case scenario.  The direction down needs to go
     -- at a slight angle to increase the chance of seeing them
     --
     -- So, normalizing the vector (.1, .1, 1) becomes
@@ -50,3 +76,34 @@ function SafetyFire(o, groundPoint)
     -- these params was kind of fun and morbid :)
     o:Teleport(Vector4.new(o.pos.x, o.pos.y, groundPoint.z + 0.3, 1), o.yaw)
 end
+
+
+--NOTE: The way the game does it is precalculate what the speed would be at impact.  This avoids
+--raycasts, but doesn't allow for anything but simple parabolic flight
+-- protected final const func IsFallHeightAcceptable(stateContext: ref<StateContext>, scriptInterface: ref<StateGameScriptInterface>) -> Bool {
+--     let acceptableFallingSpeed: Float;
+--     let verticalSpeed: Float;
+--     acceptableFallingSpeed = this.GetFallingSpeedBasedOnHeight(scriptInterface, this.GetStaticFloatParameter("minFallHeight", 3.00));
+--     verticalSpeed = this.GetVerticalSpeed(scriptInterface);
+--     if verticalSpeed < acceptableFallingSpeed {
+--       return true;
+--     };
+--     return false;
+--   }
+
+-- protected final const func GetFallingSpeedBasedOnHeight(scriptInterface: ref<StateGameScriptInterface>, height: Float) -> Float {
+--     let speed: Float;
+--     let acc: Float;
+--     let locomotionParameters: ref<LocomotionParameters>;
+--     if height < 0.00 {
+--       return 0.00;
+--     };
+--     locomotionParameters = new LocomotionParameters();
+--     this.GetStateDefaultLocomotionParameters(scriptInterface, locomotionParameters);
+--     acc = AbsF(locomotionParameters.GetUpwardsGravity(this.GetStaticFloatParameter("defaultGravity", -16.00)));
+--     speed = 0.00;
+--     if acc != 0.00 {
+--       speed = acc * SqrtF(2.00 * height / acc);
+--     };
+--     return speed * -1.00;
+--   }

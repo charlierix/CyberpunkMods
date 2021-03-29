@@ -7,6 +7,7 @@
 --https://codeberg.org/adamsmasher/cyberpunk/src/branch/master
 --https://redscript.redmodding.org/
 
+require "lib/check_other_mods"
 require "lib/customprops_wrapper"
 require "lib/debug_code"
 require "lib/drawing"
@@ -47,12 +48,12 @@ local const =
         minDot = 0,                         -- grapple will disengage when dot product of look direction and grapple line is less than this
 
         -- pull specific properties
-        speed_towardAnchor = 10,            -- how fast to go toward the anchor point (if the speed is currently greater, there is no counter force to try to slow them down)
-        accel_towardAnchor = 12,
+        speed_towardAnchor = 6,            -- how fast to go toward the anchor point (if the speed is currently greater, there is no counter force to try to slow them down)
+        accel_towardAnchor = 24,
         deadzone_dist_towardAnchor = 12,     -- accel drops to zero when near the target
 
-        speed_lookDir = 16,                   -- how fast to go in the look direction
-        accel_lookDir = 28,                   -- the acceleration to apply when under speed
+        speed_lookDir = 10,                   -- how fast to go in the look direction
+        accel_lookDir = 36,                   -- the acceleration to apply when under speed
         deadzone_dist_lookDir = 4,
 
         deadZone_speedDiff = 1,             -- accel will drop toward zero if the speed is within this dead zone
@@ -68,10 +69,11 @@ local const =
         minDot = 0,                         -- grapple will disengage when dot product of look direction and grapple line is less than this
 
         -- rigid specific properties
-        accelToRadius = 36,                 -- how hard to accelerate toward the desired radius (grapple length)
+        accelToRadius = 8,                 -- how hard to accelerate toward the desired radius (grapple length)
         radiusDeadSpot = 2,                 -- adding a dead zone keeps things from being jittery when very near the desired radius
 
-        velAway_accel = 16,                 -- extra acceleration to apply when velocity is moving away from the desired radius
+        velAway_accel_tension = 84,         -- extra acceleration to apply when velocity is moving away from the desired radius (trying to make the radius larger)
+        velAway_accel_compress = 8,         -- (trying to make the radius smaller)
         velAway_deadSpot = 0.5,
     },
 
@@ -82,6 +84,8 @@ local const =
     grappleMinResolution = 0.5,
 
     maxSpeed = 60,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
+
+    modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
 
     shouldShowDebugWindow = true,      -- shows a window with extra debug info
 }
@@ -110,13 +114,16 @@ local state =
     --startTime      -- gets populated when transitioning into a new flight mode (into aim, into flight, etc) ---- doesn't get set when transitioning to standard
 
     --mappinID      -- this will be populated while the map pin is visible (managed in mappinutil.lua)
+    --mappinName    -- this is the name of the map pin that is currently visible (managed in mappinutil.lua)
 
     --rayFrom       -- gets populated when transitioning to airdash or flight
     --rayHit        -- gets populated when transitioning to flight
     --rayDir        -- gets populated when transitioning to airdash
     --rayLength     -- gets populated when transitioning to airdash
     --distToHit     -- len(rayHit-rayFrom)    populated when transitioning to flight
+    --hasBeenAirborne   -- set to false when transitioning to flight or air dash.  Used by pull and air dash
 
+    isSafetyFireCandidate = false,      -- this will turn true when grapple is used.  Goes back to false after they touch the ground
 }
 
 --------------------------------------------------------------------
@@ -154,13 +161,17 @@ registerForEvent("onInit", function()
     function wrappers.RayCast(player, from, to, staticOnly) return player:GrapplingHook_RayCast(from, to, staticOnly) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
-    function wrappers.Get_Custom_IsFlying(player) return Get_Custom_IsFlying(player) end
-    function wrappers.Set_Custom_IsFlying(player, value) Set_Custom_IsFlying(player, value) end
+    function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
+    function wrappers.Custom_CurrentlyFlying_StartFlight(player) Custom_CurrentlyFlying_StartFlight(player, const.modNames) end
+    function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
     function wrappers.QueueSound(player, sound) player:GrapplingHook_QueueSound(sound) end
     function wrappers.StopQueuedSound(player, sound) player:GrapplingHook_StopQueuedSound(sound) end
     function wrappers.GetMapPinSystem() return Game.GetMappinSystem() end
     function wrappers.RegisterMapPin(mapPin, data, pos) return mapPin:RegisterMappin(data, pos) end
     function wrappers.SetMapPinPosition(mapPin, id, pos) mapPin:SetMappinPosition(id, pos) end
+
+    function wrappers.ChangeMappinVariant(mapPin, id, variant) mapPin:ChangeMappinVariant(id, variant) end
+
     function wrappers.UnregisterMapPin(mapPin, id) mapPin:UnregisterMappin(id) end
     o = GameObjectAccessor:new(wrappers)
 
@@ -202,31 +213,62 @@ registerForEvent("onUpdate", function(deltaTime)
 
 
 
-    -- 144 is too far.  It's noticablly unreliable at that distance.  Something like 80 might be
-    -- better (actually, up to 120 should be good, anticipating collision hulls loading in later)
-    --
-    -- Grapple Initiated:
-    --  Start firing these raycasts
-    --      If miss, show one type of map pin
-    --      If hit, show another type of map pin
-    --      Once there is a hit, move on to the next phase
-    --
-    --  After a small amount of time or if there was a hit
-    --      Play a starting tone
-    --
-    --  After another small time
-    --      play a final tone
-    --      Start the actual grapple flight
-    --
-    --  Grapple Flight (if miss):
+
+
+
+
+
+    -- Pull:
+    --  Exit if not airborne
+    --  Only start looking once airborne (when starting on the ground, enter flight first)
+
+    -- WebSwing:
+    --  Activate when double tapping A,D
+
+    -- All:
+    --  Stop when close to a wall
+
+    -- All:
+    --  Sounds
+
+    -- Air Dash:
     --      This is limited, going mostly straight
     --      Keep firing ray traces along the initial line, in case collision hulls load in as the player gets closer (do this every X frames)
     --          If there is a hit along that line segment:
     --              Play a special tone
     --              Switch to hit flight
-    --
-    --  Grapple Flight (if hit):
-    --      May need further ray casts along the initial line segment if it was beyond 80 (a collision hull could load in as the player gets closer)
+
+
+    -- Pull:
+    --      May need further ray casts along the initial line segment if it was beyond 50 (a collision hull could load in as the player gets closer)
+
+    -- Rigid:
+    --  If it's first used for compression, then it should break easily under tension
+
+    -- Pull:
+    --  If grapple point is a person (determined in aim), ragdoll them toward you
+    --  GET OVER HERE!!!
+
+    -- Pull:
+    --  Stop if distance is less than 3
+
+    -- All:
+    --  Energy tank
+
+    -- All:
+    --  Anti gravity (lasts a bit after release)
+
+    -- All:
+    --  Let them level up the grapple.  Start with:
+    --      shorter distances
+    --      weaker accelerations
+    --      (maybe a bit lower max vel)
+    --      lower energy max and recovery rate (but don't be too punative with this)
+    --      full gravity
+
+
+
+
 
 
 
@@ -234,9 +276,15 @@ registerForEvent("onUpdate", function(deltaTime)
         PopulateDebug(debug, o, keys, state)
     end
 
+    PossiblySafetyFire(o, state, const, debug, deltaTime)
+
     if state.flightMode == const.flightModes.standard then
         -- Standard (walking around)
         Process_Standard(o, state, const, deltaTime)
+
+    elseif not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
+        -- Was flying, but another mod took over
+        Transition_ToStandard(state, const, debug, o)
 
     elseif state.flightMode == const.flightModes.aim_pull then
         -- Aiming the pull forward grapple
@@ -261,7 +309,7 @@ registerForEvent("onUpdate", function(deltaTime)
         Transition_ToStandard(state, const, debug, o)
     end
 
-    keys:Tick()
+    keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
 registerForEvent("onDraw", function()

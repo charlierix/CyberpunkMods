@@ -28,6 +28,7 @@ end
 --      num downDuration (how long the key has been held down)
 function KeyDashTracker:Tick()
     -- Check for initial key down
+
     if self.keys[self.keyname] and (not self.keys[self.prevkeyname]) then      -- this only returns true when they first push the key down (all ticks after come back false as they are holding the key down)
         self.prevDownTime = self.downTime
         self.downTime = self.o.timer
