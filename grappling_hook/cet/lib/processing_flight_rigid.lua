@@ -18,6 +18,7 @@ function Process_Flight_Rigid(o, state, const, debug, deltaTime)
     --     do return end
     -- end
 
+    -- Rigid shouldn't stop on a wall hit.  There could be an advantage to sticking to the side of a wall
     -- -- If about to hit a wall, then cancel
     -- if IsWallCollisionImminent(o, deltaTime) then
     --     print("rigid: stopping on wall")
@@ -82,7 +83,6 @@ function Rigid_GetAccel_VelocityDrag(debug, grappleDirUnit, diffDist, velAlong, 
     -- diff = actual - desired
     if (diffDist < 0 and dot < 0) or    -- Compressed and moving away from point
        (diffDist > 0 and dot > 0) then     -- Stretched and moving toward the point
-        debug.zzz_WTF = "skipping"
         return 0, 0, 0
     end
 
@@ -91,11 +91,9 @@ function Rigid_GetAccel_VelocityDrag(debug, grappleDirUnit, diffDist, velAlong, 
         -- It's being compressed
         accel = GetAccel_Deadspot(diffDist, maxAccel_compress, deadSpot)
         accel = -accel
-        debug.zzz_WTF = "being compressed"
     else
         -- It's being stretched
         accel = GetAccel_Deadspot(diffDist, maxAccel_tension, deadSpot)
-        debug.zzz_WTF = "being stretched"
     end
 
     return

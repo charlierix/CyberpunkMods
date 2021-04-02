@@ -48,12 +48,12 @@ local const =
         minDot = 0,                         -- grapple will disengage when dot product of look direction and grapple line is less than this
 
         -- pull specific properties
-        speed_towardAnchor = 6,            -- how fast to go toward the anchor point (if the speed is currently greater, there is no counter force to try to slow them down)
+        speed_towardAnchor = 7,             -- how fast to go toward the anchor point (if the speed is currently greater, there is no counter force to try to slow them down)
         accel_towardAnchor = 24,
-        deadzone_dist_towardAnchor = 12,     -- accel drops to zero when near the target
+        deadzone_dist_towardAnchor = 12,    -- accel drops to zero when near the target
 
-        speed_lookDir = 10,                   -- how fast to go in the look direction
-        accel_lookDir = 36,                   -- the acceleration to apply when under speed
+        speed_lookDir = 9,                  -- how fast to go in the look direction
+        accel_lookDir = 36,                 -- the acceleration to apply when under speed
         deadzone_dist_lookDir = 4,
 
         deadZone_speedDiff = 1,             -- accel will drop toward zero if the speed is within this dead zone
@@ -123,7 +123,14 @@ local state =
     --distToHit     -- len(rayHit-rayFrom)    populated when transitioning to flight
     --hasBeenAirborne   -- set to false when transitioning to flight or air dash.  Used by pull and air dash
 
+
+
+
     isSafetyFireCandidate = false,      -- this will turn true when grapple is used.  Goes back to false after they touch the ground
+
+
+
+
 }
 
 --------------------------------------------------------------------
@@ -266,6 +273,8 @@ registerForEvent("onUpdate", function(deltaTime)
     --      lower energy max and recovery rate (but don't be too punative with this)
     --      full gravity
 
+    -- SafetyFire Check:
+    --  Look in the velocity direction.  That should avoid death when coming in at an angle
 
 
 
@@ -316,6 +325,14 @@ registerForEvent("onDraw", function()
     if isShutdown or isLoading then
         do return end
     end
+
+
+    if (state.flightMode == const.flightModes.flight_rigid) and (not state.isSafetyFireCandidate) then
+        ImGui.BeginTooltip()
+        ImGui.SetTooltip("OH NOOO!")
+        ImGui.EndTooltip()
+    end
+
 
     if const.shouldShowDebugWindow then
         DrawDebugWindow(debug)

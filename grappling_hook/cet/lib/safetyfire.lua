@@ -1,11 +1,24 @@
 function PossiblySafetyFire(o, state, const, debug, deltaTime)
     -- Only want to consider safety firing after grappling
     if not state.isSafetyFireCandidate then
+
+        if state.flightMode == const.flightModes.flight_rigid then
+            print("safety turned off for rigid")
+        end
+
+
         do return end
     end
 
     -- If another mod is flying, then don't interfere
     if not CheckOtherModsFor_SafetyFire(o, const.modNames) then
+
+        
+        if state.flightMode == const.flightModes.flight_rigid then
+            print("safety cancelled by other mod for rigid")
+        end
+
+
         do return end
     end
 

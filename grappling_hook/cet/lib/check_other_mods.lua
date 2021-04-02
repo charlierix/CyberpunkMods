@@ -21,8 +21,8 @@ end
 function CheckOtherModsFor_SafetyFire(o, modNames)
     local currentlyFlying = o:Custom_CurrentlyFlying_get()
 
-    if (not currentlyFlying) or (currentlyFlying == "") then
-        -- Nothing is flying
+    if (not currentlyFlying) or (currentlyFlying == "") or (currentlyFlying == modNames.grappling_hook) then
+        -- Nothing else is flying
         return true
     else
         -- Some other mod is flying, don't interfere
