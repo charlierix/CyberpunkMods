@@ -1,28 +1,15 @@
 function PossiblySafetyFire(o, state, const, debug, deltaTime)
     -- Only want to consider safety firing after grappling
     if not state.isSafetyFireCandidate then
-
-        if state.flightMode == const.flightModes.flight_rigid then
-            print("safety turned off for rigid")
-        end
-
-
         do return end
     end
 
     -- If another mod is flying, then don't interfere
     if not CheckOtherModsFor_SafetyFire(o, const.modNames) then
-
-        
-        if state.flightMode == const.flightModes.flight_rigid then
-            print("safety cancelled by other mod for rigid")
-        end
-
-
         do return end
     end
 
-    local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
+    local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
 
     if safetyFireHit then
         -- They're about to hit hard.  Teleport just above the ground, which sets velocity to zero
@@ -37,7 +24,7 @@ function PossiblySafetyFire(o, state, const, debug, deltaTime)
     end
 end
 
-function GetSafetyFireHitPoint(o, pos, velZ, deltaTime)
+function GetSafetyFireHitPoint_STRAIGHTDOWN(o, pos, velZ, deltaTime)
     if velZ > -16 then
         return nil
     end
@@ -76,6 +63,50 @@ function GetSafetyFireHitPoint(o, pos, velZ, deltaTime)
     end
 
     hitPoint = RayCast_HitPoint(Vector4.new(pos.x - 0.02, pos.y + 0.02, pos.z, 1), Vector4.new(-0.09901475467, 0.09901475467, -0.99014754298, 1), searchDist, 0.1, o)
+    if hitPoint then
+        return hitPoint
+    end
+
+    return nil
+end
+
+function GetSafetyFireHitPoint(o, pos, vel, deltaTime)
+    if vel.z > -16 then
+        return nil
+    end
+
+    --local searchDist = math.abs(velZ * deltaTime * 4)
+    local speed = GetVectorLength(vel)
+    local searchDist = speed * deltaTime * 4
+    local velUnit = DivideVector(vel, speed)
+
+    -- Direct Center
+    local hitPoint = RayCast_HitPoint(pos, velUnit, searchDist, 0.1, o)
+    if hitPoint then
+        return hitPoint
+    end
+
+    -- Four Corners
+
+    -- Landing on screens and slats is the worst case scenario.  The direction down needs to go
+    -- at a slight angle to increase the chance of seeing them
+
+    hitPoint = RayCast_HitPoint(Vector4.new(pos.x - 0.02, pos.y - 0.02, pos.z, 1), velUnit, searchDist, 0.1, o)
+    if hitPoint then
+        return hitPoint
+    end
+
+    hitPoint = RayCast_HitPoint(Vector4.new(pos.x + 0.02, pos.y - 0.02, pos.z, 1), velUnit, searchDist, 0.1, o)
+    if hitPoint then
+        return hitPoint
+    end
+
+    hitPoint = RayCast_HitPoint(Vector4.new(pos.x + 0.02, pos.y + 0.02, pos.z, 1), velUnit, searchDist, 0.1, o)
+    if hitPoint then
+        return hitPoint
+    end
+
+    hitPoint = RayCast_HitPoint(Vector4.new(pos.x - 0.02, pos.y + 0.02, pos.z, 1), velUnit, searchDist, 0.1, o)
     if hitPoint then
         return hitPoint
     end

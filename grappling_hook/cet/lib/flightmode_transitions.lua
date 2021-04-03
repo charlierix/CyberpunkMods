@@ -32,6 +32,7 @@ function Transition_ToFlight(state, o, flightMode, rayFrom, rayHit)
     state.distToHit = math.sqrt(GetVectorDiffLengthSqr(rayHit, rayFrom))
 
     state.hasBeenAirborne = false
+    state.initialAirborneTime = nil
 end
 
 -- This happens when they aimed too long without a hit, moving into airdash flight
@@ -46,4 +47,5 @@ function Transition_ToAirDash(state, o, const, rayFrom, lookDist)
     state.rayLength = lookDist
 
     state.hasBeenAirborne = false
+    state.initialAirborneTime = nil
 end

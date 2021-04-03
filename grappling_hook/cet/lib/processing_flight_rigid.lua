@@ -6,28 +6,13 @@ function Process_Flight_Rigid(o, state, const, debug, deltaTime)
         do return end
     end
 
-
-
-    -- -- If standing on the ground, then cancel
-    if IsAirborne(o) then
-         state.isSafetyFireCandidate = true
-    -- else
-    --     print("rigid: stopping on ground")
-
-    --     Transition_ToStandard(state, const, debug, o)
-    --     do return end
-    -- end
-
-    -- Rigid shouldn't stop on a wall hit.  There could be an advantage to sticking to the side of a wall
-    -- -- If about to hit a wall, then cancel
-    -- if IsWallCollisionImminent(o, deltaTime) then
-    --     print("rigid: stopping on wall")
-
-    --     Transition_ToStandard(state, const, debug, o)
-    --     do return end
+    -- If they are on the ground after being airborne, then exit flight
+    if ShouldStopFlyingBecauseGrounded(o, state) then
+        Transition_ToStandard(state, const, debug, o)
+        do return end
     end
 
-
+    -- Rigid shouldn't do a wall check.  There could be an advantage to hanging off the side of a building
 
     local args = const.rigid
 

@@ -27,7 +27,6 @@ require "lib/processing_flight_rigid"
 require "lib/processing_standard"
 require "lib/reporting"
 require "lib/safetyfire"
-require "lib/throwaway_code"
 require "lib/util"
 
 --------------------------------------------------------------------
@@ -121,16 +120,10 @@ local state =
     --rayDir        -- gets populated when transitioning to airdash
     --rayLength     -- gets populated when transitioning to airdash
     --distToHit     -- len(rayHit-rayFrom)    populated when transitioning to flight
+
     --hasBeenAirborne   -- set to false when transitioning to flight or air dash.  Used by pull and air dash
-
-
-
-
+    --initialAirborneTime
     isSafetyFireCandidate = false,      -- this will turn true when grapple is used.  Goes back to false after they touch the ground
-
-
-
-
 }
 
 --------------------------------------------------------------------
@@ -215,14 +208,6 @@ registerForEvent("onUpdate", function(deltaTime)
 
     state.startStopTracker:Tick()
 
-    --Test_Raycast_Mappin(o, state, debug)
-
-
-
-
-
-
-
 
 
     -- Pull:
@@ -259,6 +244,9 @@ registerForEvent("onUpdate", function(deltaTime)
     -- Pull:
     --  Stop if distance is less than 3
 
+    -- Pull:
+    --  Adjust how much anitgravity the toward has (0 to 1: the current implementation is 1)
+
     -- All:
     --  Energy tank
 
@@ -273,8 +261,26 @@ registerForEvent("onUpdate", function(deltaTime)
     --      lower energy max and recovery rate (but don't be too punative with this)
     --      full gravity
 
+    -- Input:
+    --  Give the option to register actions to this new style hotkey, if that's what they prefer
+    -- registerInput('someID', 'Some input', function(isDown)
+    --     if (isDown) then
+    --         print(GetBind('someID')..' was pressed!')
+    --     else
+    --         print(GetBind('someID')..' was released!')
+    --     end
+    -- end)
+
     -- SafetyFire Check:
     --  Look in the velocity direction.  That should avoid death when coming in at an angle
+
+    -- Pull/Rigid:
+    --  Instead of pull/rigid being distinct, hardcoded:  Make a single straight line function that gets
+    --  fed a bunch of options.  Then the user will pick which mode gets tied to which buttons:
+    --      Desired Length: pull is currently zero, rigid is currently none
+    --      Can airdash first
+    --      Compress/Tension forces
+    --          Also have option for spring forces
 
 
 
@@ -325,14 +331,6 @@ registerForEvent("onDraw", function()
     if isShutdown or isLoading then
         do return end
     end
-
-
-    if (state.flightMode == const.flightModes.flight_rigid) and (not state.isSafetyFireCandidate) then
-        ImGui.BeginTooltip()
-        ImGui.SetTooltip("OH NOOO!")
-        ImGui.EndTooltip()
-    end
-
 
     if const.shouldShowDebugWindow then
         DrawDebugWindow(debug)

@@ -38,3 +38,32 @@ end
 function IsWallCollisionImminent(o, deltaTime)
     return not o:IsPointVisible(o.pos, Vector4.new(o.pos.x + (o.vel.x * deltaTime * 4), o.pos.y + (o.vel.y * deltaTime * 4), o.pos.z + (o.vel.z * deltaTime * 4), 1))
 end
+
+function ShouldStopFlyingBecauseGrounded(o, state)
+    local isAirborne = IsAirborne(o)
+
+    if state.hasBeenAirborne then
+        -- Has been continuously airborne in this flight mode for at least a small bit of time
+        if not isAirborne then
+            return true
+        end
+    else
+        -- Hasn't had enough time continuously airborne yet
+        if isAirborne then
+            if state.initialAirborneTime then
+                -- Is airborne and has been airborne before.  See if they have been continuously long enough to transition out of this break in period
+                if o.timer - state.initialAirborneTime > 0.25 then
+                    state.isSafetyFireCandidate = true
+                    state.hasBeenAirborne = true
+                end
+            else
+                state.initialAirborneTime = o.timer
+            end
+        else
+            -- Not airborne during this warmin period, remove the timer (they are starting on the ground, or sliding along the ground at a shallow angle)
+            state.initialAirborneTime = nil
+        end
+    end
+
+    return false
+end

@@ -3,45 +3,20 @@ function Process_Flight_Pull(o, state, const, debug, deltaTime)
         do return end
     end
 
+    -- If they are on the ground after being airborne, then exit flight
+    if ShouldStopFlyingBecauseGrounded(o, state) then
+        Transition_ToStandard(state, const, debug, o)
+        do return end
+    end
 
-
-    --TODO: These are far too sensitive.  Be airborne for a little bit first
-
-
-    -- hasBeenAirborne
-    -- time of first airborne
-    -- reset if not airborne in that initial phase (sliding along the ground)
-
-    -- also don't do wall checks, because the tiniest obstacle can sometimes register as a wall (from is at height zero)
-
-
-
-
-    -- -- If standing on the ground after being airborne, then cancel
-    if IsAirborne(o) then
-    --     state.hasBeenAirborne = true
-         state.isSafetyFireCandidate = true
-    -- elseif state.hasBeenAirborne then
-    --     print("pull: stopping on ground")
-
-    --     Transition_ToStandard(state, const, debug, o)
-    --     do return end
-    -- end
-
+    -- I'm still undecided about whether a wall check is a good idea
     -- -- If about to hit a wall, then cancel
-    -- if IsWallCollisionImminent(o, deltaTime) then
+    -- if state.hasBeenAirborne and IsWallCollisionImminent(o, deltaTime) then
     --     print("pull: stopping on wall")
 
     --     Transition_ToStandard(state, const, debug, o)
     --     do return end
-    end
-
-
-
-
-
-
-
+    -- end
 
     local args = const.pull
 
