@@ -22,7 +22,7 @@ namespace grapple_ui
         {
             InitializeComponent();
 
-            var test = new GrappleArgs
+            var test = new Grapple
             {
                 Name = "hello",
             };
