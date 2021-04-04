@@ -45,7 +45,7 @@ function Process_Flight_Rigid(o, state, const, debug, deltaTime)
     local accelY = (stand_y + drag_y) * deltaTime
     local accelZ = (stand_z + drag_z) * deltaTime
 
-    o.player:Jetpack_AddImpulse(accelX, accelY, accelZ)
+    o.player:GrapplingHook_AddImpulse(accelX, accelY, accelZ)
 end
 
 function Rigid_GetAccel_Standard(directionUnit, diffDist, maxAccel, deadSpot)

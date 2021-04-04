@@ -9,14 +9,13 @@ function Process_Flight_Pull(o, state, const, debug, deltaTime)
         do return end
     end
 
-    -- I'm still undecided about whether a wall check is a good idea
-    -- -- If about to hit a wall, then cancel
-    -- if state.hasBeenAirborne and IsWallCollisionImminent(o, deltaTime) then
-    --     print("pull: stopping on wall")
+    -- If about to hit a wall, then cancel
+    if state.hasBeenAirborne and IsWallCollisionImminent(o, deltaTime) then
+        print("pull: stopping on wall")
 
-    --     Transition_ToStandard(state, const, debug, o)
-    --     do return end
-    -- end
+        Transition_ToStandard(state, const, debug, o)
+        do return end
+    end
 
     local args = const.pull
 
@@ -31,7 +30,7 @@ function Process_Flight_Pull(o, state, const, debug, deltaTime)
     end
 
     -- Cancel gravity
-    local antigrav_z = 16
+    local antigrav_z = Pull_GetAntiGravity(args.antigrav_percent)
 
     -- Apply velocity toward anchor
     local anchor_x, anchor_y, anchor_z = Pull_GetAccel(grappleDirUnit, o.vel, args.speed_towardAnchor, args.deadZone_speedDiff, grappleLen, args.deadzone_dist_towardAnchor, args.accel_towardAnchor)
@@ -44,40 +43,15 @@ function Process_Flight_Pull(o, state, const, debug, deltaTime)
     local accelY = (anchor_y + look_y) * deltaTime
     local accelZ = (anchor_z + look_z + antigrav_z) * deltaTime
 
-     o.player:Jetpack_AddImpulse(accelX, accelY, accelZ)
+     o.player:GrapplingHook_AddImpulse(accelX, accelY, accelZ)
 end
 
-function Pull_GetAccel(directionUnit, vel, desiredSpeed, deadZone_speedDiff, grappleLen, deadzone_dist, accel)
-    -- Get the component of the velocity along the request line
-    local vel_along = GetProjectedVector_AlongVector(vel, directionUnit, false)     -- returns zero if velocity is in the opposite direction
-
-    -- Figure out the delta between actual and desired speed
-    local speedSqr = GetVectorLengthSqr(vel_along)
-    if speedSqr >= desiredSpeed * desiredSpeed then
-        return 0, 0, 0
+function Pull_GetAntiGravity(percent)
+    if percent <= 0 then
+        return 0
+    elseif percent >= 1 then
+        return 16
+    else
+        return GetScaledValue(0, 16, 0, 1, percent)
     end
-
-    local speed = math.sqrt(speedSqr)
-
-    local speedDiff = math.abs(speed - desiredSpeed)
-
-    local actualAccel = accel
-    if speedDiff < deadZone_speedDiff then
-        -- Close to desired speed.  Reduce the acceleration
-        actualAccel = GetScaledValue(0, accel, 0, deadZone_speedDiff, speedDiff)
-    end
-
-    if grappleLen < deadzone_dist then
-        -- Close to the target.  Reduce the acceleration
-        local closeAccel = GetScaledValue(0, accel, 0, deadzone_dist, grappleLen)
-
-        if closeAccel < actualAccel then        -- it may already be reduced, so keep the weaker accel
-            actualAccel = closeAccel
-        end
-    end
-
-    return
-        directionUnit.x * actualAccel,
-        directionUnit.y * actualAccel,
-        directionUnit.z * actualAccel
 end

@@ -67,3 +67,39 @@ function ShouldStopFlyingBecauseGrounded(o, state)
 
     return false
 end
+
+function Pull_GetAccel(directionUnit, vel, desiredSpeed, deadZone_speedDiff, grappleLen, deadzone_dist, accel)
+    -- Get the component of the velocity along the request line
+    local vel_along = GetProjectedVector_AlongVector(vel, directionUnit, false)     -- returns zero if velocity is in the opposite direction
+
+    -- Figure out the delta between actual and desired speed
+    local speedSqr = GetVectorLengthSqr(vel_along)
+    if speedSqr >= desiredSpeed * desiredSpeed then
+        return 0, 0, 0, 0
+    end
+
+    local speed = math.sqrt(speedSqr)
+
+    local speedDiff = math.abs(speed - desiredSpeed)
+
+    local actualAccel = accel
+    if speedDiff < deadZone_speedDiff then
+        -- Close to desired speed.  Reduce the acceleration
+        actualAccel = GetScaledValue(0, accel, 0, deadZone_speedDiff, speedDiff)
+    end
+
+    if grappleLen < deadzone_dist then
+        -- Close to the target.  Reduce the acceleration
+        local closeAccel = GetScaledValue(0, accel, 0, deadzone_dist, grappleLen)
+
+        if closeAccel < actualAccel then        -- it may already be reduced, so keep the weaker accel
+            actualAccel = closeAccel
+        end
+    end
+
+    return
+        directionUnit.x * actualAccel,
+        directionUnit.y * actualAccel,
+        directionUnit.z * actualAccel,
+        actualAccel / accel     -- percent
+end

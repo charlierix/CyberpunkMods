@@ -22,6 +22,7 @@ require "lib/math_raycast"
 require "lib/math_vector"
 require "lib/math_yaw"
 require "lib/processing_aim"
+require "lib/processing_flight_airdash"
 require "lib/processing_flight_pull"
 require "lib/processing_flight_rigid"
 require "lib/processing_standard"
@@ -49,13 +50,15 @@ local const =
         -- pull specific properties
         speed_towardAnchor = 7,             -- how fast to go toward the anchor point (if the speed is currently greater, there is no counter force to try to slow them down)
         accel_towardAnchor = 24,
-        deadzone_dist_towardAnchor = 12,    -- accel drops to zero when near the target
+        deadzone_dist_towardAnchor = 5,    -- accel drops to zero when near the target
 
         speed_lookDir = 9,                  -- how fast to go in the look direction
         accel_lookDir = 36,                 -- the acceleration to apply when under speed
         deadzone_dist_lookDir = 4,
 
         deadZone_speedDiff = 1,             -- accel will drop toward zero if the speed is within this dead zone
+
+        antigrav_percent = 0.667,           -- 0 has no antigravity, 1 is full antigravity
     },
 
     rigid =
@@ -65,15 +68,33 @@ local const =
         allowAirDash = false,
         mappinName = "TakeControlVariant",
         flightMode = "flight_rigid",        -- flightModes.flight_rigid
-        minDot = 0,                         -- grapple will disengage when dot product of look direction and grapple line is less than this
+        minDot = -0.71,                     -- grapple will disengage when dot product of look direction and grapple line is less than this
 
         -- rigid specific properties
-        accelToRadius = 8,                 -- how hard to accelerate toward the desired radius (grapple length)
+        accelToRadius = 8,                  -- how hard to accelerate toward the desired radius (grapple length)
         radiusDeadSpot = 2,                 -- adding a dead zone keeps things from being jittery when very near the desired radius
 
         velAway_accel_tension = 84,         -- extra acceleration to apply when velocity is moving away from the desired radius (trying to make the radius larger)
         velAway_accel_compress = 8,         -- (trying to make the radius smaller)
         velAway_deadSpot = 0.5,
+    },
+
+    airdash =
+    {
+        -- common prop names
+        maxDistance = 130,
+        allowAirDash = false,               -- ignored
+        mappinName = "CustomPositionVariant",
+        flightMode = "flight_pull",         -- TODO: This shouldn't be hardcoded, it should come from what aim passed in
+        minDot = 0.5,                       -- grapple will disengage when dot product of look direction and grapple line is less than this
+
+        -- airdash specific properties
+        flightTime_seconds = 3,             -- TODO: Switch to energy tank.  How long flight lasts before going back to standard (can switch to pull earlier if a ray cast hits something)
+
+        speed = 12,                          -- max speed (this is the speed along the ray.  The actual velocity could have additional speed along other components)
+        accel = 48,                         -- how hard to accelerate toward that desired speed
+
+        deadZone_speedDiff = 0.3,           -- accel will drop toward zero if the speed is within this dead zone
     },
 
     mappinName_aim = "CustomPositionVariant",
@@ -210,10 +231,6 @@ registerForEvent("onUpdate", function(deltaTime)
 
 
 
-    -- Pull:
-    --  Exit if not airborne
-    --  Only start looking once airborne (when starting on the ground, enter flight first)
-
     -- WebSwing:
     --  Activate when double tapping A,D
 
@@ -222,14 +239,6 @@ registerForEvent("onUpdate", function(deltaTime)
 
     -- All:
     --  Sounds
-
-    -- Air Dash:
-    --      This is limited, going mostly straight
-    --      Keep firing ray traces along the initial line, in case collision hulls load in as the player gets closer (do this every X frames)
-    --          If there is a hit along that line segment:
-    --              Play a special tone
-    --              Switch to hit flight
-
 
     -- Pull:
     --      May need further ray casts along the initial line segment if it was beyond 50 (a collision hull could load in as the player gets closer)
@@ -243,9 +252,6 @@ registerForEvent("onUpdate", function(deltaTime)
 
     -- Pull:
     --  Stop if distance is less than 3
-
-    -- Pull:
-    --  Adjust how much anitgravity the toward has (0 to 1: the current implementation is 1)
 
     -- All:
     --  Energy tank
@@ -309,9 +315,9 @@ registerForEvent("onUpdate", function(deltaTime)
         -- Aiming the rigid grapple
         Process_Aim_Rigid(o, state, const, debug)
 
-
-    -- elseif state.flightMode == const.flightModes.air_dash then
-
+    elseif state.flightMode == const.flightModes.air_dash then
+        -- Didn't see a grapple point, so dashing forward
+        Process_Flight_AirDash(o, state, const, debug, deltaTime)
 
     elseif state.flightMode == const.flightModes.flight_pull then
         Process_Flight_Pull(o, state, const, debug, deltaTime)

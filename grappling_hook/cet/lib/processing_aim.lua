@@ -3,8 +3,10 @@ function Process_Aim_Pull(o, state, const, debug)
 end
 
 function Process_Aim_Rigid(o, state, const, debug)
-
-    --TODO: If standing on the ground, then cancel
+    if not IsAirborne(o) then
+        -- Standing on the ground, cancelling
+        Transition_ToStandard(state, const, debug, o)
+    end
 
     Process_Aim_Common(o, state, const, debug, const.rigid)
 end
@@ -27,19 +29,6 @@ function Process_Aim_Common(o, state, const, debug, args)
     if hitPoint then
         -- Ensure pin is drawn and placed properly
         EnsureMapPinVisible(hitPoint, args.mappinName, state, o)
-
-
-
-
-        -- Temp
-        -- if args.flightMode == const.flightModes.flight_rigid then
-        --     local jumpTo = AddVectors(o.pos, MultiplyVector(o.lookdir_forward, 2))
-        --     o:Teleport(jumpTo, o.yaw)
-        -- end
-
-
-
-
 
         Transition_ToFlight(state, o, args.flightMode, from, hitPoint)
         do return end
