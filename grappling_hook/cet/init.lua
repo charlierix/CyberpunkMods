@@ -22,13 +22,63 @@ require "lib/math_raycast"
 require "lib/math_vector"
 require "lib/math_yaw"
 require "lib/processing_aim"
-require "lib/processing_flight_airdash"
-require "lib/processing_flight_pull"
-require "lib/processing_flight_rigid"
+require "lib/processing_airdash"
+require "lib/processing_antigrav"
+require "lib/processing_flight"
 require "lib/processing_standard"
 require "lib/reporting"
 require "lib/safetyfire"
 require "lib/util"
+
+function TODO()
+
+    -- WebSwing:
+    --  Activate when double tapping A,D
+
+    -- All:
+    --  Sounds
+
+    -- Pull:
+    --      May need further ray casts along the initial line segment if it was beyond 50 (a collision hull could load in as the player gets closer)
+
+    -- Pull:
+    --  If grapple point is a person (determined in aim), ragdoll them toward you
+    --  GET OVER HERE!!!
+
+    -- All:
+    --  Energy tank
+
+    -- All:
+    --  Anti gravity should taper off a bit after release
+
+    -- All:
+    --  Let them level up the grapple.  Start with:
+    --      shorter distances
+    --      weaker accelerations
+    --      (maybe a bit lower max vel)
+    --      lower energy max and recovery rate (but don't be too punative with this)
+    --      full gravity
+
+    -- Input:
+    --  Give the option to register actions to this new style hotkey, if that's what they prefer
+    -- registerInput('someID', 'Some input', function(isDown)
+    --     if (isDown) then
+    --         print(GetBind('someID')..' was pressed!')
+    --     else
+    --         print(GetBind('someID')..' was released!')
+    --     end
+    -- end)
+
+    -- Pull/Rigid:
+    --  Instead of pull/rigid being distinct, hardcoded:  Make a single straight line function that gets
+    --  fed a bunch of options.  Then the user will pick which mode gets tied to which buttons:
+    --      Desired Length: pull is currently zero, rigid is currently none
+    --      Can airdash first
+    --      Compress/Tension forces
+    --          Also have option for spring forces
+
+
+end
 
 --------------------------------------------------------------------
 ---                  User Preference Constants                   ---
@@ -36,74 +86,10 @@ require "lib/util"
 
 local const =
 {
-    flightModes = CreateEnum({ "standard", "aim_pull", "aim_rigid", "air_dash", "flight_pull", "flight_rigid" }),
-
-    pull =
-    {
-        -- common prop names
-        maxDistance = 130,
-        allowAirDash = true,
-        mappinName = "AimVariant",
-        flightMode = "flight_pull",         -- flightModes.flight_pull
-        minDot = 0,                         -- grapple will disengage when dot product of look direction and grapple line is less than this
-
-        -- pull specific properties
-        speed_towardAnchor = 7,             -- how fast to go toward the anchor point (if the speed is currently greater, there is no counter force to try to slow them down)
-        accel_towardAnchor = 24,
-        deadzone_dist_towardAnchor = 5,    -- accel drops to zero when near the target
-
-        speed_lookDir = 9,                  -- how fast to go in the look direction
-        accel_lookDir = 36,                 -- the acceleration to apply when under speed
-        deadzone_dist_lookDir = 4,
-
-        deadZone_speedDiff = 1,             -- accel will drop toward zero if the speed is within this dead zone
-
-        antigrav_percent = 0.667,           -- 0 has no antigravity, 1 is full antigravity
-    },
-
-    rigid =
-    {
-        -- common prop names
-        maxDistance = 70,
-        allowAirDash = false,
-        mappinName = "TakeControlVariant",
-        flightMode = "flight_rigid",        -- flightModes.flight_rigid
-        minDot = -0.71,                     -- grapple will disengage when dot product of look direction and grapple line is less than this
-
-        -- rigid specific properties
-        accelToRadius = 8,                  -- how hard to accelerate toward the desired radius (grapple length)
-        radiusDeadSpot = 2,                 -- adding a dead zone keeps things from being jittery when very near the desired radius
-
-        velAway_accel_tension = 84,         -- extra acceleration to apply when velocity is moving away from the desired radius (trying to make the radius larger)
-        velAway_accel_compress = 8,         -- (trying to make the radius smaller)
-        velAway_deadSpot = 0.5,
-    },
-
-    airdash =
-    {
-        -- common prop names
-        maxDistance = 130,
-        allowAirDash = false,               -- ignored
-        mappinName = "CustomPositionVariant",
-        flightMode = "flight_pull",         -- TODO: This shouldn't be hardcoded, it should come from what aim passed in
-        minDot = 0.5,                       -- grapple will disengage when dot product of look direction and grapple line is less than this
-
-        -- airdash specific properties
-        flightTime_seconds = 3,             -- TODO: Switch to energy tank.  How long flight lasts before going back to standard (can switch to pull earlier if a ray cast hits something)
-
-        speed = 12,                          -- max speed (this is the speed along the ray.  The actual velocity could have additional speed along other components)
-        accel = 48,                         -- how hard to accelerate toward that desired speed
-
-        deadZone_speedDiff = 0.3,           -- accel will drop toward zero if the speed is within this dead zone
-    },
-
-    mappinName_aim = "CustomPositionVariant",
-    aim_duration = 1,           -- how long to aim before giving up and switching to airdash, or back to standard
+    flightModes = CreateEnum({ "standard", "aim", "airdash", "flight", "antigrav" }),
 
     grappleFrom_Z = 1.5,
     grappleMinResolution = 0.5,
-
-    maxSpeed = 60,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
 
     modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
 
@@ -131,6 +117,20 @@ local state =
     --sound_current = nil,  -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
     sound_started = 0,
 
+    isSafetyFireCandidate = false,      -- this will turn true when grapple is used.  Goes back to false after they touch the ground
+
+
+
+    --TODO: Make an object that stores the current flight configs
+
+
+
+
+
+
+
+    --TODO: These variables will need to be evaluated
+
     --startTime      -- gets populated when transitioning into a new flight mode (into aim, into flight, etc) ---- doesn't get set when transitioning to standard
 
     --mappinID      -- this will be populated while the map pin is visible (managed in mappinutil.lua)
@@ -144,7 +144,7 @@ local state =
 
     --hasBeenAirborne   -- set to false when transitioning to flight or air dash.  Used by pull and air dash
     --initialAirborneTime
-    isSafetyFireCandidate = false,      -- this will turn true when grapple is used.  Goes back to false after they touch the ground
+
 }
 
 --------------------------------------------------------------------
@@ -233,94 +233,45 @@ registerForEvent("onUpdate", function(deltaTime)
 
     state.startStopTracker:Tick()
 
-
-
-    -- WebSwing:
-    --  Activate when double tapping A,D
-
-    -- All:
-    --  Sounds
-
-    -- Pull:
-    --      May need further ray casts along the initial line segment if it was beyond 50 (a collision hull could load in as the player gets closer)
-
-    -- Pull:
-    --  If grapple point is a person (determined in aim), ragdoll them toward you
-    --  GET OVER HERE!!!
-
-    -- All:
-    --  Energy tank
-
-    -- All:
-    --  Anti gravity should taper off a bit after release
-
-    -- All:
-    --  Let them level up the grapple.  Start with:
-    --      shorter distances
-    --      weaker accelerations
-    --      (maybe a bit lower max vel)
-    --      lower energy max and recovery rate (but don't be too punative with this)
-    --      full gravity
-
-    -- Input:
-    --  Give the option to register actions to this new style hotkey, if that's what they prefer
-    -- registerInput('someID', 'Some input', function(isDown)
-    --     if (isDown) then
-    --         print(GetBind('someID')..' was pressed!')
-    --     else
-    --         print(GetBind('someID')..' was released!')
-    --     end
-    -- end)
-
-    -- Pull/Rigid:
-    --  Instead of pull/rigid being distinct, hardcoded:  Make a single straight line function that gets
-    --  fed a bunch of options.  Then the user will pick which mode gets tied to which buttons:
-    --      Desired Length: pull is currently zero, rigid is currently none
-    --      Can airdash first
-    --      Compress/Tension forces
-    --          Also have option for spring forces
-
-
-
-
-
-
     if const.shouldShowDebugWindow then
         PopulateDebug(debug, o, keys, state)
     end
 
+
     PossiblySafetyFire(o, state, const, debug, deltaTime)
+
+
+
 
     if state.flightMode == const.flightModes.standard then
         -- Standard (walking around)
-        Process_Standard(o, state, const, deltaTime)
+        Process_Standard(o, state, const, debug, deltaTime)
 
     elseif not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
         -- Was flying, but another mod took over
         Transition_ToStandard(state, const, debug, o)
 
-    elseif state.flightMode == const.flightModes.aim_pull then
-        -- Aiming the pull forward grapple
-        Process_Aim_Pull(o, state, const, debug)
+    elseif state.flightMode == const.flightModes.aim then
+        Process_Aim(o, state, const, debug, deltaTime)
 
-    elseif state.flightMode == const.flightModes.aim_rigid then
-        -- Aiming the rigid grapple
-        Process_Aim_Rigid(o, state, const, debug)
-
-    elseif state.flightMode == const.flightModes.air_dash then
+    elseif state.flightMode == const.flightModes.airdash then
         -- Didn't see a grapple point, so dashing forward
-        Process_Flight_AirDash(o, state, const, debug, deltaTime)
+        Process_AirDash(o, state, const, debug, deltaTime)
 
-    elseif state.flightMode == const.flightModes.flight_pull then
-        Process_Flight_Pull(o, state, const, debug, deltaTime)
+    elseif state.flightMode == const.flightModes.flight then
+        Process_Flight(o, state, const, debug, deltaTime)
 
-    elseif state.flightMode == const.flightModes.flight_rigid then
-        Process_Flight_Rigid(o, state, const, debug, deltaTime)
+    elseif state.flightMode == const.flightModes.antigrav then
+        -- Powered flight has ended, transitioning from lower gravity to standard gravity
+        Process_AntiGrav(o, state, const, debug, deltaTime)
 
     else
         print("Grappling ERROR, unknown flightMode: " .. tostring(state.flightMode))
         Transition_ToStandard(state, const, debug, o)
     end
+
+
+
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)

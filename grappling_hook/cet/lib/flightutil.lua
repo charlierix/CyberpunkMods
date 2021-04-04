@@ -8,8 +8,18 @@ function GetGrappleLine(o, state, const)
     return playerAnchor, grappleDir, grappleLen, grappleDirUnit
 end
 
+
+
+
+--TODO: This nearly replicates what standard is doing.  It also ignores energy consumption
+--Make a function that is common between the two
+
 -- This is called while in flight.  It looks for the user wanting to switch flight modes
 function SwitchedFlightMode(o, state, const)
+
+
+    --TODO: Fix this
+
     -- If they initiate a new pull or rigid, go straight to that
     local shouldPull, shouldRigid = state.startStopTracker:ShouldGrapple()
     if shouldPull then
@@ -21,6 +31,10 @@ function SwitchedFlightMode(o, state, const)
         return true
     end
 
+
+
+
+
     if state.startStopTracker:ShouldStop() then     -- doing this after the pull/rigid check, because it likely uses fewer keys
         -- Told to stop swinging, back to standard
         Transition_ToStandard(state, const, debug, o)
@@ -29,6 +43,10 @@ function SwitchedFlightMode(o, state, const)
 
     return false
 end
+
+
+
+
 
 -- This will return true as long as there is some air below the player
 function IsAirborne(o)
