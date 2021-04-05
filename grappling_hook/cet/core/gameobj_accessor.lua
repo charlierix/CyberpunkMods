@@ -5,6 +5,7 @@ local pullInterval_teleport = 12
 local pullInterval_sense = 12
 local pullInterval_targeting = 12
 local pullInterval_mapPin = 12
+local pullInterval_quest = 12
 
 GameObjectAccessor = {}
 
@@ -23,6 +24,7 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_sense = -(pullInterval_sense * 2)
     obj.lastPulled_targeting = -(pullInterval_targeting * 2)
     obj.lastPulled_mapPin = -(pullInterval_mapPin * 2)
+    obj.lastPulled_quest = -(pullInterval_quest * 2)
 
     obj.lastGot_lookDir = -1
 
@@ -245,6 +247,36 @@ function GameObjectAccessor:StopSound(soundName)
 
     if self.player then
         self.wrappers.StopQueuedSound(self.player, soundName)
+    end
+end
+
+-- This gets/sets a unique ID (must be int) in the save file's quest system.  That is used to
+-- uniquely identify a playthrough so that each created character has their own grapple config
+--
+-- Everything in the sqllite db is kept separated with this ID so that settings don't bleed
+-- between playthroughs
+function GameObjectAccessor:GetPlayerUniqueID()
+    if (self.timer - self.lastPulled_quest) >= pullInterval_quest then
+        self.lastPulled_quest = self.timer
+
+        self.quest = self.wrappers.GetQuestsSystem()
+    end
+
+    if self.quest then
+        -- this is a made up key, and can't be the same as other mod's
+        -- this returns zero if the key doesn't exist
+        return self.wrappers.GetQuestFactStr(self.quest, "Grapple_PlayerUniqueID")
+    end
+end
+function GameObjectAccessor:SetPlayerUniqueID(id)
+    if (self.timer - self.lastPulled_quest) >= pullInterval_quest then
+        self.lastPulled_quest = self.timer
+
+        self.quest = self.wrappers.GetQuestsSystem()
+    end
+
+    if self.quest then
+        self.wrappers.SetQuestFactStr(self.quest, "Grapple_PlayerUniqueID", id)      -- the ID must be integer
     end
 end
 

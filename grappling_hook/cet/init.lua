@@ -7,28 +7,33 @@
 --https://codeberg.org/adamsmasher/cyberpunk/src/branch/master
 --https://redscript.redmodding.org/
 
-require "lib/check_other_mods"
-require "lib/customprops_wrapper"
-require "lib/debug_code"
-require "lib/drawing"
-require "lib/flightmode_transitions"
-require "lib/flightutil"
-require "lib/gameobj_accessor"
-require "lib/inputtracker_startstop"
-require "lib/keys"
-require "lib/mappinutil"
-require "lib/math_basic"
-require "lib/math_raycast"
-require "lib/math_vector"
-require "lib/math_yaw"
-require "lib/processing_aim"
-require "lib/processing_airdash"
-require "lib/processing_antigrav"
-require "lib/processing_flight"
-require "lib/processing_standard"
-require "lib/reporting"
-require "lib/safetyfire"
-require "lib/util"
+require "core/check_other_mods"
+require "core/customprops_wrapper"
+require "core/debug_code"
+require "core/drawing"
+require "core/gameobj_accessor"
+require "core/inputtracker_startstop"
+require "core/keys"
+require "core/mappinutil"
+require "core/math_basic"
+require "core/math_raycast"
+require "core/math_vector"
+require "core/math_yaw"
+require "core/reporting"
+require "core/util"
+
+require "db/dal"
+require "db/datautil"
+require "db/player"
+
+require "processing/flightmode_transitions"
+require "processing/flightutil"
+require "processing/processing_aim"
+require "processing/processing_airdash"
+require "processing/processing_antigrav"
+require "processing/processing_flight"
+require "processing/processing_standard"
+require "processing/safetyfire"
 
 function TODO()
 
@@ -147,6 +152,8 @@ local state =
 
 }
 
+local player = nil       -- set this to nil whenever a load is started
+
 --------------------------------------------------------------------
 
 registerForEvent("onInit", function()
@@ -159,12 +166,14 @@ registerForEvent("onInit", function()
             isLoading = false
         else
             isLoading = true
+            player = nil
         end
     end)
 
     isShutdown = false
 
     InitializeRandom()
+    EnsureTablesCreated()
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -190,10 +199,11 @@ registerForEvent("onInit", function()
     function wrappers.GetMapPinSystem() return Game.GetMappinSystem() end
     function wrappers.RegisterMapPin(mapPin, data, pos) return mapPin:RegisterMappin(data, pos) end
     function wrappers.SetMapPinPosition(mapPin, id, pos) mapPin:SetMappinPosition(id, pos) end
-
     function wrappers.ChangeMappinVariant(mapPin, id, variant) mapPin:ChangeMappinVariant(id, variant) end
-
     function wrappers.UnregisterMapPin(mapPin, id) mapPin:UnregisterMappin(id) end
+    function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
+    function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
+    function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
     o = GameObjectAccessor:new(wrappers)
 
     InitializeKeyTrackers(state, keys, o)
@@ -221,6 +231,10 @@ registerForEvent("onUpdate", function(deltaTime)
         do return end
     end
 
+    if not player then
+        player = Player:new(o, state, const, debug)
+    end
+
     StopSound(o, state)
 
     if not IsStandingStill(o.vel) then
@@ -237,41 +251,34 @@ registerForEvent("onUpdate", function(deltaTime)
         PopulateDebug(debug, o, keys, state)
     end
 
-
     PossiblySafetyFire(o, state, const, debug, deltaTime)
-
-
-
 
     if state.flightMode == const.flightModes.standard then
         -- Standard (walking around)
-        Process_Standard(o, state, const, debug, deltaTime)
+        Process_Standard(o, player, state, const, debug, deltaTime)
 
     elseif not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
         -- Was flying, but another mod took over
         Transition_ToStandard(state, const, debug, o)
 
     elseif state.flightMode == const.flightModes.aim then
-        Process_Aim(o, state, const, debug, deltaTime)
+        Process_Aim(o, player, state, const, debug, deltaTime)
 
     elseif state.flightMode == const.flightModes.airdash then
         -- Didn't see a grapple point, so dashing forward
-        Process_AirDash(o, state, const, debug, deltaTime)
+        Process_AirDash(o, player, state, const, debug, deltaTime)
 
     elseif state.flightMode == const.flightModes.flight then
-        Process_Flight(o, state, const, debug, deltaTime)
+        Process_Flight(o, player, state, const, debug, deltaTime)
 
     elseif state.flightMode == const.flightModes.antigrav then
         -- Powered flight has ended, transitioning from lower gravity to standard gravity
-        Process_AntiGrav(o, state, const, debug, deltaTime)
+        Process_AntiGrav(o, player, state, const, debug, deltaTime)
 
     else
         print("Grappling ERROR, unknown flightMode: " .. tostring(state.flightMode))
         Transition_ToStandard(state, const, debug, o)
     end
-
-
-
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
