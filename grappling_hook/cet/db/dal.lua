@@ -28,8 +28,11 @@ function GetNextToken(tokenName, baseNum, increment)
 
 
         --TODO: Need to enforce basenum: next = max(basenum+increment, next+increment)
+        --local sql = "BEGIN TRANSACTION;\r\n"      -- transaction has a high chance of locking the database until they quit the game
+        --sql = sql .. "INSERT OR IGNORE INTO TokenGenerator VALUES ('" .. tokenName .. "', " .. tostring(baseNum) .. ");\r\n"
         local sql = "INSERT OR IGNORE INTO TokenGenerator VALUES ('" .. tokenName .. "', " .. tostring(baseNum) .. ");\r\n"
         sql = sql .. "UPDATE TokenGenerator SET NextValue = NextValue + " .. tostring(increment) .. " WHERE TokenName = '" .. tokenName .. "';"
+        --sql = sql .. "COMMIT;"
 
         print(sql)
 
