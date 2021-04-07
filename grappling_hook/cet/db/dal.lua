@@ -7,6 +7,10 @@ end
 function GetNextToken(tokenName, baseNum, increment)
     --https://stackoverflow.com/questions/3647454/increment-counter-or-insert-row-in-one-statement-in-sqlite
 
+    if not baseNum or baseNum < 0 then
+        baseNum = 0
+    end
+
     if not increment or increment < 1 then
         increment = 1
     end
@@ -34,6 +38,25 @@ function GetNextToken(tokenName, baseNum, increment)
 
 
 
+        -- Select current value
+        for row, _ in db:rows("SELECT NextValue FROM TokenGenerator WHERE TokenName = '" .. tokenName .. "';") do
+            return row[1]
+        end
+
+        print("no row found")
+        return nil      -- should never happen
+    end)
+
+    if sucess then
+        return result
+    else
+        print("db error")
+        return nil
+    end
+end
+
+function GetCurrentToken(tokenName)
+    local sucess, result = pcall(function ()
         -- Select current value
         for row, _ in db:rows("SELECT NextValue FROM TokenGenerator WHERE TokenName = '" .. tokenName .. "';") do
             return row[1]

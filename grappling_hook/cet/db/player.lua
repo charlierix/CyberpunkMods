@@ -57,6 +57,8 @@ function Player:Load_Default(existingPlayerID)
     -- there's a good chance that saves will happen (worst case, there would be a few orphaned rows
     -- and the user will need to redo their grapple settings)
 
+    print("current dbID: " .. tostring(GetCurrentToken("PlayerUniqueID")))
+
     local playerID = GetNextPlayerID(true, existingPlayerID)
     self.o:SetPlayerUniqueID(playerID)
 
