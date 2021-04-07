@@ -82,6 +82,8 @@ function TODO()
     --      Compress/Tension forces
     --          Also have option for spring forces
 
+    -- All:
+    --  Fall damage should be a percent, not a bool
 
 end
 

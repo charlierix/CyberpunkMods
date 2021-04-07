@@ -59,6 +59,22 @@ namespace grapple_ui.models
         public Aim_Straight Aim_Straight { get; init; }
         public Aim_Swing Aim_Swing { get; init; }
 
+        /// <summary>
+        /// null = no fall damage reduction (don't support null, that's too punative)
+        /// 0 = min fall damage reduction
+        /// 1 = full fall damage reduction
+        /// </summary>
+        /// <remarks>
+        /// If value is greater than zero, do the safety fire logic, but then if less than 1, artificially apply
+        /// speed based damage
+        /// 
+        /// Make it something like:
+        /// dmg% = getScaled(80%, 0%, 0, 1, reduce%)
+        /// health = health - (maxHealth * dmg%)
+        /// 
+        /// This way, they'll never die if they start with full health, but still take enough damage to be cautious
+        /// </remarks>
+        public double FallDamageReductionPercent { get; init; }
 
         /// <summary>
         /// This is how much experience was used to get these current values
