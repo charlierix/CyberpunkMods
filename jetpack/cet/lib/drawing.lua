@@ -2,7 +2,7 @@
 --https://www.nexusmods.com/cyberpunk2077/mods/1405
 function DrawJetpackProgress(name, remainBurnTime, maxBurnTime)
     ImGui.SetNextWindowPos(20, 200, ImGuiCond.Always)       -- this is under the top left combat graphic
-    ImGui.SetNextWindowSize(300, 30, ImGuiCond.Appearing)
+    ImGui.SetNextWindowSize(330, 50, ImGuiCond.Appearing)
 
     if (ImGui.Begin(name, true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoBackground)) then
         ImGui.SetWindowFontScale(1.5)
@@ -42,7 +42,7 @@ function DrawConfigName(mode)
     ImGui.SetNextWindowSize(240, 160, ImGuiCond.Appearing)
 
     if (ImGui.Begin("Jetpack Mode", true, ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoScrollbar)) then
-        ImGui.SetWindowFocus("Jetpack Mode")        -- hopefully, this forces it to be on top
+        --ImGui.SetWindowFocus("Jetpack Mode")        -- hopefully, this forces it to be on top
 
         ImGui.SetWindowFontScale(1.2)
 
@@ -56,25 +56,21 @@ function DrawConfigName(mode)
 
         if not mode.shouldSafetyFire then
             ImGui.Spacing()
-            --ImGui.TextColored(1,1,1,0.6, "unsafe landing")
             ImGui.Text("unsafe landing")
         end
 
         if mode.explosiveLanding then
             ImGui.Spacing()
-            --ImGui.TextColored(1,1,1,0.6, "explosive landing")
             ImGui.Text("explosive landing")
         end
 
         if mode.timeSpeed < 1 then
             ImGui.Spacing()
-            --ImGui.TextColored(1,1,1,0.6, string.format("%.0f", Round(mode.timeSpeed * 100, 0)) .. "%% speed")
             ImGui.Text(string.format("%.0f", Round(mode.timeSpeed * 100, 0)) .. "% speed")
         end
 
         if mode.rmb_extra then
             ImGui.Spacing()
-            --ImGui.TextColored(1,1,1,0.6, "right mouse: " .. mode.rmb_extra:Description())
             ImGui.Text("right mouse: " .. mode.rmb_extra:Description())
         end
 

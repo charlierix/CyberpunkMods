@@ -109,7 +109,9 @@ local const =
 --------------------------------------------------------------------
 
 local isShutdown = true
-local isLoading = false --true
+local isLoading = false
+local isInMenu = true
+
 local o     -- This is a class that wraps access to Game.xxx
 
 local keys = Keys:new()
@@ -212,9 +214,16 @@ registerForEvent("onShutdown", function()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
-    if isShutdown or isLoading or IsPlayerInAnyMenu() then
+    if isShutdown or isLoading then
+        isInMenu = true
         Transition_ToStandard(state, const, debug, o)
         do return end
+    else
+        isInMenu = IsPlayerInAnyMenu()
+        if isInMenu then
+            Transition_ToStandard(state, const, debug, o)
+            do return end
+        end
     end
 
     o:Tick(deltaTime)
@@ -281,15 +290,18 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
--- registerHotkey("GrapplingHookTestSQL", "Test SQL", function()
--- end)
+registerHotkey("GrapplingHookTestSQL", "Test SQL", function()
+    state.energy = 0
+end)
 
 registerForEvent("onDraw", function()
-    if isShutdown or isLoading then
+    if isShutdown or isLoading or isInMenu then
         do return end
     end
 
-    debug.energy = Round(state.energy, 1)
+    if player and state.energy < player.energy_tank.max_energy then
+        DrawEnergyProgress(state.energy, player.energy_tank.max_energy)
+    end
 
     if const.shouldShowDebugWindow then
         DrawDebugWindow(debug)

@@ -224,7 +224,9 @@ local const =
 --------------------------------------------------------------------
 
 local isShutdown = true
-local isLoading = false --true
+local isLoading = false
+local isInMenu = true
+
 local o     -- This is a class that wraps access to Game.xxx
 
 local keys = Keys:new()
@@ -256,9 +258,13 @@ registerForEvent("onInit", function()
         keys:MapAction(action)
     end)
 
-    -- jetpack.log: attempt to index a nil value (upvalue 'GameUI')
-    -- GameUI.OnUnloaded(function() isLoading = true end)      -- Triggered once the current game session has ended (when "Load Game" or "Exit to Main Menu" selected)     -- thanks NonameNonumber :)
-    -- GameUI.OnLoaded(function() isLoading = false end)       -- Triggered once the load is complete and the player is in the game (after the loading screen for "Load Game" or "New Game")
+    Observe("RadialWheelController", "RegisterBlackboards", function(_, loaded)
+        if loaded then
+            isLoading = false
+        else
+            isLoading = true
+        end
+    end)
 
     isShutdown = false
 
@@ -301,9 +307,16 @@ registerForEvent("onShutdown", function()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
-    if isShutdown or isLoading or IsPlayerInAnyMenu() then
+    if isShutdown or isLoading then
+        isInMenu = true
         ExitFlight(state, debug, o)
         do return end
+    else
+        isInMenu = IsPlayerInAnyMenu()
+        if isInMenu then
+            ExitFlight(state, debug, o)
+            do return end
+        end
     end
 
     o:Tick(deltaTime)
@@ -363,7 +376,7 @@ registerHotkey("jetpackCycleModes", "Cycle Modes", function()
 end)
 
 registerForEvent("onDraw", function()
-    if isShutdown then
+    if isShutdown or isLoading or isInMenu then
         do return end
     end
 
