@@ -8,13 +8,13 @@ namespace grapple_ui.models
 {
     public record EnergyTank
     {
-        public double MaxEnergy { get; init; }
+        public double max_energy { get; init; }
 
-        public double RecoveryRate { get; init; }
+        public double recovery_rate { get; init; }
 
         /// <summary>
         /// This is how much experience was used to get these current values
         /// </summary>
-        public double Experience { get; init; }
+        public double experience { get; init; }
     }
 }

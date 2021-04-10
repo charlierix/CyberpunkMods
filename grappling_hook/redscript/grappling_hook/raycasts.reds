@@ -89,6 +89,17 @@ func GrapplingHook_LenSqr(from: Vector4, to: Vector3) -> Float
 //         // nil gives a compile error, see if not set will work
 //         //filter = nil;
 
+//https://github.com/WolvenKit/cet-examples/blob/main/ai-components/TargetingHelper.lua#L11
+// local filters = {
+//     'Dynamic', -- Movable Objects
+//     'Vehicle',
+//     'Static', -- Buildings, Concrete Roads, Crates, etc.
+//     'Water',
+//     'Terrain',
+//     'PlayerBlocker', -- Trees, Billboards, Barriers
+// }
+
+
 //         // this also gives a compile error
 //         //filter = n"World Static" | n"Static" | n"Dynamic" | n"Vehicle" | n"Simple Environment Collision" | n"Vehicle Chassis" | n"Player Hitbox";
 

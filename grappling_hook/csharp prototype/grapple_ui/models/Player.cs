@@ -11,8 +11,6 @@ namespace grapple_ui.models
     /// </summary>
     public record Player
     {
-        public string Name { get; init; }
-
         /// <summary>
         /// This is an ID that gets tied to a playthrough (will be null for templates)
         /// </summary>
@@ -34,24 +32,32 @@ namespace grapple_ui.models
         /// Game.GetQuestsSystem():SetFactStr("my_mod_unique_id", 123)
         /// only integers, this is stored in the savefile
         /// </remarks>
-        public int? PlayerUniqueID { get; init; }
+        public int? playerID { get; init; }
+
+        public string name { get; init; }
+
+        public EnergyTank energy_tank { get; init; }
+
+        // action mapping 1,2,3
+
+        public Grapple grapple1 { get; init; }      // default: pull
+        public Grapple grapple2 { get; init; }      // default: rigid
+        public Grapple grapple3 { get; init; }      // default: web swing
 
         /// <summary>
-        /// This is used to know the active profile (will be null for templates)
+        /// How many experience points are available
+        /// </summary>
+        public double experience { get; init; }
+
+        //-------------- DB Only --------------
+
+        /// <summary>
+        /// This is used to know the active profile
         /// </summary>
         /// <remarks>
         /// They may have multiple entries for the same play through.  This helps know the exact one
         /// to use
         /// </remarks>
-        public DateTime? LastUsed { get; init; }
-
-        public EnergyTank EnergyTank { get; init; }
-
-        // action mappings
-
-        /// <summary>
-        /// How many experience points are available
-        /// </summary>
-        public double Experience { get; init; }
+        public DateTime last_used { get; init; }
     }
 }

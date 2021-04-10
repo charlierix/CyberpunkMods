@@ -19,45 +19,45 @@ namespace grapple_ui.models
     /// </remarks>
     public record Grapple
     {
-        public string Name { get; init; }
+        public string name { get; init; }
 
-        public string MappinName { get; init; }
+        public string mappin_name { get; init; }
 
         /// <summary>
         /// Grapple will disengage when dot product of look direction and grapple line is less than this
         /// </summary>
         public double minDot { get; init; } = 0;
 
-        public AntiGravity AntiGravity { get; init; }
+        public AntiGravity anti_gravity { get; init; }
 
         /// <remarks>
         /// If this is set, then this is a fixed desired length (could be zero)
         /// 
         /// If null, then the desired length is the distance from the anchor point
         /// </remarks>
-        public double? DesiredLength { get; init; }
+        public double? desired_length { get; init; }
 
-        public ConstantAccel Accel_AlongGrappleLine { get; init; }
-        public ConstantAccel Accel_AlongLook { get; init; }
+        public ConstantAccel accel_alongGrappleLine { get; init; }
+        public ConstantAccel accel_alongLook { get; init; }
 
         /// <summary>
         /// If set, this will apply an accel equal to "normalized distance from ideal" * K
         /// </summary>
-        public double? SpringAccel_K { get; init; }
+        public double? springAccel_k { get; init; }
 
         /// <summary>
         /// Adds an extra kick if current velocity is in the wrong direction (most useful to make a swing)
         /// </summary>
-        public VelocityAway VelocityAway { get; init; }
+        public VelocityAway velocity_away { get; init; }
 
         /// <summary>
         /// How much it costs to spawn a grapple
         /// </summary>
-        public double EnergyCost { get; init; }
+        public double energy_cost { get; init; }
 
         // Exactly one of these will be populated
-        public Aim_Straight Aim_Straight { get; init; }
-        public Aim_Swing Aim_Swing { get; init; }
+        public Aim_Straight aim_straight { get; init; }
+        public Aim_Swing aim_swing { get; init; }
 
         /// <summary>
         /// null = no fall damage reduction (don't support null, that's too punative)
@@ -74,7 +74,7 @@ namespace grapple_ui.models
         /// 
         /// This way, they'll never die if they start with full health, but still take enough damage to be cautious
         /// </remarks>
-        public double FallDamageReductionPercent { get; init; }
+        public double fallDamageReduction_percent { get; init; }
 
         /// <summary>
         /// This is how much experience was used to get these current values
@@ -87,7 +87,7 @@ namespace grapple_ui.models
         /// As they upgrade, keep a few previous versions, so they can try out changes and revert if they don't
         /// like it
         /// </remarks>
-        public double Experience { get; init; }
+        public double experience { get; init; }
 
 
         //TODO: Pivot constraints

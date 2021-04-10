@@ -121,3 +121,13 @@ function Pull_GetAccel(directionUnit, vel, desiredSpeed, deadZone_speedDiff, gra
         directionUnit.z * actualAccel,
         actualAccel / accel     -- percent
 end
+
+function RecoverEnergy(current, max, recoverRate, deltaTime)
+    current = current + (recoverRate * deltaTime)
+
+    if current > max then
+        current = max
+    end
+
+    return current
+end

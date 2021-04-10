@@ -54,6 +54,11 @@ registerForEvent("onShutdown", function()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
+
+
+--TODO: Check if in menu
+
+
     if isShutdown then
         do return end
     end

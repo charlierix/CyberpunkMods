@@ -24,6 +24,7 @@ require "core/util"
 
 require "db/dal"
 require "db/datautil"
+require "db/defaults"
 require "db/player"
 
 require "processing/flightmode_transitions"
@@ -115,27 +116,8 @@ local keys = Keys:new()
 
 local debug = { }
 
-local state =
+local state_ORIG_COMMENTED =
 {
-    flightMode = const.flightModes.standard,
-
-    --startStopTracker      -- this gets instantiated in init
-
-    --sound_current = nil,  -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
-    sound_started = 0,
-
-    isSafetyFireCandidate = false,      -- this will turn true when grapple is used.  Goes back to false after they touch the ground
-
-
-
-    --TODO: Make an object that stores the current flight configs
-
-
-
-
-
-
-
     --TODO: These variables will need to be evaluated
 
     --startTime      -- gets populated when transitioning into a new flight mode (into aim, into flight, etc) ---- doesn't get set when transitioning to standard
@@ -152,6 +134,19 @@ local state =
     --hasBeenAirborne   -- set to false when transitioning to flight or air dash.  Used by pull and air dash
     --initialAirborneTime
 
+    --sound_current = nil,  -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
+    sound_started = 0,
+}
+
+local state =
+{
+    flightMode = const.flightModes.standard,
+
+    energy = 0,
+
+    --startStopTracker      -- this gets instantiated in init
+
+    isSafetyFireCandidate = false,      -- this will turn true when grapple is used.  Goes back to false after they touch the ground
 }
 
 local player = nil       -- set this to nil whenever a load is started
@@ -213,6 +208,7 @@ end)
 
 registerForEvent("onShutdown", function()
     isShutdown = true
+    db:close()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
@@ -285,10 +281,15 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
+-- registerHotkey("GrapplingHookTestSQL", "Test SQL", function()
+-- end)
+
 registerForEvent("onDraw", function()
     if isShutdown or isLoading then
         do return end
     end
+
+    debug.energy = Round(state.energy, 1)
 
     if const.shouldShowDebugWindow then
         DrawDebugWindow(debug)

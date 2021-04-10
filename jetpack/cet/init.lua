@@ -216,7 +216,7 @@ local const =
 
     modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),
 
-    shouldShowDebugWindow = true,      -- shows a window with extra debug info
+    shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 
 --------------------------------------------------------------------
@@ -297,6 +297,7 @@ end)
 
 registerForEvent("onShutdown", function()
     isShutdown = true
+	db:close()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)

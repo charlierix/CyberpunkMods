@@ -24,12 +24,12 @@ namespace grapple_ui
 
             var test = new Grapple
             {
-                Name = "hello",
+                name = "hello",
             };
 
             var test2 = test with
             {
-                Name = "there"
+                name = "there"
             };
 
 
