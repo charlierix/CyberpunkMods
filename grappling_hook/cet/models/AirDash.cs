@@ -8,8 +8,8 @@ namespace grapple_ui.models
 {
     public record AirDash
     {
-        public double EnergyBurnRate { get; init; }
+        public double energyBurnRate { get; init; }
 
-        public ConstantAccel Accel { get; init; }
+        public ConstantAccel accel { get; init; }
     }
 }

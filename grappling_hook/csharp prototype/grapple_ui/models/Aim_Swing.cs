@@ -18,6 +18,14 @@ namespace grapple_ui.models
     ///             allow a period of free fall.  The more velocity is uppward, the longer the freefall will be
     ///             calculate the trajectory.  The swing will apply when they are traveling down at a certain angle
     ///                 be sure to take the antigravity property into account
+    ///                 
+    /// Use some kind of graphic to indicate that the swing request registered, but it's in freefall mode
+    /// 
+    /// Otherwise, don't bother with the freefall stuff.  If they request a swing while velocity is up, they'll just
+    /// get yanked along a new arc (probably a steeper arc)
+    /// 
+    /// Or do the opposite, and put them in an upside down arc.  So instead of a parabolic trajectory, they'll be forced
+    /// into a circular one
     /// </remarks>
     public record Aim_Swing
     {

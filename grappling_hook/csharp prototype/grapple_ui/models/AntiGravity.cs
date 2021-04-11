@@ -11,12 +11,12 @@ namespace grapple_ui.models
         /// <summary>
         /// 0 has no antigravity, 1 is full antigravity
         /// </summary>
-        public double AntiGrav_Percent { get; init; }
+        public double antigrav_percent { get; init; }
 
         /// <summary>
         /// After flight has ended, antigravity linearly fades to zero
         /// </summary>
-        public double FadeDuration { get; init; }
+        public double fade_duration { get; init; }
 
 
         // May want a property that controls the antigrav% based on how in line velocity is with direction facing (see air dash)

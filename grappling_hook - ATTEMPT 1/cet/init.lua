@@ -190,9 +190,7 @@ registerForEvent("onInit", function()
     function wrappers.GetMapPinSystem() return Game.GetMappinSystem() end
     function wrappers.RegisterMapPin(mapPin, data, pos) return mapPin:RegisterMappin(data, pos) end
     function wrappers.SetMapPinPosition(mapPin, id, pos) mapPin:SetMappinPosition(id, pos) end
-
     function wrappers.ChangeMappinVariant(mapPin, id, variant) mapPin:ChangeMappinVariant(id, variant) end
-
     function wrappers.UnregisterMapPin(mapPin, id) mapPin:UnregisterMappin(id) end
     o = GameObjectAccessor:new(wrappers)
 

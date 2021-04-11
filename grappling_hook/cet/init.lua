@@ -99,6 +99,8 @@ local const =
     grappleFrom_Z = 1.5,
     grappleMinResolution = 0.5,
 
+    energyRecoveryPercent_inFlight = 0.25,  -- while aiming/flying, energy will recover at player.energy_tank.recovery_rate * const.energyRecoveryPercent_inFlight
+
     modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
 
     shouldShowDebugWindow = true,      -- shows a window with extra debug info
@@ -110,7 +112,7 @@ local const =
 
 local isShutdown = true
 local isLoading = false
-local isInMenu = true
+local shouldDraw = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
@@ -122,19 +124,8 @@ local state_ORIG_COMMENTED =
 {
     --TODO: These variables will need to be evaluated
 
-    --startTime      -- gets populated when transitioning into a new flight mode (into aim, into flight, etc) ---- doesn't get set when transitioning to standard
-
     --mappinID      -- this will be populated while the map pin is visible (managed in mappinutil.lua)
     --mappinName    -- this is the name of the map pin that is currently visible (managed in mappinutil.lua)
-
-    --rayFrom       -- gets populated when transitioning to airdash or flight
-    --rayHit        -- gets populated when transitioning to flight
-    --rayDir        -- gets populated when transitioning to airdash
-    --rayLength     -- gets populated when transitioning to airdash
-    --distToHit     -- len(rayHit-rayFrom)    populated when transitioning to flight
-
-    --hasBeenAirborne   -- set to false when transitioning to flight or air dash.  Used by pull and air dash
-    --initialAirborneTime
 
     --sound_current = nil,  -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
     sound_started = 0,
@@ -143,10 +134,23 @@ local state_ORIG_COMMENTED =
 local state =
 {
     flightMode = const.flightModes.standard,
+    --grapple = nil,    -- an instance of models.Grapple    -- gets populated in Transition_ToAim (back to nil in Transition_ToStandard)
+    --airdash = nil,    -- an instance of models.AirDash    -- gets populated in Transition_ToAirDash (just a copy of grapple.aim_straight.air_dash)
 
-    energy = 0,
+    energy = 1000,      -- start with too much so the progress doesn't show during initial load
 
-    --startStopTracker      -- this gets instantiated in init
+    --startStopTracker  -- this gets instantiated in init
+
+    --startTime         -- gets populated when transitioning into a new flight mode (into aim, into flight, etc) ---- doesn't get set when transitioning to standard
+
+    --rayFrom           -- gets populated when transitioning to airdash or flight
+    --rayHit            -- gets populated when transitioning to flight
+    --rayDir            -- gets populated when transitioning to airdash
+    --rayLength         -- gets populated when transitioning to airdash
+    --distToHit         -- len(rayHit-rayFrom)    populated when transitioning to flight
+
+    --hasBeenAirborne   -- set to false when transitioning to flight or air dash.  Used by air dash and flight (if flight has a desired length)
+    --initialAirborneTime
 
     isSafetyFireCandidate = false,      -- this will turn true when grapple is used.  Goes back to false after they touch the ground
 }
@@ -214,16 +218,13 @@ registerForEvent("onShutdown", function()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
+    shouldDraw = false
     if isShutdown or isLoading then
-        isInMenu = true
         Transition_ToStandard(state, const, debug, o)
         do return end
-    else
-        isInMenu = IsPlayerInAnyMenu()
-        if isInMenu then
-            Transition_ToStandard(state, const, debug, o)
-            do return end
-        end
+    elseif IsPlayerInAnyMenu() then
+        Transition_ToStandard(state, const, debug, o)
+        do return end
     end
 
     o:Tick(deltaTime)
@@ -244,13 +245,13 @@ registerForEvent("onUpdate", function(deltaTime)
 
     StopSound(o, state)
 
-    if not IsStandingStill(o.vel) then
-        o:GetInWorkspot()       -- this crashes soon after loading a save.  So don't call if velocity is near zero.  Still got a crash when reloading after dying in a car shootout.  Hopefully this looser method keeps from crashing
-        if o.isInWorkspot then
-            Transition_ToStandard(state, const, debug, o)
-            do return end
-        end
+    o:GetInWorkspot()
+    if o.isInWorkspot then      -- in a vehicle
+        Transition_ToStandard(state, const, debug, o)
+        do return end
     end
+
+    shouldDraw = true       -- don't want a stopped progress bar while in menu or driving
 
     state.startStopTracker:Tick()
 
@@ -295,7 +296,7 @@ registerHotkey("GrapplingHookTestSQL", "Test SQL", function()
 end)
 
 registerForEvent("onDraw", function()
-    if isShutdown or isLoading or isInMenu then
+    if isShutdown or isLoading or not shouldDraw then
         do return end
     end
 

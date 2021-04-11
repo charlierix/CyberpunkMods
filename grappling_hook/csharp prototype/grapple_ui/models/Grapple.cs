@@ -60,7 +60,6 @@ namespace grapple_ui.models
         public Aim_Swing aim_swing { get; init; }
 
         /// <summary>
-        /// null = no fall damage reduction (don't support null, that's too punative)
         /// 0 = min fall damage reduction
         /// 1 = full fall damage reduction
         /// </summary>

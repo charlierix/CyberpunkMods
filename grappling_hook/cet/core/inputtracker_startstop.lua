@@ -8,7 +8,7 @@
 InputTracker_StartStop = {}
 
 -- The arrays passed in are in the form: keynames[i]=actionname
-function InputTracker_StartStop:new(o, keys, keynames_pull, keynames_rigid, keynames_stop)
+function InputTracker_StartStop:new(o, keys, keynames_1, keynames_2, keynames_stop)
     local obj = { }
     setmetatable(obj, self)
     self.__index = self
@@ -19,12 +19,12 @@ function InputTracker_StartStop:new(o, keys, keynames_pull, keynames_rigid, keyn
     obj.o = o
     obj.keys = keys
 
-    obj.keynames_pull = keynames_pull
-    obj.keynames_rigid = keynames_rigid
+    obj.keynames_1 = keynames_1
+    obj.keynames_2 = keynames_2
     obj.keynames_stop = keynames_stop
 
     -- This holds a deduped list of keys from the three lists of action names
-    obj.keynames = GetDeduped({ keynames_pull, keynames_rigid, keynames_stop })
+    obj.keynames = GetDeduped({ keynames_1, keynames_2, keynames_stop })
 
     -- This holds the keydown time of each action
     -- key=actionname, value=keydown_time (or nil)
@@ -58,8 +58,8 @@ end
 
 function InputTracker_StartStop:ShouldGrapple()
     return
-        self:IsDown(self.keynames_pull),
-        self:IsDown(self.keynames_rigid)
+        self:IsDown(self.keynames_1),
+        self:IsDown(self.keynames_2)
 end
 function InputTracker_StartStop:ShouldStop()
     return self:IsDown(self.keynames_stop)

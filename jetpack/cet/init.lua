@@ -225,7 +225,7 @@ local const =
 
 local isShutdown = true
 local isLoading = false
-local isInMenu = true
+local shouldDraw = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
@@ -307,16 +307,13 @@ registerForEvent("onShutdown", function()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
+    shouldDraw = false
     if isShutdown or isLoading then
-        isInMenu = true
         ExitFlight(state, debug, o)
         do return end
-    else
-        isInMenu = IsPlayerInAnyMenu()
-        if isInMenu then
-            ExitFlight(state, debug, o)
-            do return end
-        end
+    elseif IsPlayerInAnyMenu() then
+        ExitFlight(state, debug, o)
+        do return end
     end
 
     o:Tick(deltaTime)
@@ -329,13 +326,13 @@ registerForEvent("onUpdate", function(deltaTime)
 
     StopSound(o, state)
 
-    if not IsStandingStill(o.vel) then
-        o:GetInWorkspot()       -- this crashes soon after loading a save.  So don't call if velocity is near zero.  Still got a crash when reloading after dying in a car shootout.  Hopefully this looser method keeps from crashing
-        if o.isInWorkspot then
-            ExitFlight(state, debug, o)
-            do return end
-        end
+    o:GetInWorkspot()
+    if o.isInWorkspot then      -- in a vehicle
+        ExitFlight(state, debug, o)
+        do return end
     end
+
+    shouldDraw = true       -- don't want a stopped progress bar while in menu or driving
 
     if const.shouldShowDebugWindow then
         PopulateDebug(debug, o, keys, state)
@@ -376,7 +373,7 @@ registerHotkey("jetpackCycleModes", "Cycle Modes", function()
 end)
 
 registerForEvent("onDraw", function()
-    if isShutdown or isLoading or isInMenu then
+    if isShutdown or isLoading or not shouldDraw then
         do return end
     end
 

@@ -11,17 +11,17 @@ namespace grapple_ui.models
         /// <summary>
         /// How far out to look
         /// </summary>
-        public double MaxDistance { get; init; }
+        public double max_distance { get; init; }
 
         /// <summary>
         /// How long to aim before giving up, or switching to air dash
         /// </summary>
-        public double Aim_Duration { get; init; }
+        public double aim_duration { get; init; }
 
-        public string MappinName { get; init; }
+        public string mappin_name { get; init; }
 
 
-        public AirDash AirDash { get; init; }
+        public AirDash air_dash { get; init; }
 
 
         //TODO: PersonPull

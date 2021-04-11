@@ -17,7 +17,7 @@ namespace grapple_ui.models
         /// <remarks>
         /// This only makes sense when desired radius is greater than zero
         /// </remarks>
-        public double? Accel_Compression { get; init; }
+        public double? accel_compression { get; init; }
 
         /// <summary>
         /// Acceleration to apply when trying to move farther from the anchor point than the desired radius
@@ -28,11 +28,11 @@ namespace grapple_ui.models
         /// Use a large value to make it feel like a rope
         /// Use a small value to make it feel like a spring
         /// </remarks>
-        public double? Accel_Tension { get; init; }
+        public double? accel_tension { get; init; }
 
         /// <summary>
         /// If |actualDist - desiredDist| is within this deadspot, accel drops to zero
         /// </summary>
-        public double DeadSpot { get; init; }
+        public double deadSpot { get; init; }
     }
 }

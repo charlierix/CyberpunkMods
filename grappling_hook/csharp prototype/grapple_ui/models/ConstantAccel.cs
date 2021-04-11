@@ -11,16 +11,16 @@ namespace grapple_ui.models
     /// </summary>
     public record ConstantAccel
     {
-        public double Accel { get; init; }
-        public double Speed { get; init; }
+        public double accel { get; init; }
+        public double speed { get; init; }
 
         /// <summary>
         /// If distance to desired radius is less than this, accel linearly drops to zero
         /// </summary>
-        public double DeadSpot_Distance { get; init; }
+        public double deadSpot_distance { get; init; }
         /// <summary>
         /// If speed difference is less than this, accel linearly drops to zero
         /// </summary>
-        public double DeadSpot_Speed { get; init; }
+        public double deadSpot_speed { get; init; }
     }
 }
