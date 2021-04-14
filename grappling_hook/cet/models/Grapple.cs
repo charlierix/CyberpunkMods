@@ -40,6 +40,9 @@ namespace grapple_ui.models
         public ConstantAccel accel_alongGrappleLine { get; init; }
         public ConstantAccel accel_alongLook { get; init; }
 
+        //TODO: Make this a class to get dead spots max speed, dead spots.  Also max values
+        //Also may want different options for compressing and expanding.  Maybe even two
+        //different instances of the same class
         /// <summary>
         /// If set, this will apply an accel equal to "normalized distance from ideal" * K
         /// </summary>

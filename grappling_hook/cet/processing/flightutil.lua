@@ -1,41 +1,21 @@
-function GetGrappleLine(o, state, const)
-    local playerAnchor = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
+function RecoverEnergy(current, max, recoverRate, deltaTime)
+    current = current + (recoverRate * deltaTime)
 
-    local grappleDir = SubtractVectors(state.rayHit, playerAnchor)
-    local grappleLen = GetVectorLength(grappleDir)
-    local grappleDirUnit = DivideVector(grappleDir, grappleLen)
+    if current > max then
+        current = max
+    end
 
-    return playerAnchor, grappleDir, grappleLen, grappleDirUnit
+    return current
 end
 
-
-
-
---TODO: This nearly replicates what standard is doing.  It also ignores energy consumption
---Make a function that is common between the two
-
 -- This is called while in flight.  It looks for the user wanting to switch flight modes
-function SwitchedFlightMode(o, state, const)
-
-
-    --TODO: Fix this
-
-    -- If they initiate a new pull or rigid, go straight to that
-    local shouldPull, shouldRigid = state.startStopTracker:ShouldGrapple()
-    if shouldPull then
-        Transition_ToAim(state, o, const.flightModes.aim_pull)
-        return true
-
-    elseif shouldRigid then
-        Transition_ToAim(state, o, const.flightModes.aim_rigid)
+function SwitchedFlightMode(o, player, state, const)
+    -- See if they want to start a new grapple
+    if StartFlightIfRequested(o, player, state, const) then
         return true
     end
 
-
-
-
-
-    if state.startStopTracker:ShouldStop() then     -- doing this after the pull/rigid check, because it likely uses fewer keys
+    if state.startStopTracker:ShouldStop() then     -- doing this after the grapple check, because it likely uses fewer keys
         -- Told to stop swinging, back to standard
         Transition_ToStandard(state, const, debug, o)
         return true
@@ -44,17 +24,9 @@ function SwitchedFlightMode(o, state, const)
     return false
 end
 
-
-
-
-
 -- This will return true as long as there is some air below the player
 function IsAirborne(o)
     return o:IsPointVisible(o.pos, Vector4.new(o.pos.x, o.pos.y, o.pos.z - 0.5, 1))
-end
-
-function IsWallCollisionImminent(o, deltaTime)
-    return not o:IsPointVisible(o.pos, Vector4.new(o.pos.x + (o.vel.x * deltaTime * 4), o.pos.y + (o.vel.y * deltaTime * 4), o.pos.z + (o.vel.z * deltaTime * 4), 1))
 end
 
 function ShouldStopFlyingBecauseGrounded(o, state)
@@ -63,10 +35,10 @@ function ShouldStopFlyingBecauseGrounded(o, state)
     if state.hasBeenAirborne then
         -- Has been continuously airborne in this flight mode for at least a small bit of time
         if not isAirborne then
-            return true
+            return true, isAirborne
         end
     else
-        -- Hasn't had enough time continuously airborne yet
+        -- Hasn't had enough time to be continuously airborne yet
         if isAirborne then
             if state.initialAirborneTime then
                 -- Is airborne and has been airborne before.  See if they have been continuously long enough to transition out of this break in period
@@ -83,51 +55,86 @@ function ShouldStopFlyingBecauseGrounded(o, state)
         end
     end
 
-    return false
+    return false, isAirborne
 end
 
-function Pull_GetAccel(directionUnit, vel, desiredSpeed, deadZone_speedDiff, grappleLen, deadzone_dist, accel)
-    -- Get the component of the velocity along the request line
-    local vel_along = GetProjectedVector_AlongVector(vel, directionUnit, false)     -- returns zero if velocity is in the opposite direction
+function IsWallCollisionImminent(o, deltaTime)
+    return not o:IsPointVisible(o.pos, Vector4.new(o.pos.x + (o.vel.x * deltaTime * 4), o.pos.y + (o.vel.y * deltaTime * 4), o.pos.z + (o.vel.z * deltaTime * 4), 1))
+end
 
-    -- Figure out the delta between actual and desired speed
-    local speedSqr = GetVectorLengthSqr(vel_along)
-    if speedSqr >= desiredSpeed * desiredSpeed then
+function GetGrappleLine(o, state, const)
+    local playerAnchor = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
+
+    local grappleDir = SubtractVectors(state.rayHit, playerAnchor)
+    local grappleLen = GetVectorLength(grappleDir)
+    local grappleDirUnit = DivideVector(grappleDir, grappleLen)
+
+    return playerAnchor, grappleDir, grappleLen, grappleDirUnit
+end
+
+function GetAntiGravity(anti_gravity, isAirborne)
+    if not isAirborne then
+        return 16       -- when on the ground, the player seems to have extra friction.  This weightless assistance is only needed when pulling
+
+    elseif not anti_gravity then
+        return 0
+
+    elseif anti_gravity.antigrav_percent <= 0 then
+        return 0
+
+    elseif anti_gravity.antigrav_percent >= 1 then
+        return 16
+
+    else
+        return 16 * anti_gravity.antigrav_percent
+
+    end
+end
+
+function GetPullAccel_Constant(constAccel, dirUnit, diffDist, speed, isVelAwayFromTarget)
+    if not constAccel then
         return 0, 0, 0, 0
     end
 
-    local speed = math.sqrt(speedSqr)
+    local percent_speed = GetDeadPercent_Speed(speed, constAccel.speed, constAccel.deadSpot_speed, isVelAwayFromTarget)
+    local percent_dist = GetDeadPercent_Distance(diffDist, constAccel.deadSpot_distance)
 
-    local speedDiff = math.abs(speed - desiredSpeed)
-
-    local actualAccel = accel
-    if speedDiff < deadZone_speedDiff then
-        -- Close to desired speed.  Reduce the acceleration
-        actualAccel = GetScaledValue(0, accel, 0, deadZone_speedDiff, speedDiff)
-    end
-
-    if grappleLen < deadzone_dist then
-        -- Close to the target.  Reduce the acceleration
-        local closeAccel = GetScaledValue(0, accel, 0, deadzone_dist, grappleLen)
-
-        if closeAccel < actualAccel then        -- it may already be reduced, so keep the weaker accel
-            actualAccel = closeAccel
-        end
-    end
+    local percent = math.min(percent_speed, percent_dist, 1)
 
     return
-        directionUnit.x * actualAccel,
-        directionUnit.y * actualAccel,
-        directionUnit.z * actualAccel,
-        actualAccel / accel     -- percent
+        dirUnit.x * constAccel.accel * percent,
+        dirUnit.y * constAccel.accel * percent,
+        dirUnit.z * constAccel.accel * percent,
+        percent
 end
 
-function RecoverEnergy(current, max, recoverRate, deltaTime)
-    current = current + (recoverRate * deltaTime)
-
-    if current > max then
-        current = max
+-- These linearly drop percent to zero if close to desired (so acceleration doesn't cause wild oscillations)
+function GetDeadPercent_Speed(speed, maxSpeed, deadSpot, isVelAwayFromTarget)
+    if isVelAwayFromTarget then
+        return 1
     end
 
-    return current
+    local speedDiff = speed - maxSpeed
+
+    if speedDiff > 0 then
+        -- Overspeed, don't add any acceleration
+        return 0
+
+    elseif speedDiff > -deadSpot then
+        -- Close to desired speed.  Reduce the acceleration
+        return -speedDiff / deadSpot      -- speedDiff is always negative here, so just flip it to positive to compare with the positive dead speed
+
+    else
+        -- Under the deadspot speed, use full acceleration
+        return 1
+    end
+end
+function GetDeadPercent_Distance(diffDist, deadSpot)
+    local absDiff = math.abs(diffDist)
+
+    if absDiff < deadSpot then
+        return absDiff / deadSpot
+    else
+        return 1
+    end
 end

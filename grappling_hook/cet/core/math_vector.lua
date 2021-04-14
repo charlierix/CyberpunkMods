@@ -121,23 +121,27 @@ end
 -- Returns the portion of this vector that lies along the other vector
 -- NOTE: The return will be the same direction as alongVector, but the length from zero to this vector's full length
 --
+-- Also returns if is in same direction (false means opposite direction)
+--
 -- Lookup "vector projection" to see the difference between this and dot product
 -- http://en.wikipedia.org/wiki/Vector_projection
 function GetProjectedVector_AlongVector(vector, alongVectorUnit, eitherDirection)
     -- c = (a dot unit(b)) * unit(b)
 
     if IsNearZero_vec4(vector) then
-        return Vector4.new(0, 0, 0, 1)
+        return Vector4.new(0, 0, 0, 1), true
     end
 
     local length = DotProduct3D(vector, alongVectorUnit);
 
     if (not eitherDirection) and (length < 0) then
         -- It's in the opposite direction, and that isn't allowed
-        return Vector4.new(0, 0, 0, 1)
+        return Vector4.new(0, 0, 0, 1), false
     end
 
-    return MultiplyVector(alongVectorUnit, length);
+    return
+        MultiplyVector(alongVectorUnit, length),
+        length > 0
 end
 function GetProjectedVector_AlongPlane(vector, alongPlanes_normal)
     -- Get a line that is parallel to the plane, but along the direction of the vector

@@ -1,12 +1,19 @@
 function Process_Standard(o, player, state, const, debug, deltaTime)
     state.energy = RecoverEnergy(state.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate, deltaTime)
 
+    StartFlightIfRequested(o, player, state, const)        -- putting this in its own function so it can also be called from Process_Flight
+end
+
+-- Looks at buttons to see if they are requesting a grapple
+function StartFlightIfRequested(o, player, state, const)
     local isDown1, isDown2 = state.startStopTracker:ShouldGrapple()
 
     if isDown1 then
-        TryStartFlight(o, state, const, player.grapple1)
+        return TryStartFlight(o, state, const, player.grapple1)
     elseif isDown2 then
-        TryStartFlight(o, state, const, player.grapple2)
+        return TryStartFlight(o, state, const, player.grapple2)
+    else
+        return false
     end
 end
 

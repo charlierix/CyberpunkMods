@@ -7,7 +7,7 @@ function Process_Aim(o, player, state, const, debug, deltaTime)
     --
     -- That's a lot of logic that will just get replicated in the corresponding flight functions
 
-    state.energy = RecoverEnergy(state.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * const.energyRecoveryPercent_inFlight, deltaTime)
+    state.energy = RecoverEnergy(state.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * player.energy_tank.flying_percent, deltaTime)
 
     if state.grapple.aim_straight then
         Process_Aim_Straight(state.grapple.aim_straight, o, player, state, const, debug, deltaTime)

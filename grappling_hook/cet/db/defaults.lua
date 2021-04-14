@@ -20,6 +20,7 @@ function GetDefault_EnergyTank()
     {
         max_energy = 12,
         recovery_rate = 1,
+        flying_percent = 0.25,
 
         experience = 0,
     }
@@ -31,7 +32,11 @@ function GetDefault_Pull()
         name = "pull",
         mappin_name = "AimVariant",
         minDot = 0,
-        anti_gravity = GetDefault_AntiGravity(),
+        anti_gravity =
+        {
+            antigrav_percent = 0.6,       -- pull has to have some anti gravity.  Otherwise, the forces would need to be too large
+            fade_duration = 2,
+        },
         desired_length = 0,     -- pull all the way to the anchor
 
         accel_alongGrappleLine =
@@ -39,7 +44,7 @@ function GetDefault_Pull()
             accel = 24,
             speed = 7,
 
-            deadSpot_distance = 5,
+            deadSpot_distance = 3,
             deadSpot_speed = 1,
         },
 
@@ -48,7 +53,7 @@ function GetDefault_Pull()
             accel = 36,
             speed = 9,
 
-            deadSpot_distance = 4,
+            deadSpot_distance = 3,
             deadSpot_speed = 1,
         },
 
@@ -72,7 +77,7 @@ function GetDefault_Rigid()
         name = "rigid",
         mappin_name = "TakeControlVariant",
         minDot = -0.71,     -- give this extra freedom so they can look around more while hanging/swinging
-        anti_gravity = GetDefault_AntiGravity(),
+        anti_gravity = nil,
 
         desired_length = nil,       -- 6 to 12 would be a good range (start long).  The main use for this is to swing from an overhang, and if you start too far away, you'll just fall to the ground
 
@@ -104,14 +109,6 @@ function GetDefault_Rigid()
         fallDamageReduction_percent = 0,
 
         experience = 0,
-    }
-end
-
-function GetDefault_AntiGravity()
-    return
-    {
-        antigrav_percent = 0,       -- start with full gravity
-        fade_duration = 3,
     }
 end
 

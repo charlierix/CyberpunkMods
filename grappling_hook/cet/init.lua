@@ -99,8 +99,6 @@ local const =
     grappleFrom_Z = 1.5,
     grappleMinResolution = 0.5,
 
-    energyRecoveryPercent_inFlight = 0.25,  -- while aiming/flying, energy will recover at player.energy_tank.recovery_rate * const.energyRecoveryPercent_inFlight
-
     modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
 
     shouldShowDebugWindow = true,      -- shows a window with extra debug info
@@ -230,7 +228,7 @@ registerForEvent("onUpdate", function(deltaTime)
     o:Tick(deltaTime)
 
 
-    --TODO: FPS Safety
+    --TODO: Detect FPS dips.  Also cap deltaTime
 
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
