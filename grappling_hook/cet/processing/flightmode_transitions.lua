@@ -56,6 +56,14 @@ function Transition_ToFlight(state, const, o, rayFrom, rayHit)
     state.initialAirborneTime = nil
 end
 
+-- This gets called when they exit flight by looking too far away while still airborne
+function Transition_ToAntiGrav(state, const, o)
+    state.flightMode = const.flightModes.antigrav
+    o:Custom_CurrentlyFlying_StartFlight()      -- it's already the correct value, just being complete
+
+    state.startTime = o.timer
+end
+
 -- This happens when they aimed too long without a hit, moving into airdash flight
 function Transition_ToAirDash(airdash, state, const, o, rayFrom, lookDist)
     state.flightMode = const.flightModes.airdash

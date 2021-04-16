@@ -30,14 +30,11 @@ function Process_Flight(o, player, state, const, debug, deltaTime)
 
     if DotProduct3D(o.lookdir_forward, grappleDirUnit) < grapple.minDot then
         -- They looked too far away
-
-
-        --TODO: Implement this
-        --Transition_ToAntiGrav()
-
-
-        Transition_ToStandard(state, const, debug, o)
-
+        if grapple.anti_gravity then
+            Transition_ToAntiGrav(state, const, o)
+        else
+            Transition_ToStandard(state, const, debug, o)
+        end
 
         do return end
     end

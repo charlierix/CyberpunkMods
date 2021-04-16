@@ -15,9 +15,14 @@ function SwitchedFlightMode(o, player, state, const)
         return true
     end
 
-    if state.startStopTracker:ShouldStop() then     -- doing this after the grapple check, because it likely uses fewer keys
+    if state.startStopTracker:ShouldStop() then     -- doing this after the grapple check, because it likely uses a subset of those keys (A+D instead of A+D+W)
         -- Told to stop swinging, back to standard
-        Transition_ToStandard(state, const, debug, o)
+        if (state.flightMode == const.flightModes.airdash or state.flightMode == const.flightModes.flight) and state.grapple and state.grapple.anti_gravity then
+            Transition_ToAntiGrav(state, const, o)
+        else
+            Transition_ToStandard(state, const, debug, o)
+        end
+
         return true
     end
 
