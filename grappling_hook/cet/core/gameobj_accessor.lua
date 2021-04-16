@@ -230,16 +230,24 @@ end
 
 -- This plays a sound, pass in the CName (to find possible strings, search adamsmasher for
 -- SoundPlayEvent or SoundStopEvent then walk the call stack)
+--
+-- param: state is optional.  If passed in, it will store this sound, and logic will be used to
+-- only have one sound playing at a time.  If nil, then the caller is responsible for stopping
+-- the sound
 function GameObjectAccessor:PlaySound(soundName, state)
     self:EnsurePlayerLoaded()
 
     if self.player then
-        StopSound(self, state)
+        if state then
+            StopSound(self, state)
+        end
 
         self.wrappers.QueueSound(self.player, soundName)
 
-        state.sound_current = soundName
-        state.sound_started = self.timer
+        if state then
+            state.sound_current = soundName
+            state.sound_started = self.timer
+        end
     end
 end
 function GameObjectAccessor:StopSound(soundName)

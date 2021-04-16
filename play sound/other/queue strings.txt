@@ -1,0 +1,423 @@
+------------------------- .soundName
+
+    audioEvent.soundName = n"ui_jingle_vehicle_arrive";
+    evt.soundName = eventName;
+      soundEvent.soundName = n"w_feedback_player_damage";
+      soundEvent.soundName = n"test_ad_emitter_2_1";
+        soundEvent.soundName = n"test_ad_emitter_2_1";
+      soundEvent.soundName = n"w_feedback_player_damage";
+      soundEvent.soundName = n"test_ad_emitter_2_1";
+    soundEvent.soundName = n"v_col_player_impact";
+    audioEvent.soundName = soundName;
+    audioEvent.soundName = SoundEffect;
+    audioEvent.soundName = n"Play_grenade";
+    let audioEvent: ref<SoundPlayEvent>;
+    audioEvent = new SoundPlayEvent();
+    let soundEvent: ref<SoundPlayEvent>;
+    soundEvent = new SoundPlayEvent();
+    let soundEvent: ref<SoundPlayEvent>;
+        soundEvent = new SoundPlayEvent();
+    let soundEvent: ref<SoundPlayEvent>;
+    soundEvent = new SoundPlayEvent();
+    let soundEvent: ref<SoundPlayEvent>;
+    soundEvent = new SoundPlayEvent();
+    let audioEvent: ref<SoundPlayEvent>;
+    audioEvent = new SoundPlayEvent();
+    let soundEvent: ref<SoundPlayEvent>;
+    let soundEvent: ref<SoundPlayEvent>;
+    let audioEvent: ref<SoundPlayEvent>;
+    audioEvent = new SoundPlayEvent();
+public final native class SoundPlayEvent extends Event {
+    let audioEvent: ref<SoundPlayEvent>;
+    audioEvent = new SoundPlayEvent();
+
+
+
+------------------------- 
+public class GameObject extends GameEntity {
+StopSoundEvent(
+-------------------------
+
+      GameObject.StopSoundEvent(self, eventName);
+  public final static func StopSoundEvent(self: ref<GameObject>, eventName: CName) -> Void {
+    GameObject.StopSoundEvent(this, this.m_soundDetectionLoop);
+    GameObject.StopSoundEvent(this, this.m_idleSound);
+          GameObject.StopSoundEvent(this, this.m_idleSound);
+        GameObject.StopSoundEvent(this, this.m_soundDetectionLoop);
+      GameObject.StopSoundEvent(this, this.m_soundDetectionLoop);
+      GameObject.StopSoundEvent(this, n"q003_sc_03_ui_deal_virus");
+    GameObject.StopSoundEvent(this, this.m_soundDetectionLoop);
+    GameObject.StopSoundEvent(this, this.m_soundDetectionLoop);
+    GameObject.StopSoundEvent(this, this.m_soundDetectionLoop);
+    GameObject.StopSoundEvent(this, this.m_soundDetectionLoop);
+        GameObject.StopSoundEvent(this, this.m_idleSound);
+      GameObject.StopSoundEvent(this, this.m_loopAudioEvent);
+      GameObject.StopSoundEvent(this, this.m_loopAudioEvent);
+    GameObject.StopSoundEvent(this, n"w_gre_mine_activate");
+      GameObject.StopSoundEvent(this, n"w_gre_mine_activate");
+        GameObject.StopSoundEvent(this, n"w_gre_mine_activate");
+    GameObject.StopSoundEvent(this, this.m_distractionSound);
+
+
+
+
+
+-----------------------
+PlaySound(
+-----------------------
+
+
+
+      AISubActionPlaySound_Record_Implementation.PlaySound(context, record);
+      AISubActionPlaySound_Record_Implementation.PlaySound(context, record);
+      AISubActionPlaySound_Record_Implementation.PlaySound(context, record);
+  public final static func PlaySound(context: ScriptExecutionContext, record: wref<AISubActionPlaySound_Record>) -> Void {
+      GameObject.PlaySound(item, record.Name());
+      GameObject.PlaySound(ScriptExecutionContext.GetOwner(context), record.Name());
+      GameObject.PlaySound(puppet, n"drone_disable");
+      GameObject.PlaySound(puppet, n"drone_enable");
+    GameObject.PlaySound(this.GetOwner(), n"drone_defeated");
+    GameObject.PlaySound(owner, n"drone_destroyed");
+  GameObject.PlaySound((GameInstance.GetPlayerSystem(gameInstance).GetLocalPlayerMainGameObject() as PlayerPuppet), rumbleName);
+  public final static func PlaySound(self: ref<GameObject>, eventName: CName, opt emitterName: CName) -> Void {
+        GameObject.PlaySound(this, sfxList[i].Name());
+        GameObject.PlaySound(this.m_owner, this.activationSFXName, n"PlaySFXEffector");
+        GameObject.PlaySound(this.m_owner, this.activationSFXName, n"PlaySFXEffector");
+      GameObject.PlaySound(this.m_owner, this.deactivationSFXName, n"PlaySFXEffector");
+    GameObject.PlaySound(this.m_owner, this.m_sfxToStart, n"Scripts:StopAndPlaySFXEffector:ActionOn");
+    GameObject.PlaySound(this.m_owner, this.m_sfxName, n"Scripts:StopSFXEffector:ActionOn");
+  public final native func PlaySound(widgetName: CName, eventName: CName, opt actionKey: CName) -> Void
+      this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnHover");
+      this.PlaySound(n"ButtonValueDown", n"OnPress");
+      this.PlaySound(n"ButtonValueUp", n"OnPress");
+        this.PlaySound(n"ButtonValueDown", n"OnPress");
+          this.PlaySound(n"ButtonValueUp", n"OnPress");
+            this.PlaySound(this.m_SoundPrefix, this.m_PressSoundName);
+              this.PlaySound(this.m_SoundPrefix, this.m_HoverSoundName);
+    GameObject.PlaySound(this, this.m_currentGameAudioStop);
+    GameObject.PlaySound(this, this.m_currentGameAudio);
+      GameObject.PlaySound(this, this.m_currentGameAudio);
+    GameObject.PlaySound(this, this.GetDevicePS().GetGlitchSFX());
+      GameObject.PlaySound(this, n"dev_confession_booth_confessing");
+        GameObject.PlaySound(owner, SFXs[i].sfxName);
+    GameObject.PlaySound(this, this.GetDevicePS().GetGlitchSFX());
+    GameObject.PlaySound(this, n"dev_screen_glitch_distraction");
+      GameObject.PlaySound(this, n"mute_tv_emitter");
+      GameObject.PlaySound(this, n"unmute_tv_emitterr");
+      this.PlaySound();
+  protected final func PlaySound() -> Void {
+      GameObject.PlaySound(this, this.GetDevicePS().AlarmSound());
+    GameObject.PlaySound(this, this.GetDevicePS().GetGlitchSFX());
+      GameObject.PlaySound(this, this.m_soundEvent);
+    this.PlaySound(n"MiniGame", n"OnOpen");
+    this.PlaySound(n"MiniGame", n"OnClose");
+        this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(controller.GetWidgetAudioName(), n"OnHoverOver", controller.GetOnHoverOverKey());
+      this.PlaySound(controller.GetWidgetAudioName(), n"OnHoverOut", controller.GetOnHoverOutKey());
+        this.PlaySound(controller.GetWidgetAudioName(), n"OnPress", controller.GetOnHoverOutKey());
+        this.PlaySound(controller.GetWidgetAudioName(), n"OnRelease", controller.GetOnHoverOutKey());
+          GameObject.PlaySound(this.GetOwner(), audioEvent);
+          GameObject.PlaySound(this, n"gre_impact_solid_ozob");
+          GameObject.PlaySound(this, n"gre_impact_solid");
+              GameObject.PlaySound(this, n"grenade_stick");
+    GameObject.PlaySound(this, TDB.GetCName(t"rumble.world.heavy_slow"));
+    GameObject.PlaySound(this, n"grenade_laser_stop");
+      GameObject.PlaySound(this, StringToName("gre_npc_beep_lp"));
+      GameObject.PlaySound(this, StringToName("gre_npc_beep_lp_stop"));
+    GameObject.PlaySound(this, n"grenade_charge_start");
+    GameObject.PlaySound(this, n"grenade_charge_1s");
+        GameObject.PlaySound(evt.instigator, TDB.GetCName(t"rumble.local.heavy_pulse"));
+        GameObject.PlaySound(evt.instigator, TDB.GetCName(t"rumble.local.light_pulse"));
+      GameObject.PlaySound(evt.instigator, TDB.GetCName(t"rumble.local.light_pulse"));
+        GameObject.PlaySound(this.GetOwner(), hitFeedbackSound);
+      GameObject.PlaySound(this.m_ownerPuppet, n"oxygen_critical_start");
+      GameObject.PlaySound(this.m_ownerPuppet, n"oxygen_critical_stop");
+        GameObject.PlaySound(this, n"slow");
+      GameObject.PlaySound(this, soundName);
+    GameObject.PlaySound(this, soundName);
+          GameObject.PlaySound(this, TDB.GetCName(t"rumble.local.light_pulse"));
+    GameObject.PlaySound(this, rumbleName);
+        GameObject.PlaySound(this, n"ui_gmpl_stealth_detection");
+        GameObject.PlaySound(this, rumbleName);
+    GameObject.PlaySound(DefaultTransition.GetPlayerPuppet(scriptInterface), rumbleName);
+    GameObject.PlaySound(DefaultTransition.GetPlayerPuppet(scriptInterface), rumbleName);
+    GameObject.PlaySound(DefaultTransition.GetPlayerPuppet(scriptInterface), rumbleName);
+  protected final func PlaySound(soundName: CName, scriptInterface: ref<StateGameScriptInterface>) -> Void {
+    this.PlaySound(n"lcm_falling_wind_loop_end", scriptInterface);
+    this.PlaySound(n"surface_from_dive", scriptInterface);
+    this.PlaySound(n"surface_from_fast_dive", scriptInterface);
+    this.PlaySound(n"hold_breath", scriptInterface);
+    this.PlaySound(n"lcm_falling_wind_loop_end", scriptInterface);
+    this.PlaySound(n"lcm_falling_wind_loop_end", scriptInterface);
+      this.PlaySound(n"lcm_falling_wind_loop", scriptInterface);
+                  this.PlaySound(n"lcm_falling_wind_loop", scriptInterface);
+    this.PlaySound(n"lcm_falling_wind_loop_end", scriptInterface);
+    this.PlaySound(n"lcm_falling_wind_loop", scriptInterface);
+    this.PlaySound(n"q115_thruster_start", scriptInterface);
+    this.PlaySound(n"q115_thruster_stop", scriptInterface);
+    this.PlaySound(n"lcm_wallrun_out", scriptInterface);
+    this.PlaySound(n"Player_double_jump", scriptInterface);
+    this.PlaySound(n"lcm_player_double_jump", scriptInterface);
+    this.PlaySound(n"lcm_player_double_jump", scriptInterface);
+    this.PlaySound(n"lcm_player_double_jump", scriptInterface);
+        this.PlaySound(n"lcm_wallrun_in", scriptInterface);
+    this.PlaySound(n"lcm_wallrun_in", scriptInterface);
+    this.PlaySound(n"Player_falling_wind_loop", scriptInterface);
+    GameObject.PlaySound(scriptInterface.executionOwner, this.GetStaticCNameParameter("slowMoStartSound", n""));
+    this.PlaySound(n"v_mbike_dst_crash_fall", scriptInterface);
+    this.PlaySound(n"Quickmelee_guns", scriptInterface);
+      this.PlaySound(n"ui_focus_mode_zooming_in_enter", scriptInterface);
+        this.PlaySound(n"ST_Focus_Mode_On_Set_State", scriptInterface);
+        this.PlaySound(n"ST_Focus_Mode_Off_Set_State", scriptInterface);
+      this.PlaySound(n"ui_focus_mode_zooming_in_exit", scriptInterface);
+      this.PlaySound(n"ui_focus_mode_zooming_in_step_change", scriptInterface);
+      this.PlaySound(n"ui_focus_mode_zooming_in_step_change", scriptInterface);
+      this.PlaySound(n"ui_focus_mode_zooming_in_step_change", scriptInterface);
+    this.PlaySound(n"ui_focus_mode_zooming_in_step_change", scriptInterface);
+    this.PlaySound(n"ui_focus_mode_zooming_in_step_change", scriptInterface);
+    this.PlaySound(n"ui_focus_mode_zooming_in_step_change", scriptInterface);
+    this.PlaySound(n"ui_focus_mode_zooming_in_exit", scriptInterface);
+    this.PlaySound(n"ui_focus_mode_zooming_in_exit", scriptInterface);
+      this.PlaySound(this.m_soundControlName, this.m_initializeSoundName);
+      this.PlaySound(this.m_soundControlName, this.m_unitializeSoundName);
+        this.PlaySound(n"ItemGeneric", n"OnDrop");
+          this.PlaySound(n"ItemConsumableFood", n"OnUse");
+    this.PlaySound(n"ItemGeneric", n"OnDrop");
+    this.PlaySound(n"ItemGeneric", n"OnDisassemble");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+          this.PlaySound(n"ItemGeneric", n"OnDisassemble");
+      this.PlaySound(n"MapPin", n"OnDisable");
+        this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Item", n"OnCraftted");
+    this.PlaySound(n"Item", n"OnCraftted");
+    this.PlaySound(n"GameMenu", n"OnOpen");
+      this.PlaySound(n"GameMenu", n"OnClose");
+    this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"TabButton", n"OnPress");
+        this.PlaySound(n"TabButton", n"OnPress");
+    this.PlaySound(n"DeathMenu", n"OnOpen");
+    this.PlaySound(n"DeathMenu", n"OnClose");
+        this.PlaySound(n"TabButton", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"Button", n"OnHover");
+    this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"MapPin", n"OnCreate");
+            this.PlaySound(n"MapPin", n"OnEnable");
+              this.PlaySound(n"MapPin", n"OnDisable");
+                this.PlaySound(n"MapPin", n"OnDisable");
+                this.PlaySound(n"MapPin", n"OnEnable");
+    this.PlaySound(n"MapPin", n"OnCreate");
+      this.PlaySound(n"Button", n"OnPress");
+            this.PlaySound(n"Button", n"OnPress");
+                  this.PlaySound(n"Button", n"OnHover");
+                    this.PlaySound(n"Button", n"OnHover");
+                        this.PlaySound(n"Button", n"OnPress");
+                          this.PlaySound(n"Button", n"OnPress");
+                            this.PlaySound(n"Button", n"OnPress");
+                              this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(this.m_data.soundEvent, this.m_data.soundAction);
+      this.PlaySound(this.m_levelup_data.soundEvent, this.m_levelup_data.soundAction);
+      this.PlaySound(this.m_levelup_data.soundEvent, this.m_levelup_data.soundAction);
+    this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"ShardPanel", n"OnOpen");
+    this.PlaySound(n"ShardPanel", n"OnClose");
+        this.PlaySound(n"StealthTrespassingPopup", n"OnOpen");
+        this.PlaySound(n"StealthTrespassingPopup", n"OnOpen");
+        this.PlaySound(n"StealthTrespassingPopup", n"OnOpen");
+    this.PlaySound(n"StealthTrespassingPopup", n"OnOpen");
+    this.PlaySound(n"StealthTrespassingPopup", n"OnOpen");
+    this.PlaySound(n"StealthTrespassingPopup", n"OnOpen");
+    this.PlaySound(n"StealthTrespassingPopup", n"OnOpen");
+          this.PlaySound(n"Perk", n"OnBuyFail");
+            this.PlaySound(n"Perk", n"OnBuyFail");
+              this.PlaySound(n"Perk", n"OnLevelUp");
+      this.PlaySound(n"Button", n"OnHover");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Attributes", n"OnStart");
+      this.PlaySound(n"Attributes", n"OnDone");
+      this.PlaySound(n"Attributes", n"OnFail");
+    this.PlaySound(n"Attributes", n"OnStart");
+      this.PlaySound(n"Attributes", n"OnFail");
+      this.PlaySound(n"Attributes", n"OnDone");
+      this.PlaySound(n"Attributes", n"OnFail");
+        this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+          this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+          this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+          this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"CharacterCreationConfirmationAnimation", n"OnClose");
+          this.PlaySound(n"Button", n"OnPress");
+              this.PlaySound(n"Button", n"OnPress");
+                this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"CharacterCreationConfirmationAnimation", n"OnClose");
+    this.PlaySound(n"SaveDeleteButton", n"OnPress");
+    this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"CharacterCreationLoading", n"OnOpen");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"MapPin", n"OnEnable");
+        this.PlaySound(n"MapPin", n"OnDisable");
+        this.PlaySound(n"MapPin", n"OnCreate");
+        this.PlaySound(n"MapPin", n"OnDisable");
+    this.PlaySound(n"MapPin", n"OnDelete");
+        this.PlaySound(n"Button", n"OnPress");
+          this.PlaySound(n"Button", n"OnPress");
+            this.PlaySound(n"Button", n"OnPress");
+              this.PlaySound(n"Button", n"OnPress");
+                this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+          this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"CharacterCreationConfirmation", n"OnPress");
+    this.PlaySound(n"GameMenu", n"OnOpen");
+    this.PlaySound(n"GameMenu", n"OnClose");
+        this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"CharacterCreationConfirmationAnimation", n"OnOpen");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"SaveDeleteButton", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"SaveDeleteButton", n"OnPress");
+        this.PlaySound(n"SaveDeleteButton", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"MapPin", n"OnCreate");
+      this.PlaySound(n"MapPin", n"OnCreate");
+      this.PlaySound(n"Button", n"OnPress");
+          this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"ItemCyberware", n"OnInstall");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"GameMenu", n"OnClose");
+      this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"GameMenu", n"OnOpen");
+            this.PlaySound(n"MapPin", n"OnDelete");
+          this.PlaySound(Cast("Item"), Cast("OnBuy"));
+          this.PlaySound(Cast("Item"), Cast("OnBuy"));
+          this.PlaySound(Cast("Item"), Cast("OnSell"));
+      this.PlaySound(Cast("Item"), Cast("OnSell"));
+      this.PlaySound(n"Button", n"OnPress");
+          this.PlaySound(Cast("Item"), Cast("OnSell"));
+          this.PlaySound(Cast("Item"), Cast("OnSell"));
+          this.PlaySound(Cast("Item"), Cast("OnBuy"));
+            this.PlaySound(Cast("Item"), Cast("OnSell"));
+    this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(Cast("Item"), Cast("OnSell"));
+    this.PlaySound(n"MiniGame", n"AccessGranted");
+      this.PlaySound(n"MiniGame", n"AccessDenied");
+          this.PlaySound(n"PhoneCallPopup", n"OnOpen");
+    this.PlaySound(n"Holocall", n"OnPickingUp");
+    this.PlaySound(n"Holocall", n"OnHangUp");
+      this.PlaySound(n"Holocall", n"Navigation");
+  private final func PlaySound(SoundEffect: CName) -> Void {
+    this.PlaySound(n"VehicleRadioPopup", n"OnOpen");
+      this.PlaySound(n"VehicleRadioPopup", n"OnClose");
+      this.PlaySound(n"Button", n"OnPress");
+        this.PlaySound(n"ItemAdditional", n"OnUnequip");
+        this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"ItemGeneric", n"OnDrop");
+        this.PlaySound(n"ItemAdditional", n"OnEquip");
+          this.PlaySound(n"ItemGeneric", n"OnDisassemble");
+          this.PlaySound(n"ItemConsumableFood", n"OnUse");
+    this.PlaySound(n"ItemGeneric", n"OnDisassemble");
+      this.PlaySound(n"Button", n"OnPress");
+    this.PlaySound(n"ItemAdditional", n"OnUnequip");
+      this.PlaySound(Cast("Item"), Cast("OnBuy"));
+      this.PlaySound(Cast("Item"), Cast("OnBuy"));
+          this.PlaySound(n"ItemGeneric", n"OnDrop");
+        this.PlaySound(n"ItemAdditional", n"OnEquip");
+    this.PlaySound(n"ItemGeneric", n"OnDrop");
+    this.PlaySound(n"ItemGeneric", n"OnDisassemble");
+        this.PlaySound(n"ItemGeneric", n"OnDisassemble");
+        this.PlaySound(n"ItemConsumableFood", n"OnUse");
+    this.PlaySound(n"Button", n"OnPress");
+      this.PlaySound(n"GameMenu", n"OnOpen");
+      this.PlaySound(n"GameMenu", n"OnClose");
+                    this.PlaySound(n"MapPin", n"OnCreate");
+      controller.PlaySound(n"Button", n"OnHover");
+      this.PlaySound(n"RadialMenu", n"OnClose");
+      this.PlaySound(n"RadialMenu", n"OnOpen");
+        this.PlaySound(n"SmartGunRifle", n"OnTagFromAim");
+        this.PlaySound(n"SmartGunRifle", n"OnTagFromHip");
+          this.PlaySound(n"StealthTrespassingPopup", n"OnOpen");
+          this.PlaySound(n"StealthTrespassingPopup", n"OnOpen");
+          this.PlaySound(n"StealthTrespassingPopup", n"OnOpen");
+      this.PlaySound(n"QuickHackMenu", n"OnOpen");
+      this.PlaySound(n"QuickHackMenu", n"OnClose");
+  public final native func PlaySound(widgetName: CName, eventName: CName, opt actionKey: CName) -> Void
+  public final native func PlaySound(widgetName: CName, eventName: CName, opt actionKey: CName) -> Void
+
+
+
+
+
+
+
+
+------------------------- further searches
+
+public class GameObject extends GameEntity {
+StopSound(
+
+
+public class SensorDevice extends ExplosiveDevice {
+m_soundDetectionLoop
+
+
+public class SensorDevice extends ExplosiveDevice {
+m_idleSound
+
+
+public class ExplosiveDevice extends BasicDistractionDevice {
+m_loopAudioEvent
+
+
+public class Intercom extends InteractiveDevice {
+m_distractionSound
+
+
+public class DefaultTransition extends StateFunctor {
+PlaySound(
+
+public class scannerGameController extends inkHUDGameController {
+PlaySound(

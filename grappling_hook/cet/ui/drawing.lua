@@ -1,7 +1,7 @@
 --Borderless progress bar inspired by / lifted from survival mod by Architect
 --https://www.nexusmods.com/cyberpunk2077/mods/1405
 --NOTE: This is a copy of DrawJetpackProgress
-function DrawEnergyProgress(energy, max)
+function DrawEnergyProgress(energy, max, state)
     ImGui.SetNextWindowPos(20, 230, ImGuiCond.Always)       -- this is under the top left combat graphic (placing under jetpack's progress bar)
     ImGui.SetNextWindowSize(330, 50, ImGuiCond.Appearing)
 
@@ -14,9 +14,16 @@ function DrawEnergyProgress(energy, max)
 
         -- Progress Bar
         ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 3)
-        ImGui.PushStyleColor(ImGuiCol.Text, 0.46, 1, 1, 1)
-        ImGui.PushStyleColor(ImGuiCol.FrameBg, 0.37, 0.68, 0.68, 0.6)
-        ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0.45, 0.83, 0.83, 0.9)
+
+        if state.animation_lowEnergy.isProgressBarRed then
+            ImGui.PushStyleColor(ImGuiCol.Text, 1, 0.4, 0.36, 1)
+            ImGui.PushStyleColor(ImGuiCol.FrameBg, 0.29, 0.13, 0.15, 0.6)
+            ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0.78, 0.28, 0.27, 0.9)
+        else
+            ImGui.PushStyleColor(ImGuiCol.Text, 0.46, 1, 1, 1)
+            ImGui.PushStyleColor(ImGuiCol.FrameBg, 0.37, 0.68, 0.68, 0.6)
+            ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0.45, 0.83, 0.83, 0.9)
+        end
 
         ImGui.ProgressBar(energy / max, 130, 24)     -- %, width, height
 

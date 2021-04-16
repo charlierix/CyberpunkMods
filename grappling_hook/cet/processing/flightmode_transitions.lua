@@ -16,7 +16,8 @@ end
 function Transition_ToAim(grapple, state, const, o, shouldConsumeEnergy)
     if shouldConsumeEnergy then
         if state.energy < grapple.energy_cost then
-            --TODO: Play a fail sound
+            -- Notify the player that energy is too low
+            state.animation_lowEnergy:ActivateAnimation()
             return false
         else
             state.energy = state.energy - grapple.energy_cost

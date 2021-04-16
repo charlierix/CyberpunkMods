@@ -1,0 +1,33 @@
+----- negatives
+
+        "ui_generic_set_14_negative",   -- very quiet no
+        "ui_generic_set_14_positive",   -- another good error tone
+        "ui_tv_turn_on",
+        "ui_tv_turn_off",
+        "q114_sc_04_saul_hugs",     -- quick tap sound
+        "g_sc_bd_rewind_pause",     -- good error note
+
+        "q101_sc_06_troy_hits_hood",    -- maybe
+        "dev_doors_single_cabin_dex_end_open",
+        "test_ad_emitter_2_4",
+
+
+
+
+
+----- other
+
+
+        "test_ad_emitter_2_1",      -- simple tone
+        "Play_SyncClap",            -- simple tone
+
+
+        "ono_rogue_bump",     -- funny when played repeatedly
+        "ono_takemura_greet",
+        "ono_takemura_effort",
+        "ono_takemura_pain_long",
+        "ono_generic_f_laugh_soft_set_01",
+        "ono_generic_f_laugh_soft_set_03",
+        "ono_generic_f_laugh_soft_set_04",
+
+

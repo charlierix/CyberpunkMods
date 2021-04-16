@@ -10,16 +10,11 @@
 require "core/check_other_mods"
 require "core/customprops_wrapper"
 require "core/debug_code"
-require "core/drawing"
 require "core/gameobj_accessor"
-require "core/inputtracker_startstop"
-require "core/keys"
-require "core/mappinutil"
 require "core/math_basic"
 require "core/math_raycast"
 require "core/math_vector"
 require "core/math_yaw"
-require "core/reporting"
 require "core/util"
 
 require "db/dal"
@@ -35,6 +30,13 @@ require "processing/processing_antigrav"
 require "processing/processing_flight"
 require "processing/processing_standard"
 require "processing/safetyfire"
+
+require "ui/animation_lowEnergy"
+require "ui/drawing"
+require "ui/inputtracker_startstop"
+require "ui/keys"
+require "ui/mappinutil"
+require "ui/reporting"
 
 function TODO()
 
@@ -118,17 +120,6 @@ local keys = Keys:new()
 
 local debug = { }
 
-local state_ORIG_COMMENTED =
-{
-    --TODO: These variables will need to be evaluated
-
-    --mappinID      -- this will be populated while the map pin is visible (managed in mappinutil.lua)
-    --mappinName    -- this is the name of the map pin that is currently visible (managed in mappinutil.lua)
-
-    --sound_current = nil,  -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
-    sound_started = 0,
-}
-
 local state =
 {
     flightMode = const.flightModes.standard,
@@ -149,6 +140,16 @@ local state =
 
     --hasBeenAirborne   -- set to false when transitioning to flight or air dash.  Used by air dash and flight (if flight has a desired length)
     --initialAirborneTime
+
+    --mappinID          -- this will be populated while the map pin is visible (managed in mappinutil.lua)
+    --mappinName        -- this is the name of the map pin that is currently visible (managed in mappinutil.lua)
+
+    --NOTE: These sound props are only used for sounds that should be one at a time.  There can
+    --      be other sounds that are managed elsewhere
+    --sound_current = nil,  -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
+    sound_started = 0,
+
+    --animation_lowEnergy   -- instantiated in init.  Triggered when they try to fire a grapple, but don't have enough energy
 
     isSafetyFireCandidate = false,      -- this will turn true when grapple is used.  Goes back to false after they touch the ground
 }
@@ -208,6 +209,8 @@ registerForEvent("onInit", function()
     o = GameObjectAccessor:new(wrappers)
 
     InitializeKeyTrackers(state, keys, o)
+
+    state.animation_lowEnergy = Animation_LowEnergy:new(o)
 end)
 
 registerForEvent("onShutdown", function()
@@ -226,6 +229,7 @@ registerForEvent("onUpdate", function(deltaTime)
     end
 
     o:Tick(deltaTime)
+    state.animation_lowEnergy:Tick()
 
 
     --TODO: Detect FPS dips.  Also cap deltaTime
@@ -299,7 +303,7 @@ registerForEvent("onDraw", function()
     end
 
     if player and state.energy < player.energy_tank.max_energy then
-        DrawEnergyProgress(state.energy, player.energy_tank.max_energy)
+        DrawEnergyProgress(state.energy, player.energy_tank.max_energy, state)
     end
 
     if const.shouldShowDebugWindow then
