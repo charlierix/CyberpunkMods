@@ -40,11 +40,11 @@ require "ui/reporting"
 
 function TODO()
 
+    -- AirDash:
+    --  Sound
+
     -- WebSwing:
     --  Activate when double tapping A,D
-
-    -- All:
-    --  Sounds
 
     -- Pull:
     --      May need further ray casts along the initial line segment if it was beyond 50 (a collision hull could load in as the player gets closer)
@@ -52,12 +52,6 @@ function TODO()
     -- Pull:
     --  If grapple point is a person (determined in aim), ragdoll them toward you
     --  GET OVER HERE!!!
-
-    -- All:
-    --  Energy tank
-
-    -- All:
-    --  Anti gravity should taper off a bit after release
 
     -- All:
     --  Let them level up the grapple.  Start with:
@@ -77,16 +71,11 @@ function TODO()
     --     end
     -- end)
 
-    -- Pull/Rigid:
-    --  Instead of pull/rigid being distinct, hardcoded:  Make a single straight line function that gets
-    --  fed a bunch of options.  Then the user will pick which mode gets tied to which buttons:
-    --      Desired Length: pull is currently zero, rigid is currently none
-    --      Can airdash first
-    --      Compress/Tension forces
-    --          Also have option for spring forces
-
     -- All:
     --  Fall damage should be a percent, not a bool
+
+    -- GameObjectAccessor:
+    --  Interval needs to be rand(12, +-1)
 
 end
 
@@ -134,7 +123,6 @@ local state =
 
     --rayFrom           -- gets populated when transitioning to airdash or flight
     --rayHit            -- gets populated when transitioning to flight
-    --rayDir            -- gets populated when transitioning to airdash
     --rayLength         -- gets populated when transitioning to airdash
     --distToHit         -- len(rayHit-rayFrom)    populated when transitioning to flight
 

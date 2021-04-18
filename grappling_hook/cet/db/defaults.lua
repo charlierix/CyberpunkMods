@@ -118,6 +118,22 @@ function GetDefault_AimStraight()
         max_distance = 24,
         aim_duration = 0.333,     -- 1 seems ideal, but make them pay for it in third second intervals
         mappin_name = "CustomPositionVariant",
-        air_dash = false,
+        air_dash = nil,
+    }
+end
+
+function GetDefault_AirDash()
+    return
+    {
+        energyBurnRate = 1,
+        mappin_name = "OffVariant",
+        accel =
+        {
+            accel = 28,     -- anything below this, and it's like the horizontal component is ignored
+            speed = 9,
+
+            deadSpot_distance = 0,
+            deadSpot_speed = 1,
+        },
     }
 end

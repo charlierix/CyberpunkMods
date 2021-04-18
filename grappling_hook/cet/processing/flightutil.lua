@@ -7,6 +7,15 @@ function RecoverEnergy(current, max, recoverRate, deltaTime)
 
     return current
 end
+function ConsumeEnergy(current, burnRate, deltaTime)
+    local newValue = current - (burnRate * deltaTime)
+
+    if newValue < 0 then
+        return current, true
+    else
+        return newValue, false
+    end
+end
 
 -- This is called while in flight.  It looks for the user wanting to switch flight modes
 function SwitchedFlightMode(o, player, state, const)
@@ -18,6 +27,7 @@ function SwitchedFlightMode(o, player, state, const)
     if state.startStopTracker:ShouldStop() then     -- doing this after the grapple check, because it likely uses a subset of those keys (A+D instead of A+D+W)
         -- Told to stop swinging, back to standard
         if (state.flightMode == const.flightModes.airdash or state.flightMode == const.flightModes.flight) and state.grapple and state.grapple.anti_gravity then
+            print("calling from switch")
             Transition_ToAntiGrav(state, const, o)
         else
             Transition_ToStandard(state, const, debug, o)

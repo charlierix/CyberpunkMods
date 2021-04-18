@@ -58,6 +58,19 @@ end
 
 -- This gets called when they exit flight by looking too far away while still airborne
 function Transition_ToAntiGrav(state, const, o)
+
+
+
+    if not state then
+        print(":: state is nil")
+    elseif not state.grapple then
+        print(":: state.grapple is nil")
+    elseif not state.grapple.anti_gravity then
+        print(":: state.grapple.anti_gravity is nil")
+    end
+
+
+
     state.flightMode = const.flightModes.antigrav
     o:Custom_CurrentlyFlying_StartFlight()      -- it's already the correct value, just being complete
 
@@ -74,9 +87,13 @@ function Transition_ToAirDash(airdash, state, const, o, rayFrom, lookDist)
     state.startTime = o.timer
 
     state.rayFrom = rayFrom
-    state.rayDir = o.lookdir_forward
     state.rayLength = lookDist
 
     state.hasBeenAirborne = false
     state.initialAirborneTime = nil
+
+
+    --TODO: Play a sound
+
+
 end

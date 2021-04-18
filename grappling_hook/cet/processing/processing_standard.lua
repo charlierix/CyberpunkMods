@@ -1,3 +1,5 @@
+-- This gets call most of the time, it's them running around playing the game normally
+-- This recovers energy and looks at key inputs to see if they activated a grapple
 function Process_Standard(o, player, state, const, debug, deltaTime)
     state.energy = RecoverEnergy(state.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate, deltaTime)
 

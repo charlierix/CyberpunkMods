@@ -1,3 +1,11 @@
+-- This is called when they've initiated a new grapple.  It looks at the environment and kicks
+-- off actual flight with final values (like anchor point)
+--
+-- StaightLine does a ray cast.  If the ray hits, then it starts grapple.  If too much time has
+-- passed, it either does an air dash, or goes back to standard mode
+--
+-- Webswing will look at current velocity, direction looking and find a good anchor point that
+-- carries flight through a desired arc
 function Process_Aim(o, player, state, const, debug, deltaTime)
     -- There's potentially a case to stop right away if standing on the ground if:
     --  there is no air dash
@@ -7,6 +15,7 @@ function Process_Aim(o, player, state, const, debug, deltaTime)
     --
     -- That's a lot of logic that will just get replicated in the corresponding flight functions
 
+    -- Recover energy at the reduced flight rate
     state.energy = RecoverEnergy(state.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * player.energy_tank.flying_percent, deltaTime)
 
     if state.grapple.aim_straight then
@@ -49,7 +58,7 @@ function Process_Aim_Straight(aim, o, player, state, const, debug, deltaTime)
     if o.timer - state.startTime > aim.aim_duration then
         if aim.air_dash then
             -- Took too long to aim, switching to air dash
-            Transition_ToAirDash(state, o, const, from, aim.max_distance)
+            Transition_ToAirDash(aim.air_dash, state, const, o, from, aim.max_distance)
         else
             -- Took too long to aim, can't air dash, giving up
 

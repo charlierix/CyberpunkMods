@@ -1,3 +1,17 @@
+-- This is the primary worker method for grappling.  Conditions were set up while
+-- aiming
+--
+-- There is an anchor point, possibly separate desired distance.  Then it's a matter
+-- of applying acceleration toward desired distance with extra options for when they
+-- overshoot
+--
+-- There's also an option to apply a separate acceleration in the direction that the
+-- player is looking.  This makes it possible to control the swing, so it's not just
+-- a boring straight line pull
+--
+-- There are a lot of different ways that a grapple could be set up.  Any actual
+-- grapple config probably won't use all the acceleration types, but it's easier
+-- to have a single worker method that can handle lots of possible config scenarios
 function Process_Flight(o, player, state, const, debug, deltaTime)
     -- Recover at a reduced rate
     state.energy = RecoverEnergy(state.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * player.energy_tank.flying_percent, deltaTime)
@@ -31,6 +45,7 @@ function Process_Flight(o, player, state, const, debug, deltaTime)
     if DotProduct3D(o.lookdir_forward, grappleDirUnit) < grapple.minDot then
         -- They looked too far away
         if grapple.anti_gravity then
+            print("calling from flight")
             Transition_ToAntiGrav(state, const, o)
         else
             Transition_ToStandard(state, const, debug, o)
@@ -81,9 +96,9 @@ function Process_Flight(o, player, state, const, debug, deltaTime)
     local accel_y = (const_y + spring_y + drag_y + look_y) * deltaTime
     local accel_z = (const_z + spring_z + drag_z + look_z + antigrav_z) * deltaTime
 
-    debug.accel_x = Round(accel_x / deltaTime, 1)
-    debug.accel_y = Round(accel_y / deltaTime, 1)
-    debug.accel_z = Round(accel_z / deltaTime, 1)
+    -- debug.accel_x = Round(accel_x / deltaTime, 1)
+    -- debug.accel_y = Round(accel_y / deltaTime, 1)
+    -- debug.accel_z = Round(accel_z / deltaTime, 1)
 
     o.player:GrapplingHook_AddImpulse(accel_x, accel_y, accel_z)
 end

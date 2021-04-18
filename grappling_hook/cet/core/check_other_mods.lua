@@ -8,8 +8,9 @@ function CheckOtherModsFor_FlightStart(o, modNames)
     if (not currentlyFlying) or (currentlyFlying == "") then
         -- No other mod is flying
         return true
-    elseif (currentlyFlying == modNames.jetpack) or (currentlyFlying == modNames.low_flying_v) then
+    elseif (currentlyFlying == modNames.grappling_hook) or (currentlyFlying == modNames.jetpack) or (currentlyFlying == modNames.low_flying_v) then
         -- It's ok to override these
+        --NOTE: Included grappling_hook so they can fire a new grapple mid swing
         return true
     else
         -- Something unknown is running, don't interfere
