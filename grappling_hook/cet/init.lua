@@ -17,10 +17,11 @@ require "core/math_vector"
 require "core/math_yaw"
 require "core/util"
 
-require "db/dal"
-require "db/datautil"
-require "db/defaults"
-require "db/player"
+require "data/dal"
+require "data/datautil"
+require "data/defaults"
+require "data/player"
+require "data/serialization"
 
 require "processing/flightmode_transitions"
 require "processing/flightutil"
@@ -76,6 +77,10 @@ function TODO()
 
     -- GameObjectAccessor:
     --  Interval needs to be rand(12, +-1)
+    --  needs to be done in all mods
+
+    -- All:
+    --  Rename state to vars (needs to be done in all mods at the same time)
 
 end
 
@@ -142,7 +147,7 @@ local state =
     isSafetyFireCandidate = false,      -- this will turn true when grapple is used.  Goes back to false after they touch the ground
 }
 
-local player = nil       -- set this to nil whenever a load is started
+local player = nil       -- This holds current grapple settings, loaded from DB.  Resets to nil whenever a load is started, then recreated in first update
 
 --------------------------------------------------------------------
 
@@ -203,7 +208,7 @@ end)
 
 registerForEvent("onShutdown", function()
     isShutdown = true
-    db:close()
+    --db:close()      -- cet fixed this in 1.12.2
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
@@ -241,7 +246,7 @@ registerForEvent("onUpdate", function(deltaTime)
         do return end
     end
 
-    shouldDraw = true       -- don't want a stopped progress bar while in menu or driving
+    shouldDraw = true       -- don't want a hung progress bar while in menu or driving
 
     state.startStopTracker:Tick()
 
@@ -260,6 +265,7 @@ registerForEvent("onUpdate", function(deltaTime)
         Transition_ToStandard(state, const, debug, o)
 
     elseif state.flightMode == const.flightModes.aim then
+        -- Look for a grapple point
         Process_Aim(o, player, state, const, debug, deltaTime)
 
     elseif state.flightMode == const.flightModes.airdash then
@@ -267,6 +273,7 @@ registerForEvent("onUpdate", function(deltaTime)
         Process_AirDash(o, player, state, const, debug, deltaTime)
 
     elseif state.flightMode == const.flightModes.flight then
+        -- Actually grappling
         Process_Flight(o, player, state, const, debug, deltaTime)
 
     elseif state.flightMode == const.flightModes.antigrav then
@@ -281,8 +288,24 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("GrapplingHookTestSQL", "Test SQL", function()
-    state.energy = 0
+registerHotkey("GrapplingHookSerialize", "Test Serialize", function()
+    if not player then
+        print("nope")
+        do return end
+    end
+
+    local json = Serialize_Table(player.grapple1)
+    print(json)
+
+
+    print("")
+    print("-----------------------")
+    print("")
+
+
+    local deserialized = Deserialize_Table(json)
+    ReportTable_lite(deserialized)
+
 end)
 
 registerForEvent("onDraw", function()
