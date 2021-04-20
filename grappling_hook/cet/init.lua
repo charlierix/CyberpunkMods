@@ -18,6 +18,7 @@ require "core/math_yaw"
 require "core/util"
 
 require "data/dal"
+require "data/dal_tests"
 require "data/datautil"
 require "data/defaults"
 require "data/player"
@@ -305,6 +306,15 @@ registerHotkey("GrapplingHookSerialize", "Test Serialize", function()
 
     local deserialized = Deserialize_Table(json)
     ReportTable_lite(deserialized)
+end)
+
+registerHotkey("GrapplingHookSavePlayer", "Test Save Player", function()
+    if not player then
+        print("nope")
+        do return end
+    end
+
+    player:Save()
 
 end)
 

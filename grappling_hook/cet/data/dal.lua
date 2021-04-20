@@ -1,148 +1,128 @@
 --http://lua.sqlite.org/index.cgi/doc/tip/doc/lsqlite3.wiki#numerical_error_and_result_codes
+--https://sqlite.org/c3ref/c_abort.html
+
+
+--TODO: Make a function that removes old rows
+
+--TODO: Once this version is proven, rework to have a Grapple table.  Put pure functions in this
+--file, a manager function in datautil:
+--  datautil.StorePlayer(array)
+--      handle each grapple separately
+--          find latest grapple row, insert new if unique
+--      insert new player row, with primary keys to grapples
+--          json for the remaining columns
+
+-- GetPlayerEntry needs to find the db row and 
+
 
 function EnsureTablesCreated()
     --https://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists
 
-    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS TokenGenerator (TokenName TEXT NOT NULL UNIQUE, NextValue INTEGER NOT NULL);") end)
+    --TODO: Just call this Player.  Don't store the whole thing in a single json, put each grapple instance in the grapple table
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS PlayerSaves (PlayerID INTEGER NOT NULL, Name TEXT, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, Serialized TEXT NOT NULL);") end)
+
+    --TODO: Add a column for straightline vs webswing
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Grapple (GrappleKey INTEGER NOT NULL UNIQUE, Name TEXT, Experience REAL NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, JSON TEXT NOT NULL, PRIMARY KEY(GrappleKey AUTOINCREMENT));") end)
 end
 
--- Token Table (likely won't keep this)
-function GetNextToken(tokenName, baseNum, increment)
-    --https://stackoverflow.com/questions/3647454/increment-counter-or-insert-row-in-one-statement-in-sqlite
+function InsertPlayer(playerID, name, json)
 
-    if not baseNum or baseNum < 0 then
-        baseNum = 0
-    end
+    print("insert a")
 
-    if not increment or increment < 1 then
-        increment = 1
-    end
+    local time, time_readable = GetCurrentTime_AndReadable()
 
-    local sucess, result = pcall(function ()
-        -- Create or Increment
-        -- local sql = "INSERT OR IGNORE INTO TokenGenerator VALUES ('" .. tokenName .. "', 0);\r\n"
-        -- sql = sql .. "UPDATE TokenGenerator SET NextValue = NextValue + " .. tostring(increment) .. " WHERE TokenName = '" .. tokenName .. "';\r\n"
+    print("insert b")
 
-        -- db:exec(sql)
+    -- This is flawed, it doesn't escape quotes, allows sql injection
+    --local sql = "INSERT INTO PlayerSaves VALUES (" .. tostring(playerID) .. ", '" .. name .. "', ".. tostring(time) .. ", '" .. time_readable .. "', '" .. json .. "');"
 
-        -- db:exec("INSERT OR IGNORE INTO TokenGenerator VALUES ('" .. tokenName .. "', 0);")
-        -- db:exec("UPDATE TokenGenerator SET NextValue = NextValue + " .. tostring(increment) .. " WHERE TokenName = '" .. tokenName .. "';")
+    --pcall(function ()
 
+        print("insert c")
 
+        --https://stackoverflow.com/questions/1224806/how-to-quote-values-for-luasql
 
-        --TODO: Need to enforce basenum: next = max(basenum+increment, next+increment)
-        --local sql = "BEGIN TRANSACTION;\r\n"      -- transaction has a high chance of locking the database until they quit the game
-        --sql = sql .. "INSERT OR IGNORE INTO TokenGenerator VALUES ('" .. tokenName .. "', " .. tostring(baseNum) .. ");\r\n"
-        local sql = "INSERT OR IGNORE INTO TokenGenerator VALUES ('" .. tokenName .. "', " .. tostring(baseNum) .. ");\r\n"
-        sql = sql .. "UPDATE TokenGenerator SET NextValue = NextValue + " .. tostring(increment) .. " WHERE TokenName = '" .. tokenName .. "';"
-        --sql = sql .. "COMMIT;"
+        --local stmt = db:prepare[[ INSERT INTO tbl(first_name, last_name) VALUES(:first_name, :last_name) ]]
+        --local stmt = db:prepare[[ INSERT INTO PlayerSaves(PlayerID, Name, LastUsed, LastUsed_Readable, Serialized) VALUES(:PlayerID, :Name, :LastUsed, :LastUsed_Readable, :Serialized) ]]
+        local stmt = db:prepare[[ INSERT INTO PlayerSaves VALUES(:PlayerID, :Name, :LastUsed, :LastUsed_Readable, :Serialized) ]]
 
-        print(sql)
+        print("insert d")
 
-        db:exec(sql)
+        -- print("PlayerID = " .. tostring(playerID))
+        -- print("Name = " .. tostring(name))
+        -- print("LastUsed = " .. tostring(time))
+        -- print("LastUsed_Readable = " .. tostring(time_readable))
+        -- print("Serialized = " .. tostring(json))
 
+        local err = stmt:bind({ PlayerID = playerID, Name = name, LastUsed = time, LastUsed_Readable = time_readable, Serialized = json }):exec()
+        --local err = stmt:bind(playerID, name, time, time_readable, json):exec()
 
+        print("insert e: " .. tostring(err))
 
-
-        -- Select current value
-        for row, _ in db:rows("SELECT NextValue FROM TokenGenerator WHERE TokenName = '" .. tokenName .. "';") do
-            return row[1]
+        if err == 0 then
+            print("huh")
         end
 
-        print("no row found")
-        return nil      -- should never happen
-    end)
-
-    if sucess then
-        return result
-    else
-        print("db error")
-        return nil
-    end
-end
-function GetNextToken2(tokenName, baseNum, increment)
-    --https://stackoverflow.com/questions/3647454/increment-counter-or-insert-row-in-one-statement-in-sqlite
-
-    if not baseNum or baseNum < 0 then
-        baseNum = 0
-    end
-
-    if not increment or increment < 1 then
-        increment = 1
-    end
-
-    local sucess, result = pcall(function ()
-
-        -- local sql = "INSERT OR IGNORE INTO TokenGenerator VALUES ('" .. tokenName .. "', " .. tostring(baseNum) .. ");"
-        -- local err = db:exec(sql)
-
-        -- if err ~= 0 then
-        --     print(sql)
-        --     print("err: " .. tostring(err))
-        -- end
-
-        -- sql = "UPDATE TokenGenerator SET NextValue = NextValue + " .. tostring(increment) .. " WHERE TokenName = '" .. tokenName .. "';"
-        -- err = db:exec(sql)
-
-        -- if err ~= 0 then
-        --     print(sql)
-        --     print("err: " .. tostring(err))
-        -- end
-
-
-
-
-
-
-        local sql = "INSERT OR IGNORE INTO TokenGenerator VALUES ('" .. tokenName .. "', " .. tostring(baseNum) .. ");\r\n"
-        sql = sql .. "UPDATE TokenGenerator SET NextValue = NextValue + " .. tostring(increment) .. " WHERE TokenName = '" .. tokenName .. "';"
-
-        local err = db:exec(sql)
-
         if err ~= 0 then
-            print(sql)
             print("err: " .. tostring(err))
             print(tostring(db:errmsg()))
         end
 
-
-
-
-
-
-
-
-        -- Select current value
-        for row, _ in db:rows("SELECT NextValue FROM TokenGenerator WHERE TokenName = '" .. tokenName .. "';") do
-            return row[1]
-        end
-
-        print("no row found")
-        return nil      -- should never happen
-    end)
-
-    if sucess then
-        return result
-    else
-        print("db error")
-        return nil
-    end
+    --end)
 end
-function GetCurrentToken(tokenName)
-    local sucess, result = pcall(function ()
-        -- Select current value
-        for row, _ in db:rows("SELECT NextValue FROM TokenGenerator WHERE TokenName = '" .. tokenName .. "';") do
-            return row[1]
-        end
 
-        print("no row found")
-        return nil      -- should never happen
-    end)
+function InsertGrapple(grapple)
 
-    if sucess then
-        return result
-    else
-        print("db error")
+
+    --TODO: pcall
+
+    local time, time_readable = GetCurrentTime_AndReadable()
+    local json = Serialize_Table(grapple)
+
+    local stmt = db:prepare[[ INSERT INTO Grapple (Name, Experience, LastUsed, LastUsed_Readable, JSON) VALUES (?, ?, ?, ?, ?) ]]
+
+    local err = stmt:bind_values(grapple.name, grapple.experience, time, time_readable, json)
+    if err ~= sqlite3.OK then
+        print("InsertGrapple: bind_values returned an error: " .. tostring(err))
         return nil
     end
+
+    err = stmt:step()
+    if err ~= sqlite3.DONE then
+        print("InsertGrapple: step returned an error: " .. tostring(err))
+        return nil
+    end
+
+    err = stmt:finalize()
+    if err ~= sqlite3.OK then
+        print("InsertGrapple: finalize returned an error: " .. tostring(err))
+        return nil
+    end
+
+    -- This is the primary key of the inserted row
+    return db:last_insert_rowid()
+
+
+
+
+end
+function GetGrapple(primaryKey)
+    
+end
+-- This finds grapples that can be used by the amount of experience passed in
+function FindGrapples(targetExperience)
+    -- Need to also get distinct name, but get the largest experience for each of those distinct names
+
+    --select * from grapple
+    --where experience <= targetExperience
+    --order by experience desc
+end
+
+-- This returns an int and a human readable string of that time (yyyy-mm-dd hh:mm:ss), that can be stored
+-- in a table
+function GetCurrentTime_AndReadable()
+    local time = os.time()
+    local time_readable = os.date("%Y-%m-%d %H:%M:%S", time)
+
+    return time, time_readable
 end

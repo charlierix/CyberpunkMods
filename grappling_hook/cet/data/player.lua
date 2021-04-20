@@ -54,6 +54,44 @@ function Player:Load()
     self:MapRowToSelf(row)
 end
 
+function Player:Save()
+
+    print("save a")
+
+    local grappleKey = InsertGrapple(self.grapple1)
+
+    print("save b: " .. tostring(grappleKey))
+
+
+
+
+
+
+
+
+
+
+
+    -- print("save a")
+
+    -- -- The settings are scattered into properties within self.  Create a single player table,
+    -- -- then serialize it to json
+    -- local array = self:MapSelfToPlayerTable()
+
+    -- print("save b")
+
+    -- --TODO: Json shouldn't be done here, just pass the table, and that function can pick it apart, serialize the pieces
+    -- local json = Serialize_Table(array)
+
+    -- print("save c")
+
+    -- -- Store in the database
+    -- InsertPlayer(self.playerID, self.name, json)
+
+    -- print("save d")
+
+end
+
 -- Puts the contents of the parent player row in self.  This will save all the users of this class
 -- from having an extra dot (player.player.grapple1....)
 function Player:MapRowToSelf(row)
@@ -61,13 +99,28 @@ function Player:MapRowToSelf(row)
     self.name = row.name
     self.energy_tank = row.energy_tank
 
-    -- action mapping 1,2,3
+    -- action mapping 1,2,3,4,5,6
 
     self.grapple1 = row.grapple1
     self.grapple2 = row.grapple2
-    --self.grapple3 = row.grapple3
 
     self.experience = row.experience
+end
+
+function Player:MapSelfToPlayerTable()
+    return
+    {
+        playerID = self.playerID,
+        name = self.name,
+        energy_tank = self.energy_tank,
+
+        -- action mapping 1,2,3
+
+        grapple1 = self.grapple1,
+        grapple2 = self.grapple2,
+
+        experience = self.experience,
+    }
 end
 
 ------------------------------------ Private Static Methods ------------------------------------

@@ -20,6 +20,7 @@ namespace grapple_ui.models
     public record Grapple
     {
         public string name { get; init; }
+        //public string description { get; init; }      // it would be nice to have a place to describe the intention of various templates.  Or have the option to serialize grapples to file and share with others
 
         public string mappin_name { get; init; }
 
