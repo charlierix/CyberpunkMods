@@ -44,80 +44,52 @@ function Player:Load()
     print("playerID: '" .. tostring(playerID) .. "'")
 
     -- Retrieve entry from db
-    local row = GetPlayerEntry(playerID)
+    local playerEntry = GetPlayerEntry(playerID)
 
-    if not row then
+    if not playerEntry then
         -- There's no need to store default in the db.  Wait until they change something
-        row = GetDefault_Player(playerID)
+        playerEntry = GetDefault_Player(playerID)
     end
 
-    self:MapRowToSelf(row)
+    self:MapModelToSelf(playerEntry)
 end
 
 function Player:Save()
-
-    print("save a")
-
-    local grappleKey = InsertGrapple(self.grapple1)
-
-    print("save b: " .. tostring(grappleKey))
-
-
-
-
-
-
-
-
-
-
-
-    -- print("save a")
-
-    -- -- The settings are scattered into properties within self.  Create a single player table,
-    -- -- then serialize it to json
-    -- local array = self:MapSelfToPlayerTable()
-
-    -- print("save b")
-
-    -- --TODO: Json shouldn't be done here, just pass the table, and that function can pick it apart, serialize the pieces
-    -- local json = Serialize_Table(array)
-
-    -- print("save c")
-
-    -- -- Store in the database
-    -- InsertPlayer(self.playerID, self.name, json)
-
-    -- print("save d")
-
+    SavePlayer(self:MapSelfToModel())
 end
 
--- Puts the contents of the parent player row in self.  This will save all the users of this class
--- from having an extra dot (player.player.grapple1....)
-function Player:MapRowToSelf(row)
-    self.playerID = row.playerID
-    self.name = row.name
-    self.energy_tank = row.energy_tank
+-- Puts the contents of the player model entry in self.  This will save all the users of
+-- this class from having an extra dot (player.player.grapple1....)
+function Player:MapModelToSelf(model)
+    self.playerID = model.playerID
+    self.energy_tank = model.energy_tank
 
     -- action mapping 1,2,3,4,5,6
 
-    self.grapple1 = row.grapple1
-    self.grapple2 = row.grapple2
+    self.grapple1 = model.grapple1
+    self.grapple2 = model.grapple2
+    self.grapple3 = model.grapple3
+    self.grapple4 = model.grapple4
+    self.grapple5 = model.grapple5
+    self.grapple6 = model.grapple6
 
-    self.experience = row.experience
+    self.experience = model.experience
 end
 
-function Player:MapSelfToPlayerTable()
+function Player:MapSelfToModel()
     return
     {
         playerID = self.playerID,
-        name = self.name,
         energy_tank = self.energy_tank,
 
-        -- action mapping 1,2,3
+        -- action mapping 1,2,3,4,5,6
 
         grapple1 = self.grapple1,
         grapple2 = self.grapple2,
+        grapple3 = self.grapple3,
+        grapple4 = self.grapple4,
+        grapple5 = self.grapple5,
+        grapple6 = self.grapple6,
 
         experience = self.experience,
     }

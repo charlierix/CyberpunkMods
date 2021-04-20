@@ -289,25 +289,6 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("GrapplingHookSerialize", "Test Serialize", function()
-    if not player then
-        print("nope")
-        do return end
-    end
-
-    local json = Serialize_Table(player.grapple1)
-    print(json)
-
-
-    print("")
-    print("-----------------------")
-    print("")
-
-
-    local deserialized = Deserialize_Table(json)
-    ReportTable_lite(deserialized)
-end)
-
 registerHotkey("GrapplingHookSavePlayer", "Test Save Player", function()
     if not player then
         print("nope")

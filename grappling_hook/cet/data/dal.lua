@@ -18,96 +18,58 @@
 function EnsureTablesCreated()
     --https://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists
 
-    --TODO: Just call this Player.  Don't store the whole thing in a single json, put each grapple instance in the grapple table
-    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS PlayerSaves (PlayerID INTEGER NOT NULL, Name TEXT, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, Serialized TEXT NOT NULL);") end)
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Player (PlayerKey INTEGER NOT NULL UNIQUE, PlayerID INTEGER NOT NULL, JSON_Energy_Tank TEXT NOT NULL, GrappleKey1 INTEGER, GrappleKey2 INTEGER, GrappleKey3 INTEGER, GrappleKey4 INTEGER, GrappleKey5 INTEGER, GrappleKey6 INTEGER, Experience REAL NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(PlayerKey AUTOINCREMENT));") end)
 
     --TODO: Add a column for straightline vs webswing
-    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Grapple (GrappleKey INTEGER NOT NULL UNIQUE, Name TEXT, Experience REAL NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, JSON TEXT NOT NULL, PRIMARY KEY(GrappleKey AUTOINCREMENT));") end)
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Grapple (GrappleKey INTEGER NOT NULL UNIQUE, Name TEXT, Experience REAL NOT NULL, JSON TEXT NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(GrappleKey AUTOINCREMENT));") end)
 end
 
-function InsertPlayer(playerID, name, json)
-
-    print("insert a")
-
-    local time, time_readable = GetCurrentTime_AndReadable()
-
-    print("insert b")
-
-    -- This is flawed, it doesn't escape quotes, allows sql injection
-    --local sql = "INSERT INTO PlayerSaves VALUES (" .. tostring(playerID) .. ", '" .. name .. "', ".. tostring(time) .. ", '" .. time_readable .. "', '" .. json .. "');"
-
-    --pcall(function ()
-
-        print("insert c")
-
-        --https://stackoverflow.com/questions/1224806/how-to-quote-values-for-luasql
-
-        --local stmt = db:prepare[[ INSERT INTO tbl(first_name, last_name) VALUES(:first_name, :last_name) ]]
-        --local stmt = db:prepare[[ INSERT INTO PlayerSaves(PlayerID, Name, LastUsed, LastUsed_Readable, Serialized) VALUES(:PlayerID, :Name, :LastUsed, :LastUsed_Readable, :Serialized) ]]
-        local stmt = db:prepare[[ INSERT INTO PlayerSaves VALUES(:PlayerID, :Name, :LastUsed, :LastUsed_Readable, :Serialized) ]]
-
-        print("insert d")
-
-        -- print("PlayerID = " .. tostring(playerID))
-        -- print("Name = " .. tostring(name))
-        -- print("LastUsed = " .. tostring(time))
-        -- print("LastUsed_Readable = " .. tostring(time_readable))
-        -- print("Serialized = " .. tostring(json))
-
-        local err = stmt:bind({ PlayerID = playerID, Name = name, LastUsed = time, LastUsed_Readable = time_readable, Serialized = json }):exec()
-        --local err = stmt:bind(playerID, name, time, time_readable, json):exec()
-
-        print("insert e: " .. tostring(err))
-
-        if err == 0 then
-            print("huh")
-        end
-
-        if err ~= 0 then
-            print("err: " .. tostring(err))
-            print(tostring(db:errmsg()))
-        end
-
-    --end)
-end
-
+-- Inserts a grapple entry into the Grapple table
+-- Params:
+--    grapple: This is a grapple entry (see models\grapple)
+-- Returns:
+--    primary key or nil
+--    error message if primary key is nil
 function InsertGrapple(grapple)
+    local sucess, pkey, errMsg = pcall(function ()
+        local time, time_readable = GetCurrentTime_AndReadable()
+        local json = Serialize_Table(grapple)
 
+        local stmt = db:prepare[[ INSERT INTO Grapple (Name, Experience, JSON, LastUsed, LastUsed_Readable) VALUES (?, ?, ?, ?, ?) ]]
 
-    --TODO: pcall
+        local err = stmt:bind_values(grapple.name, grapple.experience, json, time, time_readable)
+        if err ~= sqlite3.OK then
+            local errMsg = "InsertGrapple: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return nil, errMsg
+        end
 
-    local time, time_readable = GetCurrentTime_AndReadable()
-    local json = Serialize_Table(grapple)
+        err = stmt:step()
+        if err ~= sqlite3.DONE then
+            local errMsg = "InsertGrapple: step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return nil, errMsg
+        end
 
-    local stmt = db:prepare[[ INSERT INTO Grapple (Name, Experience, LastUsed, LastUsed_Readable, JSON) VALUES (?, ?, ?, ?, ?) ]]
+        err = stmt:finalize()
+        if err ~= sqlite3.OK then
+            local errMsg = "InsertGrapple: finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return nil, errMsg
+        end
 
-    local err = stmt:bind_values(grapple.name, grapple.experience, time, time_readable, json)
-    if err ~= sqlite3.OK then
-        print("InsertGrapple: bind_values returned an error: " .. tostring(err))
-        return nil
+        -- This is the primary key of the inserted row
+        return db:last_insert_rowid(), nil
+    end)
+
+    if sucess then
+        return pkey, errMsg
+    else
+        return nil, "InsertGrapple: Unknown Error"
     end
-
-    err = stmt:step()
-    if err ~= sqlite3.DONE then
-        print("InsertGrapple: step returned an error: " .. tostring(err))
-        return nil
-    end
-
-    err = stmt:finalize()
-    if err ~= sqlite3.OK then
-        print("InsertGrapple: finalize returned an error: " .. tostring(err))
-        return nil
-    end
-
-    -- This is the primary key of the inserted row
-    return db:last_insert_rowid()
-
-
-
-
 end
 function GetGrapple(primaryKey)
-    
+    -- select top 1 from Grapple where GrappleKey = primaryKey
 end
 -- This finds grapples that can be used by the amount of experience passed in
 function FindGrapples(targetExperience)

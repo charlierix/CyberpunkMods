@@ -34,15 +34,19 @@ namespace grapple_ui.models
         /// </remarks>
         public int? playerID { get; init; }
 
-        public string name { get; init; }
-
         public EnergyTank energy_tank { get; init; }
 
-        // action mapping 1,2,3
+        //TODO: May want an extra class to hold a link between action mapping and grapple.  Then turn all these
+        //columns into (mapping, grapple)[]
+
+        // action mapping 1,2,3,4,5,6
 
         public Grapple grapple1 { get; init; }      // default: pull
         public Grapple grapple2 { get; init; }      // default: rigid
         public Grapple grapple3 { get; init; }      // default: web swing
+        public Grapple grapple4 { get; init; }      // extra slots for whatever they want.  There's more than people will probably ever use
+        public Grapple grapple5 { get; init; }
+        public Grapple grapple6 { get; init; }
 
         /// <summary>
         /// How many experience points are available
@@ -58,6 +62,6 @@ namespace grapple_ui.models
         /// They may have multiple entries for the same play through.  This helps know the exact one
         /// to use
         /// </remarks>
-        public DateTime last_used { get; init; }
+        //public DateTime last_used { get; init; }
     }
 }
