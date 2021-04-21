@@ -12,7 +12,7 @@ namespace grapple_ui.models
     public record Player
     {
         /// <summary>
-        /// This is an ID that gets tied to a playthrough (will be null for templates)
+        /// This is an ID that gets tied to a playthrough
         /// </summary>
         /// <remarks>
         /// Thanks to bonaniki and NonameNonumber for the idea:
@@ -32,7 +32,7 @@ namespace grapple_ui.models
         /// Game.GetQuestsSystem():SetFactStr("my_mod_unique_id", 123)
         /// only integers, this is stored in the savefile
         /// </remarks>
-        public int? playerID { get; init; }
+        public int playerID { get; init; }
 
         public EnergyTank energy_tank { get; init; }
 

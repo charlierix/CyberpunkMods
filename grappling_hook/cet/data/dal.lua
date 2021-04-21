@@ -18,10 +18,85 @@
 function EnsureTablesCreated()
     --https://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists
 
-    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Player (PlayerKey INTEGER NOT NULL UNIQUE, PlayerID INTEGER NOT NULL, JSON_Energy_Tank TEXT NOT NULL, GrappleKey1 INTEGER, GrappleKey2 INTEGER, GrappleKey3 INTEGER, GrappleKey4 INTEGER, GrappleKey5 INTEGER, GrappleKey6 INTEGER, Experience REAL NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(PlayerKey AUTOINCREMENT));") end)
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Player (PlayerKey INTEGER NOT NULL UNIQUE, PlayerID INTEGER NOT NULL, JSON_EnergyTank TEXT NOT NULL, GrappleKey1 INTEGER, GrappleKey2 INTEGER, GrappleKey3 INTEGER, GrappleKey4 INTEGER, GrappleKey5 INTEGER, GrappleKey6 INTEGER, Experience REAL NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(PlayerKey AUTOINCREMENT));") end)
 
     --TODO: Add a column for straightline vs webswing
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Grapple (GrappleKey INTEGER NOT NULL UNIQUE, Name TEXT, Experience REAL NOT NULL, JSON TEXT NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(GrappleKey AUTOINCREMENT));") end)
+end
+
+function InsertPlayer(playerID, energy_tank, grappleKeys, experience)
+    local sucess, pkey, errMsg = pcall(function ()
+        local time, time_readable = GetCurrentTime_AndReadable()
+        local json_energy_tank = Serialize_Table(energy_tank)
+
+        local stmt = db:prepare[[ INSERT INTO Player (PlayerID, JSON_EnergyTank, GrappleKey1, GrappleKey2, GrappleKey3, GrappleKey4, GrappleKey5, GrappleKey6, Experience, LastUsed, LastUsed_Readable) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ]]
+
+        local err = stmt:bind_values(playerID, json_energy_tank, grappleKeys[1], grappleKeys[2], grappleKeys[3], grappleKeys[4], grappleKeys[5], grappleKeys[6], experience, time, time_readable)
+        if err ~= sqlite3.OK then
+            local errMsg = "InsertPlayer: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return nil, errMsg
+        end
+
+        err = stmt:step()
+        if err ~= sqlite3.DONE then
+            local errMsg = "InsertPlayer: step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return nil, errMsg
+        end
+
+        err = stmt:finalize()
+        if err ~= sqlite3.OK then
+            local errMsg = "InsertPlayer: finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return nil, errMsg
+        end
+
+        -- This is the primary key of the inserted row
+        return db:last_insert_rowid(), nil
+    end)
+
+    if sucess then
+        return pkey, errMsg
+    else
+        return nil, "InsertPlayer: Unknown Error"
+    end
+end
+-- This finds the most recently saved player based on their playerID (not the primary key, but the playerID that's
+-- stored in the save file)
+-- Returns:
+--    Array with column names as keys (or nil).  These are the column names as they're stored in the db, not models\player
+--    Error message if returned row is nil
+function GetLatestPlayer(playerID)
+    local sucess, grapple, errMsg = pcall(function ()
+        local stmt = db:prepare[[ SELECT PlayerID, JSON_EnergyTank, GrappleKey1, GrappleKey2, GrappleKey3, GrappleKey4, GrappleKey5, GrappleKey6, Experience FROM Player WHERE PlayerID = ? ORDER BY LastUsed DESC LIMIT 1 ]]
+
+        local err = stmt:bind_values(playerID)
+        if err ~= sqlite3.OK then
+            local errMsg = "GetLatestPlayer: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return nil, errMsg
+        end
+
+        local result = stmt:step()
+
+        if result == sqlite3.ROW then
+            local row = stmt:get_named_values()
+            return row, nil
+
+        elseif result == sqlite3.DONE then
+            return nil, "No Rows Found"
+
+        else
+            return nil, "Unknown Error: " .. tostring(result)
+        end
+    end)
+
+    if sucess then
+        return grapple, errMsg
+    else
+        return nil, "GetLatestPlayer: Unknown Error"
+    end
 end
 
 -- Inserts a grapple entry into the Grapple table
@@ -69,7 +144,35 @@ function InsertGrapple(grapple)
     end
 end
 function GetGrapple(primaryKey)
-    -- select top 1 from Grapple where GrappleKey = primaryKey
+    local sucess, grapple, errMsg = pcall(function ()
+        local stmt = db:prepare[[ SELECT JSON FROM Grapple WHERE GrappleKey = ? LIMIT 1 ]]
+
+        local err = stmt:bind_values(primaryKey)
+        if err ~= sqlite3.OK then
+            local errMsg = "GetGrapple: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return nil, errMsg
+        end
+
+        local result = stmt:step()
+
+        if result == sqlite3.ROW then
+            local row = stmt:get_named_values()
+            return Deserialize_Table(row.JSON), nil
+
+        elseif result == sqlite3.DONE then
+            return nil, "No Rows Found"
+
+        else
+            return nil, "Unknown Error: " .. tostring(result)
+        end
+    end)
+
+    if sucess then
+        return grapple, errMsg
+    else
+        return nil, "GetGrapple: Unknown Error"
+    end
 end
 -- This finds grapples that can be used by the amount of experience passed in
 function FindGrapples(targetExperience)

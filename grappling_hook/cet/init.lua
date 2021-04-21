@@ -290,12 +290,36 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 registerHotkey("GrapplingHookSavePlayer", "Test Save Player", function()
-    if not player then
-        print("nope")
-        do return end
+    -- if not player then
+    --     print("nope")
+    --     do return end
+    -- end
+
+    -- player:Save()
+
+
+    -- local grapple, errMsg = GetGrapple(2)
+
+    -- if grapple then
+    --     ReportTable_lite(grapple)
+    -- else
+    --     print(errMsg)
+    -- end
+
+
+
+
+    --GetPlayerEntry(15)
+    local playerEntry, errMsg = GetPlayerEntry(1618966793)
+
+    if playerEntry then
+        ReportTable_lite(playerEntry)
+    else
+        print(errMsg)
     end
 
-    player:Save()
+
+
 
 end)
 
