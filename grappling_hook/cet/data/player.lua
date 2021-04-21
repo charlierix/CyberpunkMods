@@ -41,26 +41,27 @@ function Player:Load()
         playerID = CreateNewPlayerID(self.o)
     end
 
-    print("playerID: '" .. tostring(playerID) .. "'")
-
     -- Retrieve entry from db
-    local playerEntry = GetPlayerEntry(playerID)
-
+    local playerEntry, primKey, errMsg = GetPlayerEntry(playerID)
     if not playerEntry then
         -- There's no need to store default in the db.  Wait until they change something
         playerEntry = GetDefault_Player(playerID)
     end
 
-    self:MapModelToSelf(playerEntry)
+    self:MapModelToSelf(playerEntry, primKey)
 end
 
 function Player:Save()
-    SavePlayer(self:MapSelfToModel())
+    local pkey, errMsg = SavePlayer(self:MapSelfToModel())
+
+    --TODO: Handle errors
+
+    self.PlayerPrimaryKey = pkey
 end
 
 -- Puts the contents of the player model entry in self.  This will save all the users of
 -- this class from having an extra dot (player.player.grapple1....)
-function Player:MapModelToSelf(model)
+function Player:MapModelToSelf(model, primkey)
     self.playerID = model.playerID
     self.energy_tank = model.energy_tank
 
@@ -74,6 +75,8 @@ function Player:MapModelToSelf(model)
     self.grapple6 = model.grapple6
 
     self.experience = model.experience
+
+    self.PlayerPrimaryKey = primkey
 end
 
 function Player:MapSelfToModel()

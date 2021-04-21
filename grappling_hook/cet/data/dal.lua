@@ -24,6 +24,8 @@ function EnsureTablesCreated()
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Grapple (GrappleKey INTEGER NOT NULL UNIQUE, Name TEXT, Experience REAL NOT NULL, JSON TEXT NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(GrappleKey AUTOINCREMENT));") end)
 end
 
+--------------------------------------- Player ----------------------------------------
+
 function InsertPlayer(playerID, energy_tank, grappleKeys, experience)
     local sucess, pkey, errMsg = pcall(function ()
         local time, time_readable = GetCurrentTime_AndReadable()
@@ -62,6 +64,7 @@ function InsertPlayer(playerID, energy_tank, grappleKeys, experience)
         return nil, "InsertPlayer: Unknown Error"
     end
 end
+
 -- This finds the most recently saved player based on their playerID (not the primary key, but the playerID that's
 -- stored in the save file)
 -- Returns:
@@ -69,7 +72,7 @@ end
 --    Error message if returned row is nil
 function GetLatestPlayer(playerID)
     local sucess, grapple, errMsg = pcall(function ()
-        local stmt = db:prepare[[ SELECT PlayerID, JSON_EnergyTank, GrappleKey1, GrappleKey2, GrappleKey3, GrappleKey4, GrappleKey5, GrappleKey6, Experience FROM Player WHERE PlayerID = ? ORDER BY LastUsed DESC LIMIT 1 ]]
+        local stmt = db:prepare[[ SELECT PlayerKey, PlayerID, JSON_EnergyTank, GrappleKey1, GrappleKey2, GrappleKey3, GrappleKey4, GrappleKey5, GrappleKey6, Experience FROM Player WHERE PlayerID = ? ORDER BY LastUsed DESC LIMIT 1 ]]
 
         local err = stmt:bind_values(playerID)
         if err ~= sqlite3.OK then
@@ -85,10 +88,10 @@ function GetLatestPlayer(playerID)
             return row, nil
 
         elseif result == sqlite3.DONE then
-            return nil, "No Rows Found"
+            return nil, "GetLatestPlayer: No Rows Found"
 
         else
-            return nil, "Unknown Error: " .. tostring(result)
+            return nil, "GetLatestPlayer: Unknown Error: " .. tostring(result)
         end
     end)
 
@@ -98,6 +101,12 @@ function GetLatestPlayer(playerID)
         return nil, "GetLatestPlayer: Unknown Error"
     end
 end
+
+function UpdatePlayerExperience(playerKey, experience)
+    
+end
+
+--------------------------------------- Grapple ---------------------------------------
 
 -- Inserts a grapple entry into the Grapple table
 -- Params:
@@ -143,13 +152,14 @@ function InsertGrapple(grapple)
         return nil, "InsertGrapple: Unknown Error"
     end
 end
-function GetGrapple(primaryKey)
+
+function GetGrapple_ByKey(primaryKey)
     local sucess, grapple, errMsg = pcall(function ()
         local stmt = db:prepare[[ SELECT JSON FROM Grapple WHERE GrappleKey = ? LIMIT 1 ]]
 
         local err = stmt:bind_values(primaryKey)
         if err ~= sqlite3.OK then
-            local errMsg = "GetGrapple: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            local errMsg = "GetGrapple_ByKey: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
             print(errMsg)
             return nil, errMsg
         end
@@ -161,19 +171,58 @@ function GetGrapple(primaryKey)
             return Deserialize_Table(row.JSON), nil
 
         elseif result == sqlite3.DONE then
-            return nil, "No Rows Found"
+            return nil, "GetGrapple_ByKey: No Rows Found"
 
         else
-            return nil, "Unknown Error: " .. tostring(result)
+            return nil, "GetGrapple_ByKey: Unknown Error: " .. tostring(result)
         end
     end)
 
     if sucess then
         return grapple, errMsg
     else
-        return nil, "GetGrapple: Unknown Error"
+        return nil, "GetGrapple_ByKey: Unknown Error"
     end
 end
+
+-- This is nearly identical to InsertGrapple, except it's a select.  It's used to avoid unnecessarily
+-- inserting dupes
+function GetGrappleKey_ByContent(grapple)
+    local sucess, grappleKey, errMsg = pcall(function ()
+        local json = Serialize_Table(grapple)
+
+        --NOTE: This could just compare json, since that contains name and experience.  But doing it this way
+        --exactly mirrors the insert method (just in case there are bugs)
+        local stmt = db:prepare[[ SELECT GrappleKey FROM Grapple WHERE Name = ? AND Experience = ? AND JSON = ? LIMIT 1 ]]
+
+        local err = stmt:bind_values(grapple.name, grapple.experience, json)
+        if err ~= sqlite3.OK then
+            local errMsg = "GetGrappleKey_ByContent: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return nil, errMsg
+        end
+
+        local result = stmt:step()
+
+        if result == sqlite3.ROW then
+            local row = stmt:get_named_values()
+            return row.GrappleKey, nil
+
+        elseif result == sqlite3.DONE then
+            return nil, "GetGrappleKey_ByContent: No Rows Found"
+
+        else
+            return nil, "GetGrappleKey_ByContent: Unknown Error: " .. tostring(result)
+        end
+    end)
+
+    if sucess then
+        return grappleKey, errMsg
+    else
+        return nil, "GetGrappleKey_ByContent: Unknown Error"
+    end
+end
+
 -- This finds grapples that can be used by the amount of experience passed in
 function FindGrapples(targetExperience)
     -- Need to also get distinct name, but get the largest experience for each of those distinct names
@@ -182,6 +231,8 @@ function FindGrapples(targetExperience)
     --where experience <= targetExperience
     --order by experience desc
 end
+
+----------------------------------- Private Methods -----------------------------------
 
 -- This returns an int and a human readable string of that time (yyyy-mm-dd hh:mm:ss), that can be stored
 -- in a table

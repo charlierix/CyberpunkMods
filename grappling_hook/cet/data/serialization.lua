@@ -15,7 +15,19 @@ function Serialize_Table(t, maxDepth, depth)
 	local dumpStr = '{\n'
 	local indent = string.rep('\t', depth)
 
-	for k, v in pairs(t) do
+	-- Sort the keys so that jsons are built consistently (used in db compares)
+	local keys = {}
+
+	for key in pairs(t) do
+		table.insert(keys, key)
+	end
+
+	table.sort(keys)
+
+	--for k, v in pairs(t) do
+	for _, k in ipairs(keys) do		-- iterate over the sorted list
+		local v = t[k]
+
 		local ktype = type(k)
 		local vtype = type(v)
 

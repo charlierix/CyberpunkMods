@@ -1,9 +1,12 @@
 -- Returns the latest player by ID (or nil)
--- The type returned is defined in models\Player
+-- Returns:
+--    PlayerEntry (the type returned is defined in models\Player)
+--    PrimaryKey of player
+--    Error Message (only populated if the first two are nil)
 function GetPlayerEntry(playerID)
     local row, errMsg = GetLatestPlayer(playerID)
     if not row then
-        return nil, errMsg
+        return nil, nil, errMsg
     end
 
     local grapples, errMsg = GetGrapples(row)
@@ -24,7 +27,7 @@ function GetPlayerEntry(playerID)
         experience = row.Experience,
     }
 
-    return player, nil
+    return player, row.PlayerKey, nil
 end
 
 -- This inserts the player
@@ -35,7 +38,7 @@ end
 function SavePlayer(playerEntry)
     local grappleKeys, errMsg = SaveGrapples(playerEntry)
     if not grappleKeys then
-        return false, errMsg
+        return nil, errMsg
     end
 
     return InsertPlayer(playerEntry.playerID, playerEntry.energy_tank, grappleKeys, playerEntry.experience)
@@ -48,17 +51,23 @@ end
 function SaveGrapples(playerEntry)
     local pkeys = {}
 
-    --TODO: May want an extra check to only insert if changed
-
     for i=1, 6 do
         local key = "grapple" .. tostring(i)
 
         if playerEntry[key] then
-            local pkey, errMsg = InsertGrapple(playerEntry[key])
+            local pkey = GetGrappleKey_ByContent(playerEntry[key])
+
             if pkey then
+                -- The grapple settings are unchanged, point to the existing row
                 pkeys[i] = pkey
             else
-                return nil, key .. ": " .. errMsg
+                -- Newly created, or changed grapple settings.  Create a new row
+                local pkey, errMsg = InsertGrapple(playerEntry[key])
+                if pkey then
+                    pkeys[i] = pkey
+                else
+                    return nil, key .. ": " .. errMsg
+                end
             end
         else
             pkeys[i] = nil      -- not sure if this is necessary
@@ -75,7 +84,7 @@ function GetGrapples(playerRow)
         local column = "GrappleKey" .. tostring(i)
 
         if playerRow[column] then
-            local grapple, errMsg = GetGrapple(playerRow[column])
+            local grapple, errMsg = GetGrapple_ByKey(playerRow[column])
 
             if grapple then
                 grapples[i] = grapple
