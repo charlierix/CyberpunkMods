@@ -46,7 +46,32 @@ function DrawConfig(vars_ui, player)
     if not player then
         do return end
     end
-    
+
+    ImGui.SetNextWindowPos(vars_ui.mainWindow.left, vars_ui.mainWindow.top, ImGuiCond.FirstUseEver)     -- this will place it in the hardcoded location, but if they move it, it will show at the new location
+    ImGui.SetNextWindowSize(vars_ui.mainWindow.width, vars_ui.mainWindow.height, ImGuiCond.Always)
+
+    if (ImGui.Begin("Grappling Hook", true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoCollapse)) then
+        local curLeft, curTop = ImGui.GetWindowPos()
+        vars_ui.mainWindow.left = curLeft
+        vars_ui.mainWindow.top = curTop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+    end
+    ImGui.End()
 end
 
 --https://stackoverflow.com/questions/26160327/sorting-a-lua-table-by-key

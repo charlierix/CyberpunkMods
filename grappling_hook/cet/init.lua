@@ -107,8 +107,6 @@ local const =
     modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
 
     shouldShowDebugWindow = true,      -- shows a window with extra debug info
-
-    json = require("external.json")
 }
 
 --------------------------------------------------------------------
@@ -164,6 +162,7 @@ local vars_ui =
 {
     --screen    -- info about the current screen resolution (see GetScreenInfo())
     --style     -- this gets loaded from json during init
+    --mainWindow    -- info about the location of the main window (top/left gets stored in a table if they move it)
 }
 
 local player = nil       -- This holds current grapple settings, loaded from DB.  Resets to nil whenever a load is started, then recreated in first update
@@ -188,7 +187,7 @@ registerForEvent("onInit", function()
 
     InitializeRandom()
     EnsureTablesCreated()
-    InitializeUI(vars_ui)
+    InitializeUI(vars_ui)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -308,20 +307,28 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("GrapplingHookSavePlayer", "save load", function()
+registerHotkey("GrapplingHookSavePlayer", "window pos", function()
 
-    player:Save()
+    local left, top, errMsg = GetConfigPosition()
+    print(tostring(left) .. ", " .. tostring(top) .. " (" .. tostring(errMsg) .. ")")
 
-    player:Load()
+    errMsg = UpdateConfigPosition(50, 400)
+    print(tostring(errMsg))
 
-    ReportTable_lite(player)
+    left, top, errMsg = GetConfigPosition()
+    print(tostring(left) .. ", " .. tostring(top) .. " (" .. tostring(errMsg) .. ")")
+
+    errMsg = UpdateConfigPosition(555, 44)
+    print(tostring(errMsg))
+
+    left, top, errMsg = GetConfigPosition()
+    print(tostring(left) .. ", " .. tostring(top) .. " (" .. tostring(errMsg) .. ")")
 
 end)
 
 registerHotkey("GrapplingHookConfig", "Show/Hide Config", function()
     --TODO: This should just show the config.  Make them push a button to close so they can be
     --prompted to save
-
     shouldShowConfig = not shouldShowConfig
 end)
 

@@ -3,8 +3,9 @@ function InitializeUI(vars_ui)
 
     vars_ui.style = LoadStylesheet()
 
-    --ReportTable_lite(vars_ui)
+    vars_ui.mainWindow = LoadMainWindowStats(vars_ui.screen)
 
+    --ReportTable_lite(vars_ui)
 end
 
 function GetScreenInfo()
@@ -141,4 +142,17 @@ function ConvertHexStringToNumbers(hex)
 end
 function ConvertHexStringToNumbers_Magenta()
     return 0xFFFF00FF, 1, 1, 0, 1
+end
+
+function LoadMainWindowStats(screen)
+    local width = 1000
+    local height = 800
+
+    return
+    {
+        width = width,
+        height = height,
+        left = screen.center_x - width / 2,
+        top = screen.center_y - height / 2,
+    }
 end

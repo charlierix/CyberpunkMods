@@ -4,6 +4,8 @@ function CreateTestTables()
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS TestTable1 (Col1 INTEGER);") end)
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS TestTable2 (Col1 TEXT);") end)
 
+    -- REALLY need to test first before implementing my own solution.  It would save a lot of effort :)
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS ConfigPosition (Left INTEGER NOT NULL, Top INTEGER NOT NULL);") end)
 end
 
 -- Token Table (likely won't keep this)
@@ -142,7 +144,6 @@ function GetCurrentToken(tokenName)
     end
 end
 
-
 function InsertTest()
     -------- None of these work.  exec seems to be the problem
 
@@ -163,4 +164,97 @@ function InsertTest()
 
     stmt:step()
     stmt:finalize()
+end
+
+----------------------------------- Config Position -----------------------------------
+
+-- Returns left, top, errMsg
+function GetConfigPosition()
+    local sucess, left, top, errMsg = pcall(function ()
+        local stmt = db:prepare[[ SELECT Left, Top FROM ConfigPosition LIMIT 1 ]]
+
+        local result = stmt:step()
+
+        if result == sqlite3.ROW then
+            local row = stmt:get_named_values()
+            return row.Left, row.Top, nil
+
+        elseif result == sqlite3.DONE then
+            return nil, nil, "GetConfigPosition: No Rows Found"
+
+        else
+            return nil, nil, "GetConfigPosition: Unknown Error: " .. tostring(result)
+        end
+    end)
+
+    if sucess then
+        return left, top, errMsg
+    else
+        return nil, nil, "GetConfigPosition: Unknown Error"
+    end
+end
+
+-- Returns errMsg
+function UpdateConfigPosition(left, top)
+    local sucess, errMsg = pcall(function ()
+        -- It failed when trying to do two statements
+        --local stmt = db:prepare[[ INSERT OR IGNORE INTO ConfigPosition VALUES (?, ?); UPDATE ConfigPosition SET Left = ?, Top = ?; ]]
+        --local err = stmt:bind_values(left, top, left, top)      -- could probably use key/value, but just pass the values in twice
+
+        ---------- Insert ----------
+        local stmt = db:prepare[[ INSERT OR IGNORE INTO ConfigPosition VALUES (?, ?) ]]
+
+        local err = stmt:bind_values(left, top)
+        if err ~= sqlite3.OK then
+            local errMsg = "UpdateConfigPosition(insert): bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        err = stmt:step()
+        if err ~= sqlite3.DONE then
+            local errMsg = "UpdateConfigPosition(insert): step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        err = stmt:finalize()
+        if err ~= sqlite3.OK then
+            local errMsg = "UpdateConfigPosition(insert): finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        ---------- Update ----------
+        stmt = db:prepare[[ UPDATE ConfigPosition SET Left = ?, Top = ? ]]        -- it might be ok to reuse the statement (maybe more efficient?), but just starting a whole new one because it's sure to work
+
+        err = stmt:bind_values(left, top)
+        if err ~= sqlite3.OK then
+            local errMsg = "UpdateConfigPosition(update): bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        err = stmt:step()
+        if err ~= sqlite3.DONE then
+            local errMsg = "UpdateConfigPosition(update): step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        err = stmt:finalize()
+        if err ~= sqlite3.OK then
+            local errMsg = "UpdateConfigPosition(update): finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        return nil
+    end)
+
+    if sucess then
+        return errMsg
+    else
+        return "UpdateConfigPosition: Unknown Error"
+    end
 end
