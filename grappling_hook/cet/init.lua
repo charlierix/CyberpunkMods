@@ -41,6 +41,8 @@ require "ui/mappinutil"
 require "ui/reporting"
 require "ui/util_ui"
 
+extern_json = require "external/json"
+
 function TODO()
 
     -- AirDash:
@@ -301,38 +303,28 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("GrapplingHookSavePlayer", "Test Save Player", function()
-    -- if not player then
-    --     print("nope")
-    --     do return end
-    -- end
+registerHotkey("GrapplingHookSavePlayer", "color tests", function()
 
-    -- player:Save()
+    local tests =
+    {
+        "garbage",
+        "#4066E8",
+        "abc",
+        "abcd",
+        "FFA040",
+        "802040FF"
+    }
 
-    -- print(tostring(player.PlayerPrimaryKey))
+    for i=1, #tests do
+        print(tests[i])
 
-
-    -- local grapple, errMsg = GetGrapple(2)
-
-    -- if grapple then
-    --     ReportTable_lite(grapple)
-    -- else
-    --     print(errMsg)
-    -- end
-
-
-
-
-    --GetPlayerEntry(15)
-    -- local playerEntry, errMsg = GetPlayerEntry(1618966793)
-
-    -- if playerEntry then
-    --     ReportTable_lite(playerEntry)
-    -- else
-    --     print(errMsg)
-    -- end
-
-
+        local full, a, r, g, b = ConvertHexStringToNumbers(tests[i])
+        print(tostring(full))
+        print(tostring(a) .. ", " .. tostring(r) .. ", " .. tostring(g) .. ", " .. tostring(b))
+        print("")
+        print("--------------------")
+        print("")
+    end
 
 end)
 

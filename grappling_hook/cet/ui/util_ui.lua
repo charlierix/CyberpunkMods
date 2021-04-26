@@ -1,13 +1,9 @@
-local extern_json = require "external/json"
-
 function InitializeUI(vars_ui)
     vars_ui.screen = GetScreenInfo()    --NOTE: This won't see changes if they mess with their video settings, but that should be super rare.  They just need to reload mods
 
     vars_ui.style = LoadStylesheet()
 
-    ReportTable_lite(vars_ui)
-
-    --TestJSON()
+    --ReportTable_lite(vars_ui)
 
 end
 
@@ -32,50 +28,117 @@ function LoadStylesheet()
 
     local json = file:read("*all")
 
-    --local style = Deserialize_Table(json)
     local style = extern_json.decode(json)
-
-    ReportTable_lite(style)
-
-    print("-----------------------")
 
     --TODO: Convert color strings
 
     return style
 end
 
-function TestJSON()
-    local input =
-    {
-        summaryButton_border_cornerRadius = 8,
-        summaryButton_border_thickness = 2,
-        summaryButton_border_color_standard = "FFF",
-        summaryButton_border_color_hover = "FFF",
-        summaryButton_background_color_standard = "3666",
-        summaryButton_background_color_hover = "5888",
-        summaryButton_padding = 16,
-        summaryButton_header_color = "FFF",
-        summaryButton_header_gap = 4,
-        summaryButton_content_color_prompt = "888",
-        summaryButton_content_color_value = "AAA",
-    }
+function FinishStylesheetColors(style)
+    local argb = { }
 
-    print("-------- input --------")
+    for key, value in pairs(style) do
+        if string.find(key, "_color") then
+            local color, a, r, g, b = ConvertHexStringToNumbers(value)
 
-    ReportTable_lite(input)
+            -- Change from string to a full int
+            style[key] = color
 
-    print("-------- json --------")
+            -- Store these off so there's no chance of interfering with the for loop
+            argb[key .. "_a"] = a
+            argb[key .. "_r"] = r
+            argb[key .. "_g"] = g
+            argb[key .. "_b"] = b
+        end
+    end
 
-    local json = Serialize_Table(input)
+    for key, value in pairs(argb) do
+        style[key] = value
+    end
+end
 
-    print(json)
+-- The hex can be in any of the standard hex formats (# is optional):
+--  "444" becomes "FF444444" (very dark gray)
+--  "806A" becomes "880066AA" (dusty blue)
+--  "FF8040" becomes "FFFF8040" (sort of a coral)
+--  "80FFFFFF" (50% transparent white)
+--
+-- Returns:
+--  full int:  This is an int built from 0xAARRGGBB (this is how imgui's draw functions want color)
+--  a float:   alpha from 0 to 1 (this is how imgui's other functions want color)
+--  r float
+--  g float
+--  b float
+function ConvertHexStringToNumbers(hex)
+    hex = hex:gsub("#","")
 
-    print("-------- output --------")
+    local len = string.len(hex)
 
-    local output = Deserialize_Table(json)
+    local a = nil
+    local r = nil
+    local g = nil
+    local b = nil
 
-    ReportTable_lite(output)
+    if len == 3 then
+        -- RGB, compressed into single numbers
+        a = "FF"
+        r = string.sub(hex, 1, 1)
+        g = string.sub(hex, 2, 2)
+        b = string.sub(hex, 3, 3)
 
+        r = r .. r
+        g = g .. g
+        b = b .. b
 
+    elseif len == 4 then
+        -- ARGB, compressed into single numbers
+        a = string.sub(hex, 1, 1)
+        r = string.sub(hex, 2, 2)
+        g = string.sub(hex, 3, 3)
+        b = string.sub(hex, 4, 4)
 
+        a = a .. a
+        r = r .. r
+        g = g .. g
+        b = b .. b
+
+    elseif len == 6 then
+        -- RRGGBB
+        a = "FF"
+        r = string.sub(hex, 1, 2)
+        g = string.sub(hex, 3, 4)
+        b = string.sub(hex, 5, 6)
+
+    elseif len == 8 then
+        -- AARRGGBB
+        a = string.sub(hex, 1, 2)
+        r = string.sub(hex, 3, 4)
+        g = string.sub(hex, 5, 6)
+        b = string.sub(hex, 7, 8)
+
+    else
+        -- Invalid color, use magenta
+        return ConvertHexStringToNumbers_Magenta()
+    end
+
+    a = tonumber("0x" .. a)
+    r = tonumber("0x" .. r)
+    g = tonumber("0x" .. g)
+    b = tonumber("0x" .. b)
+
+    if not (a and r and g and b) then
+        -- At least one of them didn't convert to a byte
+        return ConvertHexStringToNumbers_Magenta()
+    end
+
+    return
+        tonumber("0x" .. a .. r .. g .. b),
+        a / 255,
+        r / 255,
+        g / 255,
+        b / 255
+end
+function ConvertHexStringToNumbers_Magenta()
+    return 0xFFFF00FF, 1, 1, 0, 1
 end
