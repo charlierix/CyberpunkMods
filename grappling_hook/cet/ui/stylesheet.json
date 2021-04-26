@@ -1,0 +1,18 @@
+{
+    "summaryButton_border_cornerRadius": 8,
+    "summaryButton_border_thickness": 2,
+
+    "summaryButton_border_color_standard": "FFF",
+    "summaryButton_border_color_hover": "FFF",
+
+    "summaryButton_background_color_standard": "3666",
+    "summaryButton_background_color_hover": "5888",
+
+    "summaryButton_padding": 16,
+
+    "summaryButton_header_color": "FFF",
+    "summaryButton_header_gap": 4,
+
+    "summaryButton_content_color_prompt": "888",
+    "summaryButton_content_color_value": "AAA"
+}

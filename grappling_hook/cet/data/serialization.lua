@@ -1,4 +1,5 @@
--- This serializes a table into json
+-- This serializes a table into almost json
+-- Actually, it looks like it's the definition of an array, in a string format
 --
 -- Copied from psiberx's project (NonameNonumber)
 -- https://github.com/psiberx/cp2077-cet-kit/tree/main/mods/GameSession-KillStats

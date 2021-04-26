@@ -42,6 +42,13 @@ function DrawEnergyProgress(energy, max, state)
     ImGui.End()
 end
 
+function DrawConfig(vars_ui, player)
+    if not player then
+        do return end
+    end
+    
+end
+
 --https://stackoverflow.com/questions/26160327/sorting-a-lua-table-by-key
 function DrawDebugWindow(debugInfo)
     --ImGui.SetNextWindowPos(20, 300, ImGuiCond.Always)

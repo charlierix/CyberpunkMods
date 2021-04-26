@@ -2,6 +2,11 @@
 --https://sqlite.org/c3ref/c_abort.html
 
 
+
+--TODO: either use the json library, or rename the columns so they don't say json (probably use the json library)
+
+
+
 --TODO: Make a function that removes old rows
 
 --TODO: Once this version is proven, rework to have a Grapple table.  Put pure functions in this

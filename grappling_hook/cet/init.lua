@@ -39,6 +39,7 @@ require "ui/inputtracker_startstop"
 require "ui/keys"
 require "ui/mappinutil"
 require "ui/reporting"
+require "ui/util_ui"
 
 function TODO()
 
@@ -99,6 +100,8 @@ local const =
     modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
 
     shouldShowDebugWindow = true,      -- shows a window with extra debug info
+
+    json = require("external.json")
 }
 
 --------------------------------------------------------------------
@@ -108,6 +111,7 @@ local const =
 local isShutdown = true
 local isLoading = false
 local shouldDraw = false
+local shouldShowConfig = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
@@ -115,6 +119,7 @@ local keys = Keys:new()
 
 local debug = { }
 
+--TODO: Change to vars
 local state =
 {
     flightMode = const.flightModes.standard,
@@ -148,6 +153,12 @@ local state =
     isSafetyFireCandidate = false,      -- this will turn true when grapple is used.  Goes back to false after they touch the ground
 }
 
+local vars_ui =
+{
+    --screen    -- info about the current screen resolution (see GetScreenInfo())
+    --style     -- this gets loaded from json during init
+}
+
 local player = nil       -- This holds current grapple settings, loaded from DB.  Resets to nil whenever a load is started, then recreated in first update
 
 --------------------------------------------------------------------
@@ -170,6 +181,7 @@ registerForEvent("onInit", function()
 
     InitializeRandom()
     EnsureTablesCreated()
+    InitializeUI(vars_ui)
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -324,6 +336,13 @@ registerHotkey("GrapplingHookSavePlayer", "Test Save Player", function()
 
 end)
 
+registerHotkey("GrapplingHookConfig", "Show/Hide Config", function()
+    --TODO: This should just show the config.  Make them push a button to close so they can be
+    --prompted to save
+
+    shouldShowConfig = not shouldShowConfig
+end)
+
 registerForEvent("onDraw", function()
     if isShutdown or isLoading or not shouldDraw then
         do return end
@@ -331,6 +350,10 @@ registerForEvent("onDraw", function()
 
     if player and state.energy < player.energy_tank.max_energy then
         DrawEnergyProgress(state.energy, player.energy_tank.max_energy, state)
+    end
+
+    if shouldShowConfig then
+        DrawConfig(vars_ui, player)
     end
 
     if const.shouldShowDebugWindow then
