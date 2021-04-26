@@ -1,5 +1,3 @@
---https://github.com/rxi/json.lua/blob/master/json.lua
-
 --
 -- json.lua
 --
@@ -23,6 +21,17 @@
 -- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 -- SOFTWARE.
 --
+
+-----------------------------------
+
+--https://github.com/rxi/json.lua/blob/master/json.lua
+
+-- Changes from original:
+--  Encode sorts by key so the json is built consistently
+
+--TODO: Add an option to format the json
+
+-----------------------------------
 
 local json = { _version = "0.1.2" }
 
@@ -79,6 +88,7 @@ local function encode_table(val, stack)
     if n ~= #val then
       error("invalid table: sparse array")
     end
+
     -- Encode
     for i, v in ipairs(val) do
       table.insert(res, encode(v, stack))
@@ -88,12 +98,35 @@ local function encode_table(val, stack)
 
   else
     -- Treat as an object
-    for k, v in pairs(val) do
+
+    ------- ORIG -------
+    -- for k, v in pairs(val) do
+    --   if type(k) ~= "string" then
+    --     error("invalid table: mixed or invalid key types")
+    --   end
+    --   table.insert(res, encode(k, stack) .. ":" .. encode(v, stack))
+    -- end
+
+    ------- SORTED -------
+
+    local keys = {}
+
+    for k in pairs(val) do
       if type(k) ~= "string" then
         error("invalid table: mixed or invalid key types")
       end
-      table.insert(res, encode(k, stack) .. ":" .. encode(v, stack))
+
+      table.insert(keys, k)
     end
+
+    table.sort(keys)
+
+    for _, k in ipairs(keys) do		-- iterate over the sorted list
+      table.insert(res, encode(k, stack) .. ":" .. encode(val[k], stack))
+    end
+
+    ----------------------
+
     stack[val] = nil
     return "{" .. table.concat(res, ",") .. "}"
   end

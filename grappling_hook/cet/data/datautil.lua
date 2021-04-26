@@ -17,7 +17,7 @@ function GetPlayerEntry(playerID)
     local player =
     {
         playerID = row.PlayerID,
-        energy_tank = Deserialize_Table(row.JSON_EnergyTank),
+        energy_tank = extern_json.decode(row.JSON_EnergyTank),
         grapple1 = grapples[1],
         grapple2 = grapples[2],
         grapple3 = grapples[3],

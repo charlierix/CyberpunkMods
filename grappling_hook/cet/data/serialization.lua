@@ -1,5 +1,5 @@
--- This serializes a table into almost json
--- Actually, it looks like it's the definition of an array, in a string format
+-- This serializes a table into a string representation of an array (lua script telling how to make an array)
+-- Deserialize does the reverse.  Creates an array based on the string
 --
 -- Copied from psiberx's project (NonameNonumber)
 -- https://github.com/psiberx/cp2077-cet-kit/tree/main/mods/GameSession-KillStats

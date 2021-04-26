@@ -34,7 +34,7 @@ end
 function InsertPlayer(playerID, energy_tank, grappleKeys, experience)
     local sucess, pkey, errMsg = pcall(function ()
         local time, time_readable = GetCurrentTime_AndReadable()
-        local json_energy_tank = Serialize_Table(energy_tank)
+        local json_energy_tank = extern_json.encode(energy_tank)
 
         local stmt = db:prepare[[ INSERT INTO Player (PlayerID, JSON_EnergyTank, GrappleKey1, GrappleKey2, GrappleKey3, GrappleKey4, GrappleKey5, GrappleKey6, Experience, LastUsed, LastUsed_Readable) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ]]
 
@@ -122,7 +122,7 @@ end
 function InsertGrapple(grapple)
     local sucess, pkey, errMsg = pcall(function ()
         local time, time_readable = GetCurrentTime_AndReadable()
-        local json = Serialize_Table(grapple)
+        local json = extern_json.encode(grapple)
 
         local stmt = db:prepare[[ INSERT INTO Grapple (Name, Experience, JSON, LastUsed, LastUsed_Readable) VALUES (?, ?, ?, ?, ?) ]]
 
@@ -173,7 +173,7 @@ function GetGrapple_ByKey(primaryKey)
 
         if result == sqlite3.ROW then
             local row = stmt:get_named_values()
-            return Deserialize_Table(row.JSON), nil
+            return extern_json.decode(row.JSON), nil
 
         elseif result == sqlite3.DONE then
             return nil, "GetGrapple_ByKey: No Rows Found"
@@ -194,7 +194,7 @@ end
 -- inserting dupes
 function GetGrappleKey_ByContent(grapple)
     local sucess, grappleKey, errMsg = pcall(function ()
-        local json = Serialize_Table(grapple)
+        local json = extern_json.encode(grapple)
 
         --NOTE: This could just compare json, since that contains name and experience.  But doing it this way
         --exactly mirrors the insert method (just in case there are bugs)

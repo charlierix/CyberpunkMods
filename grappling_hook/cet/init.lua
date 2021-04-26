@@ -22,7 +22,7 @@ require "data/dal_tests"
 require "data/datautil"
 require "data/defaults"
 require "data/player"
-require "data/serialization"
+--require "data/serialization"      -- using json instead.  Keeping this around in case there is something that needs the more direct way of encoding
 
 require "processing/flightmode_transitions"
 require "processing/flightutil"
@@ -41,7 +41,7 @@ require "ui/mappinutil"
 require "ui/reporting"
 require "ui/util_ui"
 
-extern_json = require "external/json"
+extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 function TODO()
 
@@ -303,28 +303,13 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("GrapplingHookSavePlayer", "color tests", function()
+registerHotkey("GrapplingHookSavePlayer", "save load", function()
 
-    local tests =
-    {
-        "garbage",
-        "#4066E8",
-        "abc",
-        "abcd",
-        "FFA040",
-        "802040FF"
-    }
+    player:Save()
 
-    for i=1, #tests do
-        print(tests[i])
+    player:Load()
 
-        local full, a, r, g, b = ConvertHexStringToNumbers(tests[i])
-        print(tostring(full))
-        print(tostring(a) .. ", " .. tostring(r) .. ", " .. tostring(g) .. ", " .. tostring(b))
-        print("")
-        print("--------------------")
-        print("")
-    end
+    ReportTable_lite(player)
 
 end)
 
