@@ -31,9 +31,8 @@ function Process_Flight(o, player, state, const, debug, deltaTime)
 
     local grapple = state.grapple       -- this will be used a lot, save a dot reference
 
-    -- If about to hit a wall, then cancel, but only if the desired point is near zero (if the
-    -- desired point is out along the rope, then it's ok if they bounce off of walls)
-    if state.hasBeenAirborne and grapple.desired_length and IsNearZero(grapple.desired_length) and IsWallCollisionImminent(o, deltaTime) then
+    -- If about to hit a wall, then cancel, but only if the settings say to
+    if state.hasBeenAirborne and grapple.stop_on_wallHit and IsWallCollisionImminent(o, deltaTime) then
         Transition_ToStandard(state, const, debug, o)
         do return end
     end
@@ -42,7 +41,7 @@ function Process_Flight(o, player, state, const, debug, deltaTime)
 
     o:GetCamera()
 
-    if DotProduct3D(o.lookdir_forward, grappleDirUnit) < grapple.minDot then
+    if grapple.minDot and (DotProduct3D(o.lookdir_forward, grappleDirUnit) < grapple.minDot) then
         -- They looked too far away
         if grapple.anti_gravity then
             print("calling from flight")

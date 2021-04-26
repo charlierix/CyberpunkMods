@@ -20,14 +20,18 @@ namespace grapple_ui.models
     public record Grapple
     {
         public string name { get; init; }
-        //public string description { get; init; }      // it would be nice to have a place to describe the intention of various templates.  Or have the option to serialize grapples to file and share with others
+        public string description { get; init; }      // it would be nice to have a place to describe the intention of various templates.  Or have the option to serialize grapples to file and share with others
 
         public string mappin_name { get; init; }
 
         /// <summary>
         /// Grapple will disengage when dot product of look direction and grapple line is less than this
         /// </summary>
-        public double minDot { get; init; } = 0;
+        /// <remarks>
+        /// If null, then grapple won't disengage based on where they look.  Good for grapples designed to make
+        /// the player hang from a wall.  Set the desired length to something small, like .5 to 1
+        /// </remarks>
+        public double? minDot { get; init; } = 0;
 
         public AntiGravity anti_gravity { get; init; }
 
@@ -37,6 +41,17 @@ namespace grapple_ui.models
         /// If null, then the desired length is the distance from the anchor point
         /// </remarks>
         public double? desired_length { get; init; }
+
+        /// <summary>
+        /// If set, then the grapple will exit if they get closer than this to the anchor point
+        /// </summary>
+        public double? stop_distance { get; init; }
+
+        /// <summary>
+        /// True: Grapple will exit if they touch a wall
+        /// False: Grapple will ignore wall touching
+        /// </summary>
+        public bool stop_on_wallHit { get; init; }
 
         public ConstantAccel accel_alongGrappleLine { get; init; }
         public ConstantAccel accel_alongLook { get; init; }
