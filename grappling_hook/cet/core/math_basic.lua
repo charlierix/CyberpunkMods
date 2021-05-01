@@ -55,3 +55,8 @@ function Clamp(min, max, value)
         return value
     end
 end
+
+-- CET uses lua 5.1, bit shifting doesn't get handled natively until 5.2
+function Bit_LShift(x, n)
+    return x * (2^n)
+end

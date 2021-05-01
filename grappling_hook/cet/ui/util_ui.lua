@@ -3,7 +3,9 @@ function InitializeUI(vars_ui)
 
     vars_ui.style = LoadStylesheet()
 
-    vars_ui.mainWindow = LoadMainWindowStats(vars_ui.screen)
+    vars_ui.mainWindow = Define_MainWindow(vars_ui.screen)
+
+    Define_SummaryButtons(vars_ui)      -- this must come after vars_ui.mainWindow is defined
 
     --ReportTable_lite(vars_ui)
 end
@@ -31,7 +33,8 @@ function LoadStylesheet()
 
     local style = extern_json.decode(json)
 
-    --TODO: Convert color strings
+    -- Convert color strings
+    FinishStylesheetColors(style)
 
     return style
 end
@@ -40,17 +43,25 @@ function FinishStylesheetColors(style)
     local argb = { }
 
     for key, value in pairs(style) do
-        if string.find(key, "_color") then
-            local color, a, r, g, b = ConvertHexStringToNumbers(value)
+        local type = type(value)
 
-            -- Change from string to a full int
-            style[key] = color
+        if type == "string" then
+            if string.find(key, "_color") then
+                local color, a, r, g, b = ConvertHexStringToNumbers(value)
 
-            -- Store these off so there's no chance of interfering with the for loop
-            argb[key .. "_a"] = a
-            argb[key .. "_r"] = r
-            argb[key .. "_g"] = g
-            argb[key .. "_b"] = b
+                -- Change from string to a full int
+                style[key] = color
+
+                -- Store these off so there's no chance of interfering with the for loop
+                argb[key .. "_a"] = a
+                argb[key .. "_r"] = r
+                argb[key .. "_g"] = g
+                argb[key .. "_b"] = b
+            end
+
+        elseif type == "table" then
+            -- Recurse
+            FinishStylesheetColors(value)
         end
     end
 
@@ -123,28 +134,28 @@ function ConvertHexStringToNumbers(hex)
         return ConvertHexStringToNumbers_Magenta()
     end
 
-    a = tonumber("0x" .. a)
-    r = tonumber("0x" .. r)
-    g = tonumber("0x" .. g)
-    b = tonumber("0x" .. b)
+    local num_a = tonumber("0x" .. a)
+    local num_r = tonumber("0x" .. r)
+    local num_g = tonumber("0x" .. g)
+    local num_b = tonumber("0x" .. b)
 
-    if not (a and r and g and b) then
+    if not (num_a and num_r and num_g and num_b) then
         -- At least one of them didn't convert to a byte
         return ConvertHexStringToNumbers_Magenta()
     end
 
     return
         tonumber("0x" .. a .. r .. g .. b),
-        a / 255,
-        r / 255,
-        g / 255,
-        b / 255
+        num_a / 255,
+        num_r / 255,
+        num_g / 255,
+        num_b / 255
 end
 function ConvertHexStringToNumbers_Magenta()
     return 0xFFFF00FF, 1, 1, 0, 1
 end
 
-function LoadMainWindowStats(screen)
+function Define_MainWindow(screen)
     local width = 1000
     local height = 800
 
@@ -155,4 +166,48 @@ function LoadMainWindowStats(screen)
         left = screen.center_x - width / 2,
         top = screen.center_y - height / 2,
     }
+end
+function Refresh_WindowPos(mainWindow)
+    local curLeft, curTop = ImGui.GetWindowPos()
+
+    mainWindow.left = curLeft
+    mainWindow.top = curTop
+end
+
+function Refresh_LineHeights(vars_ui)
+    if not vars_ui.line_heights then
+        vars_ui.line_heights = {}
+    end
+
+    vars_ui.line_heights.line = ImGui.GetTextLineHeight()
+    vars_ui.line_heights.gap = ImGui.GetTextLineHeightWithSpacing() - vars_ui.line_heights.line
+end
+
+-- There may be a way to call that enum natively, but for now, just hardcode the int
+function Get_ImDrawFlags_RoundCornersAll()
+    -- // Flags for ImDrawList functions
+    -- // (Legacy: bit 0 must always correspond to ImDrawFlags_Closed to be backward compatible with old API using a bool. Bits 1..3 must be unused)
+    -- enum ImDrawFlags_
+    -- {
+    --     ImDrawFlags_None                        = 0,
+    --     ImDrawFlags_Closed                      = 1 << 0, // PathStroke(), AddPolyline(): specify that shape should be closed (Important: this is always == 1 for legacy reason)
+    --     ImDrawFlags_RoundCornersTopLeft         = 1 << 4, // AddRect(), AddRectFilled(), PathRect(): enable rounding top-left corner only (when rounding > 0.0f, we default to all corners). Was 0x01.
+    --     ImDrawFlags_RoundCornersTopRight        = 1 << 5, // AddRect(), AddRectFilled(), PathRect(): enable rounding top-right corner only (when rounding > 0.0f, we default to all corners). Was 0x02.
+    --     ImDrawFlags_RoundCornersBottomLeft      = 1 << 6, // AddRect(), AddRectFilled(), PathRect(): enable rounding bottom-left corner only (when rounding > 0.0f, we default to all corners). Was 0x04.
+    --     ImDrawFlags_RoundCornersBottomRight     = 1 << 7, // AddRect(), AddRectFilled(), PathRect(): enable rounding bottom-right corner only (when rounding > 0.0f, we default to all corners). Wax 0x08.
+    --     ImDrawFlags_RoundCornersNone            = 1 << 8, // AddRect(), AddRectFilled(), PathRect(): disable rounding on all corners (when rounding > 0.0f). This is NOT zero, NOT an implicit flag!
+    --     ImDrawFlags_RoundCornersTop             = ImDrawFlags_RoundCornersTopLeft | ImDrawFlags_RoundCornersTopRight,
+    --     ImDrawFlags_RoundCornersBottom          = ImDrawFlags_RoundCornersBottomLeft | ImDrawFlags_RoundCornersBottomRight,
+    --     ImDrawFlags_RoundCornersLeft            = ImDrawFlags_RoundCornersBottomLeft | ImDrawFlags_RoundCornersTopLeft,
+    --     ImDrawFlags_RoundCornersRight           = ImDrawFlags_RoundCornersBottomRight | ImDrawFlags_RoundCornersTopRight,
+    --     ImDrawFlags_RoundCornersAll             = ImDrawFlags_RoundCornersTopLeft | ImDrawFlags_RoundCornersTopRight | ImDrawFlags_RoundCornersBottomLeft | ImDrawFlags_RoundCornersBottomRight,
+    --     ImDrawFlags_RoundCornersDefault_        = ImDrawFlags_RoundCornersAll, // Default to ALL corners if none of the _RoundCornersXX flags are specified.
+    --     ImDrawFlags_RoundCornersMask_           = ImDrawFlags_RoundCornersAll | ImDrawFlags_RoundCornersNone
+    -- };
+
+    return
+        Bit_LShift(1, 4) +  -- ImDrawFlags_RoundCornersTopLeft
+        Bit_LShift(1, 5) +  -- ImDrawFlags_RoundCornersTopRight
+        Bit_LShift(1, 6) +  -- ImDrawFlags_RoundCornersBottomLeft
+        Bit_LShift(1, 7)    -- ImDrawFlags_RoundCornersBottomRight
 end

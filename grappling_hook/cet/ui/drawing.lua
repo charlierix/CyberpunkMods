@@ -51,24 +51,56 @@ function DrawConfig(vars_ui, player)
     ImGui.SetNextWindowSize(vars_ui.mainWindow.width, vars_ui.mainWindow.height, ImGuiCond.Always)
 
     if (ImGui.Begin("Grappling Hook", true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoCollapse)) then
-        local curLeft, curTop = ImGui.GetWindowPos()
-        vars_ui.mainWindow.left = curLeft
-        vars_ui.mainWindow.top = curTop
+        -- These will be used by workers for this window as well as sub windows
+        Refresh_WindowPos(vars_ui.mainWindow)
+        Refresh_LineHeights(vars_ui)
 
 
 
 
+        if vars_ui.test then
+            Draw_SummaryButton(vars_ui.test, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        end
 
 
 
 
+        -- Finalize models for this frame
+
+
+--TODO: This is failing with a nil antigrav
+        --Refresh_EnergyTank(vars_ui.energyTank, player.energy_tank)
+
+
+
+        -- Refresh_GrappleSlot(vars_ui.grapple1, player.grapple1)
+        -- Refresh_GrappleSlot(vars_ui.grapple2, player.grapple2)
+        -- Refresh_GrappleSlot(vars_ui.grapple3, player.grapple3)
+        -- Refresh_GrappleSlot(vars_ui.grapple4, player.grapple4)
+        -- Refresh_GrappleSlot(vars_ui.grapple5, player.grapple5)
+        -- Refresh_GrappleSlot(vars_ui.grapple6, player.grapple6)
+
+        -- -- Show ui elements
+        --Draw_SummaryButton(vars_ui.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+
+        -- Draw_SummaryButton(vars_ui.grapple1, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        -- Draw_SummaryButton(vars_ui.grapple2, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        -- Draw_SummaryButton(vars_ui.grapple3, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        -- Draw_SummaryButton(vars_ui.grapple4, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        -- Draw_SummaryButton(vars_ui.grapple5, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        -- Draw_SummaryButton(vars_ui.grapple6, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
 
 
 
 
+        --TODO: Warn them about needing to pull up console
+        --TODO: Experience
 
 
-        
+        --TODO: Close button (inner dialogs will have: save/cancel if dirty -vs- close)
+
+
+
 
     end
     ImGui.End()

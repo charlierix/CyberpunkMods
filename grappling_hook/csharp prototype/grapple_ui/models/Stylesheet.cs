@@ -26,49 +26,10 @@ namespace grapple_ui.models
     /// </remarks>
     public record Stylesheet
     {
-        // ------------------ SummaryButton ------------------
-        // This is a custom control that has a border, a list of text inside, acts like a button
-        public double summaryButton_border_cornerRadius { get; init; }
-        public double summaryButton_border_thickness { get; init; }
 
-        public string summaryButton_border_color_standard { get; init; }
-        public string summaryButton_border_color_hover { get; init; }
-
-        public string summaryButton_background_color_standard { get; init; }
-        public string summaryButton_background_color_hover { get; init; }
-
-        /// <summary>
-        /// The gap between the border and the content
-        /// </summary>
-        public double summaryButton_padding { get; init; }
-
-        /// <summary>
-        /// Header text
-        /// </summary>
-        /// <remarks>
-        /// NOTE: It looks like the only way to change fontsize is to have multiple fonts, that sounds like
-        /// more effort than its worth
-        /// 
-        /// It looks like bold is out of the question as well
-        /// </remarks>
-        public string summaryButton_header_color { get; init; }
-        /// <summary>
-        /// This is the gap between the header and the rest of the content
-        /// </summary>
-        public double summaryButton_header_gap { get; init; }
-
-        /// <summary>
-        /// Content text
-        /// </summary>
-        public string summaryButton_content_color_prompt { get; init; }
-        public string summaryButton_content_color_value { get; init; }
+        //TODO: Window colors
 
 
-
-
-
-
-
-
+        public Stylesheet_SummaryButton summaryButton { get; init; }
     }
 }

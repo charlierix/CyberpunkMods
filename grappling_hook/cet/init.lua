@@ -39,6 +39,9 @@ require "processing/processing_standard"
 require "processing/safetyfire"
 
 require "ui/animation_lowEnergy"
+require "ui/builder_misc"
+require "ui/builder_summary_button"
+require "ui/control_definitions"
 require "ui/drawing"
 require "ui/inputtracker_startstop"
 require "ui/keys"
@@ -106,7 +109,7 @@ local const =
 
     modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
 
-    shouldShowDebugWindow = true,      -- shows a window with extra debug info
+    shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 
 --------------------------------------------------------------------
@@ -160,9 +163,10 @@ local state =
 
 local vars_ui =
 {
-    --screen    -- info about the current screen resolution (see GetScreenInfo())
+    --screen    -- info about the current screen resolution -- see GetScreenInfo()
     --style     -- this gets loaded from json during init
-    --mainWindow    -- info about the location of the main window (top/left gets stored in a table if they move it)
+    --mainWindow    -- info about the location of the main window (top/left gets stored in a table if they move it) -- see Define_MainWindow()
+    --line_heights  -- the height of strings -- see Refresh_LineHeights()
 }
 
 local player = nil       -- This holds current grapple settings, loaded from DB.  Resets to nil whenever a load is started, then recreated in first update
@@ -307,22 +311,33 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("GrapplingHookSavePlayer", "window pos", function()
+registerHotkey("GrapplingHookSavePlayer", "test summary button", function()
 
-    local left, top, errMsg = GetConfigPosition()
-    print(tostring(left) .. ", " .. tostring(top) .. " (" .. tostring(errMsg) .. ")")
+    vars_ui.test =
+    {
+        center_x = 500,
+        center_y = 200,
 
-    errMsg = UpdateConfigPosition(50, 400)
-    print(tostring(errMsg))
+        -- min_width = 220,
+        -- min_height = 180,
 
-    left, top, errMsg = GetConfigPosition()
-    print(tostring(left) .. ", " .. tostring(top) .. " (" .. tostring(errMsg) .. ")")
+        --unused_text = "unused",
 
-    errMsg = UpdateConfigPosition(555, 44)
-    print(tostring(errMsg))
+        header_prompt = "head prompt",
+        header_value = "head value",
 
-    left, top, errMsg = GetConfigPosition()
-    print(tostring(left) .. ", " .. tostring(top) .. " (" .. tostring(errMsg) .. ")")
+        content =
+        {
+            { prompt = "c prompt 1", value = "c value 1" },
+            -- { prompt = "aaa" },
+            -- { value = "bbb" },
+            -- { prompt = "ccc", value = "ddd" },
+            -- { prompt = "really really really long winded text.  This should expand the button beyond min width" },
+        },
+
+
+        -- suffix = "suffix",
+    }
 
 end)
 
