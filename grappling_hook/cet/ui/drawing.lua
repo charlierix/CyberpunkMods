@@ -58,37 +58,32 @@ function DrawConfig(vars_ui, player)
 
 
 
-        if vars_ui.test then
-            Draw_SummaryButton(vars_ui.test, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
-        end
+        -- if vars_ui.test then
+        --     Draw_SummaryButton(vars_ui.test, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        -- end
 
 
 
 
         -- Finalize models for this frame
+        Refresh_EnergyTank(vars_ui.energyTank, player.energy_tank)
 
+        Refresh_GrappleSlot(vars_ui.grapple1, player.grapple1)
+        Refresh_GrappleSlot(vars_ui.grapple2, player.grapple2)
+        Refresh_GrappleSlot(vars_ui.grapple3, player.grapple3)
+        Refresh_GrappleSlot(vars_ui.grapple4, player.grapple4)
+        Refresh_GrappleSlot(vars_ui.grapple5, player.grapple5)
+        Refresh_GrappleSlot(vars_ui.grapple6, player.grapple6)
 
---TODO: This is failing with a nil antigrav
-        --Refresh_EnergyTank(vars_ui.energyTank, player.energy_tank)
+        -- Show ui elements
+        Draw_SummaryButton(vars_ui.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
 
-
-
-        -- Refresh_GrappleSlot(vars_ui.grapple1, player.grapple1)
-        -- Refresh_GrappleSlot(vars_ui.grapple2, player.grapple2)
-        -- Refresh_GrappleSlot(vars_ui.grapple3, player.grapple3)
-        -- Refresh_GrappleSlot(vars_ui.grapple4, player.grapple4)
-        -- Refresh_GrappleSlot(vars_ui.grapple5, player.grapple5)
-        -- Refresh_GrappleSlot(vars_ui.grapple6, player.grapple6)
-
-        -- -- Show ui elements
-        --Draw_SummaryButton(vars_ui.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
-
-        -- Draw_SummaryButton(vars_ui.grapple1, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
-        -- Draw_SummaryButton(vars_ui.grapple2, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
-        -- Draw_SummaryButton(vars_ui.grapple3, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
-        -- Draw_SummaryButton(vars_ui.grapple4, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
-        -- Draw_SummaryButton(vars_ui.grapple5, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
-        -- Draw_SummaryButton(vars_ui.grapple6, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        Draw_SummaryButton(vars_ui.grapple1, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        Draw_SummaryButton(vars_ui.grapple2, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        Draw_SummaryButton(vars_ui.grapple3, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        Draw_SummaryButton(vars_ui.grapple4, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        Draw_SummaryButton(vars_ui.grapple5, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        Draw_SummaryButton(vars_ui.grapple6, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
 
 
 

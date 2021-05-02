@@ -9,7 +9,8 @@ function Define_SummaryButtons(vars_ui)
     Define_GrappleSlots(vars_ui)
 
 
-
+    -- Post Processing
+    SortSummaryButtonContent(vars_ui)
 end
 
 ------------------------------------- Main Window -------------------------------------
@@ -27,15 +28,16 @@ function Define_EnergyTank(mainWindow)
 
         content =
         {
-            recovery_rate = { prompt = "refill rate" },
-            flying_percent = { prompt = "while grappling" },
+            -- the content is presented as sorted by name
+            a_recovery_rate = { prompt = "refill rate" },
+            b_flying_percent = { prompt = "while grappling" },
         },
     }
 end
 function Refresh_EnergyTank(def, energy_tank)
     def.header_value = tostring(Round(energy_tank.max_energy))
-    def.content.recovery_rate.value = tostring(Round(energy_tank.recovery_rate, 1))
-    def.content.flying_percent = tostring(Round(energy_tank.flying_percent * 100)) .. "%"
+    def.content.a_recovery_rate.value = tostring(Round(energy_tank.recovery_rate, 1))
+    def.content.b_flying_percent.value = tostring(Round(energy_tank.flying_percent * 100)) .. "%%"
 end
 
 function Define_GrappleSlots(vars_ui)
@@ -73,5 +75,35 @@ function Refresh_GrappleSlot(def, grapple)
     else
         def.unused_text = "empty"
         def.header_prompt = nil
+    end
+end
+
+------------------------------------ Helper Methods -----------------------------------
+
+function SortSummaryButtonContent(vars_ui)
+    for _, item in pairs(vars_ui) do
+        -- Can't tell exactly what is a summary button, but it's at least a table
+        if type(item) == "table" then
+            -- The list that will be sorted is called content, so see if that exists
+            local content = item.content
+            if content and type(content) == "table" then
+                -- This is likely a summary button content.  Could do an extra validation that keys are
+                -- strings and items arrays that contain a prompt or value key.  But there shouldn't be
+                -- any harm in sorting now
+
+                -- Can't sort the content table directly, need an index table so that ipairs can be used
+                local keys = {}
+
+                -- populate the table that holds the keys
+                for key in pairs(content) do
+                    table.insert(keys, key)
+                end
+
+                -- sort the keys
+                table.sort(keys)
+
+                item.content_keys = keys
+            end
+        end
     end
 end

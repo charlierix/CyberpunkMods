@@ -36,7 +36,7 @@ namespace grapple_ui.models
         public string header_value { get; init; }
 
         // Info text, each is accessed by a key (the key isn't displayed)
-        public Dictionary<string, SummaryButton_Content> content { get; init; }
+        public SortedDictionary<string, SummaryButton_Content> content { get; init; }
 
         // *******************************************************************
 

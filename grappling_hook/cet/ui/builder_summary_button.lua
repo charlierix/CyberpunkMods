@@ -162,8 +162,14 @@ function Draw_SummaryButton_UsedHeight_AddIt(def, line_heights, style_summary)
 
         if def.content then
             -- There is content, which means gaps between header/content and suffix/content are straight forward
-            content = content + (#def.content * line_heights.line)
-            content = content + ((#def.content - 1) * line_heights.gap)
+            local numLines = 0
+            for _, _ in pairs(def.content) do
+                numLines = numLines + 1
+            end
+
+            content = content + (numLines * line_heights.line)
+            content = content + ((numLines - 1) * line_heights.gap)
+
             nonSuffix = nonSuffix + content
 
             if hasHeader then
@@ -319,8 +325,8 @@ function Draw_SummaryButton_Content(def, line_heights, style_summary)
         ImGui.SetCursorPos(left_prompt, top)
         ImGui.BeginGroup()      -- new lines stay at the same x value instead of going to zero
 
-        for _, content in pairs(def.content) do
-            local text = content.prompt
+        for _, key in ipairs(def.content_keys) do       -- content_keys is sorted
+            local text = def.content[key].prompt
             if not text then
                 text = ""
             end
@@ -336,8 +342,8 @@ function Draw_SummaryButton_Content(def, line_heights, style_summary)
         ImGui.SetCursorPos(left_value, top)
         ImGui.BeginGroup()
 
-        for _, content in pairs(def.content) do
-            local text = content.value
+        for _, key in ipairs(def.content_keys) do
+            local text = def.content[key].value
             if not text then
                 text = ""
             end

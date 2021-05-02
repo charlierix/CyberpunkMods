@@ -328,11 +328,11 @@ registerHotkey("GrapplingHookSavePlayer", "test summary button", function()
 
         content =
         {
-            { prompt = "c prompt 1", value = "c value 1" },
-            -- { prompt = "aaa" },
-            -- { value = "bbb" },
-            -- { prompt = "ccc", value = "ddd" },
-            -- { prompt = "really really really long winded text.  This should expand the button beyond min width" },
+            a = { prompt = "c prompt 1", value = "c value 1" },
+            b = { prompt = "aaa" },
+            c = { value = "bbb" },
+            d = { prompt = "ccc", value = "ddd" },
+            --e = { prompt = "really really really long winded text.  This should expand the button beyond min width" },
         },
 
 
