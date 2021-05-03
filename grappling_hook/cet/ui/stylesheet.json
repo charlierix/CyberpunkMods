@@ -29,6 +29,7 @@
 
     "colors":
     {
-        "test": { "the_color": "0F0" }
+        "test_prompt": { "the_color": "0F0" },
+        "test_value": { "the_color": "88F" }
     }
 }

@@ -7,10 +7,6 @@ function Define_SummaryButtons(vars_ui)
     vars_ui.energyTank = Define_EnergyTank(vars_ui.mainWindow)
 
     Define_GrappleSlots(vars_ui)
-
-
-    -- Post Processing
-    SortSummaryButtonContent(vars_ui)
 end
 
 ------------------------------------- Main Window -------------------------------------
@@ -75,35 +71,5 @@ function Refresh_GrappleSlot(def, grapple)
     else
         def.unused_text = "empty"
         def.header_prompt = nil
-    end
-end
-
------------------------------------- Helper Methods -----------------------------------
-
-function SortSummaryButtonContent(vars_ui)
-    for _, item in pairs(vars_ui) do
-        -- Can't tell exactly what is a summary button, but it's at least a table
-        if type(item) == "table" then
-            -- The list that will be sorted is called content, so see if that exists
-            local content = item.content
-            if content and type(content) == "table" then
-                -- This is likely a summary button content.  Could do an extra validation that keys are
-                -- strings and items arrays that contain a prompt or value key.  But there shouldn't be
-                -- any harm in sorting now
-
-                -- Can't sort the content table directly, need an index table so that ipairs can be used
-                local keys = {}
-
-                -- populate the table that holds the keys
-                for key in pairs(content) do
-                    table.insert(keys, key)
-                end
-
-                -- sort the keys
-                table.sort(keys)
-
-                item.content_keys = keys
-            end
-        end
     end
 end

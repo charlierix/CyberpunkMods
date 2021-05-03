@@ -41,6 +41,7 @@ require "processing/safetyfire"
 require "ui/animation_lowEnergy"
 require "ui/builder_label"
 require "ui/builder_misc"
+require "ui/builder_orderedlist"
 require "ui/builder_summary_button"
 require "ui/control_definitions"
 require "ui/drawing"
@@ -318,24 +319,53 @@ end)
 registerHotkey("GrapplingHookSavePlayer", "test summary button", function()
 
 
-    vars_ui.test_label =
-    {
-        --text = "really long text that should get word wrapped a few times.  Aaaaaaaaaaaaaaaaaaaaaaaaaaand here's some more",
-        text = "really long text that should get word wrapped a few times.  And here's some more",
 
-        max_width = 144,
+    vars_ui.test_orderedlist =
+    {
+        content =
+        {
+            a = { prompt = "prompt 1", value = "value 1" },
+            c = { value = "bbb" },
+            b = { prompt = "aaa" },
+            d = { prompt = "ccc", value = "ddd" },
+        },
 
         position =
         {
-            pos_x = 8,
-            pos_y = 4,
+            pos_x = 100,
+            pos_y = -100,
 
-            horizontal = const.alignment_horizontal.right,
-            vertical = const.alignment_vertical.bottom,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
         },
 
-        color = "test",
+        gap = 100,
+
+        color_prompt = "test_prompt",
+        color_value = "test_value",
     }
+
+
+    SortContentLists(vars_ui)
+
+    -- vars_ui.test_label =
+    -- {
+    --     --text = "really long text that should get word wrapped a few times.  Aaaaaaaaaaaaaaaaaaaaaaaaaaand here's some more",
+    --     text = "really long text that should get word wrapped a few times.  And here's some more",
+
+    --     max_width = 144,
+
+    --     position =
+    --     {
+    --         pos_x = 8,
+    --         pos_y = 4,
+
+    --         horizontal = const.alignment_horizontal.right,
+    --         vertical = const.alignment_vertical.bottom,
+    --     },
+
+    --     color = "test",
+    -- }
 
 
     -- vars_ui.test_summary =

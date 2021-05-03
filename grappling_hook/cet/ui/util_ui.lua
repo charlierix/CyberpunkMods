@@ -7,7 +7,36 @@ function InitializeUI(vars_ui)
 
     Define_SummaryButtons(vars_ui)      -- this must come after vars_ui.mainWindow is defined
 
+    -- Post Processing
+    SortContentLists(vars_ui)
+
+    
     --ReportTable_lite(vars_ui)
+end
+
+-- This looks for controls that have a content property and creates a sorted content_keys index
+function SortContentLists(vars_ui)
+    for _, item in pairs(vars_ui) do
+        -- All controls should be tables
+        if type(item) == "table" then
+            -- The list that will be sorted is called content, so see if that exists
+            local content = item.content
+            if content and type(content) == "table" then
+                -- Can't sort the content table directly, need an index table so that ipairs can be used
+                local keys = {}
+
+                -- populate the table that holds the keys
+                for key in pairs(content) do
+                    table.insert(keys, key)
+                end
+
+                -- sort the keys
+                table.sort(keys)
+
+                item.content_keys = keys
+            end
+        end
+    end
 end
 
 function GetScreenInfo()

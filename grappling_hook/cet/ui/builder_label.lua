@@ -1,3 +1,5 @@
+-- Draws a label at an arbitrary location within the window
+-- def is models\ui\Label
 function Draw_Label(def, style_colors, window_width, window_height, const, line_heights)
     if (not def.text) or def.text == "" then
         do return end
@@ -24,4 +26,3 @@ function Draw_Label(def, style_colors, window_width, window_height, const, line_
         ImGui.TextColored(color.the_color_r, color.the_color_g, color.the_color_b, color.the_color_a, def.text)
     end
 end
-
