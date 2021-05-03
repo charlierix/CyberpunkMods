@@ -196,7 +196,7 @@ registerForEvent("onInit", function()
 
     InitializeRandom()
     EnsureTablesCreated()
-    InitializeUI(vars_ui)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
+    InitializeUI(vars_ui, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -410,7 +410,7 @@ registerForEvent("onDraw", function()
         DrawEnergyProgress(state.energy, player.energy_tank.max_energy, state)
     end
 
-    if shouldShowConfig then
+    if shouldShowConfig and player then
         DrawConfig(vars_ui, player, const)
     end
 

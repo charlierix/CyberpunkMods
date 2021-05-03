@@ -79,6 +79,7 @@ function Draw_OrderedList_Width_PromptValue(prompt, value, gap)
     if prompt and value then
         promptWidth = ImGui.CalcTextSize(prompt)       -- ignoring vertical result
         valueWidth = ImGui.CalcTextSize(value)
+
         gapWidth = gap
 
     elseif prompt then

@@ -55,43 +55,45 @@ function DrawConfig(vars_ui, player, const)
         Refresh_WindowPos(vars_ui.mainWindow)
         Refresh_LineHeights(vars_ui)
 
-
-
-
         -- if vars_ui.test_summary then
         --     Draw_SummaryButton(vars_ui.test_summary, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
         -- end
 
-        if vars_ui.test_label then
-            Draw_Label(vars_ui.test_label, vars_ui.style.colors, vars_ui.mainWindow.width, vars_ui.mainWindow.height, const)
-        end
+        -- if vars_ui.test_label then
+        --     Draw_Label(vars_ui.test_label, vars_ui.style.colors, vars_ui.mainWindow.width, vars_ui.mainWindow.height, const)
+        -- end
 
         -- if vars_ui.test_orderedlist then
         --     Draw_OrderedList(vars_ui.test_orderedlist, vars_ui.style.colors, vars_ui.mainWindow.width, vars_ui.mainWindow.height, const, vars_ui.line_heights)
         -- end
 
 
-        -- -- Finalize models for this frame
-        -- Refresh_EnergyTank(vars_ui.energyTank, player.energy_tank)
+        -- Finalize models for this frame
+        local main = vars_ui.mainWindow
+        Refresh_EnergyTank(main.energyTank, player.energy_tank)
 
-        -- Refresh_GrappleSlot(vars_ui.grapple1, player.grapple1)
-        -- Refresh_GrappleSlot(vars_ui.grapple2, player.grapple2)
-        -- Refresh_GrappleSlot(vars_ui.grapple3, player.grapple3)
-        -- Refresh_GrappleSlot(vars_ui.grapple4, player.grapple4)
-        -- Refresh_GrappleSlot(vars_ui.grapple5, player.grapple5)
-        -- Refresh_GrappleSlot(vars_ui.grapple6, player.grapple6)
+        Refresh_GrappleSlot(main.grapple1, player.grapple1)
+        Refresh_GrappleSlot(main.grapple2, player.grapple2)
+        Refresh_GrappleSlot(main.grapple3, player.grapple3)
+        Refresh_GrappleSlot(main.grapple4, player.grapple4)
+        Refresh_GrappleSlot(main.grapple5, player.grapple5)
+        Refresh_GrappleSlot(main.grapple6, player.grapple6)
 
-        -- -- Show ui elements
-        -- Draw_SummaryButton(vars_ui.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        Refresh_Experience_Main(main.experience, player)
 
-        -- Draw_SummaryButton(vars_ui.grapple1, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
-        -- Draw_SummaryButton(vars_ui.grapple2, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
-        -- Draw_SummaryButton(vars_ui.grapple3, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
-        -- Draw_SummaryButton(vars_ui.grapple4, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
-        -- Draw_SummaryButton(vars_ui.grapple5, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
-        -- Draw_SummaryButton(vars_ui.grapple6, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        -- Show ui elements
+        Draw_SummaryButton(main.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
 
+        Draw_SummaryButton(main.grapple1, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        Draw_SummaryButton(main.grapple2, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        Draw_SummaryButton(main.grapple3, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        Draw_SummaryButton(main.grapple4, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        Draw_SummaryButton(main.grapple5, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
+        Draw_SummaryButton(main.grapple6, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
 
+        Draw_OrderedList(main.experience, vars_ui.style.colors, vars_ui.mainWindow.width, vars_ui.mainWindow.height, const, vars_ui.line_heights)
+
+        Draw_Label(main.consoleWarning, vars_ui.style.colors, vars_ui.mainWindow.width, vars_ui.mainWindow.height, const)
 
 
         --TODO: Warn them about needing to pull up console

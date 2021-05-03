@@ -1,39 +1,40 @@
-function InitializeUI(vars_ui)
+function InitializeUI(vars_ui, const)
     vars_ui.screen = GetScreenInfo()    --NOTE: This won't see changes if they mess with their video settings, but that should be super rare.  They just need to reload mods
 
     vars_ui.style = LoadStylesheet()
 
     vars_ui.mainWindow = Define_MainWindow(vars_ui.screen)
 
-    Define_SummaryButtons(vars_ui)      -- this must come after vars_ui.mainWindow is defined
+    Define_Controls_MainWindow(vars_ui, const)      -- this must come after vars_ui.mainWindow is defined
 
     -- Post Processing
     SortContentLists(vars_ui)
 
-    
     --ReportTable_lite(vars_ui)
 end
 
 -- This looks for controls that have a content property and creates a sorted content_keys index
 function SortContentLists(vars_ui)
-    for _, item in pairs(vars_ui) do
-        -- All controls should be tables
-        if type(item) == "table" then
-            -- The list that will be sorted is called content, so see if that exists
-            local content = item.content
-            if content and type(content) == "table" then
-                -- Can't sort the content table directly, need an index table so that ipairs can be used
-                local keys = {}
+    for _, window in pairs(vars_ui) do
+        for _, item in pairs(window) do
+            -- All controls should be tables
+            if type(item) == "table" then
+                -- The list that will be sorted is called content, so see if that exists
+                local content = item.content
+                if content and type(content) == "table" then
+                    -- Can't sort the content table directly, need an index table so that ipairs can be used
+                    local keys = {}
 
-                -- populate the table that holds the keys
-                for key in pairs(content) do
-                    table.insert(keys, key)
+                    -- populate the table that holds the keys
+                    for key in pairs(content) do
+                        table.insert(keys, key)
+                    end
+
+                    -- sort the keys
+                    table.sort(keys)
+
+                    item.content_keys = keys
                 end
-
-                -- sort the keys
-                table.sort(keys)
-
-                item.content_keys = keys
             end
         end
     end

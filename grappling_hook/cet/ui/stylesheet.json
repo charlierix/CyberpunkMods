@@ -10,7 +10,7 @@
         "background_color_standard": "10606060",
         "background_color_hover": "20A0A0A0",
     
-        "padding": 16,
+        "padding": 19,
     
         "unused_color": "555",
         
@@ -29,7 +29,8 @@
 
     "colors":
     {
-        "test_prompt": { "the_color": "0F0" },
-        "test_value": { "the_color": "88F" }
+        "experience_prompt": { "the_color": "F5EA65" },
+        "experience_value": { "the_color": "FADD5A" },
+        "info": { "the_color": "C4A380" }
     }
 }
