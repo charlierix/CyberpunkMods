@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace grapple_ui.models
+namespace grapple_ui.models.stylesheet
 {
     /// <summary>
     /// These are properties used by the UI
@@ -40,7 +40,7 @@ namespace grapple_ui.models
         //TODO: Window colors
 
 
-        public Stylesheet_SummaryButton summaryButton { get; init; }
+        public SummaryButton summaryButton { get; init; }
 
         /// <summary>
         /// For now, it's just a place to define named colors.  If more is needed later, change this to
@@ -54,7 +54,7 @@ namespace grapple_ui.models
         ///         "name2": { the_color: "color2" }
         ///     ]
         /// </remarks>
-        public Dictionary<string, Stylesheet_NamedColor> colors { get; init; }
+        public Dictionary<string, NamedColor> colors { get; init; }
 
     }
 }

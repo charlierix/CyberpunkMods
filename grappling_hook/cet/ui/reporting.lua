@@ -64,7 +64,7 @@ function ReportTable_lite(val, indent, overrideChildReport)
 
         for k in pairs(val) do
           if type(k) ~= "string" then
-            error("invalid table: mixed or invalid key types")
+            error("invalid table: mixed or invalid key types: " .. type(k))
           end
 
           table.insert(keys, k)

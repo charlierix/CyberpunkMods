@@ -39,6 +39,7 @@ require "processing/processing_standard"
 require "processing/safetyfire"
 
 require "ui/animation_lowEnergy"
+require "ui/builder_label"
 require "ui/builder_misc"
 require "ui/builder_summary_button"
 require "ui/control_definitions"
@@ -108,6 +109,9 @@ local const =
     grappleMinResolution = 0.5,
 
     modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
+
+    alignment_horizontal = CreateEnum({ "left", "center", "right" }),
+    alignment_vertical = CreateEnum({ "top", "center", "bottom" }),
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
@@ -313,31 +317,51 @@ end)
 
 registerHotkey("GrapplingHookSavePlayer", "test summary button", function()
 
-    vars_ui.test =
+
+    vars_ui.test_label =
     {
-        center_x = 500,
-        center_y = 200,
+        --text = "really long text that should get word wrapped a few times.  Aaaaaaaaaaaaaaaaaaaaaaaaaaand here's some more",
+        text = "really long text that should get word wrapped a few times.  And here's some more",
 
-        -- min_width = 220,
-        -- min_height = 180,
+        max_width = 144,
 
-        --unused_text = "unused",
-
-        header_prompt = "head prompt",
-        header_value = "head value",
-
-        content =
+        position =
         {
-            a = { prompt = "c prompt 1", value = "c value 1" },
-            b = { prompt = "aaa" },
-            c = { value = "bbb" },
-            d = { prompt = "ccc", value = "ddd" },
-            --e = { prompt = "really really really long winded text.  This should expand the button beyond min width" },
+            pos_x = 8,
+            pos_y = 4,
+
+            horizontal = const.alignment_horizontal.right,
+            vertical = const.alignment_vertical.bottom,
         },
 
-
-        -- suffix = "suffix",
+        color = "test",
     }
+
+
+    -- vars_ui.test_summary =
+    -- {
+    --     center_x = 500,
+    --     center_y = 200,
+
+    --     -- min_width = 220,
+    --     -- min_height = 180,
+
+    --     --unused_text = "unused",
+
+    --     header_prompt = "head prompt",
+    --     header_value = "head value",
+
+    --     content =
+    --     {
+    --         a = { prompt = "c prompt 1", value = "c value 1" },
+    --         b = { prompt = "aaa" },
+    --         c = { value = "bbb" },
+    --         d = { prompt = "ccc", value = "ddd" },
+    --         --e = { prompt = "really really really long winded text.  This should expand the button beyond min width" },
+    --     },
+
+    --     -- suffix = "suffix",
+    -- }
 
 end)
 
@@ -357,7 +381,7 @@ registerForEvent("onDraw", function()
     end
 
     if shouldShowConfig then
-        DrawConfig(vars_ui, player)
+        DrawConfig(vars_ui, player, const)
     end
 
     if const.shouldShowDebugWindow then

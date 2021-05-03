@@ -25,5 +25,10 @@
         "suffix_gap": 8,
 
         "prompt_value_gap": 8
+    },
+
+    "colors":
+    {
+        "test": { "the_color": "0F0" }
     }
 }

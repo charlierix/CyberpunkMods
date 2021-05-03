@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="del &quot;$(SolutionDir)..\cet\models\*.cs&quot;&#xD;&#xA;xcopy &quot;$(ProjectDir)models\*.cs&quot; &quot;$(SolutionDir)..\cet\models\&quot;" />
+    <Exec Command="del /s &quot;$(SolutionDir)..\cet\models\*.cs&quot;&#xD;&#xA;xcopy /e &quot;$(ProjectDir)models\*.cs&quot; &quot;$(SolutionDir)..\cet\models\&quot;" />
   </Target>
 
 </Project>

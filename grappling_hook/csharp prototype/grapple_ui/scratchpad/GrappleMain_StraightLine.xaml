@@ -35,47 +35,51 @@
         <!-- ******************* Accel Props ******************* -->
 
 
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
 
         <!-- Stop Early Conditions -->
-        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="846,850,0,0">
-            <Label Content="Stop Early" HorizontalAlignment="Center" Style="{StaticResource header}"/>
+        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource border}" Margin="846,850,0,0">
+            <StackPanel>
+                <Label Content="Stop Early" HorizontalAlignment="Center" Style="{StaticResource header}"/>
 
-            <StackPanel Orientation="Horizontal">
-                <CheckBox Content="distance to desired" Style="{StaticResource sub_header_chkbox}"/>
-                <Label Content="1" VerticalAlignment="Center" Style="{StaticResource sub_value}"/>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Content="distance to desired" Style="{StaticResource sub_header_chkbox}"/>
+                    <Label Content="1" VerticalAlignment="Center" Style="{StaticResource sub_value}"/>
+                </StackPanel>
+
+                <CheckBox Content="touch wall" Style="{StaticResource sub_header_chkbox}"/>
+
+                <!-- Stop Angle (minDot, but present in degrees) -->
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Content="look away" Style="{StaticResource sub_header_chkbox}"/>
+                    <Label Content="0" VerticalAlignment="Center" Style="{StaticResource sub_value}"/>
+                </StackPanel>
             </StackPanel>
-
-            <CheckBox Content="touch wall" Style="{StaticResource sub_header_chkbox}"/>
-
-            <!-- Stop Angle (minDot, but present in degrees) -->
-            <StackPanel Orientation="Horizontal">
-                <CheckBox Content="look away" Style="{StaticResource sub_header_chkbox}"/>
-                <Label Content="0" VerticalAlignment="Center" Style="{StaticResource sub_value}"/>
-            </StackPanel>
-        </StackPanel>
+        </Border>
 
 
 
 
 
         <!-- Aim Duration -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="29,421,0,0">
-            <Label Content="aim seconds" Style="{StaticResource sub_header}"/>
-            <Label Content="0.33" Style="{StaticResource sub_value}"/>
-        </StackPanel>
+        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource border}" Margin="29,421,0,0">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="aim seconds" Style="{StaticResource sub_header}"/>
+                <Label Content="0.33" Style="{StaticResource sub_value}"/>
+            </StackPanel>
+        </Border>
 
 
 
         <!-- ******************* Extras ******************* -->
         <!-- Anti Gravity -->
         <Border HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource border}" Margin="163,762,0,0">
-            <StackPanel Margin="8">
+            <StackPanel>
                 <Label Content="Anti Gravity" HorizontalAlignment="Center" Style="{StaticResource header}"/>
 
                 <StackPanel Orientation="Horizontal">
@@ -89,10 +93,10 @@
                 </StackPanel>
             </StackPanel>
         </Border>
-        
+
         <!-- Air Dash -->
         <Border HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource border}" Margin="412,762,0,0">
-            <StackPanel Margin="8">
+            <StackPanel>
                 <Label Content="Air Dash" HorizontalAlignment="Center" Style="{StaticResource header}"/>
 
                 <StackPanel Orientation="Horizontal">
@@ -114,10 +118,12 @@
 
 
         <!-- Reduce Fall Damage % -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="185,697,0,0">
-            <CheckBox Content="Reduce Fall Damage" Style="{StaticResource sub_header_chkbox}"/>
-            <Label Content="50%" VerticalAlignment="Center" Style="{StaticResource sub_value}"/>
-        </StackPanel>
+        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource border}" Margin="185,697,0,0">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Content="Reduce Fall Damage" Style="{StaticResource sub_header_chkbox}"/>
+                <Label Content="50%" VerticalAlignment="Center" Style="{StaticResource sub_value}"/>
+            </StackPanel>
+        </Border>
 
 
         <!-- ******************* Info ******************* -->

@@ -19,7 +19,7 @@
 
         <!-- Energy -->
         <Border HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource border}">
-            <StackPanel Margin="8">
+            <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Energy" HorizontalAlignment="Center" Style="{StaticResource header}"/>
                     <Label Content="12" Style="{StaticResource header_value}"/>

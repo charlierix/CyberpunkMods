@@ -183,6 +183,35 @@ function Refresh_LineHeights(vars_ui)
     vars_ui.line_heights.gap = ImGui.GetTextLineHeightWithSpacing() - vars_ui.line_heights.line
 end
 
+function CalcTextSize(text, max_width, line_heights)
+    -- Looks like this overload wasn't implemented.  It's still safe to call ImGui.PushTextWrapPos(left + max_width)
+    -- sol: no matching function call takes this number of arguments and the specified types
+    --  in function 'CalcTextSize'
+    --ImGui.CalcTextSize(text, "12345 don't match this string 67890", false, max_width)
+
+    local width, height = ImGui.CalcTextSize(text)
+    if (not max_width) or width <= max_width then
+        return width, height
+    end
+
+    -- It will need to be word wrapped.  Figure out how many lines there will be
+    local division = width / max_width
+    local numLines = math.ceil(division)
+
+    if numLines - division < 0.03 then
+        -- It nearly fills all available lines, add an extra line to be safe (because there will be early
+        -- splits on whole words)
+        --
+        -- This is crude and will fail with words longer than a single line, but that could only be detected
+        -- if the word wrap was manually replicated
+        numLines = numLines + 1
+    end
+
+    height = (numLines * line_heights.line) + ((numLines - 1) * line_heights.gap)
+
+    return max_width, height
+end
+
 -- There may be a way to call that enum natively, but for now, just hardcode the int
 function Get_ImDrawFlags_RoundCornersAll()
     -- // Flags for ImDrawList functions
@@ -210,4 +239,76 @@ function Get_ImDrawFlags_RoundCornersAll()
         Bit_LShift(1, 5) +  -- ImDrawFlags_RoundCornersTopRight
         Bit_LShift(1, 6) +  -- ImDrawFlags_RoundCornersBottomLeft
         Bit_LShift(1, 7)    -- ImDrawFlags_RoundCornersBottomRight
+end
+
+-- This will return the left,top of the control based on the definition, control's size,
+-- and window's size
+-- Params
+--  def = models\ui\ControlPosition
+--  control_width, control_height = size of control
+--  window_width, window_height = size of parent window
+function GetControlPosition(def, control_width, control_height, window_width, window_height, const)
+    -- Left
+    local left = nil
+
+    if def.horizontal then
+        if def.horizontal == const.alignment_horizontal.left then
+            left = def.pos_x
+
+        elseif def.horizontal == const.alignment_horizontal.center then
+            left = (window_width / 2) - (control_width / 2) + def.pos_x
+
+        elseif def.horizontal == const.alignment_horizontal.right then
+            left = window_width - def.pos_x - control_width
+
+        else
+            print("GetControlPosition: Unknown horizontal: " .. tostring(def.horizontal))
+            left = 0
+        end
+    else
+        left = def.pos_x        -- default to left align
+    end
+
+    -- Top
+    local top = nil
+        if def.vertical then
+        if def.vertical == const.alignment_vertical.top then
+            top = def.pos_y
+
+        elseif def.vertical == const.alignment_vertical.center then
+            top = (window_height / 2) - (control_height / 2) + def.pos_y
+
+        elseif def.vertical == const.alignment_vertical.bottom then
+            top = window_height - def.pos_y - control_height
+
+        else
+            print("GetControlPosition: Unknown vertical: " .. tostring(def.vertical))
+            top = 0
+        end
+    else
+        top = def.pos_y     -- default to top align
+    end
+
+    return left, top
+end
+
+-- This returns the named color else magenta (style_colors is sylesheet.colors)
+-- See models\stylesheet\NamedColor
+function GetNamedColor(style_colors, name)
+    local retVal = style_colors[name]
+    if retVal then
+        return retVal
+    end
+
+    -- Not found, use magenta
+    local color, a, r, g, b = ConvertHexStringToNumbers_Magenta()
+
+    return
+    {
+        the_color = color,
+        the_color_a = a,
+        the_color_r = r,
+        the_color_g = g,
+        the_color_b = b,
+    }
 end

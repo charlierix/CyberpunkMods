@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace grapple_ui.models
+namespace grapple_ui.models.ui
 {
     /// <summary>
     /// This gets handed to a method that builds a control that looks like some text surrounded by
@@ -17,6 +17,7 @@ namespace grapple_ui.models
     public record SummaryButton
     {
         // These are in window coords (coords relative to the parent window)
+        //TODO: Replace with ControlPosition
         public int center_x { get; init; }
         public int center_y { get; init; }
 
@@ -35,7 +36,8 @@ namespace grapple_ui.models
         public string header_prompt { get; init; }
         public string header_value { get; init; }
 
-        // Info text, each is accessed by a key (the key isn't displayed)
+        // Info text, each is accessed by a key (the key isn't displayed, but the content is displayed based on alphabetical order of the keys)
+        // It's actually dictionary content and sortedlist content_keys
         public SortedDictionary<string, SummaryButton_Content> content { get; init; }
 
         // *******************************************************************

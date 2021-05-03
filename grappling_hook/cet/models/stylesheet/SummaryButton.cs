@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace grapple_ui.models
+namespace grapple_ui.models.stylesheet
 {
-    public record Stylesheet_SummaryButton
+    public record SummaryButton
     {
         // ------------------ SummaryButton ------------------
         // This is a custom control that has a border, a list of text inside, acts like a button

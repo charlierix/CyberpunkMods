@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace grapple_ui.models
+namespace grapple_ui.models.stylesheet
 {
-    public record Stylesheet_NamedColor
+    public record NamedColor
     {
         // Instead of storing name here, it needs to be the name of this instance
         //public string name { get; init; }

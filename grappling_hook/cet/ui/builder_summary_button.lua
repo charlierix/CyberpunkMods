@@ -19,6 +19,8 @@ function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, sc
     Draw_SummaryButton_Header(def, line_heights, style_summary)
     Draw_SummaryButton_Content(def, line_heights, style_summary)
     Draw_SummaryButton_Suffix(def, line_heights, style_summary)
+
+    return isClicked
 end
 
 ------------------------------------------- Private Methods -------------------------------------------
