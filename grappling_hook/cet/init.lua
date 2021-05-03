@@ -348,24 +348,24 @@ registerHotkey("GrapplingHookSavePlayer", "test summary button", function()
 
     SortContentLists(vars_ui)
 
-    -- vars_ui.test_label =
-    -- {
-    --     --text = "really long text that should get word wrapped a few times.  Aaaaaaaaaaaaaaaaaaaaaaaaaaand here's some more",
-    --     text = "really long text that should get word wrapped a few times.  And here's some more",
+    vars_ui.test_label =
+    {
+        text = "really long text that should get word wrapped a few times.  Aaaaaaaaaaaaaaaaaaaaaaaaaaand here's some more",
+        --text = "really long text that should get word wrapped a few times.  And here's some more",
 
-    --     max_width = 144,
+        max_width = 72,
 
-    --     position =
-    --     {
-    --         pos_x = 8,
-    --         pos_y = 4,
+        position =
+        {
+            pos_x = 8,
+            pos_y = 4,
 
-    --         horizontal = const.alignment_horizontal.right,
-    --         vertical = const.alignment_vertical.bottom,
-    --     },
+            horizontal = const.alignment_horizontal.right,
+            vertical = const.alignment_vertical.bottom,
+        },
 
-    --     color = "test",
-    -- }
+        color = "test_value",
+    }
 
 
     -- vars_ui.test_summary =

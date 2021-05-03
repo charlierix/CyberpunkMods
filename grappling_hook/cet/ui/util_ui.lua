@@ -174,7 +174,7 @@ function ConvertHexStringToNumbers(hex)
     end
 
     return
-        tonumber("0x" .. a .. r .. g .. b),
+        tonumber("0x" .. a .. r .. g .. b),     --NOTE: Functions in draw gmgui_draw.cpp use this ARGB, but ImGui.PushStyleColor (and maybe all functions in imgui.h that take a single color?) needed AGBR
         num_a / 255,
         num_r / 255,
         num_g / 255,
@@ -210,35 +210,6 @@ function Refresh_LineHeights(vars_ui)
 
     vars_ui.line_heights.line = ImGui.GetTextLineHeight()
     vars_ui.line_heights.gap = ImGui.GetTextLineHeightWithSpacing() - vars_ui.line_heights.line
-end
-
-function CalcTextSize(text, max_width, line_heights)
-    -- Looks like this overload wasn't implemented.  It's still safe to call ImGui.PushTextWrapPos(left + max_width)
-    -- sol: no matching function call takes this number of arguments and the specified types
-    --  in function 'CalcTextSize'
-    --ImGui.CalcTextSize(text, "12345 don't match this string 67890", false, max_width)
-
-    local width, height = ImGui.CalcTextSize(text)
-    if (not max_width) or width <= max_width then
-        return width, height
-    end
-
-    -- It will need to be word wrapped.  Figure out how many lines there will be
-    local division = width / max_width
-    local numLines = math.ceil(division)
-
-    if numLines - division < 0.03 then
-        -- It nearly fills all available lines, add an extra line to be safe (because there will be early
-        -- splits on whole words)
-        --
-        -- This is crude and will fail with words longer than a single line, but that could only be detected
-        -- if the word wrap was manually replicated
-        numLines = numLines + 1
-    end
-
-    height = (numLines * line_heights.line) + ((numLines - 1) * line_heights.gap)
-
-    return max_width, height
 end
 
 -- There may be a way to call that enum natively, but for now, just hardcode the int

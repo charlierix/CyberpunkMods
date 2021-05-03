@@ -62,13 +62,13 @@ function DrawConfig(vars_ui, player, const)
         --     Draw_SummaryButton(vars_ui.test_summary, vars_ui.line_heights, vars_ui.style.summaryButton, vars_ui.mainWindow.left, vars_ui.mainWindow.top)
         -- end
 
-        -- if vars_ui.test_label then
-        --     Draw_Label(vars_ui.test_label, vars_ui.style.colors, vars_ui.mainWindow.width, vars_ui.mainWindow.height, const, vars_ui.line_heights)
-        -- end
-
-        if vars_ui.test_orderedlist then
-            Draw_OrderedList(vars_ui.test_orderedlist, vars_ui.style.colors, vars_ui.mainWindow.width, vars_ui.mainWindow.height, const, vars_ui.line_heights)
+        if vars_ui.test_label then
+            Draw_Label(vars_ui.test_label, vars_ui.style.colors, vars_ui.mainWindow.width, vars_ui.mainWindow.height, const)
         end
+
+        -- if vars_ui.test_orderedlist then
+        --     Draw_OrderedList(vars_ui.test_orderedlist, vars_ui.style.colors, vars_ui.mainWindow.width, vars_ui.mainWindow.height, const, vars_ui.line_heights)
+        -- end
 
 
         -- -- Finalize models for this frame
