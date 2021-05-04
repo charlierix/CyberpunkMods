@@ -22,6 +22,8 @@ namespace grapple_ui.models.ui
         public int pos_x { get; init; }
         public int pos_y { get; init; }
 
+        //TODO: optional bools that let x and y offsets be percent of the window size instead of pixels
+
         public AlignmentHorizontal horizontal { get; init; }
         public AlignmentVertical vertical { get; init; }
     }

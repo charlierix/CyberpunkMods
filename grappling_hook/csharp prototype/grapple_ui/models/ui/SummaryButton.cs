@@ -16,10 +16,10 @@ namespace grapple_ui.models.ui
     /// </remarks>
     public record SummaryButton
     {
-        // These are in window coords (coords relative to the parent window)
-        //TODO: Replace with ControlPosition
-        public int center_x { get; init; }
-        public int center_y { get; init; }
+        /// <summary>
+        /// Tells where on the window to place the text
+        /// </summary>
+        public ControlPosition position { get; init; }
 
         // This defines the min size of the inner portion.  It doesn't include the border's padding around the inner portion
         public int? min_width { get; init; }

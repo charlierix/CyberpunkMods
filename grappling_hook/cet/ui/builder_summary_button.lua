@@ -1,5 +1,5 @@
 -- This got complex.  It might be cleaner to just implement a proper layout engine :)
-function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, screenOffset_y)
+function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, screenOffset_y, window_width, window_height, const)
     -- Calcuate sizes
     if not def.sizes then
         def.sizes = {}
@@ -8,17 +8,24 @@ function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, sc
     Draw_SummaryButton_UsedWidth(def, style_summary)
     Draw_SummaryButton_UsedHeight(def, line_heights, style_summary)
 
+
+    -- Calculate the location of this control
+    local padpad = style_summary.padding * 2
+    local left, top = GetControlPosition(def.position, def.sizes.horz_final + padpad, def.sizes.vert_final + padpad, window_width, window_height, const)
+    local center_x = left + style_summary.padding + (def.sizes.horz_final / 2)
+    local center_y = top + style_summary.padding + (def.sizes.vert_final / 2)
+
     -- Invisible Button
-    local isClicked, isHovered = Draw_InvisibleButton(def.center_x, def.center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding)
+    local isClicked, isHovered = Draw_InvisibleButton(center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding)
 
     -- Border
-    Draw_Border(screenOffset_x, screenOffset_y, def.center_x, def.center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding, isHovered, style_summary.background_color_standard, style_summary.background_color_hover, style_summary.border_color_standard, style_summary.border_color_hover, style_summary.border_cornerRadius, style_summary.border_thickness)
+    Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding, isHovered, style_summary.background_color_standard, style_summary.background_color_hover, style_summary.border_color_standard, style_summary.border_color_hover, style_summary.border_cornerRadius, style_summary.border_thickness)
 
     -- Place the text
-    Draw_SummaryButton_Unused(def, line_heights, style_summary)
-    Draw_SummaryButton_Header(def, line_heights, style_summary)
-    Draw_SummaryButton_Content(def, line_heights, style_summary)
-    Draw_SummaryButton_Suffix(def, line_heights, style_summary)
+    Draw_SummaryButton_Unused(def, line_heights, style_summary, center_x, center_y)
+    Draw_SummaryButton_Header(def, line_heights, style_summary, center_x, center_y)
+    Draw_SummaryButton_Content(def, line_heights, style_summary, center_x, center_y)
+    Draw_SummaryButton_Suffix(def, line_heights, style_summary, center_x, center_y)
 
     return isClicked
 end
@@ -238,19 +245,19 @@ function Draw_SummaryButton_HeaderConentGap(def, line_heights)
     return (availableHeight - usedHeight) / numGaps
 end
 
-function Draw_SummaryButton_Unused(def, line_heights, style_summary)
+function Draw_SummaryButton_Unused(def, line_heights, style_summary, center_x, center_y)
     if not def.unused_text then
         do return end
     end
 
     -- Calculate top/left of the unused text
-    local left = def.center_x - (def.sizes.horz_unused / 2)
+    local left = center_x - (def.sizes.horz_unused / 2)
 
     local top = nil
     if def.sizes.expadedByMinHeight then
-        top = def.center_y - (def.sizes.vert_final / 2) + Draw_SummaryButton_HeaderConentGap(def, line_heights)       -- y is the same as gap, since it's on top and y is the top of the text
+        top = center_y - (def.sizes.vert_final / 2) + Draw_SummaryButton_HeaderConentGap(def, line_heights)       -- y is the same as gap, since it's on top and y is the top of the text
     else
-        top = def.center_y - (def.sizes.vert_final / 2)
+        top = center_y - (def.sizes.vert_final / 2)
     end
 
     -- Draw the text
@@ -258,19 +265,19 @@ function Draw_SummaryButton_Unused(def, line_heights, style_summary)
 
     ImGui.TextColored(style_summary.unused_color_r, style_summary.unused_color_g, style_summary.unused_color_b, style_summary.unused_color_a, def.unused_text)
 end
-function Draw_SummaryButton_Header(def, line_heights, style_summary)
+function Draw_SummaryButton_Header(def, line_heights, style_summary, center_x, center_y)
     if def.unused_text or (not (def.header_prompt or def.header_value)) then
         do return end
     end
 
     -- Calculate top/left of the header set
-    local left = def.center_x - (def.sizes.horz_header_sum / 2)
+    local left = center_x - (def.sizes.horz_header_sum / 2)
 
     local top = nil
     if def.sizes.expadedByMinHeight then
-        top = def.center_y - (def.sizes.vert_final / 2) + Draw_SummaryButton_HeaderConentGap(def, line_heights)       -- y is the same as gap, since it on top and y is the top of the text
+        top = center_y - (def.sizes.vert_final / 2) + Draw_SummaryButton_HeaderConentGap(def, line_heights)       -- y is the same as gap, since it on top and y is the top of the text
     else
-        top = def.center_y - (def.sizes.vert_final / 2)
+        top = center_y - (def.sizes.vert_final / 2)
     end
 
     -- Draw the text
@@ -289,7 +296,7 @@ function Draw_SummaryButton_Header(def, line_heights, style_summary)
         ImGui.TextColored(style_summary.header_color_value_r, style_summary.header_color_value_g, style_summary.header_color_value_b, style_summary.header_color_value_a, def.header_value)
     end
 end
-function Draw_SummaryButton_Content(def, line_heights, style_summary)
+function Draw_SummaryButton_Content(def, line_heights, style_summary, center_x, center_y)
     if def.unused_text or (not def.content) then
         do return end
     end
@@ -299,23 +306,23 @@ function Draw_SummaryButton_Content(def, line_heights, style_summary)
     if def.sizes.expadedByMinWidth then
         -- Center horizontally
         local halfContent = def.sizes.horz_content_sum / 2
-        left_prompt = def.center_x - halfContent
-        left_value = def.center_x + halfContent - def.sizes.horz_content_value
+        left_prompt = center_x - halfContent
+        left_value = center_x + halfContent - def.sizes.horz_content_value
     else
         -- Left align
-        left_prompt = def.center_x - (def.sizes.horz_final / 2)
-        left_value = def.center_x - (def.sizes.horz_final / 2) + def.sizes.horz_content_sum - def.sizes.horz_content_value
+        left_prompt = center_x - (def.sizes.horz_final / 2)
+        left_value = center_x - (def.sizes.horz_final / 2) + def.sizes.horz_content_sum - def.sizes.horz_content_value
     end
 
     local top = nil
     if def.sizes.expadedByMinHeight then
         local gap = Draw_SummaryButton_HeaderConentGap(def, line_heights)
-        top = def.center_y - (def.sizes.vert_final / 2) + gap       -- going from the top in case the gap calculation wants to include the height of suffix (it's currently commented out, but may change in the future)
+        top = center_y - (def.sizes.vert_final / 2) + gap       -- going from the top in case the gap calculation wants to include the height of suffix (it's currently commented out, but may change in the future)
         if def.header_prompt or def.header_value then
             top = top + line_heights.line + gap
         end
     else
-        top = def.center_y - (def.sizes.vert_final / 2)
+        top = center_y - (def.sizes.vert_final / 2)
         if (def.header_prompt or def.header_value) then
             top = top + line_heights.line
             top = top + style_summary.header_gap
@@ -356,14 +363,14 @@ function Draw_SummaryButton_Content(def, line_heights, style_summary)
         ImGui.EndGroup()
     end
 end
-function Draw_SummaryButton_Suffix(def, line_heights, style_summary)
+function Draw_SummaryButton_Suffix(def, line_heights, style_summary, center_x, center_y)
     if not def.suffix then      -- suffix should still show if unused is populated
         do return end
     end
 
     -- Calculate top/left of the suffix
-    local left = def.center_x + (def.sizes.horz_final / 2) - def.sizes.horz_suffix
-    local top = def.center_y + (def.sizes.vert_final / 2) - line_heights.line
+    local left = center_x + (def.sizes.horz_final / 2) - def.sizes.horz_suffix
+    local top = center_y + (def.sizes.vert_final / 2) - line_heights.line
 
     -- Draw the text
     ImGui.SetCursorPos(left, top)

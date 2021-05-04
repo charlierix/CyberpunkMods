@@ -6,11 +6,12 @@
 --  models\ui\Label
 --  models\ui\OrderedList
 function Define_Controls_MainWindow(vars_ui, const)
-    local main = vars_ui.mainWindow
+    local main = { }
+    vars_ui.main = main
 
-    main.energyTank = Define_EnergyTank(vars_ui.mainWindow)
+    main.energyTank = Define_EnergyTank(const)
 
-    Define_GrappleSlots(vars_ui, main)
+    Define_GrappleSlots(main, const)
 
     main.experience = Define_Experience_Main(const)
 
@@ -21,12 +22,18 @@ end
 
 --NOTE: Define functions get called during init.  Refresh functions get called each frame that the config is visible
 
-function Define_EnergyTank(mainWindow)
+function Define_EnergyTank(const)
     return
     {
         -- In the middle of the window
-        center_x = mainWindow.width / 2,
-        center_y = mainWindow.height / 2,
+        position =
+        {
+            pos_x = 0,
+            pos_y = 0,
+
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
 
         header_prompt = "Energy",
 
@@ -44,26 +51,31 @@ function Refresh_EnergyTank(def, energy_tank)
     def.content.b_flying_percent.value = tostring(Round(energy_tank.flying_percent * 100)) .. "%%"
 end
 
-function Define_GrappleSlots(vars_ui, window)
+function Define_GrappleSlots(window, const)
     -- Figure out the positions (they are in a hex pattern around the center)
-    local center_x = vars_ui.mainWindow.width / 2
-    local center_y = vars_ui.mainWindow.height / 2
     local offset_x_small = 160
     local offset_x_large = 280
     local offset_y = 180
 
-    window.grapple1 = Define_GrappleSlots_DoIt(center_x - offset_x_small, center_y - offset_y, "1")
-    window.grapple2 = Define_GrappleSlots_DoIt(center_x + offset_x_small, center_y - offset_y, "2")
-    window.grapple3 = Define_GrappleSlots_DoIt(center_x + offset_x_large, center_y, "3")
-    window.grapple4 = Define_GrappleSlots_DoIt(center_x + offset_x_small, center_y + offset_y, "4")
-    window.grapple5 = Define_GrappleSlots_DoIt(center_x - offset_x_small, center_y + offset_y, "5")
-    window.grapple6 = Define_GrappleSlots_DoIt(center_x - offset_x_large, center_y, "6")
+    window.grapple1 = Define_GrappleSlots_DoIt(-offset_x_small, -offset_y, "1", const)
+    window.grapple2 = Define_GrappleSlots_DoIt(offset_x_small, -offset_y, "2", const)
+    window.grapple3 = Define_GrappleSlots_DoIt(offset_x_large, 0, "3", const)
+    window.grapple4 = Define_GrappleSlots_DoIt(offset_x_small, offset_y, "4", const)
+    window.grapple5 = Define_GrappleSlots_DoIt(-offset_x_small, offset_y, "5", const)
+    window.grapple6 = Define_GrappleSlots_DoIt(-offset_x_large, 0, "6", const)
+
 end
-function Define_GrappleSlots_DoIt(x, y, suffix)
+function Define_GrappleSlots_DoIt(x, y, suffix, const)
     return
     {
-        center_x = x,
-        center_y = y,
+        position =
+        {
+            pos_x = x,
+            pos_y = y,
+
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
 
         min_width = 160,
         min_height = 70,

@@ -114,6 +114,8 @@ local const =
     alignment_horizontal = CreateEnum({ "left", "center", "right" }),
     alignment_vertical = CreateEnum({ "top", "center", "bottom" }),
 
+    windows = CreateEnum({ "main", "grapple_straight" }),
+
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 
@@ -172,6 +174,10 @@ local vars_ui =
     --style     -- this gets loaded from json during init
     --mainWindow    -- info about the location of the main window (top/left gets stored in a table if they move it) -- see Define_MainWindow()
     --line_heights  -- the height of strings -- see Refresh_LineHeights()
+
+    -- ***** Each of these is a container of controls (name matches the values in windows enum) *****
+    --main
+    --grapple_straight
 }
 
 local player = nil       -- This holds current grapple settings, loaded from DB.  Resets to nil whenever a load is started, then recreated in first update
@@ -320,52 +326,52 @@ registerHotkey("GrapplingHookSavePlayer", "test summary button", function()
 
 
 
-    vars_ui.test_orderedlist =
-    {
-        content =
-        {
-            a = { prompt = "prompt 1", value = "value 1" },
-            c = { value = "bbb" },
-            b = { prompt = "aaa" },
-            d = { prompt = "ccc", value = "ddd" },
-        },
+    -- vars_ui.test_orderedlist =
+    -- {
+    --     content =
+    --     {
+    --         a = { prompt = "prompt 1", value = "value 1" },
+    --         c = { value = "bbb" },
+    --         b = { prompt = "aaa" },
+    --         d = { prompt = "ccc", value = "ddd" },
+    --     },
 
-        position =
-        {
-            pos_x = 100,
-            pos_y = -100,
+    --     position =
+    --     {
+    --         pos_x = 100,
+    --         pos_y = -100,
 
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+    --         horizontal = const.alignment_horizontal.center,
+    --         vertical = const.alignment_vertical.center,
+    --     },
 
-        gap = 100,
+    --     gap = 100,
 
-        color_prompt = "test_prompt",
-        color_value = "test_value",
-    }
+    --     color_prompt = "test_prompt",
+    --     color_value = "test_value",
+    -- }
 
 
-    SortContentLists(vars_ui)
+    -- SortContentLists(vars_ui)
 
-    vars_ui.test_label =
-    {
-        text = "really long text that should get word wrapped a few times.  Aaaaaaaaaaaaaaaaaaaaaaaaaaand here's some more",
-        --text = "really long text that should get word wrapped a few times.  And here's some more",
+    -- vars_ui.test_label =
+    -- {
+    --     text = "really long text that should get word wrapped a few times.  Aaaaaaaaaaaaaaaaaaaaaaaaaaand here's some more",
+    --     --text = "really long text that should get word wrapped a few times.  And here's some more",
 
-        max_width = 72,
+    --     max_width = 72,
 
-        position =
-        {
-            pos_x = 8,
-            pos_y = 4,
+    --     position =
+    --     {
+    --         pos_x = 8,
+    --         pos_y = 4,
 
-            horizontal = const.alignment_horizontal.right,
-            vertical = const.alignment_vertical.bottom,
-        },
+    --         horizontal = const.alignment_horizontal.right,
+    --         vertical = const.alignment_vertical.bottom,
+    --     },
 
-        color = "test_value",
-    }
+    --     color = "test_value",
+    -- }
 
 
     -- vars_ui.test_summary =

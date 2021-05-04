@@ -3,7 +3,7 @@ function InitializeUI(vars_ui, const)
 
     vars_ui.style = LoadStylesheet()
 
-    vars_ui.mainWindow = Define_MainWindow(vars_ui.screen)
+    vars_ui.mainWindow = Define_MainWindow(vars_ui.screen)      -- going with a SPA, so it's probably going to be the only window (maybe also a dialog box at some point?)
 
     Define_Controls_MainWindow(vars_ui, const)      -- this must come after vars_ui.mainWindow is defined
 
