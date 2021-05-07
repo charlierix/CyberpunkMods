@@ -1,3 +1,5 @@
+local this = {}
+
 -- This is called when they've initiated a new grapple.  It looks at the environment and kicks
 -- off actual flight with final values (like anchor point)
 --
@@ -19,7 +21,7 @@ function Process_Aim(o, player, state, const, debug, deltaTime)
     state.energy = RecoverEnergy(state.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * player.energy_tank.flying_percent, deltaTime)
 
     if state.grapple.aim_straight then
-        Process_Aim_Straight(state.grapple.aim_straight, o, player, state, const, debug, deltaTime)
+        this.Aim_Straight(state.grapple.aim_straight, o, player, state, const, debug, deltaTime)
 
     elseif state.grapple.aim_swing then
         print("Grappling ERROR, finish aim_swing")
@@ -31,7 +33,9 @@ function Process_Aim(o, player, state, const, debug, deltaTime)
     end
 end
 
-function Process_Aim_Straight(aim, o, player, state, const, debug, deltaTime)
+--------------------------------------- Private Methods ---------------------------------------
+
+function this.Aim_Straight(aim, o, player, state, const, debug, deltaTime)
     if state.startStopTracker:ShouldStop() then
         -- told to stop aiming, back to standard
         Transition_ToStandard(state, const, debug, o)

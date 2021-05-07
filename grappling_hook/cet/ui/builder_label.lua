@@ -1,6 +1,6 @@
--- Draws a label at an arbitrary location within the window
+-- Draws a label at an arbitrary location within the parent
 -- def is models\ui\Label
-function Draw_Label(def, style_colors, window_width, window_height, const)
+function Draw_Label(def, style_colors, parent_width, parent_height, const)
     if (not def.text) or def.text == "" then
         do return end
     end
@@ -15,7 +15,7 @@ function Draw_Label(def, style_colors, window_width, window_height, const)
     end
 
     -- Calculate Position
-    local left, top = GetControlPosition(def.position, width, height, window_width, window_height, const)
+    local left, top = GetControlPosition(def.position, width, height, parent_width, parent_height, const)
 
     -- Draw the text
     local color = GetNamedColor(style_colors, def.color)

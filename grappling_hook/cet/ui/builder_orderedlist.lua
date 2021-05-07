@@ -1,15 +1,17 @@
+local this = {}
+
 -- Draws multiple lines of text in two columns (prompts are col1, values are col2)
 -- def is models\ui\OrderedList
 --
 -- NOTE: A lot of this is a copy of SummaryButton's content logic.  Making a copy, because SummaryButton
 -- is too hardcoded and specific.  A version 2 may get built in the future where it's composed of these
 -- more generic builders
-function Draw_OrderedList(def, style_colors, window_width, window_height, const, line_heights)
+function Draw_OrderedList(def, style_colors, parent_width, parent_height, const, line_heights)
     -- Calculate Position
-    local width_p, width_g, width_v, width_total = Draw_OrderedList_Width(def)
-    local height = Draw_OrderedList_Height(def, line_heights)
+    local width_p, width_g, width_v, width_total = this.Calculate_Width(def)
+    local height = this.Calculate_Height(def, line_heights)
 
-    local left, top = GetControlPosition(def.position, width_total, height, window_width, window_height, const)
+    local left, top = GetControlPosition(def.position, width_total, height, parent_width, parent_height, const)
 
     -- Draw the prompts
     if width_p > 0 then       -- there may only be values
@@ -52,13 +54,13 @@ end
 
 ------------------------------------------- Private Methods -------------------------------------------
 
-function Draw_OrderedList_Width(def)
+function this.Calculate_Width(def)
     local prompt = 0
     local gap = 0
     local value = 0
 
     for _, content in pairs(def.content) do
-        local p, g, v = Draw_OrderedList_Width_PromptValue(content.prompt, content.value, def.gap)
+        local p, g, v = this.Calculate_Width_PromptValue(content.prompt, content.value, def.gap)
 
         prompt = math.max(prompt, p)
         gap = math.max(gap, g)
@@ -71,7 +73,7 @@ function Draw_OrderedList_Width(def)
         value,
         prompt + gap + value
 end
-function Draw_OrderedList_Width_PromptValue(prompt, value, gap)
+function this.Calculate_Width_PromptValue(prompt, value, gap)
     local promptWidth = 0
     local gapWidth = 0
     local valueWidth = 0
@@ -92,7 +94,7 @@ function Draw_OrderedList_Width_PromptValue(prompt, value, gap)
     return promptWidth, gapWidth, valueWidth
 end
 
-function Draw_OrderedList_Height(def, line_heights)
+function this.Calculate_Height(def, line_heights)
     local numLines = 0
     for _, _ in pairs(def.content) do
         numLines = numLines + 1

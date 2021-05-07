@@ -1,3 +1,5 @@
+local this = {}
+
 -- This holds player level state (has nothing to do with cyberpunk's playerpuppet class)
 --
 -- This is closely tied to the Player model
@@ -38,7 +40,7 @@ function Player:Load()
     --self.o:SetPlayerUniqueID(1)
     local playerID = self.o:GetPlayerUniqueID()
     if not playerID or playerID == 0 then
-        playerID = CreateNewPlayerID(self.o)
+        playerID = this.CreateNewPlayerID(self.o)
     end
 
     -- Retrieve entry from db
@@ -100,7 +102,7 @@ end
 
 ------------------------------------ Private Static Methods ------------------------------------
 
-function CreateNewPlayerID(o)
+function this.CreateNewPlayerID(o)
     -- Save file doesn't have this quest string.  Get a new ID and store it in the save file
 
     -- It won't stick if they don't hit save.  But this is a one time setup per playthrough, so

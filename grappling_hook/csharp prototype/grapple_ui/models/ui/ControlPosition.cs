@@ -15,14 +15,14 @@ namespace grapple_ui.models.ui
         /// X is
         ///     left: distance from left
         ///     center: offset from center (negative values will be left of center)
-        ///     right: offset from window's width (so a positive 40 would give a gap of 40 between the right side of the label and the window's right edge)
+        ///     right: offset from parent's width (so a positive 40 would give a gap of 40 between the right side of the label and the parent's right edge)
         ///
         /// Y is similar logic.  For center, the offset goes: negative=up, positive=down
         /// </summary>
         public int pos_x { get; init; }
         public int pos_y { get; init; }
 
-        //TODO: optional bools that let x and y offsets be percent of the window size instead of pixels
+        //TODO: optional bools that let x and y offsets be percent of the parent size instead of pixels
 
         public AlignmentHorizontal horizontal { get; init; }
         public AlignmentVertical vertical { get; init; }

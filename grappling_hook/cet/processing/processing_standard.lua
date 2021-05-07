@@ -1,3 +1,5 @@
+local this = {}
+
 -- This gets call most of the time, it's them running around playing the game normally
 -- This recovers energy and looks at key inputs to see if they activated a grapple
 function Process_Standard(o, player, state, const, debug, deltaTime)
@@ -11,15 +13,17 @@ function StartFlightIfRequested(o, player, state, const)
     local isDown1, isDown2 = state.startStopTracker:ShouldGrapple()
 
     if isDown1 then
-        return TryStartFlight(o, state, const, player.grapple1)
+        return this.TryStartFlight(o, state, const, player.grapple1)
     elseif isDown2 then
-        return TryStartFlight(o, state, const, player.grapple2)
+        return this.TryStartFlight(o, state, const, player.grapple2)
     else
         return false
     end
 end
 
-function TryStartFlight(o, state, const, grapple)
+--------------------------------------- Private Methods ---------------------------------------
+
+function this.TryStartFlight(o, state, const, grapple)
     if CheckOtherModsFor_FlightStart(o, const.modNames) then
         -- No other mod is standing in the way
         if not Transition_ToAim(grapple, state, const, o, true) then

@@ -1,105 +1,3 @@
-function InitializeUI(vars_ui, const)
-    vars_ui.screen = GetScreenInfo()    --NOTE: This won't see changes if they mess with their video settings, but that should be super rare.  They just need to reload mods
-
-    vars_ui.style = LoadStylesheet()
-
-    vars_ui.mainWindow = Define_MainWindow(vars_ui.screen)      -- going with a SPA, so it's probably going to be the only window (maybe also a dialog box at some point?)
-
-    Define_Controls_MainWindow(vars_ui, const)      -- this must come after vars_ui.mainWindow is defined
-    Define_Controls_EnergyTank(vars_ui, const)
-
-    -- Post Processing
-    SortContentLists(vars_ui.main)
-    SortContentLists(vars_ui.energy_tank)
-
-    --ReportTable_lite(vars_ui)
-end
-
--- This looks for controls that have a content property and creates a sorted content_keys index
-function SortContentLists(window)
-    for _, item in pairs(window) do
-        -- All controls should be tables
-        if type(item) == "table" then
-            -- The list that will be sorted is called content, so see if that exists
-            local content = item.content
-            if content and type(content) == "table" then
-                -- Can't sort the content table directly, need an index table so that ipairs can be used
-                local keys = {}
-
-                -- populate the table that holds the keys
-                for key in pairs(content) do
-                    table.insert(keys, key)
-                end
-
-                -- sort the keys
-                table.sort(keys)
-
-                item.content_keys = keys
-            end
-        end
-    end
-end
-
-function GetScreenInfo()
-    local width, height = GetDisplayResolution()
-
-    return
-    {
-        width = width,
-        height = height,
-        center_x = width / 2,
-        center_y = height / 2,
-    }
-end
-
-function LoadStylesheet()
-    local file = io.open("ui/stylesheet.json", "r")
-    if not file then
-        print("GRAPPLING HOOK ERROR: Can't find file: ui/stylesheet.json")
-        return nil
-    end
-
-    local json = file:read("*all")
-
-    local style = extern_json.decode(json)
-
-    -- Convert color strings
-    FinishStylesheetColors(style)
-
-    return style
-end
-
-function FinishStylesheetColors(style)
-    local argb = { }
-
-    for key, value in pairs(style) do
-        local type = type(value)
-
-        if type == "string" then
-            if string.find(key, "_color") then
-                local color, a, r, g, b = ConvertHexStringToNumbers(value)
-
-                -- Change from string to a full int
-                style[key] = color
-
-                -- Store these off so there's no chance of interfering with the for loop
-                argb[key .. "_a"] = a
-                argb[key .. "_r"] = r
-                argb[key .. "_g"] = g
-                argb[key .. "_b"] = b
-            end
-
-        elseif type == "table" then
-            -- Recurse
-            FinishStylesheetColors(value)
-        end
-    end
-
-    for key, value in pairs(argb) do
-        style[key] = value
-    end
-end
-
 -- The hex can be in any of the standard hex formats (# is optional):
 --  "444" becomes "FF444444" (very dark gray)
 --  "806A" becomes "880066AA" (dusty blue)
@@ -185,25 +83,13 @@ function ConvertHexStringToNumbers_Magenta()
     return 0xFFFF00FF, 1, 1, 0, 1
 end
 
-function Define_MainWindow(screen)
-    local width = 1000
-    local height = 800
-
-    return
-    {
-        width = width,
-        height = height,
-        left = screen.center_x - width / 2,
-        top = screen.center_y - height / 2,
-    }
-end
+-- Called from draw each frame that the config is open
 function Refresh_WindowPos(mainWindow)
     local curLeft, curTop = ImGui.GetWindowPos()
 
     mainWindow.left = curLeft
     mainWindow.top = curTop
 end
-
 function Refresh_LineHeights(vars_ui)
     if not vars_ui.line_heights then
         vars_ui.line_heights = {}
@@ -243,12 +129,12 @@ function Get_ImDrawFlags_RoundCornersAll()
 end
 
 -- This will return the left,top of the control based on the definition, control's size,
--- and window's size
+-- and parent's size
 -- Params
 --  def = models\ui\ControlPosition
 --  control_width, control_height = size of control
---  window_width, window_height = size of parent window
-function GetControlPosition(def, control_width, control_height, window_width, window_height, const)
+--  parent_width, parent_height = size of parent window or div container
+function GetControlPosition(def, control_width, control_height, parent_width, parent_height, const)
     -- Left
     local left = nil
 
@@ -257,10 +143,10 @@ function GetControlPosition(def, control_width, control_height, window_width, wi
             left = def.pos_x
 
         elseif def.horizontal == const.alignment_horizontal.center then
-            left = (window_width / 2) - (control_width / 2) + def.pos_x
+            left = (parent_width / 2) - (control_width / 2) + def.pos_x
 
         elseif def.horizontal == const.alignment_horizontal.right then
-            left = window_width - def.pos_x - control_width
+            left = parent_width - def.pos_x - control_width
 
         else
             print("GetControlPosition: Unknown horizontal: " .. tostring(def.horizontal))
@@ -277,10 +163,10 @@ function GetControlPosition(def, control_width, control_height, window_width, wi
             top = def.pos_y
 
         elseif def.vertical == const.alignment_vertical.center then
-            top = (window_height / 2) - (control_height / 2) + def.pos_y
+            top = (parent_height / 2) - (control_height / 2) + def.pos_y
 
         elseif def.vertical == const.alignment_vertical.bottom then
-            top = window_height - def.pos_y - control_height
+            top = parent_height - def.pos_y - control_height
 
         else
             print("GetControlPosition: Unknown vertical: " .. tostring(def.vertical))

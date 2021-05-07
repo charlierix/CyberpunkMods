@@ -53,6 +53,21 @@
         "disabled_border_color": "666666"
     },
 
+    "helpButton":
+    {
+        "radius": 6,
+        "border_thickness": 1,
+
+        "foreground_color_standard": "50C9C9C9",
+        "foreground_color_hover": "FFF",
+
+        "border_color_standard": "406080",
+        "border_color_hover": "46698C",
+
+        "back_color_standard": "6036506B",
+        "back_color_hover": "806699CC"
+    },
+
     "colors":
     {
         "title": { "the_color": "FFF" },

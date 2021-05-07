@@ -22,8 +22,8 @@ end
 -- if non nil)
 -- The colors are single integers of the form: 0xFF4488CC (hex of argb)
 -- Params:
--- screenOffset_x, screenOffset_y = the window's left,top in screen coords
--- center_x, center_y = the center of the border in window coords
+-- screenOffset_x, screenOffset_y = the parent's left,top in screen coords
+-- center_x, center_y = the center of the border in parent coords
 -- width, height = the size of the content portion
 -- padding = distance around the content portion
 -- isHovered = whether the mouse is currently over this border
@@ -57,5 +57,34 @@ function Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, width, 
 
     if border then
         ImGui.ImDrawListAddRect(ImGui.GetWindowDrawList(), left, top, right, bottom, border, cornerRadius, roundCorners, thickness)
+    end
+end
+
+function Draw_Circle(screenOffset_x, screenOffset_y, center_x, center_y, radius, isHovered, color_back_standard, color_back_hovered, color_border_standard, color_border_hovered, thickness)
+    -- TODO: Calculate based on radius, have a min and max
+    local numSegments = 12
+
+    local background = nil
+    local border = nil
+    if isHovered then
+        background = color_back_hovered
+        border = color_border_hovered
+    else
+        background = color_back_standard
+        border = color_border_standard
+    end
+
+
+    -- These are ABGR
+
+
+    if background then
+        ImGui.ImDrawListAddCircleFilled(ImGui.GetWindowDrawList(), screenOffset_x + center_x, screenOffset_y + center_y, radius, background, numSegments)
+        --ImGui.ImDrawListAddCircleFilled(ImGui.GetWindowDrawList(), screenOffset_x + center_x, screenOffset_y + center_y, radius, 0xFF0000FF, numSegments)
+    end
+
+    if border then
+        ImGui.ImDrawListAddCircle(ImGui.GetWindowDrawList(), screenOffset_x + center_x, screenOffset_y + center_y, radius, border, numSegments, thickness)
+        --ImGui.ImDrawListAddCircle(ImGui.GetWindowDrawList(), screenOffset_x + center_x, screenOffset_y + center_y, radius, 0xFF00FF00, numSegments, thickness)
     end
 end

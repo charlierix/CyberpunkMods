@@ -1,3 +1,5 @@
+local this = {}
+
 -- This gets called during init and sets up as much static inforation as it can for all the
 -- controls (the rest of the info gets filled out each frame)
 --
@@ -5,54 +7,63 @@
 --  models\ui\SummaryButton
 --  models\ui\Label
 --  models\ui\OrderedList
-function Define_Controls_MainWindow(vars_ui, const)
+function Define_Window_Main(vars_ui, const)
     local main = {}
     vars_ui.main = main
 
-    main.title = Define_Title("Grappling Hook", const)
+    main.title = this.Define_Title("Grappling Hook", const)
 
-    main.consoleWarning = Define_ConsoleWarning(const)
+    main.consoleWarning = this.Define_Main_ConsoleWarning(const)
 
-    main.energyTank = Define_EnergyTank(const)
+    main.energyTank = this.Define_Main_EnergyTank(const)
 
-    Define_GrappleSlots(main, const)
+    this.Define_Main_GrappleSlots(main, const)
 
-    main.experience = Define_Experience_Main(const)
+    main.experience = this.Define_Main_Experience(const)
 end
 
-function Define_Controls_EnergyTank(vars_ui, const)
+function Define_Window_EnergyTank(vars_ui, const)
     local energy_tank = {}
     vars_ui.energy_tank = energy_tank
 
-    energy_tank.title = Define_Title("Energy Tank", const)
+    energy_tank.title = this.Define_Title("Energy Tank", const)
 
 
     -- 3 sets in a triangle around the center
 
-    energy_tank.updown =
+    -- energy_tank.updown =
+    -- {
+    --     position =
+    --     {
+    --         pos_x = 0,
+    --         pos_y = 0,
+    --         horizontal = const.alignment_horizontal.center,
+    --         vertical = const.alignment_vertical.center,
+    --     },
+
+    --     isHorizontal = false,
+    -- }
+
+
+    energy_tank.help =
     {
         position =
         {
             pos_x = 0,
             pos_y = 0,
-
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
-
-        isHorizontal = false,
     }
 
 
-
-
-    energy_tank.experience = Define_Experience_EnergyTank(const)
+    energy_tank.experience = this.Define_EnergyTank_Experience(const)
 
 end
 
 ----------------------------------- Common Controls -----------------------------------
 
-function Define_Title(title, const)
+function this.Define_Title(title, const)
     -- Label
     return
     {
@@ -62,7 +73,6 @@ function Define_Title(title, const)
         {
             pos_x = 24,
             pos_y = 24,
-
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.top,
         },
@@ -75,7 +85,7 @@ end
 
 --NOTE: Define functions get called during init.  Refresh functions get called each frame that the config is visible
 
-function Define_EnergyTank(const)
+function this.Define_Main_EnergyTank(const)
     return
     {
         -- In the middle of the window
@@ -83,7 +93,6 @@ function Define_EnergyTank(const)
         {
             pos_x = 0,
             pos_y = 0,
-
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -98,34 +107,33 @@ function Define_EnergyTank(const)
         },
     }
 end
-function Refresh_EnergyTank(def, energy_tank)
+function Refresh_Main_EnergyTank(def, energy_tank)
     def.header_value = tostring(Round(energy_tank.max_energy))
     def.content.a_recovery_rate.value = tostring(Round(energy_tank.recovery_rate, 1))
     def.content.b_flying_percent.value = tostring(Round(energy_tank.flying_percent * 100)) .. "%%"
 end
 
-function Define_GrappleSlots(window, const)
+function this.Define_Main_GrappleSlots(parent, const)
     -- Figure out the positions (they are in a hex pattern around the center)
     local offset_x_small = 160
     local offset_x_large = 280
     local offset_y = 180
 
-    window.grapple1 = Define_GrappleSlots_DoIt(-offset_x_small, -offset_y, "1", const)
-    window.grapple2 = Define_GrappleSlots_DoIt(offset_x_small, -offset_y, "2", const)
-    window.grapple3 = Define_GrappleSlots_DoIt(offset_x_large, 0, "3", const)
-    window.grapple4 = Define_GrappleSlots_DoIt(offset_x_small, offset_y, "4", const)
-    window.grapple5 = Define_GrappleSlots_DoIt(-offset_x_small, offset_y, "5", const)
-    window.grapple6 = Define_GrappleSlots_DoIt(-offset_x_large, 0, "6", const)
+    parent.grapple1 = this.Define_Main_GrappleSlots_DoIt(-offset_x_small, -offset_y, "1", const)
+    parent.grapple2 = this.Define_Main_GrappleSlots_DoIt(offset_x_small, -offset_y, "2", const)
+    parent.grapple3 = this.Define_Main_GrappleSlots_DoIt(offset_x_large, 0, "3", const)
+    parent.grapple4 = this.Define_Main_GrappleSlots_DoIt(offset_x_small, offset_y, "4", const)
+    parent.grapple5 = this.Define_Main_GrappleSlots_DoIt(-offset_x_small, offset_y, "5", const)
+    parent.grapple6 = this.Define_Main_GrappleSlots_DoIt(-offset_x_large, 0, "6", const)
 
 end
-function Define_GrappleSlots_DoIt(x, y, suffix, const)
+function this.Define_Main_GrappleSlots_DoIt(x, y, suffix, const)
     return
     {
         position =
         {
             pos_x = x,
             pos_y = y,
-
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -136,7 +144,7 @@ function Define_GrappleSlots_DoIt(x, y, suffix, const)
         suffix = suffix,
     }
 end
-function Refresh_GrappleSlot(def, grapple)
+function Refresh_Main_GrappleSlot(def, grapple)
     if grapple then
         def.header_prompt = grapple.name
         def.unused_text = nil
@@ -146,7 +154,7 @@ function Refresh_GrappleSlot(def, grapple)
     end
 end
 
-function Define_Experience_Main(const)
+function this.Define_Main_Experience(const)
     -- OrderedList
     return
     {
@@ -159,7 +167,6 @@ function Define_Experience_Main(const)
         {
             pos_x = 36,
             pos_y = 36,
-
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.bottom,
         },
@@ -170,11 +177,11 @@ function Define_Experience_Main(const)
         color_value = "experience_value",
     }
 end
-function Refresh_Experience_Main(def, player)
+function Refresh_Main_Experience(def, player)
     def.content.available.value = tostring(math.floor(player.experience))
 end
 
-function Define_ConsoleWarning(const)
+function this.Define_Main_ConsoleWarning(const)
     -- Label
     return
     {
@@ -184,7 +191,6 @@ function Define_ConsoleWarning(const)
         {
             pos_x = 0,
             pos_y = 30,
-
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.top,
         },
@@ -195,7 +201,7 @@ end
 
 ------------------------------------- Energy Tank -------------------------------------
 
-function Define_Experience_EnergyTank(const)
+function this.Define_EnergyTank_Experience(const)
     -- OrderedList
     return
     {
@@ -209,7 +215,6 @@ function Define_Experience_EnergyTank(const)
         {
             pos_x = 36,
             pos_y = 36,
-
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.bottom,
         },
@@ -221,10 +226,10 @@ function Define_Experience_EnergyTank(const)
     }
 end
 
-function Refresh_Updown(def)
-    def.isEnabled_down = true
-    def.text_down = "1"
+-- function Refresh_Updown(def)
+--     def.isEnabled_down = true
+--     def.text_down = "1"
 
-    def.isEnabled_up = true
-    def.text_up = "1"
-end
+--     def.isEnabled_up = true
+--     def.text_up = "1"
+-- end

@@ -39,19 +39,21 @@ require "processing/processing_standard"
 require "processing/safetyfire"
 
 require "ui/animation_lowEnergy"
+require "ui/builder_help_button"
 require "ui/builder_label"
 require "ui/builder_misc"
 require "ui/builder_orderedlist"
 require "ui/builder_summary_button"
 require "ui/builder_updownbuttons"
-require "ui/control_definitions"
 require "ui/draw_windows"
 require "ui/drawing"
+require "ui/init_ui"
 require "ui/inputtracker_startstop"
 require "ui/keys"
 require "ui/mappinutil"
 require "ui/reporting"
 require "ui/util_ui"
+require "ui/window_definitions"
 require "ui/window_transitions"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
@@ -332,80 +334,6 @@ end)
 
 registerHotkey("GrapplingHookSavePlayer", "test summary button", function()
 
-
-
-    -- vars_ui.test_orderedlist =
-    -- {
-    --     content =
-    --     {
-    --         a = { prompt = "prompt 1", value = "value 1" },
-    --         c = { value = "bbb" },
-    --         b = { prompt = "aaa" },
-    --         d = { prompt = "ccc", value = "ddd" },
-    --     },
-
-    --     position =
-    --     {
-    --         pos_x = 100,
-    --         pos_y = -100,
-
-    --         horizontal = const.alignment_horizontal.center,
-    --         vertical = const.alignment_vertical.center,
-    --     },
-
-    --     gap = 100,
-
-    --     color_prompt = "test_prompt",
-    --     color_value = "test_value",
-    -- }
-
-
-    -- SortContentLists(vars_ui)
-
-    -- vars_ui.test_label =
-    -- {
-    --     text = "really long text that should get word wrapped a few times.  Aaaaaaaaaaaaaaaaaaaaaaaaaaand here's some more",
-    --     --text = "really long text that should get word wrapped a few times.  And here's some more",
-
-    --     max_width = 72,
-
-    --     position =
-    --     {
-    --         pos_x = 8,
-    --         pos_y = 4,
-
-    --         horizontal = const.alignment_horizontal.right,
-    --         vertical = const.alignment_vertical.bottom,
-    --     },
-
-    --     color = "test_value",
-    -- }
-
-
-    -- vars_ui.test_summary =
-    -- {
-    --     center_x = 500,
-    --     center_y = 200,
-
-    --     -- min_width = 220,
-    --     -- min_height = 180,
-
-    --     --unused_text = "unused",
-
-    --     header_prompt = "head prompt",
-    --     header_value = "head value",
-
-    --     content =
-    --     {
-    --         a = { prompt = "c prompt 1", value = "c value 1" },
-    --         b = { prompt = "aaa" },
-    --         c = { value = "bbb" },
-    --         d = { prompt = "ccc", value = "ddd" },
-    --         --e = { prompt = "really really really long winded text.  This should expand the button beyond min width" },
-    --     },
-
-    --     -- suffix = "suffix",
-    -- }
 
 end)
 

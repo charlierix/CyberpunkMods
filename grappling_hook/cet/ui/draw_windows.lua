@@ -2,16 +2,16 @@ function DrawWindow_Main(vars_ui, player, window, const)
     local main = vars_ui.main
 
     -- Finalize models for this frame
-    Refresh_EnergyTank(main.energyTank, player.energy_tank)
+    Refresh_Main_EnergyTank(main.energyTank, player.energy_tank)
 
-    Refresh_GrappleSlot(main.grapple1, player.grapple1)
-    Refresh_GrappleSlot(main.grapple2, player.grapple2)
-    Refresh_GrappleSlot(main.grapple3, player.grapple3)
-    Refresh_GrappleSlot(main.grapple4, player.grapple4)
-    Refresh_GrappleSlot(main.grapple5, player.grapple5)
-    Refresh_GrappleSlot(main.grapple6, player.grapple6)
+    Refresh_Main_GrappleSlot(main.grapple1, player.grapple1)
+    Refresh_Main_GrappleSlot(main.grapple2, player.grapple2)
+    Refresh_Main_GrappleSlot(main.grapple3, player.grapple3)
+    Refresh_Main_GrappleSlot(main.grapple4, player.grapple4)
+    Refresh_Main_GrappleSlot(main.grapple5, player.grapple5)
+    Refresh_Main_GrappleSlot(main.grapple6, player.grapple6)
 
-    Refresh_Experience_Main(main.experience, player)
+    Refresh_Main_Experience(main.experience, player)
 
     -- Show ui elements
     Draw_Label(main.title, vars_ui.style.colors, window.width, window.height, const)
@@ -58,7 +58,7 @@ function DrawWindow_Energy_Tank(vars_ui, player, window, const)
 
     -- Finalize models for this frame
     --Refresh_Experience_EnergyTank
-    Refresh_Updown(energy_tank.updown)
+    --Refresh_Updown(energy_tank.updown)
 
     -- Show ui elements
     Draw_Label(energy_tank.title, vars_ui.style.colors, window.width, window.height, const)
@@ -66,9 +66,10 @@ function DrawWindow_Energy_Tank(vars_ui, player, window, const)
     Draw_OrderedList(energy_tank.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 
 
-    Draw_UpDownButtons(energy_tank.updown, vars_ui.style.updownButtons, window.width, window.height, const)
+    --Draw_UpDownButtons(energy_tank.updown, vars_ui.style.updownButtons, window.width, window.height, const)
 
 
+    Draw_HelpButton(energy_tank.help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
 
 end

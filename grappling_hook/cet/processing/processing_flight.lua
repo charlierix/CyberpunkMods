@@ -1,3 +1,5 @@
+local this = {}
+
 -- This is the primary worker method for grappling.  Conditions were set up while
 -- aiming
 --
@@ -81,10 +83,10 @@ function Process_Flight(o, player, state, const, debug, deltaTime)
     local spring_z = 0
 
     -- Add extra acceleration if flying away from desired distance (extra drag)
-    local drag_x, drag_y, drag_z = GetAccel_VelocityDrag(grappleDirUnit, diffDist, isSameDir, grapple.velocity_away)
+    local drag_x, drag_y, drag_z = this.GetVelocityDrag(grappleDirUnit, diffDist, isSameDir, grapple.velocity_away)
 
     -- Accelerate along look direction
-    local look_x, look_y, look_z = GetAccel_Look(o, state, grapple, grappleLen)
+    local look_x, look_y, look_z = this.GetLook(o, state, grapple, grappleLen)
 
     -- Cancel gravity
     local antigrav_z = GetAntiGravity(grapple.anti_gravity, isAirborne)
@@ -102,7 +104,9 @@ function Process_Flight(o, player, state, const, debug, deltaTime)
     o.player:GrapplingHook_AddImpulse(accel_x, accel_y, accel_z)
 end
 
-function GetAccel_VelocityDrag(dirUnit, diffDist, isSameDir, args)
+--------------------------------------- Private Methods ---------------------------------------
+
+function this.GetVelocityDrag(dirUnit, diffDist, isSameDir, args)
     if not args then
         return 0, 0, 0
     end
@@ -133,7 +137,7 @@ function GetAccel_VelocityDrag(dirUnit, diffDist, isSameDir, args)
         dirUnit.z * accel
 end
 
-function GetAccel_Look(o, state, grapple, grappleLen)
+function this.GetLook(o, state, grapple, grappleLen)
     if not grapple.accel_alongLook then
         return 0, 0, 0
     end

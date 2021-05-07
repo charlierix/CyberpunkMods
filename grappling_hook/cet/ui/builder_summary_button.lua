@@ -1,20 +1,22 @@
+local this = {}
+
 -- This is a border with a couple categories of text inside.  Acts like a button
 -- This got complex.  It might be cleaner to just implement a proper layout engine :)
 -- def is models\ui\SummaryButton
 -- style_summary is models\stylesheet\SummaryButton
 -- Returns isClicked
-function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, screenOffset_y, window_width, window_height, const)
+function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, screenOffset_y, parent_width, parent_height, const)
     -- Calcuate sizes
     if not def.sizes then
         def.sizes = {}
     end
 
-    Draw_SummaryButton_UsedWidth(def, style_summary)
-    Draw_SummaryButton_UsedHeight(def, line_heights, style_summary)
+    this.Calculate_UsedWidth(def, style_summary)
+    this.Calculate_UsedHeight(def, line_heights, style_summary)
 
     -- Calculate the location of this control
     local padpad = style_summary.padding * 2
-    local left, top = GetControlPosition(def.position, def.sizes.horz_final + padpad, def.sizes.vert_final + padpad, window_width, window_height, const)
+    local left, top = GetControlPosition(def.position, def.sizes.horz_final + padpad, def.sizes.vert_final + padpad, parent_width, parent_height, const)
     local center_x = left + style_summary.padding + (def.sizes.horz_final / 2)
     local center_y = top + style_summary.padding + (def.sizes.vert_final / 2)
 
@@ -25,17 +27,17 @@ function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, sc
     Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding, isHovered, style_summary.background_color_standard, style_summary.background_color_hover, style_summary.border_color_standard, style_summary.border_color_hover, style_summary.border_cornerRadius, style_summary.border_thickness)
 
     -- Place the text
-    Draw_SummaryButton_Unused(def, line_heights, style_summary, center_x, center_y)
-    Draw_SummaryButton_Header(def, line_heights, style_summary, center_x, center_y)
-    Draw_SummaryButton_Content(def, line_heights, style_summary, center_x, center_y)
-    Draw_SummaryButton_Suffix(def, line_heights, style_summary, center_x, center_y)
+    this.Draw_Unused(def, line_heights, style_summary, center_x, center_y)
+    this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
+    this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
+    this.Draw_Suffix(def, line_heights, style_summary, center_x, center_y)
 
     return isClicked
 end
 
 ------------------------------------------- Private Methods -------------------------------------------
 
-function Draw_SummaryButton_UsedWidth(def, style_summary)
+function this.Calculate_UsedWidth(def, style_summary)
     local unused = 0
     local h_p = 0
     local h_g = 0
@@ -49,12 +51,12 @@ function Draw_SummaryButton_UsedWidth(def, style_summary)
         unused = ImGui.CalcTextSize(def.unused_text)
     else
         -- Header
-        h_p, h_g, h_v = Draw_SummaryButton_UsedWidth_PromptValue(def.header_prompt, def.header_value, style_summary.prompt_value_gap)
+        h_p, h_g, h_v = this.Calculate_UsedWidth_PromptValue(def.header_prompt, def.header_value, style_summary.prompt_value_gap)
 
         -- Content
         if def.content then
             for _, content in pairs(def.content) do
-                local p, g, v = Draw_SummaryButton_UsedWidth_PromptValue(content.prompt, content.value, style_summary.prompt_value_gap)
+                local p, g, v = this.Calculate_UsedWidth_PromptValue(content.prompt, content.value, style_summary.prompt_value_gap)
 
                 c_p = math.max(c_p, p)
                 c_g = math.max(c_g, g)
@@ -102,7 +104,7 @@ function Draw_SummaryButton_UsedWidth(def, style_summary)
     def.sizes.horz_final = final
     def.sizes.expadedByMinWidth = expadedByMinWidth
 end
-function Draw_SummaryButton_UsedWidth_PromptValue(prompt, value, gap)
+function this.Calculate_UsedWidth_PromptValue(prompt, value, gap)
     local promptWidth = 0
     local gapWidth = 0
     local valueWidth = 0
@@ -122,13 +124,13 @@ function Draw_SummaryButton_UsedWidth_PromptValue(prompt, value, gap)
     return promptWidth, gapWidth, valueWidth
 end
 
-function Draw_SummaryButton_UsedHeight(def, line_heights, style_summary)
+function this.Calculate_UsedHeight(def, line_heights, style_summary)
     -- Add up:
     --  unused (if exists) ELSE
     --  header and gap (if exists)
     --  content lines and gaps (if exists)
     --  summary and gap (if exists)
-    local content, nonSuffix, suffixGap, total = Draw_SummaryButton_UsedHeight_AddIt(def, line_heights, style_summary)
+    local content, nonSuffix, suffixGap, total = this.Calculate_UsedHeight_AddIt(def, line_heights, style_summary)
 
     -- The calculated height is the minimum necessary to show the text.  If the minheight is defined
     -- and greater, then that is the height to use
@@ -151,7 +153,7 @@ end
 --  NonSuffix Height
 --  Gap between suffix and nonSuffix
 --  Total Height
-function Draw_SummaryButton_UsedHeight_AddIt(def, line_heights, style_summary)
+function this.Calculate_UsedHeight_AddIt(def, line_heights, style_summary)
     local content = 0
     local nonSuffix = 0
     local suffixGap = 0
@@ -225,7 +227,7 @@ end
 
 -- This is a very specific function, called from header and/or content.  Since those two are centered
 -- vertically if minHeight forces a stretch, this calculates that gap
-function Draw_SummaryButton_HeaderConentGap(def, line_heights)
+function this.HeaderConentGap(def, line_heights)
     -- Header and content will be vertically centered in the space left over.  Ignoring gaps, because
     -- the defined gaps are smaller than the gaps after stretching
     local availableHeight = def.sizes.vert_final
@@ -248,7 +250,7 @@ function Draw_SummaryButton_HeaderConentGap(def, line_heights)
     return (availableHeight - usedHeight) / numGaps
 end
 
-function Draw_SummaryButton_Unused(def, line_heights, style_summary, center_x, center_y)
+function this.Draw_Unused(def, line_heights, style_summary, center_x, center_y)
     if not def.unused_text then
         do return end
     end
@@ -258,7 +260,7 @@ function Draw_SummaryButton_Unused(def, line_heights, style_summary, center_x, c
 
     local top = nil
     if def.sizes.expadedByMinHeight then
-        top = center_y - (def.sizes.vert_final / 2) + Draw_SummaryButton_HeaderConentGap(def, line_heights)       -- y is the same as gap, since it's on top and y is the top of the text
+        top = center_y - (def.sizes.vert_final / 2) + this.HeaderConentGap(def, line_heights)       -- y is the same as gap, since it's on top and y is the top of the text
     else
         top = center_y - (def.sizes.vert_final / 2)
     end
@@ -268,7 +270,7 @@ function Draw_SummaryButton_Unused(def, line_heights, style_summary, center_x, c
 
     ImGui.TextColored(style_summary.unused_color_r, style_summary.unused_color_g, style_summary.unused_color_b, style_summary.unused_color_a, def.unused_text)
 end
-function Draw_SummaryButton_Header(def, line_heights, style_summary, center_x, center_y)
+function this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
     if def.unused_text or (not (def.header_prompt or def.header_value)) then
         do return end
     end
@@ -278,7 +280,7 @@ function Draw_SummaryButton_Header(def, line_heights, style_summary, center_x, c
 
     local top = nil
     if def.sizes.expadedByMinHeight then
-        top = center_y - (def.sizes.vert_final / 2) + Draw_SummaryButton_HeaderConentGap(def, line_heights)       -- y is the same as gap, since it on top and y is the top of the text
+        top = center_y - (def.sizes.vert_final / 2) + this.HeaderConentGap(def, line_heights)       -- y is the same as gap, since it on top and y is the top of the text
     else
         top = center_y - (def.sizes.vert_final / 2)
     end
@@ -299,7 +301,7 @@ function Draw_SummaryButton_Header(def, line_heights, style_summary, center_x, c
         ImGui.TextColored(style_summary.header_color_value_r, style_summary.header_color_value_g, style_summary.header_color_value_b, style_summary.header_color_value_a, def.header_value)
     end
 end
-function Draw_SummaryButton_Content(def, line_heights, style_summary, center_x, center_y)
+function this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
     if def.unused_text or (not def.content) then
         do return end
     end
@@ -319,7 +321,7 @@ function Draw_SummaryButton_Content(def, line_heights, style_summary, center_x, 
 
     local top = nil
     if def.sizes.expadedByMinHeight then
-        local gap = Draw_SummaryButton_HeaderConentGap(def, line_heights)
+        local gap = this.HeaderConentGap(def, line_heights)
         top = center_y - (def.sizes.vert_final / 2) + gap       -- going from the top in case the gap calculation wants to include the height of suffix (it's currently commented out, but may change in the future)
         if def.header_prompt or def.header_value then
             top = top + line_heights.line + gap
@@ -366,7 +368,7 @@ function Draw_SummaryButton_Content(def, line_heights, style_summary, center_x, 
         ImGui.EndGroup()
     end
 end
-function Draw_SummaryButton_Suffix(def, line_heights, style_summary, center_x, center_y)
+function this.Draw_Suffix(def, line_heights, style_summary, center_x, center_y)
     if not def.suffix then      -- suffix should still show if unused is populated
         do return end
     end

@@ -1,3 +1,5 @@
+local this = {}
+
 -- Returns the latest player by ID (or nil)
 -- Returns:
 --    PlayerEntry (the type returned is defined in models\Player)
@@ -9,7 +11,7 @@ function GetPlayerEntry(playerID)
         return nil, nil, errMsg
     end
 
-    local grapples, errMsg = GetGrapples(row)
+    local grapples, errMsg = this.GetGrapples(row)
     if not grapples then
         return nil, errMsg
     end
@@ -36,7 +38,7 @@ end
 --    Primary Key of inserted row
 --    Error Message if primkey came back nil, or nil if primkey is populated
 function SavePlayer(playerEntry)
-    local grappleKeys, errMsg = SaveGrapples(playerEntry)
+    local grappleKeys, errMsg = this.SaveGrapples(playerEntry)
     if not grappleKeys then
         return nil, errMsg
     end
@@ -48,7 +50,7 @@ end
 
 -- Returns an array of primary keys or nil if there was an error
 -- Second return is error message if the array returned is nil
-function SaveGrapples(playerEntry)
+function this.SaveGrapples(playerEntry)
     local pkeys = {}
 
     for i=1, 6 do
@@ -77,7 +79,7 @@ function SaveGrapples(playerEntry)
     return pkeys, nil
 end
 -- Returns an array of grapple entries based on the primary keys in the player row
-function GetGrapples(playerRow)
+function this.GetGrapples(playerRow)
     local grapples = {}
 
     for i=1, 6 do

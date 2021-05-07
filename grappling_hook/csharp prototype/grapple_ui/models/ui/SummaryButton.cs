@@ -17,7 +17,7 @@ namespace grapple_ui.models.ui
     public record SummaryButton
     {
         /// <summary>
-        /// Tells where on the window to place the text
+        /// Tells where on the parent to place the text
         /// </summary>
         public ControlPosition position { get; init; }
 

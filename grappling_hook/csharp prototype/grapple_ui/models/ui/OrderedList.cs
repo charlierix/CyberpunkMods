@@ -18,7 +18,7 @@ namespace grapple_ui.models.ui
         public SortedDictionary<string, OrderedList_Content> content { get; init; }
 
         /// <summary>
-        /// Tells where on the window to place the text
+        /// Tells where on the parent to place the text
         /// </summary>
         public ControlPosition position { get; init; }
 

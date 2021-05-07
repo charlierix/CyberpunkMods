@@ -1,21 +1,23 @@
+local this = {}
+
 -- Draws a pair of + - buttons, either horizontal or vertical orientations
 -- def is models\ui\UpDownButtons
 -- style_updown is models\stylesheet\UpDownButtons
 -- Returns:
 --	isDownClicked, isUpClicked
-function Draw_UpDownButtons(def, style_updown, window_width, window_height, const)
+function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, const)
 	-- Concatenate +- with model's text
-    local text_down, text_up = Draw_UpDownButtons_FinalText(def)
+    local text_down, text_up = this.FinalText(def)
 
 	-- Calculate Sizes
 	if not def.sizes then
         def.sizes = {}
     end
 
-    Draw_UpDownButtons_Sizes(def, style_updown, text_down, text_up)
+    this.Calculate_Sizes(def, style_updown, text_down, text_up)
 
     -- Calculate Position
-	local left, top = GetControlPosition(def.position, def.sizes.width, def.sizes.height, window_width, window_height, const)
+	local left, top = GetControlPosition(def.position, def.sizes.width, def.sizes.height, parent_width, parent_height, const)
 
 	-- Common properties
     ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_updown.border_cornerRadius)
@@ -77,7 +79,9 @@ function Draw_UpDownButtons(def, style_updown, window_width, window_height, cons
 		isUpClicked and def.isEnabled_up
 end
 
-function Draw_UpDownButtons_FinalText(def)
+------------------------------------------- Private Methods -------------------------------------------
+
+function this.FinalText(def)
     local text_down = "-"
     if def.text_down and def.text_down ~= "" then
         text_down = text_down .. def.text_down
@@ -91,10 +95,10 @@ function Draw_UpDownButtons_FinalText(def)
     return text_down, text_up
 end
 
-function Draw_UpDownButtons_Sizes(def, style_updown, text_down, text_up)
+function this.Calculate_Sizes(def, style_updown, text_down, text_up)
 	-- Individual Sizes
-	local down_width, down_height = Draw_UpDownButtons_Sizes_Single(text_down, style_updown)
-	local up_width, up_height = Draw_UpDownButtons_Sizes_Single(text_up, style_updown)
+	local down_width, down_height = this.Calculate_Sizes_Single(text_down, style_updown)
+	local up_width, up_height = this.Calculate_Sizes_Single(text_up, style_updown)
 
 	-- The buttons need to be the same size, so take the larger values
 	local width = math.max(down_width, up_width)
@@ -136,7 +140,7 @@ function Draw_UpDownButtons_Sizes(def, style_updown, text_down, text_up)
 	def.sizes.up_pad_h = style_updown.padding_horizontal + (up_width_extra / 2)
 	def.sizes.up_pad_v = style_updown.padding_vertical + (up_height_extra / 2)
 end
-function Draw_UpDownButtons_Sizes_Single(text, style_updown)
+function this.Calculate_Sizes_Single(text, style_updown)
 	-- Ignoring border size, because it's more of an after effect.  Half the border thickness goes
 	-- into the button, half goes beyond the button.  Button placement ignores border size.  If
 	-- border thickness were extreme, it may need to get accounted for, but for standard sizes, it
