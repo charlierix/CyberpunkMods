@@ -1,4 +1,8 @@
+-- This is a border with a couple categories of text inside.  Acts like a button
 -- This got complex.  It might be cleaner to just implement a proper layout engine :)
+-- def is models\ui\SummaryButton
+-- style_summary is models\stylesheet\SummaryButton
+-- Returns isClicked
 function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, screenOffset_y, window_width, window_height, const)
     -- Calcuate sizes
     if not def.sizes then
@@ -7,7 +11,6 @@ function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, sc
 
     Draw_SummaryButton_UsedWidth(def, style_summary)
     Draw_SummaryButton_UsedHeight(def, line_heights, style_summary)
-
 
     -- Calculate the location of this control
     local padpad = style_summary.padding * 2

@@ -159,6 +159,13 @@
             <Line X1="133" Y1="288" X2="244" Y2="475" Stroke="Red" StrokeThickness="6" Grid.RowSpan="2"/>
         </Grid>
 
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="30">
+            <Button Content="OK" Style="{StaticResource button_main}"/>
+            <Button Content="Cancel" Style="{StaticResource button_main}"/>
+            <Button Content="Back" Style="{StaticResource button_main}"/>
+        </StackPanel>
+
 
     </Grid>
 </Window>

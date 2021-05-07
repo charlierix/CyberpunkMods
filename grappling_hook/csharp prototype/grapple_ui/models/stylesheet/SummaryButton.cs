@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace grapple_ui.models.stylesheet
 {
+    /// <summary>
+    /// This is a custom control that has a border, a list of text inside, acts like a button
+    /// </summary>
     public record SummaryButton
     {
-        // ------------------ SummaryButton ------------------
-        // This is a custom control that has a border, a list of text inside, acts like a button
         public double border_cornerRadius { get; init; }
         public double border_thickness { get; init; }
 

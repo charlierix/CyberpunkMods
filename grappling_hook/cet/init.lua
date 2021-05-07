@@ -43,13 +43,16 @@ require "ui/builder_label"
 require "ui/builder_misc"
 require "ui/builder_orderedlist"
 require "ui/builder_summary_button"
+require "ui/builder_updownbuttons"
 require "ui/control_definitions"
+require "ui/draw_windows"
 require "ui/drawing"
 require "ui/inputtracker_startstop"
 require "ui/keys"
 require "ui/mappinutil"
 require "ui/reporting"
 require "ui/util_ui"
+require "ui/window_transitions"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
@@ -114,7 +117,7 @@ local const =
     alignment_horizontal = CreateEnum({ "left", "center", "right" }),
     alignment_vertical = CreateEnum({ "top", "center", "bottom" }),
 
-    windows = CreateEnum({ "main", "grapple_straight" }),
+    windows = CreateEnum({ "main", "energy_tank", "grapple_straight" }),
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
@@ -175,8 +178,13 @@ local vars_ui =
     --mainWindow    -- info about the location of the main window (top/left gets stored in a table if they move it) -- see Define_MainWindow()
     --line_heights  -- the height of strings -- see Refresh_LineHeights()
 
+    -- ***** See window_transitions.lua *****
+    currentWindow = const.windows.energy_tank,
+    transition_info = { }       -- this holds properties needed for the window (like grappleIndex for grapple_straight)
+
     -- ***** Each of these is a container of controls (name matches the values in windows enum) *****
     --main
+    --energy_tank
     --grapple_straight
 }
 

@@ -42,6 +42,8 @@ namespace grapple_ui.models.stylesheet
 
         public SummaryButton summaryButton { get; init; }
 
+        public UpDownButtons updownButtons { get; init; }
+
         /// <summary>
         /// For now, it's just a place to define named colors.  If more is needed later, change this to
         /// styles -- my background is wpf, not css :)
@@ -55,6 +57,5 @@ namespace grapple_ui.models.stylesheet
         ///     ]
         /// </remarks>
         public Dictionary<string, NamedColor> colors { get; init; }
-
     }
 }

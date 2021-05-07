@@ -6,16 +6,69 @@
 --  models\ui\Label
 --  models\ui\OrderedList
 function Define_Controls_MainWindow(vars_ui, const)
-    local main = { }
+    local main = {}
     vars_ui.main = main
+
+    main.title = Define_Title("Grappling Hook", const)
+
+    main.consoleWarning = Define_ConsoleWarning(const)
 
     main.energyTank = Define_EnergyTank(const)
 
     Define_GrappleSlots(main, const)
 
     main.experience = Define_Experience_Main(const)
+end
 
-    main.consoleWarning = Define_ConsoleWarning(const)
+function Define_Controls_EnergyTank(vars_ui, const)
+    local energy_tank = {}
+    vars_ui.energy_tank = energy_tank
+
+    energy_tank.title = Define_Title("Energy Tank", const)
+
+
+    -- 3 sets in a triangle around the center
+
+    energy_tank.updown =
+    {
+        position =
+        {
+            pos_x = 0,
+            pos_y = 0,
+
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        isHorizontal = false,
+    }
+
+
+
+
+    energy_tank.experience = Define_Experience_EnergyTank(const)
+
+end
+
+----------------------------------- Common Controls -----------------------------------
+
+function Define_Title(title, const)
+    -- Label
+    return
+    {
+        text = title,
+
+        position =
+        {
+            pos_x = 24,
+            pos_y = 24,
+
+            horizontal = const.alignment_horizontal.left,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "title",
+    }
 end
 
 ------------------------------------- Main Window -------------------------------------
@@ -94,6 +147,7 @@ function Refresh_GrappleSlot(def, grapple)
 end
 
 function Define_Experience_Main(const)
+    -- OrderedList
     return
     {
         content =
@@ -121,6 +175,7 @@ function Refresh_Experience_Main(def, player)
 end
 
 function Define_ConsoleWarning(const)
+    -- Label
     return
     {
         text = "NOTE: buttons won't respond unless the console window is also open",
@@ -136,4 +191,40 @@ function Define_ConsoleWarning(const)
 
         color = "info",
     }
+end
+
+------------------------------------- Energy Tank -------------------------------------
+
+function Define_Experience_EnergyTank(const)
+    -- OrderedList
+    return
+    {
+        content =
+        {
+            available = { prompt = "Experience Available" },
+            used = { prompt = "Spent on energy tank" },
+        },
+
+        position =
+        {
+            pos_x = 36,
+            pos_y = 36,
+
+            horizontal = const.alignment_horizontal.left,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        gap = 12,
+
+        color_prompt = "experience_prompt",
+        color_value = "experience_value",
+    }
+end
+
+function Refresh_Updown(def)
+    def.isEnabled_down = true
+    def.text_down = "1"
+
+    def.isEnabled_up = true
+    def.text_up = "1"
 end

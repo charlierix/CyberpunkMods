@@ -17,6 +17,8 @@
 
     <Grid>
 
+        <Label Content="Grappling Hook" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource header}" Margin="30,25,0,0"/>
+
         <!-- Energy -->
         <Border HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource border}">
             <StackPanel>
@@ -87,6 +89,9 @@
             <Label Content="Experience" Style="{StaticResource header}"/>
             <Label Content="12" Style="{StaticResource header_value}"/>
         </StackPanel>
+
+
+        <Button Content="Close" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="30" Style="{StaticResource button_main}"/>
 
     </Grid>
 </Window>
