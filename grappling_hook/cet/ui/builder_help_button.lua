@@ -22,16 +22,19 @@ function Draw_HelpButton(def, style_help, screenOffset_x, screenOffset_y, parent
     local isClicked, isHovered = Draw_InvisibleButton(def.sizes.center_x, def.sizes.center_y, clickableSize, clickableSize, 0)
 
     -- Circle
-    Draw_Circle(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, style_help.radius, isHovered, style_help.back_color_standard, style_help.back_color_hover, style_help.border_color_standard, style_help.border_color_hover, style_help.border_thickness)
+    Draw_Circle(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, style_help.radius, isHovered, style_help.back_color_standard_abgr, style_help.back_color_hover_abgr, style_help.border_color_standard_abgr, style_help.border_color_hover_abgr, style_help.border_thickness)
 
     -- Text
     ImGui.SetCursorPos(left + def.sizes.text_left, top + def.sizes.text_top)
 
     if isHovered then
-        ImGui.TextColored(style_help.foreground_color_hover_r, style_help.foreground_color_hover_g, style_help.foreground_color_hover_b, style_help.foreground_color_hover_a, "?")
+        ImGui.PushStyleColor(ImGuiCol.Text, style_help.foreground_color_hover_abgr)
     else
-        ImGui.TextColored(style_help.foreground_color_standard_r, style_help.foreground_color_standard_g, style_help.foreground_color_standard_b, style_help.foreground_color_standard_a, "?")
+        ImGui.PushStyleColor(ImGuiCol.Text, style_help.foreground_color_standard_abgr)
     end
+
+    ImGui.Text("?")
+    ImGui.PopStyleColor()
 
     return isClicked, isHovered
 end

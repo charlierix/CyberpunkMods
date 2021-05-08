@@ -24,7 +24,7 @@ function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, sc
     local isClicked, isHovered = Draw_InvisibleButton(center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding)
 
     -- Border
-    Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding, isHovered, style_summary.background_color_standard, style_summary.background_color_hover, style_summary.border_color_standard, style_summary.border_color_hover, style_summary.border_cornerRadius, style_summary.border_thickness)
+    Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding, isHovered, style_summary.background_color_standard_argb, style_summary.background_color_hover_argb, style_summary.border_color_standard_argb, style_summary.border_color_hover_argb, style_summary.border_cornerRadius, style_summary.border_thickness)
 
     -- Place the text
     this.Draw_Unused(def, line_heights, style_summary, center_x, center_y)
@@ -268,7 +268,9 @@ function this.Draw_Unused(def, line_heights, style_summary, center_x, center_y)
     -- Draw the text
     ImGui.SetCursorPos(left, top)
 
-    ImGui.TextColored(style_summary.unused_color_r, style_summary.unused_color_g, style_summary.unused_color_b, style_summary.unused_color_a, def.unused_text)
+    ImGui.PushStyleColor(ImGuiCol.Text, style_summary.unused_color_abgr)
+    ImGui.Text(def.unused_text)
+    ImGui.PopStyleColor()
 end
 function this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
     if def.unused_text or (not (def.header_prompt or def.header_value)) then
@@ -289,7 +291,9 @@ function this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
     ImGui.SetCursorPos(left, top)
 
     if def.header_prompt then
-        ImGui.TextColored(style_summary.header_color_prompt_r, style_summary.header_color_prompt_g, style_summary.header_color_prompt_b, style_summary.header_color_prompt_a, def.header_prompt)
+        ImGui.PushStyleColor(ImGuiCol.Text, style_summary.header_color_prompt_abgr)
+        ImGui.Text(def.header_prompt)
+        ImGui.PopStyleColor()
     end
 
     if def.header_prompt and def.header_value then
@@ -298,7 +302,9 @@ function this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
     end
 
     if def.header_value then
-        ImGui.TextColored(style_summary.header_color_value_r, style_summary.header_color_value_g, style_summary.header_color_value_b, style_summary.header_color_value_a, def.header_value)
+        ImGui.PushStyleColor(ImGuiCol.Text, style_summary.header_color_value_abgr)
+        ImGui.Text(def.header_value)
+        ImGui.PopStyleColor()
     end
 end
 function this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
@@ -345,7 +351,9 @@ function this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
                 text = ""
             end
 
-            ImGui.TextColored(style_summary.content_color_prompt_r, style_summary.content_color_prompt_g, style_summary.content_color_prompt_b, style_summary.content_color_prompt_a, text)
+            ImGui.PushStyleColor(ImGuiCol.Text, style_summary.content_color_prompt_abgr)
+            ImGui.Text(text)
+            ImGui.PopStyleColor()
         end
 
         ImGui.EndGroup()
@@ -362,7 +370,9 @@ function this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
                 text = ""
             end
 
-            ImGui.TextColored(style_summary.content_color_value_r, style_summary.content_color_value_g, style_summary.content_color_value_b, style_summary.content_color_value_a, text)
+            ImGui.PushStyleColor(ImGuiCol.Text, style_summary.content_color_value_abgr)
+            ImGui.Text(text)
+            ImGui.PopStyleColor()
         end
 
         ImGui.EndGroup()
@@ -380,5 +390,7 @@ function this.Draw_Suffix(def, line_heights, style_summary, center_x, center_y)
     -- Draw the text
     ImGui.SetCursorPos(left, top)
 
-    ImGui.TextColored(style_summary.suffix_color_r, style_summary.suffix_color_g, style_summary.suffix_color_b, style_summary.suffix_color_a, def.suffix)
+    ImGui.PushStyleColor(ImGuiCol.Text, style_summary.suffix_color_abgr)
+    ImGui.Text(def.suffix)
+    ImGui.PopStyleColor()
 end

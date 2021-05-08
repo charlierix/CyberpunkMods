@@ -23,15 +23,16 @@ function Draw_Label(def, style_colors, parent_width, parent_height, const)
     ImGui.SetCursorPos(left, top)
 
     if def.max_width then
-        ImGui.PushStyleColor(ImGuiCol.Text, color.the_color_r, color.the_color_g, color.the_color_b, color.the_color_a)
-        --ImGui.PushStyleColor(ImGuiCol.Text, 0xFF88FF88)     -- ABGR?
         ImGui.PushTextWrapPos(left + def.max_width)
+    end
 
-        ImGui.Text(def.text)
+    ImGui.PushStyleColor(ImGuiCol.Text, color.the_color_abgr)
 
+    ImGui.Text(def.text)
+
+    ImGui.PopStyleColor()
+
+    if def.max_width then
         ImGui.PopTextWrapPos()
-        ImGui.PopStyleColor()
-    else
-        ImGui.TextColored(color.the_color_r, color.the_color_g, color.the_color_b, color.the_color_a, def.text)
     end
 end

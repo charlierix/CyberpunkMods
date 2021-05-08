@@ -27,17 +27,17 @@ function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, cons
     ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, def.sizes.down_pad_h, def.sizes.down_pad_v)
 
 	if def.isEnabled_down then
-		ImGui.PushStyleColor(ImGuiCol.Button, style_updown.down_color_standard_r, style_updown.down_color_standard_g, style_updown.down_color_standard_b, style_updown.down_color_standard_a)
-		ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.down_color_hover_r, style_updown.down_color_hover_g, style_updown.down_color_hover_b, style_updown.down_color_hover_a)
-		ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.down_color_click_r, style_updown.down_color_click_g, style_updown.down_color_click_b, style_updown.down_color_click_a)
-		ImGui.PushStyleColor(ImGuiCol.Text, style_updown.foreground_color_r, style_updown.foreground_color_g, style_updown.foreground_color_b, style_updown.foreground_color_a)
-		ImGui.PushStyleColor(ImGuiCol.Border, style_updown.border_color_r, style_updown.border_color_g, style_updown.border_color_b, style_updown.border_color_a)
+		ImGui.PushStyleColor(ImGuiCol.Button, style_updown.down_color_standard_abgr)
+		ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.down_color_hover_abgr)
+		ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.down_color_click_abgr)
+		ImGui.PushStyleColor(ImGuiCol.Text, style_updown.foreground_color_abgr)
+		ImGui.PushStyleColor(ImGuiCol.Border, style_updown.border_color_abgr)
 	else
-		ImGui.PushStyleColor(ImGuiCol.Button, style_updown.disabled_back_color_r, style_updown.disabled_back_color_g, style_updown.disabled_back_color_b, style_updown.disabled_back_color_a)
-		ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.disabled_back_color_r, style_updown.disabled_back_color_g, style_updown.disabled_back_color_b, style_updown.disabled_back_color_a)
-		ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.disabled_back_color_r, style_updown.disabled_back_color_g, style_updown.disabled_back_color_b, style_updown.disabled_back_color_a)
-		ImGui.PushStyleColor(ImGuiCol.Text, style_updown.disabled_fore_color_r, style_updown.disabled_fore_color_g, style_updown.disabled_fore_color_b, style_updown.disabled_fore_color_a)
-		ImGui.PushStyleColor(ImGuiCol.Border, style_updown.disabled_border_color_r, style_updown.disabled_border_color_g, style_updown.disabled_border_color_b, style_updown.disabled_border_color_a)
+		ImGui.PushStyleColor(ImGuiCol.Button, style_updown.disabled_back_color_abgr)
+		ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.disabled_back_color_abgr)
+		ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.disabled_back_color_abgr)
+		ImGui.PushStyleColor(ImGuiCol.Text, style_updown.disabled_fore_color_abgr)
+		ImGui.PushStyleColor(ImGuiCol.Border, style_updown.disabled_border_color_abgr)
 	end
 
     ImGui.SetCursorPos(left + def.sizes.down_left, top + def.sizes.down_top)
@@ -51,17 +51,17 @@ function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, cons
     ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, def.sizes.up_pad_h, def.sizes.up_pad_v)
 
 	if def.isEnabled_up then
-		ImGui.PushStyleColor(ImGuiCol.Button, style_updown.up_color_standard_r, style_updown.up_color_standard_g, style_updown.up_color_standard_b, style_updown.up_color_standard_a)
-		ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.up_color_hover_r, style_updown.up_color_hover_g, style_updown.up_color_hover_b, style_updown.up_color_hover_a)
-		ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.up_color_click_r, style_updown.up_color_click_g, style_updown.up_color_click_b, style_updown.up_color_click_a)
-		ImGui.PushStyleColor(ImGuiCol.Text, style_updown.foreground_color_r, style_updown.foreground_color_g, style_updown.foreground_color_b, style_updown.foreground_color_a)
-		ImGui.PushStyleColor(ImGuiCol.Border, style_updown.border_color_r, style_updown.border_color_g, style_updown.border_color_b, style_updown.border_color_a)
+		ImGui.PushStyleColor(ImGuiCol.Button, style_updown.up_color_standard_abgr)
+		ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.up_color_hover_abgr)
+		ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.up_color_click_abgr)
+		ImGui.PushStyleColor(ImGuiCol.Text, style_updown.foreground_color_abgr)
+		ImGui.PushStyleColor(ImGuiCol.Border, style_updown.border_color_abgr)
 	else
-		ImGui.PushStyleColor(ImGuiCol.Button, style_updown.disabled_back_color_r, style_updown.disabled_back_color_g, style_updown.disabled_back_color_b, style_updown.disabled_back_color_a)
-		ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.disabled_back_color_r, style_updown.disabled_back_color_g, style_updown.disabled_back_color_b, style_updown.disabled_back_color_a)
-		ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.disabled_back_color_r, style_updown.disabled_back_color_g, style_updown.disabled_back_color_b, style_updown.disabled_back_color_a)
-		ImGui.PushStyleColor(ImGuiCol.Text, style_updown.disabled_fore_color_r, style_updown.disabled_fore_color_g, style_updown.disabled_fore_color_b, style_updown.disabled_fore_color_a)
-		ImGui.PushStyleColor(ImGuiCol.Border, style_updown.disabled_border_color_r, style_updown.disabled_border_color_g, style_updown.disabled_border_color_b, style_updown.disabled_border_color_a)
+		ImGui.PushStyleColor(ImGuiCol.Button, style_updown.disabled_back_color_abgr)
+		ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.disabled_back_color_abgr)
+		ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.disabled_back_color_abgr)
+		ImGui.PushStyleColor(ImGuiCol.Text, style_updown.disabled_fore_color_abgr)
+		ImGui.PushStyleColor(ImGuiCol.Border, style_updown.disabled_border_color_abgr)
 	end
 
     ImGui.SetCursorPos(left + def.sizes.up_left, top + def.sizes.up_top)

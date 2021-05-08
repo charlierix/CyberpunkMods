@@ -26,7 +26,9 @@ function Draw_OrderedList(def, style_colors, parent_width, parent_height, const,
                 text = ""
             end
 
-            ImGui.TextColored(color.the_color_r, color.the_color_g, color.the_color_b, color.the_color_a, text)
+            ImGui.PushStyleColor(ImGuiCol.Text, color.the_color_abgr)
+            ImGui.Text(text)
+            ImGui.PopStyleColor()
         end
 
         ImGui.EndGroup()
@@ -45,7 +47,9 @@ function Draw_OrderedList(def, style_colors, parent_width, parent_height, const,
                 text = ""
             end
 
-            ImGui.TextColored(color.the_color_r, color.the_color_g, color.the_color_b, color.the_color_a, text)
+            ImGui.PushStyleColor(ImGuiCol.Text, color.the_color_abgr)
+            ImGui.Text(text)
+            ImGui.PopStyleColor()
         end
 
         ImGui.EndGroup()

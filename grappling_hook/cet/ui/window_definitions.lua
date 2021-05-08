@@ -31,18 +31,21 @@ function Define_Window_EnergyTank(vars_ui, const)
 
     -- 3 sets in a triangle around the center
 
-    -- energy_tank.updown =
-    -- {
-    --     position =
-    --     {
-    --         pos_x = 0,
-    --         pos_y = 0,
-    --         horizontal = const.alignment_horizontal.center,
-    --         vertical = const.alignment_vertical.center,
-    --     },
+    energy_tank.updown =
+    {
+        isEnabled_down = true,
+        isEnabled_up = true,
 
-    --     isHorizontal = false,
-    -- }
+        position =
+        {
+            pos_x = 0,
+            pos_y = -100,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        isHorizontal = false,
+    }
 
 
     energy_tank.help =

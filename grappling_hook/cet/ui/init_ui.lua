@@ -75,23 +75,25 @@ function this.LoadStylesheet()
 end
 
 function this.FinishStylesheetColors(style)
-    local argb = { }
+    local stored = { }
 
     for key, value in pairs(style) do
         local type = type(value)
 
         if type == "string" then
             if string.find(key, "_color") then
-                local color, a, r, g, b = ConvertHexStringToNumbers(value)
+                local argb, abgr, a, r, g, b = ConvertHexStringToNumbers(value)
 
-                -- Change from string to a full int
-                style[key] = color
+                style[key] = nil        -- the hex value isn't needed anymore.  Getting rid of it so there's no confusion
 
                 -- Store these off so there's no chance of interfering with the for loop
-                argb[key .. "_a"] = a
-                argb[key .. "_r"] = r
-                argb[key .. "_g"] = g
-                argb[key .. "_b"] = b
+                stored[key .. "_argb"] = argb
+                stored[key .. "_abgr"] = abgr
+
+                -- stored[key .. "_a"] = a      -- the individual ints aren't needed
+                -- stored[key .. "_r"] = r
+                -- stored[key .. "_g"] = g
+                -- stored[key .. "_b"] = b
             end
 
         elseif type == "table" then
@@ -100,7 +102,7 @@ function this.FinishStylesheetColors(style)
         end
     end
 
-    for key, value in pairs(argb) do
+    for key, value in pairs(stored) do
         style[key] = value
     end
 end

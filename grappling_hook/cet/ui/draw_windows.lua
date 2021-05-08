@@ -66,7 +66,7 @@ function DrawWindow_Energy_Tank(vars_ui, player, window, const)
     Draw_OrderedList(energy_tank.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 
 
-    --Draw_UpDownButtons(energy_tank.updown, vars_ui.style.updownButtons, window.width, window.height, const)
+    Draw_UpDownButtons(energy_tank.updown, vars_ui.style.updownButtons, window.width, window.height, const)
 
 
     Draw_HelpButton(energy_tank.help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)

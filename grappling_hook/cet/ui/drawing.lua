@@ -1,6 +1,7 @@
 --Borderless progress bar inspired by / lifted from survival mod by Architect
 --https://www.nexusmods.com/cyberpunk2077/mods/1405
 --NOTE: This is a copy of DrawJetpackProgress
+--NOTE: This is positioned according to how things look at 4K.  The progress is a bit low on 1K, but it's not bad.  I tried scaling position according to resolution, but text was still large, probably would need to scale that too
 function DrawEnergyProgress(energy, max, state)
     ImGui.SetNextWindowPos(20, 230, ImGuiCond.Always)       -- this is under the top left combat graphic (placing under jetpack's progress bar)
     ImGui.SetNextWindowSize(330, 50, ImGuiCond.Appearing)
@@ -73,7 +74,7 @@ end
 --https://stackoverflow.com/questions/26160327/sorting-a-lua-table-by-key
 function DrawDebugWindow(debugInfo)
     --ImGui.SetNextWindowPos(20, 300, ImGuiCond.Always)
-    ImGui.SetNextWindowPos(20, 720, ImGuiCond.Always)
+    ImGui.SetNextWindowPos(20, 720, ImGuiCond.FirstUseEver)
     ImGui.SetNextWindowSize(300, 400, ImGuiCond.Appearing)
 
     if (ImGui.Begin("Grappling Hook Debug")) then

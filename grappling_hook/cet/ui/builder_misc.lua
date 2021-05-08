@@ -60,6 +60,7 @@ function Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, width, 
     end
 end
 
+--NOTE: This needs ABGR
 function Draw_Circle(screenOffset_x, screenOffset_y, center_x, center_y, radius, isHovered, color_back_standard, color_back_hovered, color_border_standard, color_border_hovered, thickness)
     -- TODO: Calculate based on radius, have a min and max
     local numSegments = 12
@@ -74,17 +75,11 @@ function Draw_Circle(screenOffset_x, screenOffset_y, center_x, center_y, radius,
         border = color_border_standard
     end
 
-
-    -- These are ABGR
-
-
     if background then
         ImGui.ImDrawListAddCircleFilled(ImGui.GetWindowDrawList(), screenOffset_x + center_x, screenOffset_y + center_y, radius, background, numSegments)
-        --ImGui.ImDrawListAddCircleFilled(ImGui.GetWindowDrawList(), screenOffset_x + center_x, screenOffset_y + center_y, radius, 0xFF0000FF, numSegments)
     end
 
     if border then
         ImGui.ImDrawListAddCircle(ImGui.GetWindowDrawList(), screenOffset_x + center_x, screenOffset_y + center_y, radius, border, numSegments, thickness)
-        --ImGui.ImDrawListAddCircle(ImGui.GetWindowDrawList(), screenOffset_x + center_x, screenOffset_y + center_y, radius, 0xFF00FF00, numSegments, thickness)
     end
 end
