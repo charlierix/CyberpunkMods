@@ -12,13 +12,13 @@ namespace grapple_ui.models.stylesheet
         public double padding_horizontal { get; init; }
         public double padding_vertical { get; init; }
 
-        public double border_cornerRadius { get; init; }
-        public double border_thickness { get; init; }
-
         /// <summary>
         /// Gap between buttons (horizontal or vertical)
         /// </summary>
         public double gap { get; init; }
+
+        public double border_cornerRadius { get; init; }
+        public double border_thickness { get; init; }
 
         public string border_color { get; init; }
 

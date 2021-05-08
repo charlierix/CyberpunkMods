@@ -42,6 +42,7 @@ require "ui/animation_lowEnergy"
 require "ui/builder_help_button"
 require "ui/builder_label"
 require "ui/builder_misc"
+require "ui/builder_okcancel_buttons"
 require "ui/builder_orderedlist"
 require "ui/builder_summary_button"
 require "ui/builder_updownbuttons"
@@ -337,10 +338,9 @@ registerHotkey("GrapplingHookSavePlayer", "test summary button", function()
 
 end)
 
-registerHotkey("GrapplingHookConfig", "Show/Hide Config", function()
-    --TODO: This should just show the config.  Make them push a button to close so they can be
-    --prompted to save
-    shouldShowConfig = not shouldShowConfig
+registerHotkey("GrapplingHookConfig", "Show Config", function()
+    -- This only shows the config.  They need to push a close button (and possibly ok/cancel for saving)
+    shouldShowConfig = true
 end)
 
 registerForEvent("onDraw", function()
@@ -353,7 +353,7 @@ registerForEvent("onDraw", function()
     end
 
     if shouldShowConfig and player then
-        DrawConfig(vars_ui, player, const)
+        shouldShowConfig = DrawConfig(vars_ui, player, const)
     end
 
     if const.shouldShowDebugWindow then

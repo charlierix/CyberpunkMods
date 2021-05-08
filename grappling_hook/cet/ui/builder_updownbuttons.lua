@@ -71,7 +71,7 @@ function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, cons
     ImGui.PopStyleColor(5)
     ImGui.PopStyleVar(1)
 
-	-- /Common props
+	-- /Common properties
     ImGui.PopStyleVar(2)
 
 	return

@@ -19,8 +19,8 @@ namespace grapple_ui.models.ui
         ///
         /// Y is similar logic.  For center, the offset goes: negative=up, positive=down
         /// </summary>
-        public int pos_x { get; init; }
-        public int pos_y { get; init; }
+        public double pos_x { get; init; }
+        public double pos_y { get; init; }
 
         //TODO: optional bools that let x and y offsets be percent of the parent size instead of pixels
 

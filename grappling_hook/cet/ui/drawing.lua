@@ -43,12 +43,21 @@ function DrawEnergyProgress(energy, max, state)
     ImGui.End()
 end
 
+-- Draws the config screen
+-- Returns:
+--  true: keep showing config
+--  false: stop showing config
 function DrawConfig(vars_ui, player, const)
     if not player then
-        do return end
+        return false
     end
 
+    local continueShowing = true        -- only the main window is allowed to set this to false
+
     local window = vars_ui.mainWindow
+
+    ImGui.PushStyleColor(ImGuiCol.WindowBg, vars_ui.style.back_color_abgr)
+    ImGui.PushStyleColor(ImGuiCol.Border, vars_ui.style.border_color_abgr)
 
     ImGui.SetNextWindowPos(window.left, window.top, ImGuiCond.FirstUseEver)     -- this will place it in the hardcoded location, but if they move it, it will show at the new location
     ImGui.SetNextWindowSize(window.width, window.height, ImGuiCond.Always)
@@ -59,7 +68,7 @@ function DrawConfig(vars_ui, player, const)
         Refresh_LineHeights(vars_ui)
 
         if vars_ui.currentWindow == const.windows.main then
-            DrawWindow_Main(vars_ui, player, window, const)
+            continueShowing = DrawWindow_Main(vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.energy_tank then
             DrawWindow_Energy_Tank(vars_ui, player, window, const)
@@ -69,6 +78,10 @@ function DrawConfig(vars_ui, player, const)
         end
     end
     ImGui.End()
+
+    ImGui.PopStyleColor(2)
+
+    return continueShowing
 end
 
 --https://stackoverflow.com/questions/26160327/sorting-a-lua-table-by-key

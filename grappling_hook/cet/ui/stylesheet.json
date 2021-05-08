@@ -1,4 +1,29 @@
 {
+    "back_color": "F6141414",
+    "border_color": "8444",
+
+    "okcancelButtons":
+    {
+        "pos_x": 24,
+        "pos_y": 24,
+
+        "width": 72,
+        "height": 36,
+
+        "gap": 12,
+
+        "border_cornerRadius": 6,
+        "border_thickness": 2,
+
+        "border_color": "888",
+
+        "foreground_color": "CCC",
+
+        "back_color_standard": "333",
+        "back_color_hover": "555",
+        "back_color_click": "666"
+    },
+
     "summaryButton":
     {
         "border_cornerRadius": 8,
@@ -32,10 +57,10 @@
         "padding_horizontal": 4,
         "padding_vertical": 4,
 
+        "gap": 6,
+
         "border_cornerRadius": 3,
         "border_thickness": 2,
-
-        "gap": 6,
 
         "border_color": "777",
         "foreground_color": "FFF",

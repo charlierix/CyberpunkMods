@@ -48,9 +48,9 @@ function DrawWindow_Main(vars_ui, player, window, const)
 
     Draw_OrderedList(main.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 
+    local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
 
-
-    --TODO: Close button (inner dialogs will have: save/cancel if dirty -vs- close)
+    return not isCloseClicked       -- only stop showing when they click the close button
 end
 
 function DrawWindow_Energy_Tank(vars_ui, player, window, const)
@@ -59,6 +59,8 @@ function DrawWindow_Energy_Tank(vars_ui, player, window, const)
     -- Finalize models for this frame
     --Refresh_Experience_EnergyTank
     --Refresh_Updown(energy_tank.updown)
+    --Refresh IsDirty
+
 
     -- Show ui elements
     Draw_Label(energy_tank.title, vars_ui.style.colors, window.width, window.height, const)
@@ -66,12 +68,21 @@ function DrawWindow_Energy_Tank(vars_ui, player, window, const)
     Draw_OrderedList(energy_tank.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 
 
+
+    -- tests
     Draw_UpDownButtons(energy_tank.updown, vars_ui.style.updownButtons, window.width, window.height, const)
-
-
     Draw_HelpButton(energy_tank.help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
 
+
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(energy_tank.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    if isOKClicked then
+        print("TODO: Save EnergyTank")
+        WindowTransition_Main(vars_ui, const)
+
+    elseif isCancelClicked then
+        WindowTransition_Main(vars_ui, const)
+    end
 end
 
 function DrawWindow_Grapple_Straight(vars_ui, player, window, const)

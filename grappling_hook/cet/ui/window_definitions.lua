@@ -20,6 +20,8 @@ function Define_Window_Main(vars_ui, const)
     this.Define_Main_GrappleSlots(main, const)
 
     main.experience = this.Define_Main_Experience(const)
+
+    main.okcancel = this.Define_OkCancelButtons(true, vars_ui, const)
 end
 
 function Define_Window_EnergyTank(vars_ui, const)
@@ -62,6 +64,7 @@ function Define_Window_EnergyTank(vars_ui, const)
 
     energy_tank.experience = this.Define_EnergyTank_Experience(const)
 
+    energy_tank.okcancel = this.Define_OkCancelButtons(false, vars_ui, const)
 end
 
 ----------------------------------- Common Controls -----------------------------------
@@ -81,6 +84,22 @@ function this.Define_Title(title, const)
         },
 
         color = "title",
+    }
+end
+
+function this.Define_OkCancelButtons(isMainPage, vars_ui, const)
+    return
+    {
+        isMainPage = isMainPage,
+        isDirty = false,
+
+        position =
+        {
+            pos_x = vars_ui.style.okcancelButtons.pos_x,
+            pos_y = vars_ui.style.okcancelButtons.pos_y,
+            horizontal = const.alignment_horizontal.right,
+            vertical = const.alignment_vertical.bottom,
+        },
     }
 end
 
@@ -113,7 +132,7 @@ end
 function Refresh_Main_EnergyTank(def, energy_tank)
     def.header_value = tostring(Round(energy_tank.max_energy))
     def.content.a_recovery_rate.value = tostring(Round(energy_tank.recovery_rate, 1))
-    def.content.b_flying_percent.value = tostring(Round(energy_tank.flying_percent * 100)) .. "%%"
+    def.content.b_flying_percent.value = tostring(Round(energy_tank.flying_percent * 100)) .. "%"
 end
 
 function this.Define_Main_GrappleSlots(parent, const)
@@ -228,11 +247,3 @@ function this.Define_EnergyTank_Experience(const)
         color_value = "experience_value",
     }
 end
-
--- function Refresh_Updown(def)
---     def.isEnabled_down = true
---     def.text_down = "1"
-
---     def.isEnabled_up = true
---     def.text_up = "1"
--- end
