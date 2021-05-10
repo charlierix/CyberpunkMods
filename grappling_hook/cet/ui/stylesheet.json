@@ -1,5 +1,5 @@
 {
-    "back_color": "F6141414",
+    "back_color": "FC141414",
     "border_color": "8444",
 
     "okcancelButtons":
@@ -80,7 +80,7 @@
 
     "helpButton":
     {
-        "radius": 6,
+        "radius": 7,
         "border_thickness": 1,
 
         "foreground_color_standard": "50C9C9C9",
@@ -99,7 +99,7 @@
         "info": { "the_color": "C4A380" },
         "experience_prompt": { "the_color": "F5EA65" },
         "experience_value": { "the_color": "FADD5A" },
-        "edit_name": { "the_color": "4C4" },
+        "edit_prompt": { "the_color": "4C4" },
         "edit_value": { "the_color": "4C4" }
     }
 }

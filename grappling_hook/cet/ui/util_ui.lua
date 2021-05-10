@@ -132,7 +132,7 @@ end
 -- This will return the left,top of the control based on the definition, control's size,
 -- and parent's size
 -- Params
---  def = models\ui\ControlPosition
+--  def = models\viewmodels\ControlPosition
 --  control_width, control_height = size of control
 --  parent_width, parent_height = size of parent window or div container
 function GetControlPosition(def, control_width, control_height, parent_width, parent_height, const)

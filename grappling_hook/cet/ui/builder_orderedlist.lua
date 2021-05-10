@@ -1,7 +1,7 @@
 local this = {}
 
 -- Draws multiple lines of text in two columns (prompts are col1, values are col2)
--- def is models\ui\OrderedList
+-- def is models\viewmodels\OrderedList
 --
 -- NOTE: A lot of this is a copy of SummaryButton's content logic.  Making a copy, because SummaryButton
 -- is too hardcoded and specific.  A version 2 may get built in the future where it's composed of these

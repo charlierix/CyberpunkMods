@@ -74,14 +74,6 @@ function TODO()
     --  If grapple point is a person (determined in aim), ragdoll them toward you
     --  GET OVER HERE!!!
 
-    -- All:
-    --  Let them level up the grapple.  Start with:
-    --      shorter distances
-    --      weaker accelerations
-    --      (maybe a bit lower max vel)
-    --      lower energy max and recovery rate (but don't be too punative with this)
-    --      full gravity
-
     -- Input:
     --  Give the option to register actions to this new style hotkey, if that's what they prefer
     -- registerInput('someID', 'Some input', function(isDown)
@@ -101,6 +93,10 @@ function TODO()
 
     -- All:
     --  Rename state to vars (needs to be done in all mods at the same time)
+
+    -- UI:
+    --  All numbers should be presented as dozenal :)
+    --  tostring_doz()
 
 end
 
@@ -182,7 +178,7 @@ local vars_ui =
     --line_heights  -- the height of strings -- see Refresh_LineHeights()
 
     -- ***** See window_transitions.lua *****
-    currentWindow = const.windows.energy_tank,
+    currentWindow = const.windows.main,
     transition_info = { }       -- this holds properties needed for the window (like grappleIndex for grapple_straight)
 
     -- ***** Each of these is a container of controls (name matches the values in windows enum) *****

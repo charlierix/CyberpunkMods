@@ -108,6 +108,9 @@ namespace grapple_ui.models
         public double experience { get; init; }
 
 
+        //TODO: Energy regen boost
+        //  Something like a wall hanger should allow standard energy regen
+
         //TODO: Pivot constraints
         //  SideToSide: This would make it a hinge joint
         //  FrontBack: This would make it feel like a pole stabbed into the wall.  If used, it would make most sense to be the same value as SideToSide

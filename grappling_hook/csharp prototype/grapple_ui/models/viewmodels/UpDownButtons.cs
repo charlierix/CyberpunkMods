@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace grapple_ui.models.ui
+namespace grapple_ui.models.viewmodels
 {
     public record UpDownButtons
     {
@@ -12,6 +12,10 @@ namespace grapple_ui.models.ui
         // will change with each button press
         public string text_down { get; init; }
         public string text_up { get; init; }
+
+        // These are used when the button is clicked, but not shown to the user
+        public double? value_down { get; init; }
+        public double? value_up { get; init; }
 
         // True: It will be clickable and use the standard set of colors
         // False: Not clickable, uses disabled colors

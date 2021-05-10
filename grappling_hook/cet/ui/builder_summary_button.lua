@@ -2,7 +2,7 @@ local this = {}
 
 -- This is a border with a couple categories of text inside.  Acts like a button
 -- This got complex.  It might be cleaner to just implement a proper layout engine :)
--- def is models\ui\SummaryButton
+-- def is models\viewmodels\SummaryButton
 -- style_summary is models\stylesheet\SummaryButton
 -- Returns isClicked
 function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, screenOffset_y, parent_width, parent_height, const)

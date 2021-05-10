@@ -56,25 +56,37 @@ end
 function DrawWindow_Energy_Tank(vars_ui, player, window, const)
     local energy_tank = vars_ui.energy_tank
 
-    -- Finalize models for this frame
-    --Refresh_Experience_EnergyTank
-    --Refresh_Updown(energy_tank.updown)
-    --Refresh IsDirty
+    ------------------------- Finalize models for this frame -------------------------
+    Refresh_EnergyTank_Experience(energy_tank.experience, player, energy_tank.changes)
 
+    Refresh_EnergyTank_Total_Value(energy_tank.total_value, player.energy_tank, energy_tank.changes)
+    Refresh_EnergyTank_Total_UpDown(energy_tank.total_updown, player.energy_tank, player, energy_tank.changes)
 
-    -- Show ui elements
+    Refresh_EnergyTank_IsDirty(energy_tank.okcancel, energy_tank.changes)
+
+    -------------------------------- Show ui elements --------------------------------
     Draw_Label(energy_tank.title, vars_ui.style.colors, window.width, window.height, const)
 
     Draw_OrderedList(energy_tank.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 
+    -- Total Energy
+    Draw_Label(energy_tank.total_prompt, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(energy_tank.total_value, vars_ui.style.colors, window.width, window.height, const)
+    local isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.total_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+    Update_EnergyTank_Total(energy_tank.total_updown, energy_tank.changes, isDownClicked, isUpClicked)
+
+    Draw_HelpButton(energy_tank.total_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
 
-    -- tests
-    Draw_UpDownButtons(energy_tank.updown, vars_ui.style.updownButtons, window.width, window.height, const)
-    Draw_HelpButton(energy_tank.help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+    -- Refill Rate
 
 
 
+    -- While Grappling %
+
+
+
+    -- OK/Cancel
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(energy_tank.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
         print("TODO: Save EnergyTank")

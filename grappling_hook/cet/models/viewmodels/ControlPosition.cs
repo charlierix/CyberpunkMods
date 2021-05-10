@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace grapple_ui.models.ui
+namespace grapple_ui.models.viewmodels
 {
     /// <summary>
     /// This can be added to a control to tells how to place it

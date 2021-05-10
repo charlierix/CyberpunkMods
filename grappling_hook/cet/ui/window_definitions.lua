@@ -4,9 +4,9 @@ local this = {}
 -- controls (the rest of the info gets filled out each frame)
 --
 -- See
---  models\ui\SummaryButton
---  models\ui\Label
---  models\ui\OrderedList
+--  models\viewmodels\SummaryButton
+--  models\viewmodels\Label
+--  models\viewmodels\OrderedList
 function Define_Window_Main(vars_ui, const)
     local main = {}
     vars_ui.main = main
@@ -28,38 +28,21 @@ function Define_Window_EnergyTank(vars_ui, const)
     local energy_tank = {}
     vars_ui.energy_tank = energy_tank
 
+    energy_tank.changes = {}        -- this will hold values that have changes to be applied
+
     energy_tank.title = this.Define_Title("Energy Tank", const)
 
 
     -- 3 sets in a triangle around the center
 
-    energy_tank.updown =
-    {
-        isEnabled_down = true,
-        isEnabled_up = true,
-
-        position =
-        {
-            pos_x = 0,
-            pos_y = -100,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
-
-        isHorizontal = false,
-    }
+    local prompt, value, updown, help = this.Define_EnergyTank_PropertyPack("Total Energy", 0, 0, const)
+    energy_tank.total_prompt = prompt
+    energy_tank.total_value = value
+    energy_tank.total_updown = updown
+    energy_tank.total_help = help
 
 
-    energy_tank.help =
-    {
-        position =
-        {
-            pos_x = 0,
-            pos_y = 0,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
-    }
+
 
 
     energy_tank.experience = this.Define_EnergyTank_Experience(const)
@@ -101,6 +84,32 @@ function this.Define_OkCancelButtons(isMainPage, vars_ui, const)
             vertical = const.alignment_vertical.bottom,
         },
     }
+end
+
+function this.Refresh_UpDownButton(def, down, up)
+    --TODO: May want a significant digits function, only show one or two significant digits
+
+    -- Down
+    def.value_down = down
+
+    if down then
+        def.text_down = tostring(down)
+        def.isEnabled_down = true
+    else
+        def.text_down = ""
+        def.isEnabled_down = false
+    end
+
+    -- Up
+    def.value_up = up
+
+    if up then
+        def.text_up = tostring(up)
+        def.isEnabled_up = true
+    else
+        def.text_up = ""
+        def.isEnabled_up = false
+    end
 end
 
 ------------------------------------- Main Window -------------------------------------
@@ -246,4 +255,108 @@ function this.Define_EnergyTank_Experience(const)
         color_prompt = "experience_prompt",
         color_value = "experience_value",
     }
+end
+function Refresh_EnergyTank_Experience(def, player, changes)
+    def.content.available.value = tostring(math.floor(player.experience + changes.experience))
+    def.content.used.value = tostring(Round(player.energy_tank.experience - changes.experience))
+end
+
+-- This creates a set of controls used to change a single property
+-- x and y are an offset from center
+-- Returns:
+--  label property name
+--  label property value
+--  updown buttons
+--  help button
+function this.Define_EnergyTank_PropertyPack(text, x, y, const)
+    -- Probably can't use this outside of a draw function.  Just hardcode the offsets
+    --local size_text_x, size_text_y = ImGui.CalcTextSize(text)
+
+    local label_prompt =
+    {
+        text = text,
+
+        position =
+        {
+            pos_x = x,
+            pos_y = y - 24,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_prompt",
+    }
+
+    local label_value =
+    {
+        --text = ,      -- will be populated during refresh
+
+        position =
+        {
+            pos_x = x,
+            pos_y = y,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_value",
+    }
+
+    local updown =
+    {
+        isEnabled_down = true,
+        isEnabled_up = true,
+
+        position =
+        {
+            pos_x = x,
+            pos_y = y + 32,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        isHorizontal = true,
+    }
+
+    local help =
+    {
+        position =
+        {
+            pos_x = x + 60,
+            pos_y = y - 23,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+    }
+
+    return label_prompt, label_value, updown, help
+end
+
+function Refresh_EnergyTank_Total_Value(def, energy_tank, changes)
+    def.text = tostring(Round(energy_tank.max_energy + changes.max_energy))
+end
+function Refresh_EnergyTank_Total_UpDown(def, energy_tank, player, changes)
+    local down, up = GetDecrementIncrement(energy_tank.max_energy_update, energy_tank.max_energy + changes.max_energy, player.experience + changes.experience)
+    this.Refresh_UpDownButton(def, down, up)
+end
+function Update_EnergyTank_Total(def, changes, isDownClicked, isUpClicked)
+    if isDownClicked and def.isEnabled_down then
+        changes.max_energy = changes.max_energy - def.value_down
+        changes.experience = changes.experience + 1
+    end
+
+    if isUpClicked and def.isEnabled_up then
+        changes.max_energy = changes.max_energy + def.value_up
+        changes.experience = changes.experience - 1
+    end
+end
+
+function Refresh_EnergyTank_IsDirty(def, changes)
+    local isClean =
+        IsNearZero(changes.max_energy) and
+        IsNearZero(changes.recovery_rate) and
+        IsNearZero(changes.flying_percent) --and
+        --IsNearZero(changes.experience)      -- experience is dependent on the other three.  So the only reason it would be non zero on its own is really bad math drift
+
+    def.isDirty = not isClean
 end

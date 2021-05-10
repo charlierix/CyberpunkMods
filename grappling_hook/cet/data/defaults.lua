@@ -19,8 +19,27 @@ function GetDefault_EnergyTank()
     return
     {
         max_energy = 12,
+        max_energy_update =
+        {
+            min = 1,        -- there is no max
+            amount = 1,
+        },
+
         recovery_rate = 1,
+        recovery_rate_update =
+        {
+            min = 0.1,
+            --TODO: Make this non linear
+            amount = 0.2,
+        },
+
         flying_percent = 0.25,
+        flying_percent_update =
+        {
+            min = 0,
+            max = 1,
+            amount = 0.5,
+        },
 
         experience = 0,
     }

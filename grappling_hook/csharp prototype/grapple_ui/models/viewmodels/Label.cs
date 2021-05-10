@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace grapple_ui.models.ui
+namespace grapple_ui.models.viewmodels
 {
     public record Label
     {

@@ -1,7 +1,7 @@
 local this = {}
 
 -- Draws buttons (should be placed at bottom right of window)
--- def is models\ui\OkCancelButtons
+-- def is models\viewmodels\OkCancelButtons
 -- style_updown is models\stylesheet\OkCancelButtons
 -- Returns:
 --  isOKClicked         this is only true if two buttons are showing and they click OK (def.isDirty==true)
@@ -90,7 +90,7 @@ function this.Calculate_Sizes(def, style_okcancel, text_ok, text_cancel)
     -- Final Size
     local width_final = style_okcancel.width
     if def.isDirty then
-        width_final = (width_final) + style_okcancel.gap
+        width_final = (width_final * 2) + style_okcancel.gap
     end
 
     local height_final = style_okcancel.height

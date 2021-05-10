@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace grapple_ui.models.ui
+namespace grapple_ui.models.viewmodels
 {
     /// <summary>
     /// This gets handed to a method that builds a control that looks like some text surrounded by

@@ -1,7 +1,7 @@
 local this = {}
 
 -- Draws a pair of + - buttons, either horizontal or vertical orientations
--- def is models\ui\UpDownButtons
+-- def is models\viewmodels\UpDownButtons
 -- style_updown is models\stylesheet\UpDownButtons
 -- Returns:
 --	isDownClicked, isUpClicked
@@ -77,6 +77,44 @@ function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, cons
 	return
 		isDownClicked and def.isEnabled_down,
 		isUpClicked and def.isEnabled_up
+end
+
+-- This tells what values should go in the decrement and increment (called each frame)
+-- Params:
+-- 	valueUpdates: models\viewmodels\ValueUpdates
+--	currentValue: this is the current value of the property that the up/down buttons will modify
+-- Returns:
+--	decrement or nil
+--	increment or nil
+function GetDecrementIncrement(valueUpdates, currentValue, currentExperience)
+    local dec = nil
+    local inc = nil
+
+    if valueUpdates.getDecrementIncrement then
+		-- The values are defined by a function
+        dec, inc = valueUpdates.getDecrementIncrement(currentValue)
+    else
+		-- The values are simple constants
+        dec = valueUpdates.amount
+        inc = valueUpdates.amount
+    end
+
+	if (not IsNearValue(currentExperience, 1)) and currentExperience < 1 then
+		-- There's not enough experience to apply the increment
+		inc = nil
+	end
+
+    if dec and valueUpdates.min and currentValue - dec < valueUpdates.min then
+		-- Decrementing would make it less than min
+        dec = nil
+    end
+
+    if inc and valueUpdates.max and currentValue + inc > valueUpdates.max then
+		-- Incrementing would make it greater than max
+        inc = nil
+    end
+
+    return dec, inc
 end
 
 ------------------------------------------- Private Methods -------------------------------------------

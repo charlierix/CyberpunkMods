@@ -2,7 +2,7 @@ local this = {}
 
 -- Draws a button that is a ? with a circle around it.  Used like a button to show additional
 -- information
--- def is models\ui\HelpButton
+-- def is models\viewmodels\HelpButton
 -- style_help is models\stylesheet\HelpButton
 -- Returns:
 --	isClicked, isHovered
