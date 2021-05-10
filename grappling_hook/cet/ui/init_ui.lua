@@ -10,6 +10,8 @@ function InitializeUI(vars_ui, const)
 
     Define_Window_Main(vars_ui, const)      -- this must come after vars_ui.mainWindow is defined
     Define_Window_EnergyTank(vars_ui, const)
+    Define_Window_Grapple_Choose(vars_ui, const)
+    Define_Window_Grapple_Straight(vars_ui, const)
 
     -- Post Processing
     this.SortContentLists(vars_ui.main)

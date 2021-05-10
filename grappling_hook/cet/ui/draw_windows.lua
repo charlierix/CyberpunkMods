@@ -23,27 +23,27 @@ function DrawWindow_Main(vars_ui, player, window, const)
     end
 
     if Draw_SummaryButton(main.grapple1, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Grapple_Straight(vars_ui, const, 1)
+        WindowTransition_Grapple(vars_ui, const, player, 1)
     end
 
     if Draw_SummaryButton(main.grapple2, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Grapple_Straight(vars_ui, const, 2)
+        WindowTransition_Grapple(vars_ui, const, player, 2)
     end
 
     if Draw_SummaryButton(main.grapple3, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Grapple_Straight(vars_ui, const, 3)
+        WindowTransition_Grapple(vars_ui, const, player, 3)
     end
 
     if Draw_SummaryButton(main.grapple4, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Grapple_Straight(vars_ui, const, 4)
+        WindowTransition_Grapple(vars_ui, const, player, 4)
     end
 
     if Draw_SummaryButton(main.grapple5, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Grapple_Straight(vars_ui, const, 5)
+        WindowTransition_Grapple(vars_ui, const, player, 5)
     end
 
     if Draw_SummaryButton(main.grapple6, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Grapple_Straight(vars_ui, const, 6)
+        WindowTransition_Grapple(vars_ui, const, player, 6)
     end
 
     Draw_OrderedList(main.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
@@ -115,11 +115,36 @@ function DrawWindow_Energy_Tank(vars_ui, player, window, const)
     end
 end
 
+function DrawWindow_Grapple_Choose(vars_ui, player, window, const)
+    local grapple_choose = vars_ui.grapple_choose
+
+    Draw_Label(grapple_choose.title, vars_ui.style.colors, window.width, window.height, const)
+
+
+
+    local _, isCancelClicked = Draw_OkCancelButtons(grapple_choose.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    if isCancelClicked then
+        WindowTransition_Main(vars_ui, const)
+    end
+end
+
 function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
+    local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
+    if not grapple then
+        print("DrawWindow_Grapple_Straight: grapple is nil")
+        WindowTransition_Main(vars_ui, const)
+        do return end
+    end
 
-    --TODO: Get the current grapple from some structure in vars_ui that holds current window stats
-    local grapple = player.grapple1
+    local grapple_straight = vars_ui.grapple_straight
+
+
+    Draw_Label(grapple_straight.title, vars_ui.style.colors, window.width, window.height, const)
 
 
 
+    local _, isCancelClicked = Draw_OkCancelButtons(grapple_straight.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    if isCancelClicked then
+        WindowTransition_Main(vars_ui, const)
+    end
 end

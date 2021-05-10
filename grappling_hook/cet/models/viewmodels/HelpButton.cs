@@ -18,5 +18,10 @@ namespace grapple_ui.models.viewmodels
         /// Tells where on the parent to place the text
         /// </summary>
         public ControlPosition position { get; init; }
+
+        /// <summary>
+        /// Name given to the invisible button (needs to be unique)
+        /// </summary>
+        public string invisible_name { get; init; }
     }
 }

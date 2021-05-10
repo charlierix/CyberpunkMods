@@ -118,7 +118,7 @@ local const =
     alignment_horizontal = CreateEnum({ "left", "center", "right" }),
     alignment_vertical = CreateEnum({ "top", "center", "bottom" }),
 
-    windows = CreateEnum({ "main", "energy_tank", "grapple_straight" }),
+    windows = CreateEnum({ "main", "energy_tank", "grapple_choose", "grapple_straight", "grapple_swing" }),
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }

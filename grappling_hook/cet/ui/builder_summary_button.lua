@@ -21,7 +21,7 @@ function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, sc
     local center_y = top + style_summary.padding + (def.sizes.vert_final / 2)
 
     -- Invisible Button
-    local isClicked, isHovered = Draw_InvisibleButton(center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding)
+    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding)
 
     -- Border
     Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding, isHovered, style_summary.background_color_standard_argb, style_summary.background_color_hover_argb, style_summary.border_color_standard_argb, style_summary.border_color_hover_argb, style_summary.border_cornerRadius, style_summary.border_thickness)

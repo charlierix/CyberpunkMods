@@ -13,8 +13,24 @@ function WindowTransition_Energy_Tank(vars_ui, const)
     changes.experience = 0
 end
 
-function WindowTransition_Grapple_Straight(vars_ui, const, grappleIndex)
-    vars_ui.currentWindow = const.windows.grapple_straight
+function WindowTransition_Grapple(vars_ui, const, player, grappleIndex)
+    local grapple = player:GetGrappleByIndex(grappleIndex)
 
-    vars_ui.transition_info.grappleIndex = grappleIndex
+    if grapple then
+        if grapple.aim_straight then
+            vars_ui.currentWindow = const.windows.grapple_straight
+            vars_ui.transition_info.grappleIndex = grappleIndex
+
+        elseif grapple.aim_swing then
+            print("WindowTransition_Grapple: TODO: Implement web swing")
+            WindowTransition_Main(vars_ui, const)
+
+        else
+            print("WindowTransition_Grapple: Unknown type of grapple")
+            WindowTransition_Main(vars_ui, const)
+        end
+
+    else
+        vars_ui.currentWindow = const.windows.grapple_choose
+    end
 end

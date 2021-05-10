@@ -44,6 +44,11 @@ namespace grapple_ui.models.viewmodels
 
         // Small bit of text in the bottom right corner
         public string suffix { get; init; }
+
+        /// <summary>
+        /// Name given to the invisible button (needs to be unique)
+        /// </summary>
+        public string invisible_name { get; init; }
     }
 
     public record SummaryButton_Content

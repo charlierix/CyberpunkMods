@@ -73,6 +73,9 @@ function DrawConfig(vars_ui, player, const)
         elseif vars_ui.currentWindow == const.windows.energy_tank then
             DrawWindow_Energy_Tank(vars_ui, player, window, const)
 
+        elseif vars_ui.currentWindow == const.windows.grapple_choose then
+            DrawWindow_Grapple_Choose(vars_ui, player, window, const)
+
         elseif vars_ui.currentWindow == const.windows.grapple_straight then
             DrawWindow_Grapple_Straight(vars_ui, player, window, const)
         end

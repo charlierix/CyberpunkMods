@@ -56,6 +56,43 @@ function Define_Window_EnergyTank(vars_ui, const)
     energy_tank.okcancel = this.Define_OkCancelButtons(false, vars_ui, const)
 end
 
+function Define_Window_Grapple_Choose(vars_ui, const)
+    local grapple_choose = {}
+    vars_ui.grapple_choose = grapple_choose
+
+    grapple_choose.changes = {}        -- this will hold values that have changes to be applied
+
+    grapple_choose.title = this.Define_Title("New/Load Grapple", const)
+
+
+
+
+
+    grapple_choose.okcancel = this.Define_OkCancelButtons(false, vars_ui, const)
+end
+
+function Define_Window_Grapple_Straight(vars_ui, const)
+    local grapple_straight = {}
+    vars_ui.grapple_straight = grapple_straight
+
+    grapple_straight.changes = {}        -- this will hold values that have changes to be applied
+
+    grapple_straight.title = this.Define_Title("Straight Grapple", const)
+
+
+
+
+
+
+
+
+
+
+
+
+    grapple_straight.okcancel = this.Define_OkCancelButtons(false, vars_ui, const)
+end
+
 ----------------------------------- Common Controls -----------------------------------
 
 function this.Define_Title(title, const)
@@ -143,6 +180,8 @@ function this.Define_Main_EnergyTank(const)
             a_recovery_rate = { prompt = "refill rate" },
             b_flying_percent = { prompt = "while grappling" },
         },
+
+        invisible_name = "EnergyTank",
     }
 end
 function Refresh_Main_EnergyTank(def, energy_tank)
@@ -181,6 +220,8 @@ function this.Define_Main_GrappleSlots_DoIt(x, y, suffix, const)
         min_height = 70,
 
         suffix = suffix,
+
+        invisible_name = "Grapple" .. suffix,
     }
 end
 function Refresh_Main_GrappleSlot(def, grapple)
@@ -339,6 +380,8 @@ function this.Define_EnergyTank_PropertyPack(text, x, y, const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        invisible_name = "Help" .. text
     }
 
     return label_prompt, label_value, updown, help

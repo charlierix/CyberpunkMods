@@ -108,6 +108,7 @@ namespace grapple_ui.models
         public double experience { get; init; }
 
 
+
         //TODO: Energy regen boost
         //  Something like a wall hanger should allow standard energy regen
 

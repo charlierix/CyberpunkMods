@@ -19,7 +19,7 @@ function Draw_HelpButton(def, style_help, screenOffset_x, screenOffset_y, parent
 
     -- Invisible Button
     local clickableSize = style_help.radius * 0.85 * 2
-    local isClicked, isHovered = Draw_InvisibleButton(def.sizes.center_x, def.sizes.center_y, clickableSize, clickableSize, 0)
+    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, def.sizes.center_x, def.sizes.center_y, clickableSize, clickableSize, 0)
 
     -- Circle
     Draw_Circle(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, style_help.radius, isHovered, style_help.back_color_standard_abgr, style_help.back_color_hover_abgr, style_help.border_color_standard_abgr, style_help.border_color_hover_abgr, style_help.border_thickness)

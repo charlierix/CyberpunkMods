@@ -3,7 +3,7 @@
 -- Returns:
 --  isClicked
 --  isHovered
-function Draw_InvisibleButton(center_x, center_y, width, height, padding)
+function Draw_InvisibleButton(name, center_x, center_y, width, height, padding)
     -- Don't want to go all the way to the edge of the padding
     padding = padding * 0.667
 
@@ -12,7 +12,9 @@ function Draw_InvisibleButton(center_x, center_y, width, height, padding)
 
     ImGui.SetCursorPos(left - padding, top - padding)
 
-    local isClicked = ImGui.InvisibleButton("MouseObserver", width + (padding * 2), height + (padding * 2))
+    local isClicked = ImGui.InvisibleButton(name, width + (padding * 2), height + (padding * 2))
+    --local isClicked = ImGui.InvisibleButton("MouseObserver", width + (padding * 2), height + (padding * 2))       -- the name must be unique (not sure if across all windows)
+
     local isHovered = ImGui.IsItemHovered()
 
     return isClicked, isHovered

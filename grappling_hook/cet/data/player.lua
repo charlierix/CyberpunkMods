@@ -30,6 +30,31 @@ end
 --TODO: Create methods for updating some of the stats.  Maybe taking subsets of the tree
 --These upgrade function will also insert the new stats in the database
 
+-- Saves people from writing an ugly if elseif set
+function Player:GetGrappleByIndex(index)
+    if index == 1 then
+        return self.grapple1
+
+    elseif index == 2 then
+        return self.grapple2
+
+    elseif index == 3 then
+        return self.grapple3
+
+    elseif index == 4 then
+        return self.grapple4
+
+    elseif index == 5 then
+        return self.grapple5
+
+    elseif index == 6 then
+        return self.grapple6
+
+    else
+        print("Player:GetGrappleByIndex: Index out of range: " .. tostring(index))
+        return nil
+    end
+end
 
 ------------------------------------ Private Instance Methods ------------------------------------
 
