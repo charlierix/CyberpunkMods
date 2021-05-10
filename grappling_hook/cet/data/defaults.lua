@@ -22,7 +22,7 @@ function GetDefault_EnergyTank()
         max_energy_update =
         {
             min = 1,        -- there is no max
-            amount = 1,
+            amount = 2,
         },
 
         recovery_rate = 1,
@@ -38,7 +38,7 @@ function GetDefault_EnergyTank()
         {
             min = 0,
             max = 1,
-            amount = 0.5,
+            amount = 0.05,
         },
 
         experience = 0,

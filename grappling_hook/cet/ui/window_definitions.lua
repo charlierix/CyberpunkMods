@@ -3,10 +3,8 @@ local this = {}
 -- This gets called during init and sets up as much static inforation as it can for all the
 -- controls (the rest of the info gets filled out each frame)
 --
--- See
---  models\viewmodels\SummaryButton
---  models\viewmodels\Label
---  models\viewmodels\OrderedList
+-- Individual controls are defined in
+--  models\viewmodels\...
 function Define_Window_Main(vars_ui, const)
     local main = {}
     vars_ui.main = main
@@ -32,18 +30,26 @@ function Define_Window_EnergyTank(vars_ui, const)
 
     energy_tank.title = this.Define_Title("Energy Tank", const)
 
-
-    -- 3 sets in a triangle around the center
-
-    local prompt, value, updown, help = this.Define_EnergyTank_PropertyPack("Total Energy", 0, 0, const)
+    -- Total Energy (EnergyTank.max_energy)
+    local prompt, value, updown, help = this.Define_EnergyTank_PropertyPack("Total Energy", 0, -144, const)
     energy_tank.total_prompt = prompt
     energy_tank.total_value = value
     energy_tank.total_updown = updown
     energy_tank.total_help = help
 
+    -- Refill Rate (EnergyTank.recovery_rate)
+    prompt, value, updown, help = this.Define_EnergyTank_PropertyPack("Refill Rate", -144, 120, const)
+    energy_tank.refill_prompt = prompt
+    energy_tank.refill_value = value
+    energy_tank.refill_updown = updown
+    energy_tank.refill_help = help
 
-
-
+    -- While Grappling (EnergyTank.flying_percent)
+    prompt, value, updown, help = this.Define_EnergyTank_PropertyPack("While Grappling", 144, 120, const)
+    energy_tank.percent_prompt = prompt
+    energy_tank.percent_value = value
+    energy_tank.percent_updown = updown
+    energy_tank.percent_help = help
 
     energy_tank.experience = this.Define_EnergyTank_Experience(const)
 
@@ -117,6 +123,7 @@ end
 --NOTE: Define functions get called during init.  Refresh functions get called each frame that the config is visible
 
 function this.Define_Main_EnergyTank(const)
+    -- SummaryButton
     return
     {
         -- In the middle of the window
@@ -159,6 +166,7 @@ function this.Define_Main_GrappleSlots(parent, const)
 
 end
 function this.Define_Main_GrappleSlots_DoIt(x, y, suffix, const)
+    -- SummaryButton
     return
     {
         position =
@@ -272,6 +280,7 @@ function this.Define_EnergyTank_PropertyPack(text, x, y, const)
     -- Probably can't use this outside of a draw function.  Just hardcode the offsets
     --local size_text_x, size_text_y = ImGui.CalcTextSize(text)
 
+    -- Label
     local label_prompt =
     {
         text = text,
@@ -287,6 +296,7 @@ function this.Define_EnergyTank_PropertyPack(text, x, y, const)
         color = "edit_prompt",
     }
 
+    -- Label
     local label_value =
     {
         --text = ,      -- will be populated during refresh
@@ -302,6 +312,7 @@ function this.Define_EnergyTank_PropertyPack(text, x, y, const)
         color = "edit_value",
     }
 
+    -- UpDownButtons
     local updown =
     {
         isEnabled_down = true,
@@ -318,11 +329,12 @@ function this.Define_EnergyTank_PropertyPack(text, x, y, const)
         isHorizontal = true,
     }
 
+    -- HelpButton
     local help =
     {
         position =
         {
-            pos_x = x + 60,
+            pos_x = x + 66,
             pos_y = y - 23,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
@@ -347,6 +359,53 @@ function Update_EnergyTank_Total(def, changes, isDownClicked, isUpClicked)
 
     if isUpClicked and def.isEnabled_up then
         changes.max_energy = changes.max_energy + def.value_up
+        changes.experience = changes.experience - 1
+    end
+end
+
+function Refresh_EnergyTank_Refill_Value(def, energy_tank, changes)
+    def.text = tostring(Round(energy_tank.recovery_rate + changes.recovery_rate, 1))
+end
+function Refresh_EnergyTank_Refill_UpDown(def, energy_tank, player, changes)
+    local down, up = GetDecrementIncrement(energy_tank.recovery_rate_update, energy_tank.recovery_rate + changes.recovery_rate, player.experience + changes.experience)
+    this.Refresh_UpDownButton(def, down, up)
+end
+function Update_EnergyTank_Refill(def, changes, isDownClicked, isUpClicked)
+    if isDownClicked and def.isEnabled_down then
+        changes.recovery_rate = changes.recovery_rate - def.value_down
+        changes.experience = changes.experience + 1
+    end
+
+    if isUpClicked and def.isEnabled_up then
+        changes.recovery_rate = changes.recovery_rate + def.value_up
+        changes.experience = changes.experience - 1
+    end
+end
+
+function Refresh_EnergyTank_Percent_Value(def, energy_tank, changes)
+    def.text = tostring(Round((energy_tank.flying_percent + changes.flying_percent) * 100)) .. "%"
+end
+function Refresh_EnergyTank_Percent_UpDown(def, energy_tank, player, changes)
+    local down, up = GetDecrementIncrement(energy_tank.flying_percent_update, energy_tank.flying_percent + changes.flying_percent, player.experience + changes.experience)
+    this.Refresh_UpDownButton(def, down, up)
+
+    -- Refresh_UpDownButton set several properties, but the text needs to be multiplied by 100
+    if down then
+        def.text_down = tostring(Round(down * 100))
+    end
+
+    if up then
+        def.text_up = tostring(Round(up * 100))
+    end
+end
+function Update_EnergyTank_Percent(def, changes, isDownClicked, isUpClicked)
+    if isDownClicked and def.isEnabled_down then
+        changes.flying_percent = changes.flying_percent - def.value_down
+        changes.experience = changes.experience + 1
+    end
+
+    if isUpClicked and def.isEnabled_up then
+        changes.flying_percent = changes.flying_percent + def.value_up
         changes.experience = changes.experience - 1
     end
 end

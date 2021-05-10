@@ -62,6 +62,12 @@ function DrawWindow_Energy_Tank(vars_ui, player, window, const)
     Refresh_EnergyTank_Total_Value(energy_tank.total_value, player.energy_tank, energy_tank.changes)
     Refresh_EnergyTank_Total_UpDown(energy_tank.total_updown, player.energy_tank, player, energy_tank.changes)
 
+    Refresh_EnergyTank_Refill_Value(energy_tank.refill_value, player.energy_tank, energy_tank.changes)
+    Refresh_EnergyTank_Refill_UpDown(energy_tank.refill_updown, player.energy_tank, player, energy_tank.changes)
+
+    Refresh_EnergyTank_Percent_Value(energy_tank.percent_value, player.energy_tank, energy_tank.changes)
+    Refresh_EnergyTank_Percent_UpDown(energy_tank.percent_updown, player.energy_tank, player, energy_tank.changes)
+
     Refresh_EnergyTank_IsDirty(energy_tank.okcancel, energy_tank.changes)
 
     -------------------------------- Show ui elements --------------------------------
@@ -72,17 +78,29 @@ function DrawWindow_Energy_Tank(vars_ui, player, window, const)
     -- Total Energy
     Draw_Label(energy_tank.total_prompt, vars_ui.style.colors, window.width, window.height, const)
     Draw_Label(energy_tank.total_value, vars_ui.style.colors, window.width, window.height, const)
+
     local isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.total_updown, vars_ui.style.updownButtons, window.width, window.height, const)
     Update_EnergyTank_Total(energy_tank.total_updown, energy_tank.changes, isDownClicked, isUpClicked)
 
     Draw_HelpButton(energy_tank.total_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
-
     -- Refill Rate
+    Draw_Label(energy_tank.refill_prompt, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(energy_tank.refill_value, vars_ui.style.colors, window.width, window.height, const)
 
+    isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.refill_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+    Update_EnergyTank_Refill(energy_tank.refill_updown, energy_tank.changes, isDownClicked, isUpClicked)
 
+    Draw_HelpButton(energy_tank.refill_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
     -- While Grappling %
+    Draw_Label(energy_tank.percent_prompt, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(energy_tank.percent_value, vars_ui.style.colors, window.width, window.height, const)
+
+    isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.percent_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+    Update_EnergyTank_Percent(energy_tank.percent_updown, energy_tank.changes, isDownClicked, isUpClicked)
+
+    Draw_HelpButton(energy_tank.percent_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
 
 

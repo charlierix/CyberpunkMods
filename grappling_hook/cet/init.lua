@@ -97,6 +97,8 @@ function TODO()
     -- UI:
     --  All numbers should be presented as dozenal :)
     --  tostring_doz()
+    --  Round_doz()     -- this is needed, because rounding fractions to a certain number of digits would have to be converted, then truncated
+    --  also, if there's ever a textbox, that would need to be parsed as well
 
 end
 
