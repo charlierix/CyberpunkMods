@@ -1,5 +1,6 @@
 -- Places an invisible button so that mouse events can be detected
 -- TODO: CET is currently suppressing ImGui's LeftMouseDown.  When that changes, add that as a return (if it's absolutely needed, maybe get it from Observe("PlayerPuppet", "OnAction"))
+-- NOTE: Each InvisibleButton within a window needs a unique name
 -- Returns:
 --  isClicked
 --  isHovered
@@ -12,8 +13,7 @@ function Draw_InvisibleButton(name, center_x, center_y, width, height, padding)
 
     ImGui.SetCursorPos(left - padding, top - padding)
 
-    local isClicked = ImGui.InvisibleButton(name, width + (padding * 2), height + (padding * 2))
-    --local isClicked = ImGui.InvisibleButton("MouseObserver", width + (padding * 2), height + (padding * 2))       -- the name must be unique (not sure if across all windows)
+    local isClicked = ImGui.InvisibleButton(name, width + (padding * 2), height + (padding * 2))        --NOTE: name needs to be unique within the window or isClicked won't work
 
     local isHovered = ImGui.IsItemHovered()
 

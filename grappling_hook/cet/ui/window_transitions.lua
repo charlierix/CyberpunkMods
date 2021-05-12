@@ -20,6 +20,8 @@ function WindowTransition_Grapple(vars_ui, const, player, grappleIndex)
         if grapple.aim_straight then
             vars_ui.currentWindow = const.windows.grapple_straight
             vars_ui.transition_info.grappleIndex = grappleIndex
+            vars_ui.grapple_straight.name.text = nil
+            vars_ui.grapple_straight.description.text = nil
 
         elseif grapple.aim_swing then
             print("WindowTransition_Grapple: TODO: Implement web swing")

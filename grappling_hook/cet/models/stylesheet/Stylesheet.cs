@@ -10,17 +10,18 @@ namespace grapple_ui.models.stylesheet
     /// These are properties used by the UI
     /// </summary>
     /// <remarks>
-    /// At runtime, all the color settings will be stored in both hex and r,g,b,a.  But the json
-    /// will only have the hex version.  ARGB will be calculated as a post process of deserialization
+    /// At runtime, all the color settings will be converted into ints
+    /// 
+    /// The values in json are ARGB (see util_ui.ConvertHexStringToNumbers)
     /// 
     /// Pattern is:
     ///     namewith_color = "hex value"
     ///     namewith_color_argb = int
     ///     namewith_color_abgr
-    ///     namewith_color_a = 0 to 1
-    ///     namewith_color_r
-    ///     namewith_color_g
-    ///     namewith_color_b
+    ///     // namewith_color_a = 0 to 1       -- these individual ints are no longer needed.  They could be added back if needed though
+    ///     // namewith_color_r
+    ///     // namewith_color_g
+    ///     // namewith_color_b
     /// 
     /// NOTE: It's allowed to have text after _color
     ///     "sometext_color_hover": "ABC"
@@ -43,6 +44,8 @@ namespace grapple_ui.models.stylesheet
         // Window colors
         public string back_color { get; init; }
         public string border_color { get; init; }
+
+        public TextBox textbox { get; init; }
 
         public OkCancelButtons okcancelButtons { get; init; }
 

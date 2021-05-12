@@ -47,7 +47,7 @@ end
 -- Returns:
 --  true: keep showing config
 --  false: stop showing config
-function DrawConfig(vars_ui, player, const)
+function DrawConfig(isConfigRepress, vars_ui, player, const)
     if not player then
         return false
     end
@@ -68,7 +68,7 @@ function DrawConfig(vars_ui, player, const)
         Refresh_LineHeights(vars_ui)
 
         if vars_ui.currentWindow == const.windows.main then
-            continueShowing = DrawWindow_Main(vars_ui, player, window, const)
+            continueShowing = DrawWindow_Main(isConfigRepress, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.energy_tank then
             DrawWindow_Energy_Tank(vars_ui, player, window, const)

@@ -2,6 +2,20 @@
     "back_color": "FC141414",
     "border_color": "8444",
 
+    "textbox":
+    {
+        "padding": 6,
+
+        "border_cornerRadius": 2,
+        "border_thickness": 1,
+    
+        "border_color": "24505050",
+
+        "foreground_color": "BBB",
+
+        "background_color": "20404040"
+    },
+
     "okcancelButtons":
     {
         "pos_x": 24,
@@ -39,7 +53,7 @@
     
         "unused_color": "555",
         
-        "header_color_prompt": "FFF",
+        "header_color_prompt": "EEE",
         "header_color_value": "CCF",
         "header_gap": 12,
     

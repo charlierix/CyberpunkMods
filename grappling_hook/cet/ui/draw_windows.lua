@@ -1,4 +1,4 @@
-function DrawWindow_Main(vars_ui, player, window, const)
+function DrawWindow_Main(isConfigRepress, vars_ui, player, window, const)
     local main = vars_ui.main
 
     -- Finalize models for this frame
@@ -50,7 +50,7 @@ function DrawWindow_Main(vars_ui, player, window, const)
 
     local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
 
-    return not isCloseClicked       -- only stop showing when they click the close button
+    return not (isConfigRepress or isCloseClicked)       -- stop showing when they click the close button (or press config key a second time.  This main page doesn't have anything to save, so it's ok to exit at any time)
 end
 
 function DrawWindow_Energy_Tank(vars_ui, player, window, const)
@@ -128,6 +128,8 @@ function DrawWindow_Grapple_Choose(vars_ui, player, window, const)
     end
 end
 
+--local testText = "testing"
+
 function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
     if not grapple then
@@ -138,13 +140,31 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     local grapple_straight = vars_ui.grapple_straight
 
+    ------------------------- Finalize models for this frame -------------------------
+    Refresh_GrappleStraight_Name(grapple_straight.name, grapple)
+    Refresh_GrappleStraight_Description(grapple_straight.description, grapple)
+
+    Refresh_GrappleStraight_IsDirty(grapple_straight.okcancel, grapple_straight.name, grapple_straight.description, grapple)
+
+    -------------------------------- Show ui elements --------------------------------
 
     Draw_Label(grapple_straight.title, vars_ui.style.colors, window.width, window.height, const)
 
+    Draw_TextBox(grapple_straight.name, vars_ui.style.textbox, vars_ui.line_heights, window.width, window.height, const)
+    Draw_TextBox(grapple_straight.description, vars_ui.style.textbox, vars_ui.line_heights, window.width, window.height, const)
 
 
-    local _, isCancelClicked = Draw_OkCancelButtons(grapple_straight.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
-    if isCancelClicked then
+
+
+
+
+
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_straight.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    if isOKClicked then
+        print("TODO: Save Grapple Straight")
+        WindowTransition_Main(vars_ui, const)
+
+    elseif isCancelClicked then
         WindowTransition_Main(vars_ui, const)
     end
 end

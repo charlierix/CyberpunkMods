@@ -23,6 +23,8 @@ function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, cons
     ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_updown.border_cornerRadius)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_updown.border_thickness)
 
+	ImGui.PushStyleColor(ImGuiCol.NavHighlight, 0x00000000)
+
 	-- Down
     ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, def.sizes.down_pad_h, def.sizes.down_pad_v)
 
@@ -72,6 +74,7 @@ function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, cons
     ImGui.PopStyleVar(1)
 
 	-- /Common properties
+    ImGui.PopStyleColor(1)
     ImGui.PopStyleVar(2)
 
 	return

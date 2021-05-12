@@ -79,14 +79,29 @@ function Define_Window_Grapple_Straight(vars_ui, const)
 
     grapple_straight.title = this.Define_Title("Straight Grapple", const)
 
+    grapple_straight.name = this.Define_GrappleStraight_Name(const)
+    grapple_straight.description = this.Define_GrappleStraight_Description(const)
+
+
+    -- summary length
+
+    -- summary accel along
+    -- summary accel look
+
+    -- summary aim duration
+
+    -- summary antigrav
+
+    -- summary airdash
+
+    -- summary stop early
 
 
 
 
 
 
-
-
+    -- ordered experience
 
 
 
@@ -461,4 +476,72 @@ function Refresh_EnergyTank_IsDirty(def, changes)
         --IsNearZero(changes.experience)      -- experience is dependent on the other three.  So the only reason it would be non zero on its own is really bad math drift
 
     def.isDirty = not isClean
+end
+
+----------------------------------- Grapple Straight ----------------------------------
+
+function this.Define_GrappleStraight_Name(const)
+    -- TextBox
+    return
+    {
+        name = "txtGrappleName",
+
+        maxChars = 48,
+        min_width = 160,
+
+        isMultiLine = false,
+
+        position =
+        {
+            pos_x = 30,
+            pos_y = 30,
+            horizontal = const.alignment_horizontal.right,
+            vertical = const.alignment_vertical.top,
+        },
+    }
+end
+function Refresh_GrappleStraight_Name(def, grapple)
+    -- There is no need to store changes in the changes list.  Text is directly changed as they type
+    --NOTE: WindowTransition_Grapple sets this to nil
+    if not def.text then
+        def.text = grapple.name
+    end
+end
+
+function this.Define_GrappleStraight_Description(const)
+    -- TextBox
+    return
+    {
+        name = "txtGrappleDescription",
+
+        maxChars = 288,
+        min_width = 240,
+
+        isMultiLine = false,
+
+        position =
+        {
+            pos_x = 30,
+            pos_y = 66,
+            horizontal = const.alignment_horizontal.right,
+            vertical = const.alignment_vertical.top,
+        },
+    }
+end
+function Refresh_GrappleStraight_Description(def, grapple)
+    if not def.text then
+        def.text = grapple.description
+    end
+end
+
+function Refresh_GrappleStraight_IsDirty(def, def_name, def_description, grapple)
+    local isDirty = false
+
+    if def_name.text and def_name.text ~= grapple.name then
+        isDirty = true
+    elseif def_description.text and def_description.text ~= grapple.description then
+        isDirty = true
+    end
+
+    def.isDirty = isDirty
 end

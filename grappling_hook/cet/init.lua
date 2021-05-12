@@ -45,6 +45,7 @@ require "ui/builder_misc"
 require "ui/builder_okcancel_buttons"
 require "ui/builder_orderedlist"
 require "ui/builder_summary_button"
+require "ui/builder_textbox"
 require "ui/builder_updownbuttons"
 require "ui/draw_windows"
 require "ui/drawing"
@@ -100,6 +101,12 @@ function TODO()
     --  Round_doz()     -- this is needed, because rounding fractions to a certain number of digits would have to be converted, then truncated
     --  also, if there's ever a textbox, that would need to be parsed as well
 
+    -- UI:
+    --  Show current experience when the energy progress bar is showing
+
+    -- UI:
+    --  Instead of a config button, make the player go to certain locations
+
 end
 
 --------------------------------------------------------------------
@@ -131,6 +138,7 @@ local isShutdown = true
 local isLoading = false
 local shouldDraw = false
 local shouldShowConfig = false
+local isConfigRepress = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
@@ -338,11 +346,17 @@ end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()
     -- This only shows the config.  They need to push a close button (and possibly ok/cancel for saving)
+
+    if shouldShowConfig then
+        isConfigRepress = true
+    end
+
     shouldShowConfig = true
 end)
 
 registerForEvent("onDraw", function()
     if isShutdown or isLoading or not shouldDraw then
+        shouldShowConfig = false
         do return end
     end
 
@@ -351,7 +365,8 @@ registerForEvent("onDraw", function()
     end
 
     if shouldShowConfig and player then
-        shouldShowConfig = DrawConfig(vars_ui, player, const)
+        shouldShowConfig = DrawConfig(isConfigRepress, vars_ui, player, const)
+        isConfigRepress = false
     end
 
     if const.shouldShowDebugWindow then
