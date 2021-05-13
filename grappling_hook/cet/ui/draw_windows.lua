@@ -128,8 +128,6 @@ function DrawWindow_Grapple_Choose(vars_ui, player, window, const)
     end
 end
 
---local testText = "testing"
-
 function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
     if not grapple then
@@ -150,8 +148,10 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     Draw_Label(grapple_straight.title, vars_ui.style.colors, window.width, window.height, const)
 
-    Draw_TextBox(grapple_straight.name, vars_ui.style.textbox, vars_ui.line_heights, window.width, window.height, const)
-    Draw_TextBox(grapple_straight.description, vars_ui.style.textbox, vars_ui.line_heights, window.width, window.height, const)
+    Draw_TextBox(grapple_straight.name, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.line_heights, window.width, window.height, const)
+    if Draw_LabelClickable(grapple_straight.description, vars_ui.style.textbox, vars_ui.style.colors, window.left, window.top, window.width, window.height, const) then
+        --TODO: Transition to description editor
+    end
 
 
 

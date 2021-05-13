@@ -41,6 +41,7 @@ require "processing/safetyfire"
 require "ui/animation_lowEnergy"
 require "ui/builder_help_button"
 require "ui/builder_label"
+require "ui/builder_label_clickable"
 require "ui/builder_misc"
 require "ui/builder_okcancel_buttons"
 require "ui/builder_orderedlist"
@@ -106,6 +107,15 @@ function TODO()
 
     -- UI:
     --  Instead of a config button, make the player go to certain locations
+
+    -- Grapple Straight:
+    --  Add a repulsion to walls when > some distance from desired distance
+    --  This would be helpful with going straight up walls
+
+    -- Grapple Straight:
+    --  Add an ability to jump straight away from a wall when at the desired distance (and close to a wall)
+    --  This will help with scaling tall walls.  You grapple straight up, reach the anchor, recover energy,
+    --  jump and aquire a new grapple point, repeat
 
 end
 

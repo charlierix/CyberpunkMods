@@ -110,6 +110,7 @@
     "colors":
     {
         "title": { "the_color": "FFF" },
+        "subTitle": { "the_color": "FF4" },
         "info": { "the_color": "C4A380" },
         "experience_prompt": { "the_color": "F5EA65" },
         "experience_value": { "the_color": "FADD5A" },

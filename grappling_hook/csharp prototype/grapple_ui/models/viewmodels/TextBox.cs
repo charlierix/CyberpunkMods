@@ -23,6 +23,9 @@ namespace grapple_ui.models.viewmodels
         public double? min_width { get; init; }
         public double? width { get; init; }
 
+        // Only looked at if min_width is used
+        public double? max_width { get; init; }
+
         /// <summary>
         /// Height is only used if multi line
         /// </summary>
@@ -32,5 +35,10 @@ namespace grapple_ui.models.viewmodels
         /// Tells where on the parent to place the text
         /// </summary>
         public ControlPosition position { get; init; }
+
+        /// <summary>
+        /// Optional named color (in stylesheet.colors)
+        /// </summary>
+        public string foreground_override { get; init; }
     }
 }

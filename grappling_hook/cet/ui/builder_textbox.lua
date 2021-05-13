@@ -3,7 +3,8 @@ local this = {}
 -- Shows a textbox.  The text is persisted in def.text
 -- def is models\viewmodels\TextBox
 -- style_text is models\stylesheet\TextBox
-function Draw_TextBox(def, style_text, line_heights, parent_width, parent_height, const)
+-- style_colors is stylesheet.colors
+function Draw_TextBox(def, style_text, style_colors, line_heights, parent_width, parent_height, const)
 	-- Calculate Size
 	if not def.sizes then
         def.sizes = {}
@@ -21,19 +22,25 @@ function Draw_TextBox(def, style_text, line_heights, parent_width, parent_height
 
 	ImGui.PushStyleColor(ImGuiCol.NavHighlight, 0x00000000)
     ImGui.PushStyleColor(ImGuiCol.Border, style_text.border_color_abgr)
-    ImGui.PushStyleColor(ImGuiCol.Text, style_text.foreground_color_abgr)
+    ImGui.PushStyleColor(ImGuiCol.Text, this.GetForeground_int(def, style_text, style_colors))
     ImGui.PushStyleColor(ImGuiCol.FrameBg, style_text.background_color_abgr)
 
     ImGui.SetCursorPos(left, top)
-    ImGui.PushItemWidth(def.sizes.width)
 
     if def.isMultiLine then
-        print("Implement multiline")
-    else
-        def.text = ImGui.InputText("##" .. def.name, def.text, def.maxChars)
-    end
+        --TODO: Figure out scrollbars
 
-    ImGui.PopItemWidth()
+        -- This isn't working
+        --ImGui.PushTextWrapPos(left + def.sizes.width - style_text.padding)
+
+        def.text = ImGui.InputTextMultiline("##" .. def.name, def.text, def.maxChars, def.sizes.width, def.sizes.height)
+
+        --ImGui.PopTextWrapPos()
+    else
+        ImGui.PushItemWidth(def.sizes.width)
+        def.text = ImGui.InputText("##" .. def.name, def.text, def.maxChars)
+        ImGui.PopItemWidth()
+    end
 
     ImGui.PopStyleColor(4)
     ImGui.PopStyleVar(3)
@@ -60,6 +67,11 @@ function this.Calculate_Sizes(def, style_text, line_heights)
         if def.min_width and def.min_width > width then
             width = def.min_width
         end
+
+        -- Shrink if larger than max
+        if def.max_width and width > def.max_width then
+            width = def.max_width
+        end
     end
 
     -- Height
@@ -71,4 +83,13 @@ function this.Calculate_Sizes(def, style_text, line_heights)
     -- Store values
 	def.sizes.width = width + (style_text.padding * 2)
 	def.sizes.height = height + (style_text.padding * 2)
+end
+
+function this.GetForeground_int(def, style_text, style_colors)
+    if def.foreground_override then
+        local color = GetNamedColor(style_colors, def.foreground_override)
+        return color.the_color_abgr
+    else
+        return style_text.foreground_color_abgr
+    end
 end

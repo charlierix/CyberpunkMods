@@ -487,9 +487,12 @@ function this.Define_GrappleStraight_Name(const)
         name = "txtGrappleName",
 
         maxChars = 48,
-        min_width = 160,
+        min_width = 120,
+        --max_width = 240,
 
         isMultiLine = false,
+
+        foreground_override = "subTitle",
 
         position =
         {
@@ -509,15 +512,12 @@ function Refresh_GrappleStraight_Name(def, grapple)
 end
 
 function this.Define_GrappleStraight_Description(const)
-    -- TextBox
+    -- LabelClickable
     return
     {
         name = "txtGrappleDescription",
 
-        maxChars = 288,
-        min_width = 240,
-
-        isMultiLine = false,
+        max_width = 360,
 
         position =
         {
