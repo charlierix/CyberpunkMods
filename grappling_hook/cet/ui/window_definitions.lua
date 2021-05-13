@@ -505,7 +505,7 @@ function this.Define_GrappleStraight_Name(const)
 end
 function Refresh_GrappleStraight_Name(def, grapple)
     -- There is no need to store changes in the changes list.  Text is directly changed as they type
-    --NOTE: WindowTransition_Grapple sets this to nil
+    --NOTE: TransitionWindows_Grapple sets this to nil
     if not def.text then
         def.text = grapple.name
     end

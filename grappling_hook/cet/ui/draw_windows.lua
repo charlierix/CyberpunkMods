@@ -19,31 +19,31 @@ function DrawWindow_Main(isConfigRepress, vars_ui, player, window, const)
     Draw_Label(main.consoleWarning, vars_ui.style.colors, window.width, window.height, const)
 
     if Draw_SummaryButton(main.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Energy_Tank(vars_ui, const)
+        TransitionWindows_Energy_Tank(vars_ui, const)
     end
 
     if Draw_SummaryButton(main.grapple1, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Grapple(vars_ui, const, player, 1)
+        TransitionWindows_Grapple(vars_ui, const, player, 1)
     end
 
     if Draw_SummaryButton(main.grapple2, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Grapple(vars_ui, const, player, 2)
+        TransitionWindows_Grapple(vars_ui, const, player, 2)
     end
 
     if Draw_SummaryButton(main.grapple3, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Grapple(vars_ui, const, player, 3)
+        TransitionWindows_Grapple(vars_ui, const, player, 3)
     end
 
     if Draw_SummaryButton(main.grapple4, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Grapple(vars_ui, const, player, 4)
+        TransitionWindows_Grapple(vars_ui, const, player, 4)
     end
 
     if Draw_SummaryButton(main.grapple5, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Grapple(vars_ui, const, player, 5)
+        TransitionWindows_Grapple(vars_ui, const, player, 5)
     end
 
     if Draw_SummaryButton(main.grapple6, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        WindowTransition_Grapple(vars_ui, const, player, 6)
+        TransitionWindows_Grapple(vars_ui, const, player, 6)
     end
 
     Draw_OrderedList(main.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
@@ -108,10 +108,10 @@ function DrawWindow_Energy_Tank(vars_ui, player, window, const)
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(energy_tank.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
         print("TODO: Save EnergyTank")
-        WindowTransition_Main(vars_ui, const)
+        TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
-        WindowTransition_Main(vars_ui, const)
+        TransitionWindows_Main(vars_ui, const)
     end
 end
 
@@ -124,7 +124,7 @@ function DrawWindow_Grapple_Choose(vars_ui, player, window, const)
 
     local _, isCancelClicked = Draw_OkCancelButtons(grapple_choose.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isCancelClicked then
-        WindowTransition_Main(vars_ui, const)
+        TransitionWindows_Main(vars_ui, const)
     end
 end
 
@@ -132,7 +132,7 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
     if not grapple then
         print("DrawWindow_Grapple_Straight: grapple is nil")
-        WindowTransition_Main(vars_ui, const)
+        TransitionWindows_Main(vars_ui, const)
         do return end
     end
 
@@ -162,9 +162,9 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_straight.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
         print("TODO: Save Grapple Straight")
-        WindowTransition_Main(vars_ui, const)
+        TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
-        WindowTransition_Main(vars_ui, const)
+        TransitionWindows_Main(vars_ui, const)
     end
 end

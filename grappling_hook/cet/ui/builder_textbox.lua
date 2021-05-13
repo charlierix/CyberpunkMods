@@ -30,7 +30,7 @@ function Draw_TextBox(def, style_text, style_colors, line_heights, parent_width,
     if def.isMultiLine then
         --TODO: Figure out scrollbars
 
-        -- This isn't working
+        -- This doesn't work for textbox
         --ImGui.PushTextWrapPos(left + def.sizes.width - style_text.padding)
 
         def.text = ImGui.InputTextMultiline("##" .. def.name, def.text, def.maxChars, def.sizes.width, def.sizes.height)

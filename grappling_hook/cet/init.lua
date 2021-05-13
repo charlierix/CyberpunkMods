@@ -55,9 +55,9 @@ require "ui/inputtracker_startstop"
 require "ui/keys"
 require "ui/mappinutil"
 require "ui/reporting"
+require "ui/transition_windows"
 require "ui/util_ui"
 require "ui/window_definitions"
-require "ui/window_transitions"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
