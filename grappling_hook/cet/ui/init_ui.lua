@@ -16,8 +16,8 @@ function InitializeUI(vars_ui, const)
     -- Post Processing
     this.SortContentLists(vars_ui.main)
     this.SortContentLists(vars_ui.energy_tank)
-
-    --ReportTable_lite(vars_ui)
+    this.SortContentLists(vars_ui.grapple_choose)
+    this.SortContentLists(vars_ui.grapple_straight)
 end
 
 ------------------------------------------- Private Methods -------------------------------------------

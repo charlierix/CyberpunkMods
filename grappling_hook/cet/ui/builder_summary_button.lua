@@ -351,7 +351,14 @@ function this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
                 text = ""
             end
 
-            ImGui.PushStyleColor(ImGuiCol.Text, style_summary.content_color_prompt_abgr)
+            local color = nil
+            if def.content[key].value and def.content[key].value ~= "" then
+                color = style_summary.content_color_prompt_abgr
+            else
+                color = style_summary.content_color_prompt_novalue_abgr
+            end
+
+            ImGui.PushStyleColor(ImGuiCol.Text, color)
             ImGui.Text(text)
             ImGui.PopStyleColor()
         end

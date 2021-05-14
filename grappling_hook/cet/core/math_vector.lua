@@ -153,6 +153,20 @@ function GetProjectedVector_AlongPlane(vector, alongPlanes_normal)
     return GetProjectedVector_AlongVector(vector, alongLine)
 end
 
+-- Turns dot product into a user friendly angle in degrees
+--  dot     angle
+--   1       0
+--   0       90
+--  -1       180
+function Dot_to_Angle(dot)
+    local radians = math.acos(dot)
+    return radians * 180 / math.pi
+end
+function Angle_to_Dot(angle)
+    local radians = angle * math.pi / 180
+    return math.cos(radians)
+end
+
 ------------------------------------- Convert -------------------------------------
 
 function GetPoint(fromPos, unitDirection, length)

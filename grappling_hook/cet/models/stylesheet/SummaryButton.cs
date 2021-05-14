@@ -51,6 +51,10 @@ namespace grapple_ui.models.stylesheet
         /// Content text
         /// </summary>
         public string content_color_prompt { get; init; }
+        /// <summary>
+        /// The color to use for a prompt with no value
+        /// </summary>
+        public string content_color_prompt_novalue { get; init; }
         public string content_color_value { get; init; }
 
         public string suffix_color { get; init; }

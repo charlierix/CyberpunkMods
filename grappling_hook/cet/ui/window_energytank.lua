@@ -198,7 +198,7 @@ function this.Define_PropertyPack(text, x, y, const)
             vertical = const.alignment_vertical.center,
         },
 
-        invisible_name = "Help" .. text
+        invisible_name = "EnergyTank_Help" .. text
     }
 
     return label_prompt, label_value, updown, help

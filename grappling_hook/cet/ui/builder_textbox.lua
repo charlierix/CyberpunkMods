@@ -33,12 +33,12 @@ function Draw_TextBox(def, style_text, style_colors, line_heights, parent_width,
         -- This doesn't work for textbox
         --ImGui.PushTextWrapPos(left + def.sizes.width - style_text.padding)
 
-        def.text = ImGui.InputTextMultiline("##" .. def.name, def.text, def.maxChars, def.sizes.width, def.sizes.height)
+        def.text = ImGui.InputTextMultiline("##" .. def.invisible_name, def.text, def.maxChars, def.sizes.width, def.sizes.height)
 
         --ImGui.PopTextWrapPos()
     else
         ImGui.PushItemWidth(def.sizes.width)
-        def.text = ImGui.InputText("##" .. def.name, def.text, def.maxChars)
+        def.text = ImGui.InputText("##" .. def.invisible_name, def.text, def.maxChars)
         ImGui.PopItemWidth()
     end
 

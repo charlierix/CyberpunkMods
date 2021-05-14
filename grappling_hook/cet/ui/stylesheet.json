@@ -58,12 +58,13 @@
         "header_gap": 12,
     
         "content_color_prompt": "888",
-        "content_color_value": "AAA",
+        "content_color_prompt_novalue": "555",
+        "content_color_value": "AAE",
 
         "suffix_color": "882",
         "suffix_gap": 8,
 
-        "prompt_value_gap": 8
+        "prompt_value_gap": 16
     },
 
     "updownButtons":

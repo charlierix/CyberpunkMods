@@ -131,7 +131,7 @@ function GetDefault_Grapple_Rigid()
 
         energy_cost = 3,
 
-        aim_straight = GetDefault_AimStraight(),
+        aim_straight = GetDefault_AimStraight(12),
 
         fallDamageReduction_percent = 0,
 
@@ -148,10 +148,14 @@ function GetDefault_Grapple_WallHanger()
     -- strong anti gravity
 end
 
-function GetDefault_AimStraight()
+function GetDefault_AimStraight(max)
+    if not max then
+        max = 9
+    end
+
     return
     {
-        max_distance = 9,
+        max_distance = max,
         aim_duration = 0.333,     -- 1 seems ideal, but make them pay for it in third second intervals
         mappin_name = "CustomPositionVariant",
         air_dash = nil,

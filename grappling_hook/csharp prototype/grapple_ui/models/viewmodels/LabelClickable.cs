@@ -22,7 +22,7 @@ namespace grapple_ui.models.viewmodels
         /// <summary>
         /// This isn't shown, it just needs to be a unique string
         /// </summary>
-        public string name { get; init; }
+        public string invisible_name { get; init; }
 
         public string text { get; init; }
 

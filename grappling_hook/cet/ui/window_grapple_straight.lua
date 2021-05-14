@@ -1,6 +1,11 @@
 local this = {}
 
 function Define_Window_Grapple_Straight(vars_ui, const)
+
+    --TODO: Tooltip panel on hover over buttons
+    --TODO: mappin chooser
+    --TODO: May want some uniform sizes for the summary buttons
+
     local grapple_straight = {}
     vars_ui.grapple_straight = grapple_straight
 
@@ -11,28 +16,22 @@ function Define_Window_Grapple_Straight(vars_ui, const)
     grapple_straight.name = this.Define_Name(const)
     grapple_straight.description = this.Define_Description(const)
 
+    grapple_straight.distances = this.Define_Distances(const)
 
-    -- summary length
+    grapple_straight.accel_along = this.Define_AccelAlong(const)
+    grapple_straight.accel_look = this.Define_AccelLook(const)
 
-    -- summary accel along
-    -- summary accel look
+    grapple_straight.velocity_away = this.Define_VelocityAway(const)
 
-    -- summary aim duration
+    grapple_straight.aim_duration = this.Define_AimDuration(const)
 
-    -- summary antigrav
+    grapple_straight.air_dash = this.Define_AirDash(const)
 
-    -- summary airdash
+    grapple_straight.anti_grav = this.Define_AntiGrav(const)
 
-    -- summary stop early
+    grapple_straight.stop_early = this.Define_StopEarly(const)
 
-
-
-
-
-
-    -- ordered experience
-
-
+    grapple_straight.experience = this.Define_Experience(const)
 
     grapple_straight.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
@@ -49,7 +48,26 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     ------------------------- Finalize models for this frame -------------------------
     this.Refresh_Name(grapple_straight.name, grapple)
+
     this.Refresh_Description(grapple_straight.description, grapple)
+
+    this.Refresh_Distances(grapple_straight.distances, grapple)
+
+    this.Refresh_AccelAlong(grapple_straight.accel_along, grapple)
+
+    this.Refresh_AccelLook(grapple_straight.accel_look, grapple)
+
+    this.Refresh_VelocityAway(grapple_straight.velocity_away, grapple)
+
+    this.Refresh_AimDuration(grapple_straight.aim_duration, grapple)
+
+    this.Refresh_AirDash(grapple_straight.air_dash, grapple)
+
+    this.Refresh_AntiGrav(grapple_straight.anti_grav, grapple)
+
+    this.Refresh_StopEarly(grapple_straight.stop_early, grapple)
+
+    this.Refresh_Experience(grapple_straight.experience, player, grapple)
 
     this.Refresh_IsDirty(grapple_straight.okcancel, grapple_straight.name, grapple_straight.description, grapple)
 
@@ -59,14 +77,42 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     Draw_TextBox(grapple_straight.name, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.line_heights, window.width, window.height, const)
     if Draw_LabelClickable(grapple_straight.description, vars_ui.style.textbox, vars_ui.style.colors, window.left, window.top, window.width, window.height, const) then
-        --TODO: Transition to description editor
+        print("TODO: Transition to description editor")
     end
 
+    if Draw_SummaryButton(grapple_straight.distances, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+        print("TODO: Transition to distances")
+    end
 
+    if Draw_SummaryButton(grapple_straight.accel_along, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+        print("TODO: Transition to accel_along")
+    end
 
+    if Draw_SummaryButton(grapple_straight.accel_look, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+        print("TODO: Transition to accel_look")
+    end
 
+    if Draw_SummaryButton(grapple_straight.velocity_away, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+        print("TODO: Transition to velocity_away")
+    end
 
+    if Draw_SummaryButton(grapple_straight.aim_duration, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+        print("TODO: Transition to aim_duration")
+    end
 
+    if Draw_SummaryButton(grapple_straight.air_dash, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+        print("TODO: Transition to air_dash")
+    end
+
+    if Draw_SummaryButton(grapple_straight.anti_grav, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+        print("TODO: Transition to anti_grav")
+    end
+
+    if Draw_SummaryButton(grapple_straight.stop_early, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+        print("TODO: Transition to stop_early")
+    end
+
+    Draw_OrderedList(grapple_straight.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_straight.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
@@ -84,7 +130,7 @@ function this.Define_Name(const)
     -- TextBox
     return
     {
-        name = "txtGrappleName",
+        invisible_name = "Grapple_Straight_GrappleName",
 
         maxChars = 48,
         min_width = 120,
@@ -115,7 +161,7 @@ function this.Define_Description(const)
     -- LabelClickable
     return
     {
-        name = "txtGrappleDescription",
+        invisible_name = "Grapple_Straight_GrappleDescription",
 
         max_width = 360,
 
@@ -132,6 +178,331 @@ function this.Refresh_Description(def, grapple)
     if not def.text then
         def.text = grapple.description
     end
+end
+
+function this.Define_Distances(const)
+    -- SummaryButton
+    return
+    {
+        -- In the middle of the window
+        position =
+        {
+            pos_x = -350,
+            pos_y = -230,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        header_prompt = "Distances",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_aim = { prompt = "aim" },
+            b_desired = { prompt = "desired" },
+        },
+
+        invisible_name = "Grapple_Straight_Distances",
+    }
+end
+function this.Refresh_Distances(def, grapple)
+    def.content.a_aim.value = tostring(Round(grapple.aim_straight.max_distance))
+
+    if grapple.desired_length then
+        def.content.b_desired.value = tostring(Round(grapple.desired_length, 1))
+    else
+        def.content.b_desired.value = nil
+    end
+end
+
+function this.Define_AccelAlong(const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            pos_x = -160,
+            pos_y = -170,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        header_prompt = "Accel Toward Anchor",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_accel = { prompt = "acceleration" },
+            b_speed = { prompt = "max speed" },
+        },
+
+        invisible_name = "Grapple_Straight_AccelAlong",
+    }
+end
+function this.Refresh_AccelAlong(def, grapple)
+    if grapple.accel_alongGrappleLine then
+        def.content.a_accel.value = tostring(Round(grapple.accel_alongGrappleLine.accel))
+        def.content.b_speed.value = tostring(Round(grapple.accel_alongGrappleLine.speed))
+        def.unused_text = nil
+
+    else
+        def.unused_text = def.header_prompt
+    end
+end
+
+function this.Define_AccelLook(const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            pos_x = 50,
+            pos_y = -170,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        header_prompt = "Accel Look Direction",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_accel = { prompt = "acceleration" },
+            b_speed = { prompt = "max speed" },
+        },
+
+        invisible_name = "Grapple_Straight_AccelLook",
+    }
+end
+function this.Refresh_AccelLook(def, grapple)
+    if grapple.accel_alongLook then
+        def.content.a_accel.value = tostring(Round(grapple.accel_alongLook.accel))
+        def.content.b_speed.value = tostring(Round(grapple.accel_alongLook.speed))
+        def.unused_text = nil
+
+    else
+        def.unused_text = def.header_prompt
+    end
+end
+
+function this.Define_VelocityAway(const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            pos_x = -160,
+            pos_y = -50,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        header_prompt = "Extra Drag",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_compression = { prompt = "compression" },
+            b_tension = { prompt = "tension" },
+        },
+
+        invisible_name = "Grapple_Straight_VelocityAway",
+    }
+end
+function this.Refresh_VelocityAway(def, grapple)
+    local hasValue = false
+
+    if grapple.velocity_away then
+        if grapple.velocity_away.accel_compression then
+            hasValue = true
+            def.content.a_compression.value = tostring(Round(grapple.velocity_away.accel_compression))
+        else
+            def.content.a_compression.value = nil
+        end
+
+        if grapple.velocity_away then
+            hasValue = true
+            def.content.b_tension.value = tostring(Round(grapple.velocity_away.accel_tension))
+        else
+            def.content.b_tension.value = nil
+        end
+    end
+
+    if hasValue then
+        def.unused_text = nil
+    else
+        def.unused_text = def.header_prompt
+    end
+end
+
+function this.Define_AimDuration(const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            pos_x = -350,
+            pos_y = 120,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        header_prompt = "Aim Seconds",
+
+        invisible_name = "Grapple_Straight_AimDuration",
+    }
+end
+function this.Refresh_AimDuration(def, grapple)
+    def.header_value = tostring(Round(grapple.aim_straight.aim_duration, 2))
+end
+
+function this.Define_AirDash(const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            pos_x = -350,
+            pos_y = 240,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        header_prompt = "Air Dash",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_accel = { prompt = "acceleration" },
+            b_speed = { prompt = "max speed" },
+            c_burnRate = { prompt = "energy burn rate" },
+        },
+
+        invisible_name = "Grapple_Straight_AirDash",
+    }
+end
+function this.Refresh_AirDash(def, grapple)
+    local dash = grapple.aim_straight.air_dash
+
+    if dash then
+        def.content.a_accel.value = tostring(Round(dash.accel.accel))
+        def.content.b_speed.value = tostring(Round(dash.accel.speed))
+        def.content.c_burnRate = tostring(Round(dash.energyBurnRate, 1))
+        def.unused_text = nil
+
+    else
+        def.unused_text = def.header_prompt
+    end
+end
+
+function this.Define_AntiGrav(const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            pos_x = 120,
+            pos_y = 240,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        header_prompt = "Anti Gravity",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_percent = { prompt = "percent" },
+            b_fade = { prompt = "fade seconds" },
+        },
+
+        invisible_name = "Grapple_Straight_AntiGrav",
+    }
+end
+function this.Refresh_AntiGrav(def, grapple)
+
+    if grapple.anti_gravity then
+        def.content.a_percent.value = tostring(Round(grapple.anti_gravity.antigrav_percent * 100)) .. "%"
+        def.content.b_fade.value = tostring(Round(grapple.anti_gravity.fade_duration, 1))
+        def.unused_text = nil
+
+    else
+        def.unused_text = def.header_prompt
+    end
+end
+
+function this.Define_StopEarly(const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            pos_x = 350,
+            pos_y = 240,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        header_prompt = "Stop Early",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_minDot = { prompt = "look away angle" },
+            b_distance = { prompt = "distance to desired" },
+            c_wall = { prompt = "touch wall" },
+        },
+
+        invisible_name = "Grapple_Straight_StopEarly",
+    }
+end
+function this.Refresh_StopEarly(def, grapple)
+    if grapple.minDot then
+        def.content.a_minDot.value = tostring(Round(Dot_to_Angle(grapple.minDot)))
+    else
+        def.content.a_minDot.value = nil
+    end
+
+    if grapple.stop_distance then
+        def.content.b_distance.value = tostring(Round(grapple.stop_distance, 1))
+    else
+        def.content.b_distance.value = nil
+    end
+
+    if grapple.stop_on_wallHit then
+        def.content.c_wall.value = " "      -- can't use "", because summary button looks for nil or empty string
+    else
+        def.content.c_wall.value = nil
+    end
+end
+
+function this.Define_Experience(const)
+    -- OrderedList
+    return
+    {
+        content =
+        {
+            available = { prompt = "Experience Available" },
+            used = { prompt = "Spent on grapple" },
+        },
+
+        position =
+        {
+            pos_x = 36,
+            pos_y = 36,
+            horizontal = const.alignment_horizontal.left,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        gap = 12,
+
+        color_prompt = "experience_prompt",
+        color_value = "experience_value",
+    }
+end
+function this.Refresh_Experience(def, player, grapple)
+    def.content.available.value = tostring(math.floor(player.experience))
+    def.content.used.value = tostring(Round(grapple.experience))
 end
 
 function this.Refresh_IsDirty(def, def_name, def_description, grapple)

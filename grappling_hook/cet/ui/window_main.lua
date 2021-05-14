@@ -104,7 +104,7 @@ function this.Define_EnergyTank(const)
             b_flying_percent = { prompt = "while grappling" },
         },
 
-        invisible_name = "EnergyTank",
+        invisible_name = "Main_EnergyTank",
     }
 end
 function this.Refresh_EnergyTank(def, energy_tank)
@@ -144,7 +144,7 @@ function this.Define_GrappleSlots_DoIt(x, y, suffix, const)
 
         suffix = suffix,
 
-        invisible_name = "Grapple" .. suffix,
+        invisible_name = "Main_Grapple" .. suffix,
     }
 end
 function this.Refresh_GrappleSlot(def, grapple)

@@ -19,7 +19,7 @@ function Draw_LabelClickable(def, style_text, style_colors, screenOffset_x, scre
     local left, top = GetControlPosition(def.position, def.sizes.width, def.sizes.height, parent_width, parent_height, const)
 
     -- Invisible Button
-    local isClicked, isHovered = Draw_InvisibleButton(def.name, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width_text, def.sizes.height_text, style_text.padding)
+    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width_text, def.sizes.height_text, style_text.padding)
 
     -- Border (regular textbox doesn't have a hover color, so this won't either)
     Draw_Border(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width_text, def.sizes.height_text, style_text.padding, isHovered, style_text.background_color_argb, style_text.background_color_argb, style_text.border_color_argb, style_text.border_color_argb, style_text.border_cornerRadius, style_text.border_thickness)
