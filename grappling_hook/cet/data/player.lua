@@ -26,7 +26,6 @@ function Player:new(o, state, const, debug)
     return obj
 end
 
-
 --TODO: Create methods for updating some of the stats.  Maybe taking subsets of the tree
 --These upgrade function will also insert the new stats in the database
 
@@ -56,13 +55,20 @@ function Player:GetGrappleByIndex(index)
     end
 end
 
+function Player:Save()
+    local pkey, errMsg = SavePlayer(self:MapSelfToModel())
+
+    --TODO: Handle errors
+
+    self.PlayerPrimaryKey = pkey
+end
+
 ------------------------------------ Private Instance Methods ------------------------------------
 
 -- This loads the current profile for the current playthrough.  If there are none, this will create
 -- a new one based on defaults
 function Player:Load()
     -- Get player's uniqueID (comes back as zero if there is no entry)
-    --self.o:SetPlayerUniqueID(1)
     local playerID = self.o:GetPlayerUniqueID()
     if not playerID or playerID == 0 then
         playerID = this.CreateNewPlayerID(self.o)
@@ -76,14 +82,6 @@ function Player:Load()
     end
 
     self:MapModelToSelf(playerEntry, primKey)
-end
-
-function Player:Save()
-    local pkey, errMsg = SavePlayer(self:MapSelfToModel())
-
-    --TODO: Handle errors
-
-    self.PlayerPrimaryKey = pkey
 end
 
 -- Puts the contents of the player model entry in self.  This will save all the users of
@@ -135,6 +133,7 @@ function this.CreateNewPlayerID(o)
     -- and the user will need to redo their grapple settings)
 
     local playerID = os.time()      -- seconds since 1/1/1970
+
     o:SetPlayerUniqueID(playerID)
 
     return playerID

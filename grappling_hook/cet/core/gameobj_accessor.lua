@@ -273,7 +273,7 @@ function GameObjectAccessor:GetPlayerUniqueID()
     if self.quest then
         -- this is a made up key, and can't be the same as other mod's
         -- this returns zero if the key doesn't exist
-        return self.wrappers.GetQuestFactStr(self.quest, "Grapple_PlayerUniqueID")
+        return self.wrappers.GetQuestFactStr(self.quest, "grapple_player_uniqueid")
     end
 end
 function GameObjectAccessor:SetPlayerUniqueID(id)
@@ -284,7 +284,7 @@ function GameObjectAccessor:SetPlayerUniqueID(id)
     end
 
     if self.quest then
-        self.wrappers.SetQuestFactStr(self.quest, "Grapple_PlayerUniqueID", id)      -- the ID must be integer
+        self.wrappers.SetQuestFactStr(self.quest, "grapple_player_uniqueid", id)      -- the ID must be integer
     end
 end
 

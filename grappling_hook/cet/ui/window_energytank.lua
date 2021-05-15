@@ -83,12 +83,10 @@ function DrawWindow_EnergyTank(vars_ui, player, window, const)
 
     Draw_HelpButton(energy_tank.percent_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
-
-
     -- OK/Cancel
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(energy_tank.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
-        print("TODO: Save EnergyTank")
+        this.Save(player, energy_tank.changes)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
@@ -278,4 +276,14 @@ function this.Refresh_IsDirty(def, changes)
         --IsNearZero(changes.experience)      -- experience is dependent on the other three.  So the only reason it would be non zero on its own is really bad math drift
 
     def.isDirty = not isClean
+end
+
+function this.Save(player, changes)
+    player.energy_tank.max_energy = player.energy_tank.max_energy + changes.max_energy
+    player.energy_tank.recovery_rate = player.energy_tank.recovery_rate + changes.recovery_rate
+    player.energy_tank.flying_percent = player.energy_tank.flying_percent + changes.flying_percent
+
+    player.experience = player.experience + changes.experience
+
+    player:Save()
 end

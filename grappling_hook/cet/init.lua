@@ -148,7 +148,7 @@ local const =
 --------------------------------------------------------------------
 
 local isShutdown = true
-local isLoading = false
+local isLoaded = false
 local shouldDraw = false
 local shouldShowConfig = false
 local isConfigRepress = false
@@ -219,12 +219,17 @@ registerForEvent("onInit", function()
         keys:MapAction(action)
     end)
 
-    Observe("RadialWheelController", "RegisterBlackboards", function(_, loaded)
-        if loaded then
-            isLoading = false
-        else
-            isLoading = true
-            player = nil
+    isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
+
+    Observe('QuestTrackerGameController', 'OnInitialize', function()
+        if not isLoaded then
+            isLoaded = true
+        end
+    end)
+
+    Observe('QuestTrackerGameController', 'OnUninitialize', function()
+        if Game.GetPlayer() == nil then
+            isLoaded = false
         end
     end)
 
@@ -263,6 +268,7 @@ registerForEvent("onInit", function()
     function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
     function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
     function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
+
     o = GameObjectAccessor:new(wrappers)
 
     InitializeKeyTrackers(state, keys, o)
@@ -277,7 +283,7 @@ end)
 
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = false
-    if isShutdown or isLoading then
+    if isShutdown or not isLoaded then
         Transition_ToStandard(state, const, debug, o)
         do return end
     elseif IsPlayerInAnyMenu() then
@@ -352,9 +358,16 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("GrapplingHookSavePlayer", "test summary button", function()
+registerHotkey("GrapplingHookSavePlayer", "store playerID", function()
 
+    print("add a")
+    player.experience = player.experience + 3
 
+    print("add b")
+
+    player:Save()
+
+    print("add c")
 end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()
@@ -368,7 +381,7 @@ registerHotkey("GrapplingHookConfig", "Show Config", function()
 end)
 
 registerForEvent("onDraw", function()
-    if isShutdown or isLoading or not shouldDraw then
+    if isShutdown or not isLoaded or not shouldDraw then
         shouldShowConfig = false
         do return end
     end
