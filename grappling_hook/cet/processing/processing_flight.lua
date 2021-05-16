@@ -46,7 +46,6 @@ function Process_Flight(o, player, state, const, debug, deltaTime)
     if grapple.minDot and (DotProduct3D(o.lookdir_forward, grappleDirUnit) < grapple.minDot) then
         -- They looked too far away
         if grapple.anti_gravity then
-            print("calling from flight")
             Transition_ToAntiGrav(state, const, o)
         else
             Transition_ToStandard(state, const, debug, o)

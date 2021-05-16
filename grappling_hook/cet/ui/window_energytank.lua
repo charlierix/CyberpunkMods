@@ -29,7 +29,7 @@ function Define_Window_EnergyTank(vars_ui, const)
     energy_tank.percent_updown = updown
     energy_tank.percent_help = help
 
-    energy_tank.experience = this.Define_Experience(const)
+    energy_tank.experience = Define_Experience(const, "energy tank")
 
     energy_tank.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
@@ -96,30 +96,6 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.Define_Experience(const)
-    -- OrderedList
-    return
-    {
-        content =
-        {
-            available = { prompt = "Experience Available" },
-            used = { prompt = "Spent on energy tank" },
-        },
-
-        position =
-        {
-            pos_x = 36,
-            pos_y = 36,
-            horizontal = const.alignment_horizontal.left,
-            vertical = const.alignment_vertical.bottom,
-        },
-
-        gap = 12,
-
-        color_prompt = "experience_prompt",
-        color_value = "experience_value",
-    }
-end
 function this.Refresh_Experience(def, player, changes)
     def.content.available.value = tostring(math.floor(player.experience + changes.experience))
     def.content.used.value = tostring(Round(player.energy_tank.experience - changes.experience))

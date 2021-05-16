@@ -36,3 +36,14 @@ function TransitionWindows_Grapple(vars_ui, const, player, grappleIndex)
         vars_ui.currentWindow = const.windows.grapple_choose
     end
 end
+
+function TransitionWindows_Straight_Distances(vars_ui, const)
+    -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
+    -- in vars_ui.transition_info
+
+    vars_ui.currentWindow = const.windows.grapple_straight_distances
+
+    local changes = vars_ui.gst8_dist.changes
+
+    changes.experience = 0
+end

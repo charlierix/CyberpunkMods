@@ -58,19 +58,6 @@ end
 
 -- This gets called when they exit flight by looking too far away while still airborne
 function Transition_ToAntiGrav(state, const, o)
-
-
-
-    if not state then
-        print(":: state is nil")
-    elseif not state.grapple then
-        print(":: state.grapple is nil")
-    elseif not state.grapple.anti_gravity then
-        print(":: state.grapple.anti_gravity is nil")
-    end
-
-
-
     state.flightMode = const.flightModes.antigrav
     o:Custom_CurrentlyFlying_StartFlight()      -- it's already the correct value, just being complete
 

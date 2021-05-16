@@ -145,18 +145,14 @@
 
         <!-- Person Icon -->
         <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,163,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="274*"/>
-                <RowDefinition Height="203*"/>
-            </Grid.RowDefinitions>
             <Grid.RenderTransform>
                 <ScaleTransform ScaleX=".15" ScaleY=".15"/>
             </Grid.RenderTransform>
             <Ellipse Width="112" Height="112" VerticalAlignment="Top" Stroke="Red" StrokeThickness="6"/>
-            <Line X1="0" Y1="180" X2="266" Y2="180" Stroke="Red" StrokeThickness="6" Grid.RowSpan="2"/>
-            <Line X1="133" Y1="112" X2="133" Y2="288" Stroke="Red" StrokeThickness="6" Grid.RowSpan="2"/>
-            <Line X1="133" Y1="288" X2="22" Y2="475" Stroke="Red" StrokeThickness="6" Grid.RowSpan="2"/>
-            <Line X1="133" Y1="288" X2="244" Y2="475" Stroke="Red" StrokeThickness="6" Grid.RowSpan="2"/>
+            <Line X1="0" Y1="180" X2="266" Y2="180" Stroke="Red" StrokeThickness="6"/>
+            <Line X1="133" Y1="112" X2="133" Y2="288" Stroke="Red" StrokeThickness="6"/>
+            <Line X1="133" Y1="288" X2="22" Y2="475" Stroke="Red" StrokeThickness="6"/>
+            <Line X1="133" Y1="288" X2="244" Y2="475" Stroke="Red" StrokeThickness="6"/>
         </Grid>
 
         

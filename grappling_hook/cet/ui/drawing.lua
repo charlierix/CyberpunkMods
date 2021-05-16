@@ -78,6 +78,9 @@ function DrawConfig(isConfigRepress, vars_ui, player, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight then
             DrawWindow_Grapple_Straight(vars_ui, player, window, const)
+
+        elseif vars_ui.currentWindow == const.windows.grapple_straight_distances then
+            DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
         end
     end
     ImGui.End()

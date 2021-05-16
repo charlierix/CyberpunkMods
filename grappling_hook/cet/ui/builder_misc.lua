@@ -85,3 +85,7 @@ function Draw_Circle(screenOffset_x, screenOffset_y, center_x, center_y, radius,
         ImGui.ImDrawListAddCircle(ImGui.GetWindowDrawList(), screenOffset_x + center_x, screenOffset_y + center_y, radius, border, numSegments, thickness)
     end
 end
+
+function Draw_Line(screenOffset_x, screenOffset_y, x1, y1, x2, y2, color, thickness)
+    ImGui.ImDrawListAddLine(ImGui.GetWindowDrawList(), screenOffset_x + x1, screenOffset_y + y1, screenOffset_x + x2, screenOffset_y + y2, color, thickness)
+end

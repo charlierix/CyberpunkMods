@@ -17,7 +17,7 @@ function Define_Window_Main(vars_ui, const)
 
     this.Define_GrappleSlots(main, const)
 
-    main.experience = this.Define_Experience(const)
+    main.experience = Define_Experience(const)
 
     main.okcancel = Define_OkCancelButtons(true, vars_ui, const)
 end
@@ -157,29 +157,6 @@ function this.Refresh_GrappleSlot(def, grapple)
     end
 end
 
-function this.Define_Experience(const)
-    -- OrderedList
-    return
-    {
-        content =
-        {
-            available = { prompt = "Experience" },
-        },
-
-        position =
-        {
-            pos_x = 36,
-            pos_y = 36,
-            horizontal = const.alignment_horizontal.left,
-            vertical = const.alignment_vertical.bottom,
-        },
-
-        gap = 12,
-
-        color_prompt = "experience_prompt",
-        color_value = "experience_value",
-    }
-end
 function this.Refresh_Experience(def, player)
     def.content.available.value = tostring(math.floor(player.experience))
 end

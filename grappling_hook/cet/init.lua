@@ -45,6 +45,7 @@ require "ui/builder_label_clickable"
 require "ui/builder_misc"
 require "ui/builder_okcancel_buttons"
 require "ui/builder_orderedlist"
+require "ui/builder_stickfigure"
 require "ui/builder_summary_button"
 require "ui/builder_textbox"
 require "ui/builder_updownbuttons"
@@ -60,6 +61,7 @@ require "ui/util_ui"
 require "ui/window_energytank"
 require "ui/window_grapple_choose"
 require "ui/window_grapple_straight"
+require "ui/window_grapple_straight_distances"
 require "ui/window_main"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
@@ -138,7 +140,15 @@ local const =
     alignment_horizontal = CreateEnum({ "left", "center", "right" }),
     alignment_vertical = CreateEnum({ "top", "center", "bottom" }),
 
-    windows = CreateEnum({ "main", "energy_tank", "grapple_choose", "grapple_straight", "grapple_swing" }),
+    windows = CreateEnum(
+    {
+        "main",
+            "energy_tank",
+            "grapple_choose",
+            "grapple_straight",
+                "grapple_straight_distances",
+            "grapple_swing",
+    }),
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
@@ -359,15 +369,8 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 registerHotkey("GrapplingHookSavePlayer", "store playerID", function()
-
-    print("add a")
     player.experience = player.experience + 3
-
-    print("add b")
-
     player:Save()
-
-    print("add c")
 end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()

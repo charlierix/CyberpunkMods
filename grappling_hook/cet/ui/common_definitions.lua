@@ -32,6 +32,53 @@ function Define_OkCancelButtons(isMainPage, vars_ui, const)
     }
 end
 
+function Define_Experience(const, used_prompt)
+    -- OrderedList
+    local retVal =
+    {
+        content =
+        {
+            available = { prompt = "Experience Available" },
+        },
+
+        position =
+        {
+            pos_x = 36,
+            pos_y = 36,
+            horizontal = const.alignment_horizontal.left,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        gap = 12,
+
+        color_prompt = "experience_prompt",
+        color_value = "experience_value",
+    }
+
+    if used_prompt then
+        retVal.content.used = { prompt = "Spent on " .. used_prompt }
+    end
+
+    return retVal
+end
+
+function Define_StickFigure(const)
+    -- StickFigure
+    return
+    {
+        width = 48,
+        height = 86,
+
+        position =
+        {
+            pos_x = -325,
+            pos_y = -150,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+    }
+end
+
 function Refresh_UpDownButton(def, down, up)
     --TODO: May want a significant digits function, only show one or two significant digits
 

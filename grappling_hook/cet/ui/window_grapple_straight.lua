@@ -31,7 +31,7 @@ function Define_Window_Grapple_Straight(vars_ui, const)
 
     grapple_straight.stop_early = this.Define_StopEarly(const)
 
-    grapple_straight.experience = this.Define_Experience(const)
+    grapple_straight.experience = Define_Experience(const, "grapple")
 
     grapple_straight.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
@@ -81,7 +81,7 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
     end
 
     if Draw_SummaryButton(grapple_straight.distances, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        print("TODO: Transition to distances")
+        TransitionWindows_Straight_Distances(vars_ui, const)
     end
 
     if Draw_SummaryButton(grapple_straight.accel_along, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
@@ -476,30 +476,6 @@ function this.Refresh_StopEarly(def, grapple)
     end
 end
 
-function this.Define_Experience(const)
-    -- OrderedList
-    return
-    {
-        content =
-        {
-            available = { prompt = "Experience Available" },
-            used = { prompt = "Spent on grapple" },
-        },
-
-        position =
-        {
-            pos_x = 36,
-            pos_y = 36,
-            horizontal = const.alignment_horizontal.left,
-            vertical = const.alignment_vertical.bottom,
-        },
-
-        gap = 12,
-
-        color_prompt = "experience_prompt",
-        color_value = "experience_value",
-    }
-end
 function this.Refresh_Experience(def, player, grapple)
     def.content.available.value = tostring(math.floor(player.experience))
     def.content.used.value = tostring(Round(grapple.experience))

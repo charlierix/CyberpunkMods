@@ -55,6 +55,8 @@ namespace grapple_ui.models.stylesheet
 
         public HelpButton helpButton { get; init; }
 
+        public Graphics graphics { get; init; }
+
         /// <summary>
         /// For now, it's just a place to define named colors.  If more is needed later, change this to
         /// styles -- my background is wpf, not css :)
