@@ -84,7 +84,7 @@ end
 
 -- This tells what values should go in the decrement and increment (called each frame)
 -- Params:
--- 	valueUpdates: models\viewmodels\ValueUpdates
+-- 	valueUpdates: models\ValueUpdates
 --	currentValue: this is the current value of the property that the up/down buttons will modify
 -- Returns:
 --	decrement or nil

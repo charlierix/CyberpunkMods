@@ -283,6 +283,7 @@ function this.Save(player, changes)
     player.energy_tank.recovery_rate = player.energy_tank.recovery_rate + changes.recovery_rate
     player.energy_tank.flying_percent = player.energy_tank.flying_percent + changes.flying_percent
 
+    player.energy_tank.experience = player.energy_tank.experience - changes.experience
     player.experience = player.experience + changes.experience
 
     player:Save()

@@ -16,7 +16,7 @@ function GetDefault_Player(playerID)
 end
 
 function GetDefault_EnergyTank()
-    return
+    local retVal =
     {
         max_energy = 12,
         max_energy_update =
@@ -43,6 +43,12 @@ function GetDefault_EnergyTank()
 
         experience = 0,
     }
+
+    retVal.experience = retVal.experience + CalculateExperienceCost(retVal.max_energy, retVal.max_energy_update)
+    retVal.experience = retVal.experience + CalculateExperienceCost(retVal.recovery_rate, retVal.recovery_rate_update)
+    retVal.experience = retVal.experience + CalculateExperienceCost(retVal.flying_percent, retVal.flying_percent_update)
+
+    return retVal
 end
 
 function GetDefault_Grapple_Pull()
@@ -176,4 +182,47 @@ function GetDefault_AirDash()
             deadSpot_speed = 1,
         },
     }
+end
+
+-- This is how much experience was used to get the current value of a property (from min)
+-- WARNING: This assumes that it's always an increase.  If there's a property that upgrades
+-- from high to low, this function needs to be more robust
+-- Params:
+-- 	valueUpdates: models\ValueUpdates
+--	currentValue: this is the current value of the property that the up/down buttons will modify
+function CalculateExperienceCost(currentValue, valueUpdates)
+    local min = 0
+    if valueUpdates.min then
+        min = valueUpdates.min
+    end
+
+    if currentValue < min then      -- this should never happen
+        return 0
+    end
+
+    if valueUpdates.amount then
+        -- Simple linear calculation
+        return math.floor((currentValue - min) / valueUpdates.amount)
+    end
+
+    if not valueUpdates.getDecrementIncrement then      -- should never happen (one of them should be populated)
+        return 0
+    end
+
+    -- Nonlinear.  Need to do one step at a time
+
+    local newCurrent = currentValue
+    local count = 0
+
+    while newCurrent > min do
+        local dec, inc = valueUpdates.getDecrementIncrement(newCurrent)
+
+        newCurrent = newCurrent - dec
+
+        if newCurrent >= min then
+            count = count + 1
+        end
+    end
+
+    return count
 end
