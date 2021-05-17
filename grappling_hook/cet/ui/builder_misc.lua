@@ -89,3 +89,13 @@ end
 function Draw_Line(screenOffset_x, screenOffset_y, x1, y1, x2, y2, color, thickness)
     ImGui.ImDrawListAddLine(ImGui.GetWindowDrawList(), screenOffset_x + x1, screenOffset_y + y1, screenOffset_x + x2, screenOffset_y + y2, color, thickness)
 end
+
+function Draw_Triangle(screenOffset_x, screenOffset_y, x1, y1, x2, y2, x3, y3, color_back, color_border, thickness)
+    if color_back then
+        ImGui.ImDrawListAddTriangleFilled(ImGui.GetWindowDrawList(), screenOffset_x + x1, screenOffset_y + y1, screenOffset_x + x2, screenOffset_y + y2, screenOffset_x + x3, screenOffset_y + y3, color_back)
+    end
+
+    if color_border then
+        ImGui.ImDrawListAddTriangle(ImGui.GetWindowDrawList(), screenOffset_x + x1, screenOffset_y + y1, screenOffset_x + x2, screenOffset_y + y2, screenOffset_x + x3, screenOffset_y + y3, color_border, thickness)
+    end
+end

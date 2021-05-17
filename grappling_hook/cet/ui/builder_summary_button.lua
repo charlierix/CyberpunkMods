@@ -4,7 +4,7 @@ local this = {}
 -- This got complex.  It might be cleaner to just implement a proper layout engine :)
 -- def is models\viewmodels\SummaryButton
 -- style_summary is models\stylesheet\SummaryButton
--- Returns isClicked
+-- Returns isClicked, isHovered
 function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, screenOffset_y, parent_width, parent_height, const)
     -- Calcuate sizes
     if not def.sizes then
@@ -32,7 +32,7 @@ function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, sc
     this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
     this.Draw_Suffix(def, line_heights, style_summary, center_x, center_y)
 
-    return isClicked
+    return isClicked, isHovered
 end
 
 ------------------------------------------- Private Methods -------------------------------------------

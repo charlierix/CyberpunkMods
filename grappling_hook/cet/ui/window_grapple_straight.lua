@@ -16,6 +16,9 @@ function Define_Window_Grapple_Straight(vars_ui, const)
     grapple_straight.name = this.Define_Name(const)
     grapple_straight.description = this.Define_Description(const)
 
+    grapple_straight.stickFigure = Define_StickFigure(false, const)
+    grapple_straight.arrows = Define_GrappleArrows(false, const)
+
     grapple_straight.distances = this.Define_Distances(const)
 
     grapple_straight.accel_along = this.Define_AccelAlong(const)
@@ -36,6 +39,11 @@ function Define_Window_Grapple_Straight(vars_ui, const)
     grapple_straight.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
+local isHovered_distance = false
+local isHovered_look = false
+local isHovered_along = false
+local isHovered_drag = false
+
 function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
     if not grapple then
@@ -50,6 +58,8 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
     this.Refresh_Name(grapple_straight.name, grapple)
 
     this.Refresh_Description(grapple_straight.description, grapple)
+
+    Refresh_Arrows(grapple_straight.arrows, grapple, true, isHovered_distance or isHovered_along or isHovered_drag, isHovered_look)
 
     this.Refresh_Distances(grapple_straight.distances, grapple)
 
@@ -80,19 +90,27 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
         print("TODO: Transition to description editor")
     end
 
-    if Draw_SummaryButton(grapple_straight.distances, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+    Draw_StickFigure(grapple_straight.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
+    Draw_GrappleArrows(grapple_straight.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+
+    local isClicked = nil
+    isClicked, isHovered_distance = Draw_SummaryButton(grapple_straight.distances, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    if isClicked then
         TransitionWindows_Straight_Distances(vars_ui, const)
     end
 
-    if Draw_SummaryButton(grapple_straight.accel_along, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+    isClicked, isHovered_along = Draw_SummaryButton(grapple_straight.accel_along, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    if isClicked then
         print("TODO: Transition to accel_along")
     end
 
-    if Draw_SummaryButton(grapple_straight.accel_look, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+    isClicked, isHovered_look = Draw_SummaryButton(grapple_straight.accel_look, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    if isClicked then
         print("TODO: Transition to accel_look")
     end
 
-    if Draw_SummaryButton(grapple_straight.velocity_away, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+    isClicked, isHovered_drag = Draw_SummaryButton(grapple_straight.velocity_away, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    if isClicked then
         print("TODO: Transition to velocity_away")
     end
 
@@ -187,8 +205,8 @@ function this.Define_Distances(const)
         -- In the middle of the window
         position =
         {
-            pos_x = -350,
-            pos_y = -230,
+            pos_x = 310,
+            pos_y = -150,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -221,8 +239,10 @@ function this.Define_AccelAlong(const)
     {
         position =
         {
-            pos_x = -160,
-            pos_y = -170,
+            -- pos_x = -100,
+            -- pos_y = 10,
+            pos_x = 70,
+            pos_y = -150,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -256,8 +276,8 @@ function this.Define_AccelLook(const)
     {
         position =
         {
-            pos_x = 50,
-            pos_y = -170,
+            pos_x = -240,
+            pos_y = -240,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -291,8 +311,10 @@ function this.Define_VelocityAway(const)
     {
         position =
         {
-            pos_x = -160,
-            pos_y = -50,
+            -- pos_x = 80,
+            -- pos_y = 10,
+            pos_x = 0,
+            pos_y = 10,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -341,8 +363,8 @@ function this.Define_AimDuration(const)
     {
         position =
         {
-            pos_x = -350,
-            pos_y = 120,
+            pos_x = -250,
+            pos_y = 160,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -362,7 +384,7 @@ function this.Define_AirDash(const)
     {
         position =
         {
-            pos_x = -350,
+            pos_x = -250,
             pos_y = 240,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
@@ -401,8 +423,8 @@ function this.Define_AntiGrav(const)
     {
         position =
         {
-            pos_x = 120,
-            pos_y = 240,
+            pos_x = 0,
+            pos_y = 200,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -437,8 +459,8 @@ function this.Define_StopEarly(const)
     {
         position =
         {
-            pos_x = 350,
-            pos_y = 240,
+            pos_x = 250,
+            pos_y = 200,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },

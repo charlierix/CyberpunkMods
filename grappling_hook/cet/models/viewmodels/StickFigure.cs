@@ -8,6 +8,12 @@ namespace grapple_ui.models.viewmodels
 {
     public record StickFigure
     {
+        /// <summary>
+        /// True: Use the standard color
+        /// False: Use the gray color
+        /// </summary>
+        public bool isStandardColor { get; init; }
+
         public double width { get; init; }
         public double height { get; init; }
 

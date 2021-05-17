@@ -8,7 +8,11 @@ function Define_Window_GrappleStraight_Distances(vars_ui, const)
 
     gst8_dist.title = Define_Title("Grapple Straight - Distances", const)
 
-    gst8_dist.stickFigure = Define_StickFigure(const)
+    gst8_dist.name = Define_Name(const)
+
+
+    gst8_dist.stickFigure = Define_StickFigure(true, const)
+    gst8_dist.arrows = Define_GrappleArrows(true, const)
 
 
 
@@ -31,6 +35,9 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
 
     ------------------------- Finalize models for this frame -------------------------
 
+    Refresh_Name(gst8_dist.name, grapple.name)
+
+    Refresh_Arrows(gst8_dist.arrows, grapple, false, false, false)
 
     this.Refresh_Experience(gst8_dist.experience, player, grapple, gst8_dist.changes)
 
@@ -38,8 +45,12 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
 
     Draw_Label(gst8_dist.title, vars_ui.style.colors, window.width, window.height, const)
 
+    Draw_Label(gst8_dist.name, vars_ui.style.colors, window.width, window.height, const)
+
 
     Draw_StickFigure(gst8_dist.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
+    Draw_GrappleArrows(gst8_dist.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+
 
 
 

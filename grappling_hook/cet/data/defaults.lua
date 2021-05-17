@@ -114,22 +114,14 @@ function GetDefault_Grapple_Rigid()
 
         desired_length = nil,       -- 6 to 12 would be a good range (start long).  The main use for this is to swing from an overhang, and if you start too far away, you'll just fall to the ground
 
-        accel_alongGrappleLine =
-        {
-            accel = 8,      -- keep this weak, and rely on velocity away to do most of the work
-            speed = 12,
-
-            deadSpot_distance = 1,
-            deadSpot_speed = 1,
-        },
-
+        accel_alongGrappleLine = nil,
         accel_alongLook = nil,
 
         springAccel_k = nil,        --TODO: Play with this
 
         velocity_away =
         {
-            accel_compression = 12,     -- using a small value
+            accel_compression = 20,     -- using a small value
             accel_tension = 84,         -- using a big value so it feels like rope
 
             deadSpot = 0.5,

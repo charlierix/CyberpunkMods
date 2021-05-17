@@ -39,6 +39,7 @@ require "processing/processing_standard"
 require "processing/safetyfire"
 
 require "ui/animation_lowEnergy"
+require "ui/builder_grapple_arrows"
 require "ui/builder_help_button"
 require "ui/builder_label"
 require "ui/builder_label_clickable"
@@ -111,7 +112,8 @@ function TODO()
     --  Show current experience when the energy progress bar is showing
 
     -- UI:
-    --  Instead of a config button, make the player go to certain locations
+    --  Only allow config changes within a small radius of a ripper doc
+    --  Still allow them to look at values, just not change
 
     -- Grapple Straight:
     --  Add a repulsion to walls when > some distance from desired distance

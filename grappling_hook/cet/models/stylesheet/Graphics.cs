@@ -13,6 +13,15 @@ namespace grapple_ui.models.stylesheet
     {
         public double line_thickness_main { get; init; }
 
-        public string stickfigure_color { get; init; }
+        // These are the triangle portion of an arrow head ----->
+        public double arrow_length { get; init; }
+        public double arrow_width { get; init; }
+
+        public string stickfigure_color_standard { get; init; }
+        public string stickfigure_color_gray { get; init; }
+
+        public string arrow_color_standard { get; init; }
+        public string arrow_color_gray { get; init; }
+        public string arrow_color_highlight { get; init; }
     }
 }

@@ -111,7 +111,16 @@
     "graphics":
     {
         "line_thickness_main": 1,
-        "stickfigure_color": "BBB"
+
+        "arrow_length": 10,
+        "arrow_width": 7,
+
+        "stickfigure_color_standard": "AAA",
+        "stickfigure_color_gray": "666",
+
+        "arrow_color_standard": "AAA",
+        "arrow_color_gray": "666",
+        "arrow_color_highlight": "CFDB8A"
     },
 
     "colors":
@@ -120,7 +129,7 @@
         "subTitle": { "the_color": "FF4" },
         "info": { "the_color": "C4A380" },
         "experience_prompt": { "the_color": "F5EA65" },
-        "experience_value": { "the_color": "FADD5A" },
+        "experience_value": { "the_color": "E6BB50" },
         "edit_prompt": { "the_color": "4C4" },
         "edit_value": { "the_color": "4C4" }
     }
