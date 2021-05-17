@@ -46,4 +46,5 @@ function TransitionWindows_Straight_Distances(vars_ui, const)
     local changes = vars_ui.gst8_dist.changes
 
     changes.experience = 0
+    changes.max_distance = 0
 end

@@ -163,3 +163,80 @@ function Refresh_UpDownButton(def, down, up)
         def.isEnabled_up = false
     end
 end
+
+-- This creates a set of controls used to change a single property
+-- x and y are an offset from center
+-- Returns:
+--  label property name
+--  label property value
+--  updown buttons
+--  help button
+function Define_PropertyPack_Vertical(text, x, y, const)
+    -- Probably can't use this outside of a draw function.  Just hardcode the offsets
+    --local size_text_x, size_text_y = ImGui.CalcTextSize(text)
+
+    -- Label
+    local label_prompt =
+    {
+        text = text,
+
+        position =
+        {
+            pos_x = x,
+            pos_y = y - 24,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_prompt",
+    }
+
+    -- Label
+    local label_value =
+    {
+        --text = ,      -- will be populated during refresh
+
+        position =
+        {
+            pos_x = x,
+            pos_y = y,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_value",
+    }
+
+    -- UpDownButtons
+    local updown =
+    {
+        isEnabled_down = true,
+        isEnabled_up = true,
+
+        position =
+        {
+            pos_x = x,
+            pos_y = y + 32,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        isHorizontal = true,
+    }
+
+    -- HelpButton
+    local help =
+    {
+        position =
+        {
+            pos_x = x + 66,
+            pos_y = y - 23,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        invisible_name = "EnergyTank_Help" .. text
+    }
+
+    return label_prompt, label_value, updown, help
+end

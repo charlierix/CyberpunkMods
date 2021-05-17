@@ -15,6 +15,13 @@ function Define_Window_GrappleStraight_Distances(vars_ui, const)
     gst8_dist.arrows = Define_GrappleArrows(true, const)
 
 
+    --TODO: Probably want this laid out horizontal
+    -- Max Distance (Aim_Straight.max_distance)
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Max Aim Distance", 0, 0, const)
+    gst8_dist.max_prompt = prompt
+    gst8_dist.max_value = value
+    gst8_dist.max_updown = updown
+    gst8_dist.max_help = help
 
 
 
@@ -41,6 +48,11 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
 
     this.Refresh_Experience(gst8_dist.experience, player, grapple, gst8_dist.changes)
 
+    this.Refresh_MaxDistance_Value(gst8_dist.max_value, grapple, gst8_dist.changes)
+    this.Refresh_MaxDistance_UpDown(gst8_dist.max_updown, grapple, player, gst8_dist.changes)
+
+    this.Refresh_IsDirty(gst8_dist.okcancel, gst8_dist.changes)
+
     -------------------------------- Show ui elements --------------------------------
 
     Draw_Label(gst8_dist.title, vars_ui.style.colors, window.width, window.height, const)
@@ -52,13 +64,26 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
     Draw_GrappleArrows(gst8_dist.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
 
+    -- Max Distance
+    Draw_Label(gst8_dist.max_prompt, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_dist.max_value, vars_ui.style.colors, window.width, window.height, const)
+
+    local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_dist.max_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+    this.Update_MaxDistance(gst8_dist.max_updown, gst8_dist.changes, isDownClicked, isUpClicked)
+
+    Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+
+
+
+
+
 
 
     Draw_OrderedList(gst8_dist.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_dist.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
-        print("TODO: Save Grapple Straight Distance")
+        this.Save(player, grapple, gst8_dist.changes)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
 
     elseif isCancelClicked then
@@ -73,5 +98,42 @@ function this.Refresh_Experience(def, player, grapple, changes)
     def.content.used.value = tostring(Round(grapple.experience - changes.experience))
 end
 
+function this.Refresh_MaxDistance_Value(def, grapple, changes)
+    def.text = tostring(Round(grapple.aim_straight.max_distance + changes.max_distance))
+end
+function this.Refresh_MaxDistance_UpDown(def, grapple, player, changes)
+    local down, up = GetDecrementIncrement(grapple.aim_straight.max_distance_update, grapple.aim_straight.max_distance + changes.max_distance, player.experience + changes.experience)
+    Refresh_UpDownButton(def, down, up)
+end
+function this.Update_MaxDistance(def, changes, isDownClicked, isUpClicked)
+    if isDownClicked and def.isEnabled_down then
+        changes.max_distance = changes.max_distance - def.value_down
+        changes.experience = changes.experience + 1
+    end
 
---TODO: this.Refresh_IsDirty()
+    if isUpClicked and def.isEnabled_up then
+        changes.max_distance = changes.max_distance + def.value_up
+        changes.experience = changes.experience - 1
+    end
+end
+
+
+
+
+
+
+function this.Refresh_IsDirty(def, changes)
+    local isClean =
+        IsNearZero(changes.max_distance)
+
+    def.isDirty = not isClean
+end
+
+function this.Save(player, grapple, changes)
+    grapple.aim_straight.max_distance = grapple.aim_straight.max_distance + changes.max_distance
+
+    grapple.experience = grapple.experience - changes.experience
+    player.experience = player.experience + changes.experience
+
+    player:Save()
+end

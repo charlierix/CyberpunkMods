@@ -12,6 +12,7 @@ namespace grapple_ui.models
         /// How far out to look
         /// </summary>
         public double max_distance { get; init; }
+        public ValueUpdates max_distance_update { get; init; }
 
         /// <summary>
         /// How long to aim before giving up, or switching to air dash

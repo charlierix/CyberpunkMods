@@ -9,21 +9,21 @@ function Define_Window_EnergyTank(vars_ui, const)
     energy_tank.title = Define_Title("Energy Tank", const)
 
     -- Total Energy (EnergyTank.max_energy)
-    local prompt, value, updown, help = this.Define_PropertyPack("Total Energy", 0, -144, const)
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Total Energy", 0, -144, const)
     energy_tank.total_prompt = prompt
     energy_tank.total_value = value
     energy_tank.total_updown = updown
     energy_tank.total_help = help
 
     -- Refill Rate (EnergyTank.recovery_rate)
-    prompt, value, updown, help = this.Define_PropertyPack("Refill Rate", -144, 120, const)
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Refill Rate", -144, 120, const)
     energy_tank.refill_prompt = prompt
     energy_tank.refill_value = value
     energy_tank.refill_updown = updown
     energy_tank.refill_help = help
 
     -- While Grappling (EnergyTank.flying_percent)
-    prompt, value, updown, help = this.Define_PropertyPack("While Grappling", 144, 120, const)
+    prompt, value, updown, help = Define_PropertyPack_Vertical("While Grappling", 144, 120, const)
     energy_tank.percent_prompt = prompt
     energy_tank.percent_value = value
     energy_tank.percent_updown = updown
@@ -99,83 +99,6 @@ end
 function this.Refresh_Experience(def, player, changes)
     def.content.available.value = tostring(math.floor(player.experience + changes.experience))
     def.content.used.value = tostring(Round(player.energy_tank.experience - changes.experience))
-end
-
--- This creates a set of controls used to change a single property
--- x and y are an offset from center
--- Returns:
---  label property name
---  label property value
---  updown buttons
---  help button
-function this.Define_PropertyPack(text, x, y, const)
-    -- Probably can't use this outside of a draw function.  Just hardcode the offsets
-    --local size_text_x, size_text_y = ImGui.CalcTextSize(text)
-
-    -- Label
-    local label_prompt =
-    {
-        text = text,
-
-        position =
-        {
-            pos_x = x,
-            pos_y = y - 24,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
-
-        color = "edit_prompt",
-    }
-
-    -- Label
-    local label_value =
-    {
-        --text = ,      -- will be populated during refresh
-
-        position =
-        {
-            pos_x = x,
-            pos_y = y,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
-
-        color = "edit_value",
-    }
-
-    -- UpDownButtons
-    local updown =
-    {
-        isEnabled_down = true,
-        isEnabled_up = true,
-
-        position =
-        {
-            pos_x = x,
-            pos_y = y + 32,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
-
-        isHorizontal = true,
-    }
-
-    -- HelpButton
-    local help =
-    {
-        position =
-        {
-            pos_x = x + 66,
-            pos_y = y - 23,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
-
-        invisible_name = "EnergyTank_Help" .. text
-    }
-
-    return label_prompt, label_value, updown, help
 end
 
 function this.Refresh_Total_Value(def, energy_tank, changes)

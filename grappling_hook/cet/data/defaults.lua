@@ -154,6 +154,13 @@ function GetDefault_AimStraight(max)
     return
     {
         max_distance = max,
+        max_distance_update =
+        {
+            min = 6,
+            max = 120,
+            amount = 1,
+        },
+
         aim_duration = 0.333,     -- 1 seems ideal, but make them pay for it in third second intervals
         mappin_name = "CustomPositionVariant",
         air_dash = nil,
