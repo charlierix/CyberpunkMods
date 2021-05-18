@@ -1,5 +1,6 @@
 -- Draws a label at an arbitrary location within the parent
 -- def is models\viewmodels\Label
+-- style_colors is models\stylesheet\Stylesheet.colors
 function Draw_Label(def, style_colors, parent_width, parent_height, const)
     if (not def.text) or def.text == "" then
         do return end

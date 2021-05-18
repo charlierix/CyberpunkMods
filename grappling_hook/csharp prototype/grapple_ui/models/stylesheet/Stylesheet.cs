@@ -47,6 +47,8 @@ namespace grapple_ui.models.stylesheet
 
         public TextBox textbox { get; init; }
 
+        public CheckBox checkbox { get; init; }
+
         public OkCancelButtons okcancelButtons { get; init; }
 
         public SummaryButton summaryButton { get; init; }

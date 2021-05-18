@@ -24,6 +24,8 @@ function Define_Window_GrappleStraight_Distances(vars_ui, const)
     gst8_dist.max_help = help
 
 
+    gst8_dist.desired_checkbox = this.Define_Desired_CheckBox(const)
+
 
     gst8_dist.experience = Define_Experience(const, "grapple")
 
@@ -48,8 +50,11 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
 
     this.Refresh_Experience(gst8_dist.experience, player, grapple, gst8_dist.changes)
 
+    --TODO: MaxDistance Update should be non linear
     this.Refresh_MaxDistance_Value(gst8_dist.max_value, grapple, gst8_dist.changes)
     this.Refresh_MaxDistance_UpDown(gst8_dist.max_updown, grapple, player, gst8_dist.changes)
+
+    this.Refresh_Desired_CheckBox(gst8_dist.desired_checkbox, grapple)
 
     this.Refresh_IsDirty(gst8_dist.okcancel, gst8_dist.changes)
 
@@ -59,10 +64,8 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
 
     Draw_Label(gst8_dist.name, vars_ui.style.colors, window.width, window.height, const)
 
-
     Draw_StickFigure(gst8_dist.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
     Draw_GrappleArrows(gst8_dist.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
-
 
     -- Max Distance
     Draw_Label(gst8_dist.max_prompt, vars_ui.style.colors, window.width, window.height, const)
@@ -73,6 +76,24 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
 
     Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
+
+
+    Draw_CheckBox(gst8_dist.desired_checkbox, vars_ui.style.checkbox, window.width, window.height, const)
+
+
+
+    --Use one of these (need to figure out the difference between them)
+    --ImGui.DragFloat
+    --ImGui.SliderFloat
+
+
+    --ImGuiSliderFlags_AlwaysClamp
+
+    -- ImGui.PushItemWidth(ImGui.GetWindowContentRegionWidth() - ImGui.CalcTextSize("Tilt/Rotation "))
+    -- value, changed = ImGui.DragFloat("Up/Down", value, 0.01)
+
+
+    --value, changed = ImGui.SliderFloat("Rotation", value, -180, 180)
 
 
 
@@ -118,7 +139,27 @@ function this.Update_MaxDistance(def, changes, isDownClicked, isUpClicked)
 end
 
 
+function this.Define_Desired_CheckBox(const)
+    -- CheckBox
+    return
+    {
+        text = "Desired Length",
 
+        position =
+        {
+            pos_x = -200,
+            pos_y = 100,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+    }
+end
+function this.Refresh_Desired_CheckBox(def, grapple)
+    --NOTE: TransitionWindows_Straight_Distances sets this to nil
+    if def.isChecked == nil then
+        def.isChecked = grapple.desired_length ~= nil
+    end
+end
 
 
 

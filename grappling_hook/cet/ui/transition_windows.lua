@@ -47,4 +47,5 @@ function TransitionWindows_Straight_Distances(vars_ui, const)
 
     changes.experience = 0
     changes.max_distance = 0
+    vars_ui.gst8_dist.desired_checkbox.isChecked = nil
 end

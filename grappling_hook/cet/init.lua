@@ -39,6 +39,7 @@ require "processing/processing_standard"
 require "processing/safetyfire"
 
 require "ui/animation_lowEnergy"
+require "ui/builder_checkbox"
 require "ui/builder_grapple_arrows"
 require "ui/builder_help_button"
 require "ui/builder_label"

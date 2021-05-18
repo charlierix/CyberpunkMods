@@ -52,7 +52,7 @@ function GetDefault_EnergyTank()
 end
 
 function GetDefault_Grapple_Pull()
-    return
+    local retVal =
     {
         name = "pull",
         description = "Pulls toward anchor point, also pulls in the look direction (modeled after titanfall2)",
@@ -98,10 +98,14 @@ function GetDefault_Grapple_Pull()
 
         experience = 0,
     }
+
+    retVal.experience = retVal.experience + CalculateExperienceCost(retVal.aim_straight.max_distance, retVal.aim_straight.max_distance_update)
+
+    return retVal
 end
 
 function GetDefault_Grapple_Rigid()
-    return
+    local retVal =
     {
         name = "rigid",
         description = "Mainly used like a rope.  Also has a small compression resistance, like a weak pole vault",
@@ -135,6 +139,10 @@ function GetDefault_Grapple_Rigid()
 
         experience = 0,
     }
+
+    retVal.experience = retVal.experience + CalculateExperienceCost(retVal.aim_straight.max_distance, retVal.aim_straight.max_distance_update)
+
+    return retVal
 end
 
 function GetDefault_Grapple_WallHanger()

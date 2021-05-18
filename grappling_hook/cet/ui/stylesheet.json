@@ -16,6 +16,17 @@
         "background_color": "20404040"
     },
 
+    "checkbox":
+    {
+        "foreground_color": "BBB",
+
+        "background_color_standard": "3555",
+        "background_color_hover": "4999",
+        "background_color_click": "7999",
+
+        "checkmark_color": "AAE"
+    },
+
     "okcancelButtons":
     {
         "pos_x": 24,
@@ -54,7 +65,7 @@
         "unused_color": "555",
         
         "header_color_prompt": "EEE",
-        "header_color_value": "CCF",
+        "header_color_value": "BBF",
         "header_gap": 12,
     
         "content_color_prompt": "888",
@@ -69,28 +80,28 @@
 
     "updownButtons":
     {
-        "padding_horizontal": 4,
-        "padding_vertical": 4,
+        "padding_horizontal": 5,
+        "padding_vertical": 5,
 
         "gap": 6,
 
         "border_cornerRadius": 3,
         "border_thickness": 2,
 
-        "border_color": "777",
-        "foreground_color": "FFF",
+        "border_color": "3666",
+        "foreground_color": "DDD",
 
-        "down_color_standard": "E04618",
-        "down_color_hover": "ED4B1A",
-        "down_color_click": "C73F16",
+        "down_color_standard": "3080726E",
+        "down_color_hover": "B0E04618",
+        "down_color_click": "EEFF511C",
 
-        "up_color_standard": "228B22",
-        "up_color_hover": "259925",
-        "up_color_click": "1C731C",
+        "up_color_standard": "30758075",
+        "up_color_hover": "B0228B22",
+        "up_color_click": "EE27A327",
 
-        "disabled_back_color": "808080",
-        "disabled_fore_color": "CCCCCC",
-        "disabled_border_color": "666666"
+        "disabled_back_color": "40808080",
+        "disabled_fore_color": "6CCC",
+        "disabled_border_color": "40666666"
     },
 
     "helpButton":
@@ -125,12 +136,12 @@
 
     "colors":
     {
-        "title": { "the_color": "FFF" },
+        "title": { "the_color": "F0F0F0" },
         "subTitle": { "the_color": "FF4" },
         "info": { "the_color": "C4A380" },
         "experience_prompt": { "the_color": "F5EA65" },
         "experience_value": { "the_color": "E6BB50" },
-        "edit_prompt": { "the_color": "4C4" },
-        "edit_value": { "the_color": "4C4" }
+        "edit_prompt": { "the_color": "BBB" },
+        "edit_value": { "the_color": "A8A8FF" }
     }
 }
