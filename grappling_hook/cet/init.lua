@@ -51,6 +51,7 @@ require "ui/builder_stickfigure"
 require "ui/builder_summary_button"
 require "ui/builder_textbox"
 require "ui/builder_updownbuttons"
+require "ui/changes"
 require "ui/common_definitions"
 require "ui/drawing"
 require "ui/init_ui"
@@ -170,7 +171,7 @@ local o     -- This is a class that wraps access to Game.xxx
 
 local keys = Keys:new()
 
-local debug = { }
+local debug = {}
 
 --TODO: Change to vars
 local state =
@@ -215,7 +216,7 @@ local vars_ui =
 
     -- ***** See window_transitions.lua *****
     currentWindow = const.windows.main,
-    transition_info = { }       -- this holds properties needed for the window (like grappleIndex for grapple_straight)
+    transition_info = {}       -- this holds properties needed for the window (like grappleIndex for grapple_straight)
 
     -- ***** Each of these is a container of controls (name matches the values in windows enum) *****
     --main

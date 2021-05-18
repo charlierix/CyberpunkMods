@@ -7,10 +7,10 @@ local this = {}
 -- This is meant to be static data (that's why it's in the db folder.  Any runtime variables need to be
 -- in the state array)
 
-Player = { }
+Player = {}
 
 function Player:new(o, state, const, debug)
-    local obj = { }
+    local obj = {}
     setmetatable(obj, self)
     self.__index = self
 

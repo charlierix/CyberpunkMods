@@ -4,12 +4,11 @@ function Define_Window_Grapple_Straight(vars_ui, const)
 
     --TODO: Tooltip panel on hover over buttons
     --TODO: mappin chooser
-    --TODO: May want some uniform sizes for the summary buttons
 
     local grapple_straight = {}
     vars_ui.grapple_straight = grapple_straight
 
-    grapple_straight.changes = {}        -- this will hold values that have changes to be applied
+    grapple_straight.changes = Changes:new()
 
     grapple_straight.title = Define_Title("Straight Grapple", const)
 

@@ -4,7 +4,8 @@ function Define_Window_GrappleStraight_Distances(vars_ui, const)
     local gst8_dist = {}
     vars_ui.gst8_dist = gst8_dist
 
-    gst8_dist.changes = {}        -- this will hold values that have changes to be applied
+    gst8_dist.changes = Changes:new()
+
 
     gst8_dist.title = Define_Title("Grapple Straight - Distances", const)
 
@@ -115,26 +116,26 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function this.Refresh_Experience(def, player, grapple, changes)
-    def.content.available.value = tostring(math.floor(player.experience + changes.experience))
-    def.content.used.value = tostring(Round(grapple.experience - changes.experience))
+    def.content.available.value = tostring(math.floor(player.experience + changes:Get("experience")))
+    def.content.used.value = tostring(Round(grapple.experience - changes:Get("experience")))
 end
 
 function this.Refresh_MaxDistance_Value(def, grapple, changes)
-    def.text = tostring(Round(grapple.aim_straight.max_distance + changes.max_distance))
+    def.text = tostring(Round(grapple.aim_straight.max_distance + changes:Get("max_distance")))
 end
 function this.Refresh_MaxDistance_UpDown(def, grapple, player, changes)
-    local down, up = GetDecrementIncrement(grapple.aim_straight.max_distance_update, grapple.aim_straight.max_distance + changes.max_distance, player.experience + changes.experience)
+    local down, up = GetDecrementIncrement(grapple.aim_straight.max_distance_update, grapple.aim_straight.max_distance + changes:Get("max_distance"), player.experience + changes:Get("experience"))
     Refresh_UpDownButton(def, down, up)
 end
 function this.Update_MaxDistance(def, changes, isDownClicked, isUpClicked)
     if isDownClicked and def.isEnabled_down then
-        changes.max_distance = changes.max_distance - def.value_down
-        changes.experience = changes.experience + 1
+        changes:Subtract("max_distance", def.value_down)
+        changes:Add("experience", 1)
     end
 
     if isUpClicked and def.isEnabled_up then
-        changes.max_distance = changes.max_distance + def.value_up
-        changes.experience = changes.experience - 1
+        changes:Add("max_distance", def.value_up)
+        changes:Subtract("experience", 1)
     end
 end
 
@@ -164,17 +165,14 @@ end
 
 
 function this.Refresh_IsDirty(def, changes)
-    local isClean =
-        IsNearZero(changes.max_distance)
-
-    def.isDirty = not isClean
+    def.isDirty = changes:IsDirty()
 end
 
 function this.Save(player, grapple, changes)
-    grapple.aim_straight.max_distance = grapple.aim_straight.max_distance + changes.max_distance
+    grapple.aim_straight.max_distance = grapple.aim_straight.max_distance + changes:Get("max_distance")
 
-    grapple.experience = grapple.experience - changes.experience
-    player.experience = player.experience + changes.experience
+    grapple.experience = grapple.experience - changes:Get("experience")
+    player.experience = player.experience + changes:Get("experience")
 
     player:Save()
 end

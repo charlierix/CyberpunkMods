@@ -9,6 +9,8 @@ function Define_Window_Main(vars_ui, const)
     local main = {}
     vars_ui.main = main
 
+    main.changes = Changes:new()
+
     main.title = Define_Title("Grappling Hook", const)
 
     main.consoleWarning = this.Define_ConsoleWarning(const)

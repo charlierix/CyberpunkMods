@@ -9,7 +9,7 @@ InputTracker_StartStop = {}
 
 -- The arrays passed in are in the form: keynames[i]=actionname
 function InputTracker_StartStop:new(o, keys, keynames_1, keynames_2, keynames_stop)
-    local obj = { }
+    local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
@@ -28,7 +28,7 @@ function InputTracker_StartStop:new(o, keys, keynames_1, keynames_2, keynames_st
 
     -- This holds the keydown time of each action
     -- key=actionname, value=keydown_time (or nil)
-    obj.downTimes = { }
+    obj.downTimes = {}
 
     return obj
 end
@@ -93,7 +93,7 @@ end
 
 function GetDeduped(jagged)
     -- Store all the actionnames in deduper as keys, and it will auto dedupe
-    local deduper = { }
+    local deduper = {}
 
     for i=1, #jagged do
         for j=1, #jagged[i] do
@@ -102,7 +102,7 @@ function GetDeduped(jagged)
     end
 
     -- Now commit those keys to an int indexed array
-    local deduped = { }
+    local deduped = {}
 
     local index = 1
     for key, _ in pairs(deduper) do

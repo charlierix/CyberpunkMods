@@ -4,7 +4,7 @@
 -- This will stay in an inactive state most of the time (CET will leak memory if objects keep getting
 -- created/killed)
 
-Animation_LowEnergy = { }
+Animation_LowEnergy = {}
 
 -- "ui_tv_turn_on",                         -- too weak
 -- "ui_generic_set_14_negative",            -- very quiet no (too weak)
@@ -21,7 +21,7 @@ local DURATION_ON = 0.33    -- how long to stay red each pulse
 local DURATION_OFF = 0.25   -- delay between being red pulses
 
 function Animation_LowEnergy:new(o)
-    local obj = { }
+    local obj = {}
     setmetatable(obj, self)
     self.__index = self
 

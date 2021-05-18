@@ -91,11 +91,11 @@
         "border_color": "3666",
         "foreground_color": "DDD",
 
-        "down_color_standard": "3080726E",
+        "down_color_standard": "20FF511C",
         "down_color_hover": "B0E04618",
         "down_color_click": "EEFF511C",
 
-        "up_color_standard": "30758075",
+        "up_color_standard": "2027A327",
         "up_color_hover": "B0228B22",
         "up_color_click": "EE27A327",
 

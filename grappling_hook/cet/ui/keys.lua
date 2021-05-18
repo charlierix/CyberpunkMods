@@ -1,7 +1,7 @@
-Keys = { }
+Keys = {}
 
 function Keys:new()
-    local obj = { }
+    local obj = {}
     setmetatable(obj, self)
     self.__index = self
 

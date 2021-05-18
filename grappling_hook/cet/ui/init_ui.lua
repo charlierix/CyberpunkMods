@@ -79,7 +79,7 @@ function this.LoadStylesheet()
 end
 
 function this.FinishStylesheetColors(style)
-    local stored = { }
+    local stored = {}
 
     for key, value in pairs(style) do
         local type = type(value)
