@@ -6,17 +6,13 @@ function Define_Window_GrappleStraight_Distances(vars_ui, const)
 
     gst8_dist.changes = Changes:new()
 
-
     gst8_dist.title = Define_Title("Grapple Straight - Distances", const)
 
     gst8_dist.name = Define_Name(const)
 
-
     gst8_dist.stickFigure = Define_StickFigure(true, const)
     gst8_dist.arrows = Define_GrappleArrows(true, const)
 
-
-    --TODO: Probably want this laid out horizontal
     -- Max Distance (Aim_Straight.max_distance)
     local prompt, value, updown, help = Define_PropertyPack_Vertical("Max Aim Distance", 0, 0, const)
     gst8_dist.max_prompt = prompt
@@ -24,9 +20,9 @@ function Define_Window_GrappleStraight_Distances(vars_ui, const)
     gst8_dist.max_updown = updown
     gst8_dist.max_help = help
 
-
+    -- Desired Length
     gst8_dist.desired_checkbox = this.Define_Desired_CheckBox(const)
-
+    gst8_dist.desired_slider = this.Define_Desired_Slider(const)
 
     gst8_dist.experience = Define_Experience(const, "grapple")
 
@@ -35,8 +31,8 @@ end
 
 
 
-local sliderValue1 = 0
-local sliderValue2 = 0
+-- local sliderValue1 = 0
+-- local sliderValue2 = 0
 
 
 
@@ -63,6 +59,7 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
     this.Refresh_MaxDistance_UpDown(gst8_dist.max_updown, grapple, player, gst8_dist.changes)
 
     this.Refresh_Desired_CheckBox(gst8_dist.desired_checkbox, grapple)
+    this.Refresh_Desired_Slider(gst8_dist.desired_slider, grapple, gst8_dist.changes)
 
     this.Refresh_IsDirty(gst8_dist.okcancel, gst8_dist.changes)
 
@@ -84,45 +81,12 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
 
     Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
-
-
+    -- Desired Length
     Draw_CheckBox(gst8_dist.desired_checkbox, vars_ui.style.checkbox, window.width, window.height, const)
 
-
-
-    --Use one of these (need to figure out the difference between them)
-    --ImGui.DragFloat
-    --ImGui.SliderFloat
-
-
-    --ImGuiSliderFlags_AlwaysClamp
-
-    -- ImGui.PushItemWidth(ImGui.GetWindowContentRegionWidth() - ImGui.CalcTextSize("Tilt/Rotation "))
-    -- value, changed = ImGui.DragFloat("Up/Down", value, 0.01)
-
-
-    --value, changed = ImGui.SliderFloat("Rotation", value, -180, 180)
-
-
-
-    ImGui.PushItemWidth(250)
-
-    -- ImGui.SetCursorPos(200, 200)
-
-    -- local changed1
-    -- sliderValue1, changed1 = ImGui.DragFloat("Drag", sliderValue1, 0.01, 0, 100)
-
-    ImGui.SetCursorPos(600, 600)
-
-    local changed2
-    --sliderValue2, changed2 = ImGui.SliderFloat("Slide", sliderValue2, 0, 100)
-    sliderValue2, changed2 = ImGui.SliderFloat("Slide", sliderValue2, 0, 100, "%.f", Get_ImGuiSliderFlags_AlwaysClamp_NoRoundToFormat())
-
-
-    ImGui.PopItemWidth()
-
-
-
+    if gst8_dist.desired_checkbox.isChecked then
+        Draw_Slider(gst8_dist.desired_slider, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
+    end
 
     Draw_OrderedList(gst8_dist.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 
@@ -185,6 +149,46 @@ function this.Refresh_Desired_CheckBox(def, grapple)
     end
 end
 
+function this.Define_Desired_Slider(const)
+    -- Slider
+    return
+    {
+        invisible_name = "GrappleStraight_Distances_DesiredSlider",
+
+        min = 0,
+        --max = ,       -- This is set in refresh
+
+        decimal_places = 1,
+
+        width = 400,
+
+        ctrlclickhint_horizontal = const.alignment_horizontal.left,
+        ctrlclickhint_vertical = const.alignment_vertical.bottom,
+
+        position =
+        {
+            pos_x = 200,
+            pos_y = 150,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+    }
+end
+function this.Refresh_Desired_Slider(def, grapple, changes)
+    -- There is no need to store changes in the changes list.  Text is directly changed as they type
+    --NOTE: TransitionWindows_Straight_Distances sets this to nil
+    if not def.value then
+        if grapple.desired_length then
+            -- Desired Length is populated, use that value
+            def.value = grapple.desired_length
+        else
+            -- There is currently no desired length.  If the check the checkbox, the default value should be zero
+            def.value = 0
+        end
+    end
+
+    def.max = grapple.aim_straight.max_distance + changes:Get("max_distance")
+end
 
 
 function this.Refresh_IsDirty(def, changes)

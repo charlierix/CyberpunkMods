@@ -27,6 +27,25 @@
         "checkmark_color": "AAE"
     },
 
+    "slider":
+    {
+        "border_cornerRadius": 2,
+        "border_thickness": 1,
+
+        "border_color": "38606060",
+
+        "foreground_color": "C4C4FF",
+
+        "background_color_standard": "3555",
+        "background_color_hover": "4777",
+        "background_color_click": "4999",
+
+        "grab_color_standard": "5666",
+        "grab_color_click": "8999",
+
+        "highlight_text_background_color": "9666"
+    },
+
     "okcancelButtons":
     {
         "pos_x": 24,
@@ -54,7 +73,7 @@
         "border_cornerRadius": 8,
         "border_thickness": 2,
     
-        "border_color_standard": "18909090",
+        "border_color_standard": "14808080",
         "border_color_hover": "40A0A0A0",
     
         "background_color_standard": "10606060",
@@ -126,10 +145,10 @@
         "arrow_length": 10,
         "arrow_width": 7,
 
-        "stickfigure_color_standard": "AAA",
+        "stickfigure_color_standard": "888",
         "stickfigure_color_gray": "666",
 
-        "arrow_color_standard": "AAA",
+        "arrow_color_standard": "888",
         "arrow_color_gray": "666",
         "arrow_color_highlight": "CFDB8A"
     },

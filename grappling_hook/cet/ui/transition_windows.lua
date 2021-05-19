@@ -47,4 +47,5 @@ function TransitionWindows_Straight_Distances(vars_ui, const)
 
     vars_ui.gst8_dist.changes:Clear()
     vars_ui.gst8_dist.desired_checkbox.isChecked = nil
+    vars_ui.gst8_dist.desired_slider.value = nil
 end

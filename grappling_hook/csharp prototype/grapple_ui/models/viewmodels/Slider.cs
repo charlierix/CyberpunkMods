@@ -15,10 +15,18 @@ namespace grapple_ui.models.viewmodels
 
         public double value { get; init; }
 
+        public double min { get; init; }
+        public double max { get; init; }
+
         /// <summary>
         /// This only affects the displayed decimal places.  The actual value isn't rounded
         /// </summary>
         public int decimal_places { get; init; }
+
+        // These are optional strings before and after the displayed value
+        // WARNING: Be careful with potential special characters.  % should be %%
+        public string prefix { get; init; }
+        public string suffix { get; init; }
 
         public double width { get; init; }
 
