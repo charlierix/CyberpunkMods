@@ -50,11 +50,6 @@ require "ui/reporting"
 require "ui/transition_windows"
 require "ui/util_controls"
 require "ui/util_ui"
-require "ui/window_energytank"
-require "ui/window_grapple_choose"
-require "ui/window_grapple_straight"
-require "ui/window_grapple_straight_distances"
-require "ui/window_main"
 
 require "ui_controls/checkbox"
 require "ui_controls/grapple_arrows"
@@ -68,6 +63,12 @@ require "ui_controls/stickfigure"
 require "ui_controls/summary_button"
 require "ui_controls/textbox"
 require "ui_controls/updownbuttons"
+
+require "ui_windows/energytank"
+require "ui_windows/grapple_choose"
+require "ui_windows/grapple_straight"
+require "ui_windows/grapple_straight_distances"
+require "ui_windows/main"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
