@@ -13,6 +13,11 @@ function Define_Window_GrappleStraight_Distances(vars_ui, const)
     gst8_dist.stickFigure = Define_StickFigure(true, const)
     gst8_dist.arrows = Define_GrappleArrows(true, const)
 
+
+    --TODO: A line for desired length.  Should probably be part of gst8_dist.arrows
+
+
+
     -- Max Distance (Aim_Straight.max_distance)
     local prompt, value, updown, help = Define_PropertyPack_Vertical("Max Aim Distance", 0, 0, const)
     gst8_dist.max_prompt = prompt
@@ -28,13 +33,6 @@ function Define_Window_GrappleStraight_Distances(vars_ui, const)
 
     gst8_dist.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
-
-
-
--- local sliderValue1 = 0
--- local sliderValue2 = 0
-
-
 
 function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
