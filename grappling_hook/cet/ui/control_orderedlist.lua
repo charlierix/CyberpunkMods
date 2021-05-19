@@ -5,7 +5,7 @@ local this = {}
 --
 -- NOTE: A lot of this is a copy of SummaryButton's content logic.  Making a copy, because SummaryButton
 -- is too hardcoded and specific.  A version 2 may get built in the future where it's composed of these
--- more generic builders
+-- more generic controls
 function Draw_OrderedList(def, style_colors, parent_width, parent_height, const, line_heights)
     -- Calculate Position
     local width_p, width_g, width_v, width_total = this.Calculate_Width(def)

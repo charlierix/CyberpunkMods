@@ -129,6 +129,22 @@ function Get_ImDrawFlags_RoundCornersAll()
         Bit_LShift(1, 7)    -- ImDrawFlags_RoundCornersBottomRight
 end
 
+function Get_ImGuiSliderFlags_AlwaysClamp_NoRoundToFormat()
+    -- // Flags for DragFloat(), DragInt(), SliderFloat(), SliderInt() etc.
+    -- // We use the same sets of flags for DragXXX() and SliderXXX() functions as the features are the same and it makes it easier to swap them.
+    -- enum ImGuiSliderFlags_
+    -- {
+    --     ImGuiSliderFlags_None                   = 0,
+    --     ImGuiSliderFlags_AlwaysClamp            = 1 << 4,       // Clamp value to min/max bounds when input manually with CTRL+Click. By default CTRL+Click allows going out of bounds.
+    --     ImGuiSliderFlags_Logarithmic            = 1 << 5,       // Make the widget logarithmic (linear otherwise). Consider using ImGuiSliderFlags_NoRoundToFormat with this if using a format-string with small amount of digits.
+    --     ImGuiSliderFlags_NoRoundToFormat        = 1 << 6,       // Disable rounding underlying value to match precision of the display format string (e.g. %.3f values are rounded to those 3 digits)
+    --     ImGuiSliderFlags_NoInput                = 1 << 7,       // Disable CTRL+Click or Enter key allowing to input text directly into the widget
+
+    return
+        Bit_LShift(1, 4) +
+        Bit_LShift(1, 6)
+end
+
 -- This will return the left,top of the control based on the definition, control's size,
 -- and parent's size
 -- Params

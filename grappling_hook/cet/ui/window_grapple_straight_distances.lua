@@ -33,6 +33,13 @@ function Define_Window_GrappleStraight_Distances(vars_ui, const)
     gst8_dist.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
+
+
+local sliderValue1 = 0
+local sliderValue2 = 0
+
+
+
 function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
     if not grapple then
@@ -97,6 +104,22 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
     --value, changed = ImGui.SliderFloat("Rotation", value, -180, 180)
 
 
+
+    ImGui.PushItemWidth(250)
+
+    -- ImGui.SetCursorPos(200, 200)
+
+    -- local changed1
+    -- sliderValue1, changed1 = ImGui.DragFloat("Drag", sliderValue1, 0.01, 0, 100)
+
+    ImGui.SetCursorPos(600, 600)
+
+    local changed2
+    --sliderValue2, changed2 = ImGui.SliderFloat("Slide", sliderValue2, 0, 100)
+    sliderValue2, changed2 = ImGui.SliderFloat("Slide", sliderValue2, 0, 100, "%.f", Get_ImGuiSliderFlags_AlwaysClamp_NoRoundToFormat())
+
+
+    ImGui.PopItemWidth()
 
 
 
