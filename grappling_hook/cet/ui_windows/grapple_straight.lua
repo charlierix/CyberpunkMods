@@ -114,7 +114,7 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
     end
 
     if Draw_SummaryButton(grapple_straight.aim_duration, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        print("TODO: Transition to aim_duration")
+        TransitionWindows_Straight_AimDuration(vars_ui, const)
     end
 
     if Draw_SummaryButton(grapple_straight.air_dash, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then

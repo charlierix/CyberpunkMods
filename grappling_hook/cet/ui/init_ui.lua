@@ -12,6 +12,7 @@ function InitializeUI(vars_ui, const)
     DefineWindow_EnergyTank(vars_ui, const)
     DefineWindow_Grapple_Choose(vars_ui, const)
     DefineWindow_Grapple_Straight(vars_ui, const)
+    DefineWindow_GrappleStraight_AimDuration(vars_ui, const)
     DefineWindow_GrappleStraight_Distances(vars_ui, const)
 
     -- Post Processing
@@ -19,6 +20,7 @@ function InitializeUI(vars_ui, const)
     this.SortContentLists(vars_ui.energy_tank)
     this.SortContentLists(vars_ui.grapple_choose)
     this.SortContentLists(vars_ui.grapple_straight)
+    this.SortContentLists(vars_ui.gst8_aimdur)
     this.SortContentLists(vars_ui.gst8_dist)
 end
 

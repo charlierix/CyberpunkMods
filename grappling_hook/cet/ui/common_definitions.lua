@@ -1,3 +1,5 @@
+local this = {}
+
 function Define_Title(title, const)
     -- Label
     return
@@ -173,14 +175,14 @@ function Refresh_GrappleDesiredLength(def, grapple, changed_length, changes, sho
     def.isHighlight = shouldHighlight
 end
 
-function Refresh_UpDownButton(def, down, up)
+function Refresh_UpDownButton(def, down, up, roundDigits)
     --TODO: May want a significant digits function, only show one or two significant digits
 
     -- Down
     def.value_down = down
 
     if down then
-        def.text_down = tostring(down)
+        def.text_down = this.GetDisplayString(down, roundDigits)
         def.isEnabled_down = true
     else
         def.text_down = ""
@@ -191,7 +193,7 @@ function Refresh_UpDownButton(def, down, up)
     def.value_up = up
 
     if up then
-        def.text_up = tostring(up)
+        def.text_up = this.GetDisplayString(up, roundDigits)
         def.isEnabled_up = true
     else
         def.text_up = ""
@@ -274,4 +276,18 @@ function Define_PropertyPack_Vertical(text, x, y, const)
     }
 
     return label_prompt, label_value, updown, help
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.GetDisplayString(value, roundDigits)
+    if roundDigits then
+        if roundDigits == 0 then
+            return tostring(Round(value))
+        else
+            return tostring(Round(value, roundDigits))
+        end
+    else
+        return tostring(value)
+    end
 end

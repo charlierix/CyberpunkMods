@@ -68,6 +68,7 @@ require "ui_controls/updownbuttons"
 require "ui_windows/energytank"
 require "ui_windows/grapple_choose"
 require "ui_windows/grapple_straight"
+require "ui_windows/grapple_straight_aimduration"
 require "ui_windows/grapple_straight_distances"
 require "ui_windows/main"
 
@@ -154,6 +155,7 @@ local const =
             "energy_tank",
             "grapple_choose",
             "grapple_straight",
+                "grapple_straight_aimduration",
                 "grapple_straight_distances",
             "grapple_swing",
     }),
