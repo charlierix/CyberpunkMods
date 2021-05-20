@@ -5,30 +5,30 @@ local this = {}
 function Draw_GrappleArrows(def, style_graphics, screenOffset_x, screenOffset_y, parent_width, parent_height)
     local color
     if def.isHighlight_primary then
-        color = style_graphics.arrow_color_highlight_abgr
-    elseif def.isStandardColor then
-        color = style_graphics.arrow_color_standard_abgr
+        color = style_graphics.line_color_highlight_abgr
+    elseif def.isStandardColor_primary then
+        color = style_graphics.line_color_standard_abgr
     else
-        color = style_graphics.arrow_color_gray_abgr
+        color = style_graphics.line_color_gray_abgr
     end
 
     local center_x = parent_width / 2
     local center_y = parent_height / 2
 
     -- Primary
-    Draw_Line(screenOffset_x, screenOffset_y, center_x + def.primary_from_x, center_y + def.primary_from_y, center_x + def.primary_to_x, center_y + def.primary_to_y, color, style_graphics.line_thickness_main)
+    Draw_Line(screenOffset_x, screenOffset_y, center_x + def.primary_from_x, center_y + def.primary_y, center_x + def.primary_to_x, center_y + def.primary_y, color, style_graphics.line_thickness_main)
 
-    local x1, y1, x2, y2, x3, y3 = this.GetArrowCoords(center_x + def.primary_from_x, center_y + def.primary_from_y, center_x + def.primary_to_x, center_y + def.primary_to_y, style_graphics.arrow_length, style_graphics.arrow_width)
+    local x1, y1, x2, y2, x3, y3 = this.GetArrowCoords(center_x + def.primary_from_x, center_y + def.primary_y, center_x + def.primary_to_x, center_y + def.primary_y, style_graphics.arrow_length, style_graphics.arrow_width)
     Draw_Triangle(screenOffset_x, screenOffset_y, x1, y1, x2, y2, x3, y3, color, nil, nil)
 
     -- Look
     if def.showLook then
         if def.isHighlight_look then
-            color = style_graphics.arrow_color_highlight_abgr
-        elseif def.isStandardColor then
-            color = style_graphics.arrow_color_standard_abgr
+            color = style_graphics.line_color_highlight_abgr
+        elseif def.isStandardColor_look then
+            color = style_graphics.line_color_standard_abgr
         else
-            color = style_graphics.arrow_color_gray_abgr
+            color = style_graphics.line_color_gray_abgr
         end
 
         Draw_Line(screenOffset_x, screenOffset_y, center_x + def.look_from_x, center_y + def.look_from_y, center_x + def.look_to_x, center_y + def.look_to_y, color, style_graphics.line_thickness_main)

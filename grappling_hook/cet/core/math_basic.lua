@@ -1,6 +1,16 @@
 function IsNearValue(value, test)
     return math.abs(value - test) < 0.001
 end
+-- This also considers nil
+function IsNearValue_nillable(value, test)
+    if value and test then
+        return IsNearValue(value, test)
+    elseif not value and not test then
+        return true     -- both nil
+    else
+        return false        -- one is nil, the other isn't
+    end
+end
 
 function IsNearValue_custom(value, test, epsilon)
     return math.abs(value - test) < epsilon

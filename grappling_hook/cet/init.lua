@@ -53,6 +53,7 @@ require "ui/util_ui"
 
 require "ui_controls/checkbox"
 require "ui_controls/grapple_arrows"
+require "ui_controls/grapple_desiredlength"
 require "ui_controls/help_button"
 require "ui_controls/label"
 require "ui_controls/label_clickable"

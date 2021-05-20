@@ -1,4 +1,4 @@
-function Define_Window_Grapple_Choose(vars_ui, const)
+function DefineWindow_Grapple_Choose(vars_ui, const)
     local grapple_choose = {}
     vars_ui.grapple_choose = grapple_choose
 

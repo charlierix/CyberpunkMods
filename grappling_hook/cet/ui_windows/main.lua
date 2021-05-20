@@ -5,7 +5,7 @@ local this = {}
 --
 -- Individual controls are defined in
 --  models\viewmodels\...
-function Define_Window_Main(vars_ui, const)
+function DefineWindow_Main(vars_ui, const)
     local main = {}
     vars_ui.main = main
 

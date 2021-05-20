@@ -8,11 +8,11 @@ function InitializeUI(vars_ui, const)
     --TODO: Come up with a better name for this.  It's too easily confused with vars_ui.main (the first window)
     vars_ui.mainWindow = this.Define_MainWindow(vars_ui.screen)      -- going with a SPA, so it's probably going to be the only window (maybe also a dialog box at some point?)
 
-    Define_Window_Main(vars_ui, const)      -- this must come after vars_ui.mainWindow is defined
-    Define_Window_EnergyTank(vars_ui, const)
-    Define_Window_Grapple_Choose(vars_ui, const)
-    Define_Window_Grapple_Straight(vars_ui, const)
-    Define_Window_GrappleStraight_Distances(vars_ui, const)
+    DefineWindow_Main(vars_ui, const)      -- this must come after vars_ui.mainWindow is defined
+    DefineWindow_EnergyTank(vars_ui, const)
+    DefineWindow_Grapple_Choose(vars_ui, const)
+    DefineWindow_Grapple_Straight(vars_ui, const)
+    DefineWindow_GrappleStraight_Distances(vars_ui, const)
 
     -- Post Processing
     this.SortContentLists(vars_ui.main)

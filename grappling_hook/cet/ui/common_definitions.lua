@@ -103,22 +103,23 @@ function Define_StickFigure(isStandardColor, const)
     }
 end
 
-function Define_GrappleArrows(isStandardColor, const)
+function Define_GrappleArrows(isStandardColor_primary, isStandardColor_look, const)
     -- GrappleArrows
     return
     {
-        isStandardColor = isStandardColor,
+        isStandardColor_primary = isStandardColor_primary,
+        isStandardColor_look = isStandardColor_look,
 
         showLook = false,
         isHighlight_primary = false,
         isHighlight_look = false,
 
         --NOTE: These positions are relative to center
-        primary_from_x = -300,
-        primary_from_y = -70,
 
+        --NOTE: If these values change, the values need to be copied to other controls (desired length)
+        primary_from_x = -300,
         primary_to_x = 360,
-        primary_to_y = -70,
+        primary_y = -70,
 
         look_from_x = -310,
         look_from_y = -110,
@@ -127,7 +128,7 @@ function Define_GrappleArrows(isStandardColor, const)
         look_to_y = -240,
     }
 end
-function Refresh_Arrows(def, grapple, forceShowLook, highlight_primary, highlight_look)
+function Refresh_GrappleArrows(def, grapple, forceShowLook, highlight_primary, highlight_look)
     if forceShowLook then
         def.showLook = true
     else
@@ -136,6 +137,40 @@ function Refresh_Arrows(def, grapple, forceShowLook, highlight_primary, highligh
 
     def.isHighlight_primary = highlight_primary
     def.isHighlight_look = highlight_look
+end
+
+function Define_GrappleDesiredLength(isStandardColor, const)
+    -- GrappleDesiredLength
+    return
+    {
+        isStandardColor = isStandardColor,
+
+        height = 36,
+
+        --NOTE: These values are copied from Define_GrappleArrows
+        from_x = -300,
+        to_x = 360,
+        y = -70,
+    }
+end
+function Refresh_GrappleDesiredLength(def, grapple, changed_length, changes, shouldHighlight)
+    -- Changes will only be passed in if the windows modifies desired length
+    local desired_length = nil
+    if changed_length then
+        desired_length = changed_length
+    else
+        desired_length = grapple.desired_length
+    end
+
+    -- See if/where to show it
+    if desired_length then
+        def.should_show = true
+        def.percent = desired_length / (grapple.aim_straight.max_distance + changes:Get("max_distance"))
+    else
+        def.should_show = false
+    end
+
+    def.isHighlight = shouldHighlight
 end
 
 function Refresh_UpDownButton(def, down, up)

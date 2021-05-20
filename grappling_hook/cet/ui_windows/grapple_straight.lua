@@ -1,6 +1,6 @@
 local this = {}
 
-function Define_Window_Grapple_Straight(vars_ui, const)
+function DefineWindow_Grapple_Straight(vars_ui, const)
 
     --TODO: Tooltip panel on hover over buttons
     --TODO: mappin chooser
@@ -16,7 +16,7 @@ function Define_Window_Grapple_Straight(vars_ui, const)
     grapple_straight.description = this.Define_Description(const)
 
     grapple_straight.stickFigure = Define_StickFigure(false, const)
-    grapple_straight.arrows = Define_GrappleArrows(false, const)
+    grapple_straight.arrows = Define_GrappleArrows(false, false, const)
 
     grapple_straight.distances = this.Define_Distances(const)
 
@@ -58,7 +58,7 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     this.Refresh_Description(grapple_straight.description, grapple)
 
-    Refresh_Arrows(grapple_straight.arrows, grapple, true, isHovered_distance or isHovered_along or isHovered_drag, isHovered_look)
+    Refresh_GrappleArrows(grapple_straight.arrows, grapple, true, isHovered_distance or isHovered_along or isHovered_drag, isHovered_look)
 
     this.Refresh_Distances(grapple_straight.distances, grapple)
 

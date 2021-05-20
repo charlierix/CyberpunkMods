@@ -1,6 +1,6 @@
 local this = {}
 
-function Define_Window_EnergyTank(vars_ui, const)
+function DefineWindow_EnergyTank(vars_ui, const)
     local energy_tank = {}
     vars_ui.energy_tank = energy_tank
 

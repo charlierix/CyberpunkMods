@@ -20,8 +20,8 @@ namespace grapple_ui.models.stylesheet
         public string stickfigure_color_standard { get; init; }
         public string stickfigure_color_gray { get; init; }
 
-        public string arrow_color_standard { get; init; }
-        public string arrow_color_gray { get; init; }
-        public string arrow_color_highlight { get; init; }
+        public string line_color_standard { get; init; }
+        public string line_color_gray { get; init; }
+        public string line_color_highlight { get; init; }
     }
 }

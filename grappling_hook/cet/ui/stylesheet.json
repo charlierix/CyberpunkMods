@@ -148,9 +148,9 @@
         "stickfigure_color_standard": "888",
         "stickfigure_color_gray": "666",
 
-        "arrow_color_standard": "888",
-        "arrow_color_gray": "666",
-        "arrow_color_highlight": "CFDB8A"
+        "line_color_standard": "888",
+        "line_color_gray": "666",
+        "line_color_highlight": "CFDB8A"
     },
 
     "colors":

@@ -6,27 +6,16 @@ local hint = "ctrl+click to type"
 -- def is models\viewmodels\Slider
 -- style_text is models\stylesheet\Slider
 -- Returns
---  wasChanged
+--  wasChanged, isHovered
 function Draw_Slider(def, style_slider, parent_width, parent_height, const, line_heights)
 	-- Calculate Size
-	if not def.sizes then
-        def.sizes = {}
-    end
-
-    this.Calculate_Sizes(def, style_slider, line_heights)
+	local width = def.width
+	local height = line_heights.line + 11       -- just counted pixels
 
     -- Calculate Position
-	local left, top = GetControlPosition(def.position, def.sizes.width, def.sizes.height, parent_width, parent_height, const)
-
-
+	local left, top = GetControlPosition(def.position, width, height, parent_width, parent_height, const)
 
     -- Draw the slider
-
-
-    --TODO: invisible button to detect hover
-    --TODO: hint text on hover
-
-
     ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_slider.border_cornerRadius)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_slider.border_thickness)
 
@@ -41,7 +30,7 @@ function Draw_Slider(def, style_slider, parent_width, parent_height, const, line
 
     ImGui.SetCursorPos(left, top)
 
-    ImGui.PushItemWidth(def.sizes.width)
+    ImGui.PushItemWidth(width)
 
     local changed
     def.value, changed = ImGui.SliderFloat("##" .. def.invisible_name, def.value, def.min, def.max, this.GetFormat(def), Get_ImGuiSliderFlags_AlwaysClamp_NoRoundToFormat())
@@ -51,20 +40,16 @@ function Draw_Slider(def, style_slider, parent_width, parent_height, const, line
     ImGui.PopStyleColor(8)
     ImGui.PopStyleVar(2)
 
-    return changed
+    -- Invisible Button
+    local _, isHovered = Draw_InvisibleButton(def.invisible_name .. "Hidden", left + (width / 2), top + (height / 2), width, height, 0)
+
+    --TODO: hint text on hover
+    --TODO: take in isHovered to see where to place the hint
+
+    return changed, isHovered
 end
 
 ------------------------------------------- Private Methods -------------------------------------------
-
-function this.Calculate_Sizes(def, style_slider, line_heights)
-
-    --TODO: take in isHovered to see where to place the hint
-
-
-    -- Store values
-	def.sizes.width = def.width
-	def.sizes.height = line_heights.line + 11       -- just counted pixels
-end
 
 function this.GetFormat(def)
     local decimal = ""
