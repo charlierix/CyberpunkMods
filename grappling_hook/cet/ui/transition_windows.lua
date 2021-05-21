@@ -48,6 +48,13 @@ function TransitionWindows_Straight_AimDuration(vars_ui, const)
     vars_ui.gst8_aimdur.changes:Clear()
 end
 
+function TransitionWindows_Straight_Description(vars_ui, const)
+    vars_ui.currentWindow = const.windows.grapple_straight_description
+
+    vars_ui.gst8_descr.changes:Clear()
+    vars_ui.gst8_descr.description.text = nil
+end
+
 function TransitionWindows_Straight_Distances(vars_ui, const)
     -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
     -- in vars_ui.transition_info

@@ -17,6 +17,8 @@ function DefineWindow_Main(vars_ui, const)
 
     main.energyTank = this.Define_EnergyTank(const)
 
+    --TODO: Remove Buttons
+
     this.Define_GrappleSlots(main, const)
 
     main.experience = Define_Experience(const)

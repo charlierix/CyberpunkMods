@@ -69,6 +69,7 @@ require "ui_windows/energytank"
 require "ui_windows/grapple_choose"
 require "ui_windows/grapple_straight"
 require "ui_windows/grapple_straight_aimduration"
+require "ui_windows/grapple_straight_description"
 require "ui_windows/grapple_straight_distances"
 require "ui_windows/main"
 
@@ -149,6 +150,7 @@ local const =
     alignment_horizontal = CreateEnum({ "left", "center", "right" }),
     alignment_vertical = CreateEnum({ "top", "center", "bottom" }),
 
+    -- When adding a new window, there is this enum and window lua file.  Also need to update init_ui.lua, drawing.lua, transition_windows.lua
     windows = CreateEnum(
     {
         "main",
@@ -156,6 +158,7 @@ local const =
             "grapple_choose",
             "grapple_straight",
                 "grapple_straight_aimduration",
+                "grapple_straight_description",
                 "grapple_straight_distances",
             "grapple_swing",
     }),

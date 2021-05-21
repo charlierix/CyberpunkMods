@@ -78,7 +78,7 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     this.Refresh_Experience(grapple_straight.experience, player, grapple)
 
-    this.Refresh_IsDirty(grapple_straight.okcancel, grapple_straight.name, grapple_straight.description, grapple)
+    this.Refresh_IsDirty(grapple_straight.okcancel, grapple_straight.name, grapple)
 
     -------------------------------- Show ui elements --------------------------------
 
@@ -86,7 +86,7 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     Draw_TextBox(grapple_straight.name, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.line_heights, window.width, window.height, const)
     if Draw_LabelClickable(grapple_straight.description, vars_ui.style.textbox, vars_ui.style.colors, window.left, window.top, window.width, window.height, const) then
-        print("TODO: Transition to description editor")
+        TransitionWindows_Straight_Description(vars_ui, const)
     end
 
     Draw_StickFigure(grapple_straight.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
@@ -133,7 +133,7 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_straight.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
-        print("TODO: Save Grapple Straight")
+        this.Save(player, grapple, grapple_straight.name)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
@@ -502,14 +502,18 @@ function this.Refresh_Experience(def, player, grapple)
     def.content.used.value = tostring(Round(grapple.experience))
 end
 
-function this.Refresh_IsDirty(def, def_name, def_description, grapple)
+function this.Refresh_IsDirty(def, def_name, grapple)
     local isDirty = false
 
     if def_name.text and def_name.text ~= grapple.name then
         isDirty = true
-    elseif def_description.text and def_description.text ~= grapple.description then
-        isDirty = true
     end
 
     def.isDirty = isDirty
+end
+
+function this.Save(player, grapple, def_name)
+    grapple.name = def_name.text
+
+    player:Save()
 end
