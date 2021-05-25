@@ -17,7 +17,9 @@ function Draw_StickFigure(def, style_graphics, screenOffset_x, screenOffset_y, p
     --local center_y = top + (def.height / 2)
 
     local color
-    if def.isStandardColor then
+    if def.isHighlight then
+        color = style_graphics.stickfigure_color_highlight_abgr
+    elseif def.isStandardColor then
         color = style_graphics.stickfigure_color_standard_abgr
     else
         color = style_graphics.stickfigure_color_gray_abgr

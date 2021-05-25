@@ -11,8 +11,8 @@ function DefineWindow_GrappleStraight_Distances(vars_ui, const)
     gst8_dist.name = Define_Name(const)
 
     gst8_dist.stickFigure = Define_StickFigure(false, const)
-    gst8_dist.arrows = Define_GrappleArrows(true, false, const)
-    gst8_dist.desired_line = Define_GrappleDesiredLength(true, const)
+    gst8_dist.arrows = Define_GrappleArrows(true, false)
+    gst8_dist.desired_line = Define_GrappleDesiredLength(true)
 
     -- Max Distance (Aim_Straight.max_distance)
     local prompt, value, updown, help = Define_PropertyPack_Vertical("Max Aim Distance", 220, 100, const)

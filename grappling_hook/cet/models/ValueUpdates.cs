@@ -31,8 +31,15 @@ namespace grapple_ui.models
 
         /// <summary>
         /// Calculates the amounts based on the current value
-        /// TODO: May only need to return a single value
         /// </summary>
-        public Func<double, (double dec, double inc)> getDecrementIncrement { get; init; }
+        /// <remarks>
+        /// Can't serialize deserialize the actual function call, so this just holds a unique string that
+        /// points to the actual function
+        /// 
+        /// The function to call is in defaults.lua: CallReferenced_DecrementIncrement()
+        /// </remarks>
+        public string getDecrementIncrement { get; init; }
+
+        private Func<double, (double dec, double inc)> Called_DecInc_Func { get; init; }
     }
 }

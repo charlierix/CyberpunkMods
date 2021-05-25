@@ -82,6 +82,9 @@ function DrawConfig(isConfigRepress, vars_ui, player, const)
         elseif vars_ui.currentWindow == const.windows.grapple_straight_aimduration then
             DrawWindow_GrappleStraight_AimDuration(vars_ui, player, window, const)
 
+        elseif vars_ui.currentWindow == const.windows.grapple_straight_antigrav then
+            DrawWindow_GrappleStraight_AntiGrav(vars_ui, player, window, const)
+
         elseif vars_ui.currentWindow == const.windows.grapple_straight_description then
             DrawWindow_GrappleStraight_Description(vars_ui, player, window, const)
 

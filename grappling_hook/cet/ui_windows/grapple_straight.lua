@@ -16,7 +16,8 @@ function DefineWindow_Grapple_Straight(vars_ui, const)
     grapple_straight.description = this.Define_Description(const)
 
     grapple_straight.stickFigure = Define_StickFigure(false, const)
-    grapple_straight.arrows = Define_GrappleArrows(false, false, const)
+    grapple_straight.arrows = Define_GrappleArrows(false, false)
+    grapple_straight.desired_line = Define_GrappleDesiredLength(false)
 
     grapple_straight.distances = this.Define_Distances(const)
 
@@ -42,6 +43,7 @@ local isHovered_distance = false
 local isHovered_look = false
 local isHovered_along = false
 local isHovered_drag = false
+local isHovered_antigrav = false
 
 function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
@@ -58,7 +60,10 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     this.Refresh_Description(grapple_straight.description, grapple)
 
-    Refresh_GrappleArrows(grapple_straight.arrows, grapple, true, isHovered_distance or isHovered_along or isHovered_drag, isHovered_look)
+    Refresh_StickFigure(grapple_straight.stickFigure, isHovered_antigrav)
+    local shouldHighlightAlong = isHovered_distance or isHovered_along or isHovered_drag
+    Refresh_GrappleArrows(grapple_straight.arrows, grapple, true, shouldHighlightAlong, isHovered_look)
+    Refresh_GrappleDesiredLength(grapple_straight.desired_line, grapple, nil, grapple_straight.changes, shouldHighlightAlong)
 
     this.Refresh_Distances(grapple_straight.distances, grapple)
 
@@ -91,6 +96,7 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     Draw_StickFigure(grapple_straight.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
     Draw_GrappleArrows(grapple_straight.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+    Draw_GrappleDesiredLength(grapple_straight.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
     local isClicked = nil
     isClicked, isHovered_distance = Draw_SummaryButton(grapple_straight.distances, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
@@ -121,8 +127,9 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
         print("TODO: Transition to air_dash")
     end
 
-    if Draw_SummaryButton(grapple_straight.anti_grav, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        print("TODO: Transition to anti_grav")
+    isClicked, isHovered_antigrav = Draw_SummaryButton(grapple_straight.anti_grav, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    if isClicked then
+        TransitionWindows_Straight_AntiGrav(vars_ui, const)
     end
 
     if Draw_SummaryButton(grapple_straight.stop_early, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then

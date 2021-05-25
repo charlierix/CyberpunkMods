@@ -14,6 +14,11 @@ namespace grapple_ui.models.viewmodels
         /// </summary>
         public bool isStandardColor { get; init; }
 
+        /// <summary>
+        /// Set to true when they hover over options that will modify these lines
+        /// </summary>
+        public bool isHighlight { get; init; }
+
         public double width { get; init; }
         public double height { get; init; }
 

@@ -95,7 +95,8 @@ function GetDecrementIncrement(valueUpdates, currentValue, currentExperience)
 
     if valueUpdates.getDecrementIncrement then
 		-- The values are defined by a function
-        dec, inc = valueUpdates.getDecrementIncrement(currentValue)
+		-- NOTE: valueUpdates.getDecrementIncrement is a string that is a reference to the actual function to call
+		dec, inc = CallReferenced_DecrementIncrement(valueUpdates.getDecrementIncrement, currentValue)
     else
 		-- The values are simple constants
         dec = valueUpdates.amount

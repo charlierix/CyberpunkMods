@@ -48,6 +48,16 @@ function TransitionWindows_Straight_AimDuration(vars_ui, const)
     vars_ui.gst8_aimdur.changes:Clear()
 end
 
+function TransitionWindows_Straight_AntiGrav(vars_ui, const)
+    -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
+    -- in vars_ui.transition_info
+
+    vars_ui.currentWindow = const.windows.grapple_straight_antigrav
+
+    vars_ui.gst8_antgrav.changes:Clear()
+    vars_ui.gst8_antgrav.has_antigrav.isChecked = nil
+end
+
 function TransitionWindows_Straight_Description(vars_ui, const)
     vars_ui.currentWindow = const.windows.grapple_straight_description
 

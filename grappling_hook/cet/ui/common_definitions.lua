@@ -91,6 +91,7 @@ function Define_StickFigure(isStandardColor, const)
     return
     {
         isStandardColor = isStandardColor,
+        isHighlight = false,
 
         width = 48,
         height = 86,
@@ -104,8 +105,11 @@ function Define_StickFigure(isStandardColor, const)
         },
     }
 end
+function Refresh_StickFigure(def, shouldHighlight)
+    def.isHighlight = shouldHighlight
+end
 
-function Define_GrappleArrows(isStandardColor_primary, isStandardColor_look, const)
+function Define_GrappleArrows(isStandardColor_primary, isStandardColor_look)
     -- GrappleArrows
     return
     {
@@ -141,11 +145,13 @@ function Refresh_GrappleArrows(def, grapple, forceShowLook, highlight_primary, h
     def.isHighlight_look = highlight_look
 end
 
-function Define_GrappleDesiredLength(isStandardColor, const)
+function Define_GrappleDesiredLength(isStandardColor)
     -- GrappleDesiredLength
     return
     {
         isStandardColor = isStandardColor,
+        isHighlight = false,
+        should_show = false,
 
         height = 36,
 
@@ -175,14 +181,14 @@ function Refresh_GrappleDesiredLength(def, grapple, changed_length, changes, sho
     def.isHighlight = shouldHighlight
 end
 
-function Refresh_UpDownButton(def, down, up, roundDigits)
+function Refresh_UpDownButton(def, down, up, roundDigits, display_mult)
     --TODO: May want a significant digits function, only show one or two significant digits
 
     -- Down
     def.value_down = down
 
     if down then
-        def.text_down = this.GetDisplayString(down, roundDigits)
+        def.text_down = this.GetDisplayString(down, roundDigits, display_mult)
         def.isEnabled_down = true
     else
         def.text_down = ""
@@ -193,7 +199,7 @@ function Refresh_UpDownButton(def, down, up, roundDigits)
     def.value_up = up
 
     if up then
-        def.text_up = this.GetDisplayString(up, roundDigits)
+        def.text_up = this.GetDisplayString(up, roundDigits, display_mult)
         def.isEnabled_up = true
     else
         def.text_up = ""
@@ -280,14 +286,19 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.GetDisplayString(value, roundDigits)
+function this.GetDisplayString(value, roundDigits, mult)
+    local valMultiplied = value
+    if mult then
+        valMultiplied = valMultiplied * mult
+    end
+
     if roundDigits then
         if roundDigits == 0 then
-            return tostring(Round(value))
+            return tostring(Round(valMultiplied))
         else
-            return tostring(Round(value, roundDigits))
+            return tostring(Round(valMultiplied, roundDigits))
         end
     else
-        return tostring(value)
+        return tostring(valMultiplied)
     end
 end

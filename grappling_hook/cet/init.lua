@@ -69,6 +69,7 @@ require "ui_windows/energytank"
 require "ui_windows/grapple_choose"
 require "ui_windows/grapple_straight"
 require "ui_windows/grapple_straight_aimduration"
+require "ui_windows/grapple_straight_antigrav"
 require "ui_windows/grapple_straight_description"
 require "ui_windows/grapple_straight_distances"
 require "ui_windows/main"
@@ -132,6 +133,25 @@ function TODO()
     --  This will help with scaling tall walls.  You grapple straight up, reach the anchor, recover energy,
     --  jump and aquire a new grapple point, repeat
 
+    -- Energy Tank:
+    --  Drawn Weapon Cost %
+    --
+    --  Grapple costs more When a weapon is drawn (don't do this for fists or cyberarms):
+    --      knife   10%
+    --      sword   30%
+    --      pistol  30%
+    --      smg     60%
+    --      rifle   80%
+    --      shotgun 80%
+    --      sniper  150%
+
+    -- Energy Tank:
+    --  Drawn Weapon Reduction % (5 to 95)
+    --  This is exposed in the config screen as a way to counter the above cost
+
+    -- All:
+    --  Add extra weight when carrying a dead body
+
 end
 
 --------------------------------------------------------------------
@@ -158,6 +178,7 @@ local const =
             "grapple_choose",
             "grapple_straight",
                 "grapple_straight_aimduration",
+                "grapple_straight_antigrav",
                 "grapple_straight_description",
                 "grapple_straight_distances",
             "grapple_swing",

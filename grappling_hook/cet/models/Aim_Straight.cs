@@ -18,6 +18,7 @@ namespace grapple_ui.models
         /// How long to aim before giving up, or switching to air dash
         /// </summary>
         public double aim_duration { get; init; }
+        public ValueUpdates aim_duration_update { get; init; }
 
         public string mappin_name { get; init; }
 

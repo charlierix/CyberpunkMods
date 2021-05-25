@@ -9,6 +9,13 @@ namespace grapple_ui.models.viewmodels
     public record CheckBox
     {
         public bool isChecked {get; init; }
+
+        /// <summary>
+        /// True: It will be clickable and use the standard set of colors
+        /// False: Not clickable, uses disabled colors
+        /// </summary>
+        public bool isEnabled { get; init; }
+
         public string text { get; init; }
 
         /// <summary>

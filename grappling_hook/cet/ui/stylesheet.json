@@ -24,7 +24,11 @@
         "background_color_hover": "4999",
         "background_color_click": "7999",
 
-        "checkmark_color": "AAE"
+        "checkmark_color": "AAE",
+
+        "disabled_back_color": "30484848",
+        "disabled_fore_color": "6CCC",
+        "disabled_checkmark_color": "9C9CBA"
     },
 
     "slider":
@@ -145,12 +149,15 @@
         "arrow_length": 10,
         "arrow_width": 7,
 
+        "TODO": "Probably just want to use one set of colors, since they are the same",
+
         "stickfigure_color_standard": "888",
-        "stickfigure_color_gray": "666",
+        "stickfigure_color_gray": "484848",
+        "stickfigure_color_highlight": "DAE889",
 
         "line_color_standard": "888",
-        "line_color_gray": "666",
-        "line_color_highlight": "CFDB8A"
+        "line_color_gray": "484848",
+        "line_color_highlight": "DAE889"
     },
 
     "colors":
