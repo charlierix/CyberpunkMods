@@ -112,7 +112,7 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     isClicked, isHovered_look = Draw_SummaryButton(grapple_straight.accel_look, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
     if isClicked then
-        print("TODO: Transition to accel_look")
+        TransitionWindows_Straight_AccelLook(vars_ui, const)
     end
 
     isClicked, isHovered_drag = Draw_SummaryButton(grapple_straight.velocity_away, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)

@@ -17,6 +17,7 @@ namespace grapple_ui.models
 
         public string mappin_name { get; init; }
 
+        //NOTE: accel.experience isn't used, because accel is always non null for air dash
         public double experience { get; init; }
     }
 }

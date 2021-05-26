@@ -39,6 +39,16 @@ function TransitionWindows_Grapple(vars_ui, const, player, grappleIndex)
     end
 end
 
+function TransitionWindows_Straight_AccelLook(vars_ui, const)
+    -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
+    -- in vars_ui.transition_info
+
+    vars_ui.currentWindow = const.windows.grapple_straight_accellook
+
+    vars_ui.gst8_acclook.changes:Clear()
+    vars_ui.gst8_acclook.has_accellook.isChecked = nil
+end
+
 function TransitionWindows_Straight_AimDuration(vars_ui, const)
     -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
     -- in vars_ui.transition_info

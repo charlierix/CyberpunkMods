@@ -25,5 +25,7 @@ namespace grapple_ui.models
         /// If speed difference is less than this, accel linearly drops to zero
         /// </summary>
         public double deadSpot_speed { get; init; }
+
+        public double experience { get; init; }
     }
 }

@@ -2,7 +2,7 @@
 --https://www.nexusmods.com/cyberpunk2077/mods/1405
 --NOTE: This is a copy of DrawJetpackProgress
 --NOTE: This is positioned according to how things look at 4K.  The progress is a bit low on 1K, but it's not bad.  I tried scaling position according to resolution, but text was still large, probably would need to scale that too
-function DrawEnergyProgress(energy, max, state)
+function DrawEnergyProgress(energy, max, experience, state)
     ImGui.SetNextWindowPos(20, 230, ImGuiCond.Always)       -- this is under the top left combat graphic (placing under jetpack's progress bar)
     ImGui.SetNextWindowSize(330, 50, ImGuiCond.Appearing)
 
@@ -36,7 +36,13 @@ function DrawEnergyProgress(energy, max, state)
 
         ImGui.PushStyleColor(ImGuiCol.Text, 1, 1, 0.3, 1)
 
-        ImGui.Text("grappling hook")
+        local text = "grappling hook"
+        experience = math.floor(experience)
+        if experience >= 1 then
+            text = text .. " (xp: " .. tostring(experience) .. ")"
+        end
+
+        ImGui.Text(text)
 
         ImGui.PopStyleColor(1)
     end
@@ -78,6 +84,9 @@ function DrawConfig(isConfigRepress, vars_ui, player, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight then
             DrawWindow_Grapple_Straight(vars_ui, player, window, const)
+
+        elseif vars_ui.currentWindow == const.windows.grapple_straight_accellook then
+            DrawWindow_GrappleStraight_AccelLook(vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight_aimduration then
             DrawWindow_GrappleStraight_AimDuration(vars_ui, player, window, const)

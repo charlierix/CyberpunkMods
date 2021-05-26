@@ -34,23 +34,8 @@ function GetDefault_Grapple_Pull()
 
         desired_length = 0,     -- pull all the way to the anchor
 
-        accel_alongGrappleLine =
-        {
-            accel = 24,
-            speed = 7,
-
-            deadSpot_distance = 3,
-            deadSpot_speed = 1,
-        },
-
-        accel_alongLook =
-        {
-            accel = 36,
-            speed = 9,
-
-            deadSpot_distance = 3,
-            deadSpot_speed = 1,
-        },
+        accel_alongGrappleLine = GetDefault_ConstantAccel(24, 7),
+        accel_alongLook = GetDefault_ConstantAccel(36, 9),
 
         springAccel_k = nil,        --TODO: Play with this
 
@@ -82,15 +67,16 @@ function GetDefault_Grapple_Rigid()
 
         desired_length = nil,       -- 6 to 12 would be a good range (start long).  The main use for this is to swing from an overhang, and if you start too far away, you'll just fall to the ground
 
-        accel_alongGrappleLine = nil,
+        --accel_alongGrappleLine = nil,       --TODO: Some of the acceleration needs to be this.  Otherwise it gets jerky when only drag is applied
+        accel_alongGrappleLine = GetDefault_ConstantAccel(),
         accel_alongLook = nil,
 
         springAccel_k = nil,        --TODO: Play with this
 
         velocity_away =
         {
-            accel_compression = 20,     -- using a small value
-            accel_tension = 84,         -- using a big value so it feels like rope
+            --accel_compression = 8,     -- using a small value
+            accel_tension = 64,         -- using a big value so it feels like rope
 
             deadSpot = 0.5,
         },
@@ -261,20 +247,20 @@ function GetDefault_AirDash()
         mappin_name = "OffVariant",
         accel =
         {
-            accel = 28,     -- anything below this, and it's like the horizontal component is ignored
+            accel = 28,     -- anything below this, and it's like the horizontal component is ignored (this is probably a flaw in the code.  projected vector maxing out and too much accel going to anti gravity.  probably need to stop applying any force when projected vector is full)
             accel_update =
             {
                 min = 28,
-                max = 28 + (3 * 7),
-                amount = 3,
+                max = 28 + (2 * 8),
+                amount = 2,
             },
 
             speed = 6,
             speed_update =
             {
                 min = 6,
-                max = 6 + (2 * 8),
-                amount = 2,
+                max = 6 + (1 * 8),
+                amount = 1,
             },
 
             deadSpot_distance = 0,
@@ -289,6 +275,60 @@ function GetDefault_AirDash()
         CalculateExperienceCost_Value(retVal.accel.speed, retVal.accel.speed_update)
 
     return retVal
+end
+
+function GetDefault_ConstantAccel(accel_override, speed_override)
+    -- Accel
+    local accel_update =
+    {
+        min = 20,
+        max = 20 + (2 * 16),
+        amount = 2,
+    }
+
+    local accel = accel_override
+    if not accel then
+        accel = accel_update.min
+    elseif accel < accel_update.min then
+        accel_update.min = accel
+    elseif accel > accel_update.max then
+        accel_update.max = accel
+    end
+
+    -- Speed
+    local speed_update =
+    {
+        min = 6,
+        max = 6 + (1 * 8),
+        amount = 1,
+    }
+
+    local speed = speed_override
+    if not speed then
+        speed = speed_update.min
+    elseif speed < speed_update.min then
+        speed_update.min = speed
+    elseif speed > speed_update.max then
+        speed_update.max = speed
+    end
+
+    -- Return
+    return
+    {
+        accel = accel,
+        accel_update = accel_update,
+
+        speed = speed,
+        speed_update = speed_update,
+
+        deadSpot_distance = 3,
+        deadSpot_speed = 1,
+
+        experience =
+            1 +     -- there is a base cost of 1
+            CalculateExperienceCost_Value(accel, accel_update) +
+            CalculateExperienceCost_Value(speed, speed_update),
+    }
 end
 
 --------------------------------------------- Other Functions --------------------------------------------
@@ -381,8 +421,20 @@ function this.CalculateExperience_GrappleStraight(grapple)
         antigrav = grapple.anti_gravity.experience
     end
 
+    local accel_along = 0
+    if grapple.accel_alongGrappleLine then
+        accel_along = grapple.accel_alongGrappleLine.experience
+    end
+
+    local accel_look = 0
+    if grapple.accel_alongLook then
+        accel_look = grapple.accel_alongLook.experience
+    end
+
     return
         CalculateExperienceCost_Value(grapple.aim_straight.max_distance, grapple.aim_straight.max_distance_update) +
         CalculateExperienceCost_Value(grapple.aim_straight.aim_duration, grapple.aim_straight.aim_duration_update) +
-        antigrav
+        antigrav +
+        accel_along +
+        accel_look
 end

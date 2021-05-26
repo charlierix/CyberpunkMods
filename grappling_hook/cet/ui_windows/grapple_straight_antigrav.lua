@@ -145,7 +145,7 @@ function this.Refresh_HasAntiGrav(def, player, grapple, antigrav, changes)
     if def.isChecked then
         def.isEnabled = true        -- it doesn't cost xp to remove, so the checkbox is always enabled here
     else
-        def.isEnabled = player.experience + changes:Get("experience_buysell") >= antigrav.experience + changes:Get("experience")
+        def.isEnabled = player.experience + changes:Get("experience_buysell") >= antigrav.experience
     end
 end
 function this.Update_HasAntiGrav(def, antigrav, changes, startedWithAG)

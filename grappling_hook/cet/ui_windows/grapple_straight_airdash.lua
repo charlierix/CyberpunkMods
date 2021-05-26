@@ -20,21 +20,21 @@ function DefineWindow_GrappleStraight_AirDash(vars_ui, const)
 
     gst8_airdash.burn_rate = this.Define_BurnRate(const)
 
-    -- Percent (AntiGravity.antigrav_percent)
+    -- Percent (AirDash.burnReducePercent)
     local prompt, value, updown, help = Define_PropertyPack_Vertical("Reduce Percent", -220, 130, const)
     gst8_airdash.percent_prompt = prompt
     gst8_airdash.percent_value = value
     gst8_airdash.percent_updown = updown
     gst8_airdash.percent_help = help
 
-    -- Accel
+    -- Accel (AirDash.accel.accel)
     prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", 0, 130, const)
     gst8_airdash.accel_prompt = prompt
     gst8_airdash.accel_value = value
     gst8_airdash.accel_updown = updown
     gst8_airdash.accel_help = help
 
-    -- Speed
+    -- Speed (AirDash.accel.speed)
     prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 220, 130, const)
     gst8_airdash.speed_prompt = prompt
     gst8_airdash.speed_value = value
@@ -170,7 +170,7 @@ function this.Refresh_HasAirDash(def, player, aim, airdash, changes)
     if def.isChecked then
         def.isEnabled = true        -- it doesn't cost xp to remove, so the checkbox is always enabled here
     else
-        def.isEnabled = player.experience + changes:Get("experience_buysell") >= airdash.experience + changes:Get("experience")
+        def.isEnabled = player.experience + changes:Get("experience_buysell") >= airdash.experience
     end
 end
 function this.Update_HasAirDash(def, airdash, changes, startedWithAD)

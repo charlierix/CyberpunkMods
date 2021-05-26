@@ -68,6 +68,7 @@ require "ui_controls/updownbuttons"
 require "ui_windows/energytank"
 require "ui_windows/grapple_choose"
 require "ui_windows/grapple_straight"
+require "ui_windows/grapple_straight_accellook"
 require "ui_windows/grapple_straight_aimduration"
 require "ui_windows/grapple_straight_airdash"
 require "ui_windows/grapple_straight_antigrav"
@@ -117,9 +118,6 @@ function TODO()
     --  tostring_doz()
     --  Round_doz()     -- this is needed, because rounding fractions to a certain number of digits would have to be converted, then truncated
     --  also, if there's ever a textbox, that would need to be parsed as well
-
-    -- UI:
-    --  Show current experience when the energy progress bar is showing
 
     -- UI:
     --  Only allow config changes within a small radius of vendors: ripper doc, clothing, melee, ranged
@@ -179,6 +177,7 @@ local const =
             "energy_tank",
             "grapple_choose",
             "grapple_straight",
+                "grapple_straight_accellook",
                 "grapple_straight_aimduration",
                 "grapple_straight_airdash",
                 "grapple_straight_antigrav",
@@ -427,7 +426,7 @@ registerForEvent("onDraw", function()
     end
 
     if player and state.energy < player.energy_tank.max_energy then
-        DrawEnergyProgress(state.energy, player.energy_tank.max_energy, state)
+        DrawEnergyProgress(state.energy, player.energy_tank.max_energy, player.experience, state)
     end
 
     if shouldShowConfig and player then
