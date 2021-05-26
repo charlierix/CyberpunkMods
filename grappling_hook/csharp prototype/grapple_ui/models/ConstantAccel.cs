@@ -12,7 +12,10 @@ namespace grapple_ui.models
     public record ConstantAccel
     {
         public double accel { get; init; }
+        public ValueUpdates accel_update { get; init; }
+
         public double speed { get; init; }
+        public ValueUpdates speed_update { get; init; }
 
         /// <summary>
         /// If distance to desired radius is less than this, accel linearly drops to zero

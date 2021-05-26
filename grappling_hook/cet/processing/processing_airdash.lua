@@ -11,7 +11,7 @@ function Process_AirDash(o, player, state, const, debug, deltaTime)
     local dash = state.grapple.aim_straight.air_dash
 
     -- Reduce Energy
-    local newEnergy, isEnergyEmpty = ConsumeEnergy(state.energy, dash.energyBurnRate, deltaTime)
+    local newEnergy, isEnergyEmpty = ConsumeEnergy(state.energy, dash.energyBurnRate * (1 - dash.burnReducePercent), deltaTime)
     if isEnergyEmpty then
         state.animation_lowEnergy:ActivateAnimation()
         Transition_ToStandard(state, const, debug, o)

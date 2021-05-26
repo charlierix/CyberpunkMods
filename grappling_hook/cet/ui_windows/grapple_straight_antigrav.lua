@@ -121,13 +121,6 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.Refresh_Experience(def, player, grapple, changes, hasAG, startedWithAG)
-    local cost = this.GetXPGainLoss(hasAG, startedWithAG, changes)
-
-    def.content.available.value = tostring(math.floor(player.experience + cost))
-    def.content.used.value = tostring(Round(grapple.experience - cost))
-end
-
 function this.Define_HasAntiGrav(const)
     -- CheckBox
     return
@@ -152,7 +145,7 @@ function this.Refresh_HasAntiGrav(def, player, grapple, antigrav, changes)
     if def.isChecked then
         def.isEnabled = true        -- it doesn't cost xp to remove, so the checkbox is always enabled here
     else
-        def.isEnabled = player.experience + changes:Get("experience_sell") >= antigrav.experience + changes:Get("experience")
+        def.isEnabled = player.experience + changes:Get("experience_buysell") >= antigrav.experience + changes:Get("experience")
     end
 end
 function this.Update_HasAntiGrav(def, antigrav, changes, startedWithAG)
@@ -161,15 +154,15 @@ function this.Update_HasAntiGrav(def, antigrav, changes, startedWithAG)
 
     if def.isChecked then
         if startedWithAG then
-            changes.experience_sell = 0     -- started with antigrav, unchecked at some point, now they're putting it back.  There is no extra cost
+            changes.experience_buysell = 0     -- started with antigrav, unchecked at some point, now they're putting it back.  There is no extra cost
         else
-            changes.experience_sell = -total        -- started without, so this is the purchase cost
+            changes.experience_buysell = -total        -- started without, so this is the purchase cost
         end
     else
         if startedWithAG then
-            changes.experience_sell = total     -- started with antigrav, now selling it, so gain the experience
+            changes.experience_buysell = total     -- started with antigrav, now selling it, so gain the experience
         else
-            changes.experience_sell = 0     -- started without, purchased, now removing again
+            changes.experience_buysell = 0     -- started without, purchased, now removing again
         end
     end
 end
@@ -178,7 +171,7 @@ function this.Refresh_Percent_Value(def, antigrav, changes)
     def.text = tostring(Round((antigrav.antigrav_percent + changes:Get("antigrav_percent")) * 100)) .. "%"
 end
 function this.Refresh_Percent_UpDown(def, antigrav, player, changes)
-    local down, up = GetDecrementIncrement(antigrav.antigrav_percent_update, antigrav.antigrav_percent + changes:Get("antigrav_percent"), player.experience + changes:Get("experience_sell") + changes:Get("experience"))
+    local down, up = GetDecrementIncrement(antigrav.antigrav_percent_update, antigrav.antigrav_percent + changes:Get("antigrav_percent"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
     Refresh_UpDownButton(def, down, up, 0, 100)
 end
 function this.Update_Percent(def, changes, isDownClicked, isUpClicked)
@@ -197,7 +190,7 @@ function this.Refresh_Fade_Value(def, antigrav, changes)
     def.text = tostring(Round(antigrav.fade_duration + changes:Get("fade_duration"), 2))
 end
 function this.Refresh_Fade_UpDown(def, antigrav, player, changes)
-    local down, up = GetDecrementIncrement(antigrav.fade_duration_update, antigrav.fade_duration + changes:Get("fade_duration"), player.experience + changes:Get("experience_sell") + changes:Get("experience"))
+    local down, up = GetDecrementIncrement(antigrav.fade_duration_update, antigrav.fade_duration + changes:Get("fade_duration"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
     Refresh_UpDownButton(def, down, up, 2)
 end
 function this.Update_Fade(def, changes, isDownClicked, isUpClicked)
@@ -210,6 +203,13 @@ function this.Update_Fade(def, changes, isDownClicked, isUpClicked)
         changes:Add("fade_duration", def.value_up)
         changes:Subtract("experience", 1)
     end
+end
+
+function this.Refresh_Experience(def, player, grapple, changes, hasAG, startedWithAG)
+    local cost = this.GetXPGainLoss(hasAG, startedWithAG, changes)
+
+    def.content.available.value = tostring(math.floor(player.experience + cost))
+    def.content.used.value = tostring(Round(grapple.experience - cost))
 end
 
 function this.Refresh_IsDirty(def, changes, grapple, def_checkbox)
@@ -263,11 +263,11 @@ function this.GetXPGainLoss(hasAG, startedWithAG, changes)
         if startedWithAG then
             return changes:Get("experience")
         else
-            return changes:Get("experience_sell") + changes:Get("experience")
+            return changes:Get("experience_buysell") + changes:Get("experience")
         end
     else
         if startedWithAG then
-            return changes:Get("experience_sell")       -- not including any upgrades/buybacks on individual props, because they are selling what they started with
+            return changes:Get("experience_buysell")       -- not including any upgrades/buybacks on individual props, because they are selling what they started with
         else
             return 0
         end

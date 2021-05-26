@@ -10,8 +10,13 @@ namespace grapple_ui.models
     {
         public double energyBurnRate { get; init; }
 
+        public double burnReducePercent { get; init; }
+        public ValueUpdates burnReducePercent_update { get; init; }
+
         public ConstantAccel accel { get; init; }
 
         public string mappin_name { get; init; }
+
+        public double experience { get; init; }
     }
 }

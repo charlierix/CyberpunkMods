@@ -246,19 +246,49 @@ function GetDefault_AimStraight(max_override)
 end
 
 function GetDefault_AirDash()
-    return
+    local retVal =
     {
         energyBurnRate = 1,
+
+        burnReducePercent = 0,
+        burnReducePercent_update =
+        {
+            min = 0,
+            max = 0.85,
+            amount = 0.05,
+        },
+
         mappin_name = "OffVariant",
         accel =
         {
             accel = 28,     -- anything below this, and it's like the horizontal component is ignored
-            speed = 9,
+            accel_update =
+            {
+                min = 28,
+                max = 28 + (3 * 7),
+                amount = 3,
+            },
+
+            speed = 6,
+            speed_update =
+            {
+                min = 6,
+                max = 6 + (2 * 8),
+                amount = 2,
+            },
 
             deadSpot_distance = 0,
             deadSpot_speed = 1,
         },
     }
+
+    retVal.experience =
+        1 +     -- there is a base cost of 1
+        CalculateExperienceCost_Value(retVal.burnReducePercent, retVal.burnReducePercent_update) +
+        CalculateExperienceCost_Value(retVal.accel.accel, retVal.accel.accel_update) +
+        CalculateExperienceCost_Value(retVal.accel.speed, retVal.accel.speed_update)
+
+    return retVal
 end
 
 --------------------------------------------- Other Functions --------------------------------------------

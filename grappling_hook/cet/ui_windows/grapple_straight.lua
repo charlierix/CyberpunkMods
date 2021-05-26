@@ -43,6 +43,7 @@ local isHovered_distance = false
 local isHovered_look = false
 local isHovered_along = false
 local isHovered_drag = false
+local isHovered_airdash = false
 local isHovered_antigrav = false
 
 function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
@@ -60,9 +61,9 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     this.Refresh_Description(grapple_straight.description, grapple)
 
-    Refresh_StickFigure(grapple_straight.stickFigure, isHovered_antigrav)
     local shouldHighlightAlong = isHovered_distance or isHovered_along or isHovered_drag
-    Refresh_GrappleArrows(grapple_straight.arrows, grapple, true, shouldHighlightAlong, isHovered_look)
+    Refresh_StickFigure(grapple_straight.stickFigure, isHovered_antigrav)
+    Refresh_GrappleArrows(grapple_straight.arrows, grapple, true, shouldHighlightAlong, isHovered_look or isHovered_airdash)
     Refresh_GrappleDesiredLength(grapple_straight.desired_line, grapple, nil, grapple_straight.changes, shouldHighlightAlong)
 
     this.Refresh_Distances(grapple_straight.distances, grapple)
@@ -123,8 +124,9 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
         TransitionWindows_Straight_AimDuration(vars_ui, const)
     end
 
-    if Draw_SummaryButton(grapple_straight.air_dash, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        print("TODO: Transition to air_dash")
+    isClicked, isHovered_airdash = Draw_SummaryButton(grapple_straight.air_dash, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    if isClicked then
+        TransitionWindows_Straight_AirDash(vars_ui, const)
     end
 
     isClicked, isHovered_antigrav = Draw_SummaryButton(grapple_straight.anti_grav, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
@@ -370,7 +372,7 @@ function this.Define_AimDuration(const)
         position =
         {
             pos_x = -250,
-            pos_y = 160,
+            pos_y = 140,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -415,7 +417,7 @@ function this.Refresh_AirDash(def, grapple)
     if dash then
         def.content.a_accel.value = tostring(Round(dash.accel.accel))
         def.content.b_speed.value = tostring(Round(dash.accel.speed))
-        def.content.c_burnRate = tostring(Round(dash.energyBurnRate, 1))
+        def.content.c_burnRate.value = tostring(Round(dash.energyBurnRate * (1 - dash.burnReducePercent), 2))
         def.unused_text = nil
 
     else
@@ -430,7 +432,7 @@ function this.Define_AntiGrav(const)
         position =
         {
             pos_x = 0,
-            pos_y = 200,
+            pos_y = 190,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -466,7 +468,7 @@ function this.Define_StopEarly(const)
         position =
         {
             pos_x = 250,
-            pos_y = 200,
+            pos_y = 190,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },

@@ -138,7 +138,7 @@ function Refresh_GrappleArrows(def, grapple, forceShowLook, highlight_primary, h
     if forceShowLook then
         def.showLook = true
     else
-        def.showLook = grapple.accel_alongLook ~= nil
+        def.showLook = grapple.accel_alongLook ~= nil or grapple.aim_straight.air_dash ~= nil
     end
 
     def.isHighlight_primary = highlight_primary

@@ -48,6 +48,16 @@ function TransitionWindows_Straight_AimDuration(vars_ui, const)
     vars_ui.gst8_aimdur.changes:Clear()
 end
 
+function TransitionWindows_Straight_AirDash(vars_ui, const)
+    -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
+    -- in vars_ui.transition_info
+
+    vars_ui.currentWindow = const.windows.grapple_straight_airdash
+
+    vars_ui.gst8_airdash.changes:Clear()
+    vars_ui.gst8_airdash.has_airdash.isChecked = nil
+end
+
 function TransitionWindows_Straight_AntiGrav(vars_ui, const)
     -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
     -- in vars_ui.transition_info

@@ -69,6 +69,7 @@ require "ui_windows/energytank"
 require "ui_windows/grapple_choose"
 require "ui_windows/grapple_straight"
 require "ui_windows/grapple_straight_aimduration"
+require "ui_windows/grapple_straight_airdash"
 require "ui_windows/grapple_straight_antigrav"
 require "ui_windows/grapple_straight_description"
 require "ui_windows/grapple_straight_distances"
@@ -121,8 +122,9 @@ function TODO()
     --  Show current experience when the energy progress bar is showing
 
     -- UI:
-    --  Only allow config changes within a small radius of a ripper doc
+    --  Only allow config changes within a small radius of vendors: ripper doc, clothing, melee, ranged
     --  Still allow them to look at values, just not change
+    --  Add a note when out of range
 
     -- Grapple Straight:
     --  Add a repulsion to walls when > some distance from desired distance
@@ -178,6 +180,7 @@ local const =
             "grapple_choose",
             "grapple_straight",
                 "grapple_straight_aimduration",
+                "grapple_straight_airdash",
                 "grapple_straight_antigrav",
                 "grapple_straight_description",
                 "grapple_straight_distances",

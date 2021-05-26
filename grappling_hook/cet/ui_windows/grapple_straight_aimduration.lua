@@ -71,11 +71,6 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.Refresh_Experience(def, player, grapple, changes)
-    def.content.available.value = tostring(math.floor(player.experience + changes:Get("experience")))
-    def.content.used.value = tostring(Round(grapple.experience - changes:Get("experience")))
-end
-
 function this.Refresh_AimDuration_Value(def, grapple, changes)
     def.text = tostring(Round(grapple.aim_straight.aim_duration + changes:Get("aim_duration"), 2))
 end
@@ -93,6 +88,11 @@ function this.Update_AimDuration(def, changes, isDownClicked, isUpClicked)
         changes:Add("aim_duration", def.value_up)
         changes:Subtract("experience", 1)
     end
+end
+
+function this.Refresh_Experience(def, player, grapple, changes)
+    def.content.available.value = tostring(math.floor(player.experience + changes:Get("experience")))
+    def.content.used.value = tostring(Round(grapple.experience - changes:Get("experience")))
 end
 
 function this.Refresh_IsDirty(def, changes)
