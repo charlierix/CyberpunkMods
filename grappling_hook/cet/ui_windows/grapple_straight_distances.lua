@@ -49,14 +49,14 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
     Refresh_GrappleArrows(gst8_dist.arrows, grapple, false, false, false)
     Refresh_GrappleDesiredLength(gst8_dist.desired_line, grapple, this.GetChanged_DesiredLength(gst8_dist.desired_checkbox, gst8_dist.desired_slider), gst8_dist.changes, isHovered_desired)
 
-    this.Refresh_Experience(gst8_dist.experience, player, grapple, gst8_dist.changes)
-
     --TODO: MaxDistance Update should be non linear
     this.Refresh_MaxDistance_Value(gst8_dist.max_value, grapple, gst8_dist.changes)
     this.Refresh_MaxDistance_UpDown(gst8_dist.max_updown, grapple, player, gst8_dist.changes)
 
     this.Refresh_Desired_CheckBox(gst8_dist.desired_checkbox, grapple)
     this.Refresh_Desired_Slider(gst8_dist.desired_slider, grapple, gst8_dist.changes)
+
+    this.Refresh_Experience(gst8_dist.experience, player, grapple, gst8_dist.changes)
 
     this.Refresh_IsDirty(gst8_dist.okcancel, gst8_dist.changes, gst8_dist.desired_checkbox, gst8_dist.desired_slider, grapple)
 

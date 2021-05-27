@@ -35,10 +35,10 @@ function DrawWindow_GrappleStraight_AimDuration(vars_ui, player, window, const)
 
     Refresh_Name(gst8_aimdur.name, grapple.name)
 
-    this.Refresh_Experience(gst8_aimdur.experience, player, grapple, gst8_aimdur.changes)
-
     this.Refresh_AimDuration_Value(gst8_aimdur.dur_value, grapple, gst8_aimdur.changes)
     this.Refresh_AimDuration_UpDown(gst8_aimdur.dur_updown, grapple, player, gst8_aimdur.changes)
+
+    this.Refresh_Experience(gst8_aimdur.experience, player, grapple, gst8_aimdur.changes)
 
     this.Refresh_IsDirty(gst8_aimdur.okcancel, gst8_aimdur.changes)
 

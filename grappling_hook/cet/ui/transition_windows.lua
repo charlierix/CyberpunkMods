@@ -39,6 +39,19 @@ function TransitionWindows_Grapple(vars_ui, const, player, grappleIndex)
     end
 end
 
+function TransitionWindows_Straight_AccelAlong(vars_ui, const)
+    -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
+    -- in vars_ui.transition_info
+
+    vars_ui.currentWindow = const.windows.grapple_straight_accelalong
+
+    vars_ui.gst8_accalong.changes:Clear()
+    vars_ui.gst8_accalong.has_accelalong.isChecked = nil
+
+    --TODO: Slider
+
+end
+
 function TransitionWindows_Straight_AccelLook(vars_ui, const)
     -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
     -- in vars_ui.transition_info

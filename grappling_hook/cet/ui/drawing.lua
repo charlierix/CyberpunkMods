@@ -85,6 +85,9 @@ function DrawConfig(isConfigRepress, vars_ui, player, const)
         elseif vars_ui.currentWindow == const.windows.grapple_straight then
             DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
+        elseif vars_ui.currentWindow == const.windows.grapple_straight_accelalong then
+            DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
+
         elseif vars_ui.currentWindow == const.windows.grapple_straight_accellook then
             DrawWindow_GrappleStraight_AccelLook(vars_ui, player, window, const)
 

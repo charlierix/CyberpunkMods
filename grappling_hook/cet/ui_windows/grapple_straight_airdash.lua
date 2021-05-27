@@ -67,8 +67,6 @@ function DrawWindow_GrappleStraight_AirDash(vars_ui, player, window, const)
 
     Refresh_Name(gst8_airdash.name, grapple.name)
 
-    this.Refresh_Experience(gst8_airdash.experience, player, grapple, gst8_airdash.changes, gst8_airdash.has_airdash.isChecked, startedWithAD)
-
     Refresh_GrappleArrows(gst8_airdash.arrows, grapple, true, false, false)
     Refresh_GrappleDesiredLength(gst8_airdash.desired_line, grapple, nil, gst8_airdash.changes, false)
 
@@ -84,6 +82,8 @@ function DrawWindow_GrappleStraight_AirDash(vars_ui, player, window, const)
 
     this.Refresh_Speed_Value(gst8_airdash.speed_value, airdash.accel, gst8_airdash.changes)
     this.Refresh_Speed_UpDown(gst8_airdash.speed_updown, airdash.accel, player, gst8_airdash.changes)
+
+    this.Refresh_Experience(gst8_airdash.experience, player, grapple, gst8_airdash.changes, gst8_airdash.has_airdash.isChecked, startedWithAD)
 
     this.Refresh_IsDirty(gst8_airdash.okcancel, gst8_airdash.changes, grapple, gst8_airdash.has_airdash)
 

@@ -58,8 +58,6 @@ function DrawWindow_GrappleStraight_AccelLook(vars_ui, player, window, const)
 
     Refresh_Name(gst8_acclook.name, grapple.name)
 
-    this.Refresh_Experience(gst8_acclook.experience, player, grapple, gst8_acclook.changes, gst8_acclook.has_accellook.isChecked, startedWithAL)
-
     Refresh_GrappleArrows(gst8_acclook.arrows, grapple, true, false, false)
     Refresh_GrappleDesiredLength(gst8_acclook.desired_line, grapple, nil, gst8_acclook.changes, false)
 
@@ -70,6 +68,8 @@ function DrawWindow_GrappleStraight_AccelLook(vars_ui, player, window, const)
 
     this.Refresh_Speed_Value(gst8_acclook.speed_value, accel, gst8_acclook.changes)
     this.Refresh_Speed_UpDown(gst8_acclook.speed_updown, accel, player, gst8_acclook.changes)
+
+    this.Refresh_Experience(gst8_acclook.experience, player, grapple, gst8_acclook.changes, gst8_acclook.has_accellook.isChecked, startedWithAL)
 
     this.Refresh_IsDirty(gst8_acclook.okcancel, gst8_acclook.changes, grapple, gst8_acclook.has_accellook)
 

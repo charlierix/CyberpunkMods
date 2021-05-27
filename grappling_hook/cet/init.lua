@@ -68,6 +68,7 @@ require "ui_controls/updownbuttons"
 require "ui_windows/energytank"
 require "ui_windows/grapple_choose"
 require "ui_windows/grapple_straight"
+require "ui_windows/grapple_straight_accelalong"
 require "ui_windows/grapple_straight_accellook"
 require "ui_windows/grapple_straight_aimduration"
 require "ui_windows/grapple_straight_airdash"
@@ -152,6 +153,19 @@ function TODO()
     -- All:
     --  Add extra weight when carrying a dead body
 
+    -- UI:
+    --  There's a lot of copy/pasted code.  A lot of it is around binding between model and viewmodel.  Look
+    --  for patterns and create a binding util
+
+    -- UI:
+    --  Controls are placed at absolute positions.  Create some container panel controls, like horizontal list,
+    --  vertical list (that may also support scrollbars)
+    --
+    --  Control's draw methods do both size calculations and drawing.  Split that up.  That way the panel can
+    --  get all the child control's sizes, do some final calculations based on sizes and margins, then pass
+    --  in the location to each control's draw function (could also pass in a final width/height for controls
+    --  that should stretch)
+
 end
 
 --------------------------------------------------------------------
@@ -177,6 +191,7 @@ local const =
             "energy_tank",
             "grapple_choose",
             "grapple_straight",
+                "grapple_straight_accelalong",
                 "grapple_straight_accellook",
                 "grapple_straight_aimduration",
                 "grapple_straight_airdash",

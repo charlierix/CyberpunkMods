@@ -58,8 +58,6 @@ function DrawWindow_GrappleStraight_AntiGrav(vars_ui, player, window, const)
 
     Refresh_Name(gst8_antgrav.name, grapple.name)
 
-    this.Refresh_Experience(gst8_antgrav.experience, player, grapple, gst8_antgrav.changes, gst8_antgrav.has_antigrav.isChecked, startedWithAG)
-
     Refresh_GrappleArrows(gst8_antgrav.arrows, grapple, false, false, false)
     Refresh_GrappleDesiredLength(gst8_antgrav.desired_line, grapple, nil, gst8_antgrav.changes, false)
 
@@ -70,6 +68,8 @@ function DrawWindow_GrappleStraight_AntiGrav(vars_ui, player, window, const)
 
     this.Refresh_Fade_Value(gst8_antgrav.fade_value, antigrav, gst8_antgrav.changes)
     this.Refresh_Fade_UpDown(gst8_antgrav.fade_updown, antigrav, player, gst8_antgrav.changes)
+
+    this.Refresh_Experience(gst8_antgrav.experience, player, grapple, gst8_antgrav.changes, gst8_antgrav.has_antigrav.isChecked, startedWithAG)
 
     this.Refresh_IsDirty(gst8_antgrav.okcancel, gst8_antgrav.changes, grapple, gst8_antgrav.has_antigrav)
 

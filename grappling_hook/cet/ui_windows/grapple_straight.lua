@@ -107,7 +107,7 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     isClicked, isHovered_along = Draw_SummaryButton(grapple_straight.accel_along, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
     if isClicked then
-        print("TODO: Transition to accel_along")
+        TransitionWindows_Straight_AccelAlong(vars_ui, const)
     end
 
     isClicked, isHovered_look = Draw_SummaryButton(grapple_straight.accel_look, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)

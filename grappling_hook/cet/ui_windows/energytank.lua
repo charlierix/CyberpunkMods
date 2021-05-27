@@ -38,7 +38,6 @@ function DrawWindow_EnergyTank(vars_ui, player, window, const)
     local energy_tank = vars_ui.energy_tank
 
     ------------------------- Finalize models for this frame -------------------------
-    this.Refresh_Experience(energy_tank.experience, player, energy_tank.changes)
 
     this.Refresh_Total_Value(energy_tank.total_value, player.energy_tank, energy_tank.changes)
     this.Refresh_Total_UpDown(energy_tank.total_updown, player.energy_tank, player, energy_tank.changes)
@@ -49,9 +48,12 @@ function DrawWindow_EnergyTank(vars_ui, player, window, const)
     this.Refresh_Percent_Value(energy_tank.percent_value, player.energy_tank, energy_tank.changes)
     this.Refresh_Percent_UpDown(energy_tank.percent_updown, player.energy_tank, player, energy_tank.changes)
 
+    this.Refresh_Experience(energy_tank.experience, player, energy_tank.changes)
+
     this.Refresh_IsDirty(energy_tank.okcancel, energy_tank.changes)
 
     -------------------------------- Show ui elements --------------------------------
+
     Draw_Label(energy_tank.title, vars_ui.style.colors, window.width, window.height, const)
 
     Draw_OrderedList(energy_tank.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
