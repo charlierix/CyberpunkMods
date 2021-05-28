@@ -8,6 +8,10 @@ namespace grapple_ui.models.viewmodels
 {
     public record GrappleDesiredLength
     {
+
+        //TODO: Dashed
+
+
         public bool should_show { get; init; }
 
         /// <summary>

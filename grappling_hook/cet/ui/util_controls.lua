@@ -1,3 +1,5 @@
+local this = {}
+
 -- Places an invisible button so that mouse events can be detected
 -- TODO: CET is currently suppressing ImGui's LeftMouseDown.  When that changes, add that as a return (if it's absolutely needed, maybe get it from Observe("PlayerPuppet", "OnAction"))
 -- NOTE: Each InvisibleButton within a window needs a unique name
@@ -86,8 +88,17 @@ function Draw_Circle(screenOffset_x, screenOffset_y, center_x, center_y, radius,
     end
 end
 
+--TODO: Make an overload that draws a dashed line.  That functionality isn't native, so it would be a for loop drawing little sub lines
 function Draw_Line(screenOffset_x, screenOffset_y, x1, y1, x2, y2, color, thickness)
     ImGui.ImDrawListAddLine(ImGui.GetWindowDrawList(), screenOffset_x + x1, screenOffset_y + y1, screenOffset_x + x2, screenOffset_y + y2, color, thickness)
+end
+
+-- Draws a line, and an arrow at the x2,y2 position (arrow from 1 to 2)
+function Draw_Arrow(screenOffset_x, screenOffset_y, x1, y1, x2, y2, color, thickness, arrow_length, arrow_width)
+    Draw_Line(screenOffset_x, screenOffset_y, x1, y1, x2, y2, color, thickness)
+
+    local ax1, ay1, ax2, ay2, ax3, ay3 = GetArrowCoords(x1, y1, x2, y2, arrow_length, arrow_width)
+    Draw_Triangle(screenOffset_x, screenOffset_y, ax1, ay1, ax2, ay2, ax3, ay3, color, nil, nil)
 end
 
 function Draw_Triangle(screenOffset_x, screenOffset_y, x1, y1, x2, y2, x3, y3, color_back, color_border, thickness)
@@ -98,4 +109,35 @@ function Draw_Triangle(screenOffset_x, screenOffset_y, x1, y1, x2, y2, x3, y3, c
     if color_border then
         ImGui.ImDrawListAddTriangle(ImGui.GetWindowDrawList(), screenOffset_x + x1, screenOffset_y + y1, screenOffset_x + x2, screenOffset_y + y2, screenOffset_x + x3, screenOffset_y + y3, color_border, thickness)
     end
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function GetArrowCoords(x1, y1, x2, y2, length, width)
+    local magnitude = Get2DLength(x2 - x1, y2 - y1)
+
+    -- Get a unit vector that points from the to point back to the base of the arrow head
+    local baseDir_x = (x1 - x2) / magnitude
+    local baseDir_y = (y1 - y2) / magnitude
+
+    -- Now get two unit vectors that point from the shaft out to the tips
+    local edgeDir1_x = -baseDir_y
+    local edgeDir1_y = baseDir_x
+
+    local edgeDir2_x = baseDir_y
+    local edgeDir2_y = -baseDir_x
+
+    -- Get the point at the base of the arrow that is on the shaft
+    local base_x = x2 + (baseDir_x * length)
+    local base_y = y2 + (baseDir_y * length)
+
+    local halfWidth = width / 2
+
+    return
+        x2,     -- arrow tip
+        y2,
+        base_x + (edgeDir1_x * halfWidth),      -- base point 1
+        base_y + (edgeDir1_y * halfWidth),
+        base_x + (edgeDir2_x * halfWidth),      -- base point 2
+        base_y + (edgeDir2_y * halfWidth)
 end

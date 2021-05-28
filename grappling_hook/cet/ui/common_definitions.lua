@@ -162,7 +162,7 @@ function Define_GrappleDesiredLength(isStandardColor)
     }
 end
 function Refresh_GrappleDesiredLength(def, grapple, changed_length, changes, shouldHighlight)
-    -- Changes will only be passed in if the windows modifies desired length
+    -- Changes will only be passed in if the window modifies desired length
     local desired_length = nil
     if changed_length then
         desired_length = changed_length
@@ -179,6 +179,59 @@ function Refresh_GrappleDesiredLength(def, grapple, changed_length, changes, sho
     end
 
     def.isHighlight = shouldHighlight
+end
+
+function Define_GrappleAccelToDesired(isStandardColor_accel, isStandardColor_dead)
+    -- GrappleAccelToDesired
+    return
+    {
+        isStandardColor_accel = isStandardColor_accel,
+        isStandardColor_dead = isStandardColor_dead,
+
+        show_accel = false,
+        show_dead = false,
+
+        isHighlight_accel = false,
+        isHighlight_dead = false,
+
+        yOffset_accel = -18,
+        yOffset_dead = 18,
+
+        length_accel = 60,
+        length_dead = 48,       -- this one should be calculated in refresh
+
+        length_accel_halfgap = 6,
+        deadHeight = 9,
+
+        --NOTE: These values are copied from Define_GrappleArrows
+        from_x = -300,
+        to_x = 360,
+        y = -70,
+    }
+end
+function Refresh_GrappleAccelToDesired(def, grapple, accel, changed_deadspot, shouldHighlight_accel, shouldHighlight_dead)
+    if grapple.desired_length then
+        def.percent = grapple.desired_length / grapple.aim_straight.max_distance
+    else
+        def.percent = 1
+    end
+
+    local deadSpot = 0
+    if changed_deadspot then
+        deadSpot = changed_deadspot
+    else
+        deadSpot = accel.deadSpot_distance
+    end
+
+    -- Scale drawn deadspot relative to the aim distance
+    def.length_dead = GetScaledValue(0, def.to_x - def.from_x, 0, grapple.aim_straight.max_distance, deadSpot)
+
+    def.show_accel = true       -- ConstantAccel's min accel is non zero, so there's no point in taking in an optional changed accel (it will always be true)
+    def.show_dead = not IsNearZero(deadSpot)
+
+    def.isHighlight_accel = shouldHighlight_accel
+    def.isHighlight_dead = shouldHighlight_dead
+
 end
 
 function Refresh_UpDownButton(def, down, up, roundDigits, display_mult)

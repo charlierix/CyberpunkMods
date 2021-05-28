@@ -68,7 +68,7 @@ function GetDefault_Grapple_Rigid()
         desired_length = nil,       -- 6 to 12 would be a good range (start long).  The main use for this is to swing from an overhang, and if you start too far away, you'll just fall to the ground
 
         --accel_alongGrappleLine = nil,       --TODO: Some of the acceleration needs to be this.  Otherwise it gets jerky when only drag is applied
-        accel_alongGrappleLine = GetDefault_ConstantAccel(),
+        accel_alongGrappleLine = GetDefault_ConstantAccel(nil, nil, 0.75),
         accel_alongLook = nil,
 
         springAccel_k = nil,        --TODO: Play with this
@@ -76,7 +76,8 @@ function GetDefault_Grapple_Rigid()
         velocity_away =
         {
             --accel_compression = 8,     -- using a small value
-            accel_tension = 64,         -- using a big value so it feels like rope
+            --accel_tension = 64,         -- using a big value so it feels like rope
+            accel_tension = 48,
 
             deadSpot = 0.5,
         },
@@ -277,7 +278,7 @@ function GetDefault_AirDash()
     return retVal
 end
 
-function GetDefault_ConstantAccel(accel_override, speed_override)
+function GetDefault_ConstantAccel(accel_override, speed_override, deadSpot_distance_override)
     -- Accel
     local accel_update =
     {
@@ -312,6 +313,11 @@ function GetDefault_ConstantAccel(accel_override, speed_override)
         speed_update.max = speed
     end
 
+    local deadspot_dist = 3
+    if deadSpot_distance_override then
+        deadspot_dist = deadSpot_distance_override
+    end
+
     -- Return
     return
     {
@@ -321,7 +327,7 @@ function GetDefault_ConstantAccel(accel_override, speed_override)
         speed = speed,
         speed_update = speed_update,
 
-        deadSpot_distance = 3,
+        deadSpot_distance = deadspot_dist,
         deadSpot_speed = 1,
 
         experience =

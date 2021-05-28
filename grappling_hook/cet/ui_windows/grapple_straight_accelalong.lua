@@ -14,16 +14,10 @@ function DefineWindow_GrappleStraight_AccelAlong(vars_ui, const)
     gst8_accalong.stickFigure = Define_StickFigure(false, const)
     gst8_accalong.arrows = Define_GrappleArrows(true, false)
 
-
     --TODO: An option to make the desired line dashed
-
     gst8_accalong.desired_line = Define_GrappleDesiredLength(true)
 
-
-    -- New control:
-    --TODO: Two arrows above, pointing toward the desired line
-    --TODO: Lines below to show the deadspot
-
+    gst8_accalong.desired_extra = Define_GrappleAccelToDesired(true, true)
 
     -- Checkbox for whether to have accel along (Grapple.accel_alongGrappleLine)
     gst8_accalong.has_accelalong = this.Define_HasAccelAlong(const)
@@ -77,6 +71,7 @@ function DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
 
     Refresh_GrappleArrows(gst8_accalong.arrows, grapple, true, false, false)
     Refresh_GrappleDesiredLength(gst8_accalong.desired_line, grapple, nil, gst8_accalong.changes, false)
+    Refresh_GrappleAccelToDesired(gst8_accalong.desired_extra, grapple, accel, gst8_accalong.deadspot_dist.value, false, isHovered_deadspot)
 
     this.Refresh_HasAccelAlong(gst8_accalong.has_accelalong, player, grapple, accel, gst8_accalong.changes)
 
@@ -101,6 +96,7 @@ function DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
     Draw_StickFigure(gst8_accalong.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
     Draw_GrappleArrows(gst8_accalong.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_accalong.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+    Draw_GrappleAccelToDesired(gst8_accalong.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
     if Draw_CheckBox(gst8_accalong.has_accelalong, vars_ui.style.checkbox, window.width, window.height, const) then
         this.Update_HasAccelAlong(gst8_accalong.has_accelalong, accel, gst8_accalong.changes, startedWithAG)
