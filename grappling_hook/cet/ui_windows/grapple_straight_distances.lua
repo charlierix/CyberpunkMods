@@ -188,7 +188,7 @@ function this.Define_Desired_Slider(const)
     }
 end
 function this.Refresh_Desired_Slider(def, grapple, changes)
-    -- There is no need to store changes in the changes list.  Text is directly changed as they type
+    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: TransitionWindows_Straight_Distances sets this to nil
     if not def.value then
         if grapple.desired_length then

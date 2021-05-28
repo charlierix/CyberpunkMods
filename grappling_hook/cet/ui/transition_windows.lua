@@ -47,9 +47,7 @@ function TransitionWindows_Straight_AccelAlong(vars_ui, const)
 
     vars_ui.gst8_accalong.changes:Clear()
     vars_ui.gst8_accalong.has_accelalong.isChecked = nil
-
-    --TODO: Slider
-
+    vars_ui.gst8_accalong.deadspot_dist.value = nil
 end
 
 function TransitionWindows_Straight_AccelLook(vars_ui, const)

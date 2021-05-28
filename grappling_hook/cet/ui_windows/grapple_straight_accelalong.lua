@@ -42,19 +42,17 @@ function DefineWindow_GrappleStraight_AccelAlong(vars_ui, const)
     gst8_accalong.speed_updown = updown
     gst8_accalong.speed_help = help
 
-
-
-
-    -- Slider: deadSpot_distance
-    -- (be sure to clear in transition function)
-
-
-
+    -- Dead Spot Distance (Grapple.accel_alongGrappleLine.deadSpot_distance)
+    gst8_accalong.deadspot_label = this.Define_DeadSpot_Label(const)
+    gst8_accalong.deadspot_help = this.Define_DeadSpot_Help(const)
+    gst8_accalong.deadspot_dist = this.Define_DeadSpot_Dist(const)
 
     gst8_accalong.experience = Define_Experience(const, "grapple")
 
     gst8_accalong.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
+
+local isHovered_deadspot = false
 
 function DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
@@ -88,9 +86,11 @@ function DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
     this.Refresh_Speed_Value(gst8_accalong.speed_value, accel, gst8_accalong.changes)
     this.Refresh_Speed_UpDown(gst8_accalong.speed_updown, accel, player, gst8_accalong.changes)
 
+    this.Refresh_DeadSpot_Dist(gst8_accalong.deadspot_dist, accel)
+
     this.Refresh_Experience(gst8_accalong.experience, player, grapple, gst8_accalong.changes, gst8_accalong.has_accelalong.isChecked, startedWithAG)
 
-    this.Refresh_IsDirty(gst8_accalong.okcancel, gst8_accalong.changes, grapple, gst8_accalong.has_accelalong)
+    this.Refresh_IsDirty(gst8_accalong.okcancel, gst8_accalong.changes, grapple, gst8_accalong.has_accelalong, gst8_accalong.deadspot_dist)
 
     -------------------------------- Show ui elements --------------------------------
 
@@ -124,13 +124,20 @@ function DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
         this.Update_Speed(gst8_accalong.speed_updown, gst8_accalong.changes, isDownClicked, isUpClicked)
 
         Draw_HelpButton(gst8_accalong.speed_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+
+        -- Dead Spot Distance
+        Draw_Label(gst8_accalong.deadspot_label, vars_ui.style.colors, window.width, window.height, const)
+        Draw_HelpButton(gst8_accalong.deadspot_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        _, isHovered_deadspot = Draw_Slider(gst8_accalong.deadspot_dist, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
+    else
+        isHovered_deadspot = false
     end
 
     Draw_OrderedList(gst8_accalong.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_accalong.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
-        this.Save(player, grapple, accel, gst8_accalong.changes, gst8_accalong.has_accelalong.isChecked, startedWithAG)
+        this.Save(player, grapple, accel, gst8_accalong.changes, gst8_accalong.has_accelalong.isChecked, startedWithAG, gst8_accalong.deadspot_dist)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
 
     elseif isCancelClicked then
@@ -223,6 +230,71 @@ function this.Update_Speed(def, changes, isDownClicked, isUpClicked)
     end
 end
 
+function this.Define_DeadSpot_Label(const)
+    -- Label
+    return
+    {
+        text = "Dead Spot",
+
+        position =
+        {
+            pos_x = -117,
+            pos_y = 210,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_prompt",
+    }
+end
+function this.Define_DeadSpot_Help(const)
+    -- HelpButton
+    return
+    {
+        position =
+        {
+            pos_x = -70,
+            pos_y = 210,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        invisible_name = "GrappleStraight_AccelAlong_DeadSpot_Help"
+    }
+end
+function this.Define_DeadSpot_Dist(const)
+    -- Slider
+    return
+    {
+        invisible_name = "GrappleStraight_AccelAlong_DeadSpot_Dist",
+
+        min = 0,
+        max = 6,
+
+        decimal_places = 1,
+
+        width = 300,
+
+        ctrlclickhint_horizontal = const.alignment_horizontal.left,
+        ctrlclickhint_vertical = const.alignment_vertical.bottom,
+
+        position =
+        {
+            pos_x = 0,
+            pos_y = 240,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+    }
+end
+function this.Refresh_DeadSpot_Dist(def, accel)
+    -- There is no need to store changes in the changes list.  Value is directly changed
+    --NOTE: TransitionWindows_Straight_Distances sets this to nil
+    if not def.value then
+        def.value = accel.deadSpot_distance
+    end
+end
+
 function this.Refresh_Experience(def, player, grapple, changes, hasAG, startedWithAG)
     local cost = this.GetXPGainLoss(hasAG, startedWithAG, changes)
 
@@ -230,12 +302,12 @@ function this.Refresh_Experience(def, player, grapple, changes, hasAG, startedWi
     def.content.used.value = tostring(Round(grapple.experience - cost))
 end
 
-function this.Refresh_IsDirty(def, changes, grapple, def_checkbox)
+function this.Refresh_IsDirty(def, changes, grapple, def_checkbox, def_slider)
     local isDirty = false
 
     if def_checkbox.isChecked then
         if grapple.accel_alongGrappleLine then
-            isDirty = changes:IsDirty()     -- changing existing
+            isDirty = changes:IsDirty() or not IsNearValue(def_slider.value, grapple.accel_alongGrappleLine.deadSpot_distance)      -- changing existing
         else
             isDirty = true      -- creating a new one
         end
@@ -246,12 +318,19 @@ function this.Refresh_IsDirty(def, changes, grapple, def_checkbox)
     def.isDirty = isDirty
 end
 
-function this.Save(player, grapple, accel, changes, hasAG, startedWithAG)
+function this.Save(player, grapple, accel, changes, hasAG, startedWithAG, def_slider)
     if hasAG then
+        local deadspot = def_slider.value
+        if deadspot < def_slider.min then
+            deadspot = def_slider.min
+        elseif deadspot > def_slider.max then
+            deadspot = def_slider.max
+        end
+
         if grapple.accel_alongGrappleLine then
             grapple.accel_alongGrappleLine.accel = accel.accel + changes:Get("accel")
             grapple.accel_alongGrappleLine.speed = accel.speed + changes:Get("speed")
-            grapple.accel_alongGrappleLine.deadSpot_distance = accel.deadSpot_distance + changes:Get("deadSpot_distance")
+            grapple.accel_alongGrappleLine.deadSpot_distance = deadspot
             grapple.accel_alongGrappleLine.experience = accel.experience - changes:Get("experience")
         else
             grapple.accel_alongGrappleLine =
@@ -262,7 +341,7 @@ function this.Save(player, grapple, accel, changes, hasAG, startedWithAG)
                 speed = accel.speed + changes:Get("speed"),
                 speed_update = accel.speed_update,
 
-                deadSpot_distance = accel.deadSpot_distance + changes:Get("deadSpot_distance"),
+                deadSpot_distance = deadspot,
                 deadSpot_speed = accel.deadSpot_speed,
 
                 experience = accel.experience - changes:Get("experience"),
