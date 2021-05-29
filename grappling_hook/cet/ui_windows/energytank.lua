@@ -36,21 +36,22 @@ end
 
 function DrawWindow_EnergyTank(vars_ui, player, window, const)
     local energy_tank = vars_ui.energy_tank
+    local changes = energy_tank.changes
 
     ------------------------- Finalize models for this frame -------------------------
 
-    this.Refresh_Total_Value(energy_tank.total_value, player.energy_tank, energy_tank.changes)
-    this.Refresh_Total_UpDown(energy_tank.total_updown, player.energy_tank, player, energy_tank.changes)
+    this.Refresh_Total_Value(energy_tank.total_value, player.energy_tank, changes)
+    this.Refresh_Total_UpDown(energy_tank.total_updown, player.energy_tank, player, changes)
 
-    this.Refresh_Refill_Value(energy_tank.refill_value, player.energy_tank, energy_tank.changes)
-    this.Refresh_Refill_UpDown(energy_tank.refill_updown, player.energy_tank, player, energy_tank.changes)
+    this.Refresh_Refill_Value(energy_tank.refill_value, player.energy_tank, changes)
+    this.Refresh_Refill_UpDown(energy_tank.refill_updown, player.energy_tank, player, changes)
 
-    this.Refresh_Percent_Value(energy_tank.percent_value, player.energy_tank, energy_tank.changes)
-    this.Refresh_Percent_UpDown(energy_tank.percent_updown, player.energy_tank, player, energy_tank.changes)
+    this.Refresh_Percent_Value(energy_tank.percent_value, player.energy_tank, changes)
+    this.Refresh_Percent_UpDown(energy_tank.percent_updown, player.energy_tank, player, changes)
 
-    this.Refresh_Experience(energy_tank.experience, player, energy_tank.changes)
+    this.Refresh_Experience(energy_tank.experience, player, changes)
 
-    this.Refresh_IsDirty(energy_tank.okcancel, energy_tank.changes)
+    this.Refresh_IsDirty(energy_tank.okcancel, changes)
 
     -------------------------------- Show ui elements --------------------------------
 
@@ -63,7 +64,7 @@ function DrawWindow_EnergyTank(vars_ui, player, window, const)
     Draw_Label(energy_tank.total_value, vars_ui.style.colors, window.width, window.height, const)
 
     local isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.total_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-    this.Update_Total(energy_tank.total_updown, energy_tank.changes, isDownClicked, isUpClicked)
+    this.Update_Total(energy_tank.total_updown, changes, isDownClicked, isUpClicked)
 
     Draw_HelpButton(energy_tank.total_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
@@ -72,7 +73,7 @@ function DrawWindow_EnergyTank(vars_ui, player, window, const)
     Draw_Label(energy_tank.refill_value, vars_ui.style.colors, window.width, window.height, const)
 
     isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.refill_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-    this.Update_Refill(energy_tank.refill_updown, energy_tank.changes, isDownClicked, isUpClicked)
+    this.Update_Refill(energy_tank.refill_updown, changes, isDownClicked, isUpClicked)
 
     Draw_HelpButton(energy_tank.refill_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
@@ -81,14 +82,14 @@ function DrawWindow_EnergyTank(vars_ui, player, window, const)
     Draw_Label(energy_tank.percent_value, vars_ui.style.colors, window.width, window.height, const)
 
     isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.percent_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-    this.Update_Percent(energy_tank.percent_updown, energy_tank.changes, isDownClicked, isUpClicked)
+    this.Update_Percent(energy_tank.percent_updown, changes, isDownClicked, isUpClicked)
 
     Draw_HelpButton(energy_tank.percent_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
     -- OK/Cancel
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(energy_tank.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
-        this.Save(player, energy_tank.changes)
+        this.Save(player, changes)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then

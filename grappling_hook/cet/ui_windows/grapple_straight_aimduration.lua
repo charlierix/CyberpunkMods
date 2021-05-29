@@ -31,16 +31,18 @@ function DrawWindow_GrappleStraight_AimDuration(vars_ui, player, window, const)
 
     local gst8_aimdur = vars_ui.gst8_aimdur
 
+    local changes = gst8_aimdur.changes
+
     ------------------------- Finalize models for this frame -------------------------
 
     Refresh_Name(gst8_aimdur.name, grapple.name)
 
-    this.Refresh_AimDuration_Value(gst8_aimdur.dur_value, grapple, gst8_aimdur.changes)
-    this.Refresh_AimDuration_UpDown(gst8_aimdur.dur_updown, grapple, player, gst8_aimdur.changes)
+    this.Refresh_AimDuration_Value(gst8_aimdur.dur_value, grapple, changes)
+    this.Refresh_AimDuration_UpDown(gst8_aimdur.dur_updown, grapple, player, changes)
 
-    this.Refresh_Experience(gst8_aimdur.experience, player, grapple, gst8_aimdur.changes)
+    this.Refresh_Experience(gst8_aimdur.experience, player, grapple, changes)
 
-    this.Refresh_IsDirty(gst8_aimdur.okcancel, gst8_aimdur.changes)
+    this.Refresh_IsDirty(gst8_aimdur.okcancel, changes)
 
     -------------------------------- Show ui elements --------------------------------
 
@@ -53,7 +55,7 @@ function DrawWindow_GrappleStraight_AimDuration(vars_ui, player, window, const)
     Draw_Label(gst8_aimdur.dur_value, vars_ui.style.colors, window.width, window.height, const)
 
     local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_aimdur.dur_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-    this.Update_AimDuration(gst8_aimdur.dur_updown, gst8_aimdur.changes, isDownClicked, isUpClicked)
+    this.Update_AimDuration(gst8_aimdur.dur_updown, changes, isDownClicked, isUpClicked)
 
     Draw_HelpButton(gst8_aimdur.dur_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
@@ -61,7 +63,7 @@ function DrawWindow_GrappleStraight_AimDuration(vars_ui, player, window, const)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_aimdur.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
-        this.Save(player, grapple, gst8_aimdur.changes)
+        this.Save(player, grapple, changes)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
 
     elseif isCancelClicked then

@@ -45,6 +45,7 @@ local isHovered_along = false
 local isHovered_drag = false
 local isHovered_airdash = false
 local isHovered_antigrav = false
+local isHovered_stopEarly = false
 
 function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
@@ -56,15 +57,17 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     local grapple_straight = vars_ui.grapple_straight
 
+    local changes = grapple_straight.changes
+
     ------------------------- Finalize models for this frame -------------------------
     this.Refresh_Name(grapple_straight.name, grapple)
 
     this.Refresh_Description(grapple_straight.description, grapple)
 
     local shouldHighlightAlong = isHovered_distance or isHovered_along or isHovered_drag
-    Refresh_StickFigure(grapple_straight.stickFigure, isHovered_antigrav)
+    Refresh_StickFigure(grapple_straight.stickFigure, isHovered_antigrav or isHovered_stopEarly)
     Refresh_GrappleArrows(grapple_straight.arrows, grapple, true, shouldHighlightAlong, isHovered_look or isHovered_airdash)
-    Refresh_GrappleDesiredLength(grapple_straight.desired_line, grapple, nil, grapple_straight.changes, shouldHighlightAlong)
+    Refresh_GrappleDesiredLength(grapple_straight.desired_line, grapple, nil, changes, shouldHighlightAlong)
 
     this.Refresh_Distances(grapple_straight.distances, grapple)
 
@@ -134,8 +137,9 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
         TransitionWindows_Straight_AntiGrav(vars_ui, const)
     end
 
-    if Draw_SummaryButton(grapple_straight.stop_early, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        print("TODO: Transition to stop_early")
+    isClicked, isHovered_stopEarly = Draw_SummaryButton(grapple_straight.stop_early, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    if isClicked then
+        TransitionWindows_Straight_StopEarly(vars_ui, const)
     end
 
     Draw_OrderedList(grapple_straight.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)

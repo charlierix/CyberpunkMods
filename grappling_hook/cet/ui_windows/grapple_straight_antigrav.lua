@@ -54,24 +54,26 @@ function DrawWindow_GrappleStraight_AntiGrav(vars_ui, player, window, const)
 
     local gst8_antgrav = vars_ui.gst8_antgrav
 
+    local changes = gst8_antgrav.changes
+
     ------------------------- Finalize models for this frame -------------------------
 
     Refresh_Name(gst8_antgrav.name, grapple.name)
 
     Refresh_GrappleArrows(gst8_antgrav.arrows, grapple, false, false, false)
-    Refresh_GrappleDesiredLength(gst8_antgrav.desired_line, grapple, nil, gst8_antgrav.changes, false)
+    Refresh_GrappleDesiredLength(gst8_antgrav.desired_line, grapple, nil, changes, false)
 
-    this.Refresh_HasAntiGrav(gst8_antgrav.has_antigrav, player, grapple, antigrav, gst8_antgrav.changes)
+    this.Refresh_HasAntiGrav(gst8_antgrav.has_antigrav, player, grapple, antigrav, changes)
 
-    this.Refresh_Percent_Value(gst8_antgrav.percent_value, antigrav, gst8_antgrav.changes)
-    this.Refresh_Percent_UpDown(gst8_antgrav.percent_updown, antigrav, player, gst8_antgrav.changes)
+    this.Refresh_Percent_Value(gst8_antgrav.percent_value, antigrav, changes)
+    this.Refresh_Percent_UpDown(gst8_antgrav.percent_updown, antigrav, player, changes)
 
-    this.Refresh_Fade_Value(gst8_antgrav.fade_value, antigrav, gst8_antgrav.changes)
-    this.Refresh_Fade_UpDown(gst8_antgrav.fade_updown, antigrav, player, gst8_antgrav.changes)
+    this.Refresh_Fade_Value(gst8_antgrav.fade_value, antigrav, changes)
+    this.Refresh_Fade_UpDown(gst8_antgrav.fade_updown, antigrav, player, changes)
 
-    this.Refresh_Experience(gst8_antgrav.experience, player, grapple, gst8_antgrav.changes, gst8_antgrav.has_antigrav.isChecked, startedWithAG)
+    this.Refresh_Experience(gst8_antgrav.experience, player, grapple, changes, gst8_antgrav.has_antigrav.isChecked, startedWithAG)
 
-    this.Refresh_IsDirty(gst8_antgrav.okcancel, gst8_antgrav.changes, grapple, gst8_antgrav.has_antigrav)
+    this.Refresh_IsDirty(gst8_antgrav.okcancel, changes, grapple, gst8_antgrav.has_antigrav)
 
     -------------------------------- Show ui elements --------------------------------
 
@@ -84,7 +86,7 @@ function DrawWindow_GrappleStraight_AntiGrav(vars_ui, player, window, const)
     Draw_GrappleDesiredLength(gst8_antgrav.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
     if Draw_CheckBox(gst8_antgrav.has_antigrav, vars_ui.style.checkbox, window.width, window.height, const) then
-        this.Update_HasAntiGrav(gst8_antgrav.has_antigrav, antigrav, gst8_antgrav.changes, startedWithAG)
+        this.Update_HasAntiGrav(gst8_antgrav.has_antigrav, antigrav, changes, startedWithAG)
     end
 
     if gst8_antgrav.has_antigrav.isChecked then
@@ -93,7 +95,7 @@ function DrawWindow_GrappleStraight_AntiGrav(vars_ui, player, window, const)
         Draw_Label(gst8_antgrav.percent_value, vars_ui.style.colors, window.width, window.height, const)
 
         local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_antgrav.percent_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-        this.Update_Percent(gst8_antgrav.percent_updown, gst8_antgrav.changes, isDownClicked, isUpClicked)
+        this.Update_Percent(gst8_antgrav.percent_updown, changes, isDownClicked, isUpClicked)
 
         Draw_HelpButton(gst8_antgrav.percent_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
@@ -102,7 +104,7 @@ function DrawWindow_GrappleStraight_AntiGrav(vars_ui, player, window, const)
         Draw_Label(gst8_antgrav.fade_value, vars_ui.style.colors, window.width, window.height, const)
 
         isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_antgrav.fade_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-        this.Update_Fade(gst8_antgrav.fade_updown, gst8_antgrav.changes, isDownClicked, isUpClicked)
+        this.Update_Fade(gst8_antgrav.fade_updown, changes, isDownClicked, isUpClicked)
 
         Draw_HelpButton(gst8_antgrav.fade_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
     end
@@ -111,7 +113,7 @@ function DrawWindow_GrappleStraight_AntiGrav(vars_ui, player, window, const)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_antgrav.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
-        this.Save(player, grapple, antigrav, gst8_antgrav.changes, gst8_antgrav.has_antigrav.isChecked, startedWithAG)
+        this.Save(player, grapple, antigrav, changes, gst8_antgrav.has_antigrav.isChecked, startedWithAG)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
 
     elseif isCancelClicked then

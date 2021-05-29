@@ -75,6 +75,7 @@ require "ui_windows/grapple_straight_airdash"
 require "ui_windows/grapple_straight_antigrav"
 require "ui_windows/grapple_straight_description"
 require "ui_windows/grapple_straight_distances"
+require "ui_windows/grapple_straight_stopearly"
 require "ui_windows/main"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
@@ -198,6 +199,7 @@ local const =
                 "grapple_straight_antigrav",
                 "grapple_straight_description",
                 "grapple_straight_distances",
+                "grapple_straight_stopearly",
             "grapple_swing",
     }),
 

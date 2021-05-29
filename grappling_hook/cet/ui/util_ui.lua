@@ -216,3 +216,19 @@ function GetNamedColor(style_colors, name)
         the_color_b = b,
     }
 end
+
+-- This does an extra validation to make sure the value is between min and max (if they are populated)
+-- The slider is supposed to do that, but doesn't if min and max are changed after value is set
+function GetSliderValue(def)
+    local retVal = def.value
+
+    if def.min and retVal < def.min then
+        retVal = def.min
+    end
+
+    if def.max and retVal > def.max then
+        retVal = def.max
+    end
+
+    return retVal
+end

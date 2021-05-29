@@ -106,3 +106,20 @@ function TransitionWindows_Straight_Distances(vars_ui, const)
     vars_ui.gst8_dist.desired_checkbox.isChecked = nil
     vars_ui.gst8_dist.desired_slider.value = nil
 end
+
+function TransitionWindows_Straight_StopEarly(vars_ui, const)
+    -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
+    -- in vars_ui.transition_info
+
+    vars_ui.currentWindow = const.windows.grapple_straight_stopearly
+
+    vars_ui.gst8_stop.changes:Clear()
+
+    vars_ui.gst8_stop.has_stopDistance.isChecked = nil
+    vars_ui.gst8_stop.stopDistance_value.value = nil
+
+    vars_ui.gst8_stop.should_stopOnWallHit.isChecked = nil
+
+    vars_ui.gst8_stop.has_stopAngle.isChecked = nil
+    vars_ui.gst8_stop.stopAngle_value.value = nil
+end

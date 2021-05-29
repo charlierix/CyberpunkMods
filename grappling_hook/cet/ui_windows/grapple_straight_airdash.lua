@@ -63,29 +63,31 @@ function DrawWindow_GrappleStraight_AirDash(vars_ui, player, window, const)
 
     local gst8_airdash = vars_ui.gst8_airdash
 
+    local changes = gst8_airdash.changes
+
     ------------------------- Finalize models for this frame -------------------------
 
     Refresh_Name(gst8_airdash.name, grapple.name)
 
     Refresh_GrappleArrows(gst8_airdash.arrows, grapple, true, false, false)
-    Refresh_GrappleDesiredLength(gst8_airdash.desired_line, grapple, nil, gst8_airdash.changes, false)
+    Refresh_GrappleDesiredLength(gst8_airdash.desired_line, grapple, nil, changes, false)
 
-    this.Refresh_HasAirDash(gst8_airdash.has_airdash, player, grapple.aim_straight, airdash, gst8_airdash.changes)
+    this.Refresh_HasAirDash(gst8_airdash.has_airdash, player, grapple.aim_straight, airdash, changes)
 
-    this.Refresh_BurnRate(gst8_airdash.burn_rate, airdash, gst8_airdash.changes)
+    this.Refresh_BurnRate(gst8_airdash.burn_rate, airdash, changes)
 
-    this.Refresh_Percent_Value(gst8_airdash.percent_value, airdash, gst8_airdash.changes)
-    this.Refresh_Percent_UpDown(gst8_airdash.percent_updown, airdash, player, gst8_airdash.changes)
+    this.Refresh_Percent_Value(gst8_airdash.percent_value, airdash, changes)
+    this.Refresh_Percent_UpDown(gst8_airdash.percent_updown, airdash, player, changes)
 
-    this.Refresh_Accel_Value(gst8_airdash.accel_value, airdash.accel, gst8_airdash.changes)
-    this.Refresh_Accel_UpDown(gst8_airdash.accel_updown, airdash.accel, player, gst8_airdash.changes)
+    this.Refresh_Accel_Value(gst8_airdash.accel_value, airdash.accel, changes)
+    this.Refresh_Accel_UpDown(gst8_airdash.accel_updown, airdash.accel, player, changes)
 
-    this.Refresh_Speed_Value(gst8_airdash.speed_value, airdash.accel, gst8_airdash.changes)
-    this.Refresh_Speed_UpDown(gst8_airdash.speed_updown, airdash.accel, player, gst8_airdash.changes)
+    this.Refresh_Speed_Value(gst8_airdash.speed_value, airdash.accel, changes)
+    this.Refresh_Speed_UpDown(gst8_airdash.speed_updown, airdash.accel, player, changes)
 
-    this.Refresh_Experience(gst8_airdash.experience, player, grapple, gst8_airdash.changes, gst8_airdash.has_airdash.isChecked, startedWithAD)
+    this.Refresh_Experience(gst8_airdash.experience, player, grapple, changes, gst8_airdash.has_airdash.isChecked, startedWithAD)
 
-    this.Refresh_IsDirty(gst8_airdash.okcancel, gst8_airdash.changes, grapple, gst8_airdash.has_airdash)
+    this.Refresh_IsDirty(gst8_airdash.okcancel, changes, grapple, gst8_airdash.has_airdash)
 
     -------------------------------- Show ui elements --------------------------------
 
@@ -98,7 +100,7 @@ function DrawWindow_GrappleStraight_AirDash(vars_ui, player, window, const)
     Draw_GrappleDesiredLength(gst8_airdash.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
     if Draw_CheckBox(gst8_airdash.has_airdash, vars_ui.style.checkbox, window.width, window.height, const) then
-        this.Update_HasAirDash(gst8_airdash.has_airdash, airdash, gst8_airdash.changes, startedWithAD)
+        this.Update_HasAirDash(gst8_airdash.has_airdash, airdash, changes, startedWithAD)
     end
 
     if gst8_airdash.has_airdash.isChecked then
@@ -109,7 +111,7 @@ function DrawWindow_GrappleStraight_AirDash(vars_ui, player, window, const)
         Draw_Label(gst8_airdash.percent_value, vars_ui.style.colors, window.width, window.height, const)
 
         local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_airdash.percent_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-        this.Update_Percent(gst8_airdash.percent_updown, gst8_airdash.changes, isDownClicked, isUpClicked)
+        this.Update_Percent(gst8_airdash.percent_updown, changes, isDownClicked, isUpClicked)
 
         Draw_HelpButton(gst8_airdash.percent_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
@@ -118,7 +120,7 @@ function DrawWindow_GrappleStraight_AirDash(vars_ui, player, window, const)
         Draw_Label(gst8_airdash.accel_value, vars_ui.style.colors, window.width, window.height, const)
 
         isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_airdash.accel_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-        this.Update_Accel(gst8_airdash.accel_updown, gst8_airdash.changes, isDownClicked, isUpClicked)
+        this.Update_Accel(gst8_airdash.accel_updown, changes, isDownClicked, isUpClicked)
 
         Draw_HelpButton(gst8_airdash.accel_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
@@ -127,7 +129,7 @@ function DrawWindow_GrappleStraight_AirDash(vars_ui, player, window, const)
         Draw_Label(gst8_airdash.speed_value, vars_ui.style.colors, window.width, window.height, const)
 
         isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_airdash.speed_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-        this.Update_Speed(gst8_airdash.speed_updown, gst8_airdash.changes, isDownClicked, isUpClicked)
+        this.Update_Speed(gst8_airdash.speed_updown, changes, isDownClicked, isUpClicked)
 
         Draw_HelpButton(gst8_airdash.speed_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
     end
@@ -136,7 +138,7 @@ function DrawWindow_GrappleStraight_AirDash(vars_ui, player, window, const)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_airdash.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
-        this.Save(player, grapple, grapple.aim_straight, airdash, gst8_airdash.changes, gst8_airdash.has_airdash.isChecked, startedWithAD)
+        this.Save(player, grapple, grapple.aim_straight, airdash, changes, gst8_airdash.has_airdash.isChecked, startedWithAD)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
 
     elseif isCancelClicked then

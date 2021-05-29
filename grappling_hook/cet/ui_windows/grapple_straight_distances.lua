@@ -42,23 +42,25 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
 
     local gst8_dist = vars_ui.gst8_dist
 
+    local changes = gst8_dist.changes
+
     ------------------------- Finalize models for this frame -------------------------
 
     Refresh_Name(gst8_dist.name, grapple.name)
 
     Refresh_GrappleArrows(gst8_dist.arrows, grapple, false, false, false)
-    Refresh_GrappleDesiredLength(gst8_dist.desired_line, grapple, this.GetChanged_DesiredLength(gst8_dist.desired_checkbox, gst8_dist.desired_slider), gst8_dist.changes, isHovered_desired)
+    Refresh_GrappleDesiredLength(gst8_dist.desired_line, grapple, this.GetChanged_DesiredLength(gst8_dist.desired_checkbox, gst8_dist.desired_slider), changes, isHovered_desired)
 
     --TODO: MaxDistance Update should be non linear
-    this.Refresh_MaxDistance_Value(gst8_dist.max_value, grapple, gst8_dist.changes)
-    this.Refresh_MaxDistance_UpDown(gst8_dist.max_updown, grapple, player, gst8_dist.changes)
+    this.Refresh_MaxDistance_Value(gst8_dist.max_value, grapple, changes)
+    this.Refresh_MaxDistance_UpDown(gst8_dist.max_updown, grapple, player, changes)
 
     this.Refresh_Desired_CheckBox(gst8_dist.desired_checkbox, grapple)
-    this.Refresh_Desired_Slider(gst8_dist.desired_slider, grapple, gst8_dist.changes)
+    this.Refresh_Desired_Slider(gst8_dist.desired_slider, grapple, changes)
 
-    this.Refresh_Experience(gst8_dist.experience, player, grapple, gst8_dist.changes)
+    this.Refresh_Experience(gst8_dist.experience, player, grapple, changes)
 
-    this.Refresh_IsDirty(gst8_dist.okcancel, gst8_dist.changes, gst8_dist.desired_checkbox, gst8_dist.desired_slider, grapple)
+    this.Refresh_IsDirty(gst8_dist.okcancel, changes, gst8_dist.desired_checkbox, gst8_dist.desired_slider, grapple)
 
     -------------------------------- Show ui elements --------------------------------
 
@@ -75,7 +77,7 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
     Draw_Label(gst8_dist.max_value, vars_ui.style.colors, window.width, window.height, const)
 
     local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_dist.max_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-    this.Update_MaxDistance(gst8_dist.max_updown, gst8_dist.changes, gst8_dist.desired_slider, isDownClicked, isUpClicked, grapple)
+    this.Update_MaxDistance(gst8_dist.max_updown, changes, gst8_dist.desired_slider, isDownClicked, isUpClicked, grapple)
 
     Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
@@ -88,13 +90,13 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
         isHovered_desired = false
     end
 
-    this.Update_DesiredLength(gst8_dist.desired_checkbox, gst8_dist.desired_slider, gst8_dist.changes)
+    this.Update_DesiredLength(gst8_dist.desired_checkbox, gst8_dist.desired_slider, changes)
 
     Draw_OrderedList(gst8_dist.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_dist.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
-        this.Save(player, grapple, gst8_dist.changes, gst8_dist.desired_checkbox, gst8_dist.desired_slider)
+        this.Save(player, grapple, changes, gst8_dist.desired_checkbox, gst8_dist.desired_slider)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
 
     elseif isCancelClicked then

@@ -65,27 +65,29 @@ function DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
 
     local gst8_accalong = vars_ui.gst8_accalong
 
+    local changes = gst8_accalong.changes
+
     ------------------------- Finalize models for this frame -------------------------
 
     Refresh_Name(gst8_accalong.name, grapple.name)
 
     Refresh_GrappleArrows(gst8_accalong.arrows, grapple, true, false, false)
-    Refresh_GrappleDesiredLength(gst8_accalong.desired_line, grapple, nil, gst8_accalong.changes, false)
+    Refresh_GrappleDesiredLength(gst8_accalong.desired_line, grapple, nil, changes, false)
     Refresh_GrappleAccelToDesired(gst8_accalong.desired_extra, grapple, accel, gst8_accalong.deadspot_dist.value, false, isHovered_deadspot)
 
-    this.Refresh_HasAccelAlong(gst8_accalong.has_accelalong, player, grapple, accel, gst8_accalong.changes)
+    this.Refresh_HasAccelAlong(gst8_accalong.has_accelalong, player, grapple, accel, changes)
 
-    this.Refresh_Accel_Value(gst8_accalong.accel_value, accel, gst8_accalong.changes)
-    this.Refresh_Accel_UpDown(gst8_accalong.accel_updown, accel, player, gst8_accalong.changes)
+    this.Refresh_Accel_Value(gst8_accalong.accel_value, accel, changes)
+    this.Refresh_Accel_UpDown(gst8_accalong.accel_updown, accel, player, changes)
 
-    this.Refresh_Speed_Value(gst8_accalong.speed_value, accel, gst8_accalong.changes)
-    this.Refresh_Speed_UpDown(gst8_accalong.speed_updown, accel, player, gst8_accalong.changes)
+    this.Refresh_Speed_Value(gst8_accalong.speed_value, accel, changes)
+    this.Refresh_Speed_UpDown(gst8_accalong.speed_updown, accel, player, changes)
 
     this.Refresh_DeadSpot_Dist(gst8_accalong.deadspot_dist, accel)
 
-    this.Refresh_Experience(gst8_accalong.experience, player, grapple, gst8_accalong.changes, gst8_accalong.has_accelalong.isChecked, startedWithAG)
+    this.Refresh_Experience(gst8_accalong.experience, player, grapple, changes, gst8_accalong.has_accelalong.isChecked, startedWithAG)
 
-    this.Refresh_IsDirty(gst8_accalong.okcancel, gst8_accalong.changes, grapple, gst8_accalong.has_accelalong, gst8_accalong.deadspot_dist)
+    this.Refresh_IsDirty(gst8_accalong.okcancel, changes, grapple, gst8_accalong.has_accelalong, gst8_accalong.deadspot_dist)
 
     -------------------------------- Show ui elements --------------------------------
 
@@ -99,7 +101,7 @@ function DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
     Draw_GrappleAccelToDesired(gst8_accalong.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
     if Draw_CheckBox(gst8_accalong.has_accelalong, vars_ui.style.checkbox, window.width, window.height, const) then
-        this.Update_HasAccelAlong(gst8_accalong.has_accelalong, accel, gst8_accalong.changes, startedWithAG)
+        this.Update_HasAccelAlong(gst8_accalong.has_accelalong, accel, changes, startedWithAG)
     end
 
     if gst8_accalong.has_accelalong.isChecked then
@@ -108,7 +110,7 @@ function DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
         Draw_Label(gst8_accalong.accel_value, vars_ui.style.colors, window.width, window.height, const)
 
         local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_accalong.accel_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-        this.Update_Accel(gst8_accalong.accel_updown, gst8_accalong.changes, isDownClicked, isUpClicked)
+        this.Update_Accel(gst8_accalong.accel_updown, changes, isDownClicked, isUpClicked)
 
         Draw_HelpButton(gst8_accalong.accel_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
@@ -117,7 +119,7 @@ function DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
         Draw_Label(gst8_accalong.speed_value, vars_ui.style.colors, window.width, window.height, const)
 
         isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_accalong.speed_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-        this.Update_Speed(gst8_accalong.speed_updown, gst8_accalong.changes, isDownClicked, isUpClicked)
+        this.Update_Speed(gst8_accalong.speed_updown, changes, isDownClicked, isUpClicked)
 
         Draw_HelpButton(gst8_accalong.speed_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
@@ -133,7 +135,7 @@ function DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_accalong.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
-        this.Save(player, grapple, accel, gst8_accalong.changes, gst8_accalong.has_accelalong.isChecked, startedWithAG, gst8_accalong.deadspot_dist)
+        this.Save(player, grapple, accel, changes, gst8_accalong.has_accelalong.isChecked, startedWithAG, gst8_accalong.deadspot_dist)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
 
     elseif isCancelClicked then
@@ -316,12 +318,7 @@ end
 
 function this.Save(player, grapple, accel, changes, hasAG, startedWithAG, def_slider)
     if hasAG then
-        local deadspot = def_slider.value
-        if deadspot < def_slider.min then
-            deadspot = def_slider.min
-        elseif deadspot > def_slider.max then
-            deadspot = def_slider.max
-        end
+        local deadspot = GetSliderValue(def_slider)
 
         if grapple.accel_alongGrappleLine then
             grapple.accel_alongGrappleLine.accel = accel.accel + changes:Get("accel")
