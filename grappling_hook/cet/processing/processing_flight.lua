@@ -35,22 +35,22 @@ function Process_Flight(o, player, state, const, debug, deltaTime)
 
     -- If about to hit a wall, then cancel, but only if the settings say to
     if state.hasBeenAirborne and grapple.stop_on_wallHit and IsWallCollisionImminent(o, deltaTime) then
-        Transition_ToStandard(state, const, debug, o)
+        this.Transition_AntiGravOrStandard(state, const, debug, o, grapple)
         do return end
     end
 
     local _, _, grappleLen, grappleDirUnit = GetGrappleLine(o, state, const)
 
+    if grapple.stop_distance and grappleLen <= grapple.stop_distance then
+        this.Transition_AntiGravOrStandard(state, const, debug, o, grapple)
+        do return end
+    end
+
     o:GetCamera()
 
     if grapple.minDot and (DotProduct3D(o.lookdir_forward, grappleDirUnit) < grapple.minDot) then
         -- They looked too far away
-        if grapple.anti_gravity then
-            Transition_ToAntiGrav(state, const, o)
-        else
-            Transition_ToStandard(state, const, debug, o)
-        end
-
+        this.Transition_AntiGravOrStandard(state, const, debug, o, grapple)
         do return end
     end
 
@@ -157,4 +157,12 @@ function this.GetLook(o, state, grapple, grappleLen)
 
     -- Get the acceleration
     return GetPullAccel_Constant(grapple.accel_alongLook, o.lookdir_forward, diffDist, speed, not isSameDir)
+end
+
+function this.Transition_AntiGravOrStandard(state, const, debug, o, grapple)
+    if grapple.anti_gravity then
+        Transition_ToAntiGrav(state, const, o)
+    else
+        Transition_ToStandard(state, const, debug, o)
+    end
 end

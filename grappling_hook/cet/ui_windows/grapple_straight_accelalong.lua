@@ -98,7 +98,9 @@ function DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
     Draw_StickFigure(gst8_accalong.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
     Draw_GrappleArrows(gst8_accalong.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_accalong.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
-    Draw_GrappleAccelToDesired(gst8_accalong.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+    if gst8_accalong.has_accelalong.isChecked then
+        Draw_GrappleAccelToDesired(gst8_accalong.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+    end
 
     if Draw_CheckBox(gst8_accalong.has_accelalong, vars_ui.style.checkbox, window.width, window.height, const) then
         this.Update_HasAccelAlong(gst8_accalong.has_accelalong, accel, changes, startedWithAG)

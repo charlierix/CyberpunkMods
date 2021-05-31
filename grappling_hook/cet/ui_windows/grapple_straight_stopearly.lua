@@ -13,15 +13,13 @@ function DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
     gst8_stop.stickFigure = Define_StickFigure(true, const)
     gst8_stop.arrows = Define_GrappleArrows(false, false)
     gst8_stop.desired_line = Define_GrappleDesiredLength(false)
+    gst8_stop.desired_extra = this.Define_GrappleAccelToDesired_Custom()
 
     -- Stop Angle (Grapple.minDot)
     gst8_stop.has_stopAngle = this.Define_HasStopAngle(const)
     gst8_stop.stopAngle_help = this.Define_StopAngle_Help(const)
     gst8_stop.stopAngle_value = this.Define_StopAngle_Value(const)
-
-
-    --TODO: Graphic
-
+    gst8_stop.stopAngle_graphic = this.Define_StopAngle_Graphic(const)
 
     --TODO: Reuse the deadspot graphic (always set percent to 1)
     -- Stop Distance (Grapple.stop_distance)
@@ -36,6 +34,8 @@ function DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
 
     gst8_stop.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
+
+local isHovered_stopdistance = false
 
 function DrawWindow_GrappleStraight_StopEarly(vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
@@ -62,9 +62,11 @@ function DrawWindow_GrappleStraight_StopEarly(vars_ui, player, window, const)
 
     Refresh_GrappleArrows(gst8_stop.arrows, grapple, false, false, false)
     Refresh_GrappleDesiredLength(gst8_stop.desired_line, grapple, nil, changes, false)
+    this.Refresh_GrappleAccelToDesired_Custom(gst8_stop.desired_extra, grapple, gst8_stop.has_stopDistance, gst8_stop.stopDistance_value, isHovered_stopdistance)
 
     this.Refresh_HasStopAngle(gst8_stop.has_stopAngle, grapple)
     this.Refresh_StopAngle_Value(gst8_stop.stopAngle_value, grapple)
+    this.Refresh_StopAngle_Graphic(gst8_stop.stopAngle_graphic, gst8_stop.stopAngle_value)
 
     this.Refresh_HasStopDistance(gst8_stop.has_stopDistance, grapple)
     this.Refresh_StopDistance_Value(gst8_stop.stopDistance_value, grapple)
@@ -82,19 +84,23 @@ function DrawWindow_GrappleStraight_StopEarly(vars_ui, player, window, const)
     Draw_StickFigure(gst8_stop.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
     Draw_GrappleArrows(gst8_stop.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_stop.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+    Draw_GrappleAccelToDesired(gst8_stop.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
     Draw_CheckBox(gst8_stop.has_stopAngle, vars_ui.style.checkbox, window.width, window.height, const)
     Draw_HelpButton(gst8_stop.stopAngle_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
     if gst8_stop.has_stopAngle.isChecked then
         Draw_Slider(gst8_stop.stopAngle_value, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
+        Draw_MinDotGraphic(gst8_stop.stopAngle_graphic, vars_ui.style.graphics, vars_ui.style.mindotGraphic, window.left, window.top, window.width, window.height, const)
     end
 
     Draw_CheckBox(gst8_stop.has_stopDistance, vars_ui.style.checkbox, window.width, window.height, const)
     Draw_HelpButton(gst8_stop.stopDistance_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
     if gst8_stop.has_stopDistance.isChecked then
-        Draw_Slider(gst8_stop.stopDistance_value, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
+        _, isHovered_stopdistance = Draw_Slider(gst8_stop.stopDistance_value, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
+    else
+        isHovered_stopdistance = false
     end
 
     Draw_CheckBox(gst8_stop.should_stopOnWallHit, vars_ui.style.checkbox, window.width, window.height, const)
@@ -111,6 +117,49 @@ function DrawWindow_GrappleStraight_StopEarly(vars_ui, player, window, const)
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.Define_GrappleAccelToDesired_Custom()
+    -- GrappleAccelToDesired
+    return
+    {
+        isStandardColor_accel = false,
+        isStandardColor_dead = false,
+
+        show_accel = false,
+        show_dead = true,
+
+        isHighlight_accel = false,
+        isHighlight_dead = false,
+
+        yOffset_accel = -18,
+        yOffset_dead = 18,
+
+        length_accel = 60,
+        length_dead = 48,       -- this one should be calculated in refresh
+
+        length_accel_halfgap = 6,
+        deadHeight = 9,
+
+        percent = 0,        -- it's always far right, since this is distance from anchor
+
+        --NOTE: These values are copied from Define_GrappleArrows
+        from_x = -300,
+        to_x = 360,
+        y = -70,
+    }
+end
+function this.Refresh_GrappleAccelToDesired_Custom(def, grapple, def_checkbox, def_slider, shouldHighlight)
+    if not def_checkbox.isChecked or not def_slider.value then
+        def.show_dead = false
+        do return end
+    end
+
+    def.show_dead = true
+    def.isHighlight_dead = shouldHighlight
+
+    -- Scale drawn deadspot relative to the aim distance
+    def.length_dead = GetScaledValue(0, def.to_x - def.from_x, 0, grapple.aim_straight.max_distance, GetSliderValue(def_slider))
+end
 
 -- StopAngle
 function this.Define_HasStopAngle(const)
@@ -188,6 +237,25 @@ function this.Refresh_StopAngle_Value(def, grapple)
             def.value = 0
         end
     end
+end
+
+function this.Define_StopAngle_Graphic(const)
+    -- MinDotGraphic
+    return
+    {
+        radius = 90,
+
+        position =
+        {
+            pos_x = -220,
+            pos_y = 220,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+    }
+end
+function this.Refresh_StopAngle_Graphic(def, def_slider)
+    def.radians = Degrees_to_Radians(def_slider.value)
 end
 
 -- StopDistance

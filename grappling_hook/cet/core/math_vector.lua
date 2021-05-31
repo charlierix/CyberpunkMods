@@ -159,12 +159,26 @@ end
 --   0       90
 --  -1       180
 function Dot_to_Angle(dot)
-    local radians = math.acos(dot)
-    return radians * 180 / math.pi
+    local radians = Dot_to_Radians(dot)
+    return Radians_to_Degrees(radians)
 end
-function Angle_to_Dot(angle)
-    local radians = angle * math.pi / 180
+function Angle_to_Dot(degrees)
+    local radians = Degrees_to_Radians(degrees)
+    return Radians_to_Dot(radians)
+end
+
+function Dot_to_Radians(dot)
+    return math.acos(dot)
+end
+function Radians_to_Dot(radians)
     return math.cos(radians)
+end
+
+function Degrees_to_Radians(degrees)
+    return degrees * math.pi / 180
+end
+function Radians_to_Degrees(radians)
+    return radians * 180 / math.pi
 end
 
 ------------------------------------- Convert -------------------------------------

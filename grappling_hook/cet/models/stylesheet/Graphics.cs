@@ -12,6 +12,7 @@ namespace grapple_ui.models.stylesheet
     public record Graphics
     {
         public double line_thickness_main { get; init; }
+        public double line_thickness_minor { get; init; }
 
         // These are the triangle portion of an arrow head ----->
         public double arrow_length { get; init; }

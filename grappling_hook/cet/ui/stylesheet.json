@@ -142,9 +142,17 @@
         "back_color_hover": "806699CC"
     },
 
+    "mindotGraphic":
+    {
+        "up_color": "707070",
+        "zero_color": "505050",
+        "angle_color": "AAE"
+    },
+
     "graphics":
     {
         "line_thickness_main": 1,
+        "line_thickness_minor": 0.8,
 
         "arrow_length": 10,
         "arrow_width": 7,

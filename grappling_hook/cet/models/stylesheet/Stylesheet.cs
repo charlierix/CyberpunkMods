@@ -59,6 +59,8 @@ namespace grapple_ui.models.stylesheet
 
         public HelpButton helpButton { get; init; }
 
+        public MinDotGraphic mindotGraphic { get; init; }
+
         public Graphics graphics { get; init; }
 
         /// <summary>

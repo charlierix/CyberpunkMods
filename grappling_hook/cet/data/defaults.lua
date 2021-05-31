@@ -41,7 +41,7 @@ function GetDefault_Grapple_Pull()
 
         velocity_away = nil,        -- the attractive force is strong enough that there will likely never be a velocity away.  And if there is, the force is pretty strong anyway
 
-        energy_cost = 7,
+        energy_cost = 7,        --TODO: this should be a function of the experience cost
 
         aim_straight = GetDefault_AimStraight(),
 
@@ -75,11 +75,10 @@ function GetDefault_Grapple_Rigid()
 
         velocity_away =
         {
-            --accel_compression = 8,     -- using a small value
-            --accel_tension = 64,         -- using a big value so it feels like rope
-            accel_tension = 48,
+            accel_compression = 8,     -- using a small value
+            accel_tension = 60,     -- using a big value so it feels like rope
 
-            deadSpot = 0.5,
+            deadSpot = 0.75,
         },
 
         energy_cost = 3,

@@ -57,6 +57,7 @@ require "ui_controls/grapple_desired_len_accel"
 require "ui_controls/help_button"
 require "ui_controls/label"
 require "ui_controls/label_clickable"
+require "ui_controls/mindot_graphic"
 require "ui_controls/okcancel_buttons"
 require "ui_controls/orderedlist"
 require "ui_controls/slider"
@@ -421,7 +422,7 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("GrapplingHookSavePlayer", "store playerID", function()
+registerHotkey("GrapplingHookSavePlayer", "tester hotkey", function()
     player.experience = player.experience + 3
     player:Save()
 end)

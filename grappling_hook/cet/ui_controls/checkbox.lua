@@ -3,7 +3,6 @@
 -- Returns
 --  wasChanged
 function Draw_CheckBox(def, style_checkbox, parent_width, parent_height, const)
-
     -- Calculate Size
     local width, height = ImGui.CalcTextSize(def.text)
 
