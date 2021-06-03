@@ -159,12 +159,12 @@
 
         "TODO": "Probably just want to use one set of colors, since they are the same",
 
-        "stickfigure_color_standard": "888",
-        "stickfigure_color_gray": "484848",
+        "stickfigure_color_standard": "777",
+        "stickfigure_color_gray": "383838",
         "stickfigure_color_highlight": "DAE889",
 
-        "line_color_standard": "888",
-        "line_color_gray": "484848",
+        "line_color_standard": "777",
+        "line_color_gray": "383838",
         "line_color_highlight": "DAE889"
     },
 

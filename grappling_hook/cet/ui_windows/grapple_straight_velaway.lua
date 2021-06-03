@@ -12,8 +12,9 @@ function DefineWindow_GrappleStraight_VelocityAway(vars_ui, const)
     gst8_velaway.name = Define_Name(const)
 
     gst8_velaway.stickFigure = Define_StickFigure(false, const)
-    gst8_velaway.arrows = Define_GrappleArrows(false, true)
+    gst8_velaway.arrows = Define_GrappleArrows(true, false)
     gst8_velaway.desired_line = Define_GrappleDesiredLength(false)
+    gst8_velaway.desired_extra = Define_GrappleAccelToDesired(true, true)
 
     -- Checkbox for whether to have vel away (Grapple.velocity_away)
     gst8_velaway.has_velaway = this.Define_HasVelocityAway(const)
@@ -72,6 +73,7 @@ function DrawWindow_GrappleStraight_VelocityAway(vars_ui, player, window, const)
 
     Refresh_GrappleArrows(gst8_velaway.arrows, grapple, true, false, false)
     Refresh_GrappleDesiredLength(gst8_velaway.desired_line, grapple, nil, changes, false)
+    this.Refresh_GrappleAccelToDesired_Custom(gst8_velaway.desired_extra, grapple, velaway, gst8_velaway.deadspot_dist.value, false, false, isHovered_deadspot)
 
     this.Refresh_HasVelocityAway(gst8_velaway.has_velaway, player, grapple, velaway, changes)
 
@@ -99,6 +101,10 @@ function DrawWindow_GrappleStraight_VelocityAway(vars_ui, player, window, const)
     Draw_StickFigure(gst8_velaway.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
     Draw_GrappleArrows(gst8_velaway.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_velaway.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+
+    if gst8_velaway.has_velaway.isChecked then
+        Draw_GrappleAccelToDesired(gst8_velaway.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+    end
 
     if Draw_CheckBox(gst8_velaway.has_velaway, vars_ui.style.checkbox, window.width, window.height, const) then
         this.Update_HasVelocityAway(gst8_velaway.has_velaway, velaway, changes, startedWith_velaway)
@@ -155,6 +161,32 @@ function DrawWindow_GrappleStraight_VelocityAway(vars_ui, player, window, const)
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.Refresh_GrappleAccelToDesired_Custom(def, grapple, velaway, changed_deadspot, shouldHighlight_accel_left, shouldHighlight_accel_right, shouldHighlight_dead)
+    if grapple.desired_length then
+        def.percent = grapple.desired_length / grapple.aim_straight.max_distance
+    else
+        def.percent = 1
+    end
+
+    local deadSpot = 0
+    if changed_deadspot then
+        deadSpot = changed_deadspot
+    else
+        deadSpot = velaway.deadSpot
+    end
+
+    def.show_accel_left = true
+    def.show_accel_right = true
+    def.show_dead = true
+
+    def.isHighlight_accel_left = shouldHighlight_accel_left
+    def.isHighlight_accel_right = shouldHighlight_accel_right
+    def.isHighlight_dead = shouldHighlight_dead
+
+    -- Scale drawn deadspot relative to the aim distance
+    def.length_dead = GetScaledValue(0, def.to_x - def.from_x, 0, grapple.aim_straight.max_distance, deadSpot)
+end
 
 function this.Define_HasVelocityAway(const)
     -- CheckBox

@@ -188,10 +188,12 @@ function Define_GrappleAccelToDesired(isStandardColor_accel, isStandardColor_dea
         isStandardColor_accel = isStandardColor_accel,
         isStandardColor_dead = isStandardColor_dead,
 
-        show_accel = false,
+        show_accel_left = false,
+        show_accel_right = false,
         show_dead = false,
 
-        isHighlight_accel = false,
+        isHighlight_accel_left = false,
+        isHighlight_accel_right = false,
         isHighlight_dead = false,
 
         yOffset_accel = -18,
@@ -226,12 +228,13 @@ function Refresh_GrappleAccelToDesired(def, grapple, accel, changed_deadspot, sh
     -- Scale drawn deadspot relative to the aim distance
     def.length_dead = GetScaledValue(0, def.to_x - def.from_x, 0, grapple.aim_straight.max_distance, deadSpot)
 
-    def.show_accel = true       -- ConstantAccel's min accel is non zero, so there's no point in taking in an optional changed accel (it will always be true)
+    def.show_accel_left = true       -- ConstantAccel's min accel is non zero, so there's no point in taking in an optional changed accel (it will always be true)
+    def.show_accel_right = true
     def.show_dead = not IsNearZero(deadSpot)
 
-    def.isHighlight_accel = shouldHighlight_accel
+    def.isHighlight_accel_left = shouldHighlight_accel
+    def.isHighlight_accel_right = shouldHighlight_accel
     def.isHighlight_dead = shouldHighlight_dead
-
 end
 
 function Refresh_UpDownButton(def, down, up, roundDigits, display_mult)

@@ -118,10 +118,12 @@ function this.Define_GrappleAccelToDesired_Custom()
         isStandardColor_accel = false,
         isStandardColor_dead = false,
 
-        show_accel = false,
+        show_accel_left = false,
+        show_accel_right = false,
         show_dead = true,
 
-        isHighlight_accel = false,
+        isHighlight_accel_left = false,
+        isHighlight_accel_right = false,
         isHighlight_dead = false,
 
         yOffset_accel = -18,

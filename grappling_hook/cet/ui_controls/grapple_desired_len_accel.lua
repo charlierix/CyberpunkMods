@@ -28,7 +28,7 @@ end
 -- def is models\viewmodels\GrappleAccelToDesired
 -- style_graphics is models\stylesheet\Graphics
 function Draw_GrappleAccelToDesired(def, style_graphics, screenOffset_x, screenOffset_y, parent_width, parent_height)
-    if not def.show_accel and not def.show_dead then
+    if not def.show_accel_left and not def.show_accel_right and not def.show_dead then
         do return end
     end
 
@@ -37,21 +37,31 @@ function Draw_GrappleAccelToDesired(def, style_graphics, screenOffset_x, screenO
     local color
 
     -- Accel
-    if def.show_accel then
-        if def.isHighlight_accel then
-            color = style_graphics.line_color_highlight_abgr
-        elseif def.isStandardColor_accel then
-            color = style_graphics.line_color_standard_abgr
-        else
-            color = style_graphics.line_color_gray_abgr
-        end
-
+    if def.show_accel_left or def.show_accel_right then
         local acc_y = y + def.yOffset_accel
 
-        Draw_Arrow(screenOffset_x, screenOffset_y, x - def.length_accel, acc_y, x - def.length_accel_halfgap, acc_y, color, style_graphics.line_thickness_main, style_graphics.arrow_length, style_graphics.arrow_width)
+        if def.show_accel_left then
+            if def.isHighlight_accel_left then
+                color = style_graphics.line_color_highlight_abgr
+            elseif def.isStandardColor_accel then
+                color = style_graphics.line_color_standard_abgr
+            else
+                color = style_graphics.line_color_gray_abgr
+            end
+
+            Draw_Arrow(screenOffset_x, screenOffset_y, x - def.length_accel, acc_y, x - def.length_accel_halfgap, acc_y, color, style_graphics.line_thickness_main, style_graphics.arrow_length, style_graphics.arrow_width)
+        end
 
         -- No need to draw the arrow from the anchor point to desired if desired is at the anchor point
-        if not IsNearZero(def.percent) then
+        if def.show_accel_right and not IsNearZero(def.percent) then
+            if def.isHighlight_accel_right then
+                color = style_graphics.line_color_highlight_abgr
+            elseif def.isStandardColor_accel then
+                color = style_graphics.line_color_standard_abgr
+            else
+                color = style_graphics.line_color_gray_abgr
+            end
+
             Draw_Arrow(screenOffset_x, screenOffset_y, x + def.length_accel, acc_y, x + def.length_accel_halfgap, acc_y, color, style_graphics.line_thickness_main, style_graphics.arrow_length, style_graphics.arrow_width)
         end
     end

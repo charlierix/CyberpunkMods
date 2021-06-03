@@ -12,7 +12,8 @@ namespace grapple_ui.models.viewmodels
     /// </summary>
     public record GrappleAccelToDesired
     {
-        public bool show_accel { get; init; }
+        public bool show_accel_left { get; init; }
+        public bool show_accel_right { get; init; }
         public bool show_dead { get; init; }
 
         // True: Use the standard color
@@ -21,7 +22,8 @@ namespace grapple_ui.models.viewmodels
         public bool isStandardColor_dead { get; init; }
 
         // Set to true when they hover over options that will modify these lines
-        public bool isHighlight_accel { get; init; }
+        public bool isHighlight_accel_left { get; init; }
+        public bool isHighlight_accel_right { get; init; }
         public bool isHighlight_dead { get; init; }
 
         // Where to draw the accel lines and dead lines.  Use negative if it should be above

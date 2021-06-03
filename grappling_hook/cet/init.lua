@@ -84,18 +84,23 @@ extern_json = require "external/json"       -- storing this in a global variable
 
 function TODO()
 
+    -- Hanging MapPins:
+    --  See if it's because there's an autosave mid grapple
+
     -- AirDash:
     --  Sound
 
-    -- WebSwing:
-    --  Activate when double tapping A,D
+    -- UI (grapple, jetpack):
+    --  Redo progress bars
+    --      Position
+    --      Color
 
-    -- Pull:
-    --      May need further ray casts along the initial line segment if it was beyond 50 (a collision hull could load in as the player gets closer)
-
-    -- Pull:
-    --  If grapple point is a person (determined in aim), ragdoll them toward you
-    --  GET OVER HERE!!!
+    -- UI
+    --  Checkbox to auto show with console
+    --  Settings table (one for bool, add other datatype tables as necessary)
+    --      string key, bool value
+    --      GetSetting_Bool(key, default)       -- returns default if no row found
+    --      SetSetting_Bool(key, value)
 
     -- Input:
     --  Give the option to register actions to this new style hotkey, if that's what they prefer
@@ -108,25 +113,21 @@ function TODO()
     -- end)
 
     -- All:
-    --  Fall damage should be a percent, not a bool
+    --  Rename state to vars (needs to be done in all mods at the same time)
 
     -- GameObjectAccessor:
     --  Interval needs to be rand(12, +-1)
     --  needs to be done in all mods
 
     -- All:
-    --  Rename state to vars (needs to be done in all mods at the same time)
+    --  Fall damage should be a percent, not a bool
 
-    -- UI:
-    --  All numbers should be presented as dozenal :)
-    --  tostring_doz()
-    --  Round_doz()     -- this is needed, because rounding fractions to a certain number of digits would have to be converted, then truncated
-    --  also, if there's ever a textbox, that would need to be parsed as well
+    -- Pull:
+    --  May need further ray casts along the initial line segment if it was beyond 50 (a collision hull could load in as the player gets closer)
 
-    -- UI:
-    --  Only allow config changes within a small radius of vendors: ripper doc, clothing, melee, ranged
-    --  Still allow them to look at values, just not change
-    --  Add a note when out of range
+    -- Pull:
+    --  If grapple point is a person (determined in aim), ragdoll them toward you
+    --  GET OVER HERE!!!
 
     -- Grapple Straight:
     --  Add a repulsion to walls when > some distance from desired distance
@@ -136,6 +137,9 @@ function TODO()
     --  Add an ability to jump straight away from a wall when at the desired distance (and close to a wall)
     --  This will help with scaling tall walls.  You grapple straight up, reach the anchor, recover energy,
     --  jump and aquire a new grapple point, repeat
+
+    -- Grapple Straight/Swing:
+    --  Add extra weight when carrying a dead body
 
     -- Energy Tank:
     --  Drawn Weapon Cost %
@@ -153,12 +157,17 @@ function TODO()
     --  Drawn Weapon Reduction % (5 to 95)
     --  This is exposed in the config screen as a way to counter the above cost
 
-    -- All:
-    --  Add extra weight when carrying a dead body
+    -- UI:
+    --  Unhook grapple
+    --  New/Load grapple
 
     -- UI:
-    --  There's a lot of copy/pasted code.  A lot of it is around binding between model and viewmodel.  Look
-    --  for patterns and create a binding util
+    --  Add invisible buttons to several controls, highlight graphics based on hover
+
+    -- UI:
+    --  Only allow config changes within a small radius of vendors: ripper doc, clothing, melee, ranged
+    --  Still allow them to look at values, just not change
+    --  Add a note when out of range
 
     -- UI:
     --  Controls are placed at absolute positions.  Create some container panel controls, like horizontal list,
@@ -168,6 +177,16 @@ function TODO()
     --  get all the child control's sizes, do some final calculations based on sizes and margins, then pass
     --  in the location to each control's draw function (could also pass in a final width/height for controls
     --  that should stretch)
+
+    -- UI:
+    --  There's a lot of copy/pasted code.  A lot of it is around binding between model and viewmodel.  Look
+    --  for patterns and create a binding util
+
+    -- UI:
+    --  All numbers should be presented as dozenal :)
+    --  tostring_doz()
+    --  Round_doz()     -- this is needed, because rounding fractions to a certain number of digits would have to be converted, then truncated
+    --  also, if there's ever a textbox, that would need to be parsed as well
 
 end
 
