@@ -16,14 +16,16 @@ function DrawEnergyProgress(energy, max, experience, state)
         -- Progress Bar
         ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 3)
 
+        -- The color ints are in ABGR (comments to the side are ARGB for easy copy/pasting into color editor)
+
         if state.animation_lowEnergy.isProgressBarRed then
-            ImGui.PushStyleColor(ImGuiCol.Text, 1, 0.4, 0.36, 1)
-            ImGui.PushStyleColor(ImGuiCol.FrameBg, 0.29, 0.13, 0.15, 0.6)
-            ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0.78, 0.28, 0.27, 0.9)
+            ImGui.PushStyleColor(ImGuiCol.Text, 0xFF5C66FF)        --FF665C
+            ImGui.PushStyleColor(ImGuiCol.FrameBg, 0x9926214A)       --994A2126
+            ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0xE64547C7)     --E6C74745
         else
-            ImGui.PushStyleColor(ImGuiCol.Text, 0.46, 1, 1, 1)
-            ImGui.PushStyleColor(ImGuiCol.FrameBg, 0.37, 0.68, 0.68, 0.6)
-            ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0.45, 0.83, 0.83, 0.9)
+            ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)      --75FFFF
+            ImGui.PushStyleColor(ImGuiCol.FrameBg, 0x99ADAD5E)       --995EADAD
+            ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0xE6D4D473)     --E673D4D4
         end
 
         ImGui.ProgressBar(energy / max, 130, 24)     -- %, width, height
@@ -34,7 +36,7 @@ function DrawEnergyProgress(energy, max, experience, state)
         -- Label
         ImGui.NextColumn()
 
-        ImGui.PushStyleColor(ImGuiCol.Text, 1, 1, 0.3, 1)
+        ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)       --FFFF4C
 
         local text = "grappling hook"
         experience = math.floor(experience)

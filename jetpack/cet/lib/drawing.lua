@@ -13,9 +13,12 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime)
 
         -- Progress Bar
         ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 3)
-        ImGui.PushStyleColor(ImGuiCol.Text, 0.46, 1, 1, 1)
-        ImGui.PushStyleColor(ImGuiCol.FrameBg, 0.37, 0.68, 0.68, 0.6)
-        ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0.45, 0.83, 0.83, 0.9)
+		
+        -- The color ints are in ABGR (comments to the side are ARGB for easy copy/pasting into color editor)
+		
+        ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)
+        ImGui.PushStyleColor(ImGuiCol.FrameBg, 0x99ADAD5E)
+        ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0xE6D4D473)
 
         ImGui.ProgressBar(remainBurnTime / maxBurnTime, 130, 24)     -- %, width, height
 
@@ -25,7 +28,7 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime)
         -- Label
         ImGui.NextColumn()
 
-        ImGui.PushStyleColor(ImGuiCol.Text, 1, 1, 0.3, 1)
+        ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)
 
         ImGui.Text(name)
 
@@ -35,8 +38,8 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime)
 end
 
 function DrawConfigName(mode)
-    ImGui.PushStyleColor(ImGuiCol.WindowBg, 0.18, 0.33, 0.33, 0.33)
-    ImGui.PushStyleColor(ImGuiCol.Border, 0.24, 0.43, 0.43, 0.5)
+    ImGui.PushStyleColor(ImGuiCol.WindowBg, 0x5454542E)		--542E5454
+    ImGui.PushStyleColor(ImGuiCol.Border, 0x806E6E3D)		--803D6E6E
 
     ImGui.SetNextWindowPos(20, 300, ImGuiCond.Always)
     ImGui.SetNextWindowSize(240, 160, ImGuiCond.Appearing)
@@ -47,10 +50,12 @@ function DrawConfigName(mode)
         ImGui.SetWindowFontScale(1.2)
 
         ImGui.Spacing()
-        ImGui.TextColored(1, 1, 0.3, 1, mode.name)
+		ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)		--FFFF4C
+		ImGui.Text(mode.name)
+		ImGui.PopStyleColor(1)
 
         ImGui.Spacing()
-        ImGui.PushStyleColor(ImGuiCol.Text, 0.46, 1, 1, 1)
+        ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)		--75FFFF
 
         --Only reporting settings out of ordinary (low gravity, high gravity, etc)
 
