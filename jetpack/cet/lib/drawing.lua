@@ -2,14 +2,10 @@
 --https://www.nexusmods.com/cyberpunk2077/mods/1405
 function DrawJetpackProgress(name, remainBurnTime, maxBurnTime)
     ImGui.SetNextWindowPos(20, 200, ImGuiCond.Always)       -- this is under the top left combat graphic
-    ImGui.SetNextWindowSize(330, 50, ImGuiCond.Appearing)
+    ImGui.SetNextWindowSize(380, 50, ImGuiCond.Appearing)
 
     if (ImGui.Begin(name, true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoBackground)) then
         ImGui.SetWindowFontScale(1.5)
-
-        ImGui.Spacing()
-        ImGui.Columns(2, "", false)
-        --ImGui.SetColumnWidth(1, 130)      -- this seems to be ignored
 
         -- Progress Bar
         ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 3)
@@ -20,15 +16,20 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime)
         ImGui.PushStyleColor(ImGuiCol.FrameBg, 0x99ADAD5E)
         ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0xE6D4D473)
 
+        ImGui.SetCursorPos(0, 0)
+        ImGui.PushItemWidth(130)
+
         ImGui.ProgressBar(remainBurnTime / maxBurnTime, 130, 24)     -- %, width, height
+
+        ImGui.PopItemWidth()
 
         ImGui.PopStyleColor(3)      -- count must match the number of pushes above
         ImGui.PopStyleVar(1)
 
         -- Label
-        ImGui.NextColumn()
-
         ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)
+
+        ImGui.SetCursorPos(140, 0)
 
         ImGui.Text(name)
 
