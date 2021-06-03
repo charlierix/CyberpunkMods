@@ -68,18 +68,12 @@ function GetDefault_Grapple_Rigid()
         desired_length = nil,       -- 6 to 12 would be a good range (start long).  The main use for this is to swing from an overhang, and if you start too far away, you'll just fall to the ground
 
         --accel_alongGrappleLine = nil,       --TODO: Some of the acceleration needs to be this.  Otherwise it gets jerky when only drag is applied
-        accel_alongGrappleLine = GetDefault_ConstantAccel(nil, nil, 0.75),
+        accel_alongGrappleLine = GetDefault_ConstantAccel(nil, nil, 0.75),      -- still jerky
         accel_alongLook = nil,
 
         springAccel_k = nil,        --TODO: Play with this
 
-        velocity_away =
-        {
-            accel_compression = 8,     -- using a small value
-            accel_tension = 60,     -- using a big value so it feels like rope
-
-            deadSpot = 0.75,
-        },
+        velocity_away = GetDefault_VelocityAway(nil, 60, nil),      -- using a big tension so it feels like rope
 
         energy_cost = 3,
 
@@ -278,46 +272,15 @@ function GetDefault_AirDash()
 end
 
 function GetDefault_ConstantAccel(accel_override, speed_override, deadSpot_distance_override)
-    -- Accel
-    local accel_update =
-    {
-        min = 20,
-        max = 20 + (2 * 16),
-        amount = 2,
-    }
+    local accel_update, accel = this.GetUpdateAndValue(20, 20 + (2 * 16), 2, accel_override, false)
 
-    local accel = accel_override
-    if not accel then
-        accel = accel_update.min
-    elseif accel < accel_update.min then
-        accel_update.min = accel
-    elseif accel > accel_update.max then
-        accel_update.max = accel
+    local speed_update, speed = this.GetUpdateAndValue(6, 6 + (1 * 8), 1, speed_override, false)
+
+    local deadspot_dist = deadSpot_distance_override
+    if not deadspot_dist then
+        deadspot_dist = 3
     end
 
-    -- Speed
-    local speed_update =
-    {
-        min = 6,
-        max = 6 + (1 * 8),
-        amount = 1,
-    }
-
-    local speed = speed_override
-    if not speed then
-        speed = speed_update.min
-    elseif speed < speed_update.min then
-        speed_update.min = speed
-    elseif speed > speed_update.max then
-        speed_update.max = speed
-    end
-
-    local deadspot_dist = 3
-    if deadSpot_distance_override then
-        deadspot_dist = deadSpot_distance_override
-    end
-
-    -- Return
     return
     {
         accel = accel,
@@ -334,6 +297,40 @@ function GetDefault_ConstantAccel(accel_override, speed_override, deadSpot_dista
             CalculateExperienceCost_Value(accel, accel_update) +
             CalculateExperienceCost_Value(speed, speed_update),
     }
+end
+
+function GetDefault_VelocityAway(compress_override, tension_override, deadspot_override)
+    local compress_update, compress = this.GetUpdateAndValue(12, 12 + (3 * 12), 3, compress_override, true)
+
+    local tension_update, tension = this.GetUpdateAndValue(12, 96, 6, tension_override, true)
+
+    local deadspot = deadspot_override
+    if not deadspot then
+        deadspot = 1
+    end
+
+    local retVal =
+    {
+        accel_compression = compress,
+        accel_compression_update = compress_update,
+
+        accel_tension = tension,
+        accel_tension_update = tension_update,
+
+        deadSpot = deadspot
+    }
+
+    retVal.experience = 1
+
+    if compress then
+        retVal.experience = retVal.experience + CalculateExperienceCost_Value(compress, compress_update)
+    end
+
+    if tension then
+        retVal.experience = retVal.experience + CalculateExperienceCost_Value(tension, tension_update)
+    end
+
+    return retVal
 end
 
 --------------------------------------------- Other Functions --------------------------------------------
@@ -436,10 +433,40 @@ function this.CalculateExperience_GrappleStraight(grapple)
         accel_look = grapple.accel_alongLook.experience
     end
 
+    local velocity_away = 0
+    if grapple.velocity_away then
+        velocity_away = grapple.velocity_away.experience
+    end
+
     return
         CalculateExperienceCost_Value(grapple.aim_straight.max_distance, grapple.aim_straight.max_distance_update) +
         CalculateExperienceCost_Value(grapple.aim_straight.aim_duration, grapple.aim_straight.aim_duration_update) +
         antigrav +
         accel_along +
-        accel_look
+        accel_look +
+        velocity_away
+end
+
+function this.GetUpdateAndValue(min, max, amount, value_override, defaultToNil)
+    local update =
+    {
+        min = min,
+        max = max,
+        amount = amount,
+    }
+
+    local value = value_override
+    if not defaultToNil and not value then
+        value = update.min
+    end
+
+    if value then
+        if value < update.min then
+            update.min = value
+        elseif value > update.max then
+            update.max = value
+        end
+    end
+
+    return update, value
 end

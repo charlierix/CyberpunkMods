@@ -178,19 +178,7 @@ end
 function this.Update_HasAirDash(def, airdash, changes, startedWithAD)
     local total = airdash.experience        -- this is the price when the window was started, changes are tracked separately
 
-    if def.isChecked then
-        if startedWithAD then
-            changes.experience_buysell = 0     -- started with airdash, unchecked at some point, now they're putting it back.  There is no extra cost
-        else
-            changes.experience_buysell = -total        -- started without, so this is the purchase cost
-        end
-    else
-        if startedWithAD then
-            changes.experience_buysell = total     -- started with airdash, now selling it, so gain the experience
-        else
-            changes.experience_buysell = 0     -- started without, purchased, now removing again
-        end
-    end
+    PopulateBuySell(def.isChecked, startedWithAD, changes, "experience_buysell", total)
 end
 
 function this.Define_BurnRate(const)

@@ -20,6 +20,7 @@ function InitializeUI(vars_ui, const)
     DefineWindow_GrappleStraight_Description(vars_ui, const)
     DefineWindow_GrappleStraight_Distances(vars_ui, const)
     DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
+    DefineWindow_GrappleStraight_VelocityAway(vars_ui, const)
 
     -- Post Processing
     this.SortContentLists(vars_ui.main)
@@ -34,6 +35,7 @@ function InitializeUI(vars_ui, const)
     this.SortContentLists(vars_ui.gst8_descr)
     this.SortContentLists(vars_ui.gst8_dist)
     this.SortContentLists(vars_ui.gst8_stop)
+    this.SortContentLists(vars_ui.gst8_velaway)
 end
 
 ------------------------------------------- Private Methods -------------------------------------------

@@ -120,7 +120,7 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
 
     isClicked, isHovered_drag = Draw_SummaryButton(grapple_straight.velocity_away, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
     if isClicked then
-        print("TODO: Transition to velocity_away")
+        TransitionWindows_Straight_VelocityAway(vars_ui, const)
     end
 
     if Draw_SummaryButton(grapple_straight.aim_duration, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
@@ -344,25 +344,21 @@ function this.Define_VelocityAway(const)
     }
 end
 function this.Refresh_VelocityAway(def, grapple)
-    local hasValue = false
-
     if grapple.velocity_away then
         if grapple.velocity_away.accel_compression then
-            hasValue = true
             def.content.a_compression.value = tostring(Round(grapple.velocity_away.accel_compression))
         else
             def.content.a_compression.value = nil
         end
 
-        if grapple.velocity_away then
-            hasValue = true
+        if grapple.velocity_away.accel_tension then
             def.content.b_tension.value = tostring(Round(grapple.velocity_away.accel_tension))
         else
             def.content.b_tension.value = nil
         end
     end
 
-    if hasValue then
+    if grapple.velocity_away then
         def.unused_text = nil
     else
         def.unused_text = def.header_prompt

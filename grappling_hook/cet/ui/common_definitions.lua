@@ -263,29 +263,48 @@ end
 -- This creates a set of controls used to change a single property
 -- x and y are an offset from center
 -- Returns:
---  label property name
---  label property value
+--  checkbox or label: property name
+--  label: property value
 --  updown buttons
 --  help button
-function Define_PropertyPack_Vertical(text, x, y, const)
+function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox)
     -- Probably can't use this outside of a draw function.  Just hardcode the offsets
     --local size_text_x, size_text_y = ImGui.CalcTextSize(text)
 
-    -- Label
-    local label_prompt =
-    {
-        text = text,
-
-        position =
+    local prompt
+    if isCheckbox then
+        -- CheckBox
+        prompt =
         {
-            pos_x = x,
-            pos_y = y - 24,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+            text = text,
 
-        color = "edit_prompt",
-    }
+            position =
+            {
+                pos_x = x,
+                pos_y = y - 24,
+                horizontal = const.alignment_horizontal.center,
+                vertical = const.alignment_vertical.center,
+            },
+
+            foreground_override = "edit_prompt",
+        }
+    else
+        -- Label
+        prompt =
+        {
+            text = text,
+
+            position =
+            {
+                pos_x = x,
+                pos_y = y - 24,
+                horizontal = const.alignment_horizontal.center,
+                vertical = const.alignment_vertical.center,
+            },
+
+            color = "edit_prompt",
+        }
+    end
 
     -- Label
     local label_value =
@@ -334,7 +353,7 @@ function Define_PropertyPack_Vertical(text, x, y, const)
         invisible_name = "EnergyTank_Help" .. text
     }
 
-    return label_prompt, label_value, updown, help
+    return prompt, label_value, updown, help
 end
 
 ----------------------------------- Private Methods -----------------------------------

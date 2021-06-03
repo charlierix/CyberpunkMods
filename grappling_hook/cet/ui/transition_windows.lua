@@ -123,3 +123,17 @@ function TransitionWindows_Straight_StopEarly(vars_ui, const)
     vars_ui.gst8_stop.has_stopAngle.isChecked = nil
     vars_ui.gst8_stop.stopAngle_value.value = nil
 end
+
+function TransitionWindows_Straight_VelocityAway(vars_ui, const)
+    -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
+    -- in vars_ui.transition_info
+
+    vars_ui.currentWindow = const.windows.grapple_straight_velaway
+
+    vars_ui.gst8_velaway.changes:Clear()
+
+    vars_ui.gst8_velaway.has_velaway.isChecked = nil
+    vars_ui.gst8_velaway.has_compress.isChecked = nil
+    vars_ui.gst8_velaway.has_tension.isChecked = nil
+    vars_ui.gst8_velaway.deadspot_dist.value = nil
+end

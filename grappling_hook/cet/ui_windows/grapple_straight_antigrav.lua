@@ -154,19 +154,7 @@ function this.Update_HasAntiGrav(def, antigrav, changes, startedWithAG)
     --local total = antigrav.experience + changes:Get("experience")     -- don't want to include values in changes, because that would be a double counting
     local total = antigrav.experience
 
-    if def.isChecked then
-        if startedWithAG then
-            changes.experience_buysell = 0     -- started with antigrav, unchecked at some point, now they're putting it back.  There is no extra cost
-        else
-            changes.experience_buysell = -total        -- started without, so this is the purchase cost
-        end
-    else
-        if startedWithAG then
-            changes.experience_buysell = total     -- started with antigrav, now selling it, so gain the experience
-        else
-            changes.experience_buysell = 0     -- started without, purchased, now removing again
-        end
-    end
+    PopulateBuySell(def.isChecked, startedWithAG, changes, "experience_buysell", total)
 end
 
 function this.Refresh_Percent_Value(def, antigrav, changes)

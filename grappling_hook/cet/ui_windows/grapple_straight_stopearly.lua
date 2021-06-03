@@ -40,17 +40,10 @@ local isHovered_stopdistance = false
 function DrawWindow_GrappleStraight_StopEarly(vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
     if not grapple then
-        print("DrawWindow_GrappleStraight_AccelAlong: grapple is nil")
+        print("DrawWindow_GrappleStraight_StopEarly: grapple is nil")
         TransitionWindows_Main(vars_ui, const)
         do return end
     end
-
-    local accel = grapple.accel_alongGrappleLine
-    if not accel then
-        accel = default_accel
-    end
-
-    local startedWithAG = grapple.accel_alongGrappleLine ~= nil
 
     local gst8_stop = vars_ui.gst8_stop
 

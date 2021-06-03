@@ -153,19 +153,7 @@ end
 function this.Update_HasAccelLook(def, accel, changes, startedWithAL)
     local total = accel.experience        -- this is the price when the window was started, changes are tracked separately
 
-    if def.isChecked then
-        if startedWithAL then
-            changes.experience_buysell = 0     -- started with accel look, unchecked at some point, now they're putting it back.  There is no extra cost
-        else
-            changes.experience_buysell = -total        -- started without, so this is the purchase cost
-        end
-    else
-        if startedWithAL then
-            changes.experience_buysell = total     -- started with accel look, now selling it, so gain the experience
-        else
-            changes.experience_buysell = 0     -- started without, purchased, now removing again
-        end
-    end
+    PopulateBuySell(def.isChecked, startedWithAL, changes, "experience_buysell", total)
 end
 
 function this.Refresh_Accel_Value(def, accel, changes)
