@@ -1,6 +1,11 @@
 local this = {}
 
 function InitializeUI(vars_ui, const)
+    vars_ui.autoshow_withconsole = GetSetting_Bool(const.settings.AutoShowConfig_WithConsole)
+    if vars_ui.autoshow_withconsole == nil then     -- this will only happen if there's a db error
+        vars_ui.autoshow_withconsole = true
+    end
+
     vars_ui.screen = this.GetScreenInfo()    --NOTE: This won't see changes if they mess with their video settings, but that should be super rare.  They just need to reload mods
 
     vars_ui.style = this.LoadStylesheet()

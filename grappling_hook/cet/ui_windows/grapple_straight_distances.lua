@@ -82,7 +82,7 @@ function DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
     Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
     -- Desired Length
-    Draw_CheckBox(gst8_dist.desired_checkbox, vars_ui.style.checkbox, window.width, window.height, const)
+    Draw_CheckBox(gst8_dist.desired_checkbox, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
 
     if gst8_dist.desired_checkbox.isChecked then
         _, isHovered_desired = Draw_Slider(gst8_dist.desired_slider, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)

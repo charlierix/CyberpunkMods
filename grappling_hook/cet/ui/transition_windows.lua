@@ -2,6 +2,7 @@ function TransitionWindows_Main(vars_ui, const)
     vars_ui.currentWindow = const.windows.main
 
     vars_ui.main.changes:Clear()
+    vars_ui.main.should_autoshow.isChecked = nil
 end
 
 function TransitionWindows_Energy_Tank(vars_ui, const)

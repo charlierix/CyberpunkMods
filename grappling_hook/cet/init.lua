@@ -90,11 +90,6 @@ function TODO()
     -- AirDash:
     --  Sound
 
-    -- UI (grapple, jetpack):
-    --  Redo progress bars
-    --      Position
-    --      Color
-
     -- UI
     --  Checkbox to auto show with console
     --  Settings table (one for bool, add other datatype tables as necessary)
@@ -111,6 +106,9 @@ function TODO()
     --         print(GetBind('someID')..' was released!')
     --     end
     -- end)
+
+    -- DB:
+    --  Remove old rows
 
     -- All:
     --  Rename state to vars (needs to be done in all mods at the same time)
@@ -224,6 +222,8 @@ local const =
                 "grapple_straight_velaway",
             "grapple_swing",
     }),
+
+    settings = CreateEnum({ "AutoShowConfig_WithConsole" }),
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
@@ -444,18 +444,49 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 registerHotkey("GrapplingHookSavePlayer", "tester hotkey", function()
-    player.experience = player.experience + 3
-    player:Save()
+
+    local aaa, errA = GetSetting_Bool("aaa", true)
+    local bbb, errB = GetSetting_Bool("bbb", false)
+
+    print(tostring(aaa) .. ": " .. tostring(errA))
+    print(tostring(bbb) .. ": " .. tostring(errB))
+
+    errA = SetSetting_Bool("aaa", not aaa)
+    errB = SetSetting_Bool("bbb", not bbb)
+
+    print(tostring(errA))
+    print(tostring(errB))
+
+
+
+
+    -- player.experience = player.experience + 3
+    -- player:Save()
 end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()
+    if shouldShowConfig then
+        isConfigRepress = true      -- this is used as a request to close.  The window will only close if they are on a main screen, and not dirty
+    end
+
     -- This only shows the config.  They need to push a close button (and possibly ok/cancel for saving)
+    shouldShowConfig = true
+end)
+registerForEvent("onOverlayOpen", function()
+    if not vars_ui.autoshow_withconsole then
+        do return end
+    end
+
+    shouldShowConfig = true
+end)
+registerForEvent("onOverlayClose", function()
+    if not vars_ui.autoshow_withconsole then
+        do return end
+    end
 
     if shouldShowConfig then
         isConfigRepress = true
     end
-
-    shouldShowConfig = true
 end)
 
 registerForEvent("onDraw", function()

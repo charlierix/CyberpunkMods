@@ -1,32 +1,130 @@
 --http://lua.sqlite.org/index.cgi/doc/tip/doc/lsqlite3.wiki#numerical_error_and_result_codes
 --https://sqlite.org/c3ref/c_abort.html
 
-
-
---TODO: either use the json library, or rename the columns so they don't say json (probably use the json library)
-
-
-
---TODO: Make a function that removes old rows
-
---TODO: Once this version is proven, rework to have a Grapple table.  Put pure functions in this
---file, a manager function in datautil:
---  datautil.StorePlayer(array)
---      handle each grapple separately
---          find latest grapple row, insert new if unique
---      insert new player row, with primary keys to grapples
---          json for the remaining columns
-
--- GetPlayerEntry needs to find the db row and 
-
-
 function EnsureTablesCreated()
     --https://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists
+
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Settings_Int (Key TEXT NOT NULL UNIQUE, Value INTEGER NOT NULL);") end)
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Player (PlayerKey INTEGER NOT NULL UNIQUE, PlayerID INTEGER NOT NULL, JSON_EnergyTank TEXT NOT NULL, GrappleKey1 INTEGER, GrappleKey2 INTEGER, GrappleKey3 INTEGER, GrappleKey4 INTEGER, GrappleKey5 INTEGER, GrappleKey6 INTEGER, Experience REAL NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(PlayerKey AUTOINCREMENT));") end)
 
     --TODO: Add a column for straightline vs webswing
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Grapple (GrappleKey INTEGER NOT NULL UNIQUE, Name TEXT, Experience REAL NOT NULL, JSON TEXT NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(GrappleKey AUTOINCREMENT));") end)
+end
+
+-------------------------------------- Settings ---------------------------------------
+
+-- These are tables that hold key/value pairs.  Making specific tables per datatype.  The Get functions will return
+-- the value else default value (so it's like they pretend the row is always there)
+
+-- Returns
+--  bool, error message
+function GetSetting_Bool(key, default)
+    local sucess, value, errMsg = pcall(function ()
+        --NOTE: There was no bit or bool datatype, so using int
+        local stmt = db:prepare[[ SELECT Value FROM Settings_Int WHERE Key = ? LIMIT 1 ]]
+
+        local err = stmt:bind_values(key)
+        if err ~= sqlite3.OK then
+            local errMsg = "GetSetting_Bool: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return nil, errMsg
+        end
+
+        local result = stmt:step()
+
+        if result == sqlite3.ROW then
+            local row = stmt:get_named_values()
+
+            if row.Value == 0 then
+                return false, nil
+            else
+                return true, nil        -- it should be 1 for true, 0 for false.  But treat any non zero as true
+            end
+
+        elseif result == sqlite3.DONE then
+            return default, nil     -- no row found, pretend it was found and return the default value
+
+        else
+            return nil, "GetSetting_Bool: Unknown Error: " .. tostring(result)
+        end
+    end)
+
+    if sucess then
+        return value, errMsg
+    else
+        return nil, "GetSetting_Bool: Unknown Error"
+    end
+end
+
+-- Inserts/Updates the key/value pair
+-- Returns
+--  error message or nil
+function SetSetting_Bool(key, value)
+    local valueInt
+    if value then
+        valueInt = 1
+    else
+        valueInt = 0
+    end
+
+    local sucess, errMsg = pcall(function ()
+        -- Insert
+        local stmt = db:prepare[[ INSERT OR IGNORE INTO Settings_Int VALUES(?, ?) ]]
+
+        local err = stmt:bind_values(key, valueInt)
+        if err ~= sqlite3.OK then
+            local errMsg = "SetSetting_Bool (insert): bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        err = stmt:step()
+        if err ~= sqlite3.DONE then
+            local errMsg = "SetSetting_Bool (insert): step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        err = stmt:finalize()
+        if err ~= sqlite3.OK then
+            local errMsg = "SetSetting_Bool (insert): finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        -- Update
+        stmt = db:prepare[[ UPDATE Settings_Int SET Value = ? WHERE Key = ? ]]
+
+        err = stmt:bind_values(valueInt, key)
+        if err ~= sqlite3.OK then
+            local errMsg = "SetSetting_Bool (update): bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        err = stmt:step()
+        if err ~= sqlite3.DONE then
+            local errMsg = "SetSetting_Bool (update): step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        err = stmt:finalize()
+        if err ~= sqlite3.OK then
+            local errMsg = "SetSetting_Bool (update): finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        return nil
+    end)
+
+    if sucess then
+        return errMsg
+    else
+        return "SetSetting_Bool: Unknown Error"
+    end
 end
 
 --------------------------------------- Player ----------------------------------------

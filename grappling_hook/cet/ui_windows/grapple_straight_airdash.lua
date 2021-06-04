@@ -99,7 +99,7 @@ function DrawWindow_GrappleStraight_AirDash(vars_ui, player, window, const)
     Draw_GrappleArrows(gst8_airdash.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_airdash.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
-    if Draw_CheckBox(gst8_airdash.has_airdash, vars_ui.style.checkbox, window.width, window.height, const) then
+    if Draw_CheckBox(gst8_airdash.has_airdash, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
         this.Update_HasAirDash(gst8_airdash.has_airdash, airdash, changes, startedWithAD)
     end
 

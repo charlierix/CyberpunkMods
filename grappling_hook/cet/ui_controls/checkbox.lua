@@ -2,7 +2,7 @@
 -- style_checkbox is models\stylesheet\CheckBox
 -- Returns
 --  wasChanged
-function Draw_CheckBox(def, style_checkbox, parent_width, parent_height, const)
+function Draw_CheckBox(def, style_checkbox, style_colors, parent_width, parent_height, const)
     -- Calculate Size
     local width, height = ImGui.CalcTextSize(def.text)
 
@@ -19,7 +19,12 @@ function Draw_CheckBox(def, style_checkbox, parent_width, parent_height, const)
 	ImGui.PushStyleColor(ImGuiCol.NavHighlight, 0x00000000)
 
     if def.isEnabled then
-        ImGui.PushStyleColor(ImGuiCol.Text, style_checkbox.foreground_color_abgr)
+        local fore_color = style_checkbox.foreground_color_abgr
+        if def.foreground_override then
+            fore_color = GetNamedColor(style_colors, def.foreground_override).the_color_abgr
+        end
+
+        ImGui.PushStyleColor(ImGuiCol.Text, fore_color)
         ImGui.PushStyleColor(ImGuiCol.FrameBg, style_checkbox.background_color_standard_abgr)
         ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, style_checkbox.background_color_hover_abgr)
         ImGui.PushStyleColor(ImGuiCol.FrameBgActive, style_checkbox.background_color_click_abgr)

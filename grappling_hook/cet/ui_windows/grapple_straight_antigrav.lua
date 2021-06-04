@@ -85,7 +85,7 @@ function DrawWindow_GrappleStraight_AntiGrav(vars_ui, player, window, const)
     Draw_GrappleArrows(gst8_antgrav.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_antgrav.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
-    if Draw_CheckBox(gst8_antgrav.has_antigrav, vars_ui.style.checkbox, window.width, window.height, const) then
+    if Draw_CheckBox(gst8_antgrav.has_antigrav, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
         this.Update_HasAntiGrav(gst8_antgrav.has_antigrav, antigrav, changes, startedWithAG)
     end
 

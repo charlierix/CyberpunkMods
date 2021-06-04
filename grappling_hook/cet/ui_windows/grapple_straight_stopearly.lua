@@ -79,7 +79,7 @@ function DrawWindow_GrappleStraight_StopEarly(vars_ui, player, window, const)
     Draw_GrappleDesiredLength(gst8_stop.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleAccelToDesired(gst8_stop.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
-    Draw_CheckBox(gst8_stop.has_stopAngle, vars_ui.style.checkbox, window.width, window.height, const)
+    Draw_CheckBox(gst8_stop.has_stopAngle, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
     Draw_HelpButton(gst8_stop.stopAngle_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
     if gst8_stop.has_stopAngle.isChecked then
@@ -87,7 +87,7 @@ function DrawWindow_GrappleStraight_StopEarly(vars_ui, player, window, const)
         Draw_MinDotGraphic(gst8_stop.stopAngle_graphic, vars_ui.style.graphics, vars_ui.style.mindotGraphic, window.left, window.top, window.width, window.height, const)
     end
 
-    Draw_CheckBox(gst8_stop.has_stopDistance, vars_ui.style.checkbox, window.width, window.height, const)
+    Draw_CheckBox(gst8_stop.has_stopDistance, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
     Draw_HelpButton(gst8_stop.stopDistance_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
     if gst8_stop.has_stopDistance.isChecked then
@@ -96,7 +96,7 @@ function DrawWindow_GrappleStraight_StopEarly(vars_ui, player, window, const)
         isHovered_stopdistance = false
     end
 
-    Draw_CheckBox(gst8_stop.should_stopOnWallHit, vars_ui.style.checkbox, window.width, window.height, const)
+    Draw_CheckBox(gst8_stop.should_stopOnWallHit, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
     Draw_HelpButton(gst8_stop.stopOnWallHit_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_stop.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)

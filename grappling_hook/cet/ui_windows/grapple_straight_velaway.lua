@@ -106,13 +106,13 @@ function DrawWindow_GrappleStraight_VelocityAway(vars_ui, player, window, const)
         Draw_GrappleAccelToDesired(gst8_velaway.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     end
 
-    if Draw_CheckBox(gst8_velaway.has_velaway, vars_ui.style.checkbox, window.width, window.height, const) then
+    if Draw_CheckBox(gst8_velaway.has_velaway, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
         this.Update_HasVelocityAway(gst8_velaway.has_velaway, velaway, changes, startedWith_velaway)
     end
 
     if gst8_velaway.has_velaway.isChecked then
         -- Compression
-        if Draw_CheckBox(gst8_velaway.has_compress, vars_ui.style.checkbox, window.width, window.height, const) then
+        if Draw_CheckBox(gst8_velaway.has_compress, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
             this.Update_HasCompression(gst8_velaway.has_compress, velaway, changes)
         end
 
@@ -126,7 +126,7 @@ function DrawWindow_GrappleStraight_VelocityAway(vars_ui, player, window, const)
         end
 
         -- Tension
-        if Draw_CheckBox(gst8_velaway.has_tension, vars_ui.style.checkbox, window.width, window.height, const) then
+        if Draw_CheckBox(gst8_velaway.has_tension, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
             this.Update_HasTension(gst8_velaway.has_tension, velaway, changes)
         end
 

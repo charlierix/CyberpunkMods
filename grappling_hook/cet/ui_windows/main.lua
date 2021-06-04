@@ -14,6 +14,7 @@ function DefineWindow_Main(vars_ui, const)
     main.title = Define_Title("Grappling Hook", const)
 
     main.consoleWarning = this.Define_ConsoleWarning(const)
+    main.should_autoshow = this.Define_ShouldAutoShow(const)
 
     main.energyTank = this.Define_EnergyTank(const)
 
@@ -30,7 +31,10 @@ end
 function DrawWindow_Main(isConfigRepress, vars_ui, player, window, const)
     local main = vars_ui.main
 
-    -- Finalize models for this frame
+    ------------------------- Finalize models for this frame -------------------------
+
+    this.Refresh_ShouldAutoShow(main.should_autoshow, vars_ui)
+
     this.Refresh_EnergyTank(main.energyTank, player.energy_tank)
 
     this.Refresh_GrappleSlot(main.grapple1, player.grapple1)
@@ -42,10 +46,15 @@ function DrawWindow_Main(isConfigRepress, vars_ui, player, window, const)
 
     this.Refresh_Experience(main.experience, player)
 
-    -- Show ui elements
+    -------------------------------- Show ui elements --------------------------------
+
     Draw_Label(main.title, vars_ui.style.colors, window.width, window.height, const)
 
     Draw_Label(main.consoleWarning, vars_ui.style.colors, window.width, window.height, const)
+
+    if Draw_CheckBox(main.should_autoshow, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
+        this.Update_ShouldAutoShow(main.should_autoshow, vars_ui, const)
+    end
 
     if Draw_SummaryButton(main.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
         TransitionWindows_Energy_Tank(vars_ui, const)
@@ -174,11 +183,44 @@ function this.Define_ConsoleWarning(const)
         position =
         {
             pos_x = 0,
-            pos_y = 30,
+            pos_y = 18,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.top,
         },
 
         color = "info",
     }
+end
+
+function this.Define_ShouldAutoShow(const)
+    -- CheckBox
+    return
+    {
+        text = "Auto show config when opening console",
+
+        isEnabled = true,
+
+        position =
+        {
+            pos_x = 0,
+            pos_y = 36,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.top,
+        },
+
+        foreground_override = "info",
+    }
+end
+function this.Refresh_ShouldAutoShow(def, vars_ui)
+    --NOTE: TransitionWindows_Main sets this to nil
+    if def.isChecked == nil then
+        def.isChecked = vars_ui.autoshow_withconsole
+    end
+end
+function this.Update_ShouldAutoShow(def, vars_ui, const)
+    -- In memory copy of the bool
+    vars_ui.autoshow_withconsole = def.isChecked
+
+    -- DB copy of the bool
+    SetSetting_Bool(const.settings.AutoShowConfig_WithConsole, def.isChecked)
 end
