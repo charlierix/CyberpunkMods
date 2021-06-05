@@ -65,13 +65,22 @@ function DrawConfig(isConfigRepress, vars_ui, player, const)
 
     local window = vars_ui.mainWindow
 
+    ImGui.PushStyleColor(ImGuiCol.TitleBgActive, vars_ui.style.title_color_focused_abgr)
+    ImGui.PushStyleColor(ImGuiCol.TitleBg, vars_ui.style.title_color_notFocused_abgr)      -- title when not active
+    ImGui.PushStyleColor(ImGuiCol.TitleBgCollapsed, vars_ui.style.title_color_collapsed_abgr)
+
+    ImGui.PushStyleColor(ImGuiCol.Text, vars_ui.style.title_color_foreground_abgr)     -- both the title color as well as collapse button's foreground
+
+    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, vars_ui.style.title_color_button_hover_abgr)        -- collapse button (no need to set the standard button color, it's not used in the title bar)
+    ImGui.PushStyleColor(ImGuiCol.ButtonActive, vars_ui.style.title_color_button_click_abgr)
+
     ImGui.PushStyleColor(ImGuiCol.WindowBg, vars_ui.style.back_color_abgr)
     ImGui.PushStyleColor(ImGuiCol.Border, vars_ui.style.border_color_abgr)
 
     ImGui.SetNextWindowPos(window.left, window.top, ImGuiCond.FirstUseEver)     -- this will place it in the hardcoded location, but if they move it, it will show at the new location
     ImGui.SetNextWindowSize(window.width, window.height, ImGuiCond.Always)
 
-    if (ImGui.Begin("Grappling Hook", true, ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoCollapse)) then    
+    if (ImGui.Begin("Grappling Hook", ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoScrollbar)) then     --NOTE: imgui.h doesn't mention this overload.  The overload that takes bool as second param only accepts true, and it adds the X button
         -- These will be used by workers for this window as well as sub windows
         Refresh_WindowPos(window)
         Refresh_LineHeights(vars_ui)
@@ -118,7 +127,7 @@ function DrawConfig(isConfigRepress, vars_ui, player, const)
     end
     ImGui.End()
 
-    ImGui.PopStyleColor(2)
+    ImGui.PopStyleColor(8)
 
     return continueShowing
 end

@@ -9,7 +9,7 @@ function Define_Title(title, const)
         position =
         {
             pos_x = 24,
-            pos_y = 24,
+            pos_y = 30,
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.top,
         },

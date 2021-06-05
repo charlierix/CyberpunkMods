@@ -11,7 +11,7 @@ function DefineWindow_Main(vars_ui, const)
 
     main.changes = Changes:new()
 
-    main.title = Define_Title("Grappling Hook", const)
+    --main.title = Define_Title("Grappling Hook", const)        -- the title bar already says this
 
     main.consoleWarning = this.Define_ConsoleWarning(const)
     main.should_autoshow = this.Define_ShouldAutoShow(const)
@@ -48,7 +48,7 @@ function DrawWindow_Main(isConfigRepress, vars_ui, player, window, const)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(main.title, vars_ui.style.colors, window.width, window.height, const)
+    --Draw_Label(main.title, vars_ui.style.colors, window.width, window.height, const)
 
     Draw_Label(main.consoleWarning, vars_ui.style.colors, window.width, window.height, const)
 
@@ -183,7 +183,7 @@ function this.Define_ConsoleWarning(const)
         position =
         {
             pos_x = 0,
-            pos_y = 18,
+            pos_y = 24,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.top,
         },
@@ -203,7 +203,7 @@ function this.Define_ShouldAutoShow(const)
         position =
         {
             pos_x = 0,
-            pos_y = 36,
+            pos_y = 42,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.top,
         },

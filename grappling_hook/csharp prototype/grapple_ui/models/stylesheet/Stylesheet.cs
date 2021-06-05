@@ -42,6 +42,15 @@ namespace grapple_ui.models.stylesheet
     public record Stylesheet
     {
         // Window colors
+        public string title_color_focused { get; init; }
+        public string title_color_notFocused { get; init; }
+        public string title_color_collapsed { get; init; }
+
+        public string title_color_foreground { get; init; }
+
+        public string title_color_button_hover { get; init; }
+        public string title_color_button_click { get; init; }
+
         public string back_color { get; init; }
         public string border_color { get; init; }
 
