@@ -105,6 +105,9 @@ local const =
 --------------------------------------------------------------------
 
 local isShutdown = true
+local isLoaded = false
+local shouldDraw = false
+
 local o     -- This is a class that wraps access to Game.xxx
 
 local keys = { forward=false, backward=false, left=false, right=false, jump=false, mouse_x=0, rmb=false, testAction=false, forceFlight=false }
@@ -115,8 +118,8 @@ local debug = { }
 local state =
 {
     isInFlight = false,
-    kdash = KDashInputTracker:new(),
-    rayHitStorage = RaycastHitStorage:new(),
+    --kdash = KDashInputTracker:new(),          -- moved to init
+    --rayHitStorage = RaycastHitStorage:new(),  -- moved to init
 
     ----- these are added from other places -----
     --lasercats
@@ -151,9 +154,26 @@ registerForEvent("onInit", function()
         MapAction(action, keys, keys2)
     end)
 
+    isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
+
+    Observe('QuestTrackerGameController', 'OnInitialize', function()
+        if not isLoaded then
+            isLoaded = true
+        end
+    end)
+
+    Observe('QuestTrackerGameController', 'OnUninitialize', function()
+        if Game.GetPlayer() == nil then
+            isLoaded = false
+        end
+    end)
+
     isShutdown = false
 
     InitializeRandom()
+
+    state.kdash = KDashInputTracker:new()
+    state.rayHitStorage = RaycastHitStorage:new()
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -178,7 +198,8 @@ registerForEvent("onShutdown", function()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
-    if isShutdown or IsPlayerInAnyMenu() then
+    shouldDraw = false
+    if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
         ExitFlight(state, debug)
         do return end
     end
@@ -191,13 +212,13 @@ registerForEvent("onUpdate", function(deltaTime)
         do return end
     end
 
-    if not IsStandingStill(o.vel) then
-        o:GetInWorkspot()       -- this crashes soon after loading a save.  So don't call if velocity is near zero.  Still got a crash when reloading after dying in a car shootout.  Hopefully this looser method keeps from crashing
-        if o.isInWorkspot then
-            ExitFlight(state, debug)
-            do return end
-        end
+    o:GetInWorkspot()
+    if o.isInWorkspot then      -- in a vehicle
+        ExitFlight(state, debug)
+        do return end
     end
+
+    shouldDraw = true
 
     PopulateDebug(debug, o, keys, state)
 
@@ -265,10 +286,10 @@ end)
 -- end)
 
 registerForEvent("onDraw", function()
-    if isShutdown then
+    if isShutdown or not isLoaded or not shouldDraw then
         do return end
     end
-	
+
     if const.shouldShowDebugWindow then
         DrawDebugWindow(debug)
     end

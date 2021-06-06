@@ -20,6 +20,7 @@ local shouldAnimatePeek = true
 --------------------------------------------------------------------
 
 local isShutdown = true
+local isLoaded = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
@@ -31,7 +32,23 @@ local peekingStartTime = 0
 --------------------------------------------------------------------
 
 registerForEvent("onInit", function()
+    isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
+
+    Observe('QuestTrackerGameController', 'OnInitialize', function()
+        if not isLoaded then
+            isLoaded = true
+        end
+    end)
+
+    Observe('QuestTrackerGameController', 'OnUninitialize', function()
+        if Game.GetPlayer() == nil then
+            isLoaded = false
+        end
+    end)
+
     isShutdown = false
+
+    InitializeRandom()
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -54,12 +71,7 @@ registerForEvent("onShutdown", function()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
-
-
---TODO: Check if in menu
-
-
-    if isShutdown then
+    if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
         do return end
     end
 
@@ -75,7 +87,7 @@ registerForEvent("onUpdate", function(deltaTime)
         do return end
     end
 
-    o:GetInWorkspot()       -- this crashes soon after loading a save.  With ghost forward, it should only happen if they initiate a peek right before starting a load
+    o:GetInWorkspot()
     if o.isInWorkspot then
         ResetKeys(keys)
         do return end

@@ -243,7 +243,7 @@ local isConfigRepress = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
-local keys = Keys:new()
+local keys = nil -- = Keys:new()        -- moved to init
 
 local debug = {}
 
@@ -327,6 +327,8 @@ registerForEvent("onInit", function()
     EnsureTablesCreated()
     InitializeUI(vars_ui, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
 
+    keys = Keys:new()
+
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
     function wrappers.Player_GetPos(player) return player:GetWorldPosition() end
@@ -371,20 +373,13 @@ end)
 
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = false
-    if isShutdown or not isLoaded then
-        Transition_ToStandard(state, const, debug, o)
-        do return end
-    elseif IsPlayerInAnyMenu() then
+    if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
         Transition_ToStandard(state, const, debug, o)
         do return end
     end
 
     o:Tick(deltaTime)
     state.animation_lowEnergy:Tick()
-
-
-    --TODO: Detect FPS dips.  Also cap deltaTime
-
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
     if not o.player then

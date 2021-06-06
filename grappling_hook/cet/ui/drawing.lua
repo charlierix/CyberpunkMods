@@ -4,7 +4,7 @@
 --NOTE: This is positioned according to how things look at 4K.  The progress is a bit low on 1K, but it's not bad.  I tried scaling position according to resolution, but text was still large, probably would need to scale that too
 function DrawEnergyProgress(energy, max, experience, state)
     ImGui.SetNextWindowPos(20, 230, ImGuiCond.Always)       -- this is under the top left combat graphic (placing under jetpack's progress bar)
-    ImGui.SetNextWindowSize(380, 50, ImGuiCond.Appearing)
+    ImGui.SetNextWindowSize(450, 50, ImGuiCond.Appearing)
 
     if (ImGui.Begin("energy", true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoBackground)) then
         ImGui.SetWindowFontScale(1.5)

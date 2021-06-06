@@ -146,6 +146,8 @@ function this.Define_Desired_CheckBox(const)
 
         text = "Desired Length",
 
+        isEnabled = true,
+
         position =
         {
             pos_x = 200,

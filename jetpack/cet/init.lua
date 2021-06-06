@@ -32,8 +32,6 @@ require "lib/rmb_pushup"
 require "lib/safetyfire"
 require "lib/util"
 
---local GameUI = require('GameUI')
-
 --------------------------------------------------------------------
 ---                  User Preference Constants                   ---
 --------------------------------------------------------------------
@@ -208,11 +206,11 @@ function GetConfigValues(index)
 
     return { name=name, index=index, accel_gravity=accel_gravity, accel_horz_stand=accel_horz_stand, accel_horz_dash=accel_horz_dash, accel_vert_stand=accel_vert_stand, accel_vert_dash=accel_vert_dash, maxBurnTime=maxBurnTime, burnRate_dash=burnRate_dash, burnRate_horz=burnRate_horz, energyRecoveryRate=energyRecoveryRate, timeSpeed=timeSpeed, shouldSafetyFire=shouldSafetyFire, holdJumpDelay=holdJumpDelay, useRedscript=useRedscript, rmb_extra=rmb_extra, explosiveLanding=explosiveLanding, rotateVelToLookDir=rotateVelToLookDir, rotateVel_percent_horz=rotateVel_percent_horz, rotateVel_percent_vert=rotateVel_percent_vert, rotateVel_dotPow=rotateVel_dotPow, rotateVel_minSpeed=rotateVel_minSpeed, rotateVel_maxSpeed=rotateVel_maxSpeed }
 end
-local mode = GetConfigValues(GetModeIndex())
+local mode = nil -- = GetConfigValues(GetModeIndex())      -- moved to init
 
 local const =
 {
-    maxSpeed = 120,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
+    maxSpeed = 144,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
 
     modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),
 
@@ -224,12 +222,12 @@ local const =
 --------------------------------------------------------------------
 
 local isShutdown = true
-local isLoading = false
+local isLoaded = false
 local shouldDraw = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
-local keys = Keys:new()
+local keys = nil -- = Keys:new()        -- moved to init
 
 local debug = { }
 
@@ -239,11 +237,11 @@ local state =
 
     --thrust, left, right, forward, backward are created in init
 
-    vel = Vector4.new(0, 0, 0, 1),
+    --vel = Vector4.new(0, 0, 0, 1),        -- moved this to init (Vector4 isn't available before init)
     startThrustTime = 0,
     lastThrustTime = 0,
 
-    remainBurnTime = mode.maxBurnTime,
+    --remainBurnTime = mode.maxBurnTime,        -- moved to init
 
     showConfigNameUntil = 0,
 
@@ -258,17 +256,30 @@ registerForEvent("onInit", function()
         keys:MapAction(action)
     end)
 
-    Observe("RadialWheelController", "RegisterBlackboards", function(_, loaded)
-        if loaded then
-            isLoading = false
-        else
-            isLoading = true
+    isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
+
+    Observe('QuestTrackerGameController', 'OnInitialize', function()
+        if not isLoaded then
+            isLoaded = true
+        end
+    end)
+
+    Observe('QuestTrackerGameController', 'OnUninitialize', function()
+        if Game.GetPlayer() == nil then
+            isLoaded = false
         end
     end)
 
     isShutdown = false
 
     InitializeRandom()
+
+    mode = GetConfigValues(GetModeIndex())
+    state.remainBurnTime = mode.maxBurnTime
+
+    keys = Keys:new()
+
+    state.vel = Vector4.new(0, 0, 0, 1)
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -303,15 +314,12 @@ end)
 
 registerForEvent("onShutdown", function()
     isShutdown = true
-	db:close()
+	--db:close()      -- cet fixed this in 1.12.2
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = false
-    if isShutdown or isLoading then
-        ExitFlight(state, debug, o)
-        do return end
-    elseif IsPlayerInAnyMenu() then
+    if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
         ExitFlight(state, debug, o)
         do return end
     end
@@ -373,7 +381,7 @@ registerHotkey("jetpackCycleModes", "Cycle Modes", function()
 end)
 
 registerForEvent("onDraw", function()
-    if isShutdown or isLoading or not shouldDraw then
+    if isShutdown or not isLoaded or not shouldDraw then
         do return end
     end
 
