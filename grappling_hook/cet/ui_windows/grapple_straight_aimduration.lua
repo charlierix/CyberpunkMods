@@ -10,7 +10,7 @@ function DefineWindow_GrappleStraight_AimDuration(vars_ui, const)
 
     gst8_aimdur.name = Define_Name(const)
 
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Aim Duration", 0, 0, const)
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Aim Duration", 0, 0, const, false, "GrappleStraight_AimDuration_AimDuration")
     gst8_aimdur.dur_prompt = prompt
     gst8_aimdur.dur_value = value
     gst8_aimdur.dur_updown = updown

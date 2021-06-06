@@ -8,6 +8,11 @@ namespace grapple_ui.models.viewmodels
 {
     public record CheckBox
     {
+        /// <summary>
+        /// This isn't shown, it just needs to be a unique string
+        /// </summary>
+        public string invisible_name { get; init; }
+
         public bool isChecked {get; init; }
 
         /// <summary>

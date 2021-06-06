@@ -9,21 +9,21 @@ function DefineWindow_EnergyTank(vars_ui, const)
     energy_tank.title = Define_Title("Energy Tank", const)
 
     -- Total Energy (EnergyTank.max_energy)
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Total Energy", 0, -144, const)
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Total Energy", 0, -144, const, false, "EnergyTank_TotalEnergy")
     energy_tank.total_prompt = prompt
     energy_tank.total_value = value
     energy_tank.total_updown = updown
     energy_tank.total_help = help
 
     -- Refill Rate (EnergyTank.recovery_rate)
-    prompt, value, updown, help = Define_PropertyPack_Vertical("Refill Rate", -144, 120, const)
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Refill Rate", -144, 120, const, false, "EnergyTank_RefillRate")
     energy_tank.refill_prompt = prompt
     energy_tank.refill_value = value
     energy_tank.refill_updown = updown
     energy_tank.refill_help = help
 
     -- While Grappling (EnergyTank.flying_percent)
-    prompt, value, updown, help = Define_PropertyPack_Vertical("While Grappling", 144, 120, const)
+    prompt, value, updown, help = Define_PropertyPack_Vertical("While Grappling", 144, 120, const, false, "EnergyTank_WhileGrappling")
     energy_tank.percent_prompt = prompt
     energy_tank.percent_value = value
     energy_tank.percent_updown = updown

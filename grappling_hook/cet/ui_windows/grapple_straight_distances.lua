@@ -15,7 +15,7 @@ function DefineWindow_GrappleStraight_Distances(vars_ui, const)
     gst8_dist.desired_line = Define_GrappleDesiredLength(true)
 
     -- Max Distance (Aim_Straight.max_distance)
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Max Aim Distance", 220, 100, const)
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Max Aim Distance", 220, 100, const, false, "GrappleStraight_Distances_MaxDist")
     gst8_dist.max_prompt = prompt
     gst8_dist.max_value = value
     gst8_dist.max_updown = updown
@@ -30,7 +30,8 @@ function DefineWindow_GrappleStraight_Distances(vars_ui, const)
     gst8_dist.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
-local isHovered_desired = false
+local isHovered_desired_checkbox = false
+local isHovered_desired_slider = false
 
 function DrawWindow_GrappleStraight_Distances(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
@@ -49,7 +50,7 @@ function DrawWindow_GrappleStraight_Distances(isCloseRequested, vars_ui, player,
     Refresh_Name(gst8_dist.name, grapple.name)
 
     Refresh_GrappleArrows(gst8_dist.arrows, grapple, false, false, false)
-    Refresh_GrappleDesiredLength(gst8_dist.desired_line, grapple, this.GetChanged_DesiredLength(gst8_dist.desired_checkbox, gst8_dist.desired_slider), changes, isHovered_desired)
+    Refresh_GrappleDesiredLength(gst8_dist.desired_line, grapple, this.GetChanged_DesiredLength(gst8_dist.desired_checkbox, gst8_dist.desired_slider), changes, isHovered_desired_checkbox or isHovered_desired_slider)
 
     --TODO: MaxDistance Update should be non linear
     this.Refresh_MaxDistance_Value(gst8_dist.max_value, grapple, changes)
@@ -82,12 +83,12 @@ function DrawWindow_GrappleStraight_Distances(isCloseRequested, vars_ui, player,
     Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
     -- Desired Length
-    Draw_CheckBox(gst8_dist.desired_checkbox, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    _, isHovered_desired_checkbox = Draw_CheckBox(gst8_dist.desired_checkbox, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
 
     if gst8_dist.desired_checkbox.isChecked then
-        _, isHovered_desired = Draw_Slider(gst8_dist.desired_slider, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
+        _, isHovered_desired_slider = Draw_Slider(gst8_dist.desired_slider, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
     else
-        isHovered_desired = false
+        isHovered_desired_slider = false
     end
 
     this.Update_DesiredLength(gst8_dist.desired_checkbox, gst8_dist.desired_slider, changes)
@@ -141,6 +142,8 @@ function this.Define_Desired_CheckBox(const)
     -- CheckBox
     return
     {
+        invisible_name = "GrappleStraight_Distances_Desired_CheckBox",
+
         text = "Desired Length",
 
         position =

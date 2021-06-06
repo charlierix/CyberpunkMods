@@ -447,24 +447,8 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 registerHotkey("GrapplingHookSavePlayer", "tester hotkey", function()
-
-    local aaa, errA = GetSetting_Bool("aaa", true)
-    local bbb, errB = GetSetting_Bool("bbb", false)
-
-    print(tostring(aaa) .. ": " .. tostring(errA))
-    print(tostring(bbb) .. ": " .. tostring(errB))
-
-    errA = SetSetting_Bool("aaa", not aaa)
-    errB = SetSetting_Bool("bbb", not bbb)
-
-    print(tostring(errA))
-    print(tostring(errB))
-
-
-
-
-    -- player.experience = player.experience + 3
-    -- player:Save()
+    player.experience = player.experience + 3
+    player:Save()
 end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()

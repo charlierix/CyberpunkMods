@@ -20,14 +20,14 @@ function DefineWindow_GrappleStraight_VelocityAway(vars_ui, const)
     gst8_velaway.has_velaway = this.Define_HasVelocityAway(const)
 
     -- VelocityAway.accel_compression
-    local check, value, updown, help = Define_PropertyPack_Vertical("Compression", -180, 100, const, true)
+    local check, value, updown, help = Define_PropertyPack_Vertical("Compression", -180, 100, const, true, "GrappleStraight_VelocityAway_Compression")
     gst8_velaway.has_compress = check
     gst8_velaway.compress_value = value
     gst8_velaway.compress_updown = updown
     gst8_velaway.compress_help = help
 
     -- VelocityAway.accel_tension
-    check, value, updown, help = Define_PropertyPack_Vertical("Tension", 180, 100, const, true)
+    check, value, updown, help = Define_PropertyPack_Vertical("Tension", 180, 100, const, true, "GrappleStraight_VelocityAway_Tension")
     gst8_velaway.has_tension = check
     gst8_velaway.tension_value = value
     gst8_velaway.tension_updown = updown
@@ -44,7 +44,10 @@ function DefineWindow_GrappleStraight_VelocityAway(vars_ui, const)
     gst8_velaway.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
-local isHovered_deadspot = false
+local isHovered_velaway_checkbox = false
+local isHovered_compress_checkbox = false
+local isHovered_tension_checkbox = false
+local isHovered_deadspot_slider = false
 
 function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
@@ -71,9 +74,9 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
 
     Refresh_Name(gst8_velaway.name, grapple.name)
 
-    Refresh_GrappleArrows(gst8_velaway.arrows, grapple, true, false, false)
+    Refresh_GrappleArrows(gst8_velaway.arrows, grapple, true, not gst8_velaway.has_velaway.isChecked and isHovered_velaway_checkbox, false)
     Refresh_GrappleDesiredLength(gst8_velaway.desired_line, grapple, nil, changes, false)
-    this.Refresh_GrappleAccelToDesired_Custom(gst8_velaway.desired_extra, grapple, velaway, gst8_velaway.deadspot_dist.value, false, false, isHovered_deadspot)
+    this.Refresh_GrappleAccelToDesired_Custom(gst8_velaway.desired_extra, grapple, velaway, gst8_velaway.deadspot_dist.value, isHovered_velaway_checkbox or isHovered_tension_checkbox, isHovered_velaway_checkbox or isHovered_compress_checkbox, isHovered_velaway_checkbox or isHovered_deadspot_slider)     -- this isn't visible when velaway checkbox is false, so there's no need to complicate the highlight logic
 
     this.Refresh_HasVelocityAway(gst8_velaway.has_velaway, player, grapple, velaway, changes)
 
@@ -106,13 +109,16 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
         Draw_GrappleAccelToDesired(gst8_velaway.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     end
 
-    if Draw_CheckBox(gst8_velaway.has_velaway, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
+    local isChecked
+    isChecked, isHovered_velaway_checkbox = Draw_CheckBox(gst8_velaway.has_velaway, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    if isChecked then
         this.Update_HasVelocityAway(gst8_velaway.has_velaway, velaway, changes, startedWith_velaway)
     end
 
     if gst8_velaway.has_velaway.isChecked then
         -- Compression
-        if Draw_CheckBox(gst8_velaway.has_compress, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
+        isChecked, isHovered_compress_checkbox = Draw_CheckBox(gst8_velaway.has_compress, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+        if isChecked then
             this.Update_HasCompression(gst8_velaway.has_compress, velaway, changes)
         end
 
@@ -126,7 +132,8 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
         end
 
         -- Tension
-        if Draw_CheckBox(gst8_velaway.has_tension, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
+        isChecked, isHovered_tension_checkbox = Draw_CheckBox(gst8_velaway.has_tension, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+        if isChecked then
             this.Update_HasTension(gst8_velaway.has_tension, velaway, changes)
         end
 
@@ -142,9 +149,9 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
         -- Dead Spot Distance
         Draw_Label(gst8_velaway.deadspot_label, vars_ui.style.colors, window.width, window.height, const)
         Draw_HelpButton(gst8_velaway.deadspot_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
-        _, isHovered_deadspot = Draw_Slider(gst8_velaway.deadspot_dist, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
+        _, isHovered_deadspot_slider = Draw_Slider(gst8_velaway.deadspot_dist, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
     else
-        isHovered_deadspot = false
+        isHovered_deadspot_slider = false
     end
 
     --Draw_OrderedList(gst8_velaway.xpdebug, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
@@ -194,6 +201,8 @@ function this.Define_HasVelocityAway(const)
     -- CheckBox
     return
     {
+        invisible_name = "GrappleStraight_VelocityAway_HasVelocityAway",
+
         text = "Has Extra Drag (applied when moving away from desired)",
 
         position =

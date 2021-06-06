@@ -21,21 +21,21 @@ function DefineWindow_GrappleStraight_AirDash(vars_ui, const)
     gst8_airdash.burn_rate = this.Define_BurnRate(const)
 
     -- Percent (AirDash.burnReducePercent)
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Reduce Percent", -220, 130, const)
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Reduce Percent", -220, 130, const, false, "GrappleStraight_AirDash_Percent")
     gst8_airdash.percent_prompt = prompt
     gst8_airdash.percent_value = value
     gst8_airdash.percent_updown = updown
     gst8_airdash.percent_help = help
 
     -- Accel (AirDash.accel.accel)
-    prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", 0, 130, const)
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", 0, 130, const, false, "GrappleStraight_AirDash_Accel")
     gst8_airdash.accel_prompt = prompt
     gst8_airdash.accel_value = value
     gst8_airdash.accel_updown = updown
     gst8_airdash.accel_help = help
 
     -- Speed (AirDash.accel.speed)
-    prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 220, 130, const)
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 220, 130, const, false, "GrappleStraight_AirDash_Speed")
     gst8_airdash.speed_prompt = prompt
     gst8_airdash.speed_value = value
     gst8_airdash.speed_updown = updown
@@ -45,6 +45,8 @@ function DefineWindow_GrappleStraight_AirDash(vars_ui, const)
 
     gst8_airdash.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
+
+local isHovered_has = false
 
 function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
@@ -69,7 +71,7 @@ function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, w
 
     Refresh_Name(gst8_airdash.name, grapple.name)
 
-    Refresh_GrappleArrows(gst8_airdash.arrows, grapple, true, false, false)
+    Refresh_GrappleArrows(gst8_airdash.arrows, grapple, true, false, isHovered_has)
     Refresh_GrappleDesiredLength(gst8_airdash.desired_line, grapple, nil, changes, false)
 
     this.Refresh_HasAirDash(gst8_airdash.has_airdash, player, grapple.aim_straight, airdash, changes)
@@ -99,7 +101,9 @@ function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, w
     Draw_GrappleArrows(gst8_airdash.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_airdash.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
-    if Draw_CheckBox(gst8_airdash.has_airdash, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
+    local wasChecked
+    wasChecked, isHovered_has = Draw_CheckBox(gst8_airdash.has_airdash, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    if wasChecked then
         this.Update_HasAirDash(gst8_airdash.has_airdash, airdash, changes, startedWithAD)
     end
 
@@ -154,6 +158,8 @@ function this.Define_HasAirDash(const)
     -- CheckBox
     return
     {
+        invisible_name = "GrappleStraight_AirDash_HasAirDash",
+
         text = "Has Air Dash",
 
         position =

@@ -270,7 +270,7 @@ end
 --  label: property value
 --  updown buttons
 --  help button
-function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox)
+function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleName_base)
     -- Probably can't use this outside of a draw function.  Just hardcode the offsets
     --local size_text_x, size_text_y = ImGui.CalcTextSize(text)
 
@@ -279,6 +279,8 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox)
         -- CheckBox
         prompt =
         {
+            invisible_name = invisibleName_base .. "_CheckBox",
+
             text = text,
 
             position =
@@ -328,6 +330,8 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox)
     -- UpDownButtons
     local updown =
     {
+        invisible_name = invisibleName_base .. "_UpDown",
+
         isEnabled_down = true,
         isEnabled_up = true,
 
@@ -345,6 +349,8 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox)
     -- HelpButton
     local help =
     {
+        invisible_name = invisibleName_base .. "_Help",
+
         position =
         {
             pos_x = x + 66,
@@ -352,8 +358,6 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
-
-        invisible_name = "EnergyTank_Help" .. text
     }
 
     return prompt, label_value, updown, help

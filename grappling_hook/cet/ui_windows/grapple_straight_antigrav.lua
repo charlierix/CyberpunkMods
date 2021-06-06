@@ -19,14 +19,14 @@ function DefineWindow_GrappleStraight_AntiGrav(vars_ui, const)
     gst8_antgrav.has_antigrav = this.Define_HasAntiGrav(const)
 
     -- Percent (AntiGravity.antigrav_percent)
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Antigrav Percent", -180, 100, const)
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Antigrav Percent", -180, 100, const, false, "GrappleStraight_AntiGrav_Percent")
     gst8_antgrav.percent_prompt = prompt
     gst8_antgrav.percent_value = value
     gst8_antgrav.percent_updown = updown
     gst8_antgrav.percent_help = help
 
     -- Fade Duration (AntiGravity.fade_duration)
-    prompt, value, updown, help = Define_PropertyPack_Vertical("Fade Duration", 180, 100, const)
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Fade Duration", 180, 100, const, false, "GrappleStraight_AntiGrav_Fade")
     gst8_antgrav.fade_prompt = prompt
     gst8_antgrav.fade_value = value
     gst8_antgrav.fade_updown = updown
@@ -36,6 +36,8 @@ function DefineWindow_GrappleStraight_AntiGrav(vars_ui, const)
 
     gst8_antgrav.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
+
+local isHovered_has = false
 
 function DrawWindow_GrappleStraight_AntiGrav(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
@@ -60,6 +62,7 @@ function DrawWindow_GrappleStraight_AntiGrav(isCloseRequested, vars_ui, player, 
 
     Refresh_Name(gst8_antgrav.name, grapple.name)
 
+    Refresh_StickFigure(gst8_antgrav.stickFigure, isHovered_has)
     Refresh_GrappleArrows(gst8_antgrav.arrows, grapple, false, false, false)
     Refresh_GrappleDesiredLength(gst8_antgrav.desired_line, grapple, nil, changes, false)
 
@@ -85,7 +88,9 @@ function DrawWindow_GrappleStraight_AntiGrav(isCloseRequested, vars_ui, player, 
     Draw_GrappleArrows(gst8_antgrav.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_antgrav.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
-    if Draw_CheckBox(gst8_antgrav.has_antigrav, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
+    local wasChecked
+    wasChecked, isHovered_has = Draw_CheckBox(gst8_antgrav.has_antigrav, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    if wasChecked then
         this.Update_HasAntiGrav(gst8_antgrav.has_antigrav, antigrav, changes, startedWithAG)
     end
 
@@ -129,6 +134,8 @@ function this.Define_HasAntiGrav(const)
     -- CheckBox
     return
     {
+        invisible_name = "GrappleStraight_AntiGrav_HasAntiGrav",
+
         text = "Has Anti Gravity",
 
         position =

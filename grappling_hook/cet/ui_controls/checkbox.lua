@@ -1,7 +1,7 @@
 -- def is models\viewmodels\CheckBox
 -- style_checkbox is models\stylesheet\CheckBox
 -- Returns
---  wasChanged
+--  wasChanged, isHovered
 function Draw_CheckBox(def, style_checkbox, style_colors, parent_width, parent_height, const)
     -- Calculate Size
     local width, height = ImGui.CalcTextSize(def.text)
@@ -41,11 +41,16 @@ function Draw_CheckBox(def, style_checkbox, style_colors, parent_width, parent_h
 
     local isChecked, wasChanged = ImGui.Checkbox(def.text, def.isChecked)
 
+    -- Invisible Button
+    local _, isHovered = Draw_InvisibleButton(def.invisible_name .. "Hidden", left + (width / 2), top + (height / 2), width, height, 0)
+
     if def.isEnabled then
         def.isChecked = isChecked
     end
 
     ImGui.PopStyleColor(6)
 
-    return wasChanged and def.isEnabled
+    return
+        wasChanged and def.isEnabled,
+        isHovered
 end

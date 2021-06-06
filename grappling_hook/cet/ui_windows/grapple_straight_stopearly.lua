@@ -35,7 +35,10 @@ function DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
     gst8_stop.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
-local isHovered_stopdistance = false
+local isHovered_stopAngle_checkbox = false
+local isHovered_stopdistance_checkbox = false
+local isHovered_stopdistance_slider = false
+local isHovered_stopOnWallHit_checkbox = false
 
 function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
@@ -53,9 +56,10 @@ function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player,
 
     Refresh_Name(gst8_stop.name, grapple.name)
 
+    Refresh_StickFigure(gst8_stop.stickFigure, isHovered_stopAngle_checkbox or isHovered_stopOnWallHit_checkbox)
     Refresh_GrappleArrows(gst8_stop.arrows, grapple, false, false, false)
     Refresh_GrappleDesiredLength(gst8_stop.desired_line, grapple, nil, changes, false)
-    this.Refresh_GrappleAccelToDesired_Custom(gst8_stop.desired_extra, grapple, gst8_stop.has_stopDistance, gst8_stop.stopDistance_value, isHovered_stopdistance)
+    this.Refresh_GrappleAccelToDesired_Custom(gst8_stop.desired_extra, grapple, gst8_stop.has_stopDistance, gst8_stop.stopDistance_value, isHovered_stopdistance_checkbox or isHovered_stopdistance_slider)
 
     this.Refresh_HasStopAngle(gst8_stop.has_stopAngle, grapple)
     this.Refresh_StopAngle_Value(gst8_stop.stopAngle_value, grapple)
@@ -79,7 +83,7 @@ function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player,
     Draw_GrappleDesiredLength(gst8_stop.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleAccelToDesired(gst8_stop.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
-    Draw_CheckBox(gst8_stop.has_stopAngle, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    _, isHovered_stopAngle_checkbox = Draw_CheckBox(gst8_stop.has_stopAngle, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
     Draw_HelpButton(gst8_stop.stopAngle_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
     if gst8_stop.has_stopAngle.isChecked then
@@ -87,16 +91,16 @@ function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player,
         Draw_MinDotGraphic(gst8_stop.stopAngle_graphic, vars_ui.style.graphics, vars_ui.style.mindotGraphic, window.left, window.top, window.width, window.height, const)
     end
 
-    Draw_CheckBox(gst8_stop.has_stopDistance, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    _, isHovered_stopdistance_checkbox = Draw_CheckBox(gst8_stop.has_stopDistance, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
     Draw_HelpButton(gst8_stop.stopDistance_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
     if gst8_stop.has_stopDistance.isChecked then
-        _, isHovered_stopdistance = Draw_Slider(gst8_stop.stopDistance_value, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
+        _, isHovered_stopdistance_slider = Draw_Slider(gst8_stop.stopDistance_value, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
     else
-        isHovered_stopdistance = false
+        isHovered_stopdistance_slider = false
     end
 
-    Draw_CheckBox(gst8_stop.should_stopOnWallHit, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    _, isHovered_stopOnWallHit_checkbox = Draw_CheckBox(gst8_stop.should_stopOnWallHit, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
     Draw_HelpButton(gst8_stop.stopOnWallHit_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_stop.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
@@ -163,6 +167,8 @@ function this.Define_HasStopAngle(const)
     -- CheckBox
     return
     {
+        invisible_name = "GrappleStraight_StopEarly_HasStopAngle",
+
         text = "Look Away",
 
         isEnabled = true,
@@ -260,6 +266,8 @@ function this.Define_HasStopDistance(const)
     -- CheckBox
     return
     {
+        invisible_name = "GrappleStraight_StopEarly_HasStopDistance",
+
         text = "Too close to anchor",
 
         isEnabled = true,
@@ -338,6 +346,8 @@ function this.Define_ShouldStopOnWallHit(const)
     -- CheckBox
     return
     {
+        invisible_name = "GrappleStraight_StopEarly_ShouldStopOnWallHit",
+
         text = "Touch a wall",
 
         isEnabled = true,

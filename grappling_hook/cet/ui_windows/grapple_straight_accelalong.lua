@@ -23,14 +23,14 @@ function DefineWindow_GrappleStraight_AccelAlong(vars_ui, const)
     gst8_accalong.has_accelalong = this.Define_HasAccelAlong(const)
 
     -- Accel (Grapple.accel_alongGrappleLine.accel)
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", -180, 100, const)
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", -180, 100, const, false, "GrappleStraight_AccelAlong_Accel")
     gst8_accalong.accel_prompt = prompt
     gst8_accalong.accel_value = value
     gst8_accalong.accel_updown = updown
     gst8_accalong.accel_help = help
 
     -- Speed (Grapple.accel_alongGrappleLine.speed)
-    prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 180, 100, const)
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 180, 100, const, false, "GrappleStraight_AccelAlong_Speed")
     gst8_accalong.speed_prompt = prompt
     gst8_accalong.speed_value = value
     gst8_accalong.speed_updown = updown
@@ -46,6 +46,7 @@ function DefineWindow_GrappleStraight_AccelAlong(vars_ui, const)
     gst8_accalong.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
+local isHovered_has = false
 local isHovered_deadspot = false
 
 function DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player, window, const)
@@ -71,9 +72,9 @@ function DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player
 
     Refresh_Name(gst8_accalong.name, grapple.name)
 
-    Refresh_GrappleArrows(gst8_accalong.arrows, grapple, true, false, false)
+    Refresh_GrappleArrows(gst8_accalong.arrows, grapple, false, not gst8_accalong.has_accelalong.isChecked and isHovered_has, false)
     Refresh_GrappleDesiredLength(gst8_accalong.desired_line, grapple, nil, changes, false)
-    Refresh_GrappleAccelToDesired(gst8_accalong.desired_extra, grapple, accel, gst8_accalong.deadspot_dist.value, false, isHovered_deadspot)
+    Refresh_GrappleAccelToDesired(gst8_accalong.desired_extra, grapple, accel, gst8_accalong.deadspot_dist.value, isHovered_has, isHovered_has or isHovered_deadspot)
 
     this.Refresh_HasAccelAlong(gst8_accalong.has_accelalong, player, grapple, accel, changes)
 
@@ -102,7 +103,9 @@ function DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player
         Draw_GrappleAccelToDesired(gst8_accalong.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     end
 
-    if Draw_CheckBox(gst8_accalong.has_accelalong, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
+    local wasChecked
+    wasChecked, isHovered_has = Draw_CheckBox(gst8_accalong.has_accelalong, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    if wasChecked then
         this.Update_HasAccelAlong(gst8_accalong.has_accelalong, accel, changes, startedWithAG)
     end
 
@@ -153,6 +156,8 @@ function this.Define_HasAccelAlong(const)
     -- CheckBox
     return
     {
+        invisible_name = "GrappleStraight_AccelAlong_HasAccelAlong",
+
         text = "Has acceleration along grapple line",
 
         position =

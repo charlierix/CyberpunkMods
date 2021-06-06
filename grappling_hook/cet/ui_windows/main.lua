@@ -196,6 +196,8 @@ function this.Define_ShouldAutoShow(const)
     -- CheckBox
     return
     {
+        invisible_name = "Main_ShouldAutoShow",
+
         text = "Auto show config when opening console",
 
         isEnabled = true,

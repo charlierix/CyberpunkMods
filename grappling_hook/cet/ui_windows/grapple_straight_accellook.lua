@@ -19,14 +19,14 @@ function DefineWindow_GrappleStraight_AccelLook(vars_ui, const)
     gst8_acclook.has_accellook = this.Define_HasAccelLook(const)
 
     -- Accel (Grapple.accel_alongLook.accel)
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", -180, 100, const)
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", -180, 100, const, false, "GrappleStraight_AccelLook_Accel")
     gst8_acclook.accel_prompt = prompt
     gst8_acclook.accel_value = value
     gst8_acclook.accel_updown = updown
     gst8_acclook.accel_help = help
 
     -- Speed (Grapple.accel_alongLook.speed)
-    prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 180, 100, const)
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 180, 100, const, false, "GrappleStraight_AccelLook_Speed")
     gst8_acclook.speed_prompt = prompt
     gst8_acclook.speed_value = value
     gst8_acclook.speed_updown = updown
@@ -36,6 +36,8 @@ function DefineWindow_GrappleStraight_AccelLook(vars_ui, const)
 
     gst8_acclook.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
+
+local isHovered_has = false
 
 function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
@@ -60,7 +62,7 @@ function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player,
 
     Refresh_Name(gst8_acclook.name, grapple.name)
 
-    Refresh_GrappleArrows(gst8_acclook.arrows, grapple, true, false, false)
+    Refresh_GrappleArrows(gst8_acclook.arrows, grapple, true, false, isHovered_has)
     Refresh_GrappleDesiredLength(gst8_acclook.desired_line, grapple, nil, changes, false)
 
     this.Refresh_HasAccelLook(gst8_acclook.has_accellook, player, grapple, accel, changes)
@@ -85,7 +87,9 @@ function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player,
     Draw_GrappleArrows(gst8_acclook.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_acclook.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
-    if Draw_CheckBox(gst8_acclook.has_accellook, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
+    local wasChecked
+    wasChecked, isHovered_has = Draw_CheckBox(gst8_acclook.has_accellook, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    if wasChecked then
         this.Update_HasAccelLook(gst8_acclook.has_accellook, accel, changes, startedWithAL)
     end
 
@@ -129,6 +133,8 @@ function this.Define_HasAccelLook(const)
     -- CheckBox
     return
     {
+        invisible_name = "GrappleStraight_AccelLook_HasAccelLook",
+
         text = "Has Acceleration in Look Direction",
 
         position =
