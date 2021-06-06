@@ -56,12 +56,12 @@ end
 -- Returns:
 --  true: keep showing config
 --  false: stop showing config
-function DrawConfig(isConfigRepress, vars_ui, player, const)
+function DrawConfig(isCloseRequested, vars_ui, player, const)
     if not player then
         return false
     end
 
-    local continueShowing = true        -- only the main window is allowed to set this to false
+    local continueShowing = true        -- this should go to false when isCloseRequested true, unless the window is in a dirty state
 
     local window = vars_ui.mainWindow
 
@@ -86,43 +86,43 @@ function DrawConfig(isConfigRepress, vars_ui, player, const)
         Refresh_LineHeights(vars_ui)
 
         if vars_ui.currentWindow == const.windows.main then
-            continueShowing = DrawWindow_Main(isConfigRepress, vars_ui, player, window, const)
+            continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.energy_tank then
-            DrawWindow_EnergyTank(vars_ui, player, window, const)
+            continueShowing = DrawWindow_EnergyTank(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_choose then
-            DrawWindow_Grapple_Choose(vars_ui, player, window, const)
+            continueShowing = DrawWindow_Grapple_Choose(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight then
-            DrawWindow_Grapple_Straight(vars_ui, player, window, const)
+            continueShowing = DrawWindow_Grapple_Straight(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight_accelalong then
-            DrawWindow_GrappleStraight_AccelAlong(vars_ui, player, window, const)
+            continueShowing = DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight_accellook then
-            DrawWindow_GrappleStraight_AccelLook(vars_ui, player, window, const)
+            continueShowing = DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight_aimduration then
-            DrawWindow_GrappleStraight_AimDuration(vars_ui, player, window, const)
+            continueShowing = DrawWindow_GrappleStraight_AimDuration(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight_airdash then
-            DrawWindow_GrappleStraight_AirDash(vars_ui, player, window, const)
+            continueShowing = DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight_antigrav then
-            DrawWindow_GrappleStraight_AntiGrav(vars_ui, player, window, const)
+            continueShowing = DrawWindow_GrappleStraight_AntiGrav(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight_description then
-            DrawWindow_GrappleStraight_Description(vars_ui, player, window, const)
+            continueShowing = DrawWindow_GrappleStraight_Description(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight_distances then
-            DrawWindow_GrappleStraight_Distances(vars_ui, player, window, const)
+            continueShowing = DrawWindow_GrappleStraight_Distances(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight_stopearly then
-            DrawWindow_GrappleStraight_StopEarly(vars_ui, player, window, const)
+            continueShowing = DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight_velaway then
-            DrawWindow_GrappleStraight_VelocityAway(vars_ui, player, window, const)
+            continueShowing = DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, player, window, const)
         end
     end
     ImGui.End()

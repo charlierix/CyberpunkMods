@@ -15,7 +15,7 @@ function DefineWindow_Grapple_Choose(vars_ui, const)
     grapple_choose.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
-function DrawWindow_Grapple_Choose(vars_ui, player, window, const)
+function DrawWindow_Grapple_Choose(isCloseRequested, vars_ui, player, window, const)
     local grapple_choose = vars_ui.grapple_choose
 
     Draw_Label(grapple_choose.title, vars_ui.style.colors, window.width, window.height, const)
@@ -26,4 +26,6 @@ function DrawWindow_Grapple_Choose(vars_ui, player, window, const)
     if isCancelClicked then
         TransitionWindows_Main(vars_ui, const)
     end
+
+    return not (isCloseRequested and not grapple_choose.okcancel.isDirty)     -- returns if it should continue showing
 end

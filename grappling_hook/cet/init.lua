@@ -87,15 +87,18 @@ function TODO()
     -- Hanging MapPins:
     --  See if it's because there's an autosave mid grapple
 
+    -- XP:
+    --  Gain experience when grappling
+    --  Limit gain per time so people don't sit there and exploit instead of just playing
+    --  Extra gain if low xp and high level
+    --  See if achievements can be observed:
+    --      Time spent
+    --      High G
+    --      Hang Time
+    --      Chain of grapples
+
     -- AirDash:
     --  Sound
-
-    -- UI
-    --  Checkbox to auto show with console
-    --  Settings table (one for bool, add other datatype tables as necessary)
-    --      string key, bool value
-    --      GetSetting_Bool(key, default)       -- returns default if no row found
-    --      SetSetting_Bool(key, value)
 
     -- Input:
     --  Give the option to register actions to this new style hotkey, if that's what they prefer
@@ -502,6 +505,11 @@ registerForEvent("onDraw", function()
     if shouldShowConfig and player then
         shouldShowConfig = DrawConfig(isConfigRepress, vars_ui, player, const)
         isConfigRepress = false
+
+        if not shouldShowConfig then
+            -- They closed from an arbitrary window, make sure the next time config starts at main
+            TransitionWindows_Main(vars_ui, const)
+        end
     end
 
     if const.shouldShowDebugWindow then

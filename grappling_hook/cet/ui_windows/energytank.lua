@@ -34,7 +34,7 @@ function DefineWindow_EnergyTank(vars_ui, const)
     energy_tank.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
-function DrawWindow_EnergyTank(vars_ui, player, window, const)
+function DrawWindow_EnergyTank(isCloseRequested, vars_ui, player, window, const)
     local energy_tank = vars_ui.energy_tank
     local changes = energy_tank.changes
 
@@ -95,6 +95,8 @@ function DrawWindow_EnergyTank(vars_ui, player, window, const)
     elseif isCancelClicked then
         TransitionWindows_Main(vars_ui, const)
     end
+
+    return not (isCloseRequested and not energy_tank.okcancel.isDirty)     -- returns if it should continue showing
 end
 
 ----------------------------------- Private Methods -----------------------------------

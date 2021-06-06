@@ -37,7 +37,7 @@ end
 
 local isHovered_stopdistance = false
 
-function DrawWindow_GrappleStraight_StopEarly(vars_ui, player, window, const)
+function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
     if not grapple then
         print("DrawWindow_GrappleStraight_StopEarly: grapple is nil")
@@ -107,6 +107,8 @@ function DrawWindow_GrappleStraight_StopEarly(vars_ui, player, window, const)
     elseif isCancelClicked then
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
     end
+
+    return not (isCloseRequested and not gst8_stop.okcancel.isDirty)     -- returns if it should continue showing
 end
 
 ----------------------------------- Private Methods -----------------------------------

@@ -28,7 +28,7 @@ function DefineWindow_Main(vars_ui, const)
 end
 
 -- This gets called each frame from DrawConfig()
-function DrawWindow_Main(isConfigRepress, vars_ui, player, window, const)
+function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
     local main = vars_ui.main
 
     ------------------------- Finalize models for this frame -------------------------
@@ -88,7 +88,7 @@ function DrawWindow_Main(isConfigRepress, vars_ui, player, window, const)
 
     local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
 
-    return not (isConfigRepress or isCloseClicked)       -- stop showing when they click the close button (or press config key a second time.  This main page doesn't have anything to save, so it's ok to exit at any time)
+    return not (isCloseRequested or isCloseClicked)       -- stop showing when they click the close button (or press config key a second time.  This main page doesn't have anything to save, so it's ok to exit at any time)
 end
 
 ----------------------------------- Private Methods -----------------------------------

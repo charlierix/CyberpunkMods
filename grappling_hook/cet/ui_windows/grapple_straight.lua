@@ -47,7 +47,7 @@ local isHovered_airdash = false
 local isHovered_antigrav = false
 local isHovered_stopEarly = false
 
-function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
+function DrawWindow_Grapple_Straight(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
     if not grapple then
         print("DrawWindow_Grapple_Straight: grapple is nil")
@@ -152,6 +152,8 @@ function DrawWindow_Grapple_Straight(vars_ui, player, window, const)
     elseif isCancelClicked then
         TransitionWindows_Main(vars_ui, const)
     end
+
+    return not (isCloseRequested and not grapple_straight.okcancel.isDirty)     -- returns if it should continue showing
 end
 
 ----------------------------------- Private Methods -----------------------------------
