@@ -229,7 +229,7 @@ local o     -- This is a class that wraps access to Game.xxx
 
 local keys = nil -- = Keys:new()        -- moved to init
 
-local debug = { }
+local debug = {}
 
 local state =
 {

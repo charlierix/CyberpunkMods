@@ -137,6 +137,12 @@ end
 --NOTE: It's up to the caller to make sure that GetPlayerInfo has already been called
 function GameObjectAccessor:HasHeadUnderwater()
     if self.player then
+        -- This has a chance of causing crashes, so only call it when there's a posibility of being underwater
+        -- NOTE: Judy's lake is at an altitude of 180, so this shortcut won't work there
+        if self.pos.z > 6 then
+            return false
+        end
+
         return self.wrappers.HasHeadUnderwater(self.player)
     end
 end
