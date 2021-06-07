@@ -32,6 +32,7 @@ end
 
 local isHovered_desired_checkbox = false
 local isHovered_desired_slider = false
+local isHovered_max_updown = false
 
 function DrawWindow_GrappleStraight_Distances(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
@@ -49,7 +50,7 @@ function DrawWindow_GrappleStraight_Distances(isCloseRequested, vars_ui, player,
 
     Refresh_Name(gst8_dist.name, grapple.name)
 
-    Refresh_GrappleArrows(gst8_dist.arrows, grapple, false, false, false)
+    Refresh_GrappleArrows(gst8_dist.arrows, grapple, false, isHovered_max_updown, false)
     Refresh_GrappleDesiredLength(gst8_dist.desired_line, grapple, this.GetChanged_DesiredLength(gst8_dist.desired_checkbox, gst8_dist.desired_slider), changes, isHovered_desired_checkbox or isHovered_desired_slider)
 
     --TODO: MaxDistance Update should be non linear
@@ -77,7 +78,8 @@ function DrawWindow_GrappleStraight_Distances(isCloseRequested, vars_ui, player,
     Draw_Label(gst8_dist.max_prompt, vars_ui.style.colors, window.width, window.height, const)
     Draw_Label(gst8_dist.max_value, vars_ui.style.colors, window.width, window.height, const)
 
-    local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_dist.max_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+    local isDownClicked, isUpClicked
+    isDownClicked, isUpClicked, isHovered_max_updown = Draw_UpDownButtons(gst8_dist.max_updown, vars_ui.style.updownButtons, window.width, window.height, const)
     this.Update_MaxDistance(gst8_dist.max_updown, changes, gst8_dist.desired_slider, isDownClicked, isUpClicked, grapple)
 
     Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)

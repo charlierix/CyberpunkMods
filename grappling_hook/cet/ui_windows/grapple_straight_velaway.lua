@@ -46,7 +46,9 @@ end
 
 local isHovered_velaway_checkbox = false
 local isHovered_compress_checkbox = false
+local isHovered_compress_updown = false
 local isHovered_tension_checkbox = false
+local isHovered_tension_updown = false
 local isHovered_deadspot_slider = false
 
 function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, player, window, const)
@@ -76,7 +78,7 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
 
     Refresh_GrappleArrows(gst8_velaway.arrows, grapple, true, not gst8_velaway.has_velaway.isChecked and isHovered_velaway_checkbox, false)
     Refresh_GrappleDesiredLength(gst8_velaway.desired_line, grapple, nil, changes, false)
-    this.Refresh_GrappleAccelToDesired_Custom(gst8_velaway.desired_extra, grapple, velaway, gst8_velaway.deadspot_dist.value, isHovered_velaway_checkbox or isHovered_tension_checkbox, isHovered_velaway_checkbox or isHovered_compress_checkbox, isHovered_velaway_checkbox or isHovered_deadspot_slider)     -- this isn't visible when velaway checkbox is false, so there's no need to complicate the highlight logic
+    this.Refresh_GrappleAccelToDesired_Custom(gst8_velaway.desired_extra, grapple, velaway, gst8_velaway.deadspot_dist.value, isHovered_velaway_checkbox or isHovered_tension_checkbox or isHovered_tension_updown, isHovered_velaway_checkbox or isHovered_compress_checkbox or isHovered_compress_updown, isHovered_velaway_checkbox or isHovered_deadspot_slider)     -- this isn't visible when velaway checkbox is false, so there's no need to complicate the highlight logic
 
     this.Refresh_HasVelocityAway(gst8_velaway.has_velaway, player, grapple, velaway, changes)
 
@@ -125,10 +127,13 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
         if gst8_velaway.has_compress.isChecked then
             Draw_Label(gst8_velaway.compress_value, vars_ui.style.colors, window.width, window.height, const)
 
-            local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_velaway.compress_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+            local isDownClicked, isUpClicked
+            isDownClicked, isUpClicked, isHovered_compress_updown = Draw_UpDownButtons(gst8_velaway.compress_updown, vars_ui.style.updownButtons, window.width, window.height, const)
             this.Update_Compress(gst8_velaway.compress_updown, changes, isDownClicked, isUpClicked)
 
             Draw_HelpButton(gst8_velaway.compress_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        else
+            isHovered_compress_updown = false
         end
 
         -- Tension
@@ -140,10 +145,13 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
         if gst8_velaway.has_tension.isChecked then
             Draw_Label(gst8_velaway.tension_value, vars_ui.style.colors, window.width, window.height, const)
 
-            local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_velaway.tension_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+            local isDownClicked, isUpClicked
+            isDownClicked, isUpClicked, isHovered_tension_updown = Draw_UpDownButtons(gst8_velaway.tension_updown, vars_ui.style.updownButtons, window.width, window.height, const)
             this.Update_Tension(gst8_velaway.tension_updown, changes, isDownClicked, isUpClicked)
 
             Draw_HelpButton(gst8_velaway.tension_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        else
+            isHovered_tension_updown = false
         end
 
         -- Dead Spot Distance
@@ -151,6 +159,8 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
         Draw_HelpButton(gst8_velaway.deadspot_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
         _, isHovered_deadspot_slider = Draw_Slider(gst8_velaway.deadspot_dist, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
     else
+        isHovered_compress_checkbox = false
+        isHovered_tension_checkbox = false
         isHovered_deadspot_slider = false
     end
 

@@ -38,6 +38,8 @@ function DefineWindow_GrappleStraight_AccelLook(vars_ui, const)
 end
 
 local isHovered_has = false
+local isHovered_accel = false
+local isHovered_speed = false
 
 function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
@@ -62,7 +64,7 @@ function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player,
 
     Refresh_Name(gst8_acclook.name, grapple.name)
 
-    Refresh_GrappleArrows(gst8_acclook.arrows, grapple, true, false, isHovered_has)
+    Refresh_GrappleArrows(gst8_acclook.arrows, grapple, true, false, isHovered_has or isHovered_accel or isHovered_speed)
     Refresh_GrappleDesiredLength(gst8_acclook.desired_line, grapple, nil, changes, false)
 
     this.Refresh_HasAccelLook(gst8_acclook.has_accellook, player, grapple, accel, changes)
@@ -98,7 +100,8 @@ function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player,
         Draw_Label(gst8_acclook.accel_prompt, vars_ui.style.colors, window.width, window.height, const)
         Draw_Label(gst8_acclook.accel_value, vars_ui.style.colors, window.width, window.height, const)
 
-        local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_acclook.accel_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+        local isDownClicked, isUpClicked
+        isDownClicked, isUpClicked, isHovered_accel = Draw_UpDownButtons(gst8_acclook.accel_updown, vars_ui.style.updownButtons, window.width, window.height, const)
         this.Update_Accel(gst8_acclook.accel_updown, changes, isDownClicked, isUpClicked)
 
         Draw_HelpButton(gst8_acclook.accel_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
@@ -107,10 +110,13 @@ function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player,
         Draw_Label(gst8_acclook.speed_prompt, vars_ui.style.colors, window.width, window.height, const)
         Draw_Label(gst8_acclook.speed_value, vars_ui.style.colors, window.width, window.height, const)
 
-        isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_acclook.speed_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+        isDownClicked, isUpClicked, isHovered_speed = Draw_UpDownButtons(gst8_acclook.speed_updown, vars_ui.style.updownButtons, window.width, window.height, const)
         this.Update_Speed(gst8_acclook.speed_updown, changes, isDownClicked, isUpClicked)
 
         Draw_HelpButton(gst8_acclook.speed_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+    else
+        isHovered_accel = false
+        isHovered_speed = false
     end
 
     Draw_OrderedList(gst8_acclook.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)

@@ -4,7 +4,7 @@ local this = {}
 -- def is models\viewmodels\UpDownButtons
 -- style_updown is models\stylesheet\UpDownButtons
 -- Returns:
---	isDownClicked, isUpClicked
+--	isDownClicked, isUpClicked, isHovered
 function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, const)
 	-- Concatenate +- with model's text
     local text_down, text_up = this.FinalText(def)
@@ -77,9 +77,13 @@ function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, cons
     ImGui.PopStyleColor(1)
     ImGui.PopStyleVar(2)
 
+    -- Invisible Button
+    local _, isHovered = Draw_InvisibleButton(def.invisible_name .. "Hidden", left + (def.sizes.width / 2), top + (def.sizes.height / 2), def.sizes.width, def.sizes.height, 0)
+
 	return
 		isDownClicked and def.isEnabled_down,
-		isUpClicked and def.isEnabled_up
+		isUpClicked and def.isEnabled_up,
+		isHovered
 end
 
 -- This tells what values should go in the decrement and increment (called each frame)
