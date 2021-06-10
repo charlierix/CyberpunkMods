@@ -17,16 +17,17 @@ function DefineWindow_GrappleStraight_AccelLook(vars_ui, const)
 
     -- Checkbox for whether to have accel look (Grapple.accel_alongLook)
     gst8_acclook.has_accellook = this.Define_HasAccelLook(const)
+    gst8_acclook.has_help = this.Define_HasHelp(const)
 
     -- Accel (Grapple.accel_alongLook.accel)
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", -180, 100, const, false, "GrappleStraight_AccelLook_Accel")
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", -180, 100, const, false, "GrappleStraight_AccelLook_Accel", this.Tooltip_Accel())
     gst8_acclook.accel_prompt = prompt
     gst8_acclook.accel_value = value
     gst8_acclook.accel_updown = updown
     gst8_acclook.accel_help = help
 
     -- Speed (Grapple.accel_alongLook.speed)
-    prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 180, 100, const, false, "GrappleStraight_AccelLook_Speed")
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 180, 100, const, false, "GrappleStraight_AccelLook_Speed", this.Tooltip_Speed())
     gst8_acclook.speed_prompt = prompt
     gst8_acclook.speed_value = value
     gst8_acclook.speed_updown = updown
@@ -95,6 +96,8 @@ function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player,
         this.Update_HasAccelLook(gst8_acclook.has_accellook, accel, changes, startedWithAL)
     end
 
+    Draw_HelpButton(gst8_acclook.has_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+
     if gst8_acclook.has_accellook.isChecked then
         -- Accel
         Draw_Label(gst8_acclook.accel_prompt, vars_ui.style.colors, window.width, window.height, const)
@@ -104,7 +107,7 @@ function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player,
         isDownClicked, isUpClicked, isHovered_accel = Draw_UpDownButtons(gst8_acclook.accel_updown, vars_ui.style.updownButtons, window.width, window.height, const)
         this.Update_Accel(gst8_acclook.accel_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_acclook.accel_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        Draw_HelpButton(gst8_acclook.accel_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
         -- Speed
         Draw_Label(gst8_acclook.speed_prompt, vars_ui.style.colors, window.width, window.height, const)
@@ -113,7 +116,7 @@ function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player,
         isDownClicked, isUpClicked, isHovered_speed = Draw_UpDownButtons(gst8_acclook.speed_updown, vars_ui.style.updownButtons, window.width, window.height, const)
         this.Update_Speed(gst8_acclook.speed_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_acclook.speed_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        Draw_HelpButton(gst8_acclook.speed_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
     else
         isHovered_accel = false
         isHovered_speed = false
@@ -170,6 +173,37 @@ function this.Update_HasAccelLook(def, accel, changes, startedWithAL)
     PopulateBuySell(def.isChecked, startedWithAL, changes, "experience_buysell", total)
 end
 
+function this.Define_HasHelp(const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "GrappleStraight_AccelLook_HasHelp",
+
+        position =
+        {
+            pos_x = 150,
+            pos_y = 0,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+    }
+
+    retVal.tooltip =
+[[While grappling, this will apply an acceleration in the direction you are looking
+
+This allows you to somewhat steer your flight based on where you look
+
+Watch videos of grappling in titanfall2 for examples of this play style]]
+
+    return retVal
+end
+
+function this.Tooltip_Accel()
+    return
+[[How hard to accelerate in the direction you are looking
+
+(Gravity in this game is 16)]]
+end
 function this.Refresh_Accel_Value(def, accel, changes)
     def.text = tostring(Round(accel.accel + changes:Get("accel")))
 end
@@ -189,6 +223,10 @@ function this.Update_Accel(def, changes, isDownClicked, isUpClicked)
     end
 end
 
+function this.Tooltip_Speed()
+    return
+[[Stops accelerating once this speed is reached]]
+end
 function this.Refresh_Speed_Value(def, accel, changes)
     def.text = tostring(Round(accel.speed + changes:Get("speed")))
 end

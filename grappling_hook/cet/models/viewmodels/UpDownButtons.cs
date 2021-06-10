@@ -8,6 +8,11 @@ namespace grapple_ui.models.viewmodels
 {
     public record UpDownButtons
     {
+        /// <summary>
+        /// This isn't shown, it just needs to be a unique string
+        /// </summary>
+        public string invisible_name { get; init; }
+
         // This text will sit next to the - and +.  They're used to tell how much the quantity
         // will change with each button press
         public string text_down { get; init; }

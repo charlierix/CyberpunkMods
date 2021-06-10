@@ -141,14 +141,27 @@
         "radius": 7,
         "border_thickness": 1,
 
-        "foreground_color_standard": "50C9C9C9",
-        "foreground_color_hover": "FFF",
+        "foreground_color_standard": "40A1A1A1",
+        "foreground_color_hover": "A0CCCCCC",
 
-        "border_color_standard": "406080",
-        "border_color_hover": "46698C",
+        "border_color_standard": "80596C80",
+        "border_color_hover": "A046698C",
 
-        "back_color_standard": "6036506B",
-        "back_color_hover": "806699CC"
+        "back_color_standard": "30324152",
+        "back_color_hover": "705078A1"
+    },
+
+    "tooltip":
+    {
+        "max_width": 432,
+        "padding": 9,
+
+        "border_cornerRadius": 3,
+        "border_thickness": 2,
+
+        "text_color": "B5AF91",
+        "back_color": "F4262625",
+        "border_color": "40575344"
     },
 
     "mindotGraphic":

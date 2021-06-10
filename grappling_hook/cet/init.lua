@@ -288,6 +288,8 @@ local vars_ui =
     --mainWindow    -- info about the location of the main window (top/left gets stored in a table if they move it) -- see Define_MainWindow()
     --line_heights  -- the height of strings -- see Refresh_LineHeights()
 
+    isTooltipShowing = false,       -- the tooltip is actually a sub window.  This is needed so the parent window's titlebar can stay the active color
+
     -- ***** See window_transitions.lua *****
     currentWindow = const.windows.main,
     transition_info = {}       -- this holds properties needed for the window (like grappleIndex for grapple_straight)

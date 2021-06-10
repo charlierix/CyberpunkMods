@@ -97,7 +97,7 @@ end
 function Draw_Arrow(screenOffset_x, screenOffset_y, x1, y1, x2, y2, color, thickness, arrow_length, arrow_width)
     Draw_Line(screenOffset_x, screenOffset_y, x1, y1, x2, y2, color, thickness)
 
-    local ax1, ay1, ax2, ay2, ax3, ay3 = GetArrowCoords(x1, y1, x2, y2, arrow_length, arrow_width)
+    local ax1, ay1, ax2, ay2, ax3, ay3 = this.GetArrowCoords(x1, y1, x2, y2, arrow_length, arrow_width)
     Draw_Triangle(screenOffset_x, screenOffset_y, ax1, ay1, ax2, ay2, ax3, ay3, color, nil, nil)
 end
 
@@ -111,9 +111,43 @@ function Draw_Triangle(screenOffset_x, screenOffset_y, x1, y1, x2, y2, x3, y3, c
     end
 end
 
+-- This shows a tooltip next to, but not touching x,y (based on no touch size)
+-- style_tooltip is models\stylesheet\Tooltip
+function Draw_Tooltip(text, style_tooltip, screen_x, screen_y, notouch_halfwidth, notouch_halfheight, vars_ui)
+    -- This tells the parent window to use the standard titlebar color, even though it's not focused (because this
+    -- tooltip steals focus).  The bool will get set to false each following frame
+    vars_ui.isTooltipShowing = true
+
+    local width, height = this.GetTooltip_Size(text, style_tooltip.max_width, style_tooltip.padding)
+
+    local screen_left, screen_top = this.GetTooltip_Position(width, height, screen_x, screen_y, notouch_halfwidth, notouch_halfheight, vars_ui.screen)
+
+    ImGui.PushStyleVar(ImGuiStyleVar.WindowRounding, style_tooltip.border_cornerRadius)
+    ImGui.PushStyleVar(ImGuiStyleVar.WindowBorderSize, style_tooltip.border_thickness)
+
+    ImGui.PushStyleColor(ImGuiCol.Text, style_tooltip.text_color_abgr)
+    ImGui.PushStyleColor(ImGuiCol.WindowBg, style_tooltip.back_color_abgr)
+    ImGui.PushStyleColor(ImGuiCol.Border, style_tooltip.border_color_abgr)
+
+    ImGui.SetNextWindowPos(screen_left, screen_top, ImGuiCond.Always)
+    ImGui.SetNextWindowSize(width, height, ImGuiCond.Always)
+
+    if (ImGui.Begin("tooltip", true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoScrollbar)) then
+        ImGui.SetCursorPos(style_tooltip.padding, style_tooltip.padding)
+        ImGui.PushTextWrapPos(width - style_tooltip.padding)
+
+        ImGui.Text(text)
+    end
+    ImGui.End()
+
+    ImGui.PopStyleColor(3)
+
+    ImGui.PopStyleVar(2)
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
-function GetArrowCoords(x1, y1, x2, y2, length, width)
+function this.GetArrowCoords(x1, y1, x2, y2, length, width)
     local magnitude = Get2DLength(x2 - x1, y2 - y1)
 
     -- Get a unit vector that points from the to point back to the base of the arrow head
@@ -140,4 +174,95 @@ function GetArrowCoords(x1, y1, x2, y2, length, width)
         base_y + (edgeDir1_y * halfWidth),
         base_x + (edgeDir2_x * halfWidth),      -- base point 2
         base_y + (edgeDir2_y * halfWidth)
+end
+
+function this.GetTooltip_Size(text, max_width, padding)
+    local width, height = ImGui.CalcTextSize(text, false, max_width)
+
+    return
+        width + (padding * 2),
+        height + (padding * 2)
+end
+
+function this.GetTooltip_Position(width, height, x, y, notouch_halfwidth, notouch_halfheight, screen)
+    -- Order of preference: Right, Left, Bottom, Top, else touch the no no zone
+    local left, top
+    left, top = this.GetTooltip_Position_RightLeft(width, height, x, y, notouch_halfwidth, screen)
+
+    if not left then
+        left, top = this.GetTooltip_Position_BottomTop(width, height, x, y, notouch_halfheight, screen)
+
+        if not left then
+            left, top = this.GetTooltip_Position_Covered(width, height, x, y, screen)
+        end
+    end
+
+    return left, top
+end
+
+function this.GetTooltip_Position_RightLeft(width, height, x, y, notouch_halfwidth, screen)
+    ----------- Left ----------
+    -- Start to the right
+    local left = x + notouch_halfwidth
+
+    if left + width > screen.width then
+        -- Right goes off the screen, try to the left
+        left = x - notouch_halfwidth - width
+
+        if left < 0 then
+            -- It will cover either way.  The caller needs to try vertical displacement
+            return nil, nil
+        end
+    end
+
+    ----------- Top -----------
+    --NOTE: Not checking for bottom going off the screen.  That would only happen if the tooltip is taller than the screen,
+    --and if that's the case, it's just noise anyway
+
+    -- Center it along y
+    local top = y - (height / 2)
+    if top < 0 then
+        -- It will go off the screen, pull it down a bit
+        top = 0
+    end
+
+    return left, top
+end
+function this.GetTooltip_Position_BottomTop(width, height, x, y, notouch_halfheight, screen)
+    ----------- Top -----------
+    -- Start below
+    local top = y + notouch_halfheight
+
+    if top + height > screen.height then
+        -- Bottom goes off the screen, try above
+        top = y - notouch_halfheight - height
+
+        if top < 0 then
+            -- It will cover either way.  The caller needs to try something else
+            return nil, nil
+        end
+    end
+
+    ----------- Left ----------
+    -- Center it along y
+    local left = x - (width / 2)
+    if left < 0 then
+        -- It will go off the screen, pull it down a bit
+        left = 0
+    end
+
+    return left, top
+end
+function this.GetTooltip_Position_Covered(width, height, x, y, screen)
+    local left = screen.width - width
+    if left < 0 then
+        left = 0
+    end
+
+    local top = y - (height / 2)
+    if top < 0 then
+        top = 0
+    end
+
+    return left, top
 end

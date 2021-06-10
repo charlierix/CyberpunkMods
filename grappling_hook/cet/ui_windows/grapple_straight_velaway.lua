@@ -131,7 +131,7 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
             isDownClicked, isUpClicked, isHovered_compress_updown = Draw_UpDownButtons(gst8_velaway.compress_updown, vars_ui.style.updownButtons, window.width, window.height, const)
             this.Update_Compress(gst8_velaway.compress_updown, changes, isDownClicked, isUpClicked)
 
-            Draw_HelpButton(gst8_velaway.compress_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+            Draw_HelpButton(gst8_velaway.compress_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
         else
             isHovered_compress_updown = false
         end
@@ -149,14 +149,14 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
             isDownClicked, isUpClicked, isHovered_tension_updown = Draw_UpDownButtons(gst8_velaway.tension_updown, vars_ui.style.updownButtons, window.width, window.height, const)
             this.Update_Tension(gst8_velaway.tension_updown, changes, isDownClicked, isUpClicked)
 
-            Draw_HelpButton(gst8_velaway.tension_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+            Draw_HelpButton(gst8_velaway.tension_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
         else
             isHovered_tension_updown = false
         end
 
         -- Dead Spot Distance
         Draw_Label(gst8_velaway.deadspot_label, vars_ui.style.colors, window.width, window.height, const)
-        Draw_HelpButton(gst8_velaway.deadspot_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        Draw_HelpButton(gst8_velaway.deadspot_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
         _, isHovered_deadspot_slider = Draw_Slider(gst8_velaway.deadspot_dist, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
     else
         isHovered_compress_checkbox = false

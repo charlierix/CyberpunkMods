@@ -270,7 +270,7 @@ end
 --  label: property value
 --  updown buttons
 --  help button
-function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleName_base)
+function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleName_base, help_tooltip_text)
     -- Probably can't use this outside of a draw function.  Just hardcode the offsets
     --local size_text_x, size_text_y = ImGui.CalcTextSize(text)
 
@@ -350,6 +350,8 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
     local help =
     {
         invisible_name = invisibleName_base .. "_Help",
+
+        tooltip = help_tooltip_text,
 
         position =
         {

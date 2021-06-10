@@ -1,4 +1,6 @@
 local this = {}
+local character = "?"       --"i"  (i might look better if it would be centered)
+
 
 -- Draws a button that is a ? with a circle around it.  Used like a button to show additional
 -- information
@@ -6,7 +8,7 @@ local this = {}
 -- style_help is models\stylesheet\HelpButton
 -- Returns:
 --	isClicked, isHovered
-function Draw_HelpButton(def, style_help, screenOffset_x, screenOffset_y, parent_width, parent_height, const)
+function Draw_HelpButton(def, style_help, screenOffset_x, screenOffset_y, parent_width, parent_height, const, vars_ui)
 	-- Calculate Sizes
 	if not def.sizes then
         def.sizes = {}
@@ -19,7 +21,8 @@ function Draw_HelpButton(def, style_help, screenOffset_x, screenOffset_y, parent
 
     -- Invisible Button
     local clickableSize = style_help.radius * 0.85 * 2
-    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, def.sizes.center_x, def.sizes.center_y, clickableSize, clickableSize, 0)
+    --local clickableSize = style_help.radius * 1.5 * 2
+    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, left + def.sizes.center_x, top + def.sizes.center_y, clickableSize, clickableSize, 0)
 
     -- Circle
     Draw_Circle(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, style_help.radius, isHovered, style_help.back_color_standard_abgr, style_help.back_color_hover_abgr, style_help.border_color_standard_abgr, style_help.border_color_hover_abgr, style_help.border_thickness)
@@ -33,8 +36,13 @@ function Draw_HelpButton(def, style_help, screenOffset_x, screenOffset_y, parent
         ImGui.PushStyleColor(ImGuiCol.Text, style_help.foreground_color_standard_abgr)
     end
 
-    ImGui.Text("?")
+    ImGui.Text(character)
     ImGui.PopStyleColor()
+
+    if isHovered and def.tooltip then
+        local notouch = style_help.radius + 12
+        Draw_Tooltip(def.tooltip, vars_ui.style.tooltip, screenOffset_x + left + def.sizes.center_x, screenOffset_y + top + def.sizes.center_y, notouch, notouch, vars_ui)
+    end
 
     return isClicked, isHovered
 end
@@ -42,7 +50,7 @@ end
 ------------------------------------------- Private Methods -------------------------------------------
 
 function this.Calculate_Sizes(def, style_help)
-    local width, height = ImGui.CalcTextSize("?")
+    local width, height = ImGui.CalcTextSize(character)
 
     local radius = style_help.radius
 

@@ -21,21 +21,21 @@ function DefineWindow_GrappleStraight_AirDash(vars_ui, const)
     gst8_airdash.burn_rate = this.Define_BurnRate(const)
 
     -- Percent (AirDash.burnReducePercent)
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Reduce Percent", -220, 130, const, false, "GrappleStraight_AirDash_Percent")
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Reduce Percent", -220, 130, const, false, "GrappleStraight_AirDash_Percent", this.Tooltip_Percent())
     gst8_airdash.percent_prompt = prompt
     gst8_airdash.percent_value = value
     gst8_airdash.percent_updown = updown
     gst8_airdash.percent_help = help
 
     -- Accel (AirDash.accel.accel)
-    prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", 0, 130, const, false, "GrappleStraight_AirDash_Accel")
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", 0, 130, const, false, "GrappleStraight_AirDash_Accel", this.Tooltip_Accel())
     gst8_airdash.accel_prompt = prompt
     gst8_airdash.accel_value = value
     gst8_airdash.accel_updown = updown
     gst8_airdash.accel_help = help
 
     -- Speed (AirDash.accel.speed)
-    prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 220, 130, const, false, "GrappleStraight_AirDash_Speed")
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 220, 130, const, false, "GrappleStraight_AirDash_Speed", this.Tooltip_Speed())
     gst8_airdash.speed_prompt = prompt
     gst8_airdash.speed_value = value
     gst8_airdash.speed_updown = updown
@@ -121,7 +121,7 @@ function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, w
         isDownClicked, isUpClicked, isHovered_percent = Draw_UpDownButtons(gst8_airdash.percent_updown, vars_ui.style.updownButtons, window.width, window.height, const)
         this.Update_Percent(gst8_airdash.percent_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_airdash.percent_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        Draw_HelpButton(gst8_airdash.percent_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
         -- Accel
         Draw_Label(gst8_airdash.accel_prompt, vars_ui.style.colors, window.width, window.height, const)
@@ -130,7 +130,7 @@ function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, w
         isDownClicked, isUpClicked, isHovered_accel = Draw_UpDownButtons(gst8_airdash.accel_updown, vars_ui.style.updownButtons, window.width, window.height, const)
         this.Update_Accel(gst8_airdash.accel_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_airdash.accel_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        Draw_HelpButton(gst8_airdash.accel_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
         -- Speed
         Draw_Label(gst8_airdash.speed_prompt, vars_ui.style.colors, window.width, window.height, const)
@@ -139,7 +139,7 @@ function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, w
         isDownClicked, isUpClicked, isHovered_speed = Draw_UpDownButtons(gst8_airdash.speed_updown, vars_ui.style.updownButtons, window.width, window.height, const)
         this.Update_Speed(gst8_airdash.speed_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_airdash.speed_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        Draw_HelpButton(gst8_airdash.speed_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
     else
         isHovered_percent = false
         isHovered_accel = false
@@ -228,6 +228,9 @@ function this.Refresh_BurnRate(def, airdash, changes)
     def.content.b_reduced.value = tostring(Round(rate, 2))
 end
 
+function this.Tooltip_Percent()
+    return "Reduces the cost per second of using air dash"
+end
 function this.Refresh_Percent_Value(def, airdash, changes)
     def.text = tostring(Round((airdash.burnReducePercent + changes:Get("burnReducePercent")) * 100)) .. "%"
 end
@@ -247,6 +250,12 @@ function this.Update_Percent(def, changes, isDownClicked, isUpClicked)
     end
 end
 
+function this.Tooltip_Accel()
+    return
+[[How hard to accelerate in the direction you are looking
+
+(Gravity in this game is 16)]]
+end
 function this.Refresh_Accel_Value(def, accel, changes)
     def.text = tostring(Round(accel.accel + changes:Get("accel")))
 end
@@ -266,6 +275,9 @@ function this.Update_Accel(def, changes, isDownClicked, isUpClicked)
     end
 end
 
+function this.Tooltip_Speed()
+    return "Stops accelerating once this speed is reached"
+end
 function this.Refresh_Speed_Value(def, accel, changes)
     def.text = tostring(Round(accel.speed + changes:Get("speed")))
 end

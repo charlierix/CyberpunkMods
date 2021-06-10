@@ -120,7 +120,7 @@ function DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player
         isDownClicked, isUpClicked, isHovered_accel = Draw_UpDownButtons(gst8_accalong.accel_updown, vars_ui.style.updownButtons, window.width, window.height, const)
         this.Update_Accel(gst8_accalong.accel_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_accalong.accel_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        Draw_HelpButton(gst8_accalong.accel_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
         -- Speed
         Draw_Label(gst8_accalong.speed_prompt, vars_ui.style.colors, window.width, window.height, const)
@@ -129,11 +129,11 @@ function DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player
         isDownClicked, isUpClicked, isHovered_speed = Draw_UpDownButtons(gst8_accalong.speed_updown, vars_ui.style.updownButtons, window.width, window.height, const)
         this.Update_Speed(gst8_accalong.speed_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_accalong.speed_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        Draw_HelpButton(gst8_accalong.speed_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
         -- Dead Spot Distance
         Draw_Label(gst8_accalong.deadspot_label, vars_ui.style.colors, window.width, window.height, const)
-        Draw_HelpButton(gst8_accalong.deadspot_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        Draw_HelpButton(gst8_accalong.deadspot_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
         _, isHovered_deadspot = Draw_Slider(gst8_accalong.deadspot_dist, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
     else
         isHovered_deadspot = false

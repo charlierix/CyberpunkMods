@@ -82,7 +82,7 @@ function DrawWindow_GrappleStraight_Distances(isCloseRequested, vars_ui, player,
     isDownClicked, isUpClicked, isHovered_max_updown = Draw_UpDownButtons(gst8_dist.max_updown, vars_ui.style.updownButtons, window.width, window.height, const)
     this.Update_MaxDistance(gst8_dist.max_updown, changes, gst8_dist.desired_slider, isDownClicked, isUpClicked, grapple)
 
-    Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+    Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
     -- Desired Length
     _, isHovered_desired_checkbox = Draw_CheckBox(gst8_dist.desired_checkbox, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)

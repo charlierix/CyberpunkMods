@@ -12,7 +12,15 @@ namespace grapple_ui.models.viewmodels
     /// </summary>
     public record HelpButton
     {
-        //TODO: May want some kind of tooltip property, but that will probably be fixed text known by the caller
+        /// <summary>
+        /// This is an optional property.  If set, then a tooltip will show while the mouse is over
+        /// this control
+        /// </summary>
+        /// <remarks>
+        /// Draw_HelpButton returns whether the button is clicked and hovered, so the caller can do
+        /// more elaborate things if they don't want to use this built in tooltip functionality
+        /// </remarks>
+        public string tooltip { get; init; }
 
         /// <summary>
         /// Tells where on the parent to place the text

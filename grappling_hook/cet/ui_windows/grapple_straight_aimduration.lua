@@ -57,7 +57,7 @@ function DrawWindow_GrappleStraight_AimDuration(isCloseRequested, vars_ui, playe
     local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_aimdur.dur_updown, vars_ui.style.updownButtons, window.width, window.height, const)
     this.Update_AimDuration(gst8_aimdur.dur_updown, changes, isDownClicked, isUpClicked)
 
-    Draw_HelpButton(gst8_aimdur.dur_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+    Draw_HelpButton(gst8_aimdur.dur_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
     Draw_OrderedList(gst8_aimdur.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 

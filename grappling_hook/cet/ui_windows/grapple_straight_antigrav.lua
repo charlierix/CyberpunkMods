@@ -105,7 +105,7 @@ function DrawWindow_GrappleStraight_AntiGrav(isCloseRequested, vars_ui, player, 
         isDownClicked, isUpClicked, isHovered_percent = Draw_UpDownButtons(gst8_antgrav.percent_updown, vars_ui.style.updownButtons, window.width, window.height, const)
         this.Update_Percent(gst8_antgrav.percent_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_antgrav.percent_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        Draw_HelpButton(gst8_antgrav.percent_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
         -- Fade
         Draw_Label(gst8_antgrav.fade_prompt, vars_ui.style.colors, window.width, window.height, const)
@@ -114,7 +114,7 @@ function DrawWindow_GrappleStraight_AntiGrav(isCloseRequested, vars_ui, player, 
         isDownClicked, isUpClicked, isHovered_fade = Draw_UpDownButtons(gst8_antgrav.fade_updown, vars_ui.style.updownButtons, window.width, window.height, const)
         this.Update_Fade(gst8_antgrav.fade_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_antgrav.fade_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const)
+        Draw_HelpButton(gst8_antgrav.fade_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
     else
         isHovered_percent = false
         isHovered_fade = false
