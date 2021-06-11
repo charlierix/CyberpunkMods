@@ -18,16 +18,17 @@ function DefineWindow_GrappleStraight_VelocityAway(vars_ui, const)
 
     -- Checkbox for whether to have vel away (Grapple.velocity_away)
     gst8_velaway.has_velaway = this.Define_HasVelocityAway(const)
+    gst8_velaway.has_help = this.Define_Has_Help(const)
 
     -- VelocityAway.accel_compression
-    local check, value, updown, help = Define_PropertyPack_Vertical("Compression", -180, 100, const, true, "GrappleStraight_VelocityAway_Compression")
+    local check, value, updown, help = Define_PropertyPack_Vertical("Compression", -180, 100, const, true, "GrappleStraight_VelocityAway_Compression", this.Tooltip_Compression())
     gst8_velaway.has_compress = check
     gst8_velaway.compress_value = value
     gst8_velaway.compress_updown = updown
     gst8_velaway.compress_help = help
 
     -- VelocityAway.accel_tension
-    check, value, updown, help = Define_PropertyPack_Vertical("Tension", 180, 100, const, true, "GrappleStraight_VelocityAway_Tension")
+    check, value, updown, help = Define_PropertyPack_Vertical("Tension", 180, 100, const, true, "GrappleStraight_VelocityAway_Tension", this.Tooltip_HasTension())
     gst8_velaway.has_tension = check
     gst8_velaway.tension_value = value
     gst8_velaway.tension_updown = updown
@@ -117,6 +118,8 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
         this.Update_HasVelocityAway(gst8_velaway.has_velaway, velaway, changes, startedWith_velaway)
     end
 
+    Draw_HelpButton(gst8_velaway.has_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+
     if gst8_velaway.has_velaway.isChecked then
         -- Compression
         isChecked, isHovered_compress_checkbox = Draw_CheckBox(gst8_velaway.has_compress, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
@@ -130,11 +133,11 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
             local isDownClicked, isUpClicked
             isDownClicked, isUpClicked, isHovered_compress_updown = Draw_UpDownButtons(gst8_velaway.compress_updown, vars_ui.style.updownButtons, window.width, window.height, const)
             this.Update_Compress(gst8_velaway.compress_updown, changes, isDownClicked, isUpClicked)
-
-            Draw_HelpButton(gst8_velaway.compress_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
         else
             isHovered_compress_updown = false
         end
+
+        Draw_HelpButton(gst8_velaway.compress_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
         -- Tension
         isChecked, isHovered_tension_checkbox = Draw_CheckBox(gst8_velaway.has_tension, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
@@ -148,11 +151,11 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
             local isDownClicked, isUpClicked
             isDownClicked, isUpClicked, isHovered_tension_updown = Draw_UpDownButtons(gst8_velaway.tension_updown, vars_ui.style.updownButtons, window.width, window.height, const)
             this.Update_Tension(gst8_velaway.tension_updown, changes, isDownClicked, isUpClicked)
-
-            Draw_HelpButton(gst8_velaway.tension_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
         else
             isHovered_tension_updown = false
         end
+
+        Draw_HelpButton(gst8_velaway.tension_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
         -- Dead Spot Distance
         Draw_Label(gst8_velaway.deadspot_label, vars_ui.style.colors, window.width, window.height, const)
@@ -242,6 +245,38 @@ function this.Update_HasVelocityAway(def, velaway, changes, startedWithVA)
     PopulateBuySell(def.isChecked, startedWithVA, changes, "experience_buysell", total)
 end
 
+function this.Define_Has_Help(const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "GrappleStraight_VelocityAway_Has_Help",
+
+        position =
+        {
+            pos_x = 220,
+            pos_y = 0,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+    }
+
+    retVal.tooltip =
+[[This is generally only useful when desired length is non zero
+
+This applies accelerations toward desired length when the player's velocity is going away
+
+A good mental picture is a car's suspension.  A constant acceleration toward desired is like the car only having springs.  The tire will keep bouncing and never settle down, you need shock absorbers
+
+This drag property is like those dampeners.  Acceleration toward desired length is continuous, then if you go too far, this drag kicks in to stop more quickly]]
+
+    return retVal
+end
+
+function this.Tooltip_Compression()
+    return
+[[This is used when the grapple represents a pole vault]]
+end
+
 function this.Refresh_HasCompression(def, player, velaway, changes, startedWith_velaway, startedWith_compress, startedWith_tension, has_velaway, has_compress, has_tension)
     --NOTE: TransitionWindows_Straight_VelocityAway sets this to nil
     if def.isChecked == nil then
@@ -287,6 +322,11 @@ function this.Update_Compress(def, changes, isDownClicked, isUpClicked)
         changes:Add("accel_compression", def.value_up)
         changes:Subtract("experience_compression", 1)
     end
+end
+
+function this.Tooltip_HasTension()
+    return
+[[This is used when the grapple represents a rope]]
 end
 
 function this.Refresh_HasTension(def, player, velaway, changes, startedWith_velaway, startedWith_compress, startedWith_tension, has_velaway, has_compress, has_tension)
@@ -354,7 +394,7 @@ function this.Define_DeadSpot_Label(const)
 end
 function this.Define_DeadSpot_Help(const)
     -- HelpButton
-    return
+    local retVal =
     {
         position =
         {
@@ -366,6 +406,13 @@ function this.Define_DeadSpot_Help(const)
 
         invisible_name = "GrappleStraight_VelocityAway_DeadSpot_Help"
     }
+
+    retVal.tooltip =
+[[Acceleration is full outside this deadspot, zero at distance of zero
+
+This is used to help soften the acceleration so it has a small ramp up.  Otherwise, it would go from zero to full instantly and cause jerkiness]]
+
+    return retVal
 end
 function this.Define_DeadSpot_Dist(const)
     -- Slider

@@ -10,7 +10,7 @@ function DefineWindow_GrappleStraight_AimDuration(vars_ui, const)
 
     gst8_aimdur.name = Define_Name(const)
 
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Aim Duration", 0, 0, const, false, "GrappleStraight_AimDuration_AimDuration")
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Aim Duration", 0, 0, const, false, "GrappleStraight_AimDuration_AimDuration", this.Tooltip_AimDuration())
     gst8_aimdur.dur_prompt = prompt
     gst8_aimdur.dur_value = value
     gst8_aimdur.dur_updown = updown
@@ -74,6 +74,19 @@ function DrawWindow_GrappleStraight_AimDuration(isCloseRequested, vars_ui, playe
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.Tooltip_AimDuration()
+    return
+[[How long to scan for a grapple point before giving up
+    
+When a grapple attempt is started, but you're not looking directly at something to grapple to (or maybe what you're looking at is too far away), this gives a chance to look around slightly in order to latch on
+
+There is no need to hold the button down, the aim kicks in immediately and keeps aiming until the time is up
+
+If air dash is equipped, it will activate when a grapple attempt fails (at the end of the aim duration)
+
+NOTE: The energy is removed when aiming starts, but if the time runs out without anchoring to anything, that energy is refunded]]
+end
 
 function this.Refresh_AimDuration_Value(def, grapple, changes)
     def.text = tostring(Round(grapple.aim_straight.aim_duration + changes:Get("aim_duration"), 2))

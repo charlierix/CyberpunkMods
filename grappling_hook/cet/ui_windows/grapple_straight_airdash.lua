@@ -17,6 +17,7 @@ function DefineWindow_GrappleStraight_AirDash(vars_ui, const)
 
     -- Checkbox for whether to have airdash (Aim_Straight.air_dash)
     gst8_airdash.has_airdash = this.Define_HasAirDash(const)
+    gst8_airdash.has_help = this.Define_Has_Help(const)
 
     gst8_airdash.burn_rate = this.Define_BurnRate(const)
 
@@ -110,6 +111,8 @@ function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, w
         this.Update_HasAirDash(gst8_airdash.has_airdash, airdash, changes, startedWithAD)
     end
 
+    Draw_HelpButton(gst8_airdash.has_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+
     if gst8_airdash.has_airdash.isChecked then
         Draw_OrderedList(gst8_airdash.burn_rate, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 
@@ -195,6 +198,35 @@ function this.Update_HasAirDash(def, airdash, changes, startedWithAD)
     local total = airdash.experience        -- this is the price when the window was started, changes are tracked separately
 
     PopulateBuySell(def.isChecked, startedWithAD, changes, "experience_buysell", total)
+end
+
+function this.Define_Has_Help(const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "GrappleStraight_AirDash_Has_Help",
+
+        position =
+        {
+            pos_x = 70,
+            pos_y = 0,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+    }
+
+    retVal.tooltip =
+[[This is sort of like a rocket pack that propels you along the look direction
+
+It's purpose is to give a little boost to reach spots you couldn't otherwise
+
+It activates when the aim duration is over without seeing an anchor point.  The boost will stop once a grapple can be achieved, then the grapple will occur
+
+It will also stop if there is no more energy
+
+The main reason for making it was because raycasts can fail beyond 40-60, especially when looking up the side of a building.  Imagine the buildings as made of large lego blocks.  The visuals are always there, but the collision blocks aren't loaded until the player is close enough]]
+
+    return retVal
 end
 
 function this.Define_BurnRate(const)

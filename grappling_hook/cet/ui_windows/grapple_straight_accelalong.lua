@@ -21,16 +21,17 @@ function DefineWindow_GrappleStraight_AccelAlong(vars_ui, const)
 
     -- Checkbox for whether to have accel along (Grapple.accel_alongGrappleLine)
     gst8_accalong.has_accelalong = this.Define_HasAccelAlong(const)
+    gst8_accalong.has_help = this.Define_HasHelp(const)
 
     -- Accel (Grapple.accel_alongGrappleLine.accel)
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", -180, 100, const, false, "GrappleStraight_AccelAlong_Accel")
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", -180, 100, const, false, "GrappleStraight_AccelAlong_Accel", this.Tooltip_Accel())
     gst8_accalong.accel_prompt = prompt
     gst8_accalong.accel_value = value
     gst8_accalong.accel_updown = updown
     gst8_accalong.accel_help = help
 
     -- Speed (Grapple.accel_alongGrappleLine.speed)
-    prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 180, 100, const, false, "GrappleStraight_AccelAlong_Speed")
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Max Speed", 180, 100, const, false, "GrappleStraight_AccelAlong_Speed", this.Tooltip_Speed())
     gst8_accalong.speed_prompt = prompt
     gst8_accalong.speed_value = value
     gst8_accalong.speed_updown = updown
@@ -110,6 +111,8 @@ function DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player
     if wasChecked then
         this.Update_HasAccelAlong(gst8_accalong.has_accelalong, accel, changes, startedWithAG)
     end
+
+    Draw_HelpButton(gst8_accalong.has_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
     if gst8_accalong.has_accelalong.isChecked then
         -- Accel
@@ -192,6 +195,39 @@ function this.Update_HasAccelAlong(def, accel, changes, startedWithAG)
     PopulateBuySell(def.isChecked, startedWithAG, changes, "experience_buysell", total)
 end
 
+function this.Define_HasHelp(const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "GrappleStraight_AccelAlong_HasHelp",
+
+        position =
+        {
+            pos_x = 150,
+            pos_y = 0,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+    }
+
+    retVal.tooltip =
+[[While grappling, this will apply an acceleration toward the desired length from anchor point
+
+The desired length is specified in the Distances page, if none specified, it will be the distance from the anchor point at the time of grappling
+
+This and Extra Drag both apply acceleration along the grapple line.  This applies it continuously, drag only applies acceleration when moving away from desired length
+
+If only drag is applied, it can sometimes get a little jerky (when desired length is non zero)]]
+
+    return retVal
+end
+
+function this.Tooltip_Accel()
+    return
+[[How hard to accelerate toward the desired length
+
+(Gravity in this game is 16)]]
+end
 function this.Refresh_Accel_Value(def, accel, changes)
     def.text = tostring(Round(accel.accel + changes:Get("accel")))
 end
@@ -211,6 +247,10 @@ function this.Update_Accel(def, changes, isDownClicked, isUpClicked)
     end
 end
 
+function this.Tooltip_Speed()
+    return
+[[Stops accelerating once this speed is reached]]
+end
 function this.Refresh_Speed_Value(def, accel, changes)
     def.text = tostring(Round(accel.speed + changes:Get("speed")))
 end
@@ -249,7 +289,7 @@ function this.Define_DeadSpot_Label(const)
 end
 function this.Define_DeadSpot_Help(const)
     -- HelpButton
-    return
+    local retVal =
     {
         position =
         {
@@ -261,6 +301,22 @@ function this.Define_DeadSpot_Help(const)
 
         invisible_name = "GrappleStraight_AccelAlong_DeadSpot_Help"
     }
+
+    retVal.tooltip =
+[[When closer than this to the desired distance, acceleration linearly drops to zero
+
+So when far from the desired length, acceleration is full.  When at the desired length, acceleration is zero.  It starts tapering off at this deadspot distance away
+
+
+Different grapples have different uses and reasons for this dead spot
+
+------   Desired Length = 0   ------
+With a pull style, as you get close to the anchor, you'll want momentum to carry you over the ledge.  Zero dead spot will crash you into the wall instead
+
+------   Desired Length > 0   ------
+This could be a rope or polevault.  When at the desired length, deadspot will mellow things out so you don't oscillate wildly]]
+
+    return retVal
 end
 function this.Define_DeadSpot_Dist(const)
     -- Slider

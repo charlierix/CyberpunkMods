@@ -17,16 +17,17 @@ function DefineWindow_GrappleStraight_AntiGrav(vars_ui, const)
 
     -- Checkbox for whether to have antigrav (Grapple.anti_gravity)
     gst8_antgrav.has_antigrav = this.Define_HasAntiGrav(const)
+    gst8_antgrav.has_help = this.Define_Has_Help(const)
 
     -- Percent (AntiGravity.antigrav_percent)
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Antigrav Percent", -180, 100, const, false, "GrappleStraight_AntiGrav_Percent")
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Antigrav Percent", -180, 100, const, false, "GrappleStraight_AntiGrav_Percent", this.Tooltip_Percent())
     gst8_antgrav.percent_prompt = prompt
     gst8_antgrav.percent_value = value
     gst8_antgrav.percent_updown = updown
     gst8_antgrav.percent_help = help
 
     -- Fade Duration (AntiGravity.fade_duration)
-    prompt, value, updown, help = Define_PropertyPack_Vertical("Fade Duration", 180, 100, const, false, "GrappleStraight_AntiGrav_Fade")
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Fade Duration", 180, 100, const, false, "GrappleStraight_AntiGrav_Fade", this.Tooltip_Fade())
     gst8_antgrav.fade_prompt = prompt
     gst8_antgrav.fade_value = value
     gst8_antgrav.fade_updown = updown
@@ -95,6 +96,8 @@ function DrawWindow_GrappleStraight_AntiGrav(isCloseRequested, vars_ui, player, 
     if wasChecked then
         this.Update_HasAntiGrav(gst8_antgrav.has_antigrav, antigrav, changes, startedWithAG)
     end
+
+    Draw_HelpButton(gst8_antgrav.has_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
     if gst8_antgrav.has_antigrav.isChecked then
         -- Percent
@@ -172,6 +175,39 @@ function this.Update_HasAntiGrav(def, antigrav, changes, startedWithAG)
     PopulateBuySell(def.isChecked, startedWithAG, changes, "experience_buysell", total)
 end
 
+function this.Define_Has_Help(const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "GrappleStraight_AntiGrav_Has_Help",
+
+        position =
+        {
+            pos_x = 85,
+            pos_y = 0,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+    }
+
+    retVal.tooltip =
+[[Antigravity will make you more floaty while grappling
+
+It has a side benefit of not requiring such strong acceleration values
+
+Antigravity is useful for pull style grapples, causing you to fly more easily, getting thrown farther
+
+A small amount of antigrav might be desirable for tarzan swinging, because it will slow down the swing.  But a large amount of antigravity will just be annoying and generally uncontrollable]]
+
+    return retVal
+end
+
+function this.Tooltip_Percent()
+    return
+[[0% would be standard gravity
+
+100% would be weightless]]
+end
 function this.Refresh_Percent_Value(def, antigrav, changes)
     def.text = tostring(Round((antigrav.antigrav_percent + changes:Get("antigrav_percent")) * 100)) .. "%"
 end
@@ -191,6 +227,14 @@ function this.Update_Percent(def, changes, isDownClicked, isUpClicked)
     end
 end
 
+function this.Tooltip_Fade()
+    return
+[[This is in seconds
+
+When a grapple has ended, the antigravity will fade to standard gravity
+
+Increasing this duration will keep you lighter longer, and will have the effect of throwing you farther]]
+end
 function this.Refresh_Fade_Value(def, antigrav, changes)
     def.text = tostring(Round(antigrav.fade_duration + changes:Get("fade_duration"), 2))
 end

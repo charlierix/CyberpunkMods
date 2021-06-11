@@ -156,6 +156,7 @@ function this.Refresh_GrappleAccelToDesired_Custom(def, grapple, def_checkbox, d
     end
 
     def.show_dead = true
+    def.isStandardColor_dead = true
     def.isHighlight_dead = shouldHighlight
 
     -- Scale drawn deadspot relative to the aim distance
@@ -191,7 +192,7 @@ end
 
 function this.Define_StopAngle_Help(const)
     -- HelpButton
-    return
+    local retVal =
     {
         position =
         {
@@ -203,6 +204,15 @@ function this.Define_StopAngle_Help(const)
 
         invisible_name = "GrappleStraight_StopEarly_StopAngle_Help"
     }
+
+    retVal.tooltip =
+[[This will auto disengage the grapple if you look too far away from the anchor point
+
+For pull style grapples, somewhere around 90 degrees is a good value.  If this is unchecked, or too large of an angle, then the grapple will snap the player back as they crest a ledge
+
+For wall hanging, either unchecked or a very large angle would be best, giving the player greater flexibility when to stop the grapple]]
+
+    return retVal
 end
 
 function this.Define_StopAngle_Value(const)
@@ -290,7 +300,7 @@ end
 
 function this.Define_StopDistance_Help(const)
     -- HelpButton
-    return
+    local retVal =
     {
         position =
         {
@@ -302,6 +312,13 @@ function this.Define_StopDistance_Help(const)
 
         invisible_name = "GrappleStraight_StopEarly_StopDistance_Help"
     }
+
+    retVal.tooltip =
+[[Maybe use this if you want a distance shutoff instead of a look shutoff
+
+Or to have no deadspot and a cutoff instead?]]
+
+    return retVal
 end
 
 function this.Define_StopDistance_Value(const)
@@ -370,7 +387,7 @@ end
 
 function this.Define_StopOnWallHit_Help(const)
     -- HelpButton
-    return
+    local retVal =
     {
         position =
         {
@@ -382,6 +399,11 @@ function this.Define_StopOnWallHit_Help(const)
 
         invisible_name = "GrappleStraight_StopEarly_StopOnWallHit_Help"
     }
+
+    retVal.tooltip =
+[[Might be useful for a pull style grapple]]
+
+    return retVal
 end
 
 -- Saving

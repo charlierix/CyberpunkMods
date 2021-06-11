@@ -14,16 +14,17 @@ function DefineWindow_GrappleStraight_Distances(vars_ui, const)
     gst8_dist.arrows = Define_GrappleArrows(true, false)
     gst8_dist.desired_line = Define_GrappleDesiredLength(true)
 
+    -- Desired Length
+    gst8_dist.desired_checkbox = this.Define_Desired_CheckBox(const)
+    gst8_dist.desired_help = this.Define_Desired_Help(const)
+    gst8_dist.desired_slider = this.Define_Desired_Slider(const)
+
     -- Max Distance (Aim_Straight.max_distance)
-    local prompt, value, updown, help = Define_PropertyPack_Vertical("Max Aim Distance", 220, 100, const, false, "GrappleStraight_Distances_MaxDist")
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Max Aim Distance", 220, 100, const, false, "GrappleStraight_Distances_MaxDist", this.Tooltip_MaxDistance())
     gst8_dist.max_prompt = prompt
     gst8_dist.max_value = value
     gst8_dist.max_updown = updown
     gst8_dist.max_help = help
-
-    -- Desired Length
-    gst8_dist.desired_checkbox = this.Define_Desired_CheckBox(const)
-    gst8_dist.desired_slider = this.Define_Desired_Slider(const)
 
     gst8_dist.experience = Define_Experience(const, "grapple")
 
@@ -53,12 +54,12 @@ function DrawWindow_GrappleStraight_Distances(isCloseRequested, vars_ui, player,
     Refresh_GrappleArrows(gst8_dist.arrows, grapple, false, isHovered_max_updown, false)
     Refresh_GrappleDesiredLength(gst8_dist.desired_line, grapple, this.GetChanged_DesiredLength(gst8_dist.desired_checkbox, gst8_dist.desired_slider), changes, isHovered_desired_checkbox or isHovered_desired_slider)
 
+    this.Refresh_Desired_CheckBox(gst8_dist.desired_checkbox, grapple)
+    this.Refresh_Desired_Slider(gst8_dist.desired_slider, grapple, changes)
+
     --TODO: MaxDistance Update should be non linear
     this.Refresh_MaxDistance_Value(gst8_dist.max_value, grapple, changes)
     this.Refresh_MaxDistance_UpDown(gst8_dist.max_updown, grapple, player, changes)
-
-    this.Refresh_Desired_CheckBox(gst8_dist.desired_checkbox, grapple)
-    this.Refresh_Desired_Slider(gst8_dist.desired_slider, grapple, changes)
 
     this.Refresh_Experience(gst8_dist.experience, player, grapple, changes)
 
@@ -74,16 +75,6 @@ function DrawWindow_GrappleStraight_Distances(isCloseRequested, vars_ui, player,
     Draw_GrappleArrows(gst8_dist.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_dist.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
-    -- Max Distance
-    Draw_Label(gst8_dist.max_prompt, vars_ui.style.colors, window.width, window.height, const)
-    Draw_Label(gst8_dist.max_value, vars_ui.style.colors, window.width, window.height, const)
-
-    local isDownClicked, isUpClicked
-    isDownClicked, isUpClicked, isHovered_max_updown = Draw_UpDownButtons(gst8_dist.max_updown, vars_ui.style.updownButtons, window.width, window.height, const)
-    this.Update_MaxDistance(gst8_dist.max_updown, changes, gst8_dist.desired_slider, isDownClicked, isUpClicked, grapple)
-
-    Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
-
     -- Desired Length
     _, isHovered_desired_checkbox = Draw_CheckBox(gst8_dist.desired_checkbox, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
 
@@ -94,6 +85,18 @@ function DrawWindow_GrappleStraight_Distances(isCloseRequested, vars_ui, player,
     end
 
     this.Update_DesiredLength(gst8_dist.desired_checkbox, gst8_dist.desired_slider, changes)
+
+    Draw_HelpButton(gst8_dist.desired_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+
+    -- Max Distance
+    Draw_Label(gst8_dist.max_prompt, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_dist.max_value, vars_ui.style.colors, window.width, window.height, const)
+
+    local isDownClicked, isUpClicked
+    isDownClicked, isUpClicked, isHovered_max_updown = Draw_UpDownButtons(gst8_dist.max_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+    this.Update_MaxDistance(gst8_dist.max_updown, changes, gst8_dist.desired_slider, isDownClicked, isUpClicked, grapple)
+
+    Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
     Draw_OrderedList(gst8_dist.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
 
@@ -114,30 +117,6 @@ end
 function this.Refresh_Experience(def, player, grapple, changes)
     def.content.available.value = tostring(math.floor(player.experience + changes:Get("experience")))
     def.content.used.value = tostring(Round(grapple.experience - changes:Get("experience")))
-end
-
-function this.Refresh_MaxDistance_Value(def, grapple, changes)
-    def.text = tostring(Round(grapple.aim_straight.max_distance + changes:Get("max_distance")))
-end
-function this.Refresh_MaxDistance_UpDown(def, grapple, player, changes)
-    local down, up = GetDecrementIncrement(grapple.aim_straight.max_distance_update, grapple.aim_straight.max_distance + changes:Get("max_distance"), player.experience + changes:Get("experience"))
-    Refresh_UpDownButton(def, down, up)
-end
-function this.Update_MaxDistance(def, changes, def_slider, isDownClicked, isUpClicked, grapple)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("max_distance", def.value_down)
-        changes:Add("experience", 1)
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("max_distance", def.value_up)
-        changes:Subtract("experience", 1)
-    end
-
-    def_slider.max = grapple.aim_straight.max_distance + changes:Get("max_distance")
-    if def_slider.value > def_slider.max then
-        def_slider.value = def_slider.max
-    end
 end
 
 function this.Define_Desired_CheckBox(const)
@@ -171,6 +150,37 @@ function this.Update_DesiredLength(def_checkbox, def_slider, changes)
     else
         changes.desired_length = nil
     end
+end
+
+function this.Define_Desired_Help(const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "GrappleStraight_Distances_Desired_Help",
+
+        position =
+        {
+            pos_x = 330,
+            pos_y = 90,
+            horizontal = const.alignment_horizontal.left,
+            vertical = const.alignment_vertical.center,
+        },
+    }
+
+    retVal.tooltip =
+[[This is the distance from the anchor point along the grapple line.  A distance of zero is the anchor point itself
+
+This is where accelerations pull towards
+
+If unchecked, the distance will be how far the player is from the anchor point at the time of starting a grapple
+
+A distance of zero is useful for pull style grapples
+
+An undefined distance is useful for rope like grapples (tarzan swinging)
+
+Somewhere in the middle may be good for limited swinging, wall hanging, pole vault]]
+
+    return retVal
 end
 
 function this.Define_Desired_Slider(const)
@@ -225,6 +235,38 @@ function this.GetChanged_DesiredLength(def_checkbox, def_slider)
         end
     else
         return nil
+    end
+end
+
+function this.Tooltip_MaxDistance()
+    return
+[[How far away the grapple can anchor to
+
+This is a very useful property to upgrade.  It will allow you to reach more distance places, go straight up the sides of tall buildings
+
+NOTE: The game doesn't reliably load collision meshes beyond around 50.  So you can see the visuals, but the raycast won't see it.  This seems to mostly be vertical displacement, so trying to go up really tall buildings can be frustrating.  The air dash feature was added to help combat this]]
+end
+function this.Refresh_MaxDistance_Value(def, grapple, changes)
+    def.text = tostring(Round(grapple.aim_straight.max_distance + changes:Get("max_distance")))
+end
+function this.Refresh_MaxDistance_UpDown(def, grapple, player, changes)
+    local down, up = GetDecrementIncrement(grapple.aim_straight.max_distance_update, grapple.aim_straight.max_distance + changes:Get("max_distance"), player.experience + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up)
+end
+function this.Update_MaxDistance(def, changes, def_slider, isDownClicked, isUpClicked, grapple)
+    if isDownClicked and def.isEnabled_down then
+        changes:Subtract("max_distance", def.value_down)
+        changes:Add("experience", 1)
+    end
+
+    if isUpClicked and def.isEnabled_up then
+        changes:Add("max_distance", def.value_up)
+        changes:Subtract("experience", 1)
+    end
+
+    def_slider.max = grapple.aim_straight.max_distance + changes:Get("max_distance")
+    if def_slider.value > def_slider.max then
+        def_slider.value = def_slider.max
     end
 end
 
