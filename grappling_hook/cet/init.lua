@@ -37,6 +37,7 @@ require "processing/processing_antigrav"
 require "processing/processing_flight"
 require "processing/processing_standard"
 require "processing/safetyfire"
+require "processing/xp_gain"
 
 require "ui/animation_lowEnergy"
 require "ui/changes"
@@ -258,6 +259,8 @@ local state =
 
     --startStopTracker  -- this gets instantiated in init
 
+    --xp_gain,          -- this is a class that gets told when grapple events occur, gains xp, periodically updates player and saves
+
     --startTime         -- gets populated when transitioning into a new flight mode (into aim, into flight, etc) ---- doesn't get set when transitioning to standard
 
     --rayFrom           -- gets populated when transitioning to airdash or flight
@@ -300,7 +303,9 @@ local vars_ui =
     --grapple_straight
 }
 
-local player = nil       -- This holds current grapple settings, loaded from DB.  Resets to nil whenever a load is started, then recreated in first update
+local xp_gain = nil     -- this gets called each tick, watching the player's activity.  It will slowly accumulate grapple experience, periodically add xp to player, save to db
+
+local player = nil      -- This holds current grapple settings, loaded from DB.  Resets to nil whenever a load is started, then recreated in first update
 
 --------------------------------------------------------------------
 
@@ -365,6 +370,8 @@ registerForEvent("onInit", function()
 
     InitializeKeyTrackers(state, keys, o)
 
+    xp_gain = XPGain:new(o, state, const)
+
     state.animation_lowEnergy = Animation_LowEnergy:new(o)
 end)
 
@@ -391,6 +398,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     if not player then
         player = Player:new(o, state, const, debug)
+        xp_gain:PlayerCreated(player)
     end
 
     StopSound(o, state)
@@ -439,6 +447,9 @@ registerForEvent("onUpdate", function(deltaTime)
         print("Grappling ERROR, unknown flightMode: " .. tostring(state.flightMode))
         Transition_ToStandard(state, const, debug, o)
     end
+
+    xp_gain:Tick(deltaTime)     --NOTE: This will potentially add xp to player and call save
+    debug.xp = Round(xp_gain.experience, 4)
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)

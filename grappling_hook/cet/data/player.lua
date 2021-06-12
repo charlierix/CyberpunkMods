@@ -63,7 +63,7 @@ function Player:Save()
     self.PlayerPrimaryKey = pkey
 end
 
------------------------------------- Private Instance Methods ------------------------------------
+------------------------------------ Private Instance Methods -----------------------------------
 
 -- This loads the current profile for the current playthrough.  If there are none, this will create
 -- a new one based on defaults
@@ -123,7 +123,7 @@ function Player:MapSelfToModel()
     }
 end
 
------------------------------------- Private Static Methods ------------------------------------
+------------------------------------- Private Static Methods ------------------------------------
 
 function this.CreateNewPlayerID(o)
     -- Save file doesn't have this quest string.  Get a new ID and store it in the save file
