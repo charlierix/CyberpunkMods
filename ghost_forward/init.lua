@@ -9,6 +9,8 @@ require "lib/mathutils"
 require "lib/peeking"
 require "lib/util"
 
+local this = {}
+
 --------------------------------------------------------------------
 
 local jumpDistance = 1.8
@@ -43,6 +45,7 @@ registerForEvent("onInit", function()
     Observe('QuestTrackerGameController', 'OnUninitialize', function()
         if Game.GetPlayer() == nil then
             isLoaded = false
+            this.ClearObjects()
         end
     end)
 
@@ -63,11 +66,13 @@ registerForEvent("onInit", function()
     function wrappers.Teleport(teleport, player, pos, yaw) return teleport:Teleport(player, pos, EulerAngles.new(0, 0, yaw)) end
     function wrappers.GetFPPCamera(player) return player:GetFPPCameraComponent() end
     function wrappers.SetLocalCamPosition(playerCam, pos) playerCam:SetLocalPosition(pos) end
-    o = GameObjectAccessor_gf:new(wrappers)
+
+    o = GameObjectAccessor:new(wrappers)
 end)
 
 registerForEvent("onShutdown", function()
     isShutdown = true
+    this.ClearObjects()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
@@ -131,3 +136,19 @@ end)
 registerHotkey("shouldPeekForward", "Peek Forward", function()
     keys.peekForward = true
 end)
+
+------------------------------------ Private Methods -----------------------------------
+
+-- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
+function this.ClearObjects()
+    if isPeeking then
+        isPeeking = false
+        o:SetLocalCamPosition(Vector4.new(0, 0, 0, 1))
+    end
+
+    ResetKeys(keys)
+
+    if o then
+        o:Clear()
+    end
+end

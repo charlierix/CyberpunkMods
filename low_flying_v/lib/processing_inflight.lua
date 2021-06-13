@@ -62,10 +62,8 @@ function Process_InFlight(o, state, const, keys, debug, deltaTime)
 
     state.vel = ClampVelocity(state.vel, const.maxSpeed)      -- the game gets unstable and crashes at high speed.  Probably trying to load scenes too fast, probably machine dependent
 
-    -- They are either underwater or under the ground
-    -- There are also some low lying areas (that nature trail)
-    --NOTE: This may kick them out of caves
-    if o.pos.z < 0 then
+    -- Push them up if they are underwater
+    if o:HasHeadUnderwater() then
         state.vel.z = math.max(state.vel.z, -o.pos.z)
     end
 

@@ -1,13 +1,18 @@
-local pullInterval_player = 12
-local pullInterval_workspot = 12
-local pullInterval_camera = 12
-local pullInterval_teleport = 12
-local pullInterval_sense = 12
+local this = {}
+function this.GetRandom_Variance(baseVal, variance)
+    return baseVal - variance + (math.random() * variance * 2)
+end
 
-GameObjectAccessor_lfv = {}
+local pullInterval_player = this.GetRandom_Variance(12, 1)
+local pullInterval_workspot = this.GetRandom_Variance(12, 1)
+local pullInterval_camera = this.GetRandom_Variance(12, 1)
+local pullInterval_teleport = this.GetRandom_Variance(12, 1)
+local pullInterval_sensor = this.GetRandom_Variance(12, 1)
+
+GameObjectAccessor = {}
 
 -- Constructor
-function GameObjectAccessor_lfv:new(wrappers)
+function GameObjectAccessor:new(wrappers)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -18,22 +23,28 @@ function GameObjectAccessor_lfv:new(wrappers)
     obj.lastPulled_workspot = -(pullInterval_workspot * 2)
     obj.lastPulled_camera = -(pullInterval_camera * 2)
     obj.lastPulled_teleport = -(pullInterval_teleport * 2)
-    obj.lastPulled_sense = -(pullInterval_sense * 2)
+    obj.lastPulled_sensor = -(pullInterval_sensor * 2)
 
     return obj
 end
 
-function GameObjectAccessor_lfv:Tick(deltaTime)
+-- This gets called when a load is kicked off, or shutdown
+-- This needs to drop references to all objects so garbage collector can run correctly
+function GameObjectAccessor:Clear()
+    self.player = nil
+    self.workspot = nil
+    self.camera = nil
+    self.teleport = nil
+    self.sensor = nil
+end
+
+function GameObjectAccessor:Tick(deltaTime)
     self.timer = self.timer + deltaTime
 end
 
 -- Populates this.player, position, velocity, yaw
-function GameObjectAccessor_lfv:GetPlayerInfo()
-    if (self.timer - self.lastPulled_player) >= pullInterval_player then
-        self.lastPulled_player = self.timer
-
-        self.player = self.wrappers.GetPlayer()
-    end
+function GameObjectAccessor:GetPlayerInfo()
+    self:EnsurePlayerLoaded()
 
     if self.player then
         self.pos = self.wrappers.Player_GetPos(self.player)
@@ -44,8 +55,10 @@ end
 
 -- Populates isInWorkspot
 --WARNING: If this is called while load is first kicked off, it will crash the game.  So probably want to wait until the player is moving or something
-function GameObjectAccessor_lfv:GetInWorkspot()
-    if (self.timer - self.lastPulled_workspot) >= pullInterval_workspot then
+function GameObjectAccessor:GetInWorkspot()
+    self:EnsurePlayerLoaded()
+
+    if not self.workspot or (self.timer - self.lastPulled_workspot) >= pullInterval_workspot then
         self.lastPulled_workspot = self.timer
 
         self.workspot = self.wrappers.GetWorkspotSystem()
@@ -59,8 +72,8 @@ function GameObjectAccessor_lfv:GetInWorkspot()
 end
 
 -- Populates look direction
-function GameObjectAccessor_lfv:GetCamera()
-    if (self.timer - self.lastPulled_camera) >= pullInterval_camera then
+function GameObjectAccessor:GetCamera()
+    if not self.camera or (self.timer - self.lastPulled_camera) >= pullInterval_camera then
         self.lastPulled_camera = self.timer
 
         self.camera = self.wrappers.GetCameraSystem()
@@ -72,8 +85,10 @@ function GameObjectAccessor_lfv:GetCamera()
 end
 
 -- Teleports to a point, look dir
-function GameObjectAccessor_lfv:Teleport(pos, yaw)
-    if (self.timer - self.lastPulled_teleport) >= pullInterval_teleport then
+function GameObjectAccessor:Teleport(pos, yaw)
+    self:EnsurePlayerLoaded()
+
+    if not self.teleport or (self.timer - self.lastPulled_teleport) >= pullInterval_teleport then
         self.lastPulled_teleport = self.timer
 
         self.teleport = self.wrappers.GetTeleportationFacility()
@@ -85,9 +100,9 @@ function GameObjectAccessor_lfv:Teleport(pos, yaw)
 end
 
 -- This serves as a ray cast
-function GameObjectAccessor_lfv:IsPointVisible(fromPos, toPos)
-    if (self.timer - self.lastPulled_sense) >= pullInterval_sense then
-        self.lastPulled_sense = self.timer
+function GameObjectAccessor:IsPointVisible(fromPos, toPos)
+    if not self.sensor or (self.timer - self.lastPulled_sensor) >= pullInterval_sensor then
+        self.lastPulled_sensor = self.timer
 
         self.sensor = self.wrappers.GetSenseManager()
     end
@@ -96,5 +111,32 @@ function GameObjectAccessor_lfv:IsPointVisible(fromPos, toPos)
         return self.wrappers.IsPositionVisible(self.sensor, fromPos, toPos)
     else
         return nil
+    end
+end
+
+function GameObjectAccessor:HasHeadUnderwater()
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        -- This has a chance of causing crashes, so only call it when there's a posibility of being underwater
+        -- NOTE: Judy's lake is at an altitude of 180, so this shortcut won't work there
+        -- if self.pos.z > 6 then
+
+        -- Jetpack can afford to ignore judy's lake, but low flying v needs the check
+        if self.pos.z > 186 then
+            return false
+        end
+
+        return self.wrappers.HasHeadUnderwater(self.player)
+    end
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function GameObjectAccessor:EnsurePlayerLoaded()
+    if not self.player or (self.timer - self.lastPulled_player) >= pullInterval_player then
+        self.lastPulled_player = self.timer
+
+        self.player = self.wrappers.GetPlayer()
     end
 end

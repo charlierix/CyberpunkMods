@@ -87,6 +87,12 @@ function TODO()
 
     -- Hanging MapPins:
     --  See if it's because there's an autosave mid grapple
+    --
+    -- NonameNonumber — Today at 6:48 PM
+    -- mappin system should be still available
+    -- I do similar thing in that demo:
+    -- https://github.com/WolvenKit/cet-examples/blob/main/ai-components/init.lua#L130
+    -- TargetingHelper.Dispose() destroys pins
 
     -- XP:
     --  Gain experience when grappling
@@ -116,10 +122,6 @@ function TODO()
 
     -- All:
     --  Rename state to vars (needs to be done in all mods at the same time)
-
-    -- GameObjectAccessor:
-    --  Interval needs to be rand(12, +-1)
-    --  needs to be done in all mods
 
     -- All:
     --  Fall damage should be a percent, not a bool
@@ -192,6 +194,8 @@ function TODO()
 
 end
 
+local this = {}
+
 --------------------------------------------------------------------
 ---                  User Preference Constants                   ---
 --------------------------------------------------------------------
@@ -257,7 +261,7 @@ local state =
 
     energy = 1000,      -- start with too much so the progress doesn't show during initial load
 
-    --startStopTracker  -- this gets instantiated in init
+    --startStopTracker  -- this gets instantiated in init (InitializeKeyTrackers)
 
     --xp_gain,          -- this is a class that gets told when grapple events occur, gains xp, periodically updates player and saves
 
@@ -325,6 +329,7 @@ registerForEvent("onInit", function()
     Observe('QuestTrackerGameController', 'OnUninitialize', function()
         if Game.GetPlayer() == nil then
             isLoaded = false
+            this.ClearObjects()
         end
     end)
 
@@ -378,6 +383,7 @@ end)
 registerForEvent("onShutdown", function()
     isShutdown = true
     --db:close()      -- cet fixed this in 1.12.2
+    this.ClearObjects()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
@@ -508,3 +514,21 @@ registerForEvent("onDraw", function()
         DrawDebugWindow(debug)
     end
 end)
+
+------------------------------------ Private Methods -----------------------------------
+
+-- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
+function this.ClearObjects()
+    Transition_ToStandard(state, const, debug, o)
+    TransitionWindows_Main(vars_ui, const)
+
+    player = nil
+
+    if o then
+        o:Clear()
+    end
+
+    if xp_gain then
+        xp_gain:Clear()
+    end
+end

@@ -25,6 +25,7 @@ function InputTracker_StartStop:new(o, keys, keynames_1, keynames_2, keynames_st
 
     -- This holds a deduped list of keys from the three lists of action names
     obj.keynames = GetDeduped({ keynames_1, keynames_2, keynames_stop })
+    --ReportTable(obj.keynames)
 
     -- This holds the keydown time of each action
     -- key=actionname, value=keydown_time (or nil)
@@ -68,6 +69,13 @@ end
 -------------------------------------- Private Methods --------------------------------------
 
 function InputTracker_StartStop:IsDown(keynames)
+    -- Single Key
+    if #keynames == 1 then
+        -- There's only one, so it's a simple check
+        return self.downTimes[keynames[1]] ~= nil
+    end
+
+    -- Multiple Keys (make sure they were pressed nearly the same time)
     for outer=1, #keynames-1 do
         if not self.downTimes[keynames[outer]] then
             -- The button isn't currently being pressed

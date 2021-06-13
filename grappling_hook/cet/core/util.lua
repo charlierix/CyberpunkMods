@@ -60,7 +60,8 @@ function InitializeKeyTrackers(state, keys, o)
     local grapple1 = { "Left", "Right", "Forward" }
     local grapple2 = { "Left", "Right", "Back" }
     --local grapple3 = double tap left+right
-    local stop = { "Left", "Right" }
+    --local stop = { "Left", "Right" }      -- When they are tarzan swinging and try to aquire a new grapple point, but don't have enough energy, this was making the current grapple cancel.  Changing to jump so there's no accidental cancellation
+    local stop = { "Jump" }
 
     state.startStopTracker = InputTracker_StartStop:new(o, keys, grapple1, grapple2, stop)
 

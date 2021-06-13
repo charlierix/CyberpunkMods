@@ -28,11 +28,7 @@ function XPGain:Tick(deltaTime)
     end
 
     if self:ShouldSave(deltaTime) then
-        print("tick c")
-
         self:SaveExperience()
-
-        print("tick d")
     end
 
     if self.state.flightMode == self.const.flightModes.airdash or self.state.flightMode == self.const.flightModes.flight then
@@ -57,9 +53,18 @@ function XPGain:Tick(deltaTime)
 
 end
 
+-- Call this when loading a new save
+function XPGain:Clear()
+    self.player = nil
+    self.experience = nil
+    self.elapsed = nil
+end
+
+-- This resets the class the player
 function XPGain:PlayerCreated(player)
     self.player = player
     self.experience = 0
+    self.elapsed = nil
 end
 
 ------------------------------------ Private Instance Methods -----------------------------------

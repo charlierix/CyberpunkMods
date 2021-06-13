@@ -1,5 +1,11 @@
 -- This can come from any state back to standard (the other mods called this ExitFlight)
 function Transition_ToStandard(state, const, debug, o)
+    -- This gets called every frame when they are in the menu, driving, etc.  So it needs to be
+    -- safe and cheap
+    if state.flightMode == const.flightModes.standard then
+        do return end
+    end
+
     state.flightMode = const.flightModes.standard
     o:Custom_CurrentlyFlying_Clear()
 

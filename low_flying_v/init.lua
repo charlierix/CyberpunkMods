@@ -30,6 +30,8 @@ require "lib/sticky_list"
 require "lib/unittests"
 require "lib/util"
 
+local this = {}
+
 --------------------------------------------------------------------
 ---                  User Preference Constants                   ---
 --------------------------------------------------------------------
@@ -165,6 +167,7 @@ registerForEvent("onInit", function()
     Observe('QuestTrackerGameController', 'OnUninitialize', function()
         if Game.GetPlayer() == nil then
             isLoaded = false
+            this.ClearObjects()
         end
     end)
 
@@ -188,13 +191,16 @@ registerForEvent("onInit", function()
     function wrappers.Teleport(teleport, player, pos, yaw) return teleport:Teleport(player, pos, EulerAngles.new(0, 0, yaw)) end
     function wrappers.GetSenseManager() return Game.GetSenseManager() end
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
-    o = GameObjectAccessor_lfv:new(wrappers)
+    function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
+
+    o = GameObjectAccessor:new(wrappers)
 
     state.lasercats = LaserFinderManager:new(o, state.rayHitStorage)
 end)
 
 registerForEvent("onShutdown", function()
     isShutdown = true
+    this.ClearObjects()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
@@ -225,19 +231,6 @@ registerForEvent("onUpdate", function(deltaTime)
     -- if keys.testAction then
     --     keys.testAction = false
     -- end
-
-
-
-
-
---TODO: Use player:HasHeadUnderwater() instead of hardcoding z<=0
-
-
-
-
-
-
-
 
     if state.isInFlight then
         -- In Flight
@@ -294,3 +287,14 @@ registerForEvent("onDraw", function()
         DrawDebugWindow(debug)
     end
 end)
+
+------------------------------------ Private Methods -----------------------------------
+
+-- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
+function this.ClearObjects()
+    ExitFlight(state, debug)
+
+    if o then
+        o:Clear()
+    end
+end

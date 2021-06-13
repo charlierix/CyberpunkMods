@@ -1,11 +1,15 @@
-local pullInterval_player = 12
-local pullInterval_workspot = 12
-local pullInterval_camera = 12
-local pullInterval_teleport = 12
-local pullInterval_sense = 12
-local pullInterval_targeting = 12
-local pullInterval_mapPin = 12
-local pullInterval_quest = 12
+local this = {}
+function this.GetRandom_Variance(baseVal, variance)
+    return baseVal - variance + (math.random() * variance * 2)
+end
+
+local pullInterval_player = this.GetRandom_Variance(12, 1)
+local pullInterval_workspot = this.GetRandom_Variance(12, 1)
+local pullInterval_camera = this.GetRandom_Variance(12, 1)
+local pullInterval_teleport = this.GetRandom_Variance(12, 1)
+local pullInterval_sensor = this.GetRandom_Variance(12, 1)
+local pullInterval_mapPin = this.GetRandom_Variance(12, 1)
+local pullInterval_quest = this.GetRandom_Variance(12, 1)
 
 GameObjectAccessor = {}
 
@@ -21,8 +25,7 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_workspot = -(pullInterval_workspot * 2)
     obj.lastPulled_camera = -(pullInterval_camera * 2)
     obj.lastPulled_teleport = -(pullInterval_teleport * 2)
-    obj.lastPulled_sense = -(pullInterval_sense * 2)
-    obj.lastPulled_targeting = -(pullInterval_targeting * 2)
+    obj.lastPulled_sensor = -(pullInterval_sensor * 2)
     obj.lastPulled_mapPin = -(pullInterval_mapPin * 2)
     obj.lastPulled_quest = -(pullInterval_quest * 2)
 
@@ -33,6 +36,18 @@ end
 
 function GameObjectAccessor:Tick(deltaTime)
     self.timer = self.timer + deltaTime
+end
+
+-- This gets called when a load is kicked off, or shutdown
+-- This needs to drop references to all objects so garbage collector can run correctly
+function GameObjectAccessor:Clear()
+    self.player = nil
+    self.workspot = nil
+    self.camera = nil
+    self.teleport = nil
+    self.sensor = nil
+    self.mapPin = nil
+    self.quest = nil
 end
 
 -- Populates this.player, position, velocity, yaw
@@ -74,7 +89,9 @@ end
 -- Populates isInWorkspot
 --WARNING: If this is called while load is first kicked off, it will crash the game.  So probably want to wait until the player is moving or something
 function GameObjectAccessor:GetInWorkspot()
-    if (self.timer - self.lastPulled_workspot) >= pullInterval_workspot then
+    self:EnsurePlayerLoaded()
+
+    if not self.workspot or (self.timer - self.lastPulled_workspot) >= pullInterval_workspot then
         self.lastPulled_workspot = self.timer
 
         self.workspot = self.wrappers.GetWorkspotSystem()
@@ -89,7 +106,7 @@ end
 
 -- Populates look direction
 function GameObjectAccessor:GetCamera()
-    if (self.timer - self.lastPulled_camera) >= pullInterval_camera then
+    if not self.camera or (self.timer - self.lastPulled_camera) >= pullInterval_camera then
         self.lastPulled_camera = self.timer
 
         self.camera = self.wrappers.GetCameraSystem()
@@ -104,7 +121,9 @@ end
 
 -- Teleports to a point, look dir
 function GameObjectAccessor:Teleport(pos, yaw)
-    if (self.timer - self.lastPulled_teleport) >= pullInterval_teleport then
+    self:EnsurePlayerLoaded()
+
+    if not self.teleport or (self.timer - self.lastPulled_teleport) >= pullInterval_teleport then
         self.lastPulled_teleport = self.timer
 
         self.teleport = self.wrappers.GetTeleportationFacility()
@@ -117,8 +136,8 @@ end
 
 -- This serves as a ray cast
 function GameObjectAccessor:IsPointVisible(fromPos, toPos)
-    if (self.timer - self.lastPulled_sense) >= pullInterval_sense then
-        self.lastPulled_sense = self.timer
+    if not self.sensor or (self.timer - self.lastPulled_sensor) >= pullInterval_sensor then
+        self.lastPulled_sensor = self.timer
 
         self.sensor = self.wrappers.GetSenseManager()
     end
@@ -221,8 +240,9 @@ function GameObjectAccessor:SetTimeDilation(timeSpeed)
     self.wrappers.SetTimeDilation(timeSpeed)
 end
 
---NOTE: It's up to the caller to make sure that GetPlayerInfo has already been called
 function GameObjectAccessor:HasHeadUnderwater()
+    self:EnsurePlayerLoaded()
+
     if self.player then
         return self.wrappers.HasHeadUnderwater(self.player)
     end
@@ -264,11 +284,7 @@ end
 -- Everything in the sqllite db is kept separated with this ID so that settings don't bleed
 -- between playthroughs
 function GameObjectAccessor:GetPlayerUniqueID()
-    if (self.timer - self.lastPulled_quest) >= pullInterval_quest then
-        self.lastPulled_quest = self.timer
-
-        self.quest = self.wrappers.GetQuestsSystem()
-    end
+    self:EnsureQuestLoaded()
 
     if self.quest then
         -- this is a made up key, and can't be the same as other mod's
@@ -277,21 +293,17 @@ function GameObjectAccessor:GetPlayerUniqueID()
     end
 end
 function GameObjectAccessor:SetPlayerUniqueID(id)
-    if (self.timer - self.lastPulled_quest) >= pullInterval_quest then
-        self.lastPulled_quest = self.timer
-
-        self.quest = self.wrappers.GetQuestsSystem()
-    end
+    self:EnsureQuestLoaded()
 
     if self.quest then
         self.wrappers.SetQuestFactStr(self.quest, "grapple_player_uniqueid", id)      -- the ID must be integer
     end
 end
 
----------------------- private methods
+----------------------------------- Private Methods -----------------------------------
 
 function GameObjectAccessor:EnsurePlayerLoaded()
-    if (self.timer - self.lastPulled_player) >= pullInterval_player then
+    if not self.player or (self.timer - self.lastPulled_player) >= pullInterval_player then
         self.lastPulled_player = self.timer
 
         self.player = self.wrappers.GetPlayer()
@@ -299,9 +311,17 @@ function GameObjectAccessor:EnsurePlayerLoaded()
 end
 
 function GameObjectAccessor:EnsureMapPinLoaded()
-    if (self.timer - self.lastPulled_mapPin) >= pullInterval_mapPin then
+    if not self.mapPin or (self.timer - self.lastPulled_mapPin) >= pullInterval_mapPin then
         self.lastPulled_mapPin = self.timer
 
         self.mapPin = self.wrappers.GetMapPinSystem()
+    end
+end
+
+function GameObjectAccessor:EnsureQuestLoaded()
+    if not self.quest or (self.timer - self.lastPulled_quest) >= pullInterval_quest then
+        self.lastPulled_quest = self.timer
+
+        self.quest = self.wrappers.GetQuestsSystem()
     end
 end

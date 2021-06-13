@@ -32,6 +32,8 @@ require "lib/rmb_pushup"
 require "lib/safetyfire"
 require "lib/util"
 
+local this = {}
+
 --------------------------------------------------------------------
 ---                  User Preference Constants                   ---
 --------------------------------------------------------------------
@@ -267,6 +269,7 @@ registerForEvent("onInit", function()
     Observe('QuestTrackerGameController', 'OnUninitialize', function()
         if Game.GetPlayer() == nil then
             isLoaded = false
+            this.ClearObjects()
         end
     end)
 
@@ -303,6 +306,7 @@ registerForEvent("onInit", function()
     function wrappers.Ragdoll_Out(player, radius, force, upForce) player:RagdollNPCs_ExplodeOut(radius, force, upForce) end
     function wrappers.QueueSound(player, sound) player:Jetpack_QueueSound(sound) end
     function wrappers.StopQueuedSound(player, sound) player:Jetpack_StopQueuedSound(sound) end
+
     o = GameObjectAccessor:new(wrappers)
 
     state.thrust = KeyDashTracker:new(o, keys, "jump", "prev_jump")
@@ -315,6 +319,7 @@ end)
 registerForEvent("onShutdown", function()
     isShutdown = true
 	--db:close()      -- cet fixed this in 1.12.2
+    this.ClearObjects()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
@@ -399,3 +404,14 @@ registerForEvent("onDraw", function()
         DrawDebugWindow(debug)
     end
 end)
+
+------------------------------------ Private Methods -----------------------------------
+
+-- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
+function this.ClearObjects()
+    ExitFlight(state, debug, o)
+
+    if o then
+        o:Clear()
+    end
+end
