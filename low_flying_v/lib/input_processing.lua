@@ -66,15 +66,15 @@ function KeyboardFlight_YawTurn(min, max, vel)
 end
 
 -- This brings the velocity in line with direction facing (and vice versa)
-function RotateVelocity_Horizontal(o, state, const, deltaTime)
+function RotateVelocity_Horizontal(o, vars, const, deltaTime)
     -- Get the angle difference
-    local rad = RotateVelocity_Horizontal_GetRad(o.lookdir_forward, state.vel)
+    local rad = RotateVelocity_Horizontal_GetRad(o.lookdir_forward, vars.vel)
 
     -- Some events need to make the camera swivel toward velocity more quickly
-    local percent_towardCamera, percent_towardVelocity = RotateVelocity_Horizontal_QuickSwivel(const, state.quickSwivel_startTime, o.timer)
+    local percent_towardCamera, percent_towardVelocity = RotateVelocity_Horizontal_QuickSwivel(const, vars.quickSwivel_startTime, o.timer)
 
     -- Do the rotations
-    return RotateVelocity_Horizontal_DoIt(state.vel, rad, percent_towardCamera, percent_towardVelocity, deltaTime)
+    return RotateVelocity_Horizontal_DoIt(vars.vel, rad, percent_towardCamera, percent_towardVelocity, deltaTime)
 end
 
 function RotateVelocity_Horizontal_GetRad(dirFacing, vel)

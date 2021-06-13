@@ -117,7 +117,7 @@ local keys2 = { }
 
 local debug = { }
 
-local state =
+local vars =
 {
     isInFlight = false,
     --kdash = KDashInputTracker:new(),          -- moved to init
@@ -175,8 +175,8 @@ registerForEvent("onInit", function()
 
     InitializeRandom()
 
-    state.kdash = KDashInputTracker:new()
-    state.rayHitStorage = RaycastHitStorage:new()
+    vars.kdash = KDashInputTracker:new()
+    vars.rayHitStorage = RaycastHitStorage:new()
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -195,7 +195,7 @@ registerForEvent("onInit", function()
 
     o = GameObjectAccessor:new(wrappers)
 
-    state.lasercats = LaserFinderManager:new(o, state.rayHitStorage)
+    vars.lasercats = LaserFinderManager:new(o, vars.rayHitStorage)
 end)
 
 registerForEvent("onShutdown", function()
@@ -206,7 +206,7 @@ end)
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = false
     if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
-        ExitFlight(state, debug)
+        ExitFlight(vars, debug)
         do return end
     end
 
@@ -214,30 +214,30 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
     if not o.player then
-        ExitFlight(state, debug)
+        ExitFlight(vars, debug)
         do return end
     end
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
-        ExitFlight(state, debug)
+        ExitFlight(vars, debug)
         do return end
     end
 
     shouldDraw = true
 
-    PopulateDebug(debug, o, keys, state)
+    PopulateDebug(debug, o, keys, vars)
 
     -- if keys.testAction then
     --     keys.testAction = false
     -- end
 
-    if state.isInFlight then
+    if vars.isInFlight then
         -- In Flight
-        Process_InFlight(o, state, const, keys, debug, deltaTime)
+        Process_InFlight(o, vars, const, keys, debug, deltaTime)
     else
         -- Standard (walking around)
-        Process_Standard(o, state, keys, debug)
+        Process_Standard(o, vars, keys, debug)
     end
 
     ResetKeys(keys)
@@ -292,7 +292,7 @@ end)
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
-    ExitFlight(state, debug)
+    ExitFlight(vars, debug)
 
     if o then
         o:Clear()

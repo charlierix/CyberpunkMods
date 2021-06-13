@@ -55,21 +55,21 @@ function ClampVelocity(vel, maxSpeed)
 end
 
 -- This will pull the velocity toward the direction facing
-function RotateVelocityToLookDir(o, mode, state, deltaTime, debug)
+function RotateVelocityToLookDir(o, mode, vars, deltaTime, debug)
     if not mode.rotateVelToLookDir then
         do return end
     end
 
     o:GetCamera()
 
-    local percentHorz, percentVert = RotateVelocity_Percent(o.lookdir_forward, state.vel, mode, debug)
+    local percentHorz, percentVert = RotateVelocity_Percent(o.lookdir_forward, vars.vel, mode, debug)
     if not percentHorz then     -- they are either both nil or both non nil
         do return end
     end
 
-    local velX = state.vel.x
-    local velY = state.vel.y
-    local velZ = state.vel.z
+    local velX = vars.vel.x
+    local velY = vars.vel.y
+    local velZ = vars.vel.z
 
     -- Horizontal
     velX, velY = RotateVelocity_NewXY(o.lookdir_forward.x, o.lookdir_forward.y, velX, velY, percentHorz, deltaTime)
@@ -77,9 +77,9 @@ function RotateVelocityToLookDir(o, mode, state, deltaTime, debug)
     -- Vertical (the logic is the same, just using YZ instead of XY)
     velY, velZ = RotateVelocity_NewXY(o.lookdir_forward.y, o.lookdir_forward.z, velY, velZ, percentVert, deltaTime)
 
-    state.vel.x = velX
-    state.vel.y = velY
-    state.vel.z = velZ
+    vars.vel.x = velX
+    vars.vel.y = velY
+    vars.vel.z = velZ
 end
 
 function RotateVelocity_Percent(dirFacing, vel, mode, debug)

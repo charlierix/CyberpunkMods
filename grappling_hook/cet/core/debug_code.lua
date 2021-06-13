@@ -1,8 +1,8 @@
-function PopulateDebug(debug, o, keys, state)
-    debug.flightMode = state.flightMode
+function PopulateDebug(debug, o, keys, vars)
+    debug.flightMode = vars.flightMode
     debug.currentlyFlying = o:Custom_CurrentlyFlying_get()
 
-    debug.isSafetyFireCandidate = state.isSafetyFireCandidate
+    debug.isSafetyFireCandidate = vars.isSafetyFireCandidate
 
     debug.pos = vec_str(o.pos)
     debug.vel = vec_str(o.vel)
@@ -28,13 +28,13 @@ function PopulateDebug(debug, o, keys, state)
     --     debug["prev_" .. key] = value
     -- end
 
-    -- for key, value in pairs(state.startStopTracker.downTimes) do
+    -- for key, value in pairs(vars.startStopTracker.downTimes) do
     --     debug["down_" .. key] = value
     -- end
 
-    -- debug.should_stop = state.startStopTracker:ShouldStop()
+    -- debug.should_stop = vars.startStopTracker:ShouldStop()
 
-    -- local shouldPull, shouldRigid = state.startStopTracker:ShouldGrapple()
+    -- local shouldPull, shouldRigid = vars.startStopTracker:ShouldGrapple()
     -- debug.should_pull = shouldPull
     -- debug.should_rigid = shouldRigid
 

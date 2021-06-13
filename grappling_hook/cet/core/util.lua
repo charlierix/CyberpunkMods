@@ -46,14 +46,14 @@ function InitializeRandom()
     end
 end
 
-function StopSound(o, state)
-    if state.sound_current and (o.timer - state.sound_started) > 2 then     -- all the sounds this mod plays are really quick
-        o:StopSound(state.sound_current)
-        state.sound_current = nil
+function StopSound(o, vars)
+    if vars.sound_current and (o.timer - vars.sound_started) > 2 then     -- all the sounds this mod plays are really quick
+        o:StopSound(vars.sound_current)
+        vars.sound_current = nil
     end
 end
 
-function InitializeKeyTrackers(state, keys, o)
+function InitializeKeyTrackers(vars, keys, o)
     --TODO: Get these mappings from config so people can map custom bindings (for controllers)
     --
     -- These strings have to exactly match what comes from Observe('PlayerPuppet', 'OnAction'
@@ -63,12 +63,12 @@ function InitializeKeyTrackers(state, keys, o)
     --local stop = { "Left", "Right" }      -- When they are tarzan swinging and try to aquire a new grapple point, but don't have enough energy, this was making the current grapple cancel.  Changing to jump so there's no accidental cancellation
     local stop = { "Jump" }
 
-    state.startStopTracker = InputTracker_StartStop:new(o, keys, grapple1, grapple2, stop)
+    vars.startStopTracker = InputTracker_StartStop:new(o, keys, grapple1, grapple2, stop)
 
     keys:ClearActions()
 
-    for i=1, #state.startStopTracker.keynames do
-        keys:AddAction(state.startStopTracker.keynames[i])
+    for i=1, #vars.startStopTracker.keynames do
+        keys:AddAction(vars.startStopTracker.keynames[i])
     end
 end
 

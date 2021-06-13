@@ -7,7 +7,7 @@
 -- function RMB_:Description()
 --     return "quick description"
 
--- function RMB_:Tick(o, vel, keys, state)
+-- function RMB_:Tick(o, vel, keys, vars)
 --     return accelX, accelY, accelZ, requestedEnergy
 -------------------------------------------------------------
 
@@ -28,7 +28,7 @@ function RMB_Dash:Description()
     return "dash"
 end
 
-function RMB_Dash:Tick(o, vel, keys, state)
+function RMB_Dash:Tick(o, vel, keys, vars)
     if not keys.rmb then
         return 0, 0, 0, 0
     end

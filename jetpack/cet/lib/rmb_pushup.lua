@@ -7,7 +7,7 @@
 -- function RMB_:Description()
 --     return "quick description"
 
--- function RMB_:Tick(o, vel, keys, state)
+-- function RMB_:Tick(o, vel, keys, vars)
 --     return accelX, accelY, accelZ, requestedEnergy
 -------------------------------------------------------------
 
@@ -30,13 +30,13 @@ function RMB_PushUp:Description()
     return "npc lift"
 end
 
-function RMB_PushUp:Tick(o, vel, keys, state)
+function RMB_PushUp:Tick(o, vel, keys, vars)
     -- Initial press down
     if keys.rmb and not keys.prev_rmb then
 
         o:RagdollNPCs_StraightUp(48, self.force, self.randHorz, self.randVert)
 
-        o:PlaySound("grenade_charge_1s", state)
+        o:PlaySound("grenade_charge_1s", vars)
 
         return 0, 0, 0, self.burnRate
     else

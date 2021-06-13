@@ -38,19 +38,19 @@ function IsTeleportPointSafe(fromPos, toPos, velocity, deltaTime, o)
 end
 
 -- This will move the player to the next point
-function Process_InFlight_NewPos(o, newPos, deltaYaw, state, const)
+function Process_InFlight_NewPos(o, newPos, deltaYaw, vars, const)
     local yaw = AddYaw(o.yaw, deltaYaw)
     o:Teleport(newPos, yaw)
 end
 
 -- This responds to wall/floor hits
-function Process_InFlight_HitWall(vel, isHorzHit, isVertHit, state, timer)
+function Process_InFlight_HitWall(vel, isHorzHit, isVertHit, vars, timer)
     -- Lose some momentum
     if isHorzHit then
         vel.x = vel.x * 0.5     --TODO: Bounce off the wall, don't just loose momentum (also need to adust yaw).  Need more information, can't just negate x and y velocity
         vel.y = vel.y * 0.5
 
-        state.quickSwivel_startTime = timer
+        vars.quickSwivel_startTime = timer
     end
 
     if isVertHit then
@@ -85,19 +85,19 @@ function GetGravity(closestDist, maxDist, velZ, maxMult, zMin, zMax, minDistPerc
 end
 
 -- This returns acceleration if the speed is too slow
-function EnforceMinSpeed(state, const, isBackPressed, timer)
+function EnforceMinSpeed(vars, const, isBackPressed, timer)
     -- If they are hitting back, then they are trying to slow down.  Disengage for a bit
     if isBackPressed then
-        state.hitBackTime = timer
+        vars.hitBackTime = timer
     end
 
-    if (timer - state.hitBackTime) < 0.5 then
+    if (timer - vars.hitBackTime) < 0.5 then
         return 0, 0, 0
     end
 
-    local minSpeed = GetOverridenMinSpeed(state, const, timer)
+    local minSpeed = GetOverridenMinSpeed(vars, const, timer)
 
-    local speedSqr = GetVectorLengthSqr(state.vel)
+    local speedSqr = GetVectorLengthSqr(vars.vel)
 
     if speedSqr >= (minSpeed * minSpeed) then
         -- Going fast enough, no need to apply extra acceleration
@@ -114,43 +114,43 @@ function EnforceMinSpeed(state, const, isBackPressed, timer)
         -- Going too slow
         local speed = math.sqrt(speedSqr)
         return
-            state.vel.x / speed * const.accel_underspeed,
-            state.vel.y / speed * const.accel_underspeed,
-            state.vel.z / speed * const.accel_underspeed
+            vars.vel.x / speed * const.accel_underspeed,
+            vars.vel.y / speed * const.accel_underspeed,
+            vars.vel.z / speed * const.accel_underspeed
     end
 end
 
 -- This will set the min speed
-function AdjustMinSpeed(o, state, const, keys)
+function AdjustMinSpeed(o, vars, const, keys)
     -- Wait a bit before allowing adjustments
-    if ((o.timer - state.startFlightTime) < 4) or ((not keys.forward) and (not keys.backward)) then
+    if ((o.timer - vars.startFlightTime) < 4) or ((not keys.forward) and (not keys.backward)) then
         do return end
     end
 
-    local currentSpeed = GetVectorLength(state.vel)
+    local currentSpeed = GetVectorLength(vars.vel)
 
     if (currentSpeed < const.minSpeed) and keys.backward then
         -- When trying to slow done below min speed, they are probably in a stressful situation and
         -- just want it to slow down.  So instead of slow increments, just have absolute min speed
         -- and halfway between absolute and min speed
-        state.minSpeedOverride_current = const.minSpeed_absolute
+        vars.minSpeedOverride_current = const.minSpeed_absolute
     else
-        state.minSpeedOverride_current = currentSpeed
+        vars.minSpeedOverride_current = currentSpeed
     end
 
-    state.minSpeedOverride_start = o.timer
+    vars.minSpeedOverride_start = o.timer
 end
 
 -- Calculate what the current min speed should be based on the default and override values
-function GetOverridenMinSpeed(state, const, timer)
+function GetOverridenMinSpeed(vars, const, timer)
     -- If they are trying to go slower than min speed, then don't bother with timer.  Just
     -- go that lower speed until they manually say to go faster
-    if state.minSpeedOverride_current < const.minSpeed then
-        return state.minSpeedOverride_current
+    if vars.minSpeedOverride_current < const.minSpeed then
+        return vars.minSpeedOverride_current
     end
 
     -- See how long since an override started
-    local elapsed = timer - state.minSpeedOverride_start
+    local elapsed = timer - vars.minSpeedOverride_start
 
     -- Use default if too much time has passed
     if elapsed > const.minSpeedOverride_duration then
@@ -161,7 +161,7 @@ function GetOverridenMinSpeed(state, const, timer)
     local fullSpeedDuration = const.minSpeedOverride_duration * 0.667
 
     if elapsed <= fullSpeedDuration then
-        return state.minSpeedOverride_current
+        return vars.minSpeedOverride_current
     end
 
     -- Convert elapsed into 0 to 1
@@ -172,5 +172,5 @@ function GetOverridenMinSpeed(state, const, timer)
     percent = percent * percent
     percent = 2.7182818 ^ -percent
 
-    return GetScaledValue(const.minSpeed, state.minSpeedOverride_current, 0, 1, percent)
+    return GetScaledValue(const.minSpeed, vars.minSpeedOverride_current, 0, 1, percent)
 end

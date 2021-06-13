@@ -14,35 +14,35 @@ local this = {}
 -- There are a lot of different ways that a grapple could be set up.  Any actual
 -- grapple config probably won't use all the acceleration types, but it's easier
 -- to have a single worker method that can handle lots of possible config scenarios
-function Process_Flight(o, player, state, const, debug, deltaTime)
+function Process_Flight(o, player, vars, const, debug, deltaTime)
     -- Recover at a reduced rate
-    state.energy = RecoverEnergy(state.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * player.energy_tank.flying_percent, deltaTime)
+    vars.energy = RecoverEnergy(vars.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * player.energy_tank.flying_percent, deltaTime)
 
     ---------------------------------- VALIDATIONS ----------------------------------
 
-    if SwitchedFlightMode(o, player, state, const) then
+    if SwitchedFlightMode(o, player, vars, const) then
         do return end
     end
 
     -- If they are on the ground after being airborne, then exit flight
-    local shouldStop, isAirborne = ShouldStopFlyingBecauseGrounded(o, state)
+    local shouldStop, isAirborne = ShouldStopFlyingBecauseGrounded(o, vars)
     if shouldStop then
-        Transition_ToStandard(state, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o)
         do return end
     end
 
-    local grapple = state.grapple       -- this will be used a lot, save a dot reference
+    local grapple = vars.grapple       -- this will be used a lot, save a dot reference
 
     -- If about to hit a wall, then cancel, but only if the settings say to
-    if state.hasBeenAirborne and grapple.stop_on_wallHit and IsWallCollisionImminent(o, deltaTime) then
-        this.Transition_AntiGravOrStandard(state, const, debug, o, grapple)
+    if vars.hasBeenAirborne and grapple.stop_on_wallHit and IsWallCollisionImminent(o, deltaTime) then
+        this.Transition_AntiGravOrStandard(vars, const, debug, o, grapple)
         do return end
     end
 
-    local _, _, grappleLen, grappleDirUnit = GetGrappleLine(o, state, const)
+    local _, _, grappleLen, grappleDirUnit = GetGrappleLine(o, vars, const)
 
     if grapple.stop_distance and grappleLen <= grapple.stop_distance then
-        this.Transition_AntiGravOrStandard(state, const, debug, o, grapple)
+        this.Transition_AntiGravOrStandard(vars, const, debug, o, grapple)
         do return end
     end
 
@@ -50,7 +50,7 @@ function Process_Flight(o, player, state, const, debug, deltaTime)
 
     if grapple.minDot and (DotProduct3D(o.lookdir_forward, grappleDirUnit) < grapple.minDot) then
         -- They looked too far away
-        this.Transition_AntiGravOrStandard(state, const, debug, o, grapple)
+        this.Transition_AntiGravOrStandard(vars, const, debug, o, grapple)
         do return end
     end
 
@@ -61,7 +61,7 @@ function Process_Flight(o, player, state, const, debug, deltaTime)
     if grapple.desired_length then
         diffDist = grappleLen - grapple.desired_length
     else
-        diffDist = grappleLen - state.distToHit     -- no defined desired length, use the length at the time of initiating the grapple
+        diffDist = grappleLen - vars.distToHit     -- no defined desired length, use the length at the time of initiating the grapple
     end
 
     -- Get the component of the velocity along the request line
@@ -85,7 +85,7 @@ function Process_Flight(o, player, state, const, debug, deltaTime)
     local drag_x, drag_y, drag_z = this.GetVelocityDrag(grappleDirUnit, diffDist, isSameDir, grapple.velocity_away)
 
     -- Accelerate along look direction
-    local look_x, look_y, look_z = this.GetLook(o, state, grapple, grappleLen)
+    local look_x, look_y, look_z = this.GetLook(o, vars, grapple, grappleLen)
 
     -- Cancel gravity
     local antigrav_z = GetAntiGravity(grapple.anti_gravity, isAirborne)
@@ -136,7 +136,7 @@ function this.GetVelocityDrag(dirUnit, diffDist, isSameDir, args)
         dirUnit.z * accel
 end
 
-function this.GetLook(o, state, grapple, grappleLen)
+function this.GetLook(o, vars, grapple, grappleLen)
     if not grapple.accel_alongLook then
         return 0, 0, 0
     end
@@ -152,17 +152,17 @@ function this.GetLook(o, state, grapple, grappleLen)
     local diffDist = 1000
     if grapple.desired_length then
         -- How from desired distance they are (can be negative)
-        diffDist = grappleLen - state.distToHit
+        diffDist = grappleLen - vars.distToHit
     end
 
     -- Get the acceleration
     return GetPullAccel_Constant(grapple.accel_alongLook, o.lookdir_forward, diffDist, speed, not isSameDir)
 end
 
-function this.Transition_AntiGravOrStandard(state, const, debug, o, grapple)
+function this.Transition_AntiGravOrStandard(vars, const, debug, o, grapple)
     if grapple.anti_gravity then
-        Transition_ToAntiGrav(state, const, o)
+        Transition_ToAntiGrav(vars, const, o)
     else
-        Transition_ToStandard(state, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o)
     end
 end

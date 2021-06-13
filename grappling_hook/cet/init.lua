@@ -121,9 +121,6 @@ function TODO()
     --  Remove old rows
 
     -- All:
-    --  Rename state to vars (needs to be done in all mods at the same time)
-
-    -- All:
     --  Fall damage should be a percent, not a bool
 
     -- Pull:
@@ -253,7 +250,7 @@ local keys = nil -- = Keys:new()        -- moved to init
 local debug = {}
 
 --TODO: Change to vars
-local state =
+local vars =
 {
     flightMode = const.flightModes.standard,
     --grapple = nil,    -- an instance of models.Grapple    -- gets populated in Transition_ToAim (back to nil in Transition_ToStandard)
@@ -373,11 +370,11 @@ registerForEvent("onInit", function()
 
     o = GameObjectAccessor:new(wrappers)
 
-    InitializeKeyTrackers(state, keys, o)
+    InitializeKeyTrackers(vars, keys, o)
 
-    xp_gain = XPGain:new(o, state, const)
+    xp_gain = XPGain:new(o, vars, const)
 
-    state.animation_lowEnergy = Animation_LowEnergy:new(o)
+    vars.animation_lowEnergy = Animation_LowEnergy:new(o)
 end)
 
 registerForEvent("onShutdown", function()
@@ -389,69 +386,69 @@ end)
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = false
     if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
-        Transition_ToStandard(state, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o)
         do return end
     end
 
     o:Tick(deltaTime)
-    state.animation_lowEnergy:Tick()
+    vars.animation_lowEnergy:Tick()
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
     if not o.player then
-        Transition_ToStandard(state, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o)
         do return end
     end
 
     if not player then
-        player = Player:new(o, state, const, debug)
+        player = Player:new(o, vars, const, debug)
         xp_gain:PlayerCreated(player)
     end
 
-    StopSound(o, state)
+    StopSound(o, vars)
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
-        Transition_ToStandard(state, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o)
         do return end
     end
 
     shouldDraw = true       -- don't want a hung progress bar while in menu or driving
 
-    state.startStopTracker:Tick()
+    vars.startStopTracker:Tick()
 
     if const.shouldShowDebugWindow then
-        PopulateDebug(debug, o, keys, state)
+        PopulateDebug(debug, o, keys, vars)
     end
 
-    PossiblySafetyFire(o, state, const, debug, deltaTime)
+    PossiblySafetyFire(o, vars, const, debug, deltaTime)
 
-    if state.flightMode == const.flightModes.standard then
+    if vars.flightMode == const.flightModes.standard then
         -- Standard (walking around)
-        Process_Standard(o, player, state, const, debug, deltaTime)
+        Process_Standard(o, player, vars, const, debug, deltaTime)
 
     elseif not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
         -- Was flying, but another mod took over
-        Transition_ToStandard(state, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o)
 
-    elseif state.flightMode == const.flightModes.aim then
+    elseif vars.flightMode == const.flightModes.aim then
         -- Look for a grapple point
-        Process_Aim(o, player, state, const, debug, deltaTime)
+        Process_Aim(o, player, vars, const, debug, deltaTime)
 
-    elseif state.flightMode == const.flightModes.airdash then
+    elseif vars.flightMode == const.flightModes.airdash then
         -- Didn't see a grapple point, so dashing forward
-        Process_AirDash(o, player, state, const, debug, deltaTime)
+        Process_AirDash(o, player, vars, const, debug, deltaTime)
 
-    elseif state.flightMode == const.flightModes.flight then
+    elseif vars.flightMode == const.flightModes.flight then
         -- Actually grappling
-        Process_Flight(o, player, state, const, debug, deltaTime)
+        Process_Flight(o, player, vars, const, debug, deltaTime)
 
-    elseif state.flightMode == const.flightModes.antigrav then
+    elseif vars.flightMode == const.flightModes.antigrav then
         -- Powered flight has ended, transitioning from lower gravity to standard gravity
-        Process_AntiGrav(o, player, state, const, debug, deltaTime)
+        Process_AntiGrav(o, player, vars, const, debug, deltaTime)
 
     else
-        print("Grappling ERROR, unknown flightMode: " .. tostring(state.flightMode))
-        Transition_ToStandard(state, const, debug, o)
+        print("Grappling ERROR, unknown flightMode: " .. tostring(vars.flightMode))
+        Transition_ToStandard(vars, const, debug, o)
     end
 
     xp_gain:Tick(deltaTime)     --NOTE: This will potentially add xp to player and call save
@@ -496,8 +493,8 @@ registerForEvent("onDraw", function()
         do return end
     end
 
-    if player and state.energy < player.energy_tank.max_energy then
-        DrawEnergyProgress(state.energy, player.energy_tank.max_energy, player.experience, state)
+    if player and vars.energy < player.energy_tank.max_energy then
+        DrawEnergyProgress(vars.energy, player.energy_tank.max_energy, player.experience, vars)
     end
 
     if shouldShowConfig and player then
@@ -519,7 +516,7 @@ end)
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
-    Transition_ToStandard(state, const, debug, o)
+    Transition_ToStandard(vars, const, debug, o)
     TransitionWindows_Main(vars_ui, const)
 
     player = nil

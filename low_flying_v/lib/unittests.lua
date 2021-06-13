@@ -47,7 +47,7 @@ function UnitTest_RollingBuffer()
     ReportTable(buffer:GetLatestEntries(3))
 end
 
-function UnitTest_KDashDetector(keys, o, state, debug)
+function UnitTest_KDashDetector(keys, o, vars, debug)
     -- these would be member variables
     local fastestSpeed = nil
     local wasKDash = false
@@ -55,7 +55,7 @@ function UnitTest_KDashDetector(keys, o, state, debug)
     if keys.backward then
         fastestSpeed = nil
         wasKDash = false
-        state.kdash:Clear()
+        vars.kdash:Clear()
     end
 
 
@@ -67,7 +67,7 @@ function UnitTest_KDashDetector(keys, o, state, debug)
     debug.fastestSpeed = tostring(Round(fastestSpeed, 1))
 
 
-    local shortestForward = state.kdash:GetShortestForwardInterval()
+    local shortestForward = vars.kdash:GetShortestForwardInterval()
     if shortestForward then
         debug.shortestForward = tostring(Round(shortestForward, 3))
     else
@@ -75,11 +75,11 @@ function UnitTest_KDashDetector(keys, o, state, debug)
     end
 
 
-    state.kdash:DebugElapsedTimes(o.timer, debug)
+    vars.kdash:DebugElapsedTimes(o.timer, debug)
 
 
     if not wasKDash then
-        wasKDash = state.kdash:WasKDashPerformed(o.timer, o.vel)
+        wasKDash = vars.kdash:WasKDashPerformed(o.timer, o.vel)
     end
     debug.wasKDash = wasKDash
 end

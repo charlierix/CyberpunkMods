@@ -233,7 +233,7 @@ local keys = nil -- = Keys:new()        -- moved to init
 
 local debug = {}
 
-local state =
+local vars =
 {
     isInFlight = false,
 
@@ -278,11 +278,11 @@ registerForEvent("onInit", function()
     InitializeRandom()
 
     mode = GetConfigValues(GetModeIndex())
-    state.remainBurnTime = mode.maxBurnTime
+    vars.remainBurnTime = mode.maxBurnTime
 
     keys = Keys:new()
 
-    state.vel = Vector4.new(0, 0, 0, 1)
+    vars.vel = Vector4.new(0, 0, 0, 1)
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -309,11 +309,11 @@ registerForEvent("onInit", function()
 
     o = GameObjectAccessor:new(wrappers)
 
-    state.thrust = KeyDashTracker:new(o, keys, "jump", "prev_jump")
-    state.left = KeyDashTracker:new(o, keys, "left", "prev_left")
-    state.right = KeyDashTracker:new(o, keys, "right", "prev_right")
-    state.forward = KeyDashTracker:new(o, keys, "forward", "prev_forward")
-    state.backward = KeyDashTracker:new(o, keys, "backward", "prev_backward")
+    vars.thrust = KeyDashTracker:new(o, keys, "jump", "prev_jump")
+    vars.left = KeyDashTracker:new(o, keys, "left", "prev_left")
+    vars.right = KeyDashTracker:new(o, keys, "right", "prev_right")
+    vars.forward = KeyDashTracker:new(o, keys, "forward", "prev_forward")
+    vars.backward = KeyDashTracker:new(o, keys, "backward", "prev_backward")
 end)
 
 registerForEvent("onShutdown", function()
@@ -325,7 +325,7 @@ end)
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = false
     if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
-        ExitFlight(state, debug, o)
+        ExitFlight(vars, debug, o)
         do return end
     end
 
@@ -333,22 +333,22 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
     if not o.player then
-        ExitFlight(state, debug, o)
+        ExitFlight(vars, debug, o)
         do return end
     end
 
-    StopSound(o, state)
+    StopSound(o, vars)
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
-        ExitFlight(state, debug, o)
+        ExitFlight(vars, debug, o)
         do return end
     end
 
     shouldDraw = true       -- don't want a stopped progress bar while in menu or driving
 
     if const.shouldShowDebugWindow then
-        PopulateDebug(debug, o, keys, state)
+        PopulateDebug(debug, o, keys, vars)
     end
 
     -- Cycle Config
@@ -358,24 +358,24 @@ registerForEvent("onUpdate", function(deltaTime)
         local newIndex = mode.index + 1
         UpdateModeIndex(newIndex)
         mode = GetConfigValues(newIndex)
-        state.showConfigNameUntil = o.timer + 3
+        vars.showConfigNameUntil = o.timer + 3
         ExitFlight()
     end
 
-    state.thrust:Tick()     -- this is needed for flight and non flight
+    vars.thrust:Tick()     -- this is needed for flight and non flight
 
-    if state.isInFlight then
+    if vars.isInFlight then
         -- In Flight
         if not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
-            ExitFlight(state, debug, o)
+            ExitFlight(vars, debug, o)
         elseif mode.useRedscript then
-            Process_InFlight_Red(o, state, const, mode, keys, debug, deltaTime)
+            Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
         else
-            Process_InFlight_CET(o, state, const, mode, keys, debug, deltaTime)
+            Process_InFlight_CET(o, vars, const, mode, keys, debug, deltaTime)
         end
     else
         -- Standard (walking around)
-        Process_Standard(o, state, mode, const, debug, deltaTime)
+        Process_Standard(o, vars, mode, const, debug, deltaTime)
     end
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
@@ -391,12 +391,12 @@ registerForEvent("onDraw", function()
     end
 
     -- Energy tank (only show when it's not full)
-    if state.remainBurnTime < mode.maxBurnTime then
-        DrawJetpackProgress(mode.name, state.remainBurnTime, mode.maxBurnTime)
+    if vars.remainBurnTime < mode.maxBurnTime then
+        DrawJetpackProgress(mode.name, vars.remainBurnTime, mode.maxBurnTime)
     end
 
     -- Config Name
-    if state.showConfigNameUntil > o.timer then
+    if vars.showConfigNameUntil > o.timer then
         DrawConfigName(mode)
     end
 
@@ -409,7 +409,7 @@ end)
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
-    ExitFlight(state, debug, o)
+    ExitFlight(vars, debug, o)
 
     if o then
         o:Clear()

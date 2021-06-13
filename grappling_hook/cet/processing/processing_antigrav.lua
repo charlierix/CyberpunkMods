@@ -1,23 +1,23 @@
 -- This is a small transition period between flight and standard.  It lets off of
 -- antigravity linearly so that antigravity to standard gravity isn't so abrupt
-function Process_AntiGrav(o, player, state, const, debug, deltaTime)
+function Process_AntiGrav(o, player, vars, const, debug, deltaTime)
     -- Doing a standard recovery rate
-    state.energy = RecoverEnergy(state.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate, deltaTime)
+    vars.energy = RecoverEnergy(vars.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate, deltaTime)
 
-    if SwitchedFlightMode(o, player, state, const) then
+    if SwitchedFlightMode(o, player, vars, const) then
         do return end
     end
 
     if not IsAirborne(o) then
-        Transition_ToStandard(state, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o)
         do return end
     end
 
-    local antigrav = state.grapple.anti_gravity
+    local antigrav = vars.grapple.anti_gravity
 
-    local elapsed = o.timer - state.startTime
+    local elapsed = o.timer - vars.startTime
     if elapsed > antigrav.fade_duration then
-        Transition_ToStandard(state, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o)
         do return end
     end
 

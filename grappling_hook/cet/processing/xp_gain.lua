@@ -2,13 +2,13 @@ local this = {}
 
 XPGain = {}
 
-function XPGain:new(o, state, const)
+function XPGain:new(o, vars, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
     obj.o = o
-    obj.state = state
+    obj.vars = vars
     obj.const = const
 
     -- These are set in PlayerCreated()
@@ -31,7 +31,7 @@ function XPGain:Tick(deltaTime)
         self:SaveExperience()
     end
 
-    if self.state.flightMode == self.const.flightModes.airdash or self.state.flightMode == self.const.flightModes.flight then
+    if self.vars.flightMode == self.const.flightModes.airdash or self.vars.flightMode == self.const.flightModes.flight then
         self:AddExperience(deltaTime)
     else
         --self:CoolDown()
@@ -80,7 +80,7 @@ function XPGain:ShouldSave(deltaTime)
     end
 
     -- It needs to save, but not mid grapple
-    if self.state.flightMode ~= self.const.flightModes.standard then
+    if self.vars.flightMode ~= self.const.flightModes.standard then
         self.elapsed = nil      -- reset the timer.  They need to be walking around for a bit before getting hit with a potential db lag
         return false
     end

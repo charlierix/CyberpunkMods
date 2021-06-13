@@ -18,18 +18,18 @@ function ConsumeEnergy(current, burnRate, deltaTime)
 end
 
 -- This is called while in flight.  It looks for the user wanting to switch flight modes
-function SwitchedFlightMode(o, player, state, const)
+function SwitchedFlightMode(o, player, vars, const)
     -- See if they want to start a new grapple
-    if StartFlightIfRequested(o, player, state, const) then
+    if StartFlightIfRequested(o, player, vars, const) then
         return true
     end
 
-    if state.startStopTracker:ShouldStop() then     -- doing this after the grapple check, because it likely uses a subset of those keys (A+D instead of A+D+W)
+    if vars.startStopTracker:ShouldStop() then     -- doing this after the grapple check, because it likely uses a subset of those keys (A+D instead of A+D+W)
         -- Told to stop swinging, back to standard
-        if (state.flightMode == const.flightModes.airdash or state.flightMode == const.flightModes.flight) and state.grapple and state.grapple.anti_gravity then
-            Transition_ToAntiGrav(state, const, o)
+        if (vars.flightMode == const.flightModes.airdash or vars.flightMode == const.flightModes.flight) and vars.grapple and vars.grapple.anti_gravity then
+            Transition_ToAntiGrav(vars, const, o)
         else
-            Transition_ToStandard(state, const, debug, o)
+            Transition_ToStandard(vars, const, debug, o)
         end
 
         return true
@@ -43,10 +43,10 @@ function IsAirborne(o)
     return o:IsPointVisible(o.pos, Vector4.new(o.pos.x, o.pos.y, o.pos.z - 0.5, 1))
 end
 
-function ShouldStopFlyingBecauseGrounded(o, state)
+function ShouldStopFlyingBecauseGrounded(o, vars)
     local isAirborne = IsAirborne(o)
 
-    if state.hasBeenAirborne then
+    if vars.hasBeenAirborne then
         -- Has been continuously airborne in this flight mode for at least a small bit of time
         if not isAirborne then
             return true, isAirborne
@@ -54,18 +54,18 @@ function ShouldStopFlyingBecauseGrounded(o, state)
     else
         -- Hasn't had enough time to be continuously airborne yet
         if isAirborne then
-            if state.initialAirborneTime then
+            if vars.initialAirborneTime then
                 -- Is airborne and has been airborne before.  See if they have been continuously long enough to transition out of this break in period
-                if o.timer - state.initialAirborneTime > 0.25 then
-                    state.isSafetyFireCandidate = true
-                    state.hasBeenAirborne = true
+                if o.timer - vars.initialAirborneTime > 0.25 then
+                    vars.isSafetyFireCandidate = true
+                    vars.hasBeenAirborne = true
                 end
             else
-                state.initialAirborneTime = o.timer
+                vars.initialAirborneTime = o.timer
             end
         else
             -- Not airborne during this warmin period, remove the timer (they are starting on the ground, or sliding along the ground at a shallow angle)
-            state.initialAirborneTime = nil
+            vars.initialAirborneTime = nil
         end
     end
 
@@ -76,10 +76,10 @@ function IsWallCollisionImminent(o, deltaTime)
     return not o:IsPointVisible(o.pos, Vector4.new(o.pos.x + (o.vel.x * deltaTime * 4), o.pos.y + (o.vel.y * deltaTime * 4), o.pos.z + (o.vel.z * deltaTime * 4), 1))
 end
 
-function GetGrappleLine(o, state, const)
+function GetGrappleLine(o, vars, const)
     local playerAnchor = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
 
-    local grappleDir = SubtractVectors(state.rayHit, playerAnchor)
+    local grappleDir = SubtractVectors(vars.rayHit, playerAnchor)
     local grappleLen = GetVectorLength(grappleDir)
     local grappleDirUnit = DivideVector(grappleDir, grappleLen)
 

@@ -2,7 +2,7 @@
 --https://www.nexusmods.com/cyberpunk2077/mods/1405
 --NOTE: This is a copy of DrawJetpackProgress
 --NOTE: This is positioned according to how things look at 4K.  The progress is a bit low on 1K, but it's not bad.  I tried scaling position according to resolution, but text was still large, probably would need to scale that too
-function DrawEnergyProgress(energy, max, experience, state)
+function DrawEnergyProgress(energy, max, experience, vars)
     ImGui.SetNextWindowPos(20, 230, ImGuiCond.Always)       -- this is under the top left combat graphic (placing under jetpack's progress bar)
     ImGui.SetNextWindowSize(450, 50, ImGuiCond.Appearing)
 
@@ -14,7 +14,7 @@ function DrawEnergyProgress(energy, max, experience, state)
 
         -- The color ints are in ABGR (comments to the side are ARGB for easy copy/pasting into color editor)
 
-        if state.animation_lowEnergy.isProgressBarRed then
+        if vars.animation_lowEnergy.isProgressBarRed then
             ImGui.PushStyleColor(ImGuiCol.Text, 0xFF5C66FF)        --FF665C
             ImGui.PushStyleColor(ImGuiCol.FrameBg, 0x9926214A)       --994A2126
             ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0xE64547C7)     --E6C74745

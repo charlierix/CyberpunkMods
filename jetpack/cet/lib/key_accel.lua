@@ -1,16 +1,16 @@
 -- This returns accelerations from direct keyboard inputs
-function GetAccel_Keys(state, mode, o)
-    --state.thrust:Tick()       -- this was already done in init.lua
-    state.left:Tick()
-    state.right:Tick()
-    state.forward:Tick()
-    state.backward:Tick()
+function GetAccel_Keys(vars, mode, o)
+    --vars.thrust:Tick()       -- this was already done in init.lua
+    vars.left:Tick()
+    vars.right:Tick()
+    vars.forward:Tick()
+    vars.backward:Tick()
 
-    local accel_up, energyUp = CalculateAccel(state.thrust.isDown, state.thrust.isDashing, mode.accel_vert_stand, mode.accel_vert_dash, 1, mode.burnRate_dash)
-    local accel_left, energyLeft = CalculateAccel(state.left.isDown, state.left.isDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
-    local accel_right, energyRight = CalculateAccel(state.right.isDown, state.rightisDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
-    local accel_forward, energyForward = CalculateAccel(state.forward.isDown, state.forward.isDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
-    local accel_backward, energyBackward = CalculateAccel(state.backward.isDown, state.backward.isDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
+    local accel_up, energyUp = CalculateAccel(vars.thrust.isDown, vars.thrust.isDashing, mode.accel_vert_stand, mode.accel_vert_dash, 1, mode.burnRate_dash)
+    local accel_left, energyLeft = CalculateAccel(vars.left.isDown, vars.left.isDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
+    local accel_right, energyRight = CalculateAccel(vars.right.isDown, vars.rightisDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
+    local accel_forward, energyForward = CalculateAccel(vars.forward.isDown, vars.forward.isDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
+    local accel_backward, energyBackward = CalculateAccel(vars.backward.isDown, vars.backward.isDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
 
     -- Map those into world coords
     local accelX, accelY = ConvertAccelToWorld(accel_forward - accel_backward, accel_right - accel_left, o)

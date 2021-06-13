@@ -1,15 +1,15 @@
 -- This is called each tick when they aren't in flight (just walking around)
 -- Timer has already been updated and it's verified that they aren't in a vehicle
 -- or in the menu
-function Process_Standard(o, state, keys, debug)
+function Process_Standard(o, vars, keys, debug)
     if keys.forceFlight then
-        EnterFlight(o, state)
+        EnterFlight(o, vars)
         do return end
     end
 
-    state.kdash:StoreInputs(o.timer, keys.forward, keys.jump, keys.rmb)
-    if state.kdash:WasKDashPerformed(o.timer, o.vel, debug) then
-        EnterFlight(o, state)
+    vars.kdash:StoreInputs(o.timer, keys.forward, keys.jump, keys.rmb)
+    if vars.kdash:WasKDashPerformed(o.timer, o.vel, debug) then
+        EnterFlight(o, vars)
         do return end
     end
 
@@ -19,10 +19,10 @@ function Process_Standard(o, state, keys, debug)
 
 end
 
-function EnterFlight(o, state)
-    state.isInFlight = true
-    state.vel = o.vel
-    state.startFlightTime = o.timer
-    state.lowSpeedTicks = 0
-    state.minSpeedOverride_start = -1000
+function EnterFlight(o, vars)
+    vars.isInFlight = true
+    vars.vel = o.vel
+    vars.startFlightTime = o.timer
+    vars.lowSpeedTicks = 0
+    vars.minSpeedOverride_start = -1000
 end

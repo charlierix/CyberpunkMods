@@ -7,7 +7,7 @@
 -- function RMB_:Description()
 --     return "quick description"
 
--- function RMB_:Tick(o, vel, keys, state)
+-- function RMB_:Tick(o, vel, keys, vars)
 --     return accelX, accelY, accelZ, requestedEnergy
 -------------------------------------------------------------
 
@@ -39,7 +39,7 @@ function RMB_Hover:Description()
     return "hover"
 end
 
-function RMB_Hover:Tick(o, vel, keys, state)
+function RMB_Hover:Tick(o, vel, keys, vars)
     if keys.jump then
         self.rmbLastDownTime = -self.holdDuration      -- pressing jump needs to turn off cruise control
     elseif keys.rmb then

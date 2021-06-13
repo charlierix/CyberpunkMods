@@ -8,7 +8,7 @@ local this = {}
 --
 -- Webswing will look at current velocity, direction looking and find a good anchor point that
 -- carries flight through a desired arc
-function Process_Aim(o, player, state, const, debug, deltaTime)
+function Process_Aim(o, player, vars, const, debug, deltaTime)
     -- There's potentially a case to stop right away if standing on the ground if:
     --  there is no air dash
     --  there is no pull force, either by one of:
@@ -18,27 +18,27 @@ function Process_Aim(o, player, state, const, debug, deltaTime)
     -- That's a lot of logic that will just get replicated in the corresponding flight functions
 
     -- Recover energy at the reduced flight rate
-    state.energy = RecoverEnergy(state.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * player.energy_tank.flying_percent, deltaTime)
+    vars.energy = RecoverEnergy(vars.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * player.energy_tank.flying_percent, deltaTime)
 
-    if state.grapple.aim_straight then
-        this.Aim_Straight(state.grapple.aim_straight, o, player, state, const, debug, deltaTime)
+    if vars.grapple.aim_straight then
+        this.Aim_Straight(vars.grapple.aim_straight, o, player, vars, const, debug, deltaTime)
 
-    elseif state.grapple.aim_swing then
+    elseif vars.grapple.aim_swing then
         print("Grappling ERROR, finish aim_swing")
-        Transition_ToStandard(state, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o)
 
     else
         print("Grappling ERROR, unknown aim")
-        Transition_ToStandard(state, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o)
     end
 end
 
 --------------------------------------- Private Methods ---------------------------------------
 
-function this.Aim_Straight(aim, o, player, state, const, debug, deltaTime)
-    if state.startStopTracker:ShouldStop() then
+function this.Aim_Straight(aim, o, player, vars, const, debug, deltaTime)
+    if vars.startStopTracker:ShouldStop() then
         -- told to stop aiming, back to standard
-        Transition_ToStandard(state, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o)
         do return end
     end
 
@@ -52,30 +52,30 @@ function this.Aim_Straight(aim, o, player, state, const, debug, deltaTime)
     -- See if the ray hit something
     if hitPoint then
         -- Ensure pin is drawn and placed properly (flight pin, not aim pin)
-        EnsureMapPinVisible(hitPoint, state.grapple.mappin_name, state, o)
+        EnsureMapPinVisible(hitPoint, vars.grapple.mappin_name, vars, o)
 
-        Transition_ToFlight(state, const, o, from, hitPoint)
+        Transition_ToFlight(vars, const, o, from, hitPoint)
         do return end
     end
 
     -- They're looking at open air, or something that is too far away
-    if o.timer - state.startTime > aim.aim_duration then
+    if o.timer - vars.startTime > aim.aim_duration then
         if aim.air_dash then
             -- Took too long to aim, switching to air dash
-            Transition_ToAirDash(aim.air_dash, state, const, o, from, aim.max_distance)
+            Transition_ToAirDash(aim.air_dash, vars, const, o, from, aim.max_distance)
         else
             -- Took too long to aim, can't air dash, giving up
 
             -- Since the grapple didn't happen, give back the energy that was taken at the start of the aim
             -- TODO: May want to only recover 80%
-            state.energy = RecoverEnergy(state.energy, player.energy_tank.max_energy, state.grapple.energy_cost, 1)
+            vars.energy = RecoverEnergy(vars.energy, player.energy_tank.max_energy, vars.grapple.energy_cost, 1)
 
-            Transition_ToStandard(state, const, debug, o)
+            Transition_ToStandard(vars, const, debug, o)
         end
 
     else
         -- Still aiming, make sure the map pin is visible
         local aimPoint = Vector4.new(from.x + (o.lookdir_forward.x * aim.max_distance), from.y + (o.lookdir_forward.y * aim.max_distance), from.z + (o.lookdir_forward.z * aim.max_distance), 1)
-        EnsureMapPinVisible(aimPoint, aim.mappin_name, state, o)
+        EnsureMapPinVisible(aimPoint, aim.mappin_name, vars, o)
     end
 end

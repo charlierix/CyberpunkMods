@@ -46,10 +46,10 @@ function InitializeRandom()
     end
 end
 
-function StopSound(o, state)
-    if state.sound_current and (o.timer - state.sound_started) > 2 then     -- all the sounds this mod plays are really quick
-        o:StopSound(state.sound_current)
-        state.sound_current = nil
+function StopSound(o, vars)
+    if vars.sound_current and (o.timer - vars.sound_started) > 2 then     -- all the sounds this mod plays are really quick
+        o:StopSound(vars.sound_current)
+        vars.sound_current = nil
     end
 end
 

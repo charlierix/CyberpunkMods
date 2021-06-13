@@ -1,5 +1,5 @@
-function PopulateDebug(debug, o, keys, state)
-    debug.inFlight = state.isInFlight
+function PopulateDebug(debug, o, keys, vars)
+    debug.inFlight = vars.isInFlight
 
     debug.pos = vec_str(o.pos)
     debug.vel = vec_str(o.vel)

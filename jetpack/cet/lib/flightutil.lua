@@ -1,10 +1,10 @@
-function ShouldExitFlight(o, state, isRedscript)
+function ShouldExitFlight(o, vars, isRedscript)
     -- Even if they are close to the ground, if they are actively under thrust, then they shouldn't
     -- exit flight
     --
     -- If it's flown exclusively in CET, then also need to make sure that velocity is up, or they
     -- might clip through the ground
-    if state.thrust.isDown and (state.remainBurnTime > 0.1) and (isRedscript or state.vel.z >= 0) then
+    if vars.thrust.isDown and (vars.remainBurnTime > 0.1) and (isRedscript or vars.vel.z >= 0) then
         return false
     end
 
@@ -22,7 +22,7 @@ function ShouldExitFlight(o, state, isRedscript)
 
     -- If they have been airborne, but haven't used thrust for quite a while, then exit airborne state
     -- This would be extra benefitial in case the airborne state is in error (while driving, swimming, etc)
-    if (o.timer - state.lastThrustTime) > 8 then
+    if (o.timer - vars.lastThrustTime) > 8 then
         return true
     end
 
@@ -62,7 +62,7 @@ function RecoverBurnTime(current, max, recoverRate, deltaTime)
 end
 
 -- This will blow people back if the impace speed is large enough
-function ExplosivelyLand(o, velZ, state)
+function ExplosivelyLand(o, velZ, vars)
     local maxForce = 6
 
     local force = GetScaledValue(0, maxForce, 0, 36, -velZ)
@@ -77,9 +77,9 @@ function ExplosivelyLand(o, velZ, state)
     o:RagdollNPCs_ExplodeOut(radius, force, force * 0.75)
 
     if force < 4 then
-        o:PlaySound("v_col_player_impact", state)
+        o:PlaySound("v_col_player_impact", vars)
     else
-        o:PlaySound("v_mbike_dst_crash_fall", state)
+        o:PlaySound("v_mbike_dst_crash_fall", vars)
     end
 end
 
@@ -106,29 +106,29 @@ function ClampVelocity_Drag(vel, maxSpeed)
     return vel.x / speed * -accel, vel.y / speed * -accel, vel.z / speed * -accel
 end
 
-function ExitFlight(state, debug, o)
+function ExitFlight(vars, debug, o)
     -- This gets called every frame when they are in the menu, driving, etc.  So it needs to be
     -- safe and cheap
-    if (not state) or (not state.isInFlight) then
+    if (not vars) or (not vars.isInFlight) then
         do return end
     end
 
-    state.isInFlight = false
+    vars.isInFlight = false
     o:Custom_CurrentlyFlying_Clear()
-    state.lastThrustTime = 0
-    state.startThrustTime = 0
+    vars.lastThrustTime = 0
+    vars.startThrustTime = 0
     o:SetTimeDilation(0)        -- 0 is invalid, which fully sets time to normal
 
     RemoveFlightDebug(debug)
 end
 
-function PopulateFlightDebug(state, debug, accelX, accelY, accelZ)
+function PopulateFlightDebug(vars, debug, accelX, accelY, accelZ)
     debug.accelX = Round(accelX, 1)
     debug.accelY = Round(accelY, 1)
     debug.accelZ = Round(accelZ, 1)
 
-    debug.vel2 = vec_str(state.vel)
-    debug.speed2 = Round(GetVectorLength(state.vel), 1)
+    debug.vel2 = vec_str(vars.vel)
+    debug.speed2 = Round(GetVectorLength(vars.vel), 1)
 end
 function RemoveFlightDebug(debug)
     debug.accelX = nil

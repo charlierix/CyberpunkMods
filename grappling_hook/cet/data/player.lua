@@ -5,17 +5,17 @@ local this = {}
 -- This is closely tied to the Player model
 --
 -- This is meant to be static data (that's why it's in the db folder.  Any runtime variables need to be
--- in the state array)
+-- in the vars array)
 
 Player = {}
 
-function Player:new(o, state, const, debug)
+function Player:new(o, vars, const, debug)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
     obj.o = o
-    obj.state = state
+    obj.vars = vars
     obj.const = const
     obj.debug = debug
 

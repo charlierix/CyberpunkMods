@@ -1,6 +1,6 @@
-function PossiblySafetyFire(o, state, const, debug, deltaTime)
+function PossiblySafetyFire(o, vars, const, debug, deltaTime)
     -- Only want to consider safety firing after grappling
-    if not state.isSafetyFireCandidate then
+    if not vars.isSafetyFireCandidate then
         do return end
     end
 
@@ -13,14 +13,14 @@ function PossiblySafetyFire(o, state, const, debug, deltaTime)
 
     if safetyFireHit then
         -- They're about to hit hard.  Teleport just above the ground, which sets velocity to zero
-        Transition_ToStandard(state, const, debug, o)
-        state.isSafetyFireCandidate = false
+        Transition_ToStandard(vars, const, debug, o)
+        vars.isSafetyFireCandidate = false
 
         SafetyFire(o, safetyFireHit)
 
     elseif not IsAirborne(o) then
         -- They're on the ground.  Stopping doing the safety fire check
-        state.isSafetyFireCandidate = false
+        vars.isSafetyFireCandidate = false
     end
 end
 

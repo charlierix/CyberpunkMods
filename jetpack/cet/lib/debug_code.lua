@@ -1,5 +1,5 @@
-function PopulateDebug(debug, o, keys, state)
-    debug.inFlight = state.isInFlight
+function PopulateDebug(debug, o, keys, vars)
+    debug.inFlight = vars.isInFlight
     debug.currentlyFlying = o:Custom_CurrentlyFlying_get()
 
     debug.pos = vec_str(o.pos)
@@ -18,9 +18,9 @@ function PopulateDebug(debug, o, keys, state)
     -- debug.key_rmb = keys.rmb
     -- debug.mouse_x = keys.mouse_x
 
-    -- debug.thrust_isDown = state.thrust.isDown
-    -- debug.thrust_isDashing = state.thrust.isDashing
-    -- debug.thrust_downDuration = Round(state.thrust.downDuration, 1)
+    -- debug.thrust_isDown = vars.thrust.isDown
+    -- debug.thrust_isDashing = vars.thrust.isDashing
+    -- debug.thrust_downDuration = Round(vars.thrust.downDuration, 1)
 
     debug.timer = Round(o.timer, 1)
 end

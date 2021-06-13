@@ -187,16 +187,16 @@ end
 
 -- This plays a sound, pass in the CName (to find possible strings, search adamsmasher for
 -- SoundPlayEvent or SoundStopEvent then walk the call stack)
-function GameObjectAccessor:PlaySound(soundName, state)
+function GameObjectAccessor:PlaySound(soundName, vars)
     self:EnsurePlayerLoaded()
 
     if self.player then
-        StopSound(self, state)
+        StopSound(self, vars)
 
         self.wrappers.QueueSound(self.player, soundName)
 
-        state.sound_current = soundName
-        state.sound_started = self.timer
+        vars.sound_current = soundName
+        vars.sound_started = self.timer
     end
 end
 function GameObjectAccessor:StopSound(soundName)
