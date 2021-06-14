@@ -115,6 +115,36 @@ function GameObjectAccessor:SetLocalCamPosition(localPos)
     end
 end
 
+-- This plays a sound, pass in the CName (to find possible strings, search adamsmasher for
+-- SoundPlayEvent or SoundStopEvent then walk the call stack)
+--
+-- param: vars is optional.  If passed in, it will store this sound, and logic will be used to
+-- only have one sound playing at a time.  If nil, then the caller is responsible for stopping
+-- the sound
+function GameObjectAccessor:PlaySound(soundName, vars)
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        if vars then
+            StopSound(self, vars, 0)
+        end
+
+        self.wrappers.QueueSound(self.player, soundName)
+
+        if vars then
+            vars.sound_current = soundName
+            vars.sound_started = self.timer
+        end
+    end
+end
+function GameObjectAccessor:StopSound(soundName)
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        self.wrappers.StopQueuedSound(self.player, soundName)
+    end
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function GameObjectAccessor:EnsurePlayerLoaded()

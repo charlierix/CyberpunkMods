@@ -1,4 +1,4 @@
-function GhostForward(dist, shouldExtendWhenLookingUp, o)
+function GhostForward(dist, shouldExtendWhenLookingUp, o, vars)
     o:GetCamera()
 
     local dist_up = dist
@@ -17,4 +17,12 @@ function GhostForward(dist, shouldExtendWhenLookingUp, o)
     local newPos = Vector4.new(o.pos.x + (o.lookdir_forward.x * dist), o.pos.y + (o.lookdir_forward.y * dist), o.pos.z + (o.lookdir_forward.z * dist_up), o.pos.w)       -- w is always 1
 
     o:Teleport(newPos, o.yaw)
+
+    o:PlaySound("nme_boss_smasher_melee_knee_charge", vars)
+
+    -- "nme_boss_smasher_melee_knee_charge",                -- this is really good, but a bit loud
+    -- "vfx_fullscreen_discharge_connector_deactivate",     -- too much of a click sound
+
+    -- "w_melee_cattle_prod_zap",       -- these are good, but too quiet
+    -- "w_melee_cattle_prod_zap_long",
 end

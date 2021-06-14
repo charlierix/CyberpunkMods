@@ -252,7 +252,6 @@ local keys = nil -- = Keys:new()        -- moved to init
 
 local debug = {}
 
---TODO: Change to vars
 local vars =
 {
     flightMode = const.flightModes.standard,

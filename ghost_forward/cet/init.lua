@@ -13,11 +13,14 @@ local this = {}
 
 --------------------------------------------------------------------
 
-local jumpDistance = 1.8
+local const =
+{
+    jumpDistance = 1.8,
 
-local peekTime = 1.5      -- seconds
-local peekDistance = jumpDistance * 2.5
-local shouldAnimatePeek = true
+    peekTime = 1.5,             -- seconds
+    peekDistance = 1.8 * 2.5,
+    shouldAnimatePeek = true,
+}
 
 --------------------------------------------------------------------
 
@@ -28,8 +31,16 @@ local o     -- This is a class that wraps access to Game.xxx
 
 local keys = { ghostForward=false, peekForward=false }
 
-local isPeeking = false
-local peekingStartTime = 0
+local vars =
+{
+    isPeeking = false,
+    peekingStartTime = 0,
+
+    --NOTE: These sound props are only used for sounds that should be one at a time.  There can
+    --      be other sounds that are managed elsewhere
+    --sound_current = nil,
+    sound_started = 0,
+}
 
 --------------------------------------------------------------------
 
@@ -66,6 +77,8 @@ registerForEvent("onInit", function()
     function wrappers.Teleport(teleport, player, pos, yaw) return teleport:Teleport(player, pos, EulerAngles.new(0, 0, yaw)) end
     function wrappers.GetFPPCamera(player) return player:GetFPPCameraComponent() end
     function wrappers.SetLocalCamPosition(playerCam, pos) playerCam:SetLocalPosition(pos) end
+    function wrappers.QueueSound(player, sound) player:GhostForward_QueueSound(sound) end
+    function wrappers.StopQueuedSound(player, sound) player:GhostForward_StopQueuedSound(sound) end
 
     o = GameObjectAccessor:new(wrappers)
 end)
@@ -82,7 +95,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:Tick(deltaTime)
 
-    if (not keys.ghostForward) and (not keys.peekForward) and (not isPeeking) then
+    if (not keys.ghostForward) and (not keys.peekForward) and (not vars.isPeeking) then
         do return end
     end
 
@@ -92,6 +105,8 @@ registerForEvent("onUpdate", function(deltaTime)
         do return end
     end
 
+    StopSound(o, vars, const.peekTime * 2)
+
     o:GetInWorkspot()
     if o.isInWorkspot then
         ResetKeys(keys)
@@ -100,30 +115,14 @@ registerForEvent("onUpdate", function(deltaTime)
 
     -- Ghost Forward
     if keys.ghostForward then
-        GhostForward(jumpDistance, true, o)
+        GhostForward(const.jumpDistance, true, o, vars)
     end
 
     -- Peek Forward
-    if isPeeking then
-        if o.timer - peekingStartTime < peekTime then
-            if shouldAnimatePeek then
-                local offset = peekDistance * GetPeekDistPercent(o.timer - peekingStartTime, peekTime)
-
-                o:SetLocalCamPosition(Vector4.new(0, offset, 0, 1))
-            end
-        else
-            isPeeking = false
-
-            o:SetLocalCamPosition(Vector4.new(0, 0, 0, 1))
-        end
+    if vars.isPeeking then
+        ContinuePeeking(o, vars, const)
     elseif keys.peekForward then
-        isPeeking = true
-        peekingStartTime = o.timer
-
-        if not shouldAnimatePeek then
-            -- no animation, so just set it to the max immediately
-            o:SetLocalCamPosition(Vector4.new(0, peekDistance, 0, 1))
-        end
+        StartPeeking(o, vars, const)
     end
 
     ResetKeys(keys)
@@ -141,8 +140,8 @@ end)
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
-    if isPeeking then
-        isPeeking = false
+    if vars.isPeeking then
+        vars.isPeeking = false
         o:SetLocalCamPosition(Vector4.new(0, 0, 0, 1))
     end
 
