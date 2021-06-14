@@ -104,8 +104,11 @@ function TODO()
     --      Hang Time
     --      Chain of grapples
 
-    -- AirDash:
-    --  Sound
+    -- Sound:
+    --  airdash
+	--	grapple
+	--
+	--	names containing monowire, whip, nano
 
     -- Input:
     --  Give the option to register actions to this new style hotkey, if that's what they prefer

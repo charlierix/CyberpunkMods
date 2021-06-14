@@ -157,8 +157,8 @@ registerHotkey("testSoundPrint", "Print Current", function()
 end)
 
 registerForEvent("onDraw", function()
-    ImGui.SetNextWindowPos(20, 200, ImGuiCond.Always)       -- this is under the top left combat graphic
-    ImGui.SetNextWindowSize(500, 60, ImGuiCond.Appearing)
+    ImGui.SetNextWindowPos(20, 200, ImGuiCond.FirstUseEver)
+    ImGui.SetNextWindowSize(1000, 100, ImGuiCond.Appearing)
 
     local name
     if useQueue then
@@ -168,6 +168,7 @@ registerForEvent("onDraw", function()
     end
 
     if (ImGui.Begin(name)) then
+		ImGui.SetWindowFontScale(2)
         ImGui.Spacing()
         ImGui.Text(soundsList[currentIndex])
     end
