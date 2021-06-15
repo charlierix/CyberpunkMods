@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace FilterCNames
 {
@@ -44,6 +45,43 @@ namespace FilterCNames
             }
 
             return retVal.ToArray();
+        }
+
+        /// <summary>
+        /// This is just a wrapper to the color converter (why can't they have a method off the color class with all
+        /// the others?)
+        /// </summary>
+        public static Color ColorFromHex(string hexValue)
+        {
+            string final = hexValue;
+
+            if (!final.StartsWith("#"))
+            {
+                final = "#" + final;
+            }
+
+            if (final.Length == 4)      // compressed format, no alpha
+            {
+                // #08F -> #0088FF
+                final = new string(new[] { '#', final[1], final[1], final[2], final[2], final[3], final[3] });
+            }
+            else if (final.Length == 5)     // compressed format, has alpha
+            {
+                // #8A4F -> #88AA44FF
+                final = new string(new[] { '#', final[1], final[1], final[2], final[2], final[3], final[3], final[4], final[4] });
+            }
+
+            return (Color)ColorConverter.ConvertFromString(final);
+        }
+        public static string ColorToHex(Color color, bool includeAlpha = true, bool includePound = true)
+        {
+            // I think color.ToString does the same thing, but this is explicit
+            return string.Format("{0}{1}{2}{3}{4}",
+                includePound ? "#" : "",
+                includeAlpha ? color.A.ToString("X2") : "",
+                color.R.ToString("X2"),
+                color.G.ToString("X2"),
+                color.B.ToString("X2"));
         }
 
         #region Private Methods

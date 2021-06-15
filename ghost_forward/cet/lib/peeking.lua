@@ -55,6 +55,12 @@ function this.GetPeekDistPercent_Calc(scaled)
     return 1 - math.exp(-144 * scaled * scaled)
 end
 
+this.peek_final =
+{
+    "q003_sc_02_light_movement_02",
+    "q105_sc_07_vo_scream_rev",
+}
+
 this.hum =
 {
     "amb_bl_ext_border_crossing_neon_light_07",     -- these are good, but they're still too quiet
@@ -103,6 +109,21 @@ this.other =
 
     -- "w_cyb_whip_wire_charge_intro",
     -- "w_cyb_nano_wobble",
+
+    "dev_metal_detector_alarm",
+    "dev_vending_machine_screen_glitch",
+    "dev_radio_ditraction_glitching",
+    "q113_alarm_reinforcements",
+
+    "q004_sc_04a_heartbeat_rev",
+
+    "sq012_02a_psycho_laughs",
+    "q105_sc_07_vo_scream_rev",
+
+    "q004_sc_04a_heartbeat_rev",  -- I like it, but it gets old quick
+
+    "sq012_sc_02a_alarm_rev",     -- good, but too loud
+    "q113_alarm_reinforcements",
 }
 
 -- this.breath_in = "q201_sc_07_ice_v_breath_in"        -- these take too long
@@ -115,22 +136,20 @@ function this.StartSound(o, vars)
         o:StopSound(this.currentSound)
     end
 
-    --TODO: Default to hum, with small random chance of others
-
-    this.currentSound = this.GetRandomSound(this.hum)
+    this.currentSound = this.GetRandomSound(this.peek_final)
 
     o:PlaySound(this.currentSound, vars)        --NOTE: passing vars will allow the global StopSound to kill it if this instance stop never runs (and forces only one sound to play if they teleport mid peek)
 end
-function this.ContinueSound(o, vars, percent)
-    -- if not this.currentSound then
-    --     do return end
-    -- end
+-- function this.ContinueSound(o, vars, percent)
+--     if not this.currentSound then
+--         do return end
+--     end
 
-    -- if percent > 0.5 and this.currentSound == this.breath_in then
-    --     o:StopSound(this.currentSound)
-    --     o:PlaySound(this.breath_out, vars)
-    -- end
-end
+--     if percent > 0.5 and this.currentSound == this.breath_in then
+--         o:StopSound(this.currentSound)
+--         o:PlaySound(this.breath_out, vars)
+--     end
+-- end
 function this.StopSound(o, vars)
     if this.currentSound then
         o:StopSound(this.currentSound)

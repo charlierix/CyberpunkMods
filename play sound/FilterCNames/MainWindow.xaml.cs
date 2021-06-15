@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -39,6 +41,8 @@ namespace FilterCNames
 
         private readonly string _settingsFilename;
 
+        private readonly DropShadowEffect _errorEffect;
+
         private bool _initialized = false;
 
         #endregion
@@ -50,6 +54,15 @@ namespace FilterCNames
             InitializeComponent();
 
             Background = SystemColors.ControlBrush;
+
+            _errorEffect = new DropShadowEffect()
+            {
+                Color = Util.ColorFromHex("C02020"),
+                Direction = 0,
+                ShadowDepth = 0,
+                BlurRadius = 8,
+                Opacity = .8,
+            };
 
             _settingsFilename = System.IO.Path.Combine(Environment.CurrentDirectory, "last run.json");
 
@@ -184,8 +197,31 @@ namespace FilterCNames
 
         private void RefreshResults()
         {
+            // Validate Regex
+            if(chkRegex.IsChecked.Value)
+            {
+                try
+                {
+                    Regex.IsMatch("hello", txtFilter.Text, RegexOptions.IgnoreCase);
+                }
+                catch(Exception ex)
+                {
+                    txtFilter.Effect = _errorEffect;
+                    _results.Clear();
+                    txtResults.Text = "";
+                    lblCountPrompt.Visibility = Visibility.Collapsed;
+                    lblCount.Text = ex.Message;
+                    return;
+                }
+            }
+
+            lblCountPrompt.Visibility = Visibility.Visible;
+            txtFilter.Effect = null;
+
+            // Filter
             string[] results = Util.Filter(_source, txtFilter.Text, chkRegex.IsChecked.Value);
 
+            // Sort
             IEnumerable<string> sorted = null;
 
             SortType sort = (SortType)cboSort.SelectedValue;
@@ -206,6 +242,7 @@ namespace FilterCNames
                     break;
             }
 
+            // Store results
             _results.Clear();
             _results.AddRange(sorted);
 

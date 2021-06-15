@@ -76,7 +76,7 @@
                     
                     <!-- TODO: Copy Next 1000 -->
                     
-                    <TextBlock Grid.Column="2" Text="count:" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="2" x:Name="lblCountPrompt" Text="count:" VerticalAlignment="Center"/>
                     <TextBlock Grid.Column="4" x:Name="lblCount" FontWeight="DemiBold" VerticalAlignment="Center"/>
                 </Grid>
             </Grid>
