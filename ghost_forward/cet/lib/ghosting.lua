@@ -20,7 +20,6 @@ function GhostForward(dist, shouldExtendWhenLookingUp, o, vars)
 
     o:PlaySound("nme_boss_smasher_melee_knee_charge", vars)
 
-    -- "nme_boss_smasher_melee_knee_charge",                -- this is really good, but a bit loud
     -- "vfx_fullscreen_discharge_connector_deactivate",     -- too much of a click sound
 
     -- "w_melee_cattle_prod_zap",       -- these are good, but too quiet
