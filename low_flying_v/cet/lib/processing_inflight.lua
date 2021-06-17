@@ -13,7 +13,7 @@ function Process_InFlight(o, vars, const, keys, debug, deltaTime)
 
         --NOTE: By requiring continuous holding the back key, they can safely tap back key to have nice and
         --controlled slow flight
-        if(o.timer - vars.lowSpeedTime > 0.6) then        -- this is in seconds
+        if(o.timer - vars.lowSpeedTime > 0.55) then        -- this is in seconds
             ExitFlight(vars, debug, o)
             do return end
         end

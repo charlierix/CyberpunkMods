@@ -20,13 +20,9 @@ end
 
 -- Should continue flying?
 function CheckOtherModsFor_ContinueFlight(o, modNames)
-    -- This function is called when in flight
-    -- NOTE: The other mods stop if it's empty string, but since low flying v currently doesn't ship
-    -- with redscript, it will be empty string unless they have one of my other mods
-
-    local current = o:Custom_CurrentlyFlying_get()
-
-    if current == "" or current == modNames.low_flying_v then
+    -- This function is called when in flight.  So if the property is empty string, something went wrong.
+    -- Assume that another mod attempted flight and this mod should stop
+    if o:Custom_CurrentlyFlying_get() == modNames.low_flying_v then
         return true
     else
         return false
