@@ -1,11 +1,3 @@
-function ResetKeys(keys)
-    for key, value in pairs(keys) do
-        if type(value) == "boolean" then
-            keys[key] = false
-        end
-    end
-end
-
 function KeyboardFlight(keys, lookDir, rightDir, const, startFlightTime, timer, vel)
     local x = 0
     local y = 0

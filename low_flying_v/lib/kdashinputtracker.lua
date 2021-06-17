@@ -40,22 +40,17 @@ end
 
 -- Call this each tick to see if they just initiated a kdash
 function KDashInputTracker:WasKDashPerformed(timer, velocity, debug)
-
-    --TODO: test with a legendary kerenzikov to see what speed it does
-
     local speedSqr = GetVectorLengthSqr(velocity)
-    if (speedSqr < (20 * 20)) or (speedSqr > (120 * 120)) then      -- the max speed cap helps protect against returning true when in the inventory screen (velocity goes absurdly high)
+    if (speedSqr < (20 * 20)) or (speedSqr > (120 * 120)) then      -- the max speed cap helps protect against returning true when in the inventory screen (velocity goes absurdly high) --- this check was written before menu detection.  This function now won't be called, but if they're going that fast, it's not because of kerenzikov
         --debug.kdash = "speed"
         return false
     end
 
-    -- Since this is only pushed once, there's a good chance that it will be missed
-    -- This check can be uncommented when simultaneous key press tracking is added back
-    -- local lastRMB = self.rmb:GetLastEntry()
-    -- if (not lastRMB) or ((timer - lastRMB) > 5) then
-    --     debug.kdash = "rmb"
-    --     return false
-    -- end
+    local lastRMB = self.rmb:GetLastEntry()
+    if (not lastRMB) or ((timer - lastRMB) > 5) then
+        debug.kdash = "rmb"
+        return false
+    end
 
     local shortestForward = self:GetShortestForwardInterval()
     if (not shortestForward) or (shortestForward > 0.3) then
@@ -77,7 +72,7 @@ end
 -- This looks for when they're spamming the forward button (trying to start a dash)
 function KDashInputTracker:GetShortestForwardInterval()
     local forwards = self.forward:GetLatestEntries(self.forward:GetSize())
-    
+
     local smallest = nil
 
     for i=1, #forwards-1 do

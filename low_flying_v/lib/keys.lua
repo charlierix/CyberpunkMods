@@ -5,7 +5,6 @@ function Keys:new()
     setmetatable(obj, self)
     self.__index = self
 
-    -- hardcoded keys (explicit propertes to make it easy to code against)
     obj.mouse_x = 0
 
     obj.forward = false
@@ -22,9 +21,7 @@ function Keys:new()
     obj.prev_jump = false
     obj.prev_rmb = false
 
-    -- key=ActionName value=isKeyDown
-    obj.actions = {}
-    obj.prev_actions = {}
+    obj.forceFlight = false     -- this is set to true from a hotkey, but this class will still set it back to false each tick
 
     -- This is a mapping between action name and the hardcoded properties above (the strings must match exactly)
     obj.hardcodedMapping =
@@ -40,20 +37,6 @@ function Keys:new()
     return obj
 end
 
--- These tell the class to track arbitrary action names
-function Keys:AddAction(actionName)
-    self.actions[actionName] = false
-    self.prev_actions[actionName] = false
-end
-function Keys:RemoveAction(actionName)
-    self.actions[actionName] = nil
-    self.prev_actions[actionName] = nil
-end
-function Keys:ClearActions()
-    self.actions = {}
-    self.prev_actions = {}
-end
-
 -- This gets called whenever an input action occurs (mouse movement, key press/release)
 function Keys:MapAction(action)
     local actionName = Game.NameToString(action:GetName(action))
@@ -63,8 +46,7 @@ function Keys:MapAction(action)
 
     --print("pressed: " .. tostring(pressed) .. ", released: " .. tostring(released))
 
-    self:MapAction_Fixed(action, actionName, pressed, released)
-    self:MapAction_List(actionName, pressed, released)
+    self:MapAction_HardCoded(action, actionName, pressed, released)
 end
 
 function Keys:Tick()
@@ -75,13 +57,12 @@ function Keys:Tick()
     self.prev_jump = self.jump
     self.prev_rmb = self.rmb
 
-    for key, value in pairs(self.actions) do
-        self.prev_actions[key] = value
-    end
+    self.forceFlight = false        -- this is a hotkey, so needs to be manually turned off after one tick
 end
 
------------------------------ Private Methods -----------------------------
-function Keys:MapAction_Fixed(action, actionName, pressed, released)
+----------------------------------- Private Methods -----------------------------------
+
+function Keys:MapAction_HardCoded(action, actionName, pressed, released)
     if actionName == "CameraMouseX" then
         self.mouse_x = tonumber(action:GetValue(action))
     else
@@ -99,22 +80,6 @@ function Keys:MapAction_Fixed(action, actionName, pressed, released)
             end
 
             do return end
-        end
-    end
-end
-
-function Keys:MapAction_List(actionName, pressed, released)
-    for key, _ in pairs(self.actions) do
-        if key == actionName then
-            if pressed then
-                self.actions[key] = true
-            elseif released then
-                self.actions[key] = false
-            -- else
-            --     print(actionName .. " else: " .. actionType)
-            end
-
-            do return end       -- no need to loop through the rest of the list
         end
     end
 end

@@ -5,24 +5,22 @@ function Process_InFlight(o, vars, const, keys, debug, deltaTime)
         do return end
     end
 
-    --TODO: Detect death and drop out of flight (crashes to desktop otherwise)
+    --TODO: See if another mod has taken over flight
 
-    -- If they are hitting back while being close to the ground with a reasonalbly
-    -- slow horizontal speed, then get out of flight
-    if keys.backward and (Get2DLengthSqr(vars.vel.x, vars.vel.y) < (12 * 12)) and o:IsPointVisible(o.pos, Vector4.new(o.pos.x, o.pos.y, o.pos.z - 8, 1)) then
-        ExitFlight(vars, debug)
-        do return end
-    end
+    -- Detect low speed near the ground for a few frames and drop out of flight
+    if keys.backward and GetVectorLengthSqr(vars.vel) < (12 * 12) and not o:IsPointVisible(o.pos, Vector4.new(o.pos.x, o.pos.y, o.pos.z - 8, 1)) then       -- walking speed is 5, running is about 7.5.  Flying is closer to 20+, except for brief collisions
+        if not vars.lowSpeedTime then
+            vars.lowSpeedTime = o.timer
+        end
 
-    -- Detect standing on the ground for a few frames and drop out of flight
-    if GetVectorLengthSqr(vars.vel) < (10 * 10) then       -- walking speed is 5, running is about 7.5.  Flying is closer to 20+, except for brief collisions
-        vars.lowSpeedTicks = vars.lowSpeedTicks + 1
-        if(vars.lowSpeedTicks > 12) then
+        --NOTE: By requiring continuous holding the back key, they can safely tap back key to have nice and
+        --controlled slow flight
+        if(o.timer - vars.lowSpeedTime > 0.6) then        -- this is in seconds
             ExitFlight(vars, debug)
             do return end
         end
     else
-        vars.lowSpeedTicks = 0
+        vars.lowSpeedTime = nil
     end
 
     -- Detect obstacles
@@ -43,13 +41,14 @@ function Process_InFlight(o, vars, const, keys, debug, deltaTime)
     accelZ = accelZ + keyZ
 
     -- Don't let it get too slow (this mod needs to feel a bit frenetic)
-    --local dx, dy, dz = EnforceMinSpeed(vars.vel, const.minSpeed, const.accel_underspeed, vars, keys.backward, o.timer)
     local dx, dy, dz = EnforceMinSpeed(vars, const, keys.backward, o.timer)
     accelX = accelX + dx
     accelY = accelY + dy
     accelZ = accelZ + dz
 
-    PopulateFlightDebug(vars, debug, accelX, accelY, accelZ)
+    if const.shouldShowDebugWindow then
+        PopulateFlightDebug(vars, debug, accelX, accelY, accelZ)
+    end
 
     -- Apply accelerations to the current velocity
     accelX = accelX * deltaTime

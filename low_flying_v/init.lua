@@ -15,6 +15,7 @@ require "lib/gameobj_accessor"
 require "lib/input_actionMapper"
 require "lib/input_processing"
 require "lib/kdashinputtracker"
+require "lib/keys"
 require "lib/laser_finder_manager"
 require "lib/laser_finder_worker"
 require "lib/math_basic"
@@ -30,6 +31,14 @@ require "lib/sticky_list"
 require "lib/unittests"
 require "lib/util"
 
+function TODO()
+    -- GetGravity is using 9.8 instead of 16
+
+    -- Set the isflight so that jetpack doesn't activate
+
+    -- Increase repulse strength a bit at high speed
+end
+
 local this = {}
 
 --------------------------------------------------------------------
@@ -40,14 +49,14 @@ local const =
 {
     -- Accelerations when keys are pressed
     --NOTE: Keybinds currently only report on keyup, so these have to be applied instantly (not ideal, need to change when better events are available)
-    accel_forward = 100,
-    accel_backward = 200,
+    accel_forward = 10,
+    accel_backward = 20,
     accel_side = 0,     --TODO: Figure out why this is just speeding the player up
-    accel_jump = 600,
+    accel_jump = 60,
 
     -- How much to turn when left and right keys are pressed (in degrees)
-    yaw_turn_min = 60,     -- amount at low speed
-    yaw_turn_max = 25,      -- amount at high speed
+    yaw_turn_min = 1.8,     -- amount at low speed
+    yaw_turn_max = 0.7,      -- amount at high speed
 
     -- How sensitive the mouse turn should be
     yaw_mouse_mult = 0.07,
@@ -97,7 +106,7 @@ local const =
     minSpeedOverride_duration = 18,     -- when forward or backward buttons are pressed (and the new speed is greater than this minSpeed), that new desired speed will be held.  This is the total time the override is active, but the speed will decay to default during the last portion of this time
     minSpeed_absolute = 12,             -- if slowing down below min speed, the cruise control will be more coarse and not auto speed up.  This is as slow as it will go (much slower, and you'll drop out of flight)
 
-    maxSpeed = 100,                     -- player:GetVelocity() isn't the same as the car's reported speed.  A car speed of 100 is around 26 world speed.  150 is about 33.  So a world speed of 180 would be a car speed of around 720
+    maxSpeed = 144,                     -- player:GetVelocity() isn't the same as the car's reported speed.  A car speed of 100 is around 26 world speed.  150 is about 33.  So a world speed of 180 would be a car speed of around 720
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
@@ -112,8 +121,7 @@ local shouldDraw = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
-local keys = { forward=false, backward=false, left=false, right=false, jump=false, mouse_x=0, rmb=false, testAction=false, forceFlight=false }
-local keys2 = { }
+local keys = nil -- = Keys:new()        -- moved to init
 
 local debug = { }
 
@@ -134,9 +142,9 @@ local vars =
     -- time
     quickSwivel_startTime = 0,
 
-    -- This counts the number of ticks that they are slow (when in flight mode).  This way, if
-    -- they are still for a few frames, flight will end
-    lowSpeedTicks = 0,
+    -- This remembers when they became under speed (when in flight mode).  This way, if they are
+    -- too slow for a while, flight will end
+    --lowSpeedTime = nil,
 
     -- Whenever backbutton is pressed, this gets the current time, which will be used to disable
     -- the auto speed up for a bit
@@ -153,7 +161,7 @@ local vars =
 
 registerForEvent("onInit", function()
     Observe("PlayerPuppet", "OnAction", function(action)        -- observe must be inside init and before other code
-        MapAction(action, keys, keys2)
+        keys:MapAction(action)
     end)
 
     isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
@@ -175,6 +183,7 @@ registerForEvent("onInit", function()
 
     InitializeRandom()
 
+    keys = Keys:new()
     vars.kdash = KDashInputTracker:new()
     vars.rayHitStorage = RaycastHitStorage:new()
 
@@ -228,10 +237,6 @@ registerForEvent("onUpdate", function(deltaTime)
 
     PopulateDebug(debug, o, keys, vars)
 
-    -- if keys.testAction then
-    --     keys.testAction = false
-    -- end
-
     if vars.isInFlight then
         -- In Flight
         Process_InFlight(o, vars, const, keys, debug, deltaTime)
@@ -240,39 +245,8 @@ registerForEvent("onUpdate", function(deltaTime)
         Process_Standard(o, vars, keys, debug)
     end
 
-    ResetKeys(keys)
+    keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
-
-registerHotkey("lowflyingvForward", "Forward (W)", function()
-    keys.forward = true
-end)
-
-registerHotkey("lowflyingvBackward", "Backward (S)", function()
-    keys.backward = true
-end)
-
-registerHotkey("lowflyingvLeft", "Left (A)", function()
-    keys.left = true
-end)
-
-registerHotkey("lowflyingvRight", "Right (D)", function()
-    keys.right = true
-end)
-
-registerHotkey("lowflyingvJump", "Jump (space)", function()
-    keys.jump = true
-end)
-
-registerHotkey("lowflyingvRightClick", "Right Click", function()
-    -- This is failing, so hotkeys all the way
-    --ImGui.IsMouseClicked(ImGuiMouseButton.Right, false)
-    --local mouseX, mouseY = ImGui.GetMousePos()        -- this also fails
-    keys.rmb = true
-end)
-
--- registerHotkey("lowflyingvTestAction", "Test Action", function()
---     keys.testAction = true
--- end)
 
 -- registerHotkey("lowflyingvForceFlight", "Force Flight", function()
 --     keys.forceFlight = true

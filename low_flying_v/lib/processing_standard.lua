@@ -7,22 +7,17 @@ function Process_Standard(o, vars, keys, debug)
         do return end
     end
 
-    vars.kdash:StoreInputs(o.timer, keys.forward, keys.jump, keys.rmb)
+    vars.kdash:StoreInputs(o.timer, keys.forward and not keys.prev_forward, keys.jump and not keys.prev_jump, keys.rmb and not keys.prev_rmb)
     if vars.kdash:WasKDashPerformed(o.timer, o.vel, debug) then
         EnterFlight(o, vars)
         do return end
     end
-
-
-    --TODO: Detect if they are about to die from falling and config says to save them
-
-
 end
 
 function EnterFlight(o, vars)
     vars.isInFlight = true
     vars.vel = o.vel
     vars.startFlightTime = o.timer
-    vars.lowSpeedTicks = 0
+    vars.lowSpeedTime = nil
     vars.minSpeedOverride_start = -1000
 end

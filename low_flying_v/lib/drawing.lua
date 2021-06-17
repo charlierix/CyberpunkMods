@@ -1,6 +1,6 @@
 --https://stackoverflow.com/questions/26160327/sorting-a-lua-table-by-key
 function DrawDebugWindow(debugInfo)
-    ImGui.SetNextWindowPos(20, 300, ImGuiCond.Always)
+    ImGui.SetNextWindowPos(20, 300, ImGuiCond.FirstUseEver)
     ImGui.SetNextWindowSize(300, 350, ImGuiCond.Appearing)
 
     if (ImGui.Begin("Low Flying V")) then
