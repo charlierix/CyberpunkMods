@@ -53,6 +53,31 @@ function GameObjectAccessor:GetPlayerInfo()
     end
 end
 
+-- Get/Set player.Custom_CurrentlyFlying (added in redscript.  Allows mods to talk to each other, so only one at a time will fly)
+function GameObjectAccessor:Custom_CurrentlyFlying_get()
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        return self.wrappers.Custom_CurrentlyFlying_get(self.player)
+    else
+        return false
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying_StartFlight()
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        self.wrappers.Custom_CurrentlyFlying_StartFlight(self.player)
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying_Clear()
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        self.wrappers.Custom_CurrentlyFlying_Clear(self.player)
+    end
+end
+
 -- Populates isInWorkspot
 --WARNING: If this is called while load is first kicked off, it will crash the game.  So probably want to wait until the player is moving or something
 function GameObjectAccessor:GetInWorkspot()

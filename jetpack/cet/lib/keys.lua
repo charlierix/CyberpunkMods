@@ -27,7 +27,7 @@ function Keys:new()
 end
 
 function Keys:MapAction(action)
-    local actionName = Game.NameToString(action:GetName(action))
+    local actionName = Game.NameToString(action:GetName())
     local actionType = action:GetType(action).value
     local pressed = actionType == "BUTTON_PRESSED"
     local released = actionType == "BUTTON_RELEASED"

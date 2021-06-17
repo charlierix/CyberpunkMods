@@ -34,7 +34,7 @@ end
 -- Should grapple continue flying?
 function CheckOtherModsFor_ContinueFlight(o, modNames)
     -- This function is called when in flight.  So if the property is empty string, something went wrong.
-    -- Assume that another mod attempted flight and grappling should stop
+    -- Assume that another mod attempted flight and this mod should stop
     if o:Custom_CurrentlyFlying_get() == modNames.grappling_hook then
         return true
     else

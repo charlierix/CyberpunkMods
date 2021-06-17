@@ -1,11 +1,9 @@
 -- This is called each tick when they flying (and not in the menu)
 function Process_InFlight(o, vars, const, keys, debug, deltaTime)
-    if keys.forceFlight then
-        ExitFlight(vars, debug)
+    if keys.forceFlight or not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
+        ExitFlight(vars, debug, o)
         do return end
     end
-
-    --TODO: See if another mod has taken over flight
 
     -- Detect low speed near the ground for a few frames and drop out of flight
     if keys.backward and GetVectorLengthSqr(vars.vel) < (12 * 12) and not o:IsPointVisible(o.pos, Vector4.new(o.pos.x, o.pos.y, o.pos.z - 8, 1)) then       -- walking speed is 5, running is about 7.5.  Flying is closer to 20+, except for brief collisions
@@ -16,7 +14,7 @@ function Process_InFlight(o, vars, const, keys, debug, deltaTime)
         --NOTE: By requiring continuous holding the back key, they can safely tap back key to have nice and
         --controlled slow flight
         if(o.timer - vars.lowSpeedTime > 0.6) then        -- this is in seconds
-            ExitFlight(vars, debug)
+            ExitFlight(vars, debug, o)
             do return end
         end
     else
@@ -97,7 +95,7 @@ end
 
 ---------------------------------------- Private Methods ----------------------------------------
 
-function ExitFlight(vars, debug)
+function ExitFlight(vars, debug, o)
     -- This gets called every frame when they are in the menu, driving, etc.  So it needs to be
     -- safe and cheap
     if (not vars) or (not vars.isInFlight) then
@@ -105,6 +103,7 @@ function ExitFlight(vars, debug)
     end
 
     vars.isInFlight = false
+    o:Custom_CurrentlyFlying_Clear()
     vars.kdash:Clear()
     vars.lasercats:Stop()
 

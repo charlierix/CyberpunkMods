@@ -7,6 +7,8 @@
 --https://codeberg.org/adamsmasher/cyberpunk/src/branch/master
 --https://redscript.redmodding.org/
 
+require "lib/check_other_mods"
+require "lib/customprops_wrapper"
 require "lib/debug_code"
 require "lib/drawing"
 require "lib/flightutil"
@@ -108,6 +110,8 @@ local const =
 
     maxSpeed = 144,                     -- player:GetVelocity() isn't the same as the car's reported speed.  A car speed of 100 is around 26 world speed.  150 is about 33.  So a world speed of 180 would be a car speed of around 720
 
+    modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),
+
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 
@@ -160,7 +164,7 @@ local vars =
 --------------------------------------------------------------------
 
 registerForEvent("onInit", function()
-    Observe("PlayerPuppet", "OnAction", function(action)        -- observe must be inside init and before other code
+    Observe("PlayerPuppet", "OnAction", function(_, action)        -- observe must be inside init and before other code
         keys:MapAction(action)
     end)
 
@@ -201,6 +205,9 @@ registerForEvent("onInit", function()
     function wrappers.GetSenseManager() return Game.GetSenseManager() end
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
+    function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
+    function wrappers.Custom_CurrentlyFlying_StartFlight(player) Custom_CurrentlyFlying_StartFlight(player, const.modNames) end
+    function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
 
     o = GameObjectAccessor:new(wrappers)
 
@@ -215,7 +222,7 @@ end)
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = false
     if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
-        ExitFlight(vars, debug)
+        ExitFlight(vars, debug, o)
         do return end
     end
 
@@ -223,13 +230,13 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
     if not o.player then
-        ExitFlight(vars, debug)
+        ExitFlight(vars, debug, o)
         do return end
     end
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
-        ExitFlight(vars, debug)
+        ExitFlight(vars, debug, o)
         do return end
     end
 
@@ -242,15 +249,15 @@ registerForEvent("onUpdate", function(deltaTime)
         Process_InFlight(o, vars, const, keys, debug, deltaTime)
     else
         -- Standard (walking around)
-        Process_Standard(o, vars, keys, debug)
+        Process_Standard(o, vars, keys, debug, const)
     end
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
--- registerHotkey("lowflyingvForceFlight", "Force Flight", function()
---     keys.forceFlight = true
--- end)
+registerHotkey("lowflyingvForceFlight", "Force Flight", function()
+    keys.forceFlight = true
+end)
 
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then
@@ -266,7 +273,7 @@ end)
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
-    ExitFlight(vars, debug)
+    ExitFlight(vars, debug, o)
 
     if o then
         o:Clear()

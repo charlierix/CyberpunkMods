@@ -29,7 +29,7 @@ end
 -- Should jetpack continue flying?
 function CheckOtherModsFor_ContinueFlight(o, modNames)
     -- This function is called when in flight.  So if the property is empty string, something went wrong.
-    -- Assume that another mod attempted flight and jetpack should stop
+    -- Assume that another mod attempted flight and this mod should stop
     if o:Custom_CurrentlyFlying_get() == modNames.jetpack then
         return true
     else
