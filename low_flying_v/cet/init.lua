@@ -36,8 +36,6 @@ require "lib/util"
 function TODO()
     -- GetGravity is using 9.8 instead of 16
 
-    -- Set the isflight so that jetpack doesn't activate
-
     -- Increase repulse strength a bit at high speed
 end
 

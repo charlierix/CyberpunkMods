@@ -374,7 +374,7 @@ registerForEvent("onInit", function()
 
     InitializeKeyTrackers(vars, keys, o)
 
-    xp_gain = XPGain:new(o, vars, const)
+    xp_gain = XPGain:new(o, vars, debug, const)
 
     vars.animation_lowEnergy = Animation_LowEnergy:new(o)
 end)
