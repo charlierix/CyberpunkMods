@@ -1,6 +1,8 @@
 --http://lua.sqlite.org/index.cgi/doc/tip/doc/lsqlite3.wiki#numerical_error_and_result_codes
 --https://sqlite.org/c3ref/c_abort.html
 
+local this = {}
+
 function EnsureTablesCreated()
     --https://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists
 
@@ -30,29 +32,15 @@ WHERE Key = ?
 LIMIT 1
 ]]
 
-        local err = stmt:bind_values(key)
-        if err ~= sqlite3.OK then
-            local errMsg = "GetSetting_Bool: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return nil, errMsg
-        end
-
-        local result = stmt:step()
-
-        if result == sqlite3.ROW then
-            local row = stmt:get_named_values()
-
+        local row, _ = this.Bind_Select_SingleRow(stmt, "GetSetting_Bool", key)
+        if row then
             if row.Value == 0 then
                 return false, nil
             else
                 return true, nil        -- it should be 1 for true, 0 for false.  But treat any non zero as true
             end
-
-        elseif result == sqlite3.DONE then
-            return default, nil     -- no row found, pretend it was found and return the default value
-
         else
-            return nil, "GetSetting_Bool: Unknown Error: " .. tostring(result)
+            return default, nil     -- no row found or error, pretend it was found and return the default value
         end
     end)
 
@@ -82,24 +70,8 @@ INSERT OR IGNORE INTO Settings_Int
 VALUES(?, ?)
 ]]
 
-        local err = stmt:bind_values(key, valueInt)
-        if err ~= sqlite3.OK then
-            local errMsg = "SetSetting_Bool (insert): bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return errMsg
-        end
-
-        err = stmt:step()
-        if err ~= sqlite3.DONE then
-            local errMsg = "SetSetting_Bool (insert): step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return errMsg
-        end
-
-        err = stmt:finalize()
-        if err ~= sqlite3.OK then
-            local errMsg = "SetSetting_Bool (insert): finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
+        local errMsg = this.Bind_NonSelect(stmt, "SetSetting_Bool (insert)", key, valueInt)
+        if errMsg then
             return errMsg
         end
 
@@ -111,24 +83,8 @@ SET Value = ?
 WHERE Key = ?
 ]]
 
-        err = stmt:bind_values(valueInt, key)
-        if err ~= sqlite3.OK then
-            local errMsg = "SetSetting_Bool (update): bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return errMsg
-        end
-
-        err = stmt:step()
-        if err ~= sqlite3.DONE then
-            local errMsg = "SetSetting_Bool (update): step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return errMsg
-        end
-
-        err = stmt:finalize()
-        if err ~= sqlite3.OK then
-            local errMsg = "SetSetting_Bool (update): finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
+        errMsg = this.Bind_NonSelect(stmt, "SetSetting_Bool (update)", valueInt, key)
+        if errMsg then
             return errMsg
         end
 
@@ -146,7 +102,7 @@ end
 
 function InsertPlayer(playerID, energy_tank, grappleKeys, experience)
     local sucess, pkey, errMsg = pcall(function ()
-        local time, time_readable = GetCurrentTime_AndReadable()
+        local time, time_readable = this.GetCurrentTime_AndReadable()
         local json_energy_tank = extern_json.encode(energy_tank)
 
         local stmt = db:prepare
@@ -157,24 +113,8 @@ VALUES
     (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ]]
 
-        local err = stmt:bind_values(playerID, json_energy_tank, grappleKeys[1], grappleKeys[2], grappleKeys[3], grappleKeys[4], grappleKeys[5], grappleKeys[6], experience, time, time_readable)
-        if err ~= sqlite3.OK then
-            local errMsg = "InsertPlayer: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return nil, errMsg
-        end
-
-        err = stmt:step()
-        if err ~= sqlite3.DONE then
-            local errMsg = "InsertPlayer: step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return nil, errMsg
-        end
-
-        err = stmt:finalize()
-        if err ~= sqlite3.OK then
-            local errMsg = "InsertPlayer: finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
+        local errMsg = this.Bind_NonSelect(stmt, "InsertPlayer", playerID, json_energy_tank, grappleKeys[1], grappleKeys[2], grappleKeys[3], grappleKeys[4], grappleKeys[5], grappleKeys[6], experience, time, time_readable)
+        if errMsg then
             return nil, errMsg
         end
 
@@ -195,7 +135,7 @@ end
 --    Array with column names as keys (or nil).  These are the column names as they're stored in the db, not models\player
 --    Error message if returned row is nil
 function GetLatestPlayer(playerID)
-    local sucess, grapple, errMsg = pcall(function ()
+    local sucess, player, errMsg = pcall(function ()
         local stmt = db:prepare
 [[
 SELECT
@@ -215,29 +155,11 @@ ORDER BY LastUsed DESC
 LIMIT 1
 ]]
 
-        local err = stmt:bind_values(playerID)
-        if err ~= sqlite3.OK then
-            local errMsg = "GetLatestPlayer: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return nil, errMsg
-        end
-
-        local result = stmt:step()
-
-        if result == sqlite3.ROW then
-            local row = stmt:get_named_values()
-            return row, nil
-
-        elseif result == sqlite3.DONE then
-            return nil, "GetLatestPlayer: No Rows Found"
-
-        else
-            return nil, "GetLatestPlayer: Unknown Error: " .. tostring(result)
-        end
+        return this.Bind_Select_SingleRow(stmt, "GetLatestPlayer", playerID)
     end)
 
     if sucess then
-        return grapple, errMsg
+        return player, errMsg
     else
         return nil, "GetLatestPlayer: Unknown Error"
     end
@@ -264,24 +186,8 @@ WHERE
     )
 ]]
 
-        local err = stmt:bind_values(playerID)
-        if err ~= sqlite3.OK then
-            local errMsg = "DeleteOldPlayerRows: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return errMsg
-        end
-
-        err = stmt:step()
-        if err ~= sqlite3.DONE then
-            local errMsg = "DeleteOldPlayerRows: step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return errMsg
-        end
-
-        err = stmt:finalize()
-        if err ~= sqlite3.OK then
-            local errMsg = "DeleteOldPlayerRows: finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
+        local errMsg = this.Bind_NonSelect(stmt, "DeleteOldPlayerRows", playerID)
+        if errMsg then
             return errMsg
         end
     end)
@@ -303,7 +209,7 @@ end
 --    error message if primary key is nil
 function InsertGrapple(grapple)
     local sucess, pkey, errMsg = pcall(function ()
-        local time, time_readable = GetCurrentTime_AndReadable()
+        local time, time_readable = this.GetCurrentTime_AndReadable()
         local json = extern_json.encode(grapple)
 
         local stmt = db:prepare
@@ -314,25 +220,9 @@ VALUES
     (?, ?, ?, ?, ?)
 ]]
 
-        local err = stmt:bind_values(grapple.name, grapple.experience, json, time, time_readable)
-        if err ~= sqlite3.OK then
-            local errMsg = "InsertGrapple: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return nil, errMsg
-        end
-
-        err = stmt:step()
-        if err ~= sqlite3.DONE then
-            local errMsg = "InsertGrapple: step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return nil, errMsg
-        end
-
-        err = stmt:finalize()
-        if err ~= sqlite3.OK then
-            local errMsg = "InsertGrapple: finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return nil, errMsg
+        local errMsg = this.Bind_NonSelect(stmt, "InsertGrapple", grapple.name, grapple.experience, json, time, time_readable)
+        if errMsg then
+            return errMsg
         end
 
         -- This is the primary key of the inserted row
@@ -356,24 +246,11 @@ WHERE GrappleKey = ?
 LIMIT 1
 ]]
 
-        local err = stmt:bind_values(primaryKey)
-        if err ~= sqlite3.OK then
-            local errMsg = "GetGrapple_ByKey: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return nil, errMsg
-        end
-
-        local result = stmt:step()
-
-        if result == sqlite3.ROW then
-            local row = stmt:get_named_values()
+        local row, errMsg = this.Bind_Select_SingleRow(stmt, "GetGrapple_ByKey", primaryKey)
+        if row then
             return extern_json.decode(row.JSON), nil
-
-        elseif result == sqlite3.DONE then
-            return nil, "GetGrapple_ByKey: No Rows Found"
-
         else
-            return nil, "GetGrapple_ByKey: Unknown Error: " .. tostring(result)
+            return nil, errMsg
         end
     end)
 
@@ -403,24 +280,11 @@ WHERE
 LIMIT 1
 ]]
 
-        local err = stmt:bind_values(grapple.name, grapple.experience, json)
-        if err ~= sqlite3.OK then
-            local errMsg = "GetGrappleKey_ByContent: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
-            return nil, errMsg
-        end
-
-        local result = stmt:step()
-
-        if result == sqlite3.ROW then
-            local row = stmt:get_named_values()
+        local row, errMsg = this.Bind_Select_SingleRow(stmt, "GetGrappleKey_ByContent", grapple.name, grapple.experience, json)
+        if row then
             return row.GrappleKey, nil
-
-        elseif result == sqlite3.DONE then
-            return nil, "GetGrappleKey_ByContent: No Rows Found"
-
         else
-            return nil, "GetGrappleKey_ByContent: Unknown Error: " .. tostring(result)
+            return nil, errMsg
         end
     end)
 
@@ -444,9 +308,73 @@ end
 
 -- This returns an int and a human readable string of that time (yyyy-mm-dd hh:mm:ss), that can be stored
 -- in a table
-function GetCurrentTime_AndReadable()
+function this.GetCurrentTime_AndReadable()
     local time = os.time()
     local time_readable = os.date("%Y-%m-%d %H:%M:%S", time)
 
     return time, time_readable
+end
+
+-- Select statements have the same set of checks.  This binds the values, then returns the row
+-- Params
+--  stmt    what comes back from db:prepare
+--  name    string describing the function (used for logging errors)
+--  ...     arbitrary number of params that get passed to bind values.  These need to line up with the ?'s in the sql statement
+-- Returns
+--  row or nil
+--  errMsg or nil
+function this.Bind_Select_SingleRow(stmt, name, ...)
+    local err = stmt:bind_values(...)
+    if err ~= sqlite3.OK then
+        local errMsg = name .. ": bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+        print(errMsg)
+        return nil, errMsg
+    end
+
+    local result = stmt:step()
+
+    if result == sqlite3.ROW then
+        local row = stmt:get_named_values()
+        return row, nil
+
+    elseif result == sqlite3.DONE then
+        return nil, name .. ": No Rows Found"
+
+    else
+        return nil, name .. ": Unknown Error: " .. tostring(result)
+    end
+end
+
+-- Non select statements (insert/update/delete) all have the same set of checks to do, so this just
+-- packs them into a single function call
+-- Params
+--  stmt    what comes back from db:prepare
+--  name    string describing the function (used for logging errors)
+--  ...     arbitrary number of params that get passed to bind values.  These need to line up with the ?'s in the sql statement
+-- Returns
+--  error message or nil
+function this.Bind_NonSelect(stmt, name, ...)
+    --local err = stmt:bind_values(unpack(arg))     -- this doesn't work
+    local err = stmt:bind_values(...)       -- this looks like how to do it in 5.1
+    if err ~= sqlite3.OK then
+        local errMsg = name .. ": bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+        print(errMsg)
+        return errMsg
+    end
+
+    err = stmt:step()
+    if err ~= sqlite3.DONE then
+        local errMsg = name .. ": step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+        print(errMsg)
+        return errMsg
+    end
+
+    err = stmt:finalize()
+    if err ~= sqlite3.OK then
+        local errMsg = name .. ": finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+        print(errMsg)
+        return errMsg
+    end
+
+    return nil
 end

@@ -461,12 +461,11 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 registerHotkey("GrapplingHookSavePlayer", "tester hotkey", function()
-
     for i = 1, 30 do
-        player.experience = player.experience + (1 / 12)
+        --player.experience = player.experience + (1 / 12)
+        player.grapple1.experience = math.random(12, 144)
         player:Save()
     end
-
 
     -- player.experience = player.experience + 3
     -- player:Save()

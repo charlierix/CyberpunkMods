@@ -54,7 +54,7 @@ function SavePlayer(playerEntry)
     return playerKey, errMsg
 end
 
---------------------------------------- Private Methods ---------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 -- Returns an array of primary keys or nil if there was an error
 -- Second return is error message if the array returned is nil
