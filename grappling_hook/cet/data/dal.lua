@@ -22,7 +22,13 @@ end
 function GetSetting_Bool(key, default)
     local sucess, value, errMsg = pcall(function ()
         --NOTE: There was no bit or bool datatype, so using int
-        local stmt = db:prepare[[ SELECT Value FROM Settings_Int WHERE Key = ? LIMIT 1 ]]
+        local stmt = db:prepare
+[[
+SELECT Value
+FROM Settings_Int
+WHERE Key = ?
+LIMIT 1
+]]
 
         local err = stmt:bind_values(key)
         if err ~= sqlite3.OK then
@@ -70,7 +76,11 @@ function SetSetting_Bool(key, value)
 
     local sucess, errMsg = pcall(function ()
         -- Insert
-        local stmt = db:prepare[[ INSERT OR IGNORE INTO Settings_Int VALUES(?, ?) ]]
+        local stmt = db:prepare
+[[
+INSERT OR IGNORE INTO Settings_Int
+VALUES(?, ?)
+]]
 
         local err = stmt:bind_values(key, valueInt)
         if err ~= sqlite3.OK then
@@ -94,7 +104,12 @@ function SetSetting_Bool(key, value)
         end
 
         -- Update
-        stmt = db:prepare[[ UPDATE Settings_Int SET Value = ? WHERE Key = ? ]]
+        stmt = db:prepare
+[[
+UPDATE Settings_Int
+SET Value = ?
+WHERE Key = ?
+]]
 
         err = stmt:bind_values(valueInt, key)
         if err ~= sqlite3.OK then
@@ -134,7 +149,13 @@ function InsertPlayer(playerID, energy_tank, grappleKeys, experience)
         local time, time_readable = GetCurrentTime_AndReadable()
         local json_energy_tank = extern_json.encode(energy_tank)
 
-        local stmt = db:prepare[[ INSERT INTO Player (PlayerID, JSON_EnergyTank, GrappleKey1, GrappleKey2, GrappleKey3, GrappleKey4, GrappleKey5, GrappleKey6, Experience, LastUsed, LastUsed_Readable) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ]]
+        local stmt = db:prepare
+[[
+INSERT INTO Player
+    (PlayerID, JSON_EnergyTank, GrappleKey1, GrappleKey2, GrappleKey3, GrappleKey4, GrappleKey5, GrappleKey6, Experience, LastUsed, LastUsed_Readable)
+VALUES
+    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+]]
 
         local err = stmt:bind_values(playerID, json_energy_tank, grappleKeys[1], grappleKeys[2], grappleKeys[3], grappleKeys[4], grappleKeys[5], grappleKeys[6], experience, time, time_readable)
         if err ~= sqlite3.OK then
@@ -175,7 +196,24 @@ end
 --    Error message if returned row is nil
 function GetLatestPlayer(playerID)
     local sucess, grapple, errMsg = pcall(function ()
-        local stmt = db:prepare[[ SELECT PlayerKey, PlayerID, JSON_EnergyTank, GrappleKey1, GrappleKey2, GrappleKey3, GrappleKey4, GrappleKey5, GrappleKey6, Experience FROM Player WHERE PlayerID = ? ORDER BY LastUsed DESC LIMIT 1 ]]
+        local stmt = db:prepare
+[[
+SELECT
+    PlayerKey,
+    PlayerID,
+    JSON_EnergyTank,
+    GrappleKey1,
+    GrappleKey2,
+    GrappleKey3,
+    GrappleKey4,
+    GrappleKey5,
+    GrappleKey6,
+    Experience
+FROM Player
+WHERE PlayerID = ?
+ORDER BY LastUsed DESC
+LIMIT 1
+]]
 
         local err = stmt:bind_values(playerID)
         if err ~= sqlite3.OK then
@@ -205,8 +243,54 @@ function GetLatestPlayer(playerID)
     end
 end
 
-function UpdatePlayerExperience(playerKey, experience)
-    
+-- This deletes all but the last 12 rows of player, for the playerID
+-- Returns
+--  Error Message or nil
+function DeleteOldPlayerRows(playerID)
+    local sucess, errMsg = pcall(function ()
+        -- Can't use joins, so a subquery seems to be the only option.  There shouldn't be enough rows to really matter anyway
+
+        local stmt = db:prepare
+[[
+DELETE FROM Player
+WHERE
+    PlayerID = ? AND
+    PlayerKey NOT IN
+    (
+        SELECT a.PlayerKey
+        FROM Player a
+        ORDER BY a.LastUsed DESC
+        LIMIT 12
+    )
+]]
+
+        local err = stmt:bind_values(playerID)
+        if err ~= sqlite3.OK then
+            local errMsg = "DeleteOldPlayerRows: bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        err = stmt:step()
+        if err ~= sqlite3.DONE then
+            local errMsg = "DeleteOldPlayerRows: step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+
+        err = stmt:finalize()
+        if err ~= sqlite3.OK then
+            local errMsg = "DeleteOldPlayerRows: finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
+            print(errMsg)
+            return errMsg
+        end
+    end)
+
+    if sucess then
+        return errMsg
+    else
+        return "DeleteOldPlayerRows: Unknown Error"
+    end
 end
 
 --------------------------------------- Grapple ---------------------------------------
@@ -222,7 +306,13 @@ function InsertGrapple(grapple)
         local time, time_readable = GetCurrentTime_AndReadable()
         local json = extern_json.encode(grapple)
 
-        local stmt = db:prepare[[ INSERT INTO Grapple (Name, Experience, JSON, LastUsed, LastUsed_Readable) VALUES (?, ?, ?, ?, ?) ]]
+        local stmt = db:prepare
+[[
+INSERT INTO Grapple
+    (Name, Experience, JSON, LastUsed, LastUsed_Readable)
+VALUES
+    (?, ?, ?, ?, ?)
+]]
 
         local err = stmt:bind_values(grapple.name, grapple.experience, json, time, time_readable)
         if err ~= sqlite3.OK then
@@ -258,7 +348,13 @@ end
 
 function GetGrapple_ByKey(primaryKey)
     local sucess, grapple, errMsg = pcall(function ()
-        local stmt = db:prepare[[ SELECT JSON FROM Grapple WHERE GrappleKey = ? LIMIT 1 ]]
+        local stmt = db:prepare
+[[
+SELECT JSON
+FROM Grapple
+WHERE GrappleKey = ?
+LIMIT 1
+]]
 
         local err = stmt:bind_values(primaryKey)
         if err ~= sqlite3.OK then
@@ -296,7 +392,16 @@ function GetGrappleKey_ByContent(grapple)
 
         --NOTE: This could just compare json, since that contains name and experience.  But doing it this way
         --exactly mirrors the insert method (just in case there are bugs)
-        local stmt = db:prepare[[ SELECT GrappleKey FROM Grapple WHERE Name = ? AND Experience = ? AND JSON = ? LIMIT 1 ]]
+        local stmt = db:prepare
+[[
+SELECT GrappleKey
+FROM Grapple
+WHERE
+    Name = ? AND
+    Experience = ? AND
+    JSON = ?
+LIMIT 1
+]]
 
         local err = stmt:bind_values(grapple.name, grapple.experience, json)
         if err ~= sqlite3.OK then

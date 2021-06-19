@@ -120,8 +120,9 @@ function TODO()
     --     end
     -- end)
 
-    -- DB:
-    --  Remove old rows
+    -- Grapple Straight:
+    --  Have an option for the anchor to be higher than the hit point
+    --  This will help get over ledges when the grapple distance isn't enough to get fast enough
 
     -- All:
     --  Fall damage should be a percent, not a bool
@@ -460,8 +461,15 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 registerHotkey("GrapplingHookSavePlayer", "tester hotkey", function()
-    player.experience = player.experience + 3
-    player:Save()
+
+    for i = 1, 30 do
+        player.experience = player.experience + (1 / 12)
+        player:Save()
+    end
+
+
+    -- player.experience = player.experience + 3
+    -- player:Save()
 end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()

@@ -1,6 +1,6 @@
 local pool_max = 144 * 3
 local pool_refill_rate = pool_max / (18 * 60)   -- refill in 18 minutes
-local minPoolRequestPercent = 0.03              -- even when the pool is empty, they can still get a tiny amount of xp from performing actions
+local minPoolRequestPercent = 1 / 12            -- even when the pool is empty, they can still get a tiny amount of xp from performing actions
 
 local gain_straight_start = 12
 --local gain_straight_continuous = 0.3
@@ -151,7 +151,7 @@ function XPGain:AddExperience(deltaTime)
 end
 
 function XPGain:ShouldSave(deltaTime)
-    if self.elapsed_any and self.o.timer - self.elapsed_any >= 4 * 60 then
+    if self.elapsed_any and self.o.timer - self.elapsed_any >= 6 * 60 then
         -- There has been a small amount of xp pending for a few minutes.  Autosave before it's lost
         return true
     end

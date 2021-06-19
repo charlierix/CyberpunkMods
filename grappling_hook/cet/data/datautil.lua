@@ -38,12 +38,20 @@ end
 --    Primary Key of inserted row
 --    Error Message if primkey came back nil, or nil if primkey is populated
 function SavePlayer(playerEntry)
-    local grappleKeys, errMsg = this.SaveGrapples(playerEntry)
+    local grappleKeys, errMsg, grapplesChanged = this.SaveGrapples(playerEntry)
     if not grappleKeys then
         return nil, errMsg
     end
 
-    return InsertPlayer(playerEntry.playerID, playerEntry.energy_tank, grappleKeys, playerEntry.experience)
+    local playerKey, errMsg InsertPlayer(playerEntry.playerID, playerEntry.energy_tank, grappleKeys, playerEntry.experience)
+
+    if math.random(72) == 1 then
+        DeleteOldPlayerRows(playerEntry.playerID)
+    elseif grapplesChanged and math.random(72) == 1 then
+        this.ReduceGrappleRows()
+    end
+
+    return playerKey, errMsg
 end
 
 --------------------------------------- Private Methods ---------------------------------------
@@ -52,6 +60,7 @@ end
 -- Second return is error message if the array returned is nil
 function this.SaveGrapples(playerEntry)
     local pkeys = {}
+    local hadChange = false
 
     for i=1, 6 do
         local key = "grapple" .. tostring(i)
@@ -70,13 +79,15 @@ function this.SaveGrapples(playerEntry)
                 else
                     return nil, key .. ": " .. errMsg
                 end
+
+                hadChange = true
             end
         else
             pkeys[i] = nil      -- not sure if this is necessary
         end
     end
 
-    return pkeys, nil
+    return pkeys, nil, hadChange
 end
 -- Returns an array of grapple entries based on the primary keys in the player row
 function this.GetGrapples(playerRow)
@@ -99,4 +110,8 @@ function this.GetGrapples(playerRow)
     end
 
     return grapples, nil
+end
+
+function this.ReduceGrappleRows()
+    
 end
