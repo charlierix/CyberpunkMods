@@ -11,7 +11,7 @@ local gain_achievement_straight_quad = 6        -- 4 grapples in a row
 local gain_achievement_straight_cheatdeath = 18 -- grapple when vel.z < -40
 local gain_achievement_straight_triple180 = 288 -- 3 180s in a single grapple
 
-local final_percent = 1 / 24                    -- the pool and gains are stored as integers to be easy to think about.  This converts from those units into what the xp will actually be incremented by
+local final_percent = 1 / 12                    -- the pool and gains are stored as integers to be easy to think about.  This converts from those units into what the xp will actually be incremented by
 
 XPGain = {}
 
