@@ -22,7 +22,8 @@ function DefineWindow_Main(vars_ui, const)
 
     this.Define_GrappleSlots(main, const)
 
-    main.experience = Define_Experience(const)
+    main.experience = Define_Experience(const, nil, 15)
+    main.xp_progress = this.Define_XPProgress(const)
 
     main.okcancel = Define_OkCancelButtons(true, vars_ui, const)
 end
@@ -45,6 +46,7 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
     this.Refresh_GrappleSlot(main.grapple6, player.grapple6)
 
     this.Refresh_Experience(main.experience, player)
+    this.Refresh_XPProgress(main.xp_progress, player)
 
     -------------------------------- Show ui elements --------------------------------
 
@@ -85,6 +87,7 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
     end
 
     Draw_OrderedList(main.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
+    Draw_ProgressBarSlim(main.xp_progress, vars_ui.style.progressbar_slim, vars_ui.style.colors, window.width, window.height, const)
 
     local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
 
@@ -94,6 +97,59 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 --NOTE: Define functions get called during init.  Refresh functions get called each frame that the config is visible
+
+function this.Define_ConsoleWarning(const)
+    -- Label
+    return
+    {
+        text = "NOTE: buttons won't respond unless the console window is also open",
+
+        position =
+        {
+            pos_x = 0,
+            pos_y = 24,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "info",
+    }
+end
+
+function this.Define_ShouldAutoShow(const)
+    -- CheckBox
+    return
+    {
+        invisible_name = "Main_ShouldAutoShow",
+
+        text = "Auto show config when opening console",
+
+        isEnabled = true,
+
+        position =
+        {
+            pos_x = 0,
+            pos_y = 42,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.top,
+        },
+
+        foreground_override = "info",
+    }
+end
+function this.Refresh_ShouldAutoShow(def, vars_ui)
+    --NOTE: TransitionWindows_Main sets this to nil
+    if def.isChecked == nil then
+        def.isChecked = vars_ui.autoshow_withconsole
+    end
+end
+function this.Update_ShouldAutoShow(def, vars_ui, const)
+    -- In memory copy of the bool
+    vars_ui.autoshow_withconsole = def.isChecked
+
+    -- DB copy of the bool
+    SetSetting_Bool(const.settings.AutoShowConfig_WithConsole, def.isChecked)
+end
 
 function this.Define_EnergyTank(const)
     -- SummaryButton
@@ -174,55 +230,25 @@ function this.Refresh_Experience(def, player)
     def.content.available.value = tostring(math.floor(player.experience))
 end
 
-function this.Define_ConsoleWarning(const)
-    -- Label
+function this.Define_XPProgress(const)
+    -- ProgressBar_Slim
     return
     {
-        text = "NOTE: buttons won't respond unless the console window is also open",
+        width = 155,
 
         position =
         {
-            pos_x = 0,
-            pos_y = 24,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.top,
+            pos_x = 36,
+            pos_y = 30,
+            horizontal = const.alignment_horizontal.left,
+            vertical = const.alignment_vertical.bottom,
         },
 
-        color = "info",
+        border_color = "xp_progress_border",
+        background_color = "xp_progress_back",
+        foreground_color = "xp_progress_fore",
     }
 end
-
-function this.Define_ShouldAutoShow(const)
-    -- CheckBox
-    return
-    {
-        invisible_name = "Main_ShouldAutoShow",
-
-        text = "Auto show config when opening console",
-
-        isEnabled = true,
-
-        position =
-        {
-            pos_x = 0,
-            pos_y = 42,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.top,
-        },
-
-        foreground_override = "info",
-    }
-end
-function this.Refresh_ShouldAutoShow(def, vars_ui)
-    --NOTE: TransitionWindows_Main sets this to nil
-    if def.isChecked == nil then
-        def.isChecked = vars_ui.autoshow_withconsole
-    end
-end
-function this.Update_ShouldAutoShow(def, vars_ui, const)
-    -- In memory copy of the bool
-    vars_ui.autoshow_withconsole = def.isChecked
-
-    -- DB copy of the bool
-    SetSetting_Bool(const.settings.AutoShowConfig_WithConsole, def.isChecked)
+function this.Refresh_XPProgress(def, player)
+    def.percent = player.experience - math.floor(player.experience)
 end

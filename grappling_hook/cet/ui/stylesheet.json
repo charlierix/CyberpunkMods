@@ -136,6 +136,14 @@
         "disabled_border_color": "40666666"
     },
 
+    "progressbar_slim":
+    {
+        "border_cornerRadius": 2,
+        "border_thickness": 2,
+
+        "height": 9
+    },
+
     "helpButton":
     {
         "radius": 7,
@@ -198,6 +206,9 @@
         "experience_prompt": { "the_color": "F5EA65" },
         "experience_value": { "the_color": "E6BB50" },
         "edit_prompt": { "the_color": "BBB" },
-        "edit_value": { "the_color": "A8A8FF" }
+        "edit_value": { "the_color": "A8A8FF" },
+        "xp_progress_border": { "the_color": "20EDD25A" },
+        "xp_progress_back": { "the_color": "504A4531" },
+        "xp_progress_fore": { "the_color": "8C7F42" }
     }
 }

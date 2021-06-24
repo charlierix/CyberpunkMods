@@ -56,7 +56,11 @@ function Define_OkCancelButtons(isMainPage, vars_ui, const)
     }
 end
 
-function Define_Experience(const, used_prompt)
+function Define_Experience(const, used_prompt, y_offset)
+    if not y_offset then
+        y_offset = 0
+    end
+
     -- OrderedList
     local retVal =
     {
@@ -68,7 +72,7 @@ function Define_Experience(const, used_prompt)
         position =
         {
             pos_x = 36,
-            pos_y = 36,
+            pos_y = 36 + y_offset,
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.bottom,
         },

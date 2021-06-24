@@ -61,6 +61,7 @@ require "ui_controls/label_clickable"
 require "ui_controls/mindot_graphic"
 require "ui_controls/okcancel_buttons"
 require "ui_controls/orderedlist"
+require "ui_controls/progressbar_slim.lua"
 require "ui_controls/slider"
 require "ui_controls/stickfigure"
 require "ui_controls/summary_button"
@@ -93,16 +94,6 @@ function TODO()
     -- I do similar thing in that demo:
     -- https://github.com/WolvenKit/cet-examples/blob/main/ai-components/init.lua#L130
     -- TargetingHelper.Dispose() destroys pins
-
-    -- XP:
-    --  Gain experience when grappling
-    --  Limit gain per time so people don't sit there and exploit instead of just playing
-    --  Extra gain if low xp and high level
-    --  See if achievements can be observed:
-    --      Time spent
-    --      High G
-    --      Hang Time
-    --      Chain of grapples
 
     -- Sound:
     --  airdash
@@ -192,6 +183,9 @@ function TODO()
     --  tostring_doz()
     --  Round_doz()     -- this is needed, because rounding fractions to a certain number of digits would have to be converted, then truncated
     --  also, if there's ever a textbox, that would need to be parsed as well
+
+    -- ViewModels:
+    --  The properties that change should have set instead of init
 
 end
 

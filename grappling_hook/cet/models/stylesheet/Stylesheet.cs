@@ -66,6 +66,8 @@ namespace grapple_ui.models.stylesheet
 
         public UpDownButtons updownButtons { get; init; }
 
+        public ProgressBar_Slim progressbar_slim { get; init; }
+
         public HelpButton helpButton { get; init; }
 
         public Tooltip tooltip { get; init; }
