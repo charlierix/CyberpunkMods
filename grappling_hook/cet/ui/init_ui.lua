@@ -14,6 +14,7 @@ function InitializeUI(vars_ui, const)
     vars_ui.mainWindow = this.Define_MainWindow(vars_ui.screen)      -- going with a SPA, so it's probably going to be the only window (maybe also a dialog box at some point?)
 
     DefineWindow_Main(vars_ui, const)      -- this must come after vars_ui.mainWindow is defined
+    DefineWindow_InputBindings(vars_ui, const)
     DefineWindow_EnergyTank(vars_ui, const)
     DefineWindow_Grapple_Choose(vars_ui, const)
     DefineWindow_Grapple_Straight(vars_ui, const)
@@ -29,6 +30,7 @@ function InitializeUI(vars_ui, const)
 
     -- Post Processing
     this.SortContentLists(vars_ui.main)
+    this.SortContentLists(vars_ui.input_bindings)
     this.SortContentLists(vars_ui.energy_tank)
     this.SortContentLists(vars_ui.grapple_choose)
     this.SortContentLists(vars_ui.grapple_straight)
@@ -43,7 +45,7 @@ function InitializeUI(vars_ui, const)
     this.SortContentLists(vars_ui.gst8_velaway)
 end
 
-------------------------------------------- Private Methods -------------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 -- This looks for controls that have a content property and creates a sorted content_keys index
 function this.SortContentLists(window)

@@ -16,6 +16,8 @@ function DefineWindow_Main(vars_ui, const)
     main.consoleWarning = this.Define_ConsoleWarning(const)
     main.should_autoshow = this.Define_ShouldAutoShow(const)
 
+    main.input_bindings = this.Define_InputBindings(const)
+
     main.energyTank = this.Define_EnergyTank(const)
 
     --TODO: Remove Buttons
@@ -56,6 +58,10 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
 
     if Draw_CheckBox(main.should_autoshow, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
         this.Update_ShouldAutoShow(main.should_autoshow, vars_ui, const)
+    end
+
+    if Draw_SummaryButton(main.input_bindings, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+        TransitionWindows_InputBindings(vars_ui, const)
     end
 
     if Draw_SummaryButton(main.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
@@ -149,6 +155,24 @@ function this.Update_ShouldAutoShow(def, vars_ui, const)
 
     -- DB copy of the bool
     SetSetting_Bool(const.settings.AutoShowConfig_WithConsole, def.isChecked)
+end
+
+function this.Define_InputBindings(const)
+    -- SummaryButton
+    return
+    {
+        header_prompt = "Input Bindings",
+
+        position =
+        {
+            pos_x = 36,
+            pos_y = 60,
+            horizontal = const.alignment_horizontal.left,
+            vertical = const.alignment_vertical.top,
+        },
+
+        invisible_name = "Main_InputBindings",
+    }
 end
 
 function this.Define_EnergyTank(const)

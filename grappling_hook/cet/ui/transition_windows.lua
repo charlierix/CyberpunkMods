@@ -3,6 +3,14 @@ function TransitionWindows_Main(vars_ui, const)
 
     vars_ui.main.changes:Clear()
     vars_ui.main.should_autoshow.isChecked = nil
+
+    vars_ui.keys:StopWatching()
+end
+
+function TransitionWindows_InputBindings(vars_ui, const)
+    vars_ui.currentWindow = const.windows.input_bindings
+
+    vars_ui.keys:StartWatching()
 end
 
 function TransitionWindows_Energy_Tank(vars_ui, const)

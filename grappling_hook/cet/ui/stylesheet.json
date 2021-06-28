@@ -136,6 +136,25 @@
         "disabled_border_color": "40666666"
     },
 
+    "multiitem_displaylist":
+    {
+        "padding": 12,
+
+        "border_cornerRadius": 4,
+        "border_thickness": 1,
+
+        "border_color": "40686868",
+
+        "separator_gap_vert": 18,
+        "separator_gap_horz": 12,
+        "separator_thickness": 1,
+
+        "separator_color": "589C8F76",
+
+        "foreground_color": "DBCAA7",
+        "background_color": "18787668"
+    },
+
     "progressbar_slim":
     {
         "border_cornerRadius": 2,

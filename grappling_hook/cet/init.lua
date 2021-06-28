@@ -46,6 +46,7 @@ require "ui/drawing"
 require "ui/init_ui"
 require "ui/inputtracker_startstop"
 require "ui/keys"
+require "ui/keys2"
 require "ui/mappinutil"
 require "ui/reporting"
 require "ui/transition_windows"
@@ -59,6 +60,7 @@ require "ui_controls/help_button"
 require "ui_controls/label"
 require "ui_controls/label_clickable"
 require "ui_controls/mindot_graphic"
+require "ui_controls/multiitem_displaylist"
 require "ui_controls/okcancel_buttons"
 require "ui_controls/orderedlist"
 require "ui_controls/progressbar_slim.lua"
@@ -80,6 +82,7 @@ require "ui_windows/grapple_straight_description"
 require "ui_windows/grapple_straight_distances"
 require "ui_windows/grapple_straight_stopearly"
 require "ui_windows/grapple_straight_velaway"
+require "ui_windows/input_bindings"
 require "ui_windows/main"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
@@ -211,6 +214,7 @@ local const =
     windows = CreateEnum(
     {
         "main",
+            "input_bindings",
             "energy_tank",
             "grapple_choose",
             "grapple_straight",
@@ -244,6 +248,7 @@ local isConfigRepress = false
 local o     -- This is a class that wraps access to Game.xxx
 
 local keys = nil -- = Keys:new()        -- moved to init
+local keys2 = nil
 
 local debug = {}
 
@@ -299,6 +304,8 @@ local vars_ui =
     --main
     --energy_tank
     --grapple_straight
+
+    --keys          -- gets added so it doesn't have to be included in a ton of function params (only used by the input bindings and transition to/from)
 }
 
 local xp_gain = nil     -- this gets called each tick, watching the player's activity.  It will slowly accumulate grapple experience, periodically add xp to player, save to db
@@ -310,6 +317,7 @@ local player = nil      -- This holds current grapple settings, loaded from DB. 
 registerForEvent("onInit", function()
     Observe("PlayerPuppet", "OnAction", function(_, action)        -- observe must be inside init and before other code
         keys:MapAction(action)
+        keys2:MapAction(action)
     end)
 
     isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
@@ -332,8 +340,6 @@ registerForEvent("onInit", function()
     InitializeRandom()
     EnsureTablesCreated()
     InitializeUI(vars_ui, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
-
-    keys = Keys:new()
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -366,6 +372,11 @@ registerForEvent("onInit", function()
     function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
 
     o = GameObjectAccessor:new(wrappers)
+
+    keys = Keys:new(o)
+    keys2 = Keys2:new()
+
+    vars_ui.keys = keys
 
     InitializeKeyTrackers(vars, keys, o)
 
@@ -415,6 +426,14 @@ registerForEvent("onUpdate", function(deltaTime)
 
     if const.shouldShowDebugWindow then
         PopulateDebug(debug, o, keys, vars)
+
+        for key, value in pairs(keys2.current) do
+            debug["_curr_" .. key] = tostring(value)
+        end
+
+        -- for key, value in pairs(keys2.prev) do
+        --     debug["_prev_" .. key] = tostring(value)
+        -- end
     end
 
     PossiblySafetyFire(o, vars, const, debug, deltaTime)
@@ -452,9 +471,26 @@ registerForEvent("onUpdate", function(deltaTime)
     debug.xp = Round(xp_gain.experience, 4)
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
+    keys2:Tick()
 end)
 
 registerHotkey("GrapplingHookSavePlayer", "tester hotkey", function()
+
+
+
+    for key, _ in pairs(debug) do
+        if string.sub(key, 1, 1) == "_" then
+            --print("removing key: " .. key)
+            debug[key] = nil
+        end
+    end
+
+    for key, _ in pairs(keys2.current) do
+        keys2.current[key] = nil
+    end
+
+
+
 
 
     --DeleteOldPlayerRows(player.playerID)
@@ -498,6 +534,17 @@ registerForEvent("onOverlayClose", function()
         isConfigRepress = true
     end
 end)
+
+
+-- This has real trouble with binding to the asdw keys (didn't try jump)
+-- Also, when bound to something like w+d, the 2nd binding to a+d causes the w+d to unregister
+registerInput("GrapplingHook_Key1", "Key1", function(isDown)
+end)
+
+registerInput("GrapplingHook_Key2", "Key2", function(isDown)
+end)
+
+
 
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then

@@ -95,6 +95,9 @@ function DrawConfig(isCloseRequested, vars_ui, player, const)
         if vars_ui.currentWindow == const.windows.main then
             continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
 
+        elseif vars_ui.currentWindow == const.windows.input_bindings then
+            continueShowing = DrawWindow_InputBindings(isCloseRequested, vars_ui, player, window, const)
+
         elseif vars_ui.currentWindow == const.windows.energy_tank then
             continueShowing = DrawWindow_EnergyTank(isCloseRequested, vars_ui, player, window, const)
 

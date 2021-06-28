@@ -20,16 +20,18 @@ function Draw_OrderedList(def, style_colors, parent_width, parent_height, const,
         ImGui.SetCursorPos(left, top)
         ImGui.BeginGroup()      -- new lines stay at the same x value instead of going to zero
 
+        ImGui.PushStyleColor(ImGuiCol.Text, color.the_color_abgr)
+
         for _, key in ipairs(def.content_keys) do       -- content_keys is sorted
             local text = def.content[key].prompt
             if not text then
                 text = ""
             end
 
-            ImGui.PushStyleColor(ImGuiCol.Text, color.the_color_abgr)
             ImGui.Text(text)
-            ImGui.PopStyleColor()
         end
+
+        ImGui.PopStyleColor()
 
         ImGui.EndGroup()
     end
@@ -41,16 +43,18 @@ function Draw_OrderedList(def, style_colors, parent_width, parent_height, const,
         ImGui.SetCursorPos(left + width_p + width_g, top)
         ImGui.BeginGroup()
 
+        ImGui.PushStyleColor(ImGuiCol.Text, color.the_color_abgr)
+
         for _, key in ipairs(def.content_keys) do
             local text = def.content[key].value
             if not text then
                 text = ""
             end
 
-            ImGui.PushStyleColor(ImGuiCol.Text, color.the_color_abgr)
             ImGui.Text(text)
-            ImGui.PopStyleColor()
         end
+
+        ImGui.PopStyleColor()
 
         ImGui.EndGroup()
     end

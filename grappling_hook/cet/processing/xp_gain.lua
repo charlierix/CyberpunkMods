@@ -1,5 +1,5 @@
 local pool_max = 144 * 3
-local pool_refill_rate = pool_max / (18 * 60)   -- refill in 18 minutes
+local pool_refill_rate = pool_max / (9 * 60)   -- refill in 9 minutes
 local minPoolRequestPercent = 1 / 12            -- even when the pool is empty, they can still get a tiny amount of xp from performing actions
 
 local gain_straight_start = 12
@@ -11,7 +11,7 @@ local gain_achievement_straight_quad = 6        -- 4 grapples in a row
 local gain_achievement_straight_cheatdeath = 18 -- grapple when vel.z < -40
 local gain_achievement_straight_triple180 = 288 -- 3 180s in a single grapple
 
-local final_percent = 1 / 12                    -- the pool and gains are stored as integers to be easy to think about.  This converts from those units into what the xp will actually be incremented by
+local final_percent = 1 / 9                    -- the pool and gains are stored as integers to be easy to think about.  This converts from those units into what the xp will actually be incremented by
 
 XPGain = {}
 
@@ -151,7 +151,7 @@ function XPGain:AddExperience(deltaTime)
 end
 
 function XPGain:ShouldSave(deltaTime)
-    if self.elapsed_any and self.o.timer - self.elapsed_any >= 6 * 60 then
+    if self.elapsed_any and self.o.timer - self.elapsed_any >= 4 * 60 then
         -- There has been a small amount of xp pending for a few minutes.  Autosave before it's lost
         return true
     end

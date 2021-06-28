@@ -1,9 +1,13 @@
 Keys = {}
 
-function Keys:new()
+local this = {}
+
+function Keys:new(o)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
+
+    obj.o = o
 
     -- hardcoded keys (explicit propertes to make it easy to code against)
     obj.mouse_x = 0
@@ -37,6 +41,11 @@ function Keys:new()
         CameraAim = "rmb",      -- "CameraAim" "RangedADS" "MeleeBlock"
     }
 
+    -- This is a list that holds action names that are currently in a pressed state.  It is only managed between
+    -- calls to StartWatching and StopWatching (used by the input bindings window)
+    obj.watching = {}
+    obj.isWatching = false
+
     return obj
 end
 
@@ -65,6 +74,10 @@ function Keys:MapAction(action)
 
     self:MapAction_Fixed(action, actionName, pressed, released)
     self:MapAction_List(actionName, pressed, released)
+
+    if self.isWatching then
+        self:MapAction_Watching(actionName, pressed, released)
+    end
 end
 
 function Keys:Tick()
@@ -80,7 +93,17 @@ function Keys:Tick()
     end
 end
 
------------------------------ Private Methods -----------------------------
+function Keys:StartWatching()
+    self.isWatching = true
+    self:ClearWatching()
+end
+function Keys:StopWatching()
+    self.isWatching = false
+    self:ClearWatching()
+end
+
+----------------------------------- Private Methods -----------------------------------
+
 function Keys:MapAction_Fixed(action, actionName, pressed, released)
     if actionName == "CameraMouseX" then
         self.mouse_x = tonumber(action:GetValue(action))
@@ -117,4 +140,69 @@ function Keys:MapAction_List(actionName, pressed, released)
             do return end       -- no need to loop through the rest of the list
         end
     end
+end
+
+function Keys:MapAction_Watching(actionName, pressed, released)
+    if pressed then
+        if not this.ShouldExclude(actionName) and not self.watching[actionName] then
+            self.watching[actionName] = self.o.timer
+        end
+
+    elseif released then
+        if not this.ShouldExclude(actionName) then
+            self.watching[actionName] = nil
+        end
+    end
+end
+
+function Keys:ClearWatching()
+    for key, _ in pairs(self.watching) do
+        self.watching[key] = nil
+    end
+end
+
+local exclude_whole =
+{
+    "ChoiceScrollUp",       -- Q
+    "ChoiceScrollDown",     -- E
+    "ChoiceApply",          -- F
+
+    "MeleeAttack",          -- left click
+    "RangedAttack",
+    "click",
+    "mouse_left",
+}
+local exclude_startswith =
+{
+    "world_map_",           -- left click, right click (maybe more)
+}
+
+function this.ShouldExclude(actionName)
+    for i = 1, #exclude_whole do
+        if actionName == exclude_whole[i] then
+            return true
+        end
+    end
+
+    for i = 1, #exclude_startswith do
+        if this.StartsWith(actionName, exclude_startswith[i]) then
+            return true
+        end
+    end
+
+    -- for i = 1, #exclude_endswith do
+    --     if this.EndsWith(actionName, exclude_endswith[i]) then
+    --         return true
+    --     end
+    -- end
+
+    return false
+end
+
+function this.StartsWith(text, prefix)
+    --return text:find(prefix, 1, true) == 1        -- don't use find, it's a regex variant, and would require escaping
+    return text:sub(1, #prefix) == prefix
+end
+function this.EndsWith(text, suffix)
+    return text:sub(-#suffix) == suffix
 end
