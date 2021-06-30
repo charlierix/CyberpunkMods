@@ -53,17 +53,27 @@ function StopSound(o, vars)
     end
 end
 
-function InitializeKeyTrackers(vars, keys, o)
+function InitializeKeyTrackers(vars, keys, o, const)
+    vars.startStopTracker = InputTracker_StartStop:new(o, keys, const)
+
     --TODO: Get these mappings from config so people can map custom bindings (for controllers)
     --
     -- These strings have to exactly match what comes from Observe('PlayerPuppet', 'OnAction'
-    local grapple1 = { "Left", "Right", "Forward" }
-    local grapple2 = { "Left", "Right", "Back" }
-    --local grapple3 = double tap left+right
-    --local stop = { "Left", "Right" }      -- When they are tarzan swinging and try to aquire a new grapple point, but don't have enough energy, this was making the current grapple cancel.  Changing to jump so there's no accidental cancellation
-    local stop = { "Jump" }
+    vars.startStopTracker:UpdateBinding(const.bindings.grapple1, { "Left", "Right", "Forward" })    -- A+D+W
+    vars.startStopTracker:UpdateBinding(const.bindings.grapple2, { "Left", "Right", "Back" })       -- A+D+S
 
-    vars.startStopTracker = InputTracker_StartStop:new(o, keys, grapple1, grapple2, stop)
+    vars.startStopTracker:UpdateBinding(const.bindings.grapple3, { "QuickMelee", "Forward" })       -- Q+W
+    vars.startStopTracker:UpdateBinding(const.bindings.grapple4, { "QuickMelee", "Right" })         -- Q+D
+    vars.startStopTracker:UpdateBinding(const.bindings.grapple5, { "QuickMelee", "Back" })          -- Q+S
+    vars.startStopTracker:UpdateBinding(const.bindings.grapple6, { "QuickMelee", "Forward", "Right" })  -- Q+W+D
+
+    vars.startStopTracker:UpdateBinding(const.bindings.stop, { "Jump" })        -- { "Left", "Right" } -- When they are tarzan swinging and try to aquire a new grapple point, but don't have enough energy, this was making the current grapple cancel.  Changing to jump so there's no accidental cancellation
+
+    -- print("keynames (deduped list):")
+    -- ReportTable(vars.startStopTracker.keynames)
+    -- print("")
+    -- print("call_order (subsets last):")
+    -- ReportTable(vars.startStopTracker.call_order)
 
     keys:ClearActions()
 
@@ -79,6 +89,7 @@ end
 -- local days = CreateEnum({"aday", "bday", "friday"})
 -- local specificDay = days.bday
 -- if specificDay == days.bday then print("yay") end
+-- TODO: take in ... instead of an explicit array
 function CreateEnum(names)
     local enum = {}
 

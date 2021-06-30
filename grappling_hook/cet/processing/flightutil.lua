@@ -1,3 +1,5 @@
+local this = {}
+
 function RecoverEnergy(current, max, recoverRate, deltaTime)
     current = current + (recoverRate * deltaTime)
 
@@ -18,13 +20,31 @@ function ConsumeEnergy(current, burnRate, deltaTime)
 end
 
 -- This is called while in flight.  It looks for the user wanting to switch flight modes
-function SwitchedFlightMode(o, player, vars, const)
-    -- See if they want to start a new grapple
-    if StartFlightIfRequested(o, player, vars, const) then
-        return true
+function HasSwitchedFlightMode(o, player, vars, const, watchForStop)
+    local action = vars.startStopTracker:GetRequestedAction()
+    if not action then
+        return false
     end
 
-    if vars.startStopTracker:ShouldStop() then     -- doing this after the grapple check, because it likely uses a subset of those keys (A+D instead of A+D+W)
+    if action == const.bindings.grapple1 then
+        return this.TryStartFlight(o, vars, const, player.grapple1)
+
+    elseif action == const.bindings.grapple2 then
+        return this.TryStartFlight(o, vars, const, player.grapple2)
+
+    elseif action == const.bindings.grapple3 then
+        return this.TryStartFlight(o, vars, const, player.grapple3)
+
+    elseif action == const.bindings.grapple4 then
+        return this.TryStartFlight(o, vars, const, player.grapple4)
+
+    elseif action == const.bindings.grapple5 then
+        return this.TryStartFlight(o, vars, const, player.grapple5)
+
+    elseif action == const.bindings.grapple6 then
+        return this.TryStartFlight(o, vars, const, player.grapple6)
+
+    elseif watchForStop and action == const.bindings.stop then
         -- Told to stop swinging, back to standard
         if (vars.flightMode == const.flightModes.airdash or vars.flightMode == const.flightModes.flight) and vars.grapple and vars.grapple.anti_gravity then
             Transition_ToAntiGrav(vars, const, o)
@@ -35,6 +55,7 @@ function SwitchedFlightMode(o, player, vars, const)
         return true
     end
 
+    -- Execution should never get here
     return false
 end
 
@@ -150,5 +171,28 @@ function GetDeadPercent_Distance(diffDist, deadSpot)
         return absDiff / deadSpot
     else
         return 1
+    end
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.TryStartFlight(o, vars, const, grapple)
+    if not grapple then     -- they might have input bindings set up, but no grapple assigned
+        return false
+    end
+
+    if CheckOtherModsFor_FlightStart(o, const.modNames) then
+        -- No other mod is standing in the way
+        if Transition_ToAim(grapple, vars, const, o, true) then
+            return true
+        else
+            -- There wasn't enough energy
+            vars.startStopTracker:ResetKeyDowns()
+            return false
+        end
+    else
+        -- Another mod is flying, don't interfere.  Also eat the keys
+        vars.startStopTracker:ResetKeyDowns()
+        return true
     end
 end

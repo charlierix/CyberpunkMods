@@ -32,12 +32,12 @@ function PopulateDebug(debug, o, keys, vars)
     --     debug["down_" .. key] = value
     -- end
 
-    -- debug.should_stop = vars.startStopTracker:ShouldStop()
-
-    -- local shouldPull, shouldRigid = vars.startStopTracker:ShouldGrapple()
-    -- debug.should_pull = shouldPull
-    -- debug.should_rigid = shouldRigid
-
+    -- local action = vars.startStopTracker:GetRequestedAction()
+    -- if action then
+    --     debug.action = action
+    -- else
+    --     debug.action = "-----"
+    -- end
 
     debug.timer = Round(o.timer, 1)
 end

@@ -46,7 +46,6 @@ require "ui/drawing"
 require "ui/init_ui"
 require "ui/inputtracker_startstop"
 require "ui/keys"
-require "ui/keys2"
 require "ui/mappinutil"
 require "ui/reporting"
 require "ui/transition_windows"
@@ -230,6 +229,8 @@ local const =
             "grapple_swing",
     }),
 
+    bindings = CreateEnum({ "grapple1", "grapple2", "grapple3", "grapple4", "grapple5", "grapple6", "stop" }),
+
     settings = CreateEnum({ "AutoShowConfig_WithConsole" }),
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
@@ -248,7 +249,6 @@ local isConfigRepress = false
 local o     -- This is a class that wraps access to Game.xxx
 
 local keys = nil -- = Keys:new()        -- moved to init
-local keys2 = nil
 
 local debug = {}
 
@@ -317,7 +317,6 @@ local player = nil      -- This holds current grapple settings, loaded from DB. 
 registerForEvent("onInit", function()
     Observe("PlayerPuppet", "OnAction", function(_, action)        -- observe must be inside init and before other code
         keys:MapAction(action)
-        keys2:MapAction(action)
     end)
 
     isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
@@ -374,11 +373,10 @@ registerForEvent("onInit", function()
     o = GameObjectAccessor:new(wrappers)
 
     keys = Keys:new(o)
-    keys2 = Keys2:new()
 
     vars_ui.keys = keys
 
-    InitializeKeyTrackers(vars, keys, o)
+    InitializeKeyTrackers(vars, keys, o, const)
 
     xp_gain = XPGain:new(o, vars, debug, const)
 
@@ -426,14 +424,6 @@ registerForEvent("onUpdate", function(deltaTime)
 
     if const.shouldShowDebugWindow then
         PopulateDebug(debug, o, keys, vars)
-
-        for key, value in pairs(keys2.current) do
-            debug["_curr_" .. key] = tostring(value)
-        end
-
-        -- for key, value in pairs(keys2.prev) do
-        --     debug["_prev_" .. key] = tostring(value)
-        -- end
     end
 
     PossiblySafetyFire(o, vars, const, debug, deltaTime)
@@ -471,27 +461,9 @@ registerForEvent("onUpdate", function(deltaTime)
     debug.xp = Round(xp_gain.experience, 4)
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
-    keys2:Tick()
 end)
 
 registerHotkey("GrapplingHookSavePlayer", "tester hotkey", function()
-
-
-
-    for key, _ in pairs(debug) do
-        if string.sub(key, 1, 1) == "_" then
-            --print("removing key: " .. key)
-            debug[key] = nil
-        end
-    end
-
-    for key, _ in pairs(keys2.current) do
-        keys2.current[key] = nil
-    end
-
-
-
-
 
     --DeleteOldPlayerRows(player.playerID)
 
@@ -538,10 +510,9 @@ end)
 
 -- This has real trouble with binding to the asdw keys (didn't try jump)
 -- Also, when bound to something like w+d, the 2nd binding to a+d causes the w+d to unregister
-registerInput("GrapplingHook_Key1", "Key1", function(isDown)
+registerInput("GrapplingHook_Key1", "Custom Key 1", function(isDown)
 end)
-
-registerInput("GrapplingHook_Key2", "Key2", function(isDown)
+registerInput("GrapplingHook_Key2", "Custom Key 2", function(isDown)
 end)
 
 

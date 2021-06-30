@@ -36,10 +36,17 @@ end
 --------------------------------------- Private Methods ---------------------------------------
 
 function this.Aim_Straight(aim, o, player, vars, const, debug, deltaTime)
-    if vars.startStopTracker:ShouldStop() then
-        -- told to stop aiming, back to standard
-        Transition_ToStandard(vars, const, debug, o)
-        do return end
+    if vars.startStopTracker:GetRequestedAction() then
+        -- Something different was requested, recover the energy that was used for this current grapple
+        local existingEnergy = vars.energy
+        vars.energy = math.min(vars.energy + vars.grapple.energy_cost, player.energy_tank.max_energy)
+
+        if HasSwitchedFlightMode(o, player, vars, const, true) then        -- this function looks at the same bindings as above
+            do return end
+        else
+            -- There was some reason why the switch didn't work.  Take the energy back
+            vars.energy = existingEnergy
+        end
     end
 
     -- Fire a ray
@@ -67,8 +74,7 @@ function this.Aim_Straight(aim, o, player, vars, const, debug, deltaTime)
             -- Took too long to aim, can't air dash, giving up
 
             -- Since the grapple didn't happen, give back the energy that was taken at the start of the aim
-            -- TODO: May want to only recover 80%
-            vars.energy = RecoverEnergy(vars.energy, player.energy_tank.max_energy, vars.grapple.energy_cost, 1)
+            vars.energy = math.min(vars.energy + vars.grapple.energy_cost, player.energy_tank.max_energy)
 
             Transition_ToStandard(vars, const, debug, o)
         end

@@ -20,7 +20,7 @@ function Process_AirDash(o, player, vars, const, debug, deltaTime)
         vars.energy = newEnergy
     end
 
-    if SwitchedFlightMode(o, player, vars, const) then
+    if HasSwitchedFlightMode(o, player, vars, const, true) then
         do return end
     end
 

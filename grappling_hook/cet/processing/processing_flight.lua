@@ -20,7 +20,7 @@ function Process_Flight(o, player, vars, const, debug, deltaTime)
 
     ---------------------------------- VALIDATIONS ----------------------------------
 
-    if SwitchedFlightMode(o, player, vars, const) then
+    if HasSwitchedFlightMode(o, player, vars, const, true) then
         do return end
     end
 

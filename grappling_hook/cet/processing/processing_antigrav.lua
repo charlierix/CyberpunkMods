@@ -4,7 +4,7 @@ function Process_AntiGrav(o, player, vars, const, debug, deltaTime)
     -- Doing a standard recovery rate
     vars.energy = RecoverEnergy(vars.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate, deltaTime)
 
-    if SwitchedFlightMode(o, player, vars, const) then
+    if HasSwitchedFlightMode(o, player, vars, const, true) then
         do return end
     end
 
