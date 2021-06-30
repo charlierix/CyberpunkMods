@@ -199,19 +199,19 @@ local this = {}
 
 local const =
 {
-    flightModes = CreateEnum({ "standard", "aim", "airdash", "flight", "antigrav" }),
+    flightModes = CreateEnum("standard", "aim", "airdash", "flight", "antigrav"),
 
     grappleFrom_Z = 1.5,
     grappleMinResolution = 0.5,
 
-    modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
+    modNames = CreateEnum("grappling_hook", "jetpack", "low_flying_v"),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
 
-    alignment_horizontal = CreateEnum({ "left", "center", "right" }),
-    alignment_vertical = CreateEnum({ "top", "center", "bottom" }),
+    alignment_horizontal = CreateEnum("left", "center", "right"),
+    alignment_vertical = CreateEnum("top", "center", "bottom"),
 
     -- When adding a new window, there is this enum and window lua file.  Also need to update init_ui.lua, drawing.lua, transition_windows.lua
-    windows = CreateEnum(
-    {
+    windows = CreateEnum
+    (
         "main",
             "input_bindings",
             "energy_tank",
@@ -226,12 +226,12 @@ local const =
                 "grapple_straight_distances",
                 "grapple_straight_stopearly",
                 "grapple_straight_velaway",
-            "grapple_swing",
-    }),
+            "grapple_swing"
+    ),
 
-    bindings = CreateEnum({ "grapple1", "grapple2", "grapple3", "grapple4", "grapple5", "grapple6", "stop" }),
+    bindings = CreateEnum("grapple1", "grapple2", "grapple3", "grapple4", "grapple5", "grapple6", "stop"),
 
-    settings = CreateEnum({ "AutoShowConfig_WithConsole" }),
+    settings = CreateEnum("AutoShowConfig_WithConsole"),
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
