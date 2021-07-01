@@ -163,19 +163,11 @@ function this.Define_InputBindings(const)
     {
         header_prompt = "Input Bindings",
 
-        -- position =
-        -- {
-        --     pos_x = 36,
-        --     pos_y = 60,
-        --     horizontal = const.alignment_horizontal.left,
-        --     vertical = const.alignment_vertical.top,
-        -- },
-
         position =
         {
-            pos_x = 36,
-            pos_y = 60,
-            horizontal = const.alignment_horizontal.right,
+            pos_x = 48,
+            pos_y = 72,
+            horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.top,
         },
 

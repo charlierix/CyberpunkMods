@@ -233,6 +233,8 @@ local const =
 
     settings = CreateEnum("AutoShowConfig_WithConsole"),
 
+    customKeyBase = "Grapple_Custom_",
+
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 
@@ -463,7 +465,7 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("GrapplingHookSavePlayer", "tester hotkey", function()
+registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
 
     --DeleteOldPlayerRows(player.playerID)
 
@@ -507,15 +509,35 @@ registerForEvent("onOverlayClose", function()
     end
 end)
 
-
--- This has real trouble with binding to the asdw keys (didn't try jump)
--- Also, when bound to something like w+d, the 2nd binding to a+d causes the w+d to unregister
-registerInput("GrapplingHook_Key1", "Custom Key 1", function(isDown)
+-- These let the user bind any key or combination of keys.  The final bindings tied to specific grapple
+-- actions are mapped in input_bindings.lua (and may not even use any of these, these are optional,
+-- giving more flexibility)
+--
+-- Using A-G so people don't assume that these automatically directly tie to grapple 1-6
+--
+-- This has real trouble with binding to the asdw keys (didn't try jump).  Also, when bound to something
+-- like w+d, the 2nd binding to a+d causes the w+d to unregister
+registerInput("GrapplingHook_KeyA", "Custom Key A", function(isDown)
+    keys:MapCustomKey(const.customKeyBase .. "A", isDown)
 end)
-registerInput("GrapplingHook_Key2", "Custom Key 2", function(isDown)
+registerInput("GrapplingHook_KeyB", "Custom Key B", function(isDown)
+    keys:MapCustomKey(const.customKeyBase .. "B", isDown)
 end)
-
-
+registerInput("GrapplingHook_KeyC", "Custom Key C", function(isDown)
+    keys:MapCustomKey(const.customKeyBase .. "C", isDown)
+end)
+registerInput("GrapplingHook_KeyD", "Custom Key D", function(isDown)
+    keys:MapCustomKey(const.customKeyBase .. "D", isDown)
+end)
+registerInput("GrapplingHook_KeyE", "Custom Key E", function(isDown)
+    keys:MapCustomKey(const.customKeyBase .. "E", isDown)
+end)
+registerInput("GrapplingHook_KeyF", "Custom Key F", function(isDown)
+    keys:MapCustomKey(const.customKeyBase .. "F", isDown)
+end)
+registerInput("GrapplingHook_KeyG", "Custom Key G", function(isDown)
+    keys:MapCustomKey(const.customKeyBase .. "G", isDown)
+end)
 
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then

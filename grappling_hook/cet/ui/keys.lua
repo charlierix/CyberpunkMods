@@ -80,6 +80,21 @@ function Keys:MapAction(action)
     end
 end
 
+-- This is called from registerInput event.  It allows custom bindings to be treated like actions
+-- Params
+--  name    a unique name for the custom key (make sure it's not the same as one of the in game action names)
+--  isDown  a bool
+function Keys:MapCustomKey(name, isDown)
+    local pressed = isDown
+    local released = not isDown
+
+    self:MapAction_List(name, pressed, released)
+
+    if self.isWatching then
+        self:MapAction_Watching(name, pressed, released)
+    end
+end
+
 function Keys:Tick()
     self.prev_forward = self.forward
     self.prev_backward = self.backward
