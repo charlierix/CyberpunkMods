@@ -9,6 +9,8 @@ function EnsureTablesCreated()
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Settings_Int (Key TEXT NOT NULL UNIQUE, Value INTEGER NOT NULL);") end)
 
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS InputBindings (Binding TEXT NOT NULL, ActionName TEXT NOT NULL);") end)
+
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Player (PlayerKey INTEGER NOT NULL UNIQUE, PlayerID INTEGER NOT NULL, JSON_EnergyTank TEXT NOT NULL, GrappleKey1 INTEGER, GrappleKey2 INTEGER, GrappleKey3 INTEGER, GrappleKey4 INTEGER, GrappleKey5 INTEGER, GrappleKey6 INTEGER, Experience REAL NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(PlayerKey AUTOINCREMENT));") end)
 
     --TODO: Add a column for straightline vs webswing
@@ -32,10 +34,10 @@ function GetSetting_Bool(key, default)
         --NOTE: There was no bit or bool datatype, so using int
         local stmt = db:prepare
         [[
-        SELECT Value
-        FROM Settings_Int
-        WHERE Key = ?
-        LIMIT 1
+            SELECT Value
+            FROM Settings_Int
+            WHERE Key = ?
+            LIMIT 1
         ]]
 
         local row, _ = this.Bind_Select_SingleRow(stmt, "GetSetting_Bool", key)
@@ -72,8 +74,8 @@ function SetSetting_Bool(key, value)
         -- Insert
         local stmt = db:prepare
         [[
-        INSERT OR IGNORE INTO Settings_Int
-        VALUES(?, ?)
+            INSERT OR IGNORE INTO Settings_Int
+            VALUES(?, ?)
         ]]
 
         local errMsg = this.Bind_NonSelect(stmt, "SetSetting_Bool (insert)", key, valueInt)
@@ -84,9 +86,9 @@ function SetSetting_Bool(key, value)
         -- Update
         stmt = db:prepare
         [[
-        UPDATE Settings_Int
-        SET Value = ?
-        WHERE Key = ?
+            UPDATE Settings_Int
+            SET Value = ?
+            WHERE Key = ?
         ]]
 
         errMsg = this.Bind_NonSelect(stmt, "SetSetting_Bool (update)", valueInt, key)
@@ -104,6 +106,88 @@ function SetSetting_Bool(key, value)
     end
 end
 
+----------------------------------- Input Bindings ------------------------------------
+
+-- Returns { binding1 = {"action1", "action2"}, binding2 = {"action3", "action4"} }
+function GetAllInputBindings()
+    local sucess, rows = pcall(function ()
+        local stmt = db:prepare
+        [[
+            SELECT Binding, ActionName
+            FROM InputBindings
+        ]]
+
+        local retVal = {}
+        local foundOne = false
+
+        for row in this.Bind_Select_MultiplRows_Iterator(stmt, "GetAllInputBindings", empty_param) do
+            foundOne = true
+
+            if not retVal[row.Binding] then
+                retVal[row.Binding] = {}
+            end
+
+            table.insert(retVal[row.Binding], row.ActionName)
+        end
+
+        if foundOne then
+            return retVal
+        else
+            return nil
+        end
+    end)
+
+    if sucess then
+        return rows
+    else
+        return nil
+    end
+end
+
+-- This overwrites the current binding with the one passed in
+function SetInputBinding(binding, actionNames)
+    local sucess, errMsg = pcall(function ()
+        -- Delete Old
+        local stmt = db:prepare
+        [[
+            DELETE FROM InputBindings
+            WHERE Binding = ?
+        ]]
+
+        local errMsg = this.Bind_NonSelect(stmt, "SetInputBinding (delete)", binding)
+        if errMsg then
+            return errMsg
+        end
+
+        -- Insert New
+        local sql = "INSERT INTO InputBindings VALUES "
+        local param_values = {}
+
+        for i = 1, #actionNames do
+            local append = "(?, ?)"
+
+            if i < #actionNames then
+                append = append .. ", "
+            end
+
+            sql = sql .. append
+
+            table.insert(param_values, binding)
+            table.insert(param_values, actionNames[i])
+        end
+
+        stmt = db:prepare(sql)
+
+        return this.Bind_NonSelect(stmt, "SetInputBinding (insert", unpack(param_values))
+    end)
+
+    if sucess then
+        return errMsg
+    else
+        return "DeleteOldPlayerRows: Unknown Error"
+    end
+end
+
 --------------------------------------- Player ----------------------------------------
 
 function InsertPlayer(playerID, energy_tank, grappleKeys, experience)
@@ -113,10 +197,10 @@ function InsertPlayer(playerID, energy_tank, grappleKeys, experience)
 
         local stmt = db:prepare
         [[
-        INSERT INTO Player
-            (PlayerID, JSON_EnergyTank, GrappleKey1, GrappleKey2, GrappleKey3, GrappleKey4, GrappleKey5, GrappleKey6, Experience, LastUsed, LastUsed_Readable)
-        VALUES
-            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO Player
+                (PlayerID, JSON_EnergyTank, GrappleKey1, GrappleKey2, GrappleKey3, GrappleKey4, GrappleKey5, GrappleKey6, Experience, LastUsed, LastUsed_Readable)
+            VALUES
+                (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ]]
 
         local errMsg = this.Bind_NonSelect(stmt, "InsertPlayer", playerID, json_energy_tank, grappleKeys[1], grappleKeys[2], grappleKeys[3], grappleKeys[4], grappleKeys[5], grappleKeys[6], experience, time, time_readable)
@@ -144,21 +228,21 @@ function GetLatestPlayer(playerID)
     local sucess, player, errMsg = pcall(function ()
         local stmt = db:prepare
         [[
-        SELECT
-            PlayerKey,
-            PlayerID,
-            JSON_EnergyTank,
-            GrappleKey1,
-            GrappleKey2,
-            GrappleKey3,
-            GrappleKey4,
-            GrappleKey5,
-            GrappleKey6,
-            Experience
-        FROM Player
-        WHERE PlayerID = ?
-        ORDER BY LastUsed DESC
-        LIMIT 1
+            SELECT
+                PlayerKey,
+                PlayerID,
+                JSON_EnergyTank,
+                GrappleKey1,
+                GrappleKey2,
+                GrappleKey3,
+                GrappleKey4,
+                GrappleKey5,
+                GrappleKey6,
+                Experience
+            FROM Player
+            WHERE PlayerID = ?
+            ORDER BY LastUsed DESC
+            LIMIT 1
         ]]
 
         return this.Bind_Select_SingleRow(stmt, "GetLatestPlayer", playerID)
@@ -180,16 +264,16 @@ function DeleteOldPlayerRows(playerID)
 
         local stmt = db:prepare
         [[
-        DELETE FROM Player
-        WHERE
-            PlayerID = ? AND
-            PlayerKey NOT IN
-            (
-                SELECT a.PlayerKey
-                FROM Player a
-                ORDER BY a.LastUsed DESC
-                LIMIT 12
-            )
+            DELETE FROM Player
+            WHERE
+                PlayerID = ? AND
+                PlayerKey NOT IN
+                (
+                    SELECT a.PlayerKey
+                    FROM Player a
+                    ORDER BY a.LastUsed DESC
+                    LIMIT 12
+                )
         ]]
 
         local errMsg = this.Bind_NonSelect(stmt, "DeleteOldPlayerRows", playerID)
@@ -220,10 +304,10 @@ function InsertGrapple(grapple)
 
         local stmt = db:prepare
         [[
-        INSERT INTO Grapple
-            (Name, Experience, JSON, LastUsed, LastUsed_Readable)
-        VALUES
-            (?, ?, ?, ?, ?)
+            INSERT INTO Grapple
+                (Name, Experience, JSON, LastUsed, LastUsed_Readable)
+            VALUES
+                (?, ?, ?, ?, ?)
         ]]
 
         local errMsg = this.Bind_NonSelect(stmt, "InsertGrapple", grapple.name, grapple.experience, json, time, time_readable)
@@ -246,10 +330,10 @@ function GetGrapple_ByKey(primaryKey)
     local sucess, grapple, errMsg = pcall(function ()
         local stmt = db:prepare
         [[
-        SELECT JSON
-        FROM Grapple
-        WHERE GrappleKey = ?
-        LIMIT 1
+            SELECT JSON
+            FROM Grapple
+            WHERE GrappleKey = ?
+            LIMIT 1
         ]]
 
         local row, errMsg = this.Bind_Select_SingleRow(stmt, "GetGrapple_ByKey", primaryKey)
@@ -277,13 +361,13 @@ function GetGrappleKey_ByContent(grapple)
         --exactly mirrors the insert method (just in case there are bugs)
         local stmt = db:prepare
         [[
-        SELECT GrappleKey
-        FROM Grapple
-        WHERE
-            Name = ? AND
-            Experience = ? AND
-            JSON = ?
-        LIMIT 1
+            SELECT GrappleKey
+            FROM Grapple
+            WHERE
+                Name = ? AND
+                Experience = ? AND
+                JSON = ?
+            LIMIT 1
         ]]
 
         local row, errMsg = this.Bind_Select_SingleRow(stmt, "GetGrappleKey_ByContent", grapple.name, grapple.experience, json)
@@ -329,23 +413,23 @@ function DeleteOldGrappleRows_KeepReferenced()
     local sucess, errMsg = pcall(function ()
         local stmt = db:prepare
         [[
-        INSERT INTO WorkingKeys
-        SELECT DISTINCT GrappleKey
-        FROM
-        (
-            SELECT GrappleKey1 AS GrappleKey FROM Player
-            UNION ALL
-            SELECT GrappleKey2 AS GrappleKey FROM Player
-            UNION ALL
-            SELECT GrappleKey3 AS GrappleKey FROM Player
-            UNION ALL
-            SELECT GrappleKey4 AS GrappleKey FROM Player
-            UNION ALL
-            SELECT GrappleKey5 AS GrappleKey FROM Player
-            UNION ALL
-            SELECT GrappleKey6 AS GrappleKey FROM Player
-        )
-        WHERE GrappleKey IS NOT NULL
+            INSERT INTO WorkingKeys
+            SELECT DISTINCT GrappleKey
+            FROM
+            (
+                SELECT GrappleKey1 AS GrappleKey FROM Player
+                UNION ALL
+                SELECT GrappleKey2 AS GrappleKey FROM Player
+                UNION ALL
+                SELECT GrappleKey3 AS GrappleKey FROM Player
+                UNION ALL
+                SELECT GrappleKey4 AS GrappleKey FROM Player
+                UNION ALL
+                SELECT GrappleKey5 AS GrappleKey FROM Player
+                UNION ALL
+                SELECT GrappleKey6 AS GrappleKey FROM Player
+            )
+            WHERE GrappleKey IS NOT NULL
         ]]
 
         return this.Bind_NonSelect(stmt, "DeleteOldGrappleRows_KeepReferenced", empty_param)
@@ -410,8 +494,8 @@ function DeleteOldGrappleRows_DeleteGrapples()
     local sucess, errMsg = pcall(function ()
         local stmt = db:prepare
         [[
-        DELETE FROM Grapple
-        WHERE GrappleKey NOT IN (SELECT Key FROM WorkingKeys)
+            DELETE FROM Grapple
+            WHERE GrappleKey NOT IN (SELECT Key FROM WorkingKeys)
         ]]
 
         return this.Bind_NonSelect(stmt, "DeleteOldGrappleRows_DeleteGrapples", empty_param)

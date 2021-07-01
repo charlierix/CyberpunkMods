@@ -5,6 +5,9 @@ function DefineWindow_InputBindings(vars_ui, const)
     vars_ui.input_bindings = input_bindings
 
 
+    input_bindings.remove = this.Define_RemoveButton(const)
+
+
     input_bindings.watchedActions = this.Define_WatchedActions(const)
     --input_bindings.watchedActions_OLD = this.Define_WatchedActions_OLD(const)
 
@@ -24,6 +27,10 @@ function DrawWindow_InputBindings(isCloseRequested, vars_ui, player, window, con
     this.Refresh_IsDirty(input_bindings.okcancel)
 
     -------------------------------- Show ui elements --------------------------------
+
+
+    Draw_RemoveButton(input_bindings.remove, vars_ui.style.removeButton, window.left, window.top, window.width, window.height, const)
+
 
     Draw_MultiItemDisplayList(input_bindings.watchedActions, vars_ui.style.multiitem_displaylist, window.left, window.top, window.width, window.height, const, vars_ui.line_heights)
     --Draw_OrderedList(input_bindings.watchedActions_OLD, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
@@ -146,4 +153,21 @@ function this.Refresh_IsDirty(def)
     --TODO: Watch for unsaved bindings
 
     def.isDirty = false
+end
+
+
+function this.Define_RemoveButton(const)
+    -- RemoveButton
+    return
+    {
+        position =
+        {
+            pos_x = 0,
+            pos_y = 0,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        invisible_name = "InputBindings_Remove",
+    }
 end

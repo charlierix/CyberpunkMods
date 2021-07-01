@@ -178,6 +178,23 @@
         "back_color_hover": "705078A1"
     },
 
+    "removeButton":
+    {
+        "radius": 11,
+
+        "border_thickness": 1,
+        "x_thickness": 2,
+
+        "foreground_color_standard": "888",
+        "foreground_color_hover": "4C4",
+
+        "border_color_standard": "8888",
+        "border_color_hover": "84C4",
+
+        "back_color_standard": "3333",
+        "back_color_hover": "5F00"
+    },
+
     "tooltip":
     {
         "max_width": 432,

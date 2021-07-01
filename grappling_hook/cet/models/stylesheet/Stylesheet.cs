@@ -72,6 +72,8 @@ namespace grapple_ui.models.stylesheet
 
         public HelpButton helpButton { get; init; }
 
+        public RemoveButton removeButton { get; init; }
+
         public Tooltip tooltip { get; init; }
 
         public MinDotGraphic mindotGraphic { get; init; }

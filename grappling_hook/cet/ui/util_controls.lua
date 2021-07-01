@@ -67,7 +67,7 @@ end
 --NOTE: This needs ABGR
 function Draw_Circle(screenOffset_x, screenOffset_y, center_x, center_y, radius, isHovered, color_back_standard, color_back_hovered, color_border_standard, color_border_hovered, thickness)
     -- TODO: Calculate based on radius, have a min and max
-    local numSegments = 12
+    local numSegments = 13
 
     local background = nil
     local border = nil
