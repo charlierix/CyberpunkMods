@@ -4,9 +4,28 @@ function DefineWindow_InputBindings(vars_ui, const)
     local input_bindings = {}
     vars_ui.input_bindings = input_bindings
 
+
+    -- Note about when to open and close cet console
+
+    -- Restore defaults button
+
+
+
     input_bindings.watchedActions = this.Define_WatchedActions(const)
 
-    -- { { binding = const.bindings enum, summary = SummaryButton, remove = RemoveButton, summary_hover_label = Label, remove_hover_label = Label, isDeleteChange, newActions = {"action1", "action2"} }, {...}, {...} }
+    -- {
+    --     {
+    --         binding = const.bindings enum,
+    --         summary = SummaryButton,
+    --         remove = RemoveButton,
+    --         summary_hover_label = Label,
+    --         remove_hover_label = Label,
+    --         isDeleteChange,
+    --         newActions = {"action1", "action2"}
+    --     },
+    --     {...},
+    --     {...},
+    -- }
     input_bindings.bind_buttons = this.Define_BindButtons(const)
 
     input_bindings.okcancel = Define_OkCancelButtons(false, vars_ui, const)
@@ -42,12 +61,14 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, windo
             this.Draw_Summary_Tooltips(current, vars, vars_ui, window, const)
         end
 
+        if remove_click then
+            current.isDeleteChange = true
+            current.newActions = nil
+        end
 
-
-
-        -- if removeClick
         -- elseif summaryClick
         -- elseif summaryHover and isBound (show tooltip with the action names)
+
 
     end
 
