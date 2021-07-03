@@ -185,14 +185,14 @@
         "border_thickness": 1,
         "x_thickness": 2,
 
-        "foreground_color_standard": "888",
-        "foreground_color_hover": "4C4",
+        "border_color_standard": "1E808080",
+        "border_color_hover": "40A0A0A0",
 
-        "border_color_standard": "8888",
-        "border_color_hover": "84C4",
+        "foreground_color_standard": "A0806B69",
+        "foreground_color_hover": "E0DBBEBA",
 
-        "back_color_standard": "3333",
-        "back_color_hover": "5F00"
+        "back_color_standard": "60291816",
+        "back_color_hover": "69231B"
     },
 
     "tooltip":
@@ -245,6 +245,7 @@
         "edit_value": { "the_color": "A8A8FF" },
         "xp_progress_border": { "the_color": "20EDD25A" },
         "xp_progress_back": { "the_color": "504A4531" },
-        "xp_progress_fore": { "the_color": "8C7F42" }
+        "xp_progress_fore": { "the_color": "8C7F42" },
+        "hint": { "the_color": "CFC29D" }
     }
 }

@@ -551,7 +551,7 @@ registerForEvent("onDraw", function()
     end
 
     if shouldShowConfig and player then
-        shouldShowConfig = DrawConfig(isConfigRepress, vars_ui, player, const)
+        shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, player, const)
         isConfigRepress = false
 
         if not shouldShowConfig then

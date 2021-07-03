@@ -10,6 +10,13 @@ end
 function TransitionWindows_InputBindings(vars_ui, const)
     vars_ui.currentWindow = const.windows.input_bindings
 
+    local bind_buttons = vars_ui.input_bindings.bind_buttons
+
+    for i = 1, #bind_buttons do
+        bind_buttons[i].isDeleteChange = false
+        bind_buttons[i].newActions = nil
+    end
+
     vars_ui.keys:StartWatching()
 end
 

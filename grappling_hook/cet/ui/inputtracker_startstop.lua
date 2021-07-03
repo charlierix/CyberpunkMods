@@ -123,6 +123,16 @@ function InputTracker_StartStop:GetRequestedAction()
     return nil
 end
 
+function InputTracker_StartStop:GetActionNames(binding)
+    for i = 1, #self.call_order do
+        if self.call_order[i][1] == binding then
+            return self.call_order[i][2]
+        end
+    end
+
+    return nil
+end
+
 -------------------------------------- Private Methods --------------------------------------
 
 function InputTracker_StartStop:IsDown(keynames)

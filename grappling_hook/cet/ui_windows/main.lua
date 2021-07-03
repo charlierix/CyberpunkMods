@@ -218,7 +218,6 @@ function this.Define_GrappleSlots(parent, const)
     parent.grapple4 = this.Define_GrappleSlots_DoIt(offset_x_small, offset_y, "4", const)
     parent.grapple5 = this.Define_GrappleSlots_DoIt(-offset_x_small, offset_y, "5", const)
     parent.grapple6 = this.Define_GrappleSlots_DoIt(-offset_x_large, 0, "6", const)
-
 end
 function this.Define_GrappleSlots_DoIt(x, y, suffix, const)
     -- SummaryButton

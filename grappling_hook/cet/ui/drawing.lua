@@ -56,7 +56,7 @@ end
 -- Returns:
 --  true: keep showing config
 --  false: stop showing config
-function DrawConfig(isCloseRequested, vars_ui, player, const)
+function DrawConfig(isCloseRequested, vars, vars_ui, player, const)
     if not player then
         return false
     end
@@ -96,7 +96,7 @@ function DrawConfig(isCloseRequested, vars_ui, player, const)
             continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.input_bindings then
-            continueShowing = DrawWindow_InputBindings(isCloseRequested, vars_ui, player, window, const)
+            continueShowing = DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.energy_tank then
             continueShowing = DrawWindow_EnergyTank(isCloseRequested, vars_ui, player, window, const)

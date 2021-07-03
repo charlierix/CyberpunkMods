@@ -32,8 +32,6 @@ namespace grapple_ui
                 name = "there"
             };
 
-
-
         }
     }
 }
