@@ -178,14 +178,67 @@ end
 
 local exclude_whole =
 {
-    "ChoiceScrollUp",       -- Q
-    "ChoiceScrollDown",     -- E
-    "ChoiceApply",          -- F
-
-    "MeleeAttack",          -- left click
+    -- Left Click
+    "MeleeAttack",
     "RangedAttack",
     "click",
     "mouse_left",
+
+    -- Right Click
+    "MeleeBlock",
+    "RangedADS",
+
+    -- A
+    "UI_FakeMovement",
+    "option_switch_prev",
+    "option_switch_prev_settings",
+
+    -- D
+    "UI_Drop",
+    "option_switch_next",
+    "option_switch_next_settings",
+
+    -- S,W        -- A and D filters also eliminated these
+
+    -- Q
+    "ChoiceScrollUp",
+    "UI_MoveUp",
+    "popup_moveUp",
+
+    -- E
+    "ChoiceScrollDown",
+    "UI_MoveDown",
+    "popup_moveDown",
+    "IconicCyberware",
+    "PickUpBodyFromTakedown",
+
+    -- F
+    "ChoiceApply",
+    "Choice1_Release",
+    "UI_Apply",
+    "one_click_confirm",
+    "track_quest",
+
+    -- Space
+    "UI_Skip",
+
+    -- Arrow Left
+    "UI_MoveLeft",
+    "navigate_left",
+    "popup_moveLeft",
+
+    -- Arrow Right
+    "UI_MoveRight",
+    "navigate_right",
+    "popup_moveRight",
+
+    -- Arrow Up
+    "UI_DialogFocus",
+    "navigate_up",
+
+    -- Arrow Down
+    "navigate_down",
+
 }
 local exclude_startswith =
 {

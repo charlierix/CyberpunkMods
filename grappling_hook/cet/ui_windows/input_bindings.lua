@@ -118,7 +118,7 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, wi
     -- OK/Cancel
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(input_bindings.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
     if isOKClicked then
-        this.Save(input_bindings.bind_buttons, vars.startStopTracker)
+        this.Save(input_bindings.bind_buttons, vars.startStopTracker, vars_ui.keys)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
@@ -481,7 +481,8 @@ function this.Refresh_IsDirty(def, bind_buttons)
     end
 end
 
-function this.Save(bind_buttons, startStopTracker)
+function this.Save(bind_buttons, startStopTracker, keys)
+    -- Update DB and startStopTracker
     for i = 1, #bind_buttons do
         if bind_buttons[i].isDeleteChange then
             SetInputBinding(bind_buttons[i].binding, nil)
@@ -491,6 +492,13 @@ function this.Save(bind_buttons, startStopTracker)
             SetInputBinding(bind_buttons[i].binding, bind_buttons[i].newActions)
             startStopTracker:UpdateBinding(bind_buttons[i].binding, bind_buttons[i].newActions)
         end
+    end
+
+    -- Update keys, so it knows what to look for
+    keys:ClearActions()
+
+    for i=1, #startStopTracker.keynames do
+        keys:AddAction(startStopTracker.keynames[i])
     end
 end
 

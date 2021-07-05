@@ -87,7 +87,8 @@ function DrawConfig(isCloseRequested, vars, vars_ui, player, o, const)
     ImGui.SetNextWindowPos(window.left, window.top, ImGuiCond.FirstUseEver)     -- this will place it in the hardcoded location, but if they move it, it will show at the new location
     ImGui.SetNextWindowSize(window.width, window.height, ImGuiCond.Always)
 
-    if (ImGui.Begin("Grappling Hook", ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoScrollbar)) then     --NOTE: imgui.h doesn't mention this overload.  The overload that takes bool as second param only accepts true, and it adds the X button
+    -- NoNavInputs was used mainly for the input binding window.  But there are so many custom controls on the rest of the windows that mouse navigation is pretty much required anyway
+    if (ImGui.Begin("Grappling Hook", ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoNavInputs)) then     --NOTE: imgui.h doesn't mention this overload.  The overload that takes bool as second param only accepts true, and it adds the X button
         -- These will be used by workers for this window as well as sub windows
         Refresh_WindowPos(window)
         Refresh_LineHeights(vars_ui)
