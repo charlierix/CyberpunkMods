@@ -59,6 +59,23 @@
         "highlight_text_background_color": "9666"
     },
 
+    "button":
+    {
+        "width": 72,
+        "height": 36,
+
+        "border_cornerRadius": 6,
+        "border_thickness": 2,
+
+        "border_color": "888",
+
+        "foreground_color": "CCC",
+
+        "back_color_standard": "333",
+        "back_color_hover": "555",
+        "back_color_click": "666"
+    },
+
     "okcancelButtons":
     {
         "pos_x": 24,
@@ -246,6 +263,7 @@
         "xp_progress_border": { "the_color": "20EDD25A" },
         "xp_progress_back": { "the_color": "504A4531" },
         "xp_progress_fore": { "the_color": "8C7F42" },
-        "hint": { "the_color": "CFC29D" }
+        "hint": { "the_color": "CFC29D" },
+        "instruction": { "the_color": "EEE" }
     }
 }

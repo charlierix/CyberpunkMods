@@ -57,7 +57,7 @@ function Draw_OkCancelButtons(def, style_okcancel, parent_width, parent_height, 
     return isOKClicked, isCancelClicked
 end
 
-------------------------------------------- Private Methods -------------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.GetText(def)
     local ok = ""

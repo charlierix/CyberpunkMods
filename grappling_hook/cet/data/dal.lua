@@ -159,26 +159,30 @@ function SetInputBinding(binding, actionNames)
             return errMsg
         end
 
-        -- Insert New
-        local sql = "INSERT INTO InputBindings VALUES "
-        local param_values = {}
+        if actionNames then
+            -- Insert New
+            local sql = "INSERT INTO InputBindings VALUES "
+            local param_values = {}
 
-        for i = 1, #actionNames do
-            local append = "(?, ?)"
+            for i = 1, #actionNames do
+                local append = "(?, ?)"
 
-            if i < #actionNames then
-                append = append .. ", "
+                if i < #actionNames then
+                    append = append .. ", "
+                end
+
+                sql = sql .. append
+
+                table.insert(param_values, binding)
+                table.insert(param_values, actionNames[i])
             end
 
-            sql = sql .. append
+            stmt = db:prepare(sql)
 
-            table.insert(param_values, binding)
-            table.insert(param_values, actionNames[i])
+            return this.Bind_NonSelect(stmt, "SetInputBinding (insert", unpack(param_values))
+        else
+            return nil      -- nothing inserted, so no error message to return
         end
-
-        stmt = db:prepare(sql)
-
-        return this.Bind_NonSelect(stmt, "SetInputBinding (insert", unpack(param_values))
     end)
 
     if sucess then

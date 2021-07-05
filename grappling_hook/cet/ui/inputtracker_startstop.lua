@@ -133,6 +133,10 @@ function InputTracker_StartStop:GetActionNames(binding)
     return nil
 end
 
+function InputTracker_StartStop:GetMaxElapsedTime()
+    return self.max_elapsed
+end
+
 -------------------------------------- Private Methods --------------------------------------
 
 function InputTracker_StartStop:IsDown(keynames)
@@ -200,7 +204,7 @@ function this.GetCallOrder(jagged)
         if jagged[i][2] then        -- jagged[i][1] is the binding enum
             local index = this.GetInsertIndex(retVal, jagged[i])
 
-            this.Insert(retVal, jagged[i], index)
+            Insert(retVal, jagged[i], index)
         end
     end
 
@@ -210,7 +214,7 @@ end
 --NOTE: Each of these entries is {bindingEnum, actionNames}, so this function only cares about entry[2]
 function this.GetInsertIndex(existing, entry)
     for i = 1, #existing do
-        if this.Is_A_SubsetOf_B(existing[i][2], entry[2]) then
+        if Is_A_SubsetOf_B(existing[i][2], entry[2]) then
             -- This existing item is a subset of the new entry, so the new entry must be looked at before it
             return i
         end
@@ -218,43 +222,4 @@ function this.GetInsertIndex(existing, entry)
 
     -- It's safe to add this to the end of the list
     return #existing + 1
-end
-
-function this.Insert(list, entry, index)
-    -- This might be a duplication of table.insert, making my own for the sake of certainty
-
-    -- Add
-    if index > #list then
-        list[#list+1] = entry
-        do return end
-    end
-
-    -- Make room
-    for i = #list + 1, index + 1, -1 do
-        list[i] = list[i - 1]
-    end
-
-    -- Insert it
-    list[index] = entry
-end
-
--- Returns true if all the values in A are contained in B
-function this.Is_A_SubsetOf_B(list_a, list_b)
-    for i = 1, #list_a do
-        if not this.Contains(list_b, list_a[i]) then
-            return false
-        end
-    end
-
-    return true
-end
-
-function this.Contains(list, testValue)
-    for i = 1, #list do
-        if list[i] == testValue then
-            return true
-        end
-    end
-
-    return false
 end

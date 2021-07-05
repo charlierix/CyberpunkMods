@@ -60,6 +60,8 @@ namespace grapple_ui.models.stylesheet
 
         public Slider slider { get; init; }
 
+        public Button button { get; init; }
+
         public OkCancelButtons okcancelButtons { get; init; }
 
         public SummaryButton summaryButton { get; init; }

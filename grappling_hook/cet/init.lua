@@ -16,10 +16,12 @@ require "core/check_other_mods"
 require "core/customprops_wrapper"
 require "core/debug_code"
 require "core/gameobj_accessor"
+require "core/lists"
 require "core/math_basic"
 require "core/math_raycast"
 require "core/math_vector"
 require "core/math_yaw"
+require "core/strings"
 require "core/util"
 
 require "data/dal"
@@ -52,6 +54,7 @@ require "ui/transition_windows"
 require "ui/util_controls"
 require "ui/util_ui"
 
+require "ui_controls/button"
 require "ui_controls/checkbox"
 require "ui_controls/grapple_arrows"
 require "ui_controls/grapple_desired_len_accel"
@@ -551,7 +554,7 @@ registerForEvent("onDraw", function()
     end
 
     if shouldShowConfig and player then
-        shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, player, const)
+        shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, player, o, const)
         isConfigRepress = false
 
         if not shouldShowConfig then
