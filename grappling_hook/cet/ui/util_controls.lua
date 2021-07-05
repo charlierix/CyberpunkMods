@@ -216,11 +216,14 @@ function this.GetTooltip_Position_RightLeft(width, height, x, y, notouch_halfwid
     end
 
     ----------- Top -----------
-    --NOTE: Not checking for bottom going off the screen.  That would only happen if the tooltip is taller than the screen,
-    --and if that's the case, it's just noise anyway
-
     -- Center it along y
     local top = y - (height / 2)
+
+    if top + height > screen.height then
+        -- Goes off the bottom of the screen.  If the tooltip is taller than the screen, the next if statement will fix it
+        top = screen.height - height
+    end
+
     if top < 0 then
         -- It will go off the screen, pull it down a bit
         top = 0

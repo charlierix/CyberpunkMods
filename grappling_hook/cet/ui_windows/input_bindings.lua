@@ -9,11 +9,11 @@ function DefineWindow_InputBindings(vars_ui, const)
     input_bindings.consoleWarning1 = this.Define_ConsoleWarning1(const)
     input_bindings.consoleWarning2 = this.Define_ConsoleWarning2(const)
 
+    input_bindings.help1_label = this.Define_Help1_Label(const)
+    input_bindings.help1_button = this.Define_Help1_Button(const)
 
-    -- TODO: Help button extras
-    --  comments explaining the difference between actions and cet inputs
-    --  describe how to filter unwanted action names
-
+    input_bindings.help2_label = this.Define_Help2_Label(const)
+    input_bindings.help2_button = this.Define_Help2_Button(const)
 
     -------------- Standard Display --------------
 
@@ -66,6 +66,12 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, wi
 
     Draw_Label(input_bindings.consoleWarning1, vars_ui.style.colors, window.width, window.height, const)
     Draw_Label(input_bindings.consoleWarning2, vars_ui.style.colors, window.width, window.height, const)
+
+    Draw_Label(input_bindings.help1_label, vars_ui.style.colors, window.width, window.height, const)
+    Draw_HelpButton(input_bindings.help1_button, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+
+    Draw_Label(input_bindings.help2_label, vars_ui.style.colors, window.width, window.height, const)
+    Draw_HelpButton(input_bindings.help2_button, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
 
     Draw_MultiItemDisplayList(input_bindings.watchedActions, vars_ui.style.multiitem_displaylist, window.left, window.top, window.width, window.height, const, vars_ui.line_heights)
 
@@ -139,8 +145,8 @@ function this.Define_ConsoleWarning1(const)
 
         position =
         {
-            pos_x = 0,
-            pos_y = 24,
+            pos_x = -160,
+            pos_y = 48,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.top,
         },
@@ -156,8 +162,8 @@ function this.Define_ConsoleWarning2(const)
 
         position =
         {
-            pos_x = 0,
-            pos_y = 42,
+            pos_x = -160,
+            pos_y = 66,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.top,
         },
@@ -165,6 +171,95 @@ function this.Define_ConsoleWarning2(const)
         color = "info",
     }
 end
+
+function this.Define_Help1_Label(const)
+    -- Label
+    return
+    {
+        text = "actions vs cet inputs",
+
+        position =
+        {
+            pos_x = 45,
+            pos_y = 24,
+            horizontal = const.alignment_horizontal.right,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "help",
+    }
+end
+function this.Define_Help1_Button(const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "InputBindings_Help1",
+
+        position =
+        {
+            pos_x = 24,
+            pos_y = 24,
+            horizontal = const.alignment_horizontal.right,
+            vertical = const.alignment_vertical.top,
+        },
+    }
+
+    retVal.tooltip =
+[[There are quite a few built in keys that could be reused for grapple if a couple keys are pressed at the same time
+
+A key can only be tied to a CET input once for a single mod
+
+This page gets around this by listening for in game keys and allowing multiple keys to be pressed at the same time
+
+Any combination of CET inputs and in game keys can be mixed in this window's bindings]]
+
+    return retVal
+end
+
+function this.Define_Help2_Label(const)
+    -- Label
+    return
+    {
+        text = "filter secondary actions",
+
+        position =
+        {
+            pos_x = 45,
+            pos_y = 45,
+            horizontal = const.alignment_horizontal.right,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "help",
+    }
+end
+function this.Define_Help2_Button(const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "InputBindings_Help2",
+
+        position =
+        {
+            pos_x = 24,
+            pos_y = 45,
+            horizontal = const.alignment_horizontal.right,
+            vertical = const.alignment_vertical.top,
+        },
+    }
+
+    retVal.tooltip =
+[[When in game keys are pressed, there tend to be several actions tied to that single key.  Even more if you interact with in game objects
+
+If one of these secondary action names is causing problems with grapple activating, you can suppress them by adding to a list of action names near the bottom of ui\keys.lua
+
+This list is case sensitive
+
+Also, post a message on nexus, so it can be fixed for everyone]]
+
+    return retVal
+end
+
 
 function this.Define_WatchedActions(const)
     -- MultiItemDisplayList
