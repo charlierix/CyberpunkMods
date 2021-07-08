@@ -175,7 +175,7 @@ function GetControlPosition(def, control_width, control_height, parent_width, pa
 
     -- Top
     local top = nil
-        if def.vertical then
+    if def.vertical then
         if def.vertical == const.alignment_vertical.top then
             top = def.pos_y
 

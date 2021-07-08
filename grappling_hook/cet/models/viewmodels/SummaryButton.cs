@@ -25,6 +25,8 @@ namespace grapple_ui.models.viewmodels
         public int? min_width { get; init; }
         public int? min_height { get; init; }
 
+        public double? border_cornerRadius_override { get; init; }
+
         // ************************* Use either this *************************
 
         // A gray text, horizontally and vertically centered

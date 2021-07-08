@@ -153,6 +153,29 @@
         "disabled_border_color": "40666666"
     },
 
+    "listbox":
+    {
+        "padding": 6,
+
+        "border_cornerRadius": 3,
+        "border_thickness": 1,
+
+        "border_color": "40686868",
+
+        "background_color_standard": "12707070",
+
+        "background_color_selected": "40B5BF7C",
+        "background_color_hover": "50DAE889",
+        "background_color_click": "70E2F283",
+
+        "foreground_color": "909090",
+
+        "scrollbar_background_color": "2444",
+        "scrollbar_grab_color_standard": "4555",
+        "scrollbar_grab_color_hover": "6777",
+        "scrollbar_grab_color_click": "7888"
+    },
+
     "multiitem_displaylist":
     {
         "padding": 12,

@@ -1,9 +1,9 @@
 local this = {}
 
--- Draws a button that is an X with a circle around it.  Used like a button to remove the
--- thing that it's over
+-- Draws a button that is an X with a circle around it.  Used as a button to remove the
+-- thing that it's over/near
 -- def is models\viewmodels\RemoveButton
--- style_help is models\stylesheet\RemoveButton
+-- style_remove is models\stylesheet\RemoveButton
 -- Returns:
 --	isClicked, isHovered
 function Draw_RemoveButton(def, style_remove, screenOffset_x, screenOffset_y, parent_width, parent_height, const)

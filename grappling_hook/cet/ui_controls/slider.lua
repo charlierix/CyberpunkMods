@@ -4,7 +4,7 @@ local hint = "ctrl+click to type"
 
 -- Shows a slider.  The value is persisted in def.value
 -- def is models\viewmodels\Slider
--- style_text is models\stylesheet\Slider
+-- style_slider is models\stylesheet\Slider
 -- Returns
 --  wasChanged, isHovered
 function Draw_Slider(def, style_slider, parent_width, parent_height, const, line_heights)
@@ -49,7 +49,7 @@ function Draw_Slider(def, style_slider, parent_width, parent_height, const, line
     return changed, isHovered
 end
 
-------------------------------------------- Private Methods -------------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.GetFormat(def)
     local decimal = ""

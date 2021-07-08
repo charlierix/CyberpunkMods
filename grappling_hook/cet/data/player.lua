@@ -26,33 +26,23 @@ function Player:new(o, vars, const, debug)
     return obj
 end
 
---TODO: Create methods for updating some of the stats.  Maybe taking subsets of the tree
---These upgrade function will also insert the new stats in the database
-
 -- Saves people from writing an ugly if elseif set
 function Player:GetGrappleByIndex(index)
-    if index == 1 then
-        return self.grapple1
-
-    elseif index == 2 then
-        return self.grapple2
-
-    elseif index == 3 then
-        return self.grapple3
-
-    elseif index == 4 then
-        return self.grapple4
-
-    elseif index == 5 then
-        return self.grapple5
-
-    elseif index == 6 then
-        return self.grapple6
-
-    else
-        print("Player:GetGrappleByIndex: Index out of range: " .. tostring(index))
+    local errMsg = this.ValidateIndex(index)
+    if errMsg then
+        print("Player:GetGrappleByIndex: " .. errMsg .. ": " .. tostring(index))
         return nil
     end
+
+    return self["grapple" .. tostring(index)]
+end
+function Player:SetGrappleByIndex(index, grapple)
+    local errMsg = this.ValidateIndex(index)
+    if errMsg then
+        print("Player:SetGrappleByIndex: " .. errMsg .. ": " .. tostring(index))
+    end
+
+    self["grapple" .. tostring(index)] = grapple
 end
 
 function Player:Save()
@@ -137,4 +127,22 @@ function this.CreateNewPlayerID(o)
     o:SetPlayerUniqueID(playerID)
 
     return playerID
+end
+
+function this.ValidateIndex(index)
+    if index == nil then
+        return "Index is nil"
+
+    elseif type(index) ~= "number" then
+        return "Index is not a number"
+
+    elseif math.floor(index) ~= index then
+        return "Index is floating point"
+
+    elseif index < 1 or index > 6 then
+        return "Index is out of range"
+
+    else
+        return nil
+    end
 end

@@ -2,7 +2,7 @@ local this = {}
 local character = "?"       --"i"  (i might look better if it would be centered)
 
 
--- Draws a button that is a ? with a circle around it.  Used like a button to show additional
+-- Draws a button that is a ? with a circle around it.  Used as a button to show additional
 -- information
 -- def is models\viewmodels\HelpButton
 -- style_help is models\stylesheet\HelpButton

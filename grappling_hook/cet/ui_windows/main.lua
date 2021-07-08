@@ -20,8 +20,6 @@ function DefineWindow_Main(vars_ui, const)
 
     main.energyTank = this.Define_EnergyTank(const)
 
-    --TODO: Remove Buttons
-
     this.Define_GrappleSlots(main, const)
 
     main.experience = Define_Experience(const, nil, 15)
@@ -68,28 +66,17 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
         TransitionWindows_Energy_Tank(vars_ui, const)
     end
 
-    if Draw_SummaryButton(main.grapple1, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        TransitionWindows_Grapple(vars_ui, const, player, 1)
+    for i = 1, 6 do
+        if Draw_RemoveButton(main["remove" .. tostring(i)], vars_ui.style.removeButton, window.left, window.top, window.width, window.height, const) then
+            --NOTE: This immediately removes the grapple.  Most actions populate a change list and require ok/cancel.  But that would be difficult in this case (a change that spans windows)
+            this.RemoveGrapple(player, i)
+        end
     end
 
-    if Draw_SummaryButton(main.grapple2, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        TransitionWindows_Grapple(vars_ui, const, player, 2)
-    end
-
-    if Draw_SummaryButton(main.grapple3, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        TransitionWindows_Grapple(vars_ui, const, player, 3)
-    end
-
-    if Draw_SummaryButton(main.grapple4, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        TransitionWindows_Grapple(vars_ui, const, player, 4)
-    end
-
-    if Draw_SummaryButton(main.grapple5, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        TransitionWindows_Grapple(vars_ui, const, player, 5)
-    end
-
-    if Draw_SummaryButton(main.grapple6, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
-        TransitionWindows_Grapple(vars_ui, const, player, 6)
+    for i = 1, 6 do
+        if Draw_SummaryButton(main["grapple" .. tostring(i)], vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+            TransitionWindows_Grapple(vars_ui, const, player, i)
+        end
     end
 
     Draw_OrderedList(main.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
@@ -188,6 +175,8 @@ function this.Define_EnergyTank(const)
             vertical = const.alignment_vertical.center,
         },
 
+        border_cornerRadius_override = 16,
+
         header_prompt = "Energy",
 
         content =
@@ -212,14 +201,40 @@ function this.Define_GrappleSlots(parent, const)
     local offset_x_large = 280
     local offset_y = 180
 
-    parent.grapple1 = this.Define_GrappleSlots_DoIt(-offset_x_small, -offset_y, "1", const)
-    parent.grapple2 = this.Define_GrappleSlots_DoIt(offset_x_small, -offset_y, "2", const)
-    parent.grapple3 = this.Define_GrappleSlots_DoIt(offset_x_large, 0, "3", const)
-    parent.grapple4 = this.Define_GrappleSlots_DoIt(offset_x_small, offset_y, "4", const)
-    parent.grapple5 = this.Define_GrappleSlots_DoIt(-offset_x_small, offset_y, "5", const)
-    parent.grapple6 = this.Define_GrappleSlots_DoIt(-offset_x_large, 0, "6", const)
+    local grapple, remove
+
+    grapple, remove = this.Define_GrappleSlots_DoIt(-offset_x_small, -offset_y, "1", const)
+    parent.grapple1 = grapple
+    parent.remove1 = remove
+
+    grapple, remove = this.Define_GrappleSlots_DoIt(offset_x_small, -offset_y, "2", const)
+    parent.grapple2 = grapple
+    parent.remove2 = remove
+
+    grapple, remove = this.Define_GrappleSlots_DoIt(offset_x_large, 0, "3", const)
+    parent.grapple3 = grapple
+    parent.remove3 = remove
+
+    grapple, remove = this.Define_GrappleSlots_DoIt(offset_x_small, offset_y, "4", const)
+    parent.grapple4 = grapple
+    parent.remove4 = remove
+
+    grapple, remove = this.Define_GrappleSlots_DoIt(-offset_x_small, offset_y, "5", const)
+    parent.grapple5 = grapple
+    parent.remove5 = remove
+
+    grapple, remove = this.Define_GrappleSlots_DoIt(-offset_x_large, 0, "6", const)
+    parent.grapple6 = grapple
+    parent.remove6 = remove
 end
 function this.Define_GrappleSlots_DoIt(x, y, suffix, const)
+    return
+        this.Define_GrappleSlots_Summary(x, y, suffix, const),
+        --this.Define_GrappleSlots_Remove(x - 95, y + 50, suffix, const)
+        --this.Define_GrappleSlots_Remove(x - 92, y + 53, suffix, const)
+        this.Define_GrappleSlots_Remove(x - 92, y + 47, suffix, const)
+end
+function this.Define_GrappleSlots_Summary(x, y, suffix, const)
     -- SummaryButton
     return
     {
@@ -234,11 +249,29 @@ function this.Define_GrappleSlots_DoIt(x, y, suffix, const)
         min_width = 160,
         min_height = 70,
 
+        border_cornerRadius_override = 24,
+
         suffix = suffix,
 
-        invisible_name = "Main_Grapple" .. suffix,
+        invisible_name = "Main_Grapple_Summary_" .. suffix,
     }
 end
+function this.Define_GrappleSlots_Remove(x, y, suffix, const)
+    -- RemoveButton
+    return
+    {
+        position =
+        {
+            pos_x = x,
+            pos_y = y,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        invisible_name = "Main_Grapple_Remove_" .. suffix,
+    }
+end
+
 function this.Refresh_GrappleSlot(def, grapple)
     if grapple then
         def.header_prompt = grapple.name
@@ -247,6 +280,18 @@ function this.Refresh_GrappleSlot(def, grapple)
         def.unused_text = "empty"
         def.header_prompt = nil
     end
+end
+
+function this.RemoveGrapple(player, index)
+    local grapple = player:GetGrappleByIndex(index)
+    if not grapple then
+        do return end
+    end
+
+    player:SetGrappleByIndex(index, nil)
+    player.experience = player.experience + grapple.experience
+
+    player:Save()
 end
 
 function this.Refresh_Experience(def, player)

@@ -61,6 +61,7 @@ require "ui_controls/grapple_desired_len_accel"
 require "ui_controls/help_button"
 require "ui_controls/label"
 require "ui_controls/label_clickable"
+require "ui_controls/listbox"
 require "ui_controls/mindot_graphic"
 require "ui_controls/multiitem_displaylist"
 require "ui_controls/okcancel_buttons"
@@ -92,6 +93,11 @@ extern_json = require "external/json"       -- storing this in a global variable
 
 function TODO()
 
+    -- Transition_Windows:
+    --  Add an Activate_WindowName function to each window lua file
+    --  Call that from the transition function
+    --  This way, the transition functions don't need such deep knowledge about private window controls
+
     -- Hanging MapPins:
     --  See if it's because there's an autosave mid grapple
     --
@@ -106,16 +112,6 @@ function TODO()
 	--	grapple
 	--
 	--	names containing monowire, whip, nano
-
-    -- Input:
-    --  Give the option to register actions to this new style hotkey, if that's what they prefer
-    -- registerInput('someID', 'Some input', function(isDown)
-    --     if (isDown) then
-    --         print(GetBind('someID')..' was pressed!')
-    --     else
-    --         print(GetBind('someID')..' was released!')
-    --     end
-    -- end)
 
     -- Grapple Straight:
     --  Have an option for the anchor to be higher than the hit point
@@ -179,6 +175,8 @@ function TODO()
     --  get all the child control's sizes, do some final calculations based on sizes and margins, then pass
     --  in the location to each control's draw function (could also pass in a final width/height for controls
     --  that should stretch)
+    --
+    --  A simpler alternative could be placing controls relative to other controls
 
     -- UI:
     --  There's a lot of copy/pasted code.  A lot of it is around binding between model and viewmodel.  Look
@@ -469,24 +467,10 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
-
-    --DeleteOldPlayerRows(player.playerID)
-
-    --ReduceGrappleRows()
-
-
-    -- for i = 1, 30 do
-    --     --player.experience = player.experience + (1 / 12)
-    --     player.grapple1.experience = math.random(12, 144)
-    --     player.grapple2.experience = math.random(12, 144)
-    --     player:Save()
-    -- end
-
-
-    -- player.experience = player.experience + 3
-    -- player:Save()
-end)
+-- registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
+--     player.experience = player.experience + 3
+--     player:Save()
+-- end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()
     if shouldShowConfig then

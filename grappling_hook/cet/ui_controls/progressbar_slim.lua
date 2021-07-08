@@ -1,3 +1,7 @@
+-- Draws a progress bar that vertically small (too small for embedded text)
+-- def is models\viewmodels\ProgressBar_Slim
+-- style_progress is models\stylesheet\ProgressBar_Slim
+-- style_colors is models\stylesheet\Stylesheet.colors
 function Draw_ProgressBarSlim(def, style_progress, style_colors, parent_width, parent_height, const)
     -- Calculate Position
 	local left, top = GetControlPosition(def.position, def.width, style_progress.height, parent_width, parent_height, const)

@@ -70,7 +70,7 @@ function Keys:MapAction(action)
     local pressed = actionType == "BUTTON_PRESSED"
     local released = actionType == "BUTTON_RELEASED"
 
-    --print("pressed: " .. tostring(pressed) .. ", released: " .. tostring(released))
+    --print(actionName .. ", pressed: " .. tostring(pressed) .. ", released: " .. tostring(released))
 
     self:MapAction_Fixed(action, actionName, pressed, released)
     self:MapAction_List(actionName, pressed, released)

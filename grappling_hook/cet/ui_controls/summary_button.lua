@@ -24,7 +24,11 @@ function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, sc
     local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding)
 
     -- Border
-    Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding, isHovered, style_summary.background_color_standard_argb, style_summary.background_color_hover_argb, style_summary.border_color_standard_argb, style_summary.border_color_hover_argb, style_summary.border_cornerRadius, style_summary.border_thickness)
+    local cornerRadius = style_summary.border_cornerRadius
+    if def.border_cornerRadius_override then
+        cornerRadius = def.border_cornerRadius_override
+    end
+    Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding, isHovered, style_summary.background_color_standard_argb, style_summary.background_color_hover_argb, style_summary.border_color_standard_argb, style_summary.border_color_hover_argb, cornerRadius, style_summary.border_thickness)
 
     -- Place the text
     this.Draw_Unused(def, line_heights, style_summary, center_x, center_y)

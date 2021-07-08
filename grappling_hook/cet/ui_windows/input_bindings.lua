@@ -15,9 +15,9 @@ function DefineWindow_InputBindings(vars_ui, const)
     input_bindings.help2_label = this.Define_Help2_Label(const)
     input_bindings.help2_button = this.Define_Help2_Button(const)
 
-    -------------- Standard Display --------------
-
     input_bindings.watchedActions = this.Define_WatchedActions(const)
+
+    -------------- Standard Display --------------
 
     -- {
     --     {
@@ -259,7 +259,6 @@ Also, post a message on nexus, so it can be fixed for everyone]]
 
     return retVal
 end
-
 
 function this.Define_WatchedActions(const)
     -- MultiItemDisplayList

@@ -1,5 +1,6 @@
 local this = {}
 
+-- This shows a readonly list of items
 -- def is models\viewmodels\MultiItemDisplayList
 -- style_list is models\stylesheet\MultiItemDisplayList
 function Draw_MultiItemDisplayList(def, style_list, screenOffset_x, screenOffset_y, parent_width, parent_height, const, line_heights)
