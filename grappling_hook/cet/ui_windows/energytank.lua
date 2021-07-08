@@ -34,6 +34,10 @@ function DefineWindow_EnergyTank(vars_ui, const)
     energy_tank.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
+function ActivateWindow_EnergyTank(vars_ui)
+    vars_ui.energy_tank.changes:Clear()
+end
+
 function DrawWindow_EnergyTank(isCloseRequested, vars_ui, player, window, const)
     local energy_tank = vars_ui.energy_tank
     local changes = energy_tank.changes

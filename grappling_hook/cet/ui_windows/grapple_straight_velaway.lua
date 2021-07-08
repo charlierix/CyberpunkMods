@@ -45,6 +45,15 @@ function DefineWindow_GrappleStraight_VelocityAway(vars_ui, const)
     gst8_velaway.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
+function ActivateWindow_GrappleStraight_VelocityAway(vars_ui)
+    vars_ui.gst8_velaway.changes:Clear()
+
+    vars_ui.gst8_velaway.has_velaway.isChecked = nil
+    vars_ui.gst8_velaway.has_compress.isChecked = nil
+    vars_ui.gst8_velaway.has_tension.isChecked = nil
+    vars_ui.gst8_velaway.deadspot_dist.value = nil
+end
+
 local isHovered_velaway_checkbox = false
 local isHovered_compress_checkbox = false
 local isHovered_compress_updown = false

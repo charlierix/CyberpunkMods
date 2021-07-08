@@ -47,6 +47,12 @@ function DefineWindow_GrappleStraight_AirDash(vars_ui, const)
     gst8_airdash.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
+function ActivateWindow_GrappleStraight_AirDash(vars_ui)
+    vars_ui.gst8_airdash.changes:Clear()
+
+    vars_ui.gst8_airdash.has_airdash.isChecked = nil
+end
+
 local isHovered_has = false
 local isHovered_percent = false
 local isHovered_accel = false

@@ -39,6 +39,13 @@ function DefineWindow_Grapple_Straight(vars_ui, const)
     grapple_straight.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
+function ActivateWindow_Grapple_Straight(vars_ui)
+    vars_ui.grapple_straight.changes:Clear()
+
+    vars_ui.grapple_straight.name.text = nil
+    vars_ui.grapple_straight.description.text = nil
+end
+
 local isHovered_distance = false
 local isHovered_look = false
 local isHovered_along = false

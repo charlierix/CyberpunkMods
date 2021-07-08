@@ -35,6 +35,18 @@ function DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
     gst8_stop.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
+function ActivateWindow_GrappleStraight_StopEarly(vars_ui)
+    vars_ui.gst8_stop.changes:Clear()
+
+    vars_ui.gst8_stop.has_stopDistance.isChecked = nil
+    vars_ui.gst8_stop.stopDistance_value.value = nil
+
+    vars_ui.gst8_stop.should_stopOnWallHit.isChecked = nil
+
+    vars_ui.gst8_stop.has_stopAngle.isChecked = nil
+    vars_ui.gst8_stop.stopAngle_value.value = nil
+end
+
 local isHovered_stopAngle_checkbox = false
 local isHovered_stopdistance_checkbox = false
 local isHovered_stopdistance_slider = false

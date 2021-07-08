@@ -38,6 +38,12 @@ function DefineWindow_GrappleStraight_AccelLook(vars_ui, const)
     gst8_acclook.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
+function ActivateWindow_GrappleStraight_AccelLook(vars_ui)
+    vars_ui.gst8_acclook.changes:Clear()
+
+    vars_ui.gst8_acclook.has_accellook.isChecked = nil
+end
+
 local isHovered_has = false
 local isHovered_accel = false
 local isHovered_speed = false

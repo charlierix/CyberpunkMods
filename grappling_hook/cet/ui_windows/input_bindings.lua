@@ -49,6 +49,17 @@ function DefineWindow_InputBindings(vars_ui, const)
     input_bindings.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
+function ActivateWindow_InputBindings(vars_ui)
+    local bind_buttons = vars_ui.input_bindings.bind_buttons
+
+    for i = 1, #bind_buttons do
+        bind_buttons[i].isDeleteChange = false
+        bind_buttons[i].newActions = nil
+    end
+
+    vars_ui.keys:StartWatching()
+end
+
 function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, window, const)
     local input_bindings = vars_ui.input_bindings
 

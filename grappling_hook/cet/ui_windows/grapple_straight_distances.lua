@@ -31,6 +31,13 @@ function DefineWindow_GrappleStraight_Distances(vars_ui, const)
     gst8_dist.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
+function ActivateWindow_GrappleStraight_Distances(vars_ui)
+    vars_ui.gst8_dist.changes:Clear()
+
+    vars_ui.gst8_dist.desired_checkbox.isChecked = nil
+    vars_ui.gst8_dist.desired_slider.value = nil
+end
+
 local isHovered_desired_checkbox = false
 local isHovered_desired_slider = false
 local isHovered_max_updown = false

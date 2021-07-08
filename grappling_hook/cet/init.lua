@@ -93,11 +93,6 @@ extern_json = require "external/json"       -- storing this in a global variable
 
 function TODO()
 
-    -- Transition_Windows:
-    --  Add an Activate_WindowName function to each window lua file
-    --  Call that from the transition function
-    --  This way, the transition functions don't need such deep knowledge about private window controls
-
     -- Hanging MapPins:
     --  See if it's because there's an autosave mid grapple
     --

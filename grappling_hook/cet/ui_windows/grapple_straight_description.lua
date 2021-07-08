@@ -20,6 +20,12 @@ function DefineWindow_GrappleStraight_Description(vars_ui, const)
     gst8_descr.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 end
 
+function ActivateWindow_GrappleStraight_Description(vars_ui)
+    vars_ui.gst8_descr.changes:Clear()
+
+    vars_ui.gst8_descr.description.text = nil
+end
+
 function DrawWindow_GrappleStraight_Description(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
     if not grapple then

@@ -28,6 +28,14 @@ function DefineWindow_Main(vars_ui, const)
     main.okcancel = Define_OkCancelButtons(true, vars_ui, const)
 end
 
+function ActivateWindow_Main(vars_ui)
+    vars_ui.main.changes:Clear()
+
+    vars_ui.main.should_autoshow.isChecked = nil
+
+    vars_ui.keys:StopWatching()     -- doing this in case it came from the input bindings window (which put keys in a watching state)
+end
+
 -- This gets called each frame from DrawConfig()
 function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
     local main = vars_ui.main
