@@ -1,5 +1,13 @@
 local this = {}
 
+local isHovered_distance = false
+local isHovered_look = false
+local isHovered_along = false
+local isHovered_drag = false
+local isHovered_airdash = false
+local isHovered_antigrav = false
+local isHovered_stopEarly = false
+
 function DefineWindow_Grapple_Straight(vars_ui, const)
 
     --TODO: Tooltip panel on hover over buttons
@@ -45,14 +53,6 @@ function ActivateWindow_Grapple_Straight(vars_ui)
     vars_ui.grapple_straight.name.text = nil
     vars_ui.grapple_straight.description.text = nil
 end
-
-local isHovered_distance = false
-local isHovered_look = false
-local isHovered_along = false
-local isHovered_drag = false
-local isHovered_airdash = false
-local isHovered_antigrav = false
-local isHovered_stopEarly = false
 
 function DrawWindow_Grapple_Straight(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)

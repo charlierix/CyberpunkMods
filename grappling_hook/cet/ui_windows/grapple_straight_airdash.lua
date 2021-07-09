@@ -1,6 +1,11 @@
 local this = {}
 local default_airdash = GetDefault_AirDash()
 
+local isHovered_has = false
+local isHovered_percent = false
+local isHovered_accel = false
+local isHovered_speed = false
+
 function DefineWindow_GrappleStraight_AirDash(vars_ui, const)
     local gst8_airdash = {}
     vars_ui.gst8_airdash = gst8_airdash
@@ -52,11 +57,6 @@ function ActivateWindow_GrappleStraight_AirDash(vars_ui)
 
     vars_ui.gst8_airdash.has_airdash.isChecked = nil
 end
-
-local isHovered_has = false
-local isHovered_percent = false
-local isHovered_accel = false
-local isHovered_speed = false
 
 function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)

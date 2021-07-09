@@ -1,5 +1,10 @@
 local this = {}
 
+local isHovered_stopAngle_checkbox = false
+local isHovered_stopdistance_checkbox = false
+local isHovered_stopdistance_slider = false
+local isHovered_stopOnWallHit_checkbox = false
+
 function DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
     local gst8_stop = {}
     vars_ui.gst8_stop = gst8_stop
@@ -46,11 +51,6 @@ function ActivateWindow_GrappleStraight_StopEarly(vars_ui)
     vars_ui.gst8_stop.has_stopAngle.isChecked = nil
     vars_ui.gst8_stop.stopAngle_value.value = nil
 end
-
-local isHovered_stopAngle_checkbox = false
-local isHovered_stopdistance_checkbox = false
-local isHovered_stopdistance_slider = false
-local isHovered_stopOnWallHit_checkbox = false
 
 function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)

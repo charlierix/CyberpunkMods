@@ -37,7 +37,7 @@ function TransitionWindows_Grapple(vars_ui, const, player, grappleIndex)
 
     else
         vars_ui.currentWindow = const.windows.grapple_choose
-        ActivateWindow_Grapple_Choose(vars_ui)
+        ActivateWindow_Grapple_Choose(vars_ui, player)
     end
 end
 

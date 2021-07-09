@@ -186,6 +186,10 @@ function TODO()
     -- ViewModels:
     --  The properties that change should have set instead of init
 
+    -- Graphics:
+    --  See if this can be used to draw in game
+    --  https://redscript.redmodding.org/#37505
+
 end
 
 local this = {}

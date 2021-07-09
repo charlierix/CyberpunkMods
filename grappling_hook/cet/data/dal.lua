@@ -389,13 +389,53 @@ function GetGrappleKey_ByContent(grapple)
     end
 end
 
--- This finds grapples that can be used by the amount of experience passed in
-function FindGrapples(targetExperience)
-    -- Need to also get distinct name, but get the largest experience for each of those distinct names
+-- This returns information about each grapple row, sorted by xp, name
+-- Returns
+--  { { grapple_key, name, experience, description, date }, {...}, {...}, }
+function GetAvailableGrapples()
+    local sucess, rows = pcall(function ()
+        local stmt = db:prepare
+        [[
+            SELECT
+                GrappleKey,
+                Name,
+                Experience,
+                JSON,
+                LastUsed_Readable
+            FROM
+                Grapple
+            ORDER BY
+                Experience, Name
+        ]]
 
-    --select * from grapple
-    --where experience <= targetExperience
-    --order by experience desc
+        local retVal = {}
+        local foundOne = false
+
+        for row in this.Bind_Select_MultiplRows_Iterator(stmt, "GetAvailableGrapples", empty_param) do
+            foundOne = true
+
+            retVal[#retVal+1] =
+            {
+                grapple_key = row.GrappleKey,
+                name = row.Name,
+                experience = row.Experience,
+                description = this.GetGrappleDescription(row.JSON),
+                date = row.LastUsed_Readable,
+            }
+        end
+
+        if foundOne then
+            return retVal
+        else
+            return nil
+        end
+    end)
+
+    if sucess then
+        return rows
+    else
+        return nil
+    end
 end
 
 -- These are a set of functions that will delete excess rows from the grapple table (see datautil.ReduceGrappleRows)
@@ -521,6 +561,23 @@ function this.GetCurrentTime_AndReadable()
     local time_readable = os.date("%Y-%m-%d %H:%M:%S", time)
 
     return time, time_readable
+end
+
+function this.GetGrappleDescription(json)
+    if not json then
+        return ""
+    end
+
+    local grapple = extern_json.decode(json)
+    if not grapple then
+        return ""
+    end
+
+    if not grapple.description then
+        return ""
+    end
+
+    return grapple.description
 end
 
 -- Select statements have the same set of checks.  This binds the values, then returns the row

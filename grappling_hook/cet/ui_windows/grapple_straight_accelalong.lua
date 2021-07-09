@@ -1,6 +1,11 @@
 local this = {}
 local default_accel = GetDefault_ConstantAccel()
 
+local isHovered_has = false
+local isHovered_accel = false
+local isHovered_speed = false
+local isHovered_deadspot = false
+
 function DefineWindow_GrappleStraight_AccelAlong(vars_ui, const)
     local gst8_accalong = {}
     vars_ui.gst8_accalong = gst8_accalong
@@ -53,11 +58,6 @@ function ActivateWindow_GrappleStraight_AccelAlong(vars_ui)
     vars_ui.gst8_accalong.has_accelalong.isChecked = nil
     vars_ui.gst8_accalong.deadspot_dist.value = nil
 end
-
-local isHovered_has = false
-local isHovered_accel = false
-local isHovered_speed = false
-local isHovered_deadspot = false
 
 function DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)

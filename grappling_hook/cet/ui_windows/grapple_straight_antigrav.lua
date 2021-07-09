@@ -1,6 +1,10 @@
 local this = {}
 local default_antigrav = GetDefault_AntiGravity()
 
+local isHovered_has = false
+local isHovered_percent = false
+local isHovered_fade = false
+
 function DefineWindow_GrappleStraight_AntiGrav(vars_ui, const)
     local gst8_antgrav = {}
     vars_ui.gst8_antgrav = gst8_antgrav
@@ -43,10 +47,6 @@ function ActivateWindow_GrappleStraight_AntiGrav(vars_ui)
 
     vars_ui.gst8_antgrav.has_antigrav.isChecked = nil
 end
-
-local isHovered_has = false
-local isHovered_percent = false
-local isHovered_fade = false
 
 function DrawWindow_GrappleStraight_AntiGrav(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)

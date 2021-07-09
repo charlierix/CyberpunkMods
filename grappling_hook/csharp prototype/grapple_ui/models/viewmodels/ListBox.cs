@@ -19,6 +19,11 @@ namespace grapple_ui.models.viewmodels
         public string[] items { get; init; }
 
         /// <summary>
+        /// Optional array, same size as items.  If present, this will determine which items can be selected
+        /// </summary>
+        public bool[] selectable { get; init; }
+
+        /// <summary>
         /// Use zero for nothing selected
         /// </summary>
         public int selected_index { get; init; }

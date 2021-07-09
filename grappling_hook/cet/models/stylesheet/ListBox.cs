@@ -29,7 +29,9 @@ namespace grapple_ui.models.stylesheet
         /// <summary>
         /// Color of the text
         /// </summary>
-        public string foreground_color { get; init; }
+        public string foreground_color_standard { get; init; }
+        public string foreground_color_selected { get; init; }
+        public string foreground_color_disabled { get; init; }
 
         /// <summary>
         /// NOTE: The scrollbar's background color is applied over top of the listbox's background color.  So an opacity of

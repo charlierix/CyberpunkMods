@@ -1,6 +1,13 @@
 local this = {}
 local default_velaway = GetDefault_VelocityAway()
 
+local isHovered_velaway_checkbox = false
+local isHovered_compress_checkbox = false
+local isHovered_compress_updown = false
+local isHovered_tension_checkbox = false
+local isHovered_tension_updown = false
+local isHovered_deadspot_slider = false
+
 function DefineWindow_GrappleStraight_VelocityAway(vars_ui, const)
     local gst8_velaway = {}
     vars_ui.gst8_velaway = gst8_velaway
@@ -53,13 +60,6 @@ function ActivateWindow_GrappleStraight_VelocityAway(vars_ui)
     vars_ui.gst8_velaway.has_tension.isChecked = nil
     vars_ui.gst8_velaway.deadspot_dist.value = nil
 end
-
-local isHovered_velaway_checkbox = false
-local isHovered_compress_checkbox = false
-local isHovered_compress_updown = false
-local isHovered_tension_checkbox = false
-local isHovered_tension_updown = false
-local isHovered_deadspot_slider = false
 
 function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)

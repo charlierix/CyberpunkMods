@@ -8,10 +8,8 @@ function GetDefault_Player(playerID)
         name = "default",
         energy_tank = GetDefault_EnergyTank(),
 
-        --TODO: Action Mappings
-
         grapple1 = GetDefault_Grapple_Pull(),
-        grapple2 = GetDefault_Grapple_Rigid(),
+        grapple2 = GetDefault_Grapple_Rope(),
         --grapple3 = GetDefault_WebSwing(),
 
         experience = 0,
@@ -19,6 +17,67 @@ function GetDefault_Player(playerID)
 end
 
 ------------------------------------------------ Grapples ------------------------------------------------
+
+-- This returns an array that is used by the grapple choose window
+-- Returns
+--  { { name, experience, description }, {...}, {...}, }
+function GetDefault_Grapple_Choices()
+    return
+    {
+        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Blank()),
+        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Rope()),
+        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Pull()),
+    }
+end
+
+function GetDefault_Grapple_ByName(name)
+    if name == "blank" then
+        return GetDefault_Grapple_Blank()
+
+    elseif name == "pull" then
+        return GetDefault_Grapple_Pull()
+
+    elseif name == "rope" then
+        return GetDefault_Grapple_Rope()
+
+    else
+        print("GetDefault_Grapple_ByName: Unknown name: " .. tostring(name))
+        return nil
+    end
+end
+
+function GetDefault_Grapple_Blank()
+    local retVal =
+    {
+        name = "blank",
+        description = "Just a scaffolding to build from.  Some assembly required",
+
+        mappin_name = "DistractVariant",
+        minDot = nil,
+        stop_on_wallHit = false,
+
+        anti_gravity = nil,
+
+        desired_length = nil,
+
+        accel_alongGrappleLine = nil,
+        accel_alongLook = nil,
+
+        springAccel_k = nil,        --TODO: Play with this
+
+        velocity_away = nil,        -- the attractive force is strong enough that there will likely never be a velocity away.  And if there is, the force is pretty strong anyway
+
+        energy_cost = 1,        --TODO: this should be a function of the experience cost
+
+        aim_straight = GetDefault_AimStraight(6),
+
+        fallDamageReduction_percent = 0,
+    }
+
+    retVal.experience = this.CalculateExperience_GrappleStraight(retVal)
+
+    return retVal
+end
 
 function GetDefault_Grapple_Pull()
     local retVal =
@@ -53,11 +112,11 @@ function GetDefault_Grapple_Pull()
     return retVal
 end
 
-function GetDefault_Grapple_Rigid()
+function GetDefault_Grapple_Rope()
     local retVal =
     {
-        name = "rigid",
-        description = "Mainly used like a rope.  Also has a small compression resistance, like a weak pole vault",
+        name = "rope",
+        description = "This allows you to swing from overhangs or hang from walls",
 
         mappin_name = "TakeControlVariant",
         minDot = -0.71,     -- give this extra freedom so they can look around more while hanging/swinging
@@ -87,8 +146,14 @@ function GetDefault_Grapple_Rigid()
     return retVal
 end
 
+function GetDefault_Grapple_PoleVault()
+    -- Similar to a rope, but with compression instead of tension
+
+    -- If there is a desired length, then the max speed applied to standard force should be very small
+end
+
 function GetDefault_Grapple_WallHanger()
-    -- This should be rope used to hang from a wall
+    -- This should be a rope used to hang from a wall (not sure if this is needed, since rope does most of this)
 
     -- mindot = nil
     -- desired length = .75
@@ -469,4 +534,13 @@ function this.GetUpdateAndValue(min, max, amount, value_override, defaultToNil)
     end
 
     return update, value
+end
+
+function this.GetDefault_Grapple_Choices_SubArray(grapple)
+    return
+    {
+        name = grapple.name,
+        experience = grapple.experience,
+        description = grapple.description,
+    }
 end
