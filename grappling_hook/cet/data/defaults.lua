@@ -22,12 +22,33 @@ end
 -- Returns
 --  { { name, experience, description }, {...}, {...}, }
 function GetDefault_Grapple_Choices()
-    return
-    {
+    local comparer = function (a, b)
+        return Comparer(a.experience, b.experience)
+    end
+
+    local retVal = {}
+
+    InsertSorted(
+        retVal,
         this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Blank()),
-        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Rope()),
+        comparer)
+
+    InsertSorted(
+        retVal,
         this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Pull()),
-    }
+        comparer)
+
+    InsertSorted(
+        retVal,
+        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Rope()),
+        comparer)
+
+    InsertSorted(
+        retVal,
+        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_PoleVault()),
+        comparer)
+
+    return retVal
 end
 
 function GetDefault_Grapple_ByName(name)
@@ -147,18 +168,37 @@ function GetDefault_Grapple_Rope()
 end
 
 function GetDefault_Grapple_PoleVault()
-    -- Similar to a rope, but with compression instead of tension
+    local retVal =
+    {
+        name = "pole vault",
+        description = "Meant to be pointed at the ground mid jump to help traverse gaps between buildings",
 
-    -- If there is a desired length, then the max speed applied to standard force should be very small
-end
+        mappin_name = "TakeControlVariant",
+        minDot = -0.87,
+        stop_distance = 2,
+        stop_on_wallHit = true,
 
-function GetDefault_Grapple_WallHanger()
-    -- This should be a rope used to hang from a wall (not sure if this is needed, since rope does most of this)
+        anti_gravity = nil,
 
-    -- mindot = nil
-    -- desired length = .75
-    -- moderate pull force
-    -- strong anti gravity
+        desired_length = nil,
+
+        accel_alongGrappleLine = GetDefault_ConstantAccel(20, 6, 0.75),
+        accel_alongLook = nil,
+
+        springAccel_k = nil,        --TODO: Play with this
+
+        velocity_away = GetDefault_VelocityAway(42, nil, 1),
+
+        energy_cost = 3,
+
+        aim_straight = GetDefault_AimStraight(14),
+
+        fallDamageReduction_percent = 0,
+    }
+
+    retVal.experience = this.CalculateExperience_GrappleStraight(retVal)
+
+    return retVal
 end
 
 function GetDefault_Grapple_AngryBird()
@@ -168,6 +208,10 @@ function GetDefault_Grapple_AngryBird()
     -- Short aim length
 
     -- This uses the grapple like a slingshot
+
+
+    -- This needs some work.  The player gets propelled to the anchor quickly, but then just sort of
+    -- hits the wall, pops straight up.  Needs the anchor above hit point by a meter or two
 end
 
 function GetDefault_Grapple_HeliumFrog()
@@ -181,6 +225,11 @@ function GetDefault_Grapple_HeliumFrog()
     -- Long aim distance
 
     -- Very weak acceleration, low max speed
+
+
+    -- The current min speeds and accel are too high for this to work.  Fun idea, but jetpack
+    -- is better suited for this type of flight
+
 end
 
 ----------------------------------------------- Components -----------------------------------------------

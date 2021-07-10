@@ -93,6 +93,8 @@ extern_json = require "external/json"       -- storing this in a global variable
 
 function TODO()
 
+    -- Fix grapple energy cost
+
     -- Hanging MapPins:
     --  See if it's because there's an autosave mid grapple
     --
