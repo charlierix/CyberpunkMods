@@ -121,10 +121,11 @@ function this.Refresh_IsDirty(def, changes)
 end
 
 function this.Save(player, grapple, changes)
-    grapple.aim_straight.aim_duration = grapple.aim_straight.aim_duration + changes:Get("aim_duration")
+    if not player:TransferExperience_GrappleStraight(grapple, -changes:Get("experience")) then
+        do return end
+    end
 
-    grapple.experience = grapple.experience - changes:Get("experience")
-    player.experience = player.experience + changes:Get("experience")
+    grapple.aim_straight.aim_duration = grapple.aim_straight.aim_duration + changes:Get("aim_duration")
 
     player:Save()
 end

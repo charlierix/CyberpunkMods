@@ -557,6 +557,11 @@ function this.Refresh_IsDirty(def, changes, grapple, def_slider, startedWith_vel
 end
 
 function this.Save(player, grapple, velaway, changes, def_slider, startedWith_velaway, startedWith_compress, startedWith_tension, has_velaway, has_compress, has_tension)
+    local cost = this.GetXPGainLoss(changes, startedWith_velaway, startedWith_compress, startedWith_tension, has_velaway, has_compress, has_tension)
+    if not player:TransferExperience_GrappleStraight(grapple, -cost) then
+        do return end
+    end
+
     if has_velaway then
         local deadspot = GetSliderValue(def_slider)
 
@@ -582,11 +587,6 @@ function this.Save(player, grapple, velaway, changes, def_slider, startedWith_ve
     else
         grapple.velocity_away = nil
     end
-
-    local cost = this.GetXPGainLoss(changes, startedWith_velaway, startedWith_compress, startedWith_tension, has_velaway, has_compress, has_tension)
-
-    grapple.experience = grapple.experience - cost
-    player.experience = player.experience + cost
 
     player:Save()
 end

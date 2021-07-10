@@ -359,6 +359,11 @@ function this.Refresh_IsDirty(def, changes, aim, def_checkbox)
 end
 
 function this.Save(player, grapple, aim, airdash, changes, hasAD, startedWithAD)
+    local cost = this.GetXPGainLoss(hasAD, startedWithAD, changes)
+    if not player:TransferExperience_GrappleStraight(grapple, -cost) then
+        do return end
+    end
+
     if hasAD then
         if aim.air_dash then
             aim.air_dash.burnReducePercent = airdash.burnReducePercent + changes:Get("burnReducePercent")
@@ -393,11 +398,6 @@ function this.Save(player, grapple, aim, airdash, changes, hasAD, startedWithAD)
     else
         aim.air_dash = nil
     end
-
-    local cost = this.GetXPGainLoss(hasAD, startedWithAD, changes)
-
-    grapple.experience = grapple.experience - cost
-    player.experience = player.experience + cost
 
     player:Save()
 end

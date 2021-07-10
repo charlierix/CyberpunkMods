@@ -199,12 +199,13 @@ function this.Refresh_IsDirty(def, changes)
 end
 
 function this.Save(player, changes)
+    if not player:TransferExperience_EnergyTank(player.energy_tank, -changes:Get("experience")) then
+        do return end
+    end
+
     player.energy_tank.max_energy = player.energy_tank.max_energy + changes:Get("max_energy")
     player.energy_tank.recovery_rate = player.energy_tank.recovery_rate + changes:Get("recovery_rate")
     player.energy_tank.flying_percent = player.energy_tank.flying_percent + changes:Get("flying_percent")
-
-    player.energy_tank.experience = player.energy_tank.experience - changes:Get("experience")
-    player.experience = player.experience + changes:Get("experience")
 
     player:Save()
 end

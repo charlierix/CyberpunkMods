@@ -284,12 +284,13 @@ function this.Refresh_IsDirty(def, changes, def_checkbox, def_slider, grapple)
 end
 
 function this.Save(player, grapple, changes, def_checkbox, def_slider)
+    if not player:TransferExperience_GrappleStraight(grapple, -changes:Get("experience")) then
+        do return end
+    end
+
     grapple.desired_length = this.GetChanged_DesiredLength(def_checkbox, def_slider)
 
     grapple.aim_straight.max_distance = grapple.aim_straight.max_distance + changes:Get("max_distance")
-
-    grapple.experience = grapple.experience - changes:Get("experience")
-    player.experience = player.experience + changes:Get("experience")
 
     player:Save()
 end

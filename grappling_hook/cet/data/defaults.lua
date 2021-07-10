@@ -16,6 +16,18 @@ function GetDefault_Player(playerID)
     }
 end
 
+function GetEnergyCost_GrappleStraight(experience)
+    -- https://mycurvefit.com/
+    -- https://www.desmos.com/calculator
+    -- low=12 (3)
+    -- med=24 (9)
+    -- high=48 (14)
+
+    --return 15.92308 + (-15.92308 / (1 + ((experience / 21.59567) ^ 2.485427)))
+    local retVal = 15.92308 - 15.92308 / (1 + (experience / 21.59567) ^ 2.485427)      -- tested with/without extra parenthesis and the order of operation is correct on this simpler version
+    return math.max(retVal, 0)
+end
+
 ------------------------------------------------ Grapples ------------------------------------------------
 
 -- This returns an array that is used by the grapple choose window
@@ -96,6 +108,7 @@ function GetDefault_Grapple_Blank()
     }
 
     retVal.experience = this.CalculateExperience_GrappleStraight(retVal)
+    --retVal.energy_cost = this.CalculateEnergyCost_GrappleStraight(retVal)
 
     return retVal
 end
@@ -121,14 +134,13 @@ function GetDefault_Grapple_Pull()
 
         velocity_away = nil,        -- the attractive force is strong enough that there will likely never be a velocity away.  And if there is, the force is pretty strong anyway
 
-        energy_cost = 7,        --TODO: this should be a function of the experience cost
-
         aim_straight = GetDefault_AimStraight(),
 
         fallDamageReduction_percent = 0,
     }
 
     retVal.experience = this.CalculateExperience_GrappleStraight(retVal)
+    retVal.energy_cost = GetEnergyCost_GrappleStraight(retVal.experience)
 
     return retVal
 end
@@ -155,14 +167,13 @@ function GetDefault_Grapple_Rope()
 
         velocity_away = GetDefault_VelocityAway(nil, 60, nil),      -- using a big tension so it feels like rope
 
-        energy_cost = 3,
-
         aim_straight = GetDefault_AimStraight(12),
 
         fallDamageReduction_percent = 0,
     }
 
     retVal.experience = this.CalculateExperience_GrappleStraight(retVal)
+    retVal.energy_cost = GetEnergyCost_GrappleStraight(retVal.experience)
 
     return retVal
 end
@@ -189,14 +200,13 @@ function GetDefault_Grapple_PoleVault()
 
         velocity_away = GetDefault_VelocityAway(42, nil, 1),
 
-        energy_cost = 3,
-
         aim_straight = GetDefault_AimStraight(14),
 
         fallDamageReduction_percent = 0,
     }
 
     retVal.experience = this.CalculateExperience_GrappleStraight(retVal)
+    retVal.energy_cost = GetEnergyCost_GrappleStraight(retVal.experience)
 
     return retVal
 end

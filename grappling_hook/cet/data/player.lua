@@ -45,6 +45,39 @@ function Player:SetGrappleByIndex(index, grapple)
     self["grapple" .. tostring(index)] = grapple
 end
 
+function Player:TransferExperience_GrappleStraight(grapple, purchaseXP)
+    if self.experience - purchaseXP < 0 then
+        print("TransferExperience_GrappleStraight: Not enough player xp: " .. tostring(self.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
+        return false
+
+    elseif grapple.experience + purchaseXP < 0 then
+        print("TransferExperience_GrappleStraight: Not enough grapple xp: " .. tostring(grapple.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
+        return false
+    end
+
+    grapple.experience = grapple.experience + purchaseXP
+    self.experience = self.experience - purchaseXP
+
+    grapple.energy_cost = GetEnergyCost_GrappleStraight(grapple.experience)
+
+    return true
+end
+function Player:TransferExperience_EnergyTank(energy_tank, purchaseXP)
+    if self.experience - purchaseXP < 0 then
+        print("TransferExperience_EnergyTank: Not enough player xp: " .. tostring(self.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
+        return false
+
+    elseif energy_tank.experience + purchaseXP < 0 then
+        print("TransferExperience_EnergyTank: Not enough energy tank xp: " .. tostring(energy_tank.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
+        return false
+    end
+
+    energy_tank.experience = energy_tank.experience + purchaseXP
+    self.experience = self.experience - purchaseXP
+
+    return true
+end
+
 function Player:Save()
     local pkey, errMsg = SavePlayer(self:MapSelfToModel())
 

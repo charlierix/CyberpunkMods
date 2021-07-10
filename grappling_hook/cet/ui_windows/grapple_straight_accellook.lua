@@ -276,6 +276,11 @@ function this.Refresh_IsDirty(def, changes, grapple, def_checkbox)
 end
 
 function this.Save(player, grapple, accel, changes, hasAL, startedWithAL)
+    local cost = this.GetXPGainLoss(hasAL, startedWithAL, changes)
+    if not player:TransferExperience_GrappleStraight(grapple, -cost) then
+        do return end
+    end
+
     if hasAL then
         if grapple.accel_alongLook then
             grapple.accel_alongLook.accel = accel.accel + changes:Get("accel")
@@ -299,11 +304,6 @@ function this.Save(player, grapple, accel, changes, hasAL, startedWithAL)
     else
         grapple.accel_alongLook = nil
     end
-
-    local cost = this.GetXPGainLoss(hasAL, startedWithAL, changes)
-
-    grapple.experience = grapple.experience - cost
-    player.experience = player.experience + cost
 
     player:Save()
 end

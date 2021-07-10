@@ -1,7 +1,7 @@
 local this = {}
 
 -- def is models\viewmodels\Button
--- style_updown is models\stylesheet\Button
+-- style_button is models\stylesheet\Button
 -- Returns:
 --  isClicked
 function Draw_Button(def, style_button, parent_width, parent_height, const)
