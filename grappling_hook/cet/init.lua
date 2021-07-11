@@ -93,17 +93,6 @@ extern_json = require "external/json"       -- storing this in a global variable
 
 function TODO()
 
-    -- Fix grapple energy cost
-
-    -- Hanging MapPins:
-    --  See if it's because there's an autosave mid grapple
-    --
-    -- NonameNonumber — Today at 6:48 PM
-    -- mappin system should be still available
-    -- I do similar thing in that demo:
-    -- https://github.com/WolvenKit/cet-examples/blob/main/ai-components/init.lua#L130
-    -- TargetingHelper.Dispose() destroys pins
-
     -- Sound:
     --  airdash
 	--	grapple
@@ -153,10 +142,6 @@ function TODO()
     --  This is exposed in the config screen as a way to counter the above cost
 
     -- UI:
-    --  Unhook grapple
-    --  New/Load grapple
-
-    -- UI:
     --  Add invisible buttons to several controls, highlight graphics based on hover
 
     -- UI:
@@ -185,6 +170,10 @@ function TODO()
     --  Round_doz()     -- this is needed, because rounding fractions to a certain number of digits would have to be converted, then truncated
     --  also, if there's ever a textbox, that would need to be parsed as well
 
+    -- UI:
+    --  The props in viewmodels that override style are currently suffixed with _override
+    --  Need to make most style properties overridable by the viewmodel, and it should just be the same name
+
     -- ViewModels:
     --  The properties that change should have set instead of init
 
@@ -192,6 +181,14 @@ function TODO()
     --  See if this can be used to draw in game
     --  https://redscript.redmodding.org/#37505
 
+    -- Hanging MapPins: -- this might be fixed now
+    --  See if it's because there's an autosave mid grapple
+    --
+    -- NonameNonumber — Today at 6:48 PM
+    -- mappin system should be still available
+    -- I do similar thing in that demo:
+    -- https://github.com/WolvenKit/cet-examples/blob/main/ai-components/init.lua#L130
+    -- TargetingHelper.Dispose() destroys pins
 end
 
 local this = {}

@@ -221,6 +221,7 @@ function GameObjectAccessor:ChangePinIcon(id, variant)
     self:EnsureMapPinLoaded()
 
     if self.mapPin then
+        --NOTE: This function doesn't always work
         self.wrappers.ChangeMappinVariant(self.mapPin, id, variant)
     end
 end
