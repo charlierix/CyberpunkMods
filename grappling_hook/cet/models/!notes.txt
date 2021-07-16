@@ -1,11 +1,9 @@
 The files in this folder are just defining interface that the rest of the lua script conforms to
 
-Lots of functionality will be written around these types, as well as database entries
+Lots of functionality will be written around these types
 
 So using c#, because it's easier to define types in that (also, the files won't be seen as lua
 and try to be interpreted at runtime)
-
-It's also easier to prototype the ui in wpf
 
 
 NOTE: There is a post build event in the c# project that replaces these .cs files with its copy
