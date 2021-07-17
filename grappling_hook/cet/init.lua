@@ -102,6 +102,14 @@ function TODO()
     -- Grapple Straight:
     --  Have an option for the anchor to be higher than the hit point
     --  This will help get over ledges when the grapple distance isn't enough to get fast enough
+    --
+    --  Also an option to anchor some distance away from the wall
+    --  This would be useful for rope to get some better angles
+    --
+    --  Another way to go is some offset from the anchor point's normal
+
+    -- Aim:
+    --  Add an option to slow down time while aiming
 
     -- All:
     --  Fall damage should be a percent, not a bool
@@ -122,13 +130,16 @@ function TODO()
     --  This will help with scaling tall walls.  You grapple straight up, reach the anchor, recover energy,
     --  jump and aquire a new grapple point, repeat
 
+    -- Web Swing:
+    --  Have options for increased gravity, to make the player move faster
+
     -- Grapple Straight/Swing:
     --  Add extra weight when carrying a dead body
 
     -- Energy Tank:
     --  Drawn Weapon Cost %
     --
-    --  Grapple costs more When a weapon is drawn (don't do this for fists or cyberarms):
+    --  Grapple costs more when a weapon is drawn (don't do this for fists or cyberarms):
     --      knife   10%
     --      sword   30%
     --      pistol  30%
@@ -140,6 +151,9 @@ function TODO()
     -- Energy Tank:
     --  Drawn Weapon Reduction % (5 to 95)
     --  This is exposed in the config screen as a way to counter the above cost
+
+    -- XP Gain
+    --  Add achievments
 
     -- UI:
     --  Add invisible buttons to several controls, highlight graphics based on hover
@@ -173,6 +187,16 @@ function TODO()
     -- UI:
     --  The props in viewmodels that override style are currently suffixed with _override
     --  Need to make most style properties overridable by the viewmodel, and it should just be the same name
+
+    -- ValueUpdates.cs:
+    --  Add an optional property: min_abs
+    --  This can be set lower than min, and won't count toward xp
+    --  Will need a new color for the down button
+
+    -- Zip Line:
+    --  Choose an anchor point some distance along the look direction
+    --  Calculate a parabola or bezier above the player, then draw it
+    --  This wouldn't necessarily anchor to anything (because collision hulls would be too far away)
 
     -- ViewModels:
     --  The properties that change should have set instead of init
@@ -465,11 +489,6 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
--- registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
---     player.experience = player.experience + 3
---     player:Save()
--- end)
-
 registerHotkey("GrapplingHookConfig", "Show Config", function()
     if shouldShowConfig then
         isConfigRepress = true      -- this is used as a request to close.  The window will only close if they are on a main screen, and not dirty
@@ -524,6 +543,11 @@ end)
 registerInput("GrapplingHook_KeyG", "Custom Key G", function(isDown)
     keys:MapCustomKey(const.customKeyBase .. "G", isDown)
 end)
+
+-- registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
+--     player.experience = player.experience + 3
+--     player:Save()
+-- end)
 
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then
