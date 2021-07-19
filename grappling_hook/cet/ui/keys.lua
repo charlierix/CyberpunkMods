@@ -45,6 +45,7 @@ function Keys:new(o)
     -- calls to StartWatching and StopWatching (used by the input bindings window)
     obj.watching = {}
     obj.isWatching = false
+    obj.isWatching_latch = false        -- while latching, this won't remove unpressed buttons.  Without this, the input binding will miss quickly pressed buttons
 
     return obj
 end
@@ -110,10 +111,22 @@ end
 
 function Keys:StartWatching()
     self.isWatching = true
+    self.isWatching_latch = false
     self:ClearWatching()
 end
 function Keys:StopWatching()
     self.isWatching = false
+    self.isWatching_latch = false
+    self:ClearWatching()
+end
+
+--NOTE: These only make sense while inside of StartWatching/StopWatching
+function Keys:StartLatchingWatched()
+    self.isWatching_latch = true
+    self:ClearWatching()
+end
+function Keys:StopLatchingWatched()
+    self.isWatching_latch = false
     self:ClearWatching()
 end
 
@@ -163,7 +176,7 @@ function Keys:MapAction_Watching(actionName, pressed, released)
             self.watching[actionName] = self.o.timer
         end
 
-    elseif released then
+    elseif released and not self.isWatching_latch then      -- only release when latch is false
         if not this.ShouldExclude(actionName) then
             self.watching[actionName] = nil
         end

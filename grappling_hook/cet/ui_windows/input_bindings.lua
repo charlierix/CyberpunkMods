@@ -95,6 +95,8 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, wi
             setting_bind.isDeleteChange = false
 
             setting_bind = nil
+
+            vars_ui.keys:StopLatchingWatched()
         end
 
         Draw_Label(input_bindings.instruction1, vars_ui.style.colors, window.width, window.height, const)
@@ -124,6 +126,7 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, wi
                 current.newActions = nil
             elseif summary_click then
                 setting_bind = current
+                vars_ui.keys:StartLatchingWatched()     -- don't want quickly pressed keys to be forgotten
             end
         end
 

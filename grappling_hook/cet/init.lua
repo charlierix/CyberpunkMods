@@ -94,11 +94,23 @@ extern_json = require "external/json"       -- storing this in a global variable
 
 function TODO()
 
-    -- Sound:
-    --  airdash
-	--	grapple
-	--
-	--	names containing monowire, whip, nano
+    -- Aim:
+    --  Add an option to slow down time while aiming
+
+    -- Aim:
+    --  Add an option to create a false anchor if no hits
+    --  This will cost twice the energy of a normal grapple
+    --  One property for % of max dist
+    --  One property to reduce the cost
+
+    -- Grapple Straight:
+    --  Add a repulsion to walls when > some distance from desired distance
+    --  This would be helpful with going straight up walls
+
+    -- Grapple Straight:
+    --  Add an ability to jump straight away from a wall when at the desired distance (and close to a wall)
+    --  This will help with scaling tall walls.  You grapple straight up, reach the anchor, recover energy,
+    --  jump and aquire a new grapple point, repeat
 
     -- Grapple Straight:
     --  Have an option for the anchor to be higher than the hit point
@@ -108,15 +120,6 @@ function TODO()
     --  This would be useful for rope to get some better angles
     --
     --  Another way to go is some offset from the anchor point's normal
-
-    -- Aim:
-    --  Add an option to slow down time while aiming
-
-    -- Aim:
-    --  Add an option to create a false anchor if no hits
-    --  This will cost twice the energy of a normal grapple
-    --  One property for % of max dist
-    --  One property to reduce the cost
 
     -- All:
     --  Fall damage should be a percent, not a bool
@@ -128,17 +131,13 @@ function TODO()
     --  If grapple point is a person (determined in aim), ragdoll them toward you
     --  GET OVER HERE!!!
 
-    -- Grapple Straight:
-    --  Add a repulsion to walls when > some distance from desired distance
-    --  This would be helpful with going straight up walls
-
-    -- Grapple Straight:
-    --  Add an ability to jump straight away from a wall when at the desired distance (and close to a wall)
-    --  This will help with scaling tall walls.  You grapple straight up, reach the anchor, recover energy,
-    --  jump and aquire a new grapple point, repeat
-
     -- Web Swing:
     --  Have options for increased gravity, to make the player move faster
+
+    -- Zip Line:
+    --  Choose an anchor point some distance along the look direction
+    --  Calculate a parabola or bezier above the player, then draw it
+    --  This wouldn't necessarily anchor to anything (because collision hulls would be too far away)
 
     -- Grapple Straight/Swing:
     --  Add extra weight when carrying a dead body
@@ -186,24 +185,14 @@ function TODO()
     --  for patterns and create a binding util
 
     -- UI:
+    --  The props in viewmodels that override style are currently suffixed with _override
+    --  Need to make most style properties overridable by the viewmodel, and it should just be the same name
+
+    -- UI:
     --  All numbers should be presented as dozenal :)
     --  tostring_doz()
     --  Round_doz()     -- this is needed, because rounding fractions to a certain number of digits would have to be converted, then truncated
     --  also, if there's ever a textbox, that would need to be parsed as well
-
-    -- UI:
-    --  The props in viewmodels that override style are currently suffixed with _override
-    --  Need to make most style properties overridable by the viewmodel, and it should just be the same name
-
-    -- ValueUpdates.cs:
-    --  Add an optional property: min_abs
-    --  This can be set lower than min, and won't count toward xp
-    --  Will need a new color for the down button
-
-    -- Zip Line:
-    --  Choose an anchor point some distance along the look direction
-    --  Calculate a parabola or bezier above the player, then draw it
-    --  This wouldn't necessarily anchor to anything (because collision hulls would be too far away)
 
     -- ViewModels:
     --  The properties that change should have set instead of init
@@ -212,7 +201,7 @@ function TODO()
     --  See if this can be used to draw in game
     --  https://redscript.redmodding.org/#37505
 
-    -- Hanging MapPins: -- this might be fixed now
+    -- Hanging MapPins: -- this might be fixed now (it seems to be)
     --  See if it's because there's an autosave mid grapple
     --
     -- NonameNonumber — Today at 6:48 PM
