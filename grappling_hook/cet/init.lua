@@ -53,6 +53,7 @@ require "ui/reporting"
 require "ui/transition_windows"
 require "ui/util_controls"
 require "ui/util_ui"
+require "ui/util_vm_binding"
 
 require "ui_controls/button"
 require "ui_controls/checkbox"
@@ -110,6 +111,12 @@ function TODO()
 
     -- Aim:
     --  Add an option to slow down time while aiming
+
+    -- Aim:
+    --  Add an option to create a false anchor if no hits
+    --  This will cost twice the energy of a normal grapple
+    --  One property for % of max dist
+    --  One property to reduce the cost
 
     -- All:
     --  Fall damage should be a percent, not a bool
@@ -489,6 +496,9 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
+-- registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
+-- end)
+
 registerHotkey("GrapplingHookConfig", "Show Config", function()
     if shouldShowConfig then
         isConfigRepress = true      -- this is used as a request to close.  The window will only close if they are on a main screen, and not dirty
@@ -512,6 +522,11 @@ registerForEvent("onOverlayClose", function()
     if shouldShowConfig then
         isConfigRepress = true
     end
+end)
+
+registerHotkey("GrapplingHookCheatXP", "Instant XP (cheat)", function()
+    player.experience = player.experience + 3
+    player:Save()
 end)
 
 -- These let the user bind any key or combination of keys.  The final bindings tied to specific grapple
@@ -543,11 +558,6 @@ end)
 registerInput("GrapplingHook_KeyG", "Custom Key G", function(isDown)
     keys:MapCustomKey(const.customKeyBase .. "G", isDown)
 end)
-
--- registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
---     player.experience = player.experience + 3
---     player:Save()
--- end)
 
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then

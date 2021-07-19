@@ -27,6 +27,12 @@ namespace grapple_ui.models.viewmodels
         public bool isEnabled_down { get; init; }
         public bool isEnabled_up { get; init; }
 
+        // These only have meaning when the corresponding button is enabled
+        // True: Pushing the button will change the value, but there is no change in experience
+        // False: Each push of the button is 1 xp
+        public bool isFree_down { get; init; }
+        public bool isFree_up { get; init; }
+
         /// <summary>
         /// Tells where on the parent to place the text
         /// </summary>

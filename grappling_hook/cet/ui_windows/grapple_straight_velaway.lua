@@ -318,19 +318,13 @@ function this.Refresh_Compress_UpDown(def, velaway, player, changes, has_velaway
     local currentXP = this.GetCurrentExperience(player, changes, has_velaway, has_compress, has_tension)
 
     local base = this.GetNullableMin(velaway.accel_compression, velaway.accel_compression_update.min)
-    local down, up = GetDecrementIncrement(velaway.accel_compression_update, base + changes:Get("accel_compression"), currentXP)
-    Refresh_UpDownButton(def, down, up, 0)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(velaway.accel_compression_update, base + changes:Get("accel_compression"), currentXP)
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0)
 end
 function this.Update_Compress(def, changes, isDownClicked, isUpClicked)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("accel_compression", def.value_down)
-        changes:Add("experience_compression", 1)        -- experience needs to be independently tracked between compression and tension, because the checkbox tells whether to look at this or the buysell property
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("accel_compression", def.value_up)
-        changes:Subtract("experience_compression", 1)
-    end
+    -- experience needs to be independently tracked between compression and tension, because the
+    -- checkbox tells whether to look at this or the buysell property
+    Update_UpDownButton("accel_compression", "experience_compression", isDownClicked, isUpClicked, def, changes)
 end
 
 function this.Tooltip_HasTension()
@@ -369,19 +363,11 @@ function this.Refresh_Tension_UpDown(def, velaway, player, changes, has_velaway,
     local currentXP = this.GetCurrentExperience(player, changes, has_velaway, has_compress, has_tension)
 
     local base = this.GetNullableMin(velaway.accel_tension, velaway.accel_tension_update.min)
-    local down, up = GetDecrementIncrement(velaway.accel_tension_update, base + changes:Get("accel_tension"), currentXP)
-    Refresh_UpDownButton(def, down, up, 0)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(velaway.accel_tension_update, base + changes:Get("accel_tension"), currentXP)
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0)
 end
 function this.Update_Tension(def, changes, isDownClicked, isUpClicked)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("accel_tension", def.value_down)
-        changes:Add("experience_tension", 1)
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("accel_tension", def.value_up)
-        changes:Subtract("experience_tension", 1)
-    end
+    Update_UpDownButton("accel_tension", "experience_tension", isDownClicked, isUpClicked, def, changes)
 end
 
 function this.Define_DeadSpot_Label(const)

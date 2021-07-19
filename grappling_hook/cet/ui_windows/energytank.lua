@@ -120,19 +120,11 @@ function this.Refresh_Total_Value(def, energy_tank, changes)
     def.text = tostring(Round(energy_tank.max_energy + changes:Get("max_energy")))
 end
 function this.Refresh_Total_UpDown(def, energy_tank, player, changes)
-    local down, up = GetDecrementIncrement(energy_tank.max_energy_update, energy_tank.max_energy + changes:Get("max_energy"), player.experience + changes:Get("experience"))
-    Refresh_UpDownButton(def, down, up)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(energy_tank.max_energy_update, energy_tank.max_energy + changes:Get("max_energy"), player.experience + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up)
 end
 function this.Update_Total(def, changes, isDownClicked, isUpClicked)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("max_energy", def.value_down)
-        changes:Add("experience", 1)
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("max_energy", def.value_up)
-        changes:Subtract("experience", 1)
-    end
+    Update_UpDownButton("max_energy", "experience", isDownClicked, isUpClicked, def, changes)
 end
 
 function this.Tooltip_Refill()
@@ -145,19 +137,11 @@ function this.Refresh_Refill_Value(def, energy_tank, changes)
     def.text = tostring(Round(energy_tank.recovery_rate + changes:Get("recovery_rate"), 1))
 end
 function this.Refresh_Refill_UpDown(def, energy_tank, player, changes)
-    local down, up = GetDecrementIncrement(energy_tank.recovery_rate_update, energy_tank.recovery_rate + changes:Get("recovery_rate"), player.experience + changes:Get("experience"))
-    Refresh_UpDownButton(def, down, up)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(energy_tank.recovery_rate_update, energy_tank.recovery_rate + changes:Get("recovery_rate"), player.experience + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up)
 end
 function this.Update_Refill(def, changes, isDownClicked, isUpClicked)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("recovery_rate", def.value_down)
-        changes:Add("experience", 1)
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("recovery_rate", def.value_up)
-        changes:Subtract("experience", 1)
-    end
+    Update_UpDownButton("recovery_rate", "experience", isDownClicked, isUpClicked, def, changes)
 end
 
 function this.Tooltip_Percent()
@@ -170,28 +154,11 @@ function this.Refresh_Percent_Value(def, energy_tank, changes)
     def.text = tostring(Round((energy_tank.flying_percent + changes:Get("flying_percent")) * 100)) .. "%"
 end
 function this.Refresh_Percent_UpDown(def, energy_tank, player, changes)
-    local down, up = GetDecrementIncrement(energy_tank.flying_percent_update, energy_tank.flying_percent + changes:Get("flying_percent"), player.experience + changes:Get("experience"))
-    Refresh_UpDownButton(def, down, up)
-
-    -- Refresh_UpDownButton set several properties, but the text needs to be multiplied by 100
-    if down then
-        def.text_down = tostring(Round(down * 100))
-    end
-
-    if up then
-        def.text_up = tostring(Round(up * 100))
-    end
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(energy_tank.flying_percent_update, energy_tank.flying_percent + changes:Get("flying_percent"), player.experience + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0, 100)
 end
 function this.Update_Percent(def, changes, isDownClicked, isUpClicked)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("flying_percent", def.value_down)
-        changes:Add("experience", 1)
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("flying_percent", def.value_up)
-        changes:Subtract("experience", 1)
-    end
+    Update_UpDownButton("flying_percent", "experience", isDownClicked, isUpClicked, def, changes)
 end
 
 function this.Refresh_IsDirty(def, changes)

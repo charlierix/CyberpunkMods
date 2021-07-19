@@ -99,7 +99,7 @@ function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, w
 
     this.Refresh_Experience(gst8_airdash.experience, player, grapple, changes, gst8_airdash.has_airdash.isChecked, startedWithAD)
 
-    this.Refresh_IsDirty(gst8_airdash.okcancel, changes, grapple, gst8_airdash.has_airdash)
+    this.Refresh_IsDirty(gst8_airdash.okcancel, changes, grapple.aim_straight, gst8_airdash.has_airdash)
 
     -------------------------------- Show ui elements --------------------------------
 
@@ -273,19 +273,11 @@ function this.Refresh_Percent_Value(def, airdash, changes)
     def.text = tostring(Round((airdash.burnReducePercent + changes:Get("burnReducePercent")) * 100)) .. "%"
 end
 function this.Refresh_Percent_UpDown(def, airdash, player, changes)
-    local down, up = GetDecrementIncrement(airdash.burnReducePercent_update, airdash.burnReducePercent + changes:Get("burnReducePercent"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
-    Refresh_UpDownButton(def, down, up, 0, 100)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(airdash.burnReducePercent_update, airdash.burnReducePercent + changes:Get("burnReducePercent"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0, 100)
 end
 function this.Update_Percent(def, changes, isDownClicked, isUpClicked)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("burnReducePercent", def.value_down)
-        changes:Add("experience", 1)
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("burnReducePercent", def.value_up)
-        changes:Subtract("experience", 1)
-    end
+    Update_UpDownButton("burnReducePercent", "experience", isDownClicked, isUpClicked, def, changes)
 end
 
 function this.Tooltip_Accel()
@@ -298,19 +290,11 @@ function this.Refresh_Accel_Value(def, accel, changes)
     def.text = tostring(Round(accel.accel + changes:Get("accel")))
 end
 function this.Refresh_Accel_UpDown(def, accel, player, changes)
-    local down, up = GetDecrementIncrement(accel.accel_update, accel.accel + changes:Get("accel"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
-    Refresh_UpDownButton(def, down, up, 0)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(accel.accel_update, accel.accel + changes:Get("accel"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0)
 end
 function this.Update_Accel(def, changes, isDownClicked, isUpClicked)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("accel", def.value_down)
-        changes:Add("experience", 1)
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("accel", def.value_up)
-        changes:Subtract("experience", 1)
-    end
+    Update_UpDownButton("accel", "experience", isDownClicked, isUpClicked, def, changes)
 end
 
 function this.Tooltip_Speed()
@@ -320,19 +304,11 @@ function this.Refresh_Speed_Value(def, accel, changes)
     def.text = tostring(Round(accel.speed + changes:Get("speed")))
 end
 function this.Refresh_Speed_UpDown(def, accel, player, changes)
-    local down, up = GetDecrementIncrement(accel.speed_update, accel.speed + changes:Get("speed"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
-    Refresh_UpDownButton(def, down, up, 0)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(accel.speed_update, accel.speed + changes:Get("speed"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0)
 end
 function this.Update_Speed(def, changes, isDownClicked, isUpClicked)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("speed", def.value_down)
-        changes:Add("experience", 1)
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("speed", def.value_up)
-        changes:Subtract("experience", 1)
-    end
+    Update_UpDownButton("speed", "experience", isDownClicked, isUpClicked, def, changes)
 end
 
 function this.Refresh_Experience(def, player, grapple, changes, hasAD, startedWithAD)

@@ -148,6 +148,10 @@
         "up_color_hover": "B0228B22",
         "up_color_click": "EE27A327",
 
+        "free_color_standard": "40C2B088",
+        "free_color_hover": "B082765B",
+        "free_color_click": "EEC2B088",
+
         "disabled_back_color": "40808080",
         "disabled_fore_color": "6CCC",
         "disabled_border_color": "40666666"

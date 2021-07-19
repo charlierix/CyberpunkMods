@@ -29,9 +29,16 @@ function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, cons
     ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, def.sizes.down_pad_h, def.sizes.down_pad_v)
 
 	if def.isEnabled_down then
-		ImGui.PushStyleColor(ImGuiCol.Button, style_updown.down_color_standard_abgr)
-		ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.down_color_hover_abgr)
-		ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.down_color_click_abgr)
+		if def.isFree_down then
+			ImGui.PushStyleColor(ImGuiCol.Button, style_updown.free_color_standard_abgr)
+			ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.free_color_hover_abgr)
+			ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.free_color_click_abgr)
+		else
+			ImGui.PushStyleColor(ImGuiCol.Button, style_updown.down_color_standard_abgr)
+			ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.down_color_hover_abgr)
+			ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.down_color_click_abgr)
+		end
+
 		ImGui.PushStyleColor(ImGuiCol.Text, style_updown.foreground_color_abgr)
 		ImGui.PushStyleColor(ImGuiCol.Border, style_updown.border_color_abgr)
 	else
@@ -53,9 +60,16 @@ function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, cons
     ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, def.sizes.up_pad_h, def.sizes.up_pad_v)
 
 	if def.isEnabled_up then
-		ImGui.PushStyleColor(ImGuiCol.Button, style_updown.up_color_standard_abgr)
-		ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.up_color_hover_abgr)
-		ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.up_color_click_abgr)
+		if def.isFree_up then
+			ImGui.PushStyleColor(ImGuiCol.Button, style_updown.free_color_standard_abgr)
+			ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.free_color_hover_abgr)
+			ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.free_color_click_abgr)
+		else
+			ImGui.PushStyleColor(ImGuiCol.Button, style_updown.up_color_standard_abgr)
+			ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.up_color_hover_abgr)
+			ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.up_color_click_abgr)
+		end
+
 		ImGui.PushStyleColor(ImGuiCol.Text, style_updown.foreground_color_abgr)
 		ImGui.PushStyleColor(ImGuiCol.Border, style_updown.border_color_abgr)
 	else
@@ -93,6 +107,8 @@ end
 -- Returns:
 --	decrement or nil
 --	increment or nil
+--	isFree_down
+--	isFree_up
 function GetDecrementIncrement(valueUpdates, currentValue, currentExperience)
     local dec = nil
     local inc = nil
@@ -107,22 +123,42 @@ function GetDecrementIncrement(valueUpdates, currentValue, currentExperience)
         inc = valueUpdates.amount
     end
 
-	if (not IsNearValue(currentExperience, 1)) and currentExperience < 1 then
+	if inc and valueUpdates.min and currentValue + inc <= valueUpdates.min then
+		-- Even after incrementing, the value will be less than min (which means there's min_abs).  So inc can stay
+		-- populated
+	elseif (not IsNearValue(currentExperience, 1)) and currentExperience < 1 then
 		-- There's not enough experience to apply the increment
 		inc = nil
 	end
 
-    if dec and valueUpdates.min and currentValue - dec < valueUpdates.min then
-		-- Decrementing would make it less than min
-        dec = nil
-    end
+	if dec then
+		if valueUpdates.min_abs and currentValue - dec < valueUpdates.min_abs then
+			-- Decrementing would make it less than min_abs
+			dec  = nil
+		elseif not valueUpdates.min_abs and valueUpdates.min and currentValue - dec < valueUpdates.min then
+			-- Decrementing would make it less than min (and there's no min_abs)
+			dec = nil
+		end
+	end
 
     if inc and valueUpdates.max and currentValue + inc > valueUpdates.max then
 		-- Incrementing would make it greater than max
         inc = nil
     end
 
-    return dec, inc
+	local isFree_down = true
+	if dec and valueUpdates.min and currentValue > valueUpdates.min then		-- not subtracting dec in this compare, because it's enough that they start above min.  It doesn't matter if the subtraction puts them below/at/above min
+		-- Decrementing will cause the player to gain xp (selling stats for xp)
+		isFree_down = false
+	end
+
+	local isFree_up = true
+	if inc and valueUpdates.min and currentValue + inc > valueUpdates.min then		-- it doesn't matter where the starting point was
+		-- Incrementing will cause the player to lose xp (buying stats with xp)
+		isFree_up = false
+	end
+
+    return dec, inc, isFree_down, isFree_up
 end
 
 ------------------------------------------- Private Methods -------------------------------------------

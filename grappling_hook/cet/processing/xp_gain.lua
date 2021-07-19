@@ -3,15 +3,15 @@ local pool_refill_rate = pool_max / (9 * 60)   -- refill in 9 minutes
 local minPoolRequestPercent = 1 / 12            -- even when the pool is empty, they can still get a tiny amount of xp from performing actions
 
 local gain_straight_start = 12
---local gain_straight_continuous = 0.3
 local gain_airdash_continuous = 1 / 24          -- gain per second
 
 local gain_achievement_straight_180 = 48        -- when the dot product between the start of the grapple and current is nearly -1 (they use grapple to reverse their direction)
 local gain_achievement_straight_quad = 6        -- 4 grapples in a row
 local gain_achievement_straight_cheatdeath = 18 -- grapple when vel.z < -40
-local gain_achievement_straight_triple180 = 288 -- 3 180s in a single grapple
+local gain_achievement_straight_triple180 = 288 -- 3 180s in a single grapple (may need to also make sure they aren't pressing direction keys to just circle a pole)
 
-local final_percent = 1 / 9                    -- the pool and gains are stored as integers to be easy to think about.  This converts from those units into what the xp will actually be incremented by
+--local final_percent = 1 / 9                    -- the pool and gains are stored as integers to be easy to think about.  This converts from those units into what the xp will actually be incremented by
+local final_percent = 2 / 9   --TODO: Put this back the the lower value when achievments are implemented
 
 XPGain = {}
 

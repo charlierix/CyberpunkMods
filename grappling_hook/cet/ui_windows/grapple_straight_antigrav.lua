@@ -218,19 +218,11 @@ function this.Refresh_Percent_Value(def, antigrav, changes)
     def.text = tostring(Round((antigrav.antigrav_percent + changes:Get("antigrav_percent")) * 100)) .. "%"
 end
 function this.Refresh_Percent_UpDown(def, antigrav, player, changes)
-    local down, up = GetDecrementIncrement(antigrav.antigrav_percent_update, antigrav.antigrav_percent + changes:Get("antigrav_percent"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
-    Refresh_UpDownButton(def, down, up, 0, 100)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(antigrav.antigrav_percent_update, antigrav.antigrav_percent + changes:Get("antigrav_percent"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0, 100)
 end
 function this.Update_Percent(def, changes, isDownClicked, isUpClicked)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("antigrav_percent", def.value_down)
-        changes:Add("experience", 1)
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("antigrav_percent", def.value_up)
-        changes:Subtract("experience", 1)
-    end
+    Update_UpDownButton("antigrav_percent", "experience", isDownClicked, isUpClicked, def, changes)
 end
 
 function this.Tooltip_Fade()
@@ -245,19 +237,11 @@ function this.Refresh_Fade_Value(def, antigrav, changes)
     def.text = tostring(Round(antigrav.fade_duration + changes:Get("fade_duration"), 2))
 end
 function this.Refresh_Fade_UpDown(def, antigrav, player, changes)
-    local down, up = GetDecrementIncrement(antigrav.fade_duration_update, antigrav.fade_duration + changes:Get("fade_duration"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
-    Refresh_UpDownButton(def, down, up, 2)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(antigrav.fade_duration_update, antigrav.fade_duration + changes:Get("fade_duration"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 2)
 end
 function this.Update_Fade(def, changes, isDownClicked, isUpClicked)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("fade_duration", def.value_down)
-        changes:Add("experience", 1)
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("fade_duration", def.value_up)
-        changes:Subtract("experience", 1)
-    end
+    Update_UpDownButton("fade_duration", "experience", isDownClicked, isUpClicked, def, changes)
 end
 
 function this.Refresh_Experience(def, player, grapple, changes, hasAG, startedWithAG)

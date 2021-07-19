@@ -241,7 +241,7 @@ function Refresh_GrappleAccelToDesired(def, grapple, accel, changed_deadspot, sh
     def.isHighlight_dead = shouldHighlight_dead
 end
 
-function Refresh_UpDownButton(def, down, up, roundDigits, display_mult)
+function Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, roundDigits, display_mult)
     --TODO: May want a significant digits function, only show one or two significant digits
 
     -- Down
@@ -255,6 +255,8 @@ function Refresh_UpDownButton(def, down, up, roundDigits, display_mult)
         def.isEnabled_down = false
     end
 
+    def.isFree_down = isFree_down
+
     -- Up
     def.value_up = up
 
@@ -265,6 +267,8 @@ function Refresh_UpDownButton(def, down, up, roundDigits, display_mult)
         def.text_up = ""
         def.isEnabled_up = false
     end
+
+    def.isFree_up = isFree_up
 end
 
 -- This creates a set of controls used to change a single property

@@ -96,19 +96,11 @@ function this.Refresh_AimDuration_Value(def, grapple, changes)
     def.text = tostring(Round(grapple.aim_straight.aim_duration + changes:Get("aim_duration"), 2))
 end
 function this.Refresh_AimDuration_UpDown(def, grapple, player, changes)
-    local down, up = GetDecrementIncrement(grapple.aim_straight.aim_duration_update, grapple.aim_straight.aim_duration + changes:Get("aim_duration"), player.experience + changes:Get("experience"))
-    Refresh_UpDownButton(def, down, up, 2)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(grapple.aim_straight.aim_duration_update, grapple.aim_straight.aim_duration + changes:Get("aim_duration"), player.experience + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 2)
 end
 function this.Update_AimDuration(def, changes, isDownClicked, isUpClicked)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("aim_duration", def.value_down)
-        changes:Add("experience", 1)
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("aim_duration", def.value_up)
-        changes:Subtract("experience", 1)
-    end
+    Update_UpDownButton("aim_duration", "experience", isDownClicked, isUpClicked, def, changes)
 end
 
 function this.Refresh_Experience(def, player, grapple, changes)

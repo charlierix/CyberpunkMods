@@ -257,19 +257,11 @@ function this.Refresh_MaxDistance_Value(def, grapple, changes)
     def.text = tostring(Round(grapple.aim_straight.max_distance + changes:Get("max_distance")))
 end
 function this.Refresh_MaxDistance_UpDown(def, grapple, player, changes)
-    local down, up = GetDecrementIncrement(grapple.aim_straight.max_distance_update, grapple.aim_straight.max_distance + changes:Get("max_distance"), player.experience + changes:Get("experience"))
-    Refresh_UpDownButton(def, down, up)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(grapple.aim_straight.max_distance_update, grapple.aim_straight.max_distance + changes:Get("max_distance"), player.experience + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up)
 end
 function this.Update_MaxDistance(def, changes, def_slider, isDownClicked, isUpClicked, grapple)
-    if isDownClicked and def.isEnabled_down then
-        changes:Subtract("max_distance", def.value_down)
-        changes:Add("experience", 1)
-    end
-
-    if isUpClicked and def.isEnabled_up then
-        changes:Add("max_distance", def.value_up)
-        changes:Subtract("experience", 1)
-    end
+    Update_UpDownButton("max_distance", "experience", isDownClicked, isUpClicked, def, changes)
 
     def_slider.max = grapple.aim_straight.max_distance + changes:Get("max_distance")
     if def_slider.value > def_slider.max then

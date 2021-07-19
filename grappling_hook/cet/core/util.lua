@@ -94,7 +94,7 @@ function GetDefaultInputBindings(const)
     bindings[const.bindings.grapple3] = { "QuickMelee", "Forward" }             -- Q+W          --NOTE: other actions also trigger when they press Q, but QuickMelee is all that really needs to be listened for (assuming they keep default in game bindings)
     bindings[const.bindings.grapple4] = { "QuickMelee", "Right" }               -- Q+D
     bindings[const.bindings.grapple5] = { "QuickMelee", "Back" }                -- Q+S
-    bindings[const.bindings.grapple6] = { "QuickMelee", "Forward", "Right" }    -- Q+W+D
+    bindings[const.bindings.grapple6] = { "Left", "Right" }                     -- A+D          -- using this instead of QWD, because it would be easier to press.  The danger of this is if you intend to hit AWD or ASD and hit AD instead
 
     bindings[const.bindings.stop] = { "Jump" }                                  -- Space        -- { "Left", "Right" } -- When they are tarzan swinging and try to aquire a new grapple point, but don't have enough energy, this was making the current grapple cancel.  Changing to jump so there's no accidental cancellation
 

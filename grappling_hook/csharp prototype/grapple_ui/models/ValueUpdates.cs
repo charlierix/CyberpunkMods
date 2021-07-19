@@ -18,8 +18,18 @@ namespace grapple_ui.models
     /// </remarks>
     public record ValueUpdates
     {
-        // The value can't exceed these
-        public double? min { get; init; }
+        /// <summary>
+        /// min_abs is an optional value that is lower than min.  If it's null, then min is the lowest value
+        /// </summary>
+        /// <remarks>
+        /// The reason there are two is because of experience calculations.  A value at min has an xp cost of zero,
+        /// then values above min cost extra xp
+        /// 
+        /// There are certain items where a lower value may be desired, so the values between min_abs and min are
+        /// free in terms of xp
+        /// </remarks>
+        public double? min_abs { get; init; }
+        public double min { get; init; }
         public double? max { get; init; }
 
         // Either use the fixed value, or define a function that returns the values based on current state (allowing for exponential growth)

@@ -331,6 +331,7 @@ function GetDefault_AimStraight(max_override)
         max_distance = max,
         max_distance_update =
         {
+            min_abs = 1,        -- values between 1 and 6 don't cost experience
             min = 6,
             max = 120,
             amount = 1,
@@ -368,6 +369,7 @@ function GetDefault_AirDash()
             accel = 28,     -- anything below this, and it's like the horizontal component is ignored (this is probably a flaw in the code.  projected vector maxing out and too much accel going to anti gravity.  probably need to stop applying any force when projected vector is full)
             accel_update =
             {
+                min_abs = 2,
                 min = 28,
                 max = 28 + (2 * 8),
                 amount = 2,
@@ -376,6 +378,7 @@ function GetDefault_AirDash()
             speed = 6,
             speed_update =
             {
+                min_abs = 1,
                 min = 6,
                 max = 6 + (1 * 8),
                 amount = 1,
@@ -396,9 +399,9 @@ function GetDefault_AirDash()
 end
 
 function GetDefault_ConstantAccel(accel_override, speed_override, deadSpot_distance_override)
-    local accel_update, accel = this.GetUpdateAndValue(20, 20 + (2 * 16), 2, accel_override, false)
+    local accel_update, accel = this.GetUpdateAndValue(2, 20, 20 + (2 * 16), 2, accel_override, false)
 
-    local speed_update, speed = this.GetUpdateAndValue(6, 6 + (1 * 8), 1, speed_override, false)
+    local speed_update, speed = this.GetUpdateAndValue(1, 6, 6 + (1 * 8), 1, speed_override, false)
 
     local deadspot_dist = deadSpot_distance_override
     if not deadspot_dist then
@@ -424,9 +427,9 @@ function GetDefault_ConstantAccel(accel_override, speed_override, deadSpot_dista
 end
 
 function GetDefault_VelocityAway(compress_override, tension_override, deadspot_override)
-    local compress_update, compress = this.GetUpdateAndValue(12, 12 + (3 * 12), 3, compress_override, true)
+    local compress_update, compress = this.GetUpdateAndValue(3, 12, 12 + (3 * 12), 3, compress_override, true)
 
-    local tension_update, tension = this.GetUpdateAndValue(12, 96, 6, tension_override, true)
+    local tension_update, tension = this.GetUpdateAndValue(6, 12, 96, 6, tension_override, true)
 
     local deadspot = deadspot_override
     if not deadspot then
@@ -466,18 +469,18 @@ end
 -- 	valueUpdates: models\ValueUpdates
 --	currentValue: this is the current value of the property that the up/down buttons will modify
 function CalculateExperienceCost_Value(currentValue, valueUpdates)
-    local min = 0
-    if valueUpdates.min then
-        min = valueUpdates.min
+    if not valueUpdates.min then
+        -- should never be nil.  If it is, just give up and don't calculate xp
+        return 0
     end
 
-    if currentValue < min then      -- this should never happen
+    if currentValue < valueUpdates.min then      -- ignoring min_abs
         return 0
     end
 
     if valueUpdates.amount then
         -- Simple linear calculation
-        return math.floor((currentValue - min) / valueUpdates.amount)
+        return math.floor((currentValue - valueUpdates.min) / valueUpdates.amount)
     end
 
     if not valueUpdates.getDecrementIncrement then      -- should never happen (one of them should be populated)
@@ -489,13 +492,13 @@ function CalculateExperienceCost_Value(currentValue, valueUpdates)
     local newCurrent = currentValue
     local count = 0
 
-    while newCurrent > min do
+    while newCurrent > valueUpdates.min do
         --local dec, inc = valueUpdates.getDecrementIncrement(newCurrent)
         local dec, inc = CallReferenced_DecrementIncrement(valueUpdates.getDecrementIncrement, newCurrent)
 
         newCurrent = newCurrent - dec
 
-        if newCurrent >= min then
+        if newCurrent >= valueUpdates.min then
             count = count + 1
         end
     end
@@ -571,9 +574,10 @@ function this.CalculateExperience_GrappleStraight(grapple)
         velocity_away
 end
 
-function this.GetUpdateAndValue(min, max, amount, value_override, defaultToNil)
+function this.GetUpdateAndValue(min_abs, min, max, amount, value_override, defaultToNil)
     local update =
     {
+        min_abs = min_abs,
         min = min,
         max = max,
         amount = amount,

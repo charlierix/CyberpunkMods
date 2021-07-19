@@ -36,6 +36,10 @@ namespace grapple_ui.models.stylesheet
         public string up_color_hover { get; init; }
         public string up_color_click { get; init; }
 
+        public string free_color_standard { get; init; }
+        public string free_color_hover { get; init; }
+        public string free_color_click { get; init; }
+
         public string disabled_back_color { get; init; }
         public string disabled_fore_color { get; init; }
         public string disabled_border_color { get; init; }
