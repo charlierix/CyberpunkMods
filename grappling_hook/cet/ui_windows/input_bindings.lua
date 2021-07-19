@@ -47,9 +47,15 @@ function DefineWindow_InputBindings(vars_ui, const)
     ----------------------------------------------
 
     input_bindings.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(input_bindings)
 end
 
-function ActivateWindow_InputBindings(vars_ui)
+function ActivateWindow_InputBindings(vars_ui, const)
+    if not vars_ui.input_bindings then
+        DefineWindow_InputBindings(vars_ui, const)
+    end
+
     local bind_buttons = vars_ui.input_bindings.bind_buttons
 
     for i = 1, #bind_buttons do

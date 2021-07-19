@@ -40,9 +40,15 @@ function DefineWindow_GrappleStraight_AccelLook(vars_ui, const)
     gst8_acclook.experience = Define_Experience(const, "grapple")
 
     gst8_acclook.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(gst8_acclook)
 end
 
-function ActivateWindow_GrappleStraight_AccelLook(vars_ui)
+function ActivateWindow_GrappleStraight_AccelLook(vars_ui, const)
+    if not vars_ui.gst8_acclook then
+        DefineWindow_GrappleStraight_AccelLook(vars_ui, const)
+    end
+
     vars_ui.gst8_acclook.changes:Clear()
 
     vars_ui.gst8_acclook.has_accellook.isChecked = nil

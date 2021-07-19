@@ -19,9 +19,15 @@ function DefineWindow_GrappleStraight_AimDuration(vars_ui, const)
     gst8_aimdur.experience = Define_Experience(const, "grapple")
 
     gst8_aimdur.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(gst8_aimdur)
 end
 
-function ActivateWindow_GrappleStraight_AimDuration(vars_ui)
+function ActivateWindow_GrappleStraight_AimDuration(vars_ui, const)
+    if not vars_ui.gst8_aimdur then
+        DefineWindow_GrappleStraight_AimDuration(vars_ui, const)
+    end
+
     vars_ui.gst8_aimdur.changes:Clear()
 end
 

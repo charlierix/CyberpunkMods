@@ -229,7 +229,7 @@ local const =
     alignment_horizontal = CreateEnum("left", "center", "right"),
     alignment_vertical = CreateEnum("top", "center", "bottom"),
 
-    -- When adding a new window, there is this enum and window lua file.  Also need to update init_ui.lua, drawing.lua, transition_windows.lua
+    -- When adding a new window, there is this enum and window lua file.  Also need to update drawing.lua, transition_windows.lua
     windows = CreateEnum
     (
         "main",
@@ -403,6 +403,8 @@ registerForEvent("onInit", function()
     xp_gain = XPGain:new(o, vars, debug, const)
 
     vars.animation_lowEnergy = Animation_LowEnergy:new(o)
+
+    TransitionWindows_Main(vars_ui, const)
 end)
 
 registerForEvent("onShutdown", function()

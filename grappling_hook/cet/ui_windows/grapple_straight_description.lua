@@ -18,9 +18,15 @@ function DefineWindow_GrappleStraight_Description(vars_ui, const)
 
 
     gst8_descr.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(gst8_descr)
 end
 
-function ActivateWindow_GrappleStraight_Description(vars_ui)
+function ActivateWindow_GrappleStraight_Description(vars_ui, const)
+    if not vars_ui.gst8_descr then
+        DefineWindow_GrappleStraight_Description(vars_ui, const)
+    end
+
     vars_ui.gst8_descr.changes:Clear()
 
     vars_ui.gst8_descr.description.text = nil

@@ -50,9 +50,15 @@ function DefineWindow_GrappleStraight_AccelAlong(vars_ui, const)
     gst8_accalong.experience = Define_Experience(const, "grapple")
 
     gst8_accalong.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(gst8_accalong)
 end
 
-function ActivateWindow_GrappleStraight_AccelAlong(vars_ui)
+function ActivateWindow_GrappleStraight_AccelAlong(vars_ui, const)
+    if not vars_ui.gst8_accalong then
+        DefineWindow_GrappleStraight_AccelAlong(vars_ui, const)
+    end
+
     vars_ui.gst8_accalong.changes:Clear()
 
     vars_ui.gst8_accalong.has_accelalong.isChecked = nil

@@ -45,9 +45,15 @@ function DefineWindow_Grapple_Straight(vars_ui, const)
     grapple_straight.experience = Define_Experience(const, "grapple")
 
     grapple_straight.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(grapple_straight)
 end
 
-function ActivateWindow_Grapple_Straight(vars_ui)
+function ActivateWindow_Grapple_Straight(vars_ui, const)
+    if not vars_ui.grapple_straight then
+        DefineWindow_Grapple_Straight(vars_ui, const)
+    end
+
     vars_ui.grapple_straight.changes:Clear()
 
     vars_ui.grapple_straight.name.text = nil

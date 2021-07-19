@@ -36,11 +36,16 @@ function DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
     gst8_stop.should_stopOnWallHit = this.Define_ShouldStopOnWallHit(const)
     gst8_stop.stopOnWallHit_help = this.Define_StopOnWallHit_Help(const)
 
-
     gst8_stop.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(gst8_stop)
 end
 
-function ActivateWindow_GrappleStraight_StopEarly(vars_ui)
+function ActivateWindow_GrappleStraight_StopEarly(vars_ui, const)
+    if not vars_ui.gst8_stop then
+        DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
+    end
+
     vars_ui.gst8_stop.changes:Clear()
 
     vars_ui.gst8_stop.has_stopDistance.isChecked = nil

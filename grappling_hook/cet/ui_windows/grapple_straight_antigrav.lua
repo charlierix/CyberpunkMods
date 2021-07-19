@@ -40,9 +40,15 @@ function DefineWindow_GrappleStraight_AntiGrav(vars_ui, const)
     gst8_antgrav.experience = Define_Experience(const, "grapple")
 
     gst8_antgrav.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(gst8_antgrav)
 end
 
-function ActivateWindow_GrappleStraight_AntiGrav(vars_ui)
+function ActivateWindow_GrappleStraight_AntiGrav(vars_ui, const)
+    if not vars_ui.gst8_antgrav then
+        DefineWindow_GrappleStraight_AntiGrav(vars_ui, const)
+    end
+
     vars_ui.gst8_antgrav.changes:Clear()
 
     vars_ui.gst8_antgrav.has_antigrav.isChecked = nil

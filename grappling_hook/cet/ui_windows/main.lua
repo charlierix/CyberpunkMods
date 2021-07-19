@@ -26,9 +26,15 @@ function DefineWindow_Main(vars_ui, const)
     main.xp_progress = this.Define_XPProgress(const)
 
     main.okcancel = Define_OkCancelButtons(true, vars_ui, const)
+
+    FinishDefiningWindow(main)
 end
 
-function ActivateWindow_Main(vars_ui)
+function ActivateWindow_Main(vars_ui, const)
+    if not vars_ui.main then
+        DefineWindow_Main(vars_ui, const)
+    end
+
     vars_ui.main.changes:Clear()
 
     vars_ui.main.should_autoshow.isChecked = nil

@@ -50,9 +50,15 @@ function DefineWindow_GrappleStraight_VelocityAway(vars_ui, const)
     gst8_velaway.experience = Define_Experience(const, "grapple")
 
     gst8_velaway.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(gst8_velaway)
 end
 
-function ActivateWindow_GrappleStraight_VelocityAway(vars_ui)
+function ActivateWindow_GrappleStraight_VelocityAway(vars_ui, const)
+    if not vars_ui.gst8_velaway then
+        DefineWindow_GrappleStraight_VelocityAway(vars_ui, const)
+    end
+
     vars_ui.gst8_velaway.changes:Clear()
 
     vars_ui.gst8_velaway.has_velaway.isChecked = nil

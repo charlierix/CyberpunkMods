@@ -33,9 +33,15 @@ function DefineWindow_GrappleStraight_Distances(vars_ui, const)
     gst8_dist.experience = Define_Experience(const, "grapple")
 
     gst8_dist.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(gst8_dist)
 end
 
-function ActivateWindow_GrappleStraight_Distances(vars_ui)
+function ActivateWindow_GrappleStraight_Distances(vars_ui, const)
+    if not vars_ui.gst8_dist then
+        DefineWindow_GrappleStraight_Distances(vars_ui, const)
+    end
+
     vars_ui.gst8_dist.changes:Clear()
 
     vars_ui.gst8_dist.desired_checkbox.isChecked = nil

@@ -32,9 +32,15 @@ function DefineWindow_EnergyTank(vars_ui, const)
     energy_tank.experience = Define_Experience(const, "energy tank")
 
     energy_tank.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(energy_tank)
 end
 
-function ActivateWindow_EnergyTank(vars_ui)
+function ActivateWindow_EnergyTank(vars_ui, const)
+    if not vars_ui.energy_tank then
+        DefineWindow_EnergyTank(vars_ui, const)
+    end
+
     vars_ui.energy_tank.changes:Clear()
 end
 

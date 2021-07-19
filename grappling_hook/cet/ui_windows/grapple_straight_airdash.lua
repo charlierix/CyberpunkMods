@@ -50,9 +50,15 @@ function DefineWindow_GrappleStraight_AirDash(vars_ui, const)
     gst8_airdash.experience = Define_Experience(const, "grapple")
 
     gst8_airdash.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(gst8_airdash)
 end
 
-function ActivateWindow_GrappleStraight_AirDash(vars_ui)
+function ActivateWindow_GrappleStraight_AirDash(vars_ui, const)
+    if not vars_ui.gst8_airdash then
+        DefineWindow_GrappleStraight_AirDash(vars_ui, const)
+    end
+
     vars_ui.gst8_airdash.changes:Clear()
 
     vars_ui.gst8_airdash.has_airdash.isChecked = nil

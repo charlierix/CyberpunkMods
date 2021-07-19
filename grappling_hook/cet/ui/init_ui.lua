@@ -11,38 +11,16 @@ function InitializeUI(vars_ui, const)
     vars_ui.style = this.LoadStylesheet()
 
     --TODO: Come up with a better name for this.  It's too easily confused with vars_ui.main (the first window)
+    --TODO: Call it configWindow
     vars_ui.mainWindow = this.Define_MainWindow(vars_ui.screen)      -- going with a SPA, so it's probably going to be the only window (maybe also a dialog box at some point?)
 
-    DefineWindow_Main(vars_ui, const)      -- this must come after vars_ui.mainWindow is defined
-    DefineWindow_InputBindings(vars_ui, const)
-    DefineWindow_EnergyTank(vars_ui, const)
-    DefineWindow_Grapple_Choose(vars_ui, const)
-    DefineWindow_Grapple_Straight(vars_ui, const)
-    DefineWindow_GrappleStraight_AccelAlong(vars_ui, const)
-    DefineWindow_GrappleStraight_AccelLook(vars_ui, const)
-    DefineWindow_GrappleStraight_AimDuration(vars_ui, const)
-    DefineWindow_GrappleStraight_AirDash(vars_ui, const)
-    DefineWindow_GrappleStraight_AntiGrav(vars_ui, const)
-    DefineWindow_GrappleStraight_Description(vars_ui, const)
-    DefineWindow_GrappleStraight_Distances(vars_ui, const)
-    DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
-    DefineWindow_GrappleStraight_VelocityAway(vars_ui, const)
+    -- This can't be called yet.  It has to be done by the caller
+    --TransitionWindows_Main(vars_ui, const)
+end
 
-    -- Post Processing
-    this.SortContentLists(vars_ui.main)
-    this.SortContentLists(vars_ui.input_bindings)
-    this.SortContentLists(vars_ui.energy_tank)
-    this.SortContentLists(vars_ui.grapple_choose)
-    this.SortContentLists(vars_ui.grapple_straight)
-    this.SortContentLists(vars_ui.gst8_accalong)
-    this.SortContentLists(vars_ui.gst8_acclook)
-    this.SortContentLists(vars_ui.gst8_aimdur)
-    this.SortContentLists(vars_ui.gst8_airdash)
-    this.SortContentLists(vars_ui.gst8_antgrav)
-    this.SortContentLists(vars_ui.gst8_descr)
-    this.SortContentLists(vars_ui.gst8_dist)
-    this.SortContentLists(vars_ui.gst8_stop)
-    this.SortContentLists(vars_ui.gst8_velaway)
+-- The last step when defining a window is to call this, which does some post processing
+function FinishDefiningWindow(window)
+    this.SortContentLists(window)
 end
 
 ----------------------------------- Private Methods -----------------------------------

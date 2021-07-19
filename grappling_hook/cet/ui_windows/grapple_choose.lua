@@ -22,9 +22,15 @@ function DefineWindow_Grapple_Choose(vars_ui, const)
     grapple_choose.experience = Define_Experience(const)
 
     grapple_choose.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+
+    FinishDefiningWindow(grapple_choose)
 end
 
-function ActivateWindow_Grapple_Choose(vars_ui, player)
+function ActivateWindow_Grapple_Choose(vars_ui, const, player)
+    if not vars_ui.grapple_choose then
+        DefineWindow_Grapple_Choose(vars_ui, const)
+    end
+
     local grapple_choose = vars_ui.grapple_choose
 
     -- Query existing grapples (also gets hardcoded defaults)
