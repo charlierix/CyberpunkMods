@@ -1,3 +1,5 @@
+local this = {}
+
 -- This can come from any state back to standard (the other mods called this ExitFlight)
 function Transition_ToStandard(vars, const, debug, o)
     -- This gets called every frame when they are in the menu, driving, etc.  So it needs to be
@@ -44,13 +46,16 @@ function Transition_ToAim(grapple, vars, const, o, shouldConsumeEnergy)
     return true
 end
 
--- This goes from aim into flight
+-- This goes from aim into flight (or airdash to flight)
 -- There's no need to check for energy, that was done when trying to aim
 function Transition_ToFlight(vars, const, o, rayFrom, rayHit)
     vars.flightMode = const.flightModes.flight
     o:Custom_CurrentlyFlying_StartFlight()
 
     -- vars.grapple is already populated by aim
+
+    --TODO: When webswing and zipline get implemented, need a way to tell them apart from straightline
+    this.PlaySound_Grapple(vars, o)
 
     vars.startTime = o.timer
 
@@ -89,4 +94,22 @@ function Transition_ToAirDash(airdash, vars, const, o, rayFrom, lookDist)
     --TODO: Play a sound
 
 
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+this.sounds_grapple =
+{
+    "w_cyb_monowire_whip_grapple",		-- that's just kind of obvious :)
+    "q003_sc_08_whip_whoosh",
+    "w_cyb_whip_wire_throw",
+}
+
+function this.PlaySound_Grapple(vars, o)
+    local sound = this.GetRandomSound(this.sounds_grapple)
+    o:PlaySound(sound, vars)
+end
+
+function this.GetRandomSound(list)
+    return list[math.random(#list)]
 end

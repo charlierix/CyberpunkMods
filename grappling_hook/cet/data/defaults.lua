@@ -73,6 +73,9 @@ function GetDefault_Grapple_ByName(name)
     elseif name == "rope" then
         return GetDefault_Grapple_Rope()
 
+    elseif name == "pole vault" then
+        return GetDefault_Grapple_PoleVault()
+
     else
         print("GetDefault_Grapple_ByName: Unknown name: " .. tostring(name))
         return nil
