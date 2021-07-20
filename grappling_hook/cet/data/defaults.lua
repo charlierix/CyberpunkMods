@@ -356,7 +356,7 @@ end
 function GetDefault_AirDash()
     local retVal =
     {
-        energyBurnRate = 1,
+        energyBurnRate = 4,
 
         burnReducePercent = 0,
         burnReducePercent_update =

@@ -111,6 +111,8 @@ function TODO()
     --  Add an ability to jump straight away from a wall when at the desired distance (and close to a wall)
     --  This will help with scaling tall walls.  You grapple straight up, reach the anchor, recover energy,
     --  jump and aquire a new grapple point, repeat
+    --
+    --  Also give an option to slow time while jumping.  This will be useful for ambushing enemies
 
     -- Grapple Straight:
     --  Have an option for the anchor to be higher than the hit point
@@ -138,6 +140,10 @@ function TODO()
     --  Choose an anchor point some distance along the look direction
     --  Calculate a parabola or bezier above the player, then draw it
     --  This wouldn't necessarily anchor to anything (because collision hulls would be too far away)
+
+    -- Air Dash:
+    --  Stop supporting air dash
+    --  Auto sell back airdash if equipped
 
     -- Grapple Straight/Swing:
     --  Add extra weight when carrying a dead body
