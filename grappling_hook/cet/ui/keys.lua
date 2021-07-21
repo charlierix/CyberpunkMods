@@ -97,12 +97,9 @@ function Keys:MapCustomKey(name, isDown)
 end
 
 function Keys:Tick()
-    self.prev_forward = self.forward
-    self.prev_backward = self.backward
-    self.prev_left = self.left
-    self.prev_right = self.right
-    self.prev_jump = self.jump
-    self.prev_rmb = self.rmb
+    for _, propName in pairs(self.hardcodedMapping) do
+        self["prev_" .. propName] = self[propName]
+    end
 
     for key, value in pairs(self.actions) do
         self.prev_actions[key] = value

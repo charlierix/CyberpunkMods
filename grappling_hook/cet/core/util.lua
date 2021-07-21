@@ -1,7 +1,3 @@
-function IsStandingStill(velocity)
-    return (GetVectorLengthSqr(velocity) < (0.03 * 0.03))        --IsNearZero_vec4 is too exact if you're sitting still on a vehicle, need something a looser like +-.03
-end
-
 -- Returns true if the table is an instance of the class
 -- NOTE: This doesn't work every time (when objects get nested within objects)
 --https://stackoverflow.com/questions/45192939/lua-check-if-a-table-is-an-instance

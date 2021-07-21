@@ -214,7 +214,7 @@ local const =
 {
     maxSpeed = 144,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
 
-    modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),
+    modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v", "wall_hang" }),
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }

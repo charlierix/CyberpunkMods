@@ -230,7 +230,7 @@ local const =
     grappleFrom_Z = 1.5,
     grappleMinResolution = 0.5,
 
-    modNames = CreateEnum("grappling_hook", "jetpack", "low_flying_v"),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
+    modNames = CreateEnum("grappling_hook", "jetpack", "low_flying_v", "wall_hang"),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
 
     alignment_horizontal = CreateEnum("left", "center", "right"),
     alignment_vertical = CreateEnum("top", "center", "bottom"),

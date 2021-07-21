@@ -108,7 +108,7 @@ local const =
 
     maxSpeed = 144,                     -- player:GetVelocity() isn't the same as the car's reported speed.  A car speed of 100 is around 26 world speed.  150 is about 33.  So a world speed of 180 would be a car speed of around 720
 
-    modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v" }),
+    modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v", "wall_hang" }),
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
