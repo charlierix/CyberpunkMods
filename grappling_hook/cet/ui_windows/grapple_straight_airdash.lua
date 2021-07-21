@@ -20,6 +20,8 @@ function DefineWindow_GrappleStraight_AirDash(vars_ui, const)
     gst8_airdash.arrows = Define_GrappleArrows(false, true)
     gst8_airdash.desired_line = Define_GrappleDesiredLength(false)
 
+    gst8_airdash.deprecated = this.Define_Deprecated(const)
+
     -- Checkbox for whether to have airdash (Aim_Straight.air_dash)
     gst8_airdash.has_airdash = this.Define_HasAirDash(const)
     gst8_airdash.has_help = this.Define_Has_Help(const)
@@ -117,6 +119,8 @@ function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, w
     Draw_GrappleArrows(gst8_airdash.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_airdash.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
+    Draw_Label(gst8_airdash.deprecated, vars_ui.style.colors, window.width, window.height, const)
+
     local wasChecked
     wasChecked, isHovered_has = Draw_CheckBox(gst8_airdash.has_airdash, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
     if wasChecked then
@@ -176,6 +180,24 @@ function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, w
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.Define_Deprecated(const)
+    -- Label
+    return
+    {
+        text = "DEPRECATED - airdash will be removed in a future release.  Use virtual anchor instead",
+
+        position =
+        {
+            pos_x = 0,
+            pos_y = -36,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "info",
+    }
+end
 
 function this.Define_HasAirDash(const)
     -- CheckBox
