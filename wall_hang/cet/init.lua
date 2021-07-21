@@ -13,9 +13,16 @@
 --https://github.com/jac3km4/redscript
 
 require "lib/customprops_wrapper"
+require "lib/debug_code"
+require "lib/drawing"
 require "lib/flightmode_transitions"
 require "lib/gameobj_accessor"
+require "lib/inputtracker_startstop"
 require "lib/keys"
+require "lib/math_basic"
+require "lib/math_raycast"
+require "lib/math_vector"
+require "lib/math_yaw"
 require "lib/util"
 
 local this = {}
@@ -24,16 +31,29 @@ local this = {}
 ---                  User Preference Constants                   ---
 --------------------------------------------------------------------
 
+-- If you want to use an action that the game sees (like Q, F, Shift), then set this here
+--
+-- This doesn't map directly to the key, instead it maps to an action that the key produces
+--
+-- If you want a different action, the easiest way is to use grappling hook's input bindings
+-- config to see what it's called
+
+--NOTE: This is case sensitive
+--NOTE: Comment this out if you want it ignored (and use the override instead)
+local hangAction = "QuickMelee"      -- Q key (or equivalent button on a controller)
+
+--------------------------------------------------------------------
+---                     (leave these alone)                      ---
+--------------------------------------------------------------------
+
 local const =
 {
     flightModes = CreateEnum("standard"),
 
     modNames = CreateEnum("wall_hang", "grappling_hook", "jetpack", "low_flying_v"),     -- this really doesn't need to know the other mod names, since wall hang will override flight
-}
 
---------------------------------------------------------------------
----              Current State (leave these alone)               ---
---------------------------------------------------------------------
+    shouldShowDebugWindow = true
+}
 
 local isShutdown = true
 local isLoaded = false
@@ -42,6 +62,7 @@ local shouldDraw = false
 local o     -- This is a class that wraps access to Game.xxx
 
 local keys = nil -- = Keys:new()        -- moved to init
+local startStopTracker = nil -- InputTracker_StartStop:new()        -- moved to init
 
 local debug = {}
 
@@ -103,7 +124,8 @@ registerForEvent("onInit", function()
 
     o = GameObjectAccessor:new(wrappers)
 
-    keys = Keys:new(o)
+    keys = Keys:new(o, hangAction)
+    startStopTracker = InputTracker_StartStop:new(o, keys, const, hangAction == nil)
 end)
 
 registerForEvent("onShutdown", function()
@@ -136,9 +158,11 @@ registerForEvent("onUpdate", function(deltaTime)
 
     shouldDraw = true       -- don't want a hung progress bar while in menu or driving
 
-    -- if const.shouldShowDebugWindow then
-    --     PopulateDebug(debug, o, keys, vars)
-    -- end
+    startStopTracker:Tick()
+
+    if const.shouldShowDebugWindow then
+        PopulateDebug(debug, o, keys, vars, startStopTracker)
+    end
 
     -- if vars.flightMode == const.flightModes.standard then
     --     -- Standard (walking around)
@@ -155,14 +179,19 @@ end)
 registerHotkey("WallHangTesterButton", "tester hotkey", function()
 end)
 
+registerInput("WallHang_CustomHang", "Hang (override default)", function(isDown)
+    keys:PressedCustom(isDown)
+    startStopTracker:SawCustom()
+end)
+
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then
         do return end
     end
 
-    -- if const.shouldShowDebugWindow then
-    --     DrawDebugWindow(debug)
-    -- end
+    if const.shouldShowDebugWindow then
+        DrawDebugWindow(debug)
+    end
 end)
 
 ------------------------------------ Private Methods -----------------------------------

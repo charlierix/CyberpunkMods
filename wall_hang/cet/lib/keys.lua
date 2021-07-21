@@ -2,7 +2,7 @@ Keys = {}
 
 local this = {}
 
-function Keys:new(o)
+function Keys:new(o, hangAction)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -17,14 +17,16 @@ function Keys:new(o)
     obj.left = false
     obj.right = false
     obj.jump = false
-    obj.stick = false
+    obj.hang = false
+    obj.custom = false      -- this is set from PressedCustom()
 
     obj.prev_forward = false
     obj.prev_backward = false
     obj.prev_left = false
     obj.prev_right = false
     obj.prev_jump = false
-    obj.prev_stick = false
+    obj.prev_hang = false
+    obj.prev_custom = false
 
     -- This is a mapping between action name and the hardcoded properties above (the strings must match exactly)
     -- Key is the actionName, value is self.xxx
@@ -35,8 +37,12 @@ function Keys:new(o)
         Left = "left",
         Right = "right",
         Jump = "jump",
-        QuickMelee = "stick",       -- Q
+        --QuickMelee = "hang",       -- Q
     }
+
+    if hangAction then
+        obj.hardcodedMapping[hangAction] = "hang"
+    end
 
     return obj
 end
@@ -53,10 +59,16 @@ function Keys:MapAction(action)
     self:MapAction_Fixed(action, actionName, pressed, released)
 end
 
+function Keys:PressedCustom(isDown)
+    self.custom = isDown
+end
+
 function Keys:Tick()
     for _, propName in pairs(self.hardcodedMapping) do
         self["prev_" .. propName] = self[propName]
     end
+
+    self.prev_custom = self.custom
 end
 
 ----------------------------------- Private Methods -----------------------------------
