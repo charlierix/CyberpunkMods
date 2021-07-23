@@ -23,5 +23,11 @@ function PopulateDebug(debug, o, keys, vars, startStopTracker)
     debug.tracked_isHangDown = isHangDown
     debug.tracked_isJumpDown = isJumpDown
 
+    debug.isAirborne = IsAirborne(o)
+
+    debug.hang_hangPos = vars.hangPos
+    debug.hang_normal = vars.normal
+    debug.hang_material = vars.material
+
     debug.timer = Round(o.timer, 1)
 end

@@ -226,6 +226,7 @@ function AddVectors(vector1, vector2)
     return Vector4.new(vector1.x + vector2.x, vector1.y + vector2.y, vector1.z + vector2.z, 1)
 end
 
+-- Returns 1 - 2
 function SubtractVectors(vector1, vector2)
     return Vector4.new(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z, 1)
 end

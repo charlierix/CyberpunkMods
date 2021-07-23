@@ -144,6 +144,8 @@ function GameObjectAccessor:IsPointVisible(fromPos, toPos)
 end
 
 -- This ray cast also returns normal (but doesn't see quite as much as IsPointVisible)
+-- Returns
+--  HitPoint, Normal, Material (or nils)
 function GameObjectAccessor:RayCast(fromPos, toPos, staticOnly)
     self:EnsurePlayerLoaded()
 
@@ -152,7 +154,7 @@ function GameObjectAccessor:RayCast(fromPos, toPos, staticOnly)
         local result = self.wrappers.RayCast(self.player, fromPos, toPos, staticOnly)
 
         if result == "" then
-            return nil
+            return nil, nil, nil
         end
 
         -- position
@@ -184,7 +186,10 @@ function GameObjectAccessor:RayCast(fromPos, toPos, staticOnly)
         -- material
         local material = string.sub(result, i1 + 1, string.len(result))
 
-        return Vector4.new(tonumber(px), tonumber(py), tonumber(pz), 1), Vector4.new(tonumber(nx), tonumber(ny), tonumber(nz), 1), material
+        return
+            Vector4.new(tonumber(px), tonumber(py), tonumber(pz), 1),
+            Vector4.new(tonumber(nx), tonumber(ny), tonumber(nz), 1),
+            material
     end
 end
 

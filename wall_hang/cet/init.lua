@@ -16,6 +16,7 @@ require "lib/customprops_wrapper"
 require "lib/debug_code"
 require "lib/drawing"
 require "lib/flightmode_transitions"
+require "lib/flightutil"
 require "lib/gameobj_accessor"
 require "lib/inputtracker_startstop"
 require "lib/keys"
@@ -23,6 +24,8 @@ require "lib/math_basic"
 require "lib/math_raycast"
 require "lib/math_vector"
 require "lib/math_yaw"
+require "lib/processing_hang"
+require "lib/processing_standard"
 require "lib/util"
 
 local this = {}
@@ -48,9 +51,12 @@ local hangAction = "QuickMelee"      -- Q key (or equivalent button on a control
 
 local const =
 {
-    flightModes = CreateEnum("standard"),
+    flightModes = CreateEnum("standard", "hang"),
 
     modNames = CreateEnum("wall_hang", "grappling_hook", "jetpack", "low_flying_v"),     -- this really doesn't need to know the other mod names, since wall hang will override flight
+
+    rayFrom_Z = 1.5,
+    rayLen = 1.2,       -- tried 0.3, but raycast never saw a hit
 
     shouldShowDebugWindow = true
 }
@@ -68,6 +74,11 @@ local debug = {}
 
 local vars =
 {
+    -- These get populated in Transition_ToHang()
+    --hangPos,
+    --normal,
+    --material,
+
     --NOTE: These sound props are only used for sounds that should be one at a time.  There can
     --      be other sounds that are managed elsewhere
     --sound_current = nil,  -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
@@ -86,6 +97,7 @@ registerForEvent("onInit", function()
     Observe('QuestTrackerGameController', 'OnInitialize', function()
         if not isLoaded then
             isLoaded = true
+            Transition_ToStandard(vars, const, debug, o)
         end
     end)
 
@@ -126,6 +138,8 @@ registerForEvent("onInit", function()
 
     keys = Keys:new(o, hangAction)
     startStopTracker = InputTracker_StartStop:new(o, keys, const, hangAction == nil)
+
+    Transition_ToStandard(vars, const, debug, o)
 end)
 
 registerForEvent("onShutdown", function()
@@ -164,14 +178,18 @@ registerForEvent("onUpdate", function(deltaTime)
         PopulateDebug(debug, o, keys, vars, startStopTracker)
     end
 
-    -- if vars.flightMode == const.flightModes.standard then
-    --     -- Standard (walking around)
-    --     Process_Standard(o, player, vars, const, debug, deltaTime)
+    if vars.flightMode == const.flightModes.standard then
+        -- Standard (walking around)
+        Process_Standard(o, vars, const, debug, startStopTracker)
 
-    -- else
-    --     print("Wall Hang ERROR, unknown flightMode: " .. tostring(vars.flightMode))
-    --     Transition_ToStandard(vars, const, debug, o)
-    -- end
+    elseif vars.flightMode == const.flightModes.hang then
+        -- Hanging from a wall
+        Process_Hang(o, vars, const, debug, keys, startStopTracker)
+
+    else
+        print("Wall Hang ERROR, unknown flightMode: " .. tostring(vars.flightMode))
+        Transition_ToStandard(vars, const, debug, o)
+    end
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
