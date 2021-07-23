@@ -16,6 +16,18 @@ function IsInstance(table, class)
     return false
 end
 
+-- Saves from writing:
+--  if item == "a" or item == "b" or ...
+function In(testValue, ...)
+    for i = 1, select("#", ...) do
+        if testValue == select(i, ...) then
+            return true
+        end
+    end
+
+    return false
+end
+
 -- Posted by Foxxy
 function IsPlayerInAnyMenu()
     local blackboardDefs = Game.GetAllBlackboardDefs()

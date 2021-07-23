@@ -1,7 +1,4 @@
 function Process_Hang(o, vars, const, debug, keys, startStopTracker)
-
-    --TODO: Check for other mods
-
     local isHangDown, isJumpDown = startStopTracker:GetButtonState()
     if not isHangDown then
         Transition_ToStandard(vars, const, debug, o)
@@ -15,10 +12,18 @@ function Process_Hang(o, vars, const, debug, keys, startStopTracker)
         do return end
     end
 
-
     local deltaYaw = keys.mouse_x * -0.08
 
     local yaw = AddYaw(o.yaw, deltaYaw)
+
+    --TODO: Don't perfectly hold this position
+    --
+    -- When first entering hang, move in the direction of
+    -- their prev velocity and ease into a stop (over a very short distance, but still more than
+    -- an instant stop)
+    --
+    -- Then slowly drift around randomly.  Mostly in the plane of the wall, but a little off the
+    -- wall (like a really flat ellipsoid)
 
     o:Teleport(vars.hangPos, yaw)
 end

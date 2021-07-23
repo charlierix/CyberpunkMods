@@ -12,6 +12,7 @@
 
 --https://github.com/jac3km4/redscript
 
+require "lib/check_other_mods"
 require "lib/customprops_wrapper"
 require "lib/debug_code"
 require "lib/drawing"
@@ -181,6 +182,10 @@ registerForEvent("onUpdate", function(deltaTime)
     if vars.flightMode == const.flightModes.standard then
         -- Standard (walking around)
         Process_Standard(o, vars, const, debug, startStopTracker)
+
+    elseif not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
+        -- Was hanging/jumping, but another mod took over
+        Transition_ToStandard(vars, const, debug, o)
 
     elseif vars.flightMode == const.flightModes.hang then
         -- Hanging from a wall

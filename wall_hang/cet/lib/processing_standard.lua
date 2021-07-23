@@ -30,7 +30,7 @@ function Process_Standard(o, vars, const, debug, startStopTracker)
 
     if isHangDown then
         local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
-        Transition_ToHang(vars, const, hangPos, normal, material)
+        Transition_ToHang(vars, const, o, hangPos, normal, material)
 
     elseif isJumpDown then
         print("TODO: Support jumping off walls")

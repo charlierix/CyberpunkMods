@@ -14,7 +14,7 @@ function InputTracker_StartStop:new(o, keys, const, is_keysHang_empty)
     obj.uses_custom = is_keysHang_empty      -- custom could also be unused, but don't even bother looking at keys.hang
 
     obj.jump_downTime = nil
-    obj.saw_jump = false        -- this is a latch so jump is only reported the first time
+    obj.saw_jump = false        -- this is a latch so jump is only reported the first time (when they hold in the jump key)
 
     return obj
 end

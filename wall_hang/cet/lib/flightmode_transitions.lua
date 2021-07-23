@@ -10,15 +10,11 @@ function Transition_ToStandard(vars, const, debug, o)
     o:Custom_CurrentlyFlying_Clear()
 end
 
-function Transition_ToHang(vars, const, hangPos, normal, material)
+function Transition_ToHang(vars, const, o, hangPos, normal, material)
     vars.flightMode = const.flightModes.hang
+    o:Custom_CurrentlyFlying_StartFlight()
 
     vars.hangPos = hangPos
     vars.normal = normal
     vars.material = material
-
-
-    --TODO: Tell the input tracker to reset jump
-
-
 end
