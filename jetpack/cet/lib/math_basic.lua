@@ -31,7 +31,7 @@ end
 -- maxReturn    This is the value that will be returned with valueRange == maxRange
 -- minRange     The lowest value that valueRange can be
 -- maxRange     The highest value that valueRange can be
--- valueRange   The percent (0 to 1)
+-- valueRange   Somewhere between minRange and maxRange
 --
 -- returns      Somewhere between minReturn and maxReturn
 function GetScaledValue(minReturn, maxReturn, minRange, maxRange, valueRange)

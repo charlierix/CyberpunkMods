@@ -18,3 +18,12 @@ function Transition_ToHang(vars, const, o, hangPos, normal, material)
     vars.normal = normal
     vars.material = material
 end
+
+function Transition_ToJump(vars, const, o, hangPos, normal, material)
+    vars.flightMode = const.flightModes.jump
+    o:Custom_CurrentlyFlying_StartFlight()
+
+    vars.hangPos = hangPos
+    vars.normal = normal
+    vars.material = material
+end

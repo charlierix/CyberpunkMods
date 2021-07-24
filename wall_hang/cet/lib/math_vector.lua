@@ -6,6 +6,14 @@ function vec_str(vector)
     return tostring(Round(vector.x, 2)) .. ", " .. tostring(Round(vector.y, 2)) .. ", " .. tostring(Round(vector.z, 2))
 end
 
+function quat_str(quat)
+    if not quat then
+        return "nil"
+    end
+
+    return tostring(Round(quat.i, 3)) .. ", " .. tostring(Round(quat.j, 3)) .. ", " .. tostring(Round(quat.k, 3)) .. ", " .. tostring(Round(quat.r, 3))
+end
+
 ------------------------------------- Length -------------------------------------
 
 --TODO: See if vector4 already exposes a magnitude function --- it's GetSingleton('Vector4'):Distance(vector1, vector2)
@@ -80,6 +88,23 @@ function RadiansBetween3D(v1, v2)
     return math.acos(DotProduct3D(v1, v2) / (GetVectorLength(v1) * GetVectorLength(v2)))
 end
 
+-- Returns a quaternion that is the rotation from v1 to v2
+-- percent is optional
+function GetRotation(v1, v2, percent)
+    local axis = CrossProduct3D(v1, v2)
+    local angle = RadiansBetween3D(v1, v2)
+
+    if percent then
+        angle = angle * percent
+    end
+
+    --https://redscript.redmodding.org/#30122
+    --public static native SetAxisAngle(out q: Quaternion, axis: Vector4, angle: Float): Void
+    local retVal = GetSingleton('Quaternion'):SetAxisAngle(axis, angle)     -- looks like cet turns out param into return
+
+    return retVal
+end
+
 -- Rotates a vector by the amount of radians (right hand rule, so positive radians are counter
 -- clockwise)
 function RotateVector2D(x, y, radians)
@@ -89,6 +114,10 @@ function RotateVector2D(x, y, radians)
     return
         (cos * x) - (sin * y),
         (sin * x) + (cos * y)
+end
+
+function RotateVector3D(vector, quat)
+    return GetSingleton('Quaternion'):Transform(quat, vector)
 end
 
 -- This takes a 3D vector, gets rid of the Z, then makes that 2D projected vector have a length of 1

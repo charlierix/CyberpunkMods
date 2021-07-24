@@ -26,7 +26,9 @@ require "lib/math_raycast"
 require "lib/math_vector"
 require "lib/math_yaw"
 require "lib/processing_hang"
+require "lib/processing_jump"
 require "lib/processing_standard"
+require "lib/reporting"
 require "lib/util"
 
 local this = {}
@@ -52,14 +54,16 @@ local hangAction = "QuickMelee"      -- Q key (or equivalent button on a control
 
 local const =
 {
-    flightModes = CreateEnum("standard", "hang"),
+    flightModes = CreateEnum("standard", "hang", "jump"),
 
     modNames = CreateEnum("wall_hang", "grappling_hook", "jetpack", "low_flying_v"),     -- this really doesn't need to know the other mod names, since wall hang will override flight
 
     rayFrom_Z = 1.5,
-    rayLen = 1.2,       -- tried 0.3, but raycast never saw a hit
+    rayLen = 1.2,
 
-    shouldShowDebugWindow = true
+    jump_strength = 12,
+
+    shouldShowDebugWindow = false
 }
 
 local isShutdown = true
@@ -191,6 +195,10 @@ registerForEvent("onUpdate", function(deltaTime)
         -- Hanging from a wall
         Process_Hang(o, vars, const, debug, keys, startStopTracker)
 
+    elseif vars.flightMode == const.flightModes.jump then
+        -- Jump off a wall
+        Process_Jump(o, vars, const, debug, startStopTracker)
+
     else
         print("Wall Hang ERROR, unknown flightMode: " .. tostring(vars.flightMode))
         Transition_ToStandard(vars, const, debug, o)
@@ -199,8 +207,8 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("WallHangTesterButton", "tester hotkey", function()
-end)
+-- registerHotkey("WallHangTesterButton", "tester hotkey", function()
+-- end)
 
 registerInput("WallHang_CustomHang", "Hang (override default)", function(isDown)
     keys:PressedCustom(isDown)

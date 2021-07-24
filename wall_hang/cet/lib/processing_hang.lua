@@ -5,10 +5,7 @@ function Process_Hang(o, vars, const, debug, keys, startStopTracker)
         do return end
 
     elseif isJumpDown then
-
-        print("TODO: Implement Jump")
-        Transition_ToStandard(vars, const, debug, o)
-
+        Transition_ToJump(vars, const, o, vars.hangPos, vars.normal, vars.material)
         do return end
     end
 
@@ -21,6 +18,9 @@ function Process_Hang(o, vars, const, debug, keys, startStopTracker)
     -- When first entering hang, move in the direction of
     -- their prev velocity and ease into a stop (over a very short distance, but still more than
     -- an instant stop)
+    --
+    -- Also, the final resting position should be slightly lower than the initial hang position.
+    -- This will give a sense of weight to the player
     --
     -- Then slowly drift around randomly.  Mostly in the plane of the wall, but a little off the
     -- wall (like a really flat ellipsoid)
