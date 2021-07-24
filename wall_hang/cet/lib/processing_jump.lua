@@ -2,6 +2,8 @@ local this = {}
 local MINDOT = 0.35
 local BACKWARD_POW = 1.5
 
+local up = nil      -- can't use vector4 before init
+
 function Process_Jump(o, vars, const, debug, startStopTracker)
 
 
@@ -9,6 +11,11 @@ function Process_Jump(o, vars, const, debug, startStopTracker)
     --  jump_calculate
     --  jump_teleturn
     --  jump_impulse
+
+
+
+    --TODO: Also look at direction keys:
+    --  forward: Jump up more than out, leave direction facing alone
 
 
     ------------------ Initial Calculations ------------------
@@ -22,16 +29,11 @@ function Process_Jump(o, vars, const, debug, startStopTracker)
 
     local jump_dir = this.CalculateJumpDirection_Direct(o.lookdir_forward, vars.normal)
 
-    print("jump_dir: " .. vec_str(jump_dir))
-
     -- turn that into a destination yaw
     local yaw = Vect_to_Yaw(jump_dir.x, jump_dir.y)
 
 
-
-
     local impulse = this.GetImpulse(jump_dir, const.jump_strength)
-
 
 
 
@@ -83,21 +85,40 @@ end
 
 -- This returns the final impulse to apply
 function this.GetImpulse(direction, jump_strength)
+    if not up then
+        up = Vector4.new(0, 0, 1, 0)
+    end
 
-    
+    -- pi       straight down
+    -- pi/2     horizontal
+    -- 0        straight up
+    local radian = Dot_to_Radians(DotProduct3D(direction, up))
+
+    --https://mycurvefit.com/
+    --https://www.desmos.com/calculator
 
     -- Rotate up, by this angle
-    --  x is the angle they are looking (phi)
-    --  y is the angle they should jump
+    --  phi is the angle they are looking
+    --  result is the angle they should jump
 
     -- -90  -90
     --  0   45      -- when they are looking straight out, angle should be 45 for best arc
     --  90  90
-    --
-    -- y = 45 + x - 0.005555556 * x^2
 
-    -- Probably need to use radians instead
+    -- jumpAngle = 45 + phi - 0.005555556 * phi^2
 
-    return MultiplyVector(direction, jump_strength)
+    -- Same idea, but with radians
+    --  pi      -pi/2
+    --  pi/2    pi/4
+    --  0       pi/2
 
+    local adjustRadians = 1.570796 - 0.3183099 * radian ^ 2
+
+    local axis = CrossProduct3D(direction, up)
+
+    local horizontal = GetProjectedVector_AlongPlane(direction, up)
+
+    local rotated = RotateVector3D(horizontal, Quaternion_FromAxisRadians(axis, adjustRadians))
+
+    return MultiplyVector(rotated, jump_strength / GetVectorLength(rotated))      -- rotated isn't a unit vector, so dividing by len makes it 1
 end

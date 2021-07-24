@@ -92,17 +92,20 @@ end
 -- percent is optional
 function GetRotation(v1, v2, percent)
     local axis = CrossProduct3D(v1, v2)
-    local angle = RadiansBetween3D(v1, v2)
+    local radians = RadiansBetween3D(v1, v2)
 
     if percent then
-        angle = angle * percent
+        radians = radians * percent
     end
 
+    return Quaternion_FromAxisRadians(axis, radians)
+end
+
+-- Just wrapping it to be easier to remember/use
+function Quaternion_FromAxisRadians(axis, radians)
     --https://redscript.redmodding.org/#30122
     --public static native SetAxisAngle(out q: Quaternion, axis: Vector4, angle: Float): Void
-    local retVal = GetSingleton('Quaternion'):SetAxisAngle(axis, angle)     -- looks like cet turns out param into return
-
-    return retVal
+    return GetSingleton('Quaternion'):SetAxisAngle(axis, radians)     -- looks like cet turns out param into return
 end
 
 -- Rotates a vector by the amount of radians (right hand rule, so positive radians are counter

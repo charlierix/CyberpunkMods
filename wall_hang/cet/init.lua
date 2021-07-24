@@ -61,7 +61,7 @@ local const =
     rayFrom_Z = 1.5,
     rayLen = 1.2,
 
-    jump_strength = 12,
+    jump_strength = 11,
 
     shouldShowDebugWindow = false
 }
