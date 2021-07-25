@@ -1,6 +1,6 @@
 local this = {}
 
-local MINDOT = 0.35
+local MINDOT = 0.1
 local BACKWARD_POW = 1.5
 
 local up = nil      -- can't use vector4 before init
