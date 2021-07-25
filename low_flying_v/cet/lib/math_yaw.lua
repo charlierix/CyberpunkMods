@@ -20,12 +20,19 @@ function Yaw_to_Vect(yaw)
     return math.cos(yaw), math.sin(yaw)
 end
 function Vect_to_Yaw(x, y)
-    local angle = math.atan(y, x) * 180 / math.pi
+    local angle = math.atan(math.abs(y / x)) * 180 / math.pi        -- keeping y/x positive and adjusting each quadrant manually
 
-    angle = angle - 90
+    if x >= 0 and y >= 0 then
+        angle = angle - 90
 
-    if (angle >= -270) and (angle < -180) then
-        angle = angle + 360
+    elseif x < 0 and y >= 0 then
+        angle = 90 - angle
+
+    elseif x < 0 and y < 0 then
+        angle = angle + 90
+
+    elseif x >= 0 and y < 0 then
+        angle = -angle - 90
     end
 
     return angle

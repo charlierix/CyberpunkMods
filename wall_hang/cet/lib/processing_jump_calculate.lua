@@ -1,47 +1,27 @@
 local this = {}
+
 local MINDOT = 0.35
 local BACKWARD_POW = 1.5
 
 local up = nil      -- can't use vector4 before init
 
-function Process_Jump(o, vars, const, debug, startStopTracker)
-
-
-    ------------------ Initial Calculations ------------------
-
-
+function Process_Jump_Calculate(o, vars, const, debug)
     o:GetCamera()
     if not o.lookdir_forward then       -- shouldn't happen
         Transition_ToStandard(vars, const, debug, o)
         do return end
     end
 
+    -- Complare the look direction with the wall's normal, figure out the direction to go
     local jump_dir = this.CalculateJumpDirection_Direct(o.lookdir_forward, vars.normal)
 
-    -- turn that into a destination yaw
-    local yaw = Vect_to_Yaw(jump_dir.x, jump_dir.y)
-
-
+    -- Rotate up so the jump will be in an arc
     local impulse = this.GetImpulse(jump_dir, const.jump_strength)
 
+    --NOTE: In the future, there may be reasons to not adjust the look direction (because they are
+    --holding a direction key, or config says not to).  In those cases, go straight to jump_impulse
 
-
-    ------------------ Spread over a few frames ------------------
-
-
-
-    --o:Teleport(vars.hangPos, yaw)
-
-    o.player:WallHang_AddImpulse(impulse.x, impulse.y, impulse.z)
-
-
-
-
-
-    ------------------ Finally ------------------
-
-
-    Transition_ToStandard(vars, const, debug, o)
+    Transition_ToJump_TeleTurn(vars, const, o, impulse, jump_dir)
 end
 
 ----------------------------------- Private Methods -----------------------------------

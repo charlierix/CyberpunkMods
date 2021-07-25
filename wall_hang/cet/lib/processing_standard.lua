@@ -38,7 +38,7 @@ function Process_Standard(o, vars, const, debug, startStopTracker)
 
     elseif isJumpDown and this.ValidateSlope_Jump(normal) then
         local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
-        Transition_ToJump(vars, const, o, hangPos, normal, material)
+        Transition_ToJump_Calculate(vars, const, o, hangPos, normal, material)
     end
 end
 

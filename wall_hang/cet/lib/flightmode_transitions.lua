@@ -19,11 +19,26 @@ function Transition_ToHang(vars, const, o, hangPos, normal, material)
     vars.material = material
 end
 
-function Transition_ToJump(vars, const, o, hangPos, normal, material)
-    vars.flightMode = const.flightModes.jump
+function Transition_ToJump_Calculate(vars, const, o, hangPos, normal, material)
+    vars.flightMode = const.flightModes.jump_calculate
     o:Custom_CurrentlyFlying_StartFlight()
 
     vars.hangPos = hangPos
     vars.normal = normal
     vars.material = material
+end
+
+function Transition_ToJump_TeleTurn(vars, const, o, impulse, final_lookdir)
+    vars.flightMode = const.flightModes.jump_teleturn
+    o:Custom_CurrentlyFlying_StartFlight()
+
+    vars.impulse = impulse
+    vars.final_lookdir = final_lookdir
+end
+
+function Transition_ToJump_Impulse(vars, const, o, impulse)
+    vars.flightMode = const.flightModes.jump_impulse
+    o:Custom_CurrentlyFlying_StartFlight()
+
+    vars.impulse = impulse
 end

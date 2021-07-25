@@ -26,7 +26,9 @@ require "lib/math_raycast"
 require "lib/math_vector"
 require "lib/math_yaw"
 require "lib/processing_hang"
-require "lib/processing_jump"
+require "lib/processing_jump_calculate"
+require "lib/processing_jump_impulse"
+require "lib/processing_jump_teleturn"
 require "lib/processing_standard"
 require "lib/reporting"
 require "lib/util"
@@ -54,7 +56,7 @@ local hangAction = "QuickMelee"      -- Q key (or equivalent button on a control
 
 local const =
 {
-    flightModes = CreateEnum("standard", "hang", "jump"),
+    flightModes = CreateEnum("standard", "hang", "jump_calculate", "jump_teleturn", "jump_impulse"),
 
     modNames = CreateEnum("wall_hang", "grappling_hook", "jetpack", "low_flying_v"),     -- this really doesn't need to know the other mod names, since wall hang will override flight
 
@@ -62,6 +64,8 @@ local const =
     rayLen = 1.2,
 
     jump_strength = 11,
+
+    teleturn_radians_per_second = math.pi * 3.5,      -- this needs to be very fast, teleturn is a hack and can't last very long.  Just enough motion that the player can sense the direction change (it's very disorienting to instantly face a new direction)
 
     shouldShowDebugWindow = false
 }
@@ -79,10 +83,14 @@ local debug = {}
 
 local vars =
 {
-    -- These get populated in Transition_ToHang()
+    -- These get populated in Transition_ToHang() and/or Transition_ToJump_Calculate()
     --hangPos,
     --normal,
     --material,
+
+    -- These get populated in Transition_ToJump_TeleTurn()
+    --impulse,
+    --final_lookdir,
 
     --NOTE: These sound props are only used for sounds that should be one at a time.  There can
     --      be other sounds that are managed elsewhere
@@ -195,9 +203,17 @@ registerForEvent("onUpdate", function(deltaTime)
         -- Hanging from a wall
         Process_Hang(o, vars, const, debug, keys, startStopTracker)
 
-    elseif vars.flightMode == const.flightModes.jump then
-        -- Jump off a wall
-        Process_Jump(o, vars, const, debug, startStopTracker)
+    elseif vars.flightMode == const.flightModes.jump_calculate then
+        -- Figure out direction/strength to jump
+        Process_Jump_Calculate(o, vars, const, debug)
+
+    elseif vars.flightMode == const.flightModes.jump_teleturn then
+        -- Use teleport to adjust the look direction over a few frames
+        Process_Jump_TeleTurn(o, vars, const, debug, deltaTime)
+
+    elseif vars.flightMode == const.flightModes.jump_impulse then
+        -- Apply a final impulse to finish jumping the player
+        Process_Jump_Impulse(o, vars, const, debug)
 
     else
         print("Wall Hang ERROR, unknown flightMode: " .. tostring(vars.flightMode))
@@ -225,7 +241,7 @@ registerForEvent("onDraw", function()
     end
 end)
 
------------------------------------- Private Methods -----------------------------------
+------------------------- Private Methods --------------------------
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
@@ -234,4 +250,46 @@ function this.ClearObjects()
     if o then
         o:Clear()
     end
+end
+
+--------------------------------------------------------------------
+
+function TODO()
+
+    -- Sounds
+
+    -- Jump+Forward
+    --  When jumping off a wall, if they are holding forward:
+    --      Go up
+    --      Don't change yaw
+
+    -- Hang+Direction
+    --  While hanging, if they hold a direction, then crawl along the wall in that direction
+    --  (think of mario on those wire fences)
+    --      It would be funny if a button press causes the player to flip to the other side of the wall :)
+
+    -- Double tap jump
+    --  If they quickly double tap jump, then enter bullet time for a few seconds
+
+    -- Wall Run
+    --  Hold in shift to enter and stay in wall run
+
+    -- Hang Drift
+    --  Don't perfectly hold position
+    --
+    --  When first entering hang, move in the direction of
+    --  their prev velocity and ease into a stop (over a very short distance, but still more than
+    --  an instant stop)
+    --
+    --  Also, the final resting position should be slightly lower than the initial hang position.
+    --  This will give a sense of weight to the player
+    --
+    --  Then very slowly drift around randomly.  Mostly in the plane of the wall, but a little off
+    --  the wall (like a really flat ellipsoid)
+
+    -- Jump Calculation
+    --  Instead of a simple hardcoded angle adjustment and constant power...
+    --  Determine what they are looking at (if they are looking away from the wall)
+    --  Find a trajectory that will place them where they are looking
+
 end

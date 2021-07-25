@@ -26,23 +26,17 @@ public func WallHang_RayCast(from: Vector4, to: Vector4, staticOnly: Bool) -> St
         };
     };
 
-
-
-    // May want to include dynamic.  Testing without it, and seeing what gets missed
-
     // More objects, but it's not perfect.  The top part of street lights are seen, but the vertical
     // part never is.  I don't think trees will register either.  People aren't seen by this either
-    // if !staticOnly && spacialQuery.SyncRaycastByCollisionGroup(from, to, n"Dynamic", attempt) {
-    //     attemptDistSqr = WallHang_LenSqr(from, attempt.position);
+    if !staticOnly && spacialQuery.SyncRaycastByCollisionGroup(from, to, n"Dynamic", attempt) {
+        attemptDistSqr = WallHang_LenSqr(from, attempt.position);
 
-    //     if distSqr < 0.00 || attemptDistSqr < distSqr {
-    //         distSqr = attemptDistSqr;
-    //         result = attempt;
-    //         //filterType = "dynamic";
-    //     };
-    // };
-
-
+        if distSqr < 0.00 || attemptDistSqr < distSqr {
+            distSqr = attemptDistSqr;
+            result = attempt;
+            //filterType = "dynamic";
+        };
+    };
 
     // Don't want to include this, because moving vehicles would be a problem
     // if !staticOnly && spacialQuery.SyncRaycastByCollisionGroup(from, to, n"Vehicle", attempt) {
