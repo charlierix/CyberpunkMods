@@ -31,6 +31,7 @@ require "lib/processing_jump_impulse"
 require "lib/processing_jump_teleturn"
 require "lib/processing_standard"
 require "lib/reporting"
+require "lib/sounds"
 require "lib/util"
 
 local this = {}

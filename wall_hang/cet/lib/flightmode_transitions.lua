@@ -1,3 +1,5 @@
+local this = {}
+
 -- This can come from any state back to standard
 function Transition_ToStandard(vars, const, debug, o)
     -- This gets called every frame when they are in the menu, driving, etc.  So it needs to be
@@ -17,6 +19,8 @@ function Transition_ToHang(vars, const, o, hangPos, normal, material)
     vars.hangPos = hangPos
     vars.normal = normal
     vars.material = material
+
+    PlaySound_Hang(vars, o)
 end
 
 function Transition_ToJump_Calculate(vars, const, o, hangPos, normal, material)
@@ -26,6 +30,8 @@ function Transition_ToJump_Calculate(vars, const, o, hangPos, normal, material)
     vars.hangPos = hangPos
     vars.normal = normal
     vars.material = material
+
+    PlaySound_Jump(vars, o)
 end
 
 function Transition_ToJump_TeleTurn(vars, const, o, impulse, final_lookdir)
