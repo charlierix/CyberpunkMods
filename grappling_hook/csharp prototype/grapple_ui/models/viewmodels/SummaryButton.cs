@@ -1,4 +1,5 @@
-﻿using System;
+﻿using grapple_ui.models.misc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,13 @@ namespace grapple_ui.models.viewmodels
     /// This will get mostly filled out with static data during init, then a few values get update
     /// each frame
     /// </remarks>
-    public record SummaryButton
+    public record SummaryButton : IControl
     {
         /// <summary>
         /// Tells where on the parent to place the text
         /// </summary>
         public ControlPosition position { get; init; }
+        public RenderPosition render_pos { get; init; }
 
         // This defines the min size of the inner portion.  It doesn't include the border's padding around the inner portion
         public int? min_width { get; init; }
@@ -51,6 +53,8 @@ namespace grapple_ui.models.viewmodels
         /// Name given to the invisible button (needs to be unique)
         /// </summary>
         public string invisible_name { get; init; }
+
+        public Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
     }
 
     public record SummaryButton_Content

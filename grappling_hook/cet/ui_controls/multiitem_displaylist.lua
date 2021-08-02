@@ -1,11 +1,19 @@
 local this = {}
 
+-- def is models\viewmodels\MultiItemDisplayList
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_MultiItemDisplayList(def, style, line_heights)
+    def.render_pos.width = def.width
+    def.render_pos.height = def.height
+end
+
 -- This shows a readonly list of items
 -- def is models\viewmodels\MultiItemDisplayList
 -- style_list is models\stylesheet\MultiItemDisplayList
-function Draw_MultiItemDisplayList(def, style_list, screenOffset_x, screenOffset_y, parent_width, parent_height, const, line_heights)
-    -- Calculate Position
-    local left, top = GetControlPosition(def.position, def.width, def.height, parent_width, parent_height, const)
+function Draw_MultiItemDisplayList(def, style_list, screenOffset_x, screenOffset_y, line_heights)
+    local left = def.render_pos.left
+    local top = def.render_pos.top
 
     -- Border
     Draw_Border(screenOffset_x, screenOffset_y, left + (def.width / 2), top + (def.height / 2), def.width, def.height, 0, false, style_list.background_color_argb, nil, style_list.border_color_argb, nil, style_list.border_cornerRadius, style_list.border_thickness)

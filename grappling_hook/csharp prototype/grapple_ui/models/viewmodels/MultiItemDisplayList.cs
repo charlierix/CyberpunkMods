@@ -1,4 +1,5 @@
-﻿using System;
+﻿using grapple_ui.models.misc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace grapple_ui.models.viewmodels
 {
-    public record MultiItemDisplayList
+    public record MultiItemDisplayList : IControl
     {
         /// <summary>
         /// The outer sets list is sorted by key
@@ -21,6 +22,7 @@ namespace grapple_ui.models.viewmodels
         /// Tells where on the parent to place the text
         /// </summary>
         public ControlPosition position { get; init; }
+        public RenderPosition render_pos { get; init; }
 
         // These are populated by MultiItemDisplayList_SetsChanged()
         /// <summary>
@@ -31,5 +33,7 @@ namespace grapple_ui.models.viewmodels
         /// Index of each inner set (dict's key is the set)
         /// </summary>
         private Dictionary<string, string[]> items_sorted { get; set; }
+
+        public Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
     }
 }

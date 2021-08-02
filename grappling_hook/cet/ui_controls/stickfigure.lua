@@ -1,6 +1,14 @@
 -- def is models\viewmodels\StickFigure
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_StickFigure(def, style, line_heights)
+    def.render_pos.width = def.width
+    def.render_pos.height = def.height
+end
+
+-- def is models\viewmodels\StickFigure
 -- style_graphics is models\stylesheet\Graphics
-function Draw_StickFigure(def, style_graphics, screenOffset_x, screenOffset_y, parent_width, parent_height, const)
+function Draw_StickFigure(def, style_graphics, screenOffset_x, screenOffset_y)
     -- width = 266
     -- height = 475
     -- <Ellipse Width="112" Height="112" VerticalAlignment="Top"/>      -- head
@@ -9,8 +17,8 @@ function Draw_StickFigure(def, style_graphics, screenOffset_x, screenOffset_y, p
     -- <Line X1="133" Y1="288" X2="22" Y2="475"/>       -- left leg
     -- <Line X1="133" Y1="288" X2="244" Y2="475"/>      -- right leg
 
-    -- Calculate Position
-	local left, top = GetControlPosition(def.position, def.width, def.height, parent_width, parent_height, const)
+	local left = def.render_pos.left
+    local top = def.render_pos.top
     local right = left + def.width
     local bottom = top + def.height
     local center_x = left + (def.width / 2)

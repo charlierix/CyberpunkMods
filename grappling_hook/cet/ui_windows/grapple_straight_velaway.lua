@@ -113,13 +113,18 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
 
     this.Refresh_IsDirty(gst8_velaway.okcancel, changes, grapple, gst8_velaway.deadspot_dist, startedWith_velaway, startedWith_compress, startedWith_tension, gst8_velaway.has_velaway.isChecked, gst8_velaway.has_compress.isChecked, gst8_velaway.has_tension.isChecked)
 
+    ------------------------------ Calculate Positions -------------------------------
+
+    CalculateSizes(gst8_velaway.render_nodes, vars_ui.style, vars_ui.line_heights)
+    CalculatePositions(gst8_velaway.render_nodes, window.width, window.height, const)
+
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gst8_velaway.title, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_velaway.title, vars_ui.style.colors)
 
-    Draw_Label(gst8_velaway.name, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_velaway.name, vars_ui.style.colors)
 
-    Draw_StickFigure(gst8_velaway.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
+    Draw_StickFigure(gst8_velaway.stickFigure, vars_ui.style.graphics, window.left, window.top)
     Draw_GrappleArrows(gst8_velaway.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_velaway.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
@@ -128,64 +133,64 @@ function DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, play
     end
 
     local isChecked
-    isChecked, isHovered_velaway_checkbox = Draw_CheckBox(gst8_velaway.has_velaway, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    isChecked, isHovered_velaway_checkbox = Draw_CheckBox(gst8_velaway.has_velaway, vars_ui.style.checkbox, vars_ui.style.colors)
     if isChecked then
         this.Update_HasVelocityAway(gst8_velaway.has_velaway, velaway, changes, startedWith_velaway)
     end
 
-    Draw_HelpButton(gst8_velaway.has_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    Draw_HelpButton(gst8_velaway.has_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     if gst8_velaway.has_velaway.isChecked then
         -- Compression
-        isChecked, isHovered_compress_checkbox = Draw_CheckBox(gst8_velaway.has_compress, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+        isChecked, isHovered_compress_checkbox = Draw_CheckBox(gst8_velaway.has_compress, vars_ui.style.checkbox, vars_ui.style.colors)
         if isChecked then
             this.Update_HasCompression(gst8_velaway.has_compress, velaway, changes)
         end
 
         if gst8_velaway.has_compress.isChecked then
-            Draw_Label(gst8_velaway.compress_value, vars_ui.style.colors, window.width, window.height, const)
+            Draw_Label(gst8_velaway.compress_value, vars_ui.style.colors)
 
             local isDownClicked, isUpClicked
-            isDownClicked, isUpClicked, isHovered_compress_updown = Draw_UpDownButtons(gst8_velaway.compress_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+            isDownClicked, isUpClicked, isHovered_compress_updown = Draw_UpDownButtons(gst8_velaway.compress_updown, vars_ui.style.updownButtons)
             this.Update_Compress(gst8_velaway.compress_updown, changes, isDownClicked, isUpClicked)
         else
             isHovered_compress_updown = false
         end
 
-        Draw_HelpButton(gst8_velaway.compress_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+        Draw_HelpButton(gst8_velaway.compress_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
         -- Tension
-        isChecked, isHovered_tension_checkbox = Draw_CheckBox(gst8_velaway.has_tension, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+        isChecked, isHovered_tension_checkbox = Draw_CheckBox(gst8_velaway.has_tension, vars_ui.style.checkbox, vars_ui.style.colors)
         if isChecked then
             this.Update_HasTension(gst8_velaway.has_tension, velaway, changes)
         end
 
         if gst8_velaway.has_tension.isChecked then
-            Draw_Label(gst8_velaway.tension_value, vars_ui.style.colors, window.width, window.height, const)
+            Draw_Label(gst8_velaway.tension_value, vars_ui.style.colors)
 
             local isDownClicked, isUpClicked
-            isDownClicked, isUpClicked, isHovered_tension_updown = Draw_UpDownButtons(gst8_velaway.tension_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+            isDownClicked, isUpClicked, isHovered_tension_updown = Draw_UpDownButtons(gst8_velaway.tension_updown, vars_ui.style.updownButtons)
             this.Update_Tension(gst8_velaway.tension_updown, changes, isDownClicked, isUpClicked)
         else
             isHovered_tension_updown = false
         end
 
-        Draw_HelpButton(gst8_velaway.tension_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+        Draw_HelpButton(gst8_velaway.tension_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
         -- Dead Spot Distance
-        Draw_Label(gst8_velaway.deadspot_label, vars_ui.style.colors, window.width, window.height, const)
-        Draw_HelpButton(gst8_velaway.deadspot_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
-        _, isHovered_deadspot_slider = Draw_Slider(gst8_velaway.deadspot_dist, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
+        Draw_Label(gst8_velaway.deadspot_label, vars_ui.style.colors)
+        Draw_HelpButton(gst8_velaway.deadspot_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        _, isHovered_deadspot_slider = Draw_Slider(gst8_velaway.deadspot_dist, vars_ui.style.slider)
     else
         isHovered_compress_checkbox = false
         isHovered_tension_checkbox = false
         isHovered_deadspot_slider = false
     end
 
-    --Draw_OrderedList(gst8_velaway.xpdebug, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
-    Draw_OrderedList(gst8_velaway.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
+    --Draw_OrderedList(gst8_velaway.xpdebug, vars_ui.style.colors)
+    Draw_OrderedList(gst8_velaway.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_velaway.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_velaway.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
         this.Save(player, grapple, velaway, changes, gst8_velaway.deadspot_dist, startedWith_velaway, startedWith_compress, startedWith_tension, gst8_velaway.has_velaway.isChecked, gst8_velaway.has_compress.isChecked, gst8_velaway.has_tension.isChecked)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
@@ -240,6 +245,8 @@ function this.Define_HasVelocityAway(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_CheckBox,
     }
 end
 function this.Refresh_HasVelocityAway(def, player, grapple, velaway, changes)
@@ -273,6 +280,8 @@ function this.Define_Has_Help(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_HelpButton,
     }
 
     retVal.tooltip =
@@ -391,6 +400,8 @@ function this.Define_DeadSpot_Label(const)
         },
 
         color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
     }
 end
 function this.Define_DeadSpot_Help(const)
@@ -405,7 +416,9 @@ function this.Define_DeadSpot_Help(const)
             vertical = const.alignment_vertical.center,
         },
 
-        invisible_name = "GrappleStraight_VelocityAway_DeadSpot_Help"
+        invisible_name = "GrappleStraight_VelocityAway_DeadSpot_Help",
+
+        CalcSize = CalcSize_HelpButton,
     }
 
     retVal.tooltip =
@@ -438,6 +451,8 @@ function this.Define_DeadSpot_Dist(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_Slider,
     }
 end
 function this.Refresh_DeadSpot_Dist(def, velaway)
@@ -493,6 +508,8 @@ function this.Define_XPDebug(const)
 
         color_prompt = "experience_prompt",
         color_value = "experience_value",
+
+        CalcSize = CalcSize_OrderedList,
     }
 end
 function this.Refresh_XPDebug(def, player, grapple, velaway, changes, startedWith_velaway, startedWith_compress, startedWith_tension, has_velaway, has_compress, has_tension)

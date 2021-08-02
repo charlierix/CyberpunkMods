@@ -2,18 +2,24 @@ local this = {}
 
 local hint = "ctrl+click to type"
 
+-- def is models\viewmodels\Slider
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_Slider(def, style, line_heights)
+    def.render_pos.width = def.width
+    def.render_pos.height = line_heights.line + 11       -- just counted pixels
+end
+
 -- Shows a slider.  The value is persisted in def.value
 -- def is models\viewmodels\Slider
 -- style_slider is models\stylesheet\Slider
 -- Returns
 --  wasChanged, isHovered
-function Draw_Slider(def, style_slider, parent_width, parent_height, const, line_heights)
-	-- Calculate Size
-	local width = def.width
-	local height = line_heights.line + 11       -- just counted pixels
-
-    -- Calculate Position
-	local left, top = GetControlPosition(def.position, width, height, parent_width, parent_height, const)
+function Draw_Slider(def, style_slider)
+    local width = def.render_pos.width
+    local height = def.render_pos.height
+    local left = def.render_pos.left
+    local top = def.render_pos.top
 
     -- Draw the slider
     ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_slider.border_cornerRadius)

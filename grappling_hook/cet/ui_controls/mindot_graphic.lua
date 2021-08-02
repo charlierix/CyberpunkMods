@@ -1,9 +1,17 @@
 -- def is models\viewmodels\MinDotGraphic
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_MinDotGraphic(def, style, line_heights)
+    def.render_pos.width = def.radius
+    def.render_pos.height = def.radius * 2
+end
+
+-- def is models\viewmodels\MinDotGraphic
 -- style_graphics is models\stylesheet\Graphics
 -- style_mindot is models\stylesheet\MinDotGraphic
-function Draw_MinDotGraphic(def, style_graphics, style_mindot, screenOffset_x, screenOffset_y, parent_width, parent_height, const)
-    -- Calculate Position
-	local left, top = GetControlPosition(def.position, def.radius, def.radius * 2, parent_width, parent_height, const)
+function Draw_MinDotGraphic(def, style_graphics, style_mindot, screenOffset_x, screenOffset_y)
+    local left = def.render_pos.left
+    local top = def.render_pos.top
 
     -- Zero Line
     Draw_Line(screenOffset_x, screenOffset_y, left, top + def.radius, left + def.radius * 0.8, top + def.radius, style_mindot.zero_color_abgr, style_graphics.line_thickness_minor)

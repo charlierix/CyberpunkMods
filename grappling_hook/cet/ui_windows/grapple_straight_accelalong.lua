@@ -106,13 +106,18 @@ function DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player
 
     this.Refresh_IsDirty(gst8_accalong.okcancel, changes, grapple, gst8_accalong.has_accelalong, gst8_accalong.deadspot_dist)
 
+    ------------------------------ Calculate Positions -------------------------------
+
+    CalculateSizes(gst8_accalong.render_nodes, vars_ui.style, vars_ui.line_heights)
+    CalculatePositions(gst8_accalong.render_nodes, window.width, window.height, const)
+
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gst8_accalong.title, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_accalong.title, vars_ui.style.colors)
 
-    Draw_Label(gst8_accalong.name, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_accalong.name, vars_ui.style.colors)
 
-    Draw_StickFigure(gst8_accalong.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
+    Draw_StickFigure(gst8_accalong.stickFigure, vars_ui.style.graphics, window.left, window.top)
     Draw_GrappleArrows(gst8_accalong.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_accalong.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     if gst8_accalong.has_accelalong.isChecked then
@@ -120,46 +125,46 @@ function DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player
     end
 
     local wasChecked
-    wasChecked, isHovered_has = Draw_CheckBox(gst8_accalong.has_accelalong, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    wasChecked, isHovered_has = Draw_CheckBox(gst8_accalong.has_accelalong, vars_ui.style.checkbox, vars_ui.style.colors)
     if wasChecked then
         this.Update_HasAccelAlong(gst8_accalong.has_accelalong, accel, changes, startedWithAG)
     end
 
-    Draw_HelpButton(gst8_accalong.has_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    Draw_HelpButton(gst8_accalong.has_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     if gst8_accalong.has_accelalong.isChecked then
         -- Accel
-        Draw_Label(gst8_accalong.accel_prompt, vars_ui.style.colors, window.width, window.height, const)
-        Draw_Label(gst8_accalong.accel_value, vars_ui.style.colors, window.width, window.height, const)
+        Draw_Label(gst8_accalong.accel_prompt, vars_ui.style.colors)
+        Draw_Label(gst8_accalong.accel_value, vars_ui.style.colors)
 
         local isDownClicked, isUpClicked
-        isDownClicked, isUpClicked, isHovered_accel = Draw_UpDownButtons(gst8_accalong.accel_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+        isDownClicked, isUpClicked, isHovered_accel = Draw_UpDownButtons(gst8_accalong.accel_updown, vars_ui.style.updownButtons)
         this.Update_Accel(gst8_accalong.accel_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_accalong.accel_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+        Draw_HelpButton(gst8_accalong.accel_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
         -- Speed
-        Draw_Label(gst8_accalong.speed_prompt, vars_ui.style.colors, window.width, window.height, const)
-        Draw_Label(gst8_accalong.speed_value, vars_ui.style.colors, window.width, window.height, const)
+        Draw_Label(gst8_accalong.speed_prompt, vars_ui.style.colors)
+        Draw_Label(gst8_accalong.speed_value, vars_ui.style.colors)
 
-        isDownClicked, isUpClicked, isHovered_speed = Draw_UpDownButtons(gst8_accalong.speed_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+        isDownClicked, isUpClicked, isHovered_speed = Draw_UpDownButtons(gst8_accalong.speed_updown, vars_ui.style.updownButtons)
         this.Update_Speed(gst8_accalong.speed_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_accalong.speed_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+        Draw_HelpButton(gst8_accalong.speed_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
         -- Dead Spot Distance
-        Draw_Label(gst8_accalong.deadspot_label, vars_ui.style.colors, window.width, window.height, const)
-        Draw_HelpButton(gst8_accalong.deadspot_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
-        _, isHovered_deadspot = Draw_Slider(gst8_accalong.deadspot_dist, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
+        Draw_Label(gst8_accalong.deadspot_label, vars_ui.style.colors)
+        Draw_HelpButton(gst8_accalong.deadspot_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        _, isHovered_deadspot = Draw_Slider(gst8_accalong.deadspot_dist, vars_ui.style.slider)
     else
         isHovered_deadspot = false
         isHovered_accel = false
         isHovered_speed = false
     end
 
-    Draw_OrderedList(gst8_accalong.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
+    Draw_OrderedList(gst8_accalong.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_accalong.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_accalong.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
         this.Save(player, grapple, accel, changes, gst8_accalong.has_accelalong.isChecked, startedWithAG, gst8_accalong.deadspot_dist)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
@@ -188,6 +193,8 @@ function this.Define_HasAccelAlong(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_CheckBox,
     }
 end
 function this.Refresh_HasAccelAlong(def, player, grapple, accel, changes)
@@ -221,6 +228,8 @@ function this.Define_HasHelp(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_HelpButton,
     }
 
     retVal.tooltip =
@@ -282,6 +291,8 @@ function this.Define_DeadSpot_Label(const)
         },
 
         color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
     }
 end
 function this.Define_DeadSpot_Help(const)
@@ -296,7 +307,9 @@ function this.Define_DeadSpot_Help(const)
             vertical = const.alignment_vertical.center,
         },
 
-        invisible_name = "GrappleStraight_AccelAlong_DeadSpot_Help"
+        invisible_name = "GrappleStraight_AccelAlong_DeadSpot_Help",
+
+        CalcSize = CalcSize_HelpButton,
     }
 
     retVal.tooltip =
@@ -338,6 +351,8 @@ function this.Define_DeadSpot_Dist(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_Slider,
     }
 end
 function this.Refresh_DeadSpot_Dist(def, accel)

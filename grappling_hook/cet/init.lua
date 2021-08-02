@@ -52,6 +52,7 @@ require "ui/mappinutil"
 require "ui/reporting"
 require "ui/transition_windows"
 require "ui/util_controls"
+require "ui/util_layout"
 require "ui/util_ui"
 require "ui/util_vm_binding"
 

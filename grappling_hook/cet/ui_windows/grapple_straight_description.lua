@@ -50,15 +50,20 @@ function DrawWindow_GrappleStraight_Description(isCloseRequested, vars_ui, playe
 
     this.Refresh_IsDirty(gst8_descr.okcancel, gst8_descr.description, grapple)
 
+    ------------------------------ Calculate Positions -------------------------------
+
+    CalculateSizes(gst8_descr.render_nodes, vars_ui.style, vars_ui.line_heights)
+    CalculatePositions(gst8_descr.render_nodes, window.width, window.height, const)
+
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gst8_descr.title, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_descr.title, vars_ui.style.colors)
 
-    Draw_Label(gst8_descr.name, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_descr.name, vars_ui.style.colors)
 
-    Draw_TextBox(gst8_descr.description, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.line_heights, window.width, window.height, const)
+    Draw_TextBox(gst8_descr.description, vars_ui.style.textbox, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_descr.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_descr.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
         this.Save(player, grapple, gst8_descr.description)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
@@ -93,6 +98,8 @@ function this.Define_Description(const, parent_width, parent_height)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_TextBox,
     }
 end
 function this.Refresh_Description(def, grapple)

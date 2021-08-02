@@ -1,4 +1,5 @@
-﻿using System;
+﻿using grapple_ui.models.misc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace grapple_ui.models.viewmodels
     /// <summary>
     /// This will lay out the prompts and values in columns
     /// </summary>
-    public record OrderedList
+    public record OrderedList : IControl
     {
         /// <summary>
         /// Same concept as what is in summary button
@@ -21,6 +22,7 @@ namespace grapple_ui.models.viewmodels
         /// Tells where on the parent to place the text
         /// </summary>
         public ControlPosition position { get; init; }
+        public RenderPosition render_pos { get; init; }
 
         // Named colors from the stylesheet's colors list
         public string color_prompt { get; init; }
@@ -28,6 +30,8 @@ namespace grapple_ui.models.viewmodels
 
         // Min gap between prompt and value columns
         public double gap { get; init; }
+
+        public Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
     }
 
     public record OrderedList_Content

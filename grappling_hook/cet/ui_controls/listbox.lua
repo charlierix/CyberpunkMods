@@ -1,13 +1,17 @@
+-- def is models\viewmodels\ListBox
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_ListBox(def, style, line_heights)
+    def.render_pos.width = def.width
+    def.render_pos.height = def.height
+end
+
 -- This shows a listbox that remembers the selected item
 -- def is models\viewmodels\ListBox
 -- style_list is models\stylesheet\ListBox
-function Draw_ListBox(def, style_list, parent_width, parent_height, const)
+function Draw_ListBox(def, style_list)
     --TODO: Return a selection changed bool (look for when the index changes after drawing a selectable)
 
-    -- Calculate Position
-    local left, top = GetControlPosition(def.position, def.width, def.height, parent_width, parent_height, const)
-
-    -- Draw the listbox
     ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, style_list.padding, style_list.padding)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_list.border_cornerRadius)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_list.border_thickness)
@@ -19,7 +23,7 @@ function Draw_ListBox(def, style_list, parent_width, parent_height, const)
     ImGui.PushStyleColor(ImGuiCol.ScrollbarGrabHovered, style_list.scrollbar_grab_color_hover_abgr)
     ImGui.PushStyleColor(ImGuiCol.ScrollbarGrabActive, style_list.scrollbar_grab_color_click_abgr)
 
-    ImGui.SetCursorPos(left, top)
+    ImGui.SetCursorPos(def.render_pos.left, def.render_pos.top)
 
     if ImGui.BeginListBox("##" .. def.invisible_name, def.width, def.height) then
         if def.items then

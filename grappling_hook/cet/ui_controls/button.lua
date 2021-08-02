@@ -1,20 +1,24 @@
 local this = {}
 
 -- def is models\viewmodels\Button
--- style_button is models\stylesheet\Button
--- Returns:
---  isClicked
-function Draw_Button(def, style_button, parent_width, parent_height, const)
-    local width = style_button.width
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_Button(def, style, line_heights)
+    local width = style.button.width
     if def.width_override then
         width = def.width_override
     end
 
-    -- Calculate Position
-	local left, top = GetControlPosition(def.position, width, style_button.height, parent_width, parent_height, const)
+    def.render_pos.width = width
+    def.render_pos.height = style.button.height
+end
 
-    -- Draw Button
-    local padding_h, padding_v = this.GetPadding(def, width, style_button.height)
+-- def is models\viewmodels\Button
+-- style_button is models\stylesheet\Button
+-- Returns:
+--  isClicked
+function Draw_Button(def, style_button)
+    local padding_h, padding_v = this.GetPadding(def, def.render_pos.width, style_button.height)
 
     ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_button.border_cornerRadius)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_button.border_thickness)
@@ -26,7 +30,7 @@ function Draw_Button(def, style_button, parent_width, parent_height, const)
     ImGui.PushStyleColor(ImGuiCol.Text, style_button.foreground_color_abgr)
     ImGui.PushStyleColor(ImGuiCol.Border, style_button.border_color_abgr)
 
-    ImGui.SetCursorPos(left, top)
+    ImGui.SetCursorPos(def.render_pos.left, def.render_pos.top)
 
     local isClicked = ImGui.Button(def.text)
 

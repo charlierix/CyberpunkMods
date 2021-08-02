@@ -79,18 +79,23 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, wi
 
     this.Refresh_IsDirty(input_bindings.okcancel, input_bindings.bind_buttons)
 
+    ------------------------------ Calculate Positions -------------------------------
+
+    CalculateSizes(input_bindings.render_nodes, vars_ui.style, vars_ui.line_heights)
+    CalculatePositions(input_bindings.render_nodes, window.width, window.height, const)
+
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(input_bindings.consoleWarning1, vars_ui.style.colors, window.width, window.height, const)
-    Draw_Label(input_bindings.consoleWarning2, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(input_bindings.consoleWarning1, vars_ui.style.colors)
+    Draw_Label(input_bindings.consoleWarning2, vars_ui.style.colors)
 
-    Draw_Label(input_bindings.help1_label, vars_ui.style.colors, window.width, window.height, const)
-    Draw_HelpButton(input_bindings.help1_button, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    Draw_Label(input_bindings.help1_label, vars_ui.style.colors)
+    Draw_HelpButton(input_bindings.help1_button, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
-    Draw_Label(input_bindings.help2_label, vars_ui.style.colors, window.width, window.height, const)
-    Draw_HelpButton(input_bindings.help2_button, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    Draw_Label(input_bindings.help2_label, vars_ui.style.colors)
+    Draw_HelpButton(input_bindings.help2_button, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
-    Draw_MultiItemDisplayList(input_bindings.watchedActions, vars_ui.style.multiitem_displaylist, window.left, window.top, window.width, window.height, const, vars_ui.line_heights)
+    Draw_MultiItemDisplayList(input_bindings.watchedActions, vars_ui.style.multiitem_displaylist, window.left, window.top, vars_ui.line_heights)
 
     if setting_bind then
         -------------- Changing Binding --------------
@@ -105,11 +110,11 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, wi
             vars_ui.keys:StopLatchingWatched()
         end
 
-        Draw_Label(input_bindings.instruction1, vars_ui.style.colors, window.width, window.height, const)
-        Draw_Label(input_bindings.instruction2, vars_ui.style.colors, window.width, window.height, const)
-        Draw_Label(input_bindings.instruction3, vars_ui.style.colors, window.width, window.height, const)
+        Draw_Label(input_bindings.instruction1, vars_ui.style.colors)
+        Draw_Label(input_bindings.instruction2, vars_ui.style.colors)
+        Draw_Label(input_bindings.instruction3, vars_ui.style.colors)
 
-        if Draw_Button(input_bindings.cancel_bind, vars_ui.style.button, window.width, window.height, const) then
+        if Draw_Button(input_bindings.cancel_bind, vars_ui.style.button) then
             setting_bind = nil
         end
     else
@@ -118,8 +123,8 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, wi
         for i = 1, #input_bindings.bind_buttons do
             local current = input_bindings.bind_buttons[i]
 
-            local summary_click, summary_hover = Draw_SummaryButton(current.summary, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
-            local remove_click, remove_hover = Draw_RemoveButton(current.remove, vars_ui.style.removeButton, window.left, window.top, window.width, window.height, const)
+            local summary_click, summary_hover = Draw_SummaryButton(current.summary, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
+            local remove_click, remove_hover = Draw_RemoveButton(current.remove, vars_ui.style.removeButton, window.left, window.top)
 
             if remove_hover then
                 this.Draw_Remove_Tooltip(current, vars_ui, window, const)
@@ -136,13 +141,13 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, wi
             end
         end
 
-        if Draw_Button(input_bindings.restore_defaults, vars_ui.style.button, window.width, window.height, const) then
+        if Draw_Button(input_bindings.restore_defaults, vars_ui.style.button) then
             this.RestoreDefaults(input_bindings.bind_buttons, const)
         end
     end
 
     -- OK/Cancel
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(input_bindings.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(input_bindings.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
         this.Save(input_bindings.bind_buttons, vars.startStopTracker, vars_ui.keys)
         TransitionWindows_Main(vars_ui, const)
@@ -172,6 +177,8 @@ function this.Define_ConsoleWarning1(const)
         },
 
         color = "info",
+
+        CalcSize = CalcSize_Label,
     }
 end
 function this.Define_ConsoleWarning2(const)
@@ -189,6 +196,8 @@ function this.Define_ConsoleWarning2(const)
         },
 
         color = "info",
+
+        CalcSize = CalcSize_Label,
     }
 end
 
@@ -207,6 +216,8 @@ function this.Define_Help1_Label(const)
         },
 
         color = "help",
+
+        CalcSize = CalcSize_Label,
     }
 end
 function this.Define_Help1_Button(const)
@@ -222,6 +233,8 @@ function this.Define_Help1_Button(const)
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.top,
         },
+
+        CalcSize = CalcSize_HelpButton,
     }
 
     retVal.tooltip =
@@ -251,6 +264,8 @@ function this.Define_Help2_Label(const)
         },
 
         color = "help",
+
+        CalcSize = CalcSize_Label,
     }
 end
 function this.Define_Help2_Button(const)
@@ -266,6 +281,8 @@ function this.Define_Help2_Button(const)
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.top,
         },
+
+        CalcSize = CalcSize_HelpButton,
     }
 
     retVal.tooltip =
@@ -296,6 +313,8 @@ function this.Define_WatchedActions(const)
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_MultiItemDisplayList,
     }
 end
 function this.Refresh_WatchedActions(def, keys)
@@ -379,6 +398,8 @@ function this.Define_BindButtons_Summary(x, y, name, const)
         -- Refresh will either populate the header or the unused
 
         invisible_name = "InputBindings_Summary_" .. name,
+
+        CalcSize = CalcSize_SummaryButton,
     }
 end
 function this.Define_BindButtons_Remove(x, y, name, const)
@@ -394,6 +415,8 @@ function this.Define_BindButtons_Remove(x, y, name, const)
         },
 
         invisible_name = "InputBindings_Remove_" .. name,
+
+        CalcSize = CalcSize_RemoveButton,
     }
 end
 function this.Define_BindButtons_SummaryHoverLabel(x, y, const)
@@ -411,6 +434,8 @@ function this.Define_BindButtons_SummaryHoverLabel(x, y, const)
         },
 
         color = "hint",
+
+        CalcSize = CalcSize_Label,
     }
 end
 function this.Define_BindButtons_RemoveHoverLabel(x, y, const)
@@ -428,6 +453,8 @@ function this.Define_BindButtons_RemoveHoverLabel(x, y, const)
         },
 
         color = "hint",
+
+        CalcSize = CalcSize_Label,
     }
 end
 
@@ -455,10 +482,10 @@ function this.Draw_Remove_Tooltip(current, vars_ui, window, const)
     -- Draw_Tooltip("Clear Binding", vars_ui.style.tooltip, window.left + left + radius, window.top + top + radius, notouch, notouch, vars_ui)
 
 
-    Draw_Label(current.remove_hover_label, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(current.remove_hover_label, vars_ui.style.colors)
 end
 function this.Draw_Summary_Tooltips(current, vars, vars_ui, window, const)
-    Draw_Label(current.summary_hover_label, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(current.summary_hover_label, vars_ui.style.colors)
 
     local actionList = this.GetActionList(current, vars.startStopTracker)
     if actionList then
@@ -492,6 +519,8 @@ function this.Define_RestoreDefaults(vars_ui, const)
         },
 
         color = "hint",
+
+        CalcSize = CalcSize_Button,
     }
 end
 
@@ -529,13 +558,15 @@ function this.Define_Instruction1(const)
         },
 
         color = "instruction",
+
+        CalcSize = CalcSize_Label,
     }
 end
 function this.Define_Instruction2(const)
     -- Label
     return
     {
-        text = "Press desired keys at the same time",
+        text = "Press desired keys at the SAME TIME",
 
         position =
         {
@@ -546,6 +577,8 @@ function this.Define_Instruction2(const)
         },
 
         color = "instruction",
+
+        CalcSize = CalcSize_Label,
     }
 end
 function this.Define_Instruction3(const)
@@ -563,6 +596,8 @@ function this.Define_Instruction3(const)
         },
 
         color = "instruction",
+
+        CalcSize = CalcSize_Label,
     }
 end
 
@@ -581,6 +616,8 @@ function this.Define_CancelBind(const)
         },
 
         color = "hint",
+
+        CalcSize = CalcSize_Button,
     }
 end
 

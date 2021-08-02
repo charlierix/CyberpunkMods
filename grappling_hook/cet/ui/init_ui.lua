@@ -20,35 +20,11 @@ end
 
 -- The last step when defining a window is to call this, which does some post processing
 function FinishDefiningWindow(window)
-    this.SortContentLists(window)
+    this.BuildRenderTree(window)
+    this.SortContentLists(window.render_nodes)
 end
 
 ----------------------------------- Private Methods -----------------------------------
-
--- This looks for controls that have a content property and creates a sorted content_keys index
-function this.SortContentLists(window)
-    for _, item in pairs(window) do
-        -- All controls should be tables
-        if type(item) == "table" then
-            -- The list that will be sorted is called content, so see if that exists
-            local content = item.content
-            if content and type(content) == "table" then
-                -- Can't sort the content table directly, need an index table so that ipairs can be used
-                local keys = {}
-
-                -- populate the table that holds the keys
-                for key in pairs(content) do
-                    table.insert(keys, key)
-                end
-
-                -- sort the keys
-                table.sort(keys)
-
-                item.content_keys = keys
-            end
-        end
-    end
-end
 
 function this.GetScreenInfo()
     local width, height = GetDisplayResolution()
@@ -123,4 +99,101 @@ function this.Define_MainWindow(screen)
         left = screen.center_x - width / 2,
         top = screen.center_y - height / 2,
     }
+end
+
+-- This looks for controls that have a position property and stores them in render_nodes
+-- NOTE: This is is recursive, because controls may be stored in structures
+function this.BuildRenderTree(window)
+    local controls = this.FindAllControlsWithPosition(window)
+
+    local nodes = {}
+
+    for i = 1, #controls do
+        --TODO: When controls can point to each other, this will need to be expanded to be a tree.  will
+        -- need to have a list of temp subtrees in case the controls are iterated out of order (A points
+        -- to B, but A is seen first)
+        nodes[#nodes+1] =
+        {
+            control = controls[i],
+            --children = nil,
+        }
+    end
+
+    window.render_nodes = nodes
+end
+
+function this.FindAllControlsWithPosition(container)
+    local retVal = {}
+
+    for _, item in pairs(container) do
+        if this.IsControlWithPosition(item) then
+            retVal[#retVal+1] = item
+
+        elseif type(item) == "table" then
+
+            --TODO: Once panels are implemented, look for the children property and don't recurse (the panel will
+            --manage its own children)
+
+            -- Recurse
+            local sub_list = this.FindAllControlsWithPosition(item)
+            for i = 1, #sub_list do
+                retVal[#retVal+1] = sub_list[i]
+            end
+        end
+    end
+
+    return retVal
+end
+
+function this.IsControlWithPosition(item)
+    -- All controls should be tables
+    if type(item) ~= "table" then
+        return false
+    end
+
+    local pos = item.position
+    if not pos or type(pos) ~= "table" then
+        return false
+    end
+
+    -- This should be enough, but go ahead and look for horizontal and vertical
+    local horz = pos.horizontal
+    if not horz or type(horz) ~= "string" then
+        return false
+    end
+
+    local vert = pos.horizontal
+    if not vert or type(vert) ~= "string" then
+        return false
+    end
+
+    return true
+end
+
+-- This looks for controls that have a content property and creates a sorted content_keys index
+-- nodes is an array of models\misc\RenderNode
+function this.SortContentLists(nodes)
+    for i = 1, #nodes do
+        -- The list that to be sorted is called content, so see if that exists
+        local content = nodes[i].control.content
+        if content and type(content) == "table" then
+            -- Can't sort the content table directly, need an index table so that ipairs can be used
+            local keys = {}
+
+            -- populate the table that holds the keys
+            for key in pairs(content) do
+                table.insert(keys, key)
+            end
+
+            -- sort the keys
+            table.sort(keys)
+
+            nodes[i].control.content_keys = keys
+        end
+
+        -- Recurse
+        if nodes[i].children then
+            this.SortContentLists(nodes[i].children)
+        end
+    end
 end

@@ -1,23 +1,29 @@
 local this = {}
 
+-- def is models\viewmodels\UpDownButtons
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_UpDownButtons(def, style, line_heights)
+	if not def.sizes then
+        def.sizes = {}
+    end
+
+    local text_down, text_up = this.FinalText(def)
+
+    this.Calculate_Sizes(def, style.updownButtons, text_down, text_up)
+
+    def.render_pos.width = def.sizes.width
+    def.render_pos.height = def.sizes.height
+end
+
 -- Draws a pair of + - buttons, either horizontal or vertical orientations
 -- def is models\viewmodels\UpDownButtons
 -- style_updown is models\stylesheet\UpDownButtons
 -- Returns:
 --	isDownClicked, isUpClicked, isHovered
-function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, const)
+function Draw_UpDownButtons(def, style_updown)
 	-- Concatenate +- with model's text
     local text_down, text_up = this.FinalText(def)
-
-	-- Calculate Sizes
-	if not def.sizes then
-        def.sizes = {}
-    end
-
-    this.Calculate_Sizes(def, style_updown, text_down, text_up)
-
-    -- Calculate Position
-	local left, top = GetControlPosition(def.position, def.sizes.width, def.sizes.height, parent_width, parent_height, const)
 
 	-- Common properties
     ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_updown.border_cornerRadius)
@@ -49,7 +55,7 @@ function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, cons
 		ImGui.PushStyleColor(ImGuiCol.Border, style_updown.disabled_border_color_abgr)
 	end
 
-    ImGui.SetCursorPos(left + def.sizes.down_left, top + def.sizes.down_top)
+    ImGui.SetCursorPos(def.render_pos.left + def.sizes.down_left, def.render_pos.top + def.sizes.down_top)
 
     local isDownClicked = ImGui.Button(text_down)		-- this bool is ANDed with isEnabled at the bottom of this function
 
@@ -80,7 +86,7 @@ function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, cons
 		ImGui.PushStyleColor(ImGuiCol.Border, style_updown.disabled_border_color_abgr)
 	end
 
-    ImGui.SetCursorPos(left + def.sizes.up_left, top + def.sizes.up_top)
+    ImGui.SetCursorPos(def.render_pos.left + def.sizes.up_left, def.render_pos.top + def.sizes.up_top)
 
     local isUpClicked = ImGui.Button(text_up)
 
@@ -92,7 +98,7 @@ function Draw_UpDownButtons(def, style_updown, parent_width, parent_height, cons
     ImGui.PopStyleVar(2)
 
     -- Invisible Button
-    local _, isHovered = Draw_InvisibleButton(def.invisible_name .. "Hidden", left + (def.sizes.width / 2), top + (def.sizes.height / 2), def.sizes.width, def.sizes.height, 0)
+    local _, isHovered = Draw_InvisibleButton(def.invisible_name .. "Hidden", def.render_pos.left + (def.sizes.width / 2), def.render_pos.top + (def.sizes.height / 2), def.sizes.width, def.sizes.height, 0)
 
 	return
 		isDownClicked and def.isEnabled_down,

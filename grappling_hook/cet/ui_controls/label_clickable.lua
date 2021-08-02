@@ -1,5 +1,19 @@
 local this = {}
 
+-- def is models\viewmodels\LabelClickable
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_LabelClickable(def, style, line_heights)
+	if not def.sizes then
+        def.sizes = {}
+    end
+
+    this.Calculate_Sizes(def, style.textbox)
+
+    def.render_pos.width = def.sizes.width
+    def.render_pos.height = def.sizes.height
+end
+
 -- Shows a wordwrapped label that is made to look like a textbox, but acts like a button.  If the user
 -- clicks this, a multiline textbox should be shown instead.  Multiline textbox doesn't support wordwrap,
 -- so that textbox will need to be much larger to make it easier for the user to type what they want
@@ -7,16 +21,9 @@ local this = {}
 -- style_text is models\stylesheet\TextBox
 -- style_colors is stylesheet.colors
 -- Returns isClicked
-function Draw_LabelClickable(def, style_text, style_colors, screenOffset_x, screenOffset_y, parent_width, parent_height, const)
-	-- Calculate Size
-	if not def.sizes then
-        def.sizes = {}
-    end
-
-    this.Calculate_Sizes(def, style_text)
-
-    -- Calculate Position
-    local left, top = GetControlPosition(def.position, def.sizes.width, def.sizes.height, parent_width, parent_height, const)
+function Draw_LabelClickable(def, style_text, style_colors, screenOffset_x, screenOffset_y)
+    local left = def.render_pos.left
+    local top = def.render_pos.top
 
     -- Invisible Button
     local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width_text, def.sizes.height_text, style_text.padding)

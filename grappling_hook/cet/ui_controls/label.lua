@@ -1,30 +1,36 @@
+-- def is models\viewmodels\Label
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_Label(def, style, line_heights)
+    local width = 0
+    local height = 0
+
+    if def.text and def.text ~= "" then
+        if def.max_width then
+            width, height = ImGui.CalcTextSize(def.text, false, def.max_width)
+        else
+            width, height = ImGui.CalcTextSize(def.text)
+        end
+    end
+
+    def.render_pos.width = width
+    def.render_pos.height = height
+end
+
 -- Draws a label at an arbitrary location within the parent
 -- def is models\viewmodels\Label
 -- style_colors is models\stylesheet\Stylesheet.colors
-function Draw_Label(def, style_colors, parent_width, parent_height, const)
+function Draw_Label(def, style_colors)
     if (not def.text) or def.text == "" then
         do return end
     end
 
-    -- Calculate Size
-    local width = nil
-    local height = nil
-    if def.max_width then
-        width, height = ImGui.CalcTextSize(def.text, false, def.max_width)
-    else
-        width, height = ImGui.CalcTextSize(def.text)
-    end
-
-    -- Calculate Position
-    local left, top = GetControlPosition(def.position, width, height, parent_width, parent_height, const)
-
-    -- Draw the text
     local color = GetNamedColor(style_colors, def.color)
 
-    ImGui.SetCursorPos(left, top)
+    ImGui.SetCursorPos(def.render_pos.left, def.render_pos.top)
 
     if def.max_width then
-        ImGui.PushTextWrapPos(left + def.max_width)
+        ImGui.PushTextWrapPos(def.render_pos.left + def.max_width)
     end
 
     ImGui.PushStyleColor(ImGuiCol.Text, color.the_color_abgr)

@@ -1,23 +1,29 @@
 local this = {}
 
--- Draws buttons (should be placed at bottom right of window)
 -- def is models\viewmodels\OkCancelButtons
--- style_updown is models\stylesheet\OkCancelButtons
--- Returns:
---  isOKClicked         this is only true if two buttons are showing and they click OK (def.isDirty==true)
---  isCancelClicked     this is true when they click the cancel button, or if there is a single button showing
-function Draw_OkCancelButtons(def, style_okcancel, parent_width, parent_height, const)
-	-- Calculate Sizes
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_OkCancelButtons(def, style, line_heights)
 	if not def.sizes then
         def.sizes = {}
     end
 
     local text_ok, text_cancel = this.GetText(def)
 
-    this.Calculate_Sizes(def, style_okcancel, text_ok, text_cancel)
+    this.Calculate_Sizes(def, style.okcancelButtons, text_ok, text_cancel)
 
-    -- Calculate Position
-	local left, top = GetControlPosition(def.position, def.sizes.width, def.sizes.height, parent_width, parent_height, const)
+    def.render_pos.width = def.sizes.width
+    def.render_pos.height = def.sizes.height
+end
+
+-- Draws buttons (should be placed at bottom right of window)
+-- def is models\viewmodels\OkCancelButtons
+-- style_updown is models\stylesheet\OkCancelButtons
+-- Returns:
+--  isOKClicked         this is only true if two buttons are showing and they click OK (def.isDirty==true)
+--  isCancelClicked     this is true when they click the cancel button, or if there is a single button showing
+function Draw_OkCancelButtons(def, style_okcancel)
+    local text_ok, text_cancel = this.GetText(def)
 
 	-- Common properties
     ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_okcancel.border_cornerRadius)
@@ -34,7 +40,7 @@ function Draw_OkCancelButtons(def, style_okcancel, parent_width, parent_height, 
     if def.isDirty then
         ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, def.sizes.ok_pad_h, def.sizes.ok_pad_v)
 
-        ImGui.SetCursorPos(left + def.sizes.ok_left, top + def.sizes.ok_top)
+        ImGui.SetCursorPos(def.render_pos.left + def.sizes.ok_left, def.render_pos.top + def.sizes.ok_top)
 
         isOKClicked = ImGui.Button(text_ok)
 
@@ -44,7 +50,7 @@ function Draw_OkCancelButtons(def, style_okcancel, parent_width, parent_height, 
     -- Cancel
     ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, def.sizes.cancel_pad_h, def.sizes.cancel_pad_v)
 
-    ImGui.SetCursorPos(left + def.sizes.cancel_left, top + def.sizes.cancel_top)
+    ImGui.SetCursorPos(def.render_pos.left + def.sizes.cancel_left, def.render_pos.top + def.sizes.cancel_top)
 
     local isCancelClicked = ImGui.Button(text_cancel)
 

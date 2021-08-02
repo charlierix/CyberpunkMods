@@ -1,4 +1,5 @@
-﻿using System;
+﻿using grapple_ui.models.misc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace grapple_ui.models.viewmodels
     /// <summary>
     /// This is a list of items, one of them can be selected
     /// </summary>
-    public record ListBox
+    public record ListBox : IControl
     {
         /// <summary>
         /// This isn't shown, it just needs to be a unique string
@@ -37,5 +38,8 @@ namespace grapple_ui.models.viewmodels
         /// Tells where on the parent to place the text
         /// </summary>
         public ControlPosition position { get; init; }
+        public RenderPosition render_pos { get; init; }
+
+        public Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
     }
 }

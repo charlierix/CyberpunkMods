@@ -57,25 +57,30 @@ function DrawWindow_Grapple_Choose(isCloseRequested, vars_ui, player, window, co
 
     this.Refresh_IsDirty(grapple_choose.okcancel, grapple_choose.available.selected_index)
 
+    ------------------------------ Calculate Positions -------------------------------
+
+    CalculateSizes(grapple_choose.render_nodes, vars_ui.style, vars_ui.line_heights)
+    CalculatePositions(grapple_choose.render_nodes, window.width, window.height, const)
+
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(grapple_choose.title, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(grapple_choose.title, vars_ui.style.colors)
 
-    Draw_ListBox(grapple_choose.available, vars_ui.style.listbox, window.width, window.height, const)
+    Draw_ListBox(grapple_choose.available, vars_ui.style.listbox)
 
     if isAnyAvailable then
         if grapple_choose.available.selected_index > 0 then
-            Draw_Label(grapple_choose.name, vars_ui.style.colors, window.width, window.height, const)
-            Draw_Label(grapple_choose.description, vars_ui.style.colors, window.width, window.height, const)
+            Draw_Label(grapple_choose.name, vars_ui.style.colors)
+            Draw_Label(grapple_choose.description, vars_ui.style.colors)
         end
     else
-        Draw_Label(grapple_choose.low_xp1, vars_ui.style.colors, window.width, window.height, const)
-        Draw_Label(grapple_choose.low_xp2, vars_ui.style.colors, window.width, window.height, const)
+        Draw_Label(grapple_choose.low_xp1, vars_ui.style.colors)
+        Draw_Label(grapple_choose.low_xp2, vars_ui.style.colors)
     end
 
-    Draw_OrderedList(grapple_choose.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
+    Draw_OrderedList(grapple_choose.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_choose.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_choose.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
         this.Save(player, vars_ui.transition_info.grappleIndex, available_info[grapple_choose.available.selected_index])
         TransitionWindows_Main(vars_ui, const)
@@ -191,6 +196,8 @@ function this.Define_LowXP1(const)
         },
 
         color = "info",
+
+        CalcSize = CalcSize_Label,
     }
 end
 function this.Define_LowXP2(const)
@@ -208,6 +215,8 @@ function this.Define_LowXP2(const)
         },
 
         color = "info",
+
+        CalcSize = CalcSize_Label,
     }
 end
 
@@ -226,6 +235,8 @@ function this.Define_Name(const)
         },
 
         color = "subTitle",
+
+        CalcSize = CalcSize_Label,
     }
 end
 function this.Refresh_Name(def, selected_index)
@@ -253,6 +264,8 @@ function this.Define_Description(const)
         },
 
         color = "edit_prompt",      -- Grapple_Straight has description in a LabelClickable, which defaults to textbox's foreground if it's not overriden.  TextBox's color happens to be the same as this (if the stylesheet ever changes, may want a dedicated color name for this)
+
+        CalcSize = CalcSize_Label,
     }
 end
 function this.Refresh_Description(def, selected_index)
@@ -283,6 +296,8 @@ function this.Define_AvailableGrapples(const)
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.top,
         },
+
+        CalcSize = CalcSize_ListBox,
     }
 end
 

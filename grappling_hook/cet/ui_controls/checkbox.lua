@@ -1,9 +1,7 @@
 -- def is models\viewmodels\CheckBox
--- style_checkbox is models\stylesheet\CheckBox
--- Returns
---  wasChanged, isHovered
-function Draw_CheckBox(def, style_checkbox, style_colors, parent_width, parent_height, const)
-    -- Calculate Size
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_CheckBox(def, style, line_heights)
     local width, height = ImGui.CalcTextSize(def.text)
 
     -- Couldn't find a function to measure the size of the box and gap between box and text, so resorted
@@ -11,8 +9,19 @@ function Draw_CheckBox(def, style_checkbox, style_colors, parent_width, parent_h
     width = width + 19 + 5
     height = math.max(height, 19)
 
-    -- Calculate Position
-	local left, top = GetControlPosition(def.position, width, height, parent_width, parent_height, const)
+    def.render_pos.width = width
+    def.render_pos.height = height
+end
+
+-- def is models\viewmodels\CheckBox
+-- style_checkbox is models\stylesheet\CheckBox
+-- Returns
+--  wasChanged, isHovered
+function Draw_CheckBox(def, style_checkbox, style_colors)
+    local width = def.render_pos.width
+    local height = def.render_pos.height
+    local left = def.render_pos.left
+    local top = def.render_pos.top
 
     -- Draw the checkbox
     --ImGui.PushStyleColor(ImGuiCol.Border, 0xFF80FF40)     -- border is ignored

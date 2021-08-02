@@ -78,42 +78,47 @@ function DrawWindow_GrappleStraight_Distances(isCloseRequested, vars_ui, player,
 
     this.Refresh_IsDirty(gst8_dist.okcancel, changes, gst8_dist.desired_checkbox, gst8_dist.desired_slider, grapple)
 
+    ------------------------------ Calculate Positions -------------------------------
+
+    CalculateSizes(gst8_dist.render_nodes, vars_ui.style, vars_ui.line_heights)
+    CalculatePositions(gst8_dist.render_nodes, window.width, window.height, const)
+
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gst8_dist.title, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_dist.title, vars_ui.style.colors)
 
-    Draw_Label(gst8_dist.name, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_dist.name, vars_ui.style.colors)
 
-    Draw_StickFigure(gst8_dist.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
+    Draw_StickFigure(gst8_dist.stickFigure, vars_ui.style.graphics, window.left, window.top)
     Draw_GrappleArrows(gst8_dist.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_dist.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
     -- Desired Length
-    _, isHovered_desired_checkbox = Draw_CheckBox(gst8_dist.desired_checkbox, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    _, isHovered_desired_checkbox = Draw_CheckBox(gst8_dist.desired_checkbox, vars_ui.style.checkbox, vars_ui.style.colors)
 
     if gst8_dist.desired_checkbox.isChecked then
-        _, isHovered_desired_slider = Draw_Slider(gst8_dist.desired_slider, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
+        _, isHovered_desired_slider = Draw_Slider(gst8_dist.desired_slider, vars_ui.style.slider)
     else
         isHovered_desired_slider = false
     end
 
     this.Update_DesiredLength(gst8_dist.desired_checkbox, gst8_dist.desired_slider, changes)
 
-    Draw_HelpButton(gst8_dist.desired_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    Draw_HelpButton(gst8_dist.desired_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     -- Max Distance
-    Draw_Label(gst8_dist.max_prompt, vars_ui.style.colors, window.width, window.height, const)
-    Draw_Label(gst8_dist.max_value, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_dist.max_prompt, vars_ui.style.colors)
+    Draw_Label(gst8_dist.max_value, vars_ui.style.colors)
 
     local isDownClicked, isUpClicked
-    isDownClicked, isUpClicked, isHovered_max_updown = Draw_UpDownButtons(gst8_dist.max_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+    isDownClicked, isUpClicked, isHovered_max_updown = Draw_UpDownButtons(gst8_dist.max_updown, vars_ui.style.updownButtons)
     this.Update_MaxDistance(gst8_dist.max_updown, changes, gst8_dist.desired_slider, isDownClicked, isUpClicked, grapple)
 
-    Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    Draw_HelpButton(gst8_dist.max_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
-    Draw_OrderedList(gst8_dist.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
+    Draw_OrderedList(gst8_dist.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_dist.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_dist.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
         this.Save(player, grapple, changes, gst8_dist.desired_checkbox, gst8_dist.desired_slider)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
@@ -149,6 +154,8 @@ function this.Define_Desired_CheckBox(const)
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_CheckBox,
     }
 end
 function this.Refresh_Desired_CheckBox(def, grapple)
@@ -178,6 +185,8 @@ function this.Define_Desired_Help(const)
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_HelpButton,
     }
 
     retVal.tooltip =
@@ -219,6 +228,8 @@ function this.Define_Desired_Slider(const)
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_Slider,
     }
 end
 function this.Refresh_Desired_Slider(def, grapple, changes)

@@ -102,62 +102,67 @@ function DrawWindow_Grapple_Straight(isCloseRequested, vars_ui, player, window, 
 
     this.Refresh_IsDirty(grapple_straight.okcancel, grapple_straight.name, grapple)
 
+    ------------------------------ Calculate Positions -------------------------------
+
+    CalculateSizes(grapple_straight.render_nodes, vars_ui.style, vars_ui.line_heights)
+    CalculatePositions(grapple_straight.render_nodes, window.width, window.height, const)
+
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(grapple_straight.title, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(grapple_straight.title, vars_ui.style.colors)
 
-    Draw_TextBox(grapple_straight.name, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.line_heights, window.width, window.height, const)
-    if Draw_LabelClickable(grapple_straight.description, vars_ui.style.textbox, vars_ui.style.colors, window.left, window.top, window.width, window.height, const) then
+    Draw_TextBox(grapple_straight.name, vars_ui.style.textbox, vars_ui.style.colors)
+    if Draw_LabelClickable(grapple_straight.description, vars_ui.style.textbox, vars_ui.style.colors, window.left, window.top) then
         TransitionWindows_Straight_Description(vars_ui, const)
     end
 
-    Draw_StickFigure(grapple_straight.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
+    Draw_StickFigure(grapple_straight.stickFigure, vars_ui.style.graphics, window.left, window.top)
     Draw_GrappleArrows(grapple_straight.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(grapple_straight.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
     local isClicked = nil
-    isClicked, isHovered_distance = Draw_SummaryButton(grapple_straight.distances, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    isClicked, isHovered_distance = Draw_SummaryButton(grapple_straight.distances, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
     if isClicked then
         TransitionWindows_Straight_Distances(vars_ui, const)
     end
 
-    isClicked, isHovered_along = Draw_SummaryButton(grapple_straight.accel_along, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    isClicked, isHovered_along = Draw_SummaryButton(grapple_straight.accel_along, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
     if isClicked then
         TransitionWindows_Straight_AccelAlong(vars_ui, const)
     end
 
-    isClicked, isHovered_look = Draw_SummaryButton(grapple_straight.accel_look, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    isClicked, isHovered_look = Draw_SummaryButton(grapple_straight.accel_look, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
     if isClicked then
         TransitionWindows_Straight_AccelLook(vars_ui, const)
     end
 
-    isClicked, isHovered_drag = Draw_SummaryButton(grapple_straight.velocity_away, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    isClicked, isHovered_drag = Draw_SummaryButton(grapple_straight.velocity_away, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
     if isClicked then
         TransitionWindows_Straight_VelocityAway(vars_ui, const)
     end
 
-    if Draw_SummaryButton(grapple_straight.aim_duration, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+    if Draw_SummaryButton(grapple_straight.aim_duration, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
         TransitionWindows_Straight_AimDuration(vars_ui, const)
     end
 
-    isClicked, isHovered_airdash = Draw_SummaryButton(grapple_straight.air_dash, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    isClicked, isHovered_airdash = Draw_SummaryButton(grapple_straight.air_dash, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
     if isClicked then
         TransitionWindows_Straight_AirDash(vars_ui, const)
     end
 
-    isClicked, isHovered_antigrav = Draw_SummaryButton(grapple_straight.anti_grav, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    isClicked, isHovered_antigrav = Draw_SummaryButton(grapple_straight.anti_grav, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
     if isClicked then
         TransitionWindows_Straight_AntiGrav(vars_ui, const)
     end
 
-    isClicked, isHovered_stopEarly = Draw_SummaryButton(grapple_straight.stop_early, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const)
+    isClicked, isHovered_stopEarly = Draw_SummaryButton(grapple_straight.stop_early, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
     if isClicked then
         TransitionWindows_Straight_StopEarly(vars_ui, const)
     end
 
-    Draw_OrderedList(grapple_straight.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
+    Draw_OrderedList(grapple_straight.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_straight.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_straight.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
         this.Save(player, grapple, grapple_straight.name)
         TransitionWindows_Main(vars_ui, const)
@@ -192,6 +197,8 @@ function this.Define_Name(const)
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.top,
         },
+
+        CalcSize = CalcSize_TextBox,
     }
 end
 function this.Refresh_Name(def, grapple)
@@ -217,6 +224,8 @@ function this.Define_Description(const)
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.top,
         },
+
+        CalcSize = CalcSize_LabelClickable,
     }
 end
 function this.Refresh_Description(def, grapple)
@@ -248,6 +257,8 @@ function this.Define_Distances(const)
         },
 
         invisible_name = "Grapple_Straight_Distances",
+
+        CalcSize = CalcSize_SummaryButton,
     }
 end
 function this.Refresh_Distances(def, grapple)
@@ -284,6 +295,8 @@ function this.Define_AccelAlong(const)
         },
 
         invisible_name = "Grapple_Straight_AccelAlong",
+
+        CalcSize = CalcSize_SummaryButton,
     }
 end
 function this.Refresh_AccelAlong(def, grapple)
@@ -319,6 +332,8 @@ function this.Define_AccelLook(const)
         },
 
         invisible_name = "Grapple_Straight_AccelLook",
+
+        CalcSize = CalcSize_SummaryButton,
     }
 end
 function this.Refresh_AccelLook(def, grapple)
@@ -356,6 +371,8 @@ function this.Define_VelocityAway(const)
         },
 
         invisible_name = "Grapple_Straight_VelocityAway",
+
+        CalcSize = CalcSize_SummaryButton,
     }
 end
 function this.Refresh_VelocityAway(def, grapple)
@@ -395,6 +412,8 @@ function this.Define_AimDuration(const)
         header_prompt = "Aim Seconds",
 
         invisible_name = "Grapple_Straight_AimDuration",
+
+        CalcSize = CalcSize_SummaryButton,
     }
 end
 function this.Refresh_AimDuration(def, grapple)
@@ -424,6 +443,8 @@ function this.Define_AirDash(const)
         },
 
         invisible_name = "Grapple_Straight_AirDash",
+
+        CalcSize = CalcSize_SummaryButton,
     }
 end
 function this.Refresh_AirDash(def, grapple)
@@ -462,6 +483,8 @@ function this.Define_AntiGrav(const)
         },
 
         invisible_name = "Grapple_Straight_AntiGrav",
+
+        CalcSize = CalcSize_SummaryButton,
     }
 end
 function this.Refresh_AntiGrav(def, grapple)
@@ -499,6 +522,8 @@ function this.Define_StopEarly(const)
         },
 
         invisible_name = "Grapple_Straight_StopEarly",
+
+        CalcSize = CalcSize_SummaryButton,
     }
 end
 function this.Refresh_StopEarly(def, grapple)

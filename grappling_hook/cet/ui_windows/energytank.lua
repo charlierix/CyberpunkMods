@@ -63,41 +63,46 @@ function DrawWindow_EnergyTank(isCloseRequested, vars_ui, player, window, const)
 
     this.Refresh_IsDirty(energy_tank.okcancel, changes)
 
+    ------------------------------ Calculate Positions -------------------------------
+
+    CalculateSizes(energy_tank.render_nodes, vars_ui.style, vars_ui.line_heights)
+    CalculatePositions(energy_tank.render_nodes, window.width, window.height, const)
+
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(energy_tank.title, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(energy_tank.title, vars_ui.style.colors)
 
-    Draw_OrderedList(energy_tank.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
+    Draw_OrderedList(energy_tank.experience, vars_ui.style.colors)
 
     -- Total Energy
-    Draw_Label(energy_tank.total_prompt, vars_ui.style.colors, window.width, window.height, const)
-    Draw_Label(energy_tank.total_value, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(energy_tank.total_prompt, vars_ui.style.colors)
+    Draw_Label(energy_tank.total_value, vars_ui.style.colors)
 
-    local isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.total_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+    local isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.total_updown, vars_ui.style.updownButtons)
     this.Update_Total(energy_tank.total_updown, changes, isDownClicked, isUpClicked)
 
-    Draw_HelpButton(energy_tank.total_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    Draw_HelpButton(energy_tank.total_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     -- Refill Rate
-    Draw_Label(energy_tank.refill_prompt, vars_ui.style.colors, window.width, window.height, const)
-    Draw_Label(energy_tank.refill_value, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(energy_tank.refill_prompt, vars_ui.style.colors)
+    Draw_Label(energy_tank.refill_value, vars_ui.style.colors)
 
-    isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.refill_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+    isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.refill_updown, vars_ui.style.updownButtons)
     this.Update_Refill(energy_tank.refill_updown, changes, isDownClicked, isUpClicked)
 
-    Draw_HelpButton(energy_tank.refill_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    Draw_HelpButton(energy_tank.refill_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     -- While Grappling %
-    Draw_Label(energy_tank.percent_prompt, vars_ui.style.colors, window.width, window.height, const)
-    Draw_Label(energy_tank.percent_value, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(energy_tank.percent_prompt, vars_ui.style.colors)
+    Draw_Label(energy_tank.percent_value, vars_ui.style.colors)
 
-    isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.percent_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+    isDownClicked, isUpClicked = Draw_UpDownButtons(energy_tank.percent_updown, vars_ui.style.updownButtons)
     this.Update_Percent(energy_tank.percent_updown, changes, isDownClicked, isUpClicked)
 
-    Draw_HelpButton(energy_tank.percent_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    Draw_HelpButton(energy_tank.percent_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     -- OK/Cancel
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(energy_tank.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(energy_tank.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
         this.Save(player, changes)
         TransitionWindows_Main(vars_ui, const)

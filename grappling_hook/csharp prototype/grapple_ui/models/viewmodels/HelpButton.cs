@@ -1,4 +1,5 @@
-﻿using System;
+﻿using grapple_ui.models.misc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace grapple_ui.models.viewmodels
     /// This is a ? with a circle around it.  Used to show extra information, probably just while the
     /// mouse is hovering over the button
     /// </summary>
-    public record HelpButton
+    public record HelpButton : IControl
     {
         /// <summary>
         /// This is an optional property.  If set, then a tooltip will show while the mouse is over
@@ -26,10 +27,13 @@ namespace grapple_ui.models.viewmodels
         /// Tells where on the parent to place the text
         /// </summary>
         public ControlPosition position { get; init; }
+        public RenderPosition render_pos { get; init; }
 
         /// <summary>
         /// Name given to the invisible button (needs to be unique)
         /// </summary>
         public string invisible_name { get; init; }
+
+        public Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
     }
 }

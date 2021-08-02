@@ -15,6 +15,8 @@ function Define_Title(title, const)
         },
 
         color = "title",
+
+        CalcSize = CalcSize_Label,
     }
 end
 
@@ -34,6 +36,8 @@ function Define_Name(const)
         },
 
         color = "subTitle",
+
+        CalcSize = CalcSize_Label,
     }
 end
 function Refresh_Name(def, name)
@@ -53,6 +57,8 @@ function Define_OkCancelButtons(isMainPage, vars_ui, const)
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.bottom,
         },
+
+        CalcSize = CalcSize_OkCancelButtons,
     }
 end
 
@@ -81,6 +87,8 @@ function Define_Experience(const, used_prompt, y_offset)
 
         color_prompt = "experience_prompt",
         color_value = "experience_value",
+
+        CalcSize = CalcSize_OrderedList,
     }
 
     if used_prompt then
@@ -107,6 +115,8 @@ function Define_StickFigure(isStandardColor, const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_StickFigure,
     }
 end
 function Refresh_StickFigure(def, shouldHighlight)
@@ -300,6 +310,8 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
             },
 
             foreground_override = "edit_prompt",
+
+            CalcSize = CalcSize_CheckBox,
         }
     else
         -- Label
@@ -316,6 +328,8 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
             },
 
             color = "edit_prompt",
+
+            CalcSize = CalcSize_Label,
         }
     end
 
@@ -333,6 +347,8 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
         },
 
         color = "edit_value",
+
+        CalcSize = CalcSize_Label,
     }
 
     -- UpDownButtons
@@ -352,6 +368,8 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
         },
 
         isHorizontal = true,
+
+        CalcSize = CalcSize_UpDownButtons,
     }
 
     -- HelpButton
@@ -368,6 +386,8 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_HelpButton,
     }
 
     return prompt, label_value, updown, help

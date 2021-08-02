@@ -257,8 +257,6 @@ end
 
 function TODO()
 
-    -- Sounds
-
     -- Jump+Forward
     --  When jumping off a wall, if they are holding forward:
     --      Go up
@@ -271,6 +269,7 @@ function TODO()
 
     -- Double tap jump
     --  If they quickly double tap jump, then enter bullet time for a few seconds
+	--	(suggested by "Let's Go! Video Games!" from youtube)
 
     -- Wall Run
     --  Hold in shift to enter and stay in wall run
@@ -292,5 +291,15 @@ function TODO()
     --  Instead of a simple hardcoded angle adjustment and constant power...
     --  Determine what they are looking at (if they are looking away from the wall)
     --  Find a trajectory that will place them where they are looking
+	
+	-- Purchase
+	--	For bare hand, require them to purchase this before it starts working
+
+	-- Latch hang key
+	--	Make an option for the hang key to be toggled instead of held in
+	--	They will need to press the key at some point while mid air, but then it will stay true until they:
+	--		Jump off the wall
+	--		Touch the ground
+	--		Press it again
 
 end

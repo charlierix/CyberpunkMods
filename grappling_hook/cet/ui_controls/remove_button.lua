@@ -1,21 +1,28 @@
 local this = {}
 
+-- def is models\viewmodels\RemoveButton
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_RemoveButton(def, style, line_heights)
+	if not def.sizes then
+        def.sizes = {}
+    end
+
+    this.Calculate_Sizes(def, style.removeButton)
+
+    def.render_pos.width = def.sizes.width
+    def.render_pos.height = def.sizes.height
+end
+
 -- Draws a button that is an X with a circle around it.  Used as a button to remove the
 -- thing that it's over/near
 -- def is models\viewmodels\RemoveButton
 -- style_remove is models\stylesheet\RemoveButton
 -- Returns:
 --	isClicked, isHovered
-function Draw_RemoveButton(def, style_remove, screenOffset_x, screenOffset_y, parent_width, parent_height, const)
-	-- Calculate Sizes
-	if not def.sizes then
-        def.sizes = {}
-    end
-
-    this.Calculate_Sizes(def, style_remove)
-
-    -- Calculate Position
-	local left, top = GetControlPosition(def.position, def.sizes.width, def.sizes.height, parent_width, parent_height, const)
+function Draw_RemoveButton(def, style_remove, screenOffset_x, screenOffset_y)
+	local left = def.render_pos.left
+    local top = def.render_pos.top
 
     -- Invisible Button
     local clickableSize = style_remove.radius * 0.85 * 2

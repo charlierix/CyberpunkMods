@@ -62,41 +62,46 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
     this.Refresh_Experience(main.experience, player)
     this.Refresh_XPProgress(main.xp_progress, player)
 
+    ------------------------------ Calculate Positions -------------------------------
+
+    CalculateSizes(main.render_nodes, vars_ui.style, vars_ui.line_heights)
+    CalculatePositions(main.render_nodes, window.width, window.height, const)
+
     -------------------------------- Show ui elements --------------------------------
 
-    --Draw_Label(main.title, vars_ui.style.colors, window.width, window.height, const)
+    --Draw_Label(main.title, vars_ui.style.colors)
 
-    Draw_Label(main.consoleWarning, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(main.consoleWarning, vars_ui.style.colors)
 
-    if Draw_CheckBox(main.should_autoshow, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const) then
+    if Draw_CheckBox(main.should_autoshow, vars_ui.style.checkbox, vars_ui.style.colors) then
         this.Update_ShouldAutoShow(main.should_autoshow, vars_ui, const)
     end
 
-    if Draw_SummaryButton(main.input_bindings, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+    if Draw_SummaryButton(main.input_bindings, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
         TransitionWindows_InputBindings(vars_ui, const)
     end
 
-    if Draw_SummaryButton(main.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+    if Draw_SummaryButton(main.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
         TransitionWindows_Energy_Tank(vars_ui, const)
     end
 
     for i = 1, 6 do
-        if Draw_RemoveButton(main["remove" .. tostring(i)], vars_ui.style.removeButton, window.left, window.top, window.width, window.height, const) then
+        if Draw_RemoveButton(main["remove" .. tostring(i)], vars_ui.style.removeButton, window.left, window.top) then
             --NOTE: This immediately removes the grapple.  Most actions populate a change list and require ok/cancel.  But that would be difficult in this case (a change that spans windows)
             this.RemoveGrapple(player, i)
         end
     end
 
     for i = 1, 6 do
-        if Draw_SummaryButton(main["grapple" .. tostring(i)], vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, window.width, window.height, const) then
+        if Draw_SummaryButton(main["grapple" .. tostring(i)], vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
             TransitionWindows_Grapple(vars_ui, const, player, i)
         end
     end
 
-    Draw_OrderedList(main.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
-    Draw_ProgressBarSlim(main.xp_progress, vars_ui.style.progressbar_slim, vars_ui.style.colors, window.width, window.height, const)
+    Draw_OrderedList(main.experience, vars_ui.style.colors)
+    Draw_ProgressBarSlim(main.xp_progress, vars_ui.style.progressbar_slim, vars_ui.style.colors)
 
-    local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons)
 
     return not (isCloseRequested or isCloseClicked)       -- stop showing when they click the close button (or press config key a second time.  This main page doesn't have anything to save, so it's ok to exit at any time)
 end
@@ -120,6 +125,8 @@ function this.Define_ConsoleWarning(const)
         },
 
         color = "info",
+
+        CalcSize = CalcSize_Label,
     }
 end
 
@@ -142,6 +149,8 @@ function this.Define_ShouldAutoShow(const)
         },
 
         foreground_override = "info",
+
+        CalcSize = CalcSize_CheckBox,
     }
 end
 function this.Refresh_ShouldAutoShow(def, vars_ui)
@@ -173,6 +182,8 @@ function this.Define_InputBindings(const)
         },
 
         invisible_name = "Main_InputBindings",
+
+        CalcSize = CalcSize_SummaryButton,
     }
 end
 
@@ -201,6 +212,8 @@ function this.Define_EnergyTank(const)
         },
 
         invisible_name = "Main_EnergyTank",
+
+        CalcSize = CalcSize_SummaryButton,
     }
 end
 function this.Refresh_EnergyTank(def, energy_tank)
@@ -244,8 +257,6 @@ end
 function this.Define_GrappleSlots_DoIt(x, y, suffix, const)
     return
         this.Define_GrappleSlots_Summary(x, y, suffix, const),
-        --this.Define_GrappleSlots_Remove(x - 95, y + 50, suffix, const)
-        --this.Define_GrappleSlots_Remove(x - 92, y + 53, suffix, const)
         this.Define_GrappleSlots_Remove(x - 92, y + 47, suffix, const)
 end
 function this.Define_GrappleSlots_Summary(x, y, suffix, const)
@@ -268,6 +279,8 @@ function this.Define_GrappleSlots_Summary(x, y, suffix, const)
         suffix = suffix,
 
         invisible_name = "Main_Grapple_Summary_" .. suffix,
+
+        CalcSize = CalcSize_SummaryButton,
     }
 end
 function this.Define_GrappleSlots_Remove(x, y, suffix, const)
@@ -283,6 +296,8 @@ function this.Define_GrappleSlots_Remove(x, y, suffix, const)
         },
 
         invisible_name = "Main_Grapple_Remove_" .. suffix,
+
+        CalcSize = CalcSize_RemoveButton,
     }
 end
 
@@ -329,6 +344,8 @@ function this.Define_XPProgress(const)
         border_color = "xp_progress_border",
         background_color = "xp_progress_back",
         foreground_color = "xp_progress_fore",
+
+        CalcSize = CalcSize_ProgressBarSlim,
     }
 end
 function this.Refresh_XPProgress(def, player)

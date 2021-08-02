@@ -1,24 +1,31 @@
 local this = {}
 
--- This is a border with a couple categories of text inside.  Acts like a button
--- This got complex.  It might be cleaner to just implement a proper layout engine :)
 -- def is models\viewmodels\SummaryButton
--- style_summary is models\stylesheet\SummaryButton
--- Returns isClicked, isHovered
-function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, screenOffset_y, parent_width, parent_height, const)
-    -- Calcuate sizes
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_SummaryButton(def, style, line_heights)
     if not def.sizes then
         def.sizes = {}
     end
 
-    this.Calculate_UsedWidth(def, style_summary)
-    this.Calculate_UsedHeight(def, line_heights, style_summary)
+    this.Calculate_UsedWidth(def, style.summaryButton)
+    this.Calculate_UsedHeight(def, line_heights, style.summaryButton)
 
-    -- Calculate the location of this control
-    local padpad = style_summary.padding * 2
-    local left, top = GetControlPosition(def.position, def.sizes.horz_final + padpad, def.sizes.vert_final + padpad, parent_width, parent_height, const)
-    local center_x = left + style_summary.padding + (def.sizes.horz_final / 2)
-    local center_y = top + style_summary.padding + (def.sizes.vert_final / 2)
+    local padpad = style.summaryButton.padding * 2
+
+    def.render_pos.width = def.sizes.horz_final + padpad
+    def.render_pos.height = def.sizes.vert_final + padpad
+end
+
+-- This is a border with a couple categories of text inside.  Acts like a button
+-- This got complex (it was my first attempt at a proper control).  It might be cleaner to just implement a proper layout engine :)     -- getting there
+--
+-- def is models\viewmodels\SummaryButton
+-- style_summary is models\stylesheet\SummaryButton
+-- Returns isClicked, isHovered
+function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, screenOffset_y)
+    local center_x = def.render_pos.left + style_summary.padding + (def.sizes.horz_final / 2)
+    local center_y = def.render_pos.top + style_summary.padding + (def.sizes.vert_final / 2)
 
     -- Invisible Button
     local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding)

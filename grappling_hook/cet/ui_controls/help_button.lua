@@ -1,6 +1,19 @@
 local this = {}
 local character = "?"       --"i"  (i might look better if it would be centered)
 
+-- def is models\viewmodels\HelpButton
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_HelpButton(def, style, line_heights)
+	if not def.sizes then
+        def.sizes = {}
+    end
+
+    this.Calculate_Sizes(def, style.helpButton)
+
+    def.render_pos.width = def.sizes.width
+    def.render_pos.height = def.sizes.height
+end
 
 -- Draws a button that is a ? with a circle around it.  Used as a button to show additional
 -- information
@@ -8,16 +21,9 @@ local character = "?"       --"i"  (i might look better if it would be centered)
 -- style_help is models\stylesheet\HelpButton
 -- Returns:
 --	isClicked, isHovered
-function Draw_HelpButton(def, style_help, screenOffset_x, screenOffset_y, parent_width, parent_height, const, vars_ui)
-	-- Calculate Sizes
-	if not def.sizes then
-        def.sizes = {}
-    end
-
-    this.Calculate_Sizes(def, style_help)
-
-    -- Calculate Position
-	local left, top = GetControlPosition(def.position, def.sizes.width, def.sizes.height, parent_width, parent_height, const)
+function Draw_HelpButton(def, style_help, screenOffset_x, screenOffset_y, vars_ui)
+    local left = def.render_pos.left
+    local top = def.render_pos.top
 
     -- Invisible Button
     local clickableSize = style_help.radius * 0.85 * 2

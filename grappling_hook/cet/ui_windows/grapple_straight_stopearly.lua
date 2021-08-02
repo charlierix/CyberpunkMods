@@ -89,38 +89,43 @@ function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player,
 
     this.Refresh_IsDirty(gst8_stop.okcancel, grapple, gst8_stop)
 
+    ------------------------------ Calculate Positions -------------------------------
+
+    CalculateSizes(gst8_stop.render_nodes, vars_ui.style, vars_ui.line_heights)
+    CalculatePositions(gst8_stop.render_nodes, window.width, window.height, const)
+
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gst8_stop.title, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_stop.title, vars_ui.style.colors)
 
-    Draw_Label(gst8_stop.name, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_stop.name, vars_ui.style.colors)
 
-    Draw_StickFigure(gst8_stop.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
+    Draw_StickFigure(gst8_stop.stickFigure, vars_ui.style.graphics, window.left, window.top)
     Draw_GrappleArrows(gst8_stop.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_stop.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleAccelToDesired(gst8_stop.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
-    _, isHovered_stopAngle_checkbox = Draw_CheckBox(gst8_stop.has_stopAngle, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
-    Draw_HelpButton(gst8_stop.stopAngle_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    _, isHovered_stopAngle_checkbox = Draw_CheckBox(gst8_stop.has_stopAngle, vars_ui.style.checkbox, vars_ui.style.colors)
+    Draw_HelpButton(gst8_stop.stopAngle_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     if gst8_stop.has_stopAngle.isChecked then
-        Draw_Slider(gst8_stop.stopAngle_value, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
-        Draw_MinDotGraphic(gst8_stop.stopAngle_graphic, vars_ui.style.graphics, vars_ui.style.mindotGraphic, window.left, window.top, window.width, window.height, const)
+        Draw_Slider(gst8_stop.stopAngle_value, vars_ui.style.slider)
+        Draw_MinDotGraphic(gst8_stop.stopAngle_graphic, vars_ui.style.graphics, vars_ui.style.mindotGraphic, window.left, window.top)
     end
 
-    _, isHovered_stopdistance_checkbox = Draw_CheckBox(gst8_stop.has_stopDistance, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
-    Draw_HelpButton(gst8_stop.stopDistance_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    _, isHovered_stopdistance_checkbox = Draw_CheckBox(gst8_stop.has_stopDistance, vars_ui.style.checkbox, vars_ui.style.colors)
+    Draw_HelpButton(gst8_stop.stopDistance_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     if gst8_stop.has_stopDistance.isChecked then
-        _, isHovered_stopdistance_slider = Draw_Slider(gst8_stop.stopDistance_value, vars_ui.style.slider, window.width, window.height, const, vars_ui.line_heights)
+        _, isHovered_stopdistance_slider = Draw_Slider(gst8_stop.stopDistance_value, vars_ui.style.slider)
     else
         isHovered_stopdistance_slider = false
     end
 
-    _, isHovered_stopOnWallHit_checkbox = Draw_CheckBox(gst8_stop.should_stopOnWallHit, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
-    Draw_HelpButton(gst8_stop.stopOnWallHit_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    _, isHovered_stopOnWallHit_checkbox = Draw_CheckBox(gst8_stop.should_stopOnWallHit, vars_ui.style.checkbox, vars_ui.style.colors)
+    Draw_HelpButton(gst8_stop.stopOnWallHit_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_stop.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_stop.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
         this.Save(player, grapple, gst8_stop)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
@@ -198,6 +203,8 @@ function this.Define_HasStopAngle(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_CheckBox,
     }
 end
 function this.Refresh_HasStopAngle(def, grapple)
@@ -219,7 +226,9 @@ function this.Define_StopAngle_Help(const)
             vertical = const.alignment_vertical.center,
         },
 
-        invisible_name = "GrappleStraight_StopEarly_StopAngle_Help"
+        invisible_name = "GrappleStraight_StopEarly_StopAngle_Help",
+
+        CalcSize = CalcSize_HelpButton,
     }
 
     retVal.tooltip =
@@ -255,6 +264,8 @@ function this.Define_StopAngle_Value(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_Slider,
     }
 end
 function this.Refresh_StopAngle_Value(def, grapple)
@@ -282,6 +293,8 @@ function this.Define_StopAngle_Graphic(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_MinDotGraphic,
     }
 end
 function this.Refresh_StopAngle_Graphic(def, def_slider)
@@ -306,6 +319,8 @@ function this.Define_HasStopDistance(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_CheckBox,
     }
 end
 function this.Refresh_HasStopDistance(def, grapple)
@@ -327,7 +342,9 @@ function this.Define_StopDistance_Help(const)
             vertical = const.alignment_vertical.center,
         },
 
-        invisible_name = "GrappleStraight_StopEarly_StopDistance_Help"
+        invisible_name = "GrappleStraight_StopEarly_StopDistance_Help",
+
+        CalcSize = CalcSize_HelpButton,
     }
 
     retVal.tooltip =
@@ -361,6 +378,8 @@ function this.Define_StopDistance_Value(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_Slider,
     }
 end
 function this.Refresh_StopDistance_Value(def, grapple)
@@ -393,6 +412,8 @@ function this.Define_ShouldStopOnWallHit(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_CheckBox,
     }
 end
 function this.Refresh_ShouldStopOnWallHit(def, grapple)
@@ -414,7 +435,9 @@ function this.Define_StopOnWallHit_Help(const)
             vertical = const.alignment_vertical.center,
         },
 
-        invisible_name = "GrappleStraight_StopEarly_StopOnWallHit_Help"
+        invisible_name = "GrappleStraight_StopEarly_StopOnWallHit_Help",
+
+        CalcSize = CalcSize_HelpButton,
     }
 
     retVal.tooltip =

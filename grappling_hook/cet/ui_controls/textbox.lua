@@ -1,21 +1,24 @@
 local this = {}
 
--- Shows a textbox.  The text is persisted in def.text
 -- def is models\viewmodels\TextBox
--- style_text is models\stylesheet\TextBox
--- style_colors is stylesheet.colors
-function Draw_TextBox(def, style_text, style_colors, line_heights, parent_width, parent_height, const)
-	-- Calculate Size
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_TextBox(def, style, line_heights)
 	if not def.sizes then
         def.sizes = {}
     end
 
-    this.Calculate_Sizes(def, style_text, line_heights)
+    this.Calculate_Sizes(def, style.textbox, line_heights)
 
-    -- Calculate Position
-	local left, top = GetControlPosition(def.position, def.sizes.width, def.sizes.height, parent_width, parent_height, const)
+    def.render_pos.width = def.sizes.width
+    def.render_pos.height = def.sizes.height
+end
 
-    -- Draw the textbox
+-- Shows a textbox.  The text is persisted in def.text
+-- def is models\viewmodels\TextBox
+-- style_text is models\stylesheet\TextBox
+-- style_colors is stylesheet.colors
+function Draw_TextBox(def, style_text, style_colors)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_text.border_cornerRadius)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_text.border_thickness)
     ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, style_text.padding, style_text.padding)
@@ -25,7 +28,7 @@ function Draw_TextBox(def, style_text, style_colors, line_heights, parent_width,
     ImGui.PushStyleColor(ImGuiCol.Text, this.GetForeground_int(def, style_text, style_colors))
     ImGui.PushStyleColor(ImGuiCol.FrameBg, style_text.background_color_abgr)
 
-    ImGui.SetCursorPos(left, top)
+    ImGui.SetCursorPos(def.render_pos.left, def.render_pos.top)
 
     if def.isMultiLine then
         --TODO: Figure out scrollbars

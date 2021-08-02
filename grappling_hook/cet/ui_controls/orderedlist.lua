@@ -1,23 +1,38 @@
 local this = {}
 
+-- def is models\viewmodels\OrderedList
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
+function CalcSize_OrderedList(def, style, line_heights)
+	if not def.sizes then
+        def.sizes = {}
+    end
+
+    local width_p, width_g, width_v, width_total = this.Calculate_Width(def)
+    local height = this.Calculate_Height(def, line_heights)
+
+    def.sizes.width_p = width_p
+    def.sizes.width_g = width_g
+    def.sizes.width_v = width_v
+    -- def.sizes.width_total = width_total
+    -- def.sizes.height = height
+
+    def.render_pos.width = width_total
+    def.render_pos.height = height
+end
+
 -- Draws multiple lines of text in two columns (prompts are col1, values are col2)
 -- def is models\viewmodels\OrderedList
 --
 -- NOTE: A lot of this is a copy of SummaryButton's content logic.  Making a copy, because SummaryButton
 -- is too hardcoded and specific.  A version 2 may get built in the future where it's composed of these
 -- more generic controls
-function Draw_OrderedList(def, style_colors, parent_width, parent_height, const, line_heights)
-    -- Calculate Position
-    local width_p, width_g, width_v, width_total = this.Calculate_Width(def)
-    local height = this.Calculate_Height(def, line_heights)
-
-    local left, top = GetControlPosition(def.position, width_total, height, parent_width, parent_height, const)
-
+function Draw_OrderedList(def, style_colors)
     -- Draw the prompts
-    if width_p > 0 then       -- there may only be values
+    if def.sizes.width_p > 0 then       -- there may only be values
         local color = GetNamedColor(style_colors, def.color_prompt)
 
-        ImGui.SetCursorPos(left, top)
+        ImGui.SetCursorPos(def.render_pos.left, def.render_pos.top)
         ImGui.BeginGroup()      -- new lines stay at the same x value instead of going to zero
 
         ImGui.PushStyleColor(ImGuiCol.Text, color.the_color_abgr)
@@ -37,10 +52,10 @@ function Draw_OrderedList(def, style_colors, parent_width, parent_height, const,
     end
 
     -- Draw the values
-    if width_v > 0 then
+    if def.sizes.width_v > 0 then
         local color = GetNamedColor(style_colors, def.color_value)
 
-        ImGui.SetCursorPos(left + width_p + width_g, top)
+        ImGui.SetCursorPos(def.render_pos.left + def.sizes.width_p + def.sizes.width_g, def.render_pos.top)
         ImGui.BeginGroup()
 
         ImGui.PushStyleColor(ImGuiCol.Text, color.the_color_abgr)

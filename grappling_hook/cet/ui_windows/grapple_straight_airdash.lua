@@ -109,65 +109,70 @@ function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, w
 
     this.Refresh_IsDirty(gst8_airdash.okcancel, changes, grapple.aim_straight, gst8_airdash.has_airdash)
 
+    ------------------------------ Calculate Positions -------------------------------
+
+    CalculateSizes(gst8_airdash.render_nodes, vars_ui.style, vars_ui.line_heights)
+    CalculatePositions(gst8_airdash.render_nodes, window.width, window.height, const)
+
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gst8_airdash.title, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_airdash.title, vars_ui.style.colors)
 
-    Draw_Label(gst8_airdash.name, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_airdash.name, vars_ui.style.colors)
 
-    Draw_StickFigure(gst8_airdash.stickFigure, vars_ui.style.graphics, window.left, window.top, window.width, window.height, const)
+    Draw_StickFigure(gst8_airdash.stickFigure, vars_ui.style.graphics, window.left, window.top)
     Draw_GrappleArrows(gst8_airdash.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
     Draw_GrappleDesiredLength(gst8_airdash.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
 
-    Draw_Label(gst8_airdash.deprecated, vars_ui.style.colors, window.width, window.height, const)
+    Draw_Label(gst8_airdash.deprecated, vars_ui.style.colors)
 
     local wasChecked
-    wasChecked, isHovered_has = Draw_CheckBox(gst8_airdash.has_airdash, vars_ui.style.checkbox, vars_ui.style.colors, window.width, window.height, const)
+    wasChecked, isHovered_has = Draw_CheckBox(gst8_airdash.has_airdash, vars_ui.style.checkbox, vars_ui.style.colors)
     if wasChecked then
         this.Update_HasAirDash(gst8_airdash.has_airdash, airdash, changes, startedWithAD)
     end
 
-    Draw_HelpButton(gst8_airdash.has_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+    Draw_HelpButton(gst8_airdash.has_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     if gst8_airdash.has_airdash.isChecked then
-        Draw_OrderedList(gst8_airdash.burn_rate, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
+        Draw_OrderedList(gst8_airdash.burn_rate, vars_ui.style.colors)
 
         -- Percent
-        Draw_Label(gst8_airdash.percent_prompt, vars_ui.style.colors, window.width, window.height, const)
-        Draw_Label(gst8_airdash.percent_value, vars_ui.style.colors, window.width, window.height, const)
+        Draw_Label(gst8_airdash.percent_prompt, vars_ui.style.colors)
+        Draw_Label(gst8_airdash.percent_value, vars_ui.style.colors)
 
         local isDownClicked, isUpClicked
-        isDownClicked, isUpClicked, isHovered_percent = Draw_UpDownButtons(gst8_airdash.percent_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+        isDownClicked, isUpClicked, isHovered_percent = Draw_UpDownButtons(gst8_airdash.percent_updown, vars_ui.style.updownButtons)
         this.Update_Percent(gst8_airdash.percent_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_airdash.percent_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+        Draw_HelpButton(gst8_airdash.percent_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
         -- Accel
-        Draw_Label(gst8_airdash.accel_prompt, vars_ui.style.colors, window.width, window.height, const)
-        Draw_Label(gst8_airdash.accel_value, vars_ui.style.colors, window.width, window.height, const)
+        Draw_Label(gst8_airdash.accel_prompt, vars_ui.style.colors)
+        Draw_Label(gst8_airdash.accel_value, vars_ui.style.colors)
 
-        isDownClicked, isUpClicked, isHovered_accel = Draw_UpDownButtons(gst8_airdash.accel_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+        isDownClicked, isUpClicked, isHovered_accel = Draw_UpDownButtons(gst8_airdash.accel_updown, vars_ui.style.updownButtons)
         this.Update_Accel(gst8_airdash.accel_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_airdash.accel_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+        Draw_HelpButton(gst8_airdash.accel_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
         -- Speed
-        Draw_Label(gst8_airdash.speed_prompt, vars_ui.style.colors, window.width, window.height, const)
-        Draw_Label(gst8_airdash.speed_value, vars_ui.style.colors, window.width, window.height, const)
+        Draw_Label(gst8_airdash.speed_prompt, vars_ui.style.colors)
+        Draw_Label(gst8_airdash.speed_value, vars_ui.style.colors)
 
-        isDownClicked, isUpClicked, isHovered_speed = Draw_UpDownButtons(gst8_airdash.speed_updown, vars_ui.style.updownButtons, window.width, window.height, const)
+        isDownClicked, isUpClicked, isHovered_speed = Draw_UpDownButtons(gst8_airdash.speed_updown, vars_ui.style.updownButtons)
         this.Update_Speed(gst8_airdash.speed_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_airdash.speed_help, vars_ui.style.helpButton, window.left, window.top, window.width, window.height, const, vars_ui)
+        Draw_HelpButton(gst8_airdash.speed_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
     else
         isHovered_percent = false
         isHovered_accel = false
         isHovered_speed = false
     end
 
-    Draw_OrderedList(gst8_airdash.experience, vars_ui.style.colors, window.width, window.height, const, vars_ui.line_heights)
+    Draw_OrderedList(gst8_airdash.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_airdash.okcancel, vars_ui.style.okcancelButtons, window.width, window.height, const)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_airdash.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
         this.Save(player, grapple, grapple.aim_straight, airdash, changes, gst8_airdash.has_airdash.isChecked, startedWithAD)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
@@ -196,6 +201,8 @@ function this.Define_Deprecated(const)
         },
 
         color = "info",
+
+        CalcSize = CalcSize_Label,
     }
 end
 
@@ -214,6 +221,8 @@ function this.Define_HasAirDash(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_CheckBox,
     }
 end
 function this.Refresh_HasAirDash(def, player, aim, airdash, changes)
@@ -247,6 +256,8 @@ function this.Define_Has_Help(const)
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
+
+        CalcSize = CalcSize_HelpButton,
     }
 
     retVal.tooltip =
@@ -285,6 +296,8 @@ function this.Define_BurnRate(const)
 
         color_prompt = "edit_prompt",
         color_value = "edit_value",
+
+        CalcSize = CalcSize_OrderedList,
     }
 end
 function this.Refresh_BurnRate(def, airdash, changes)
