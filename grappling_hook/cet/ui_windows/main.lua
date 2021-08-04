@@ -14,7 +14,7 @@ function DefineWindow_Main(vars_ui, const)
     --main.title = Define_Title("Grappling Hook", const)        -- the title bar already says this
 
     main.consoleWarning = this.Define_ConsoleWarning(const)
-    main.should_autoshow = this.Define_ShouldAutoShow(const)
+    main.should_autoshow = this.Define_ShouldAutoShow(main.consoleWarning, const)
 
     main.input_bindings = this.Define_InputBindings(const)
 
@@ -130,7 +130,7 @@ function this.Define_ConsoleWarning(const)
     }
 end
 
-function this.Define_ShouldAutoShow(const)
+function this.Define_ShouldAutoShow(parent, const)
     -- CheckBox
     return
     {
@@ -142,9 +142,15 @@ function this.Define_ShouldAutoShow(const)
 
         position =
         {
+            relative_to = parent,
+
             pos_x = 0,
-            pos_y = 42,
+            pos_y = 6,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
+
+            relatvie_vert = const.alignment_vertical.bottom,
             vertical = const.alignment_vertical.top,
         },
 

@@ -24,7 +24,7 @@ function DefineWindow_GrappleStraight_AirDash(vars_ui, const)
 
     -- Checkbox for whether to have airdash (Aim_Straight.air_dash)
     gst8_airdash.has_airdash = this.Define_HasAirDash(const)
-    gst8_airdash.has_help = this.Define_Has_Help(const)
+    gst8_airdash.has_help = this.Define_Has_Help(gst8_airdash.has_airdash, const)
 
     gst8_airdash.burn_rate = this.Define_BurnRate(const)
 
@@ -243,19 +243,13 @@ function this.Update_HasAirDash(def, airdash, changes, startedWithAD)
     PopulateBuySell(def.isChecked, startedWithAD, changes, "experience_buysell", total)
 end
 
-function this.Define_Has_Help(const)
+function this.Define_Has_Help(parent, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "GrappleStraight_AirDash_Has_Help",
 
-        position =
-        {
-            pos_x = 70,
-            pos_y = 0,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_HelpButton(parent, const),
 
         CalcSize = CalcSize_HelpButton,
     }

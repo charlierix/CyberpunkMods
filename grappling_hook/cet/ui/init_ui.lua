@@ -105,19 +105,9 @@ end
 -- NOTE: This is is recursive, because controls may be stored in structures
 function this.BuildRenderTree(window)
     local controls = this.FindAllControlsWithPosition(window)
+    local nodes = this.Convert_Control_To_RenderPosition(controls)
 
-    local nodes = {}
-
-    for i = 1, #controls do
-        --TODO: When controls can point to each other, this will need to be expanded to be a tree.  will
-        -- need to have a list of temp subtrees in case the controls are iterated out of order (A points
-        -- to B, but A is seen first)
-        nodes[#nodes+1] =
-        {
-            control = controls[i],
-            --children = nil,
-        }
-    end
+    this.GroupRelativeTo(nodes)
 
     window.render_nodes = nodes
 end
@@ -168,6 +158,67 @@ function this.IsControlWithPosition(item)
     end
 
     return true
+end
+
+-- This converts into nodes, doesn't touch children property
+function this.Convert_Control_To_RenderPosition(controls)
+    local nodes = {}
+
+    for i = 1, #controls do
+        nodes[#nodes+1] =
+        {
+            control = controls[i],
+            --children = nil,
+        }
+    end
+
+    return nodes
+end
+
+-- This moves nodes under the node they are relative to
+-- NOTE: nodes passed in needs to be a 1D list
+function this.GroupRelativeTo(nodes)
+    local index = 1
+
+    while index < #nodes do
+        if nodes[index].control.position.relative_to then
+            -- This has a parent, so can't be at the root level.  Remove from the roots and add to the control it's pointing to
+            local node = table.remove(nodes, index)
+
+            local parent = this.FindParent(nodes, node)
+            if not parent then      -- letting control flow so a nil exception will also be logged
+                print("Couldn't find the control referenced by relative_to")
+                ReportTable(node.control)
+            end
+
+            if not parent.children then
+                parent.children = {}
+            end
+
+            parent.children[#parent.children+1] = node
+
+        else
+            -- This can stay at the root level, move to the next node
+            index = index + 1
+        end
+    end
+end
+function this.FindParent(nodes, node)
+    for i = 1, #nodes do
+        if nodes[i].control == node.control.position.relative_to then
+            return nodes[i]
+        end
+
+        if nodes[i].children then
+            -- Recurse
+            local retVal = this.FindParent(nodes[i].children, node)
+            if retVal then
+                return retVal
+            end
+        end
+    end
+
+    return nil
 end
 
 -- This looks for controls that have a content property and creates a sorted content_keys index

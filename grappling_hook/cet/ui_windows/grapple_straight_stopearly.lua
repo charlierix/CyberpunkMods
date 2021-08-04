@@ -22,19 +22,19 @@ function DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
 
     -- Stop Angle (Grapple.minDot)
     gst8_stop.has_stopAngle = this.Define_HasStopAngle(const)
-    gst8_stop.stopAngle_help = this.Define_StopAngle_Help(const)
+    gst8_stop.stopAngle_help = this.Define_StopAngle_Help(gst8_stop.has_stopAngle, const)
     gst8_stop.stopAngle_value = this.Define_StopAngle_Value(const)
     gst8_stop.stopAngle_graphic = this.Define_StopAngle_Graphic(const)
 
     --TODO: Reuse the deadspot graphic (always set percent to 1)
     -- Stop Distance (Grapple.stop_distance)
     gst8_stop.has_stopDistance = this.Define_HasStopDistance(const)
-    gst8_stop.stopDistance_help = this.Define_StopDistance_Help(const)
+    gst8_stop.stopDistance_help = this.Define_StopDistance_Help(gst8_stop.has_stopDistance, const)
     gst8_stop.stopDistance_value = this.Define_StopDistance_Value(const)
 
     -- Stop on wall hit (Grapple.stop_on_wallHit)
     gst8_stop.should_stopOnWallHit = this.Define_ShouldStopOnWallHit(const)
-    gst8_stop.stopOnWallHit_help = this.Define_StopOnWallHit_Help(const)
+    gst8_stop.stopOnWallHit_help = this.Define_StopOnWallHit_Help(gst8_stop.should_stopOnWallHit, const)
 
     gst8_stop.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 
@@ -214,17 +214,11 @@ function this.Refresh_HasStopAngle(def, grapple)
     end
 end
 
-function this.Define_StopAngle_Help(const)
+function this.Define_StopAngle_Help(parent, const)
     -- HelpButton
     local retVal =
     {
-        position =
-        {
-            pos_x = -160,
-            pos_y = 40,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_HelpButton(parent, const),
 
         invisible_name = "GrappleStraight_StopEarly_StopAngle_Help",
 
@@ -330,17 +324,11 @@ function this.Refresh_HasStopDistance(def, grapple)
     end
 end
 
-function this.Define_StopDistance_Help(const)
+function this.Define_StopDistance_Help(parent, const)
     -- HelpButton
     local retVal =
     {
-        position =
-        {
-            pos_x = 310,
-            pos_y = 40,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_HelpButton(parent, const),
 
         invisible_name = "GrappleStraight_StopEarly_StopDistance_Help",
 
@@ -423,17 +411,11 @@ function this.Refresh_ShouldStopOnWallHit(def, grapple)
     end
 end
 
-function this.Define_StopOnWallHit_Help(const)
+function this.Define_StopOnWallHit_Help(parent, const)
     -- HelpButton
     local retVal =
     {
-        position =
-        {
-            pos_x = 70,
-            pos_y = 240,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_HelpButton(parent, const),
 
         invisible_name = "GrappleStraight_StopEarly_StopOnWallHit_Help",
 

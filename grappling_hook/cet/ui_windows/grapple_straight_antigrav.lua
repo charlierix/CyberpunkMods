@@ -21,7 +21,7 @@ function DefineWindow_GrappleStraight_AntiGrav(vars_ui, const)
 
     -- Checkbox for whether to have antigrav (Grapple.anti_gravity)
     gst8_antgrav.has_antigrav = this.Define_HasAntiGrav(const)
-    gst8_antgrav.has_help = this.Define_Has_Help(const)
+    gst8_antgrav.has_help = this.Define_Has_Help(gst8_antgrav.has_antigrav, const)
 
     -- Percent (AntiGravity.antigrav_percent)
     local prompt, value, updown, help = Define_PropertyPack_Vertical("Antigrav Percent", -180, 100, const, false, "GrappleStraight_AntiGrav_Percent", this.Tooltip_Percent())
@@ -194,19 +194,13 @@ function this.Update_HasAntiGrav(def, antigrav, changes, startedWithAG)
     PopulateBuySell(def.isChecked, startedWithAG, changes, "experience_buysell", total)
 end
 
-function this.Define_Has_Help(const)
+function this.Define_Has_Help(parent, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "GrappleStraight_AntiGrav_Has_Help",
 
-        position =
-        {
-            pos_x = 85,
-            pos_y = 0,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_HelpButton(parent, const),
 
         CalcSize = CalcSize_HelpButton,
     }

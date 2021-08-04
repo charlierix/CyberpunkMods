@@ -25,7 +25,7 @@ function DefineWindow_GrappleStraight_VelocityAway(vars_ui, const)
 
     -- Checkbox for whether to have vel away (Grapple.velocity_away)
     gst8_velaway.has_velaway = this.Define_HasVelocityAway(const)
-    gst8_velaway.has_help = this.Define_Has_Help(const)
+    gst8_velaway.has_help = this.Define_Has_Help(gst8_velaway.has_velaway, const)
 
     -- VelocityAway.accel_compression
     local check, value, updown, help = Define_PropertyPack_Vertical("Compression", -180, 100, const, true, "GrappleStraight_VelocityAway_Compression", this.Tooltip_Compression())
@@ -42,9 +42,9 @@ function DefineWindow_GrappleStraight_VelocityAway(vars_ui, const)
     gst8_velaway.tension_help = help
 
     -- VelocityAway.deadSpot
-    gst8_velaway.deadspot_label = this.Define_DeadSpot_Label(const)
-    gst8_velaway.deadspot_help = this.Define_DeadSpot_Help(const)
     gst8_velaway.deadspot_dist = this.Define_DeadSpot_Dist(const)
+    gst8_velaway.deadspot_label = this.Define_DeadSpot_Label(gst8_velaway.deadspot_dist, const)
+    gst8_velaway.deadspot_help = this.Define_DeadSpot_Help(gst8_velaway.deadspot_label, const)
 
     --gst8_velaway.xpdebug = this.Define_XPDebug(const)
     gst8_velaway.experience = Define_Experience(const, "grapple")
@@ -267,19 +267,13 @@ function this.Update_HasVelocityAway(def, velaway, changes, startedWithVA)
     PopulateBuySell(def.isChecked, startedWithVA, changes, "experience_buysell", total)
 end
 
-function this.Define_Has_Help(const)
+function this.Define_Has_Help(parent, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "GrappleStraight_VelocityAway_Has_Help",
 
-        position =
-        {
-            pos_x = 220,
-            pos_y = 0,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_HelpButton(parent, const),
 
         CalcSize = CalcSize_HelpButton,
     }
@@ -385,36 +379,24 @@ function this.Update_Tension(def, changes, isDownClicked, isUpClicked)
     Update_UpDownButton("accel_tension", "experience_tension", isDownClicked, isUpClicked, def, changes)
 end
 
-function this.Define_DeadSpot_Label(const)
+function this.Define_DeadSpot_Label(parent, const)
     -- Label
     return
     {
         text = "Dead Spot",
 
-        position =
-        {
-            pos_x = -117,
-            pos_y = 210,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_LabelAbove(parent, const),
 
         color = "edit_prompt",
 
         CalcSize = CalcSize_Label,
     }
 end
-function this.Define_DeadSpot_Help(const)
+function this.Define_DeadSpot_Help(parent, const)
     -- HelpButton
     local retVal =
     {
-        position =
-        {
-            pos_x = -70,
-            pos_y = 210,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_HelpButton(parent, const),
 
         invisible_name = "GrappleStraight_VelocityAway_DeadSpot_Help",
 

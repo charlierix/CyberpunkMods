@@ -1,4 +1,5 @@
-﻿using System;
+﻿using grapple_ui.models.viewmodels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,35 @@ namespace grapple_ui.models.misc
 
         public AlignmentHorizontal horizontal { get; init; }
         public AlignmentVertical vertical { get; init; }
+
+        // ******************************************************************************
+        // If these are populated, then this control will be placed relative to a control instead of absolute
+        // position on the parent
+
+        /// <summary>
+        /// This is a link to the control that this will be placed relative to
+        /// </summary>
+        public IControl relative_to { get; init; }
+
+        // These are what part of the parent control to align to
+        public AlignmentHorizontal relative_horz { get; init; }
+        public AlignmentVertical relatvie_vert { get; init; }
+
+        // Examples:
+        //
+        // Place to the right of the parent, centered vertically
+        //  relative_horz = right
+        //  horizontal = left
+        //  relatvie_vert = center
+        //  vertical = center
+        //
+        // Place above parent, align left (like a label over a textbox)
+        //  relative_horz = left
+        //  horizontal = left
+        //  relatvie_vert = top
+        //  vertical = bottom
+
+        // ******************************************************************************
     }
 
     public enum AlignmentHorizontal

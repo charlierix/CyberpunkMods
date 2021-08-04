@@ -281,6 +281,39 @@ function Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, roundDigits
     def.isFree_up = isFree_up
 end
 
+-- This is for help buttons to the right of a label/checkbox
+function GetRelativePosition_HelpButton(parent, const)
+    return
+    {
+        relative_to = parent,
+
+        pos_x = 10,
+        pos_y = 0,
+
+        relative_horz = const.alignment_horizontal.right,
+        horizontal = const.alignment_horizontal.left,
+
+        relatvie_vert = const.alignment_vertical.center,
+        vertical = const.alignment_vertical.center,
+    }
+end
+-- This is for labels/checkboxes above something (like slider, textbox)
+function GetRelativePosition_LabelAbove(parent, const)
+    return
+    {
+        relative_to = parent,
+
+        pos_x = 1,
+        pos_y = 13,
+
+        relative_horz = const.alignment_horizontal.left,
+        horizontal = const.alignment_horizontal.left,
+
+        relatvie_vert = const.alignment_vertical.top,
+        vertical = const.alignment_vertical.bottom,
+    }
+end
+
 -- This creates a set of controls used to change a single property
 -- x and y are an offset from center
 -- Returns:
@@ -292,47 +325,7 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
     -- Probably can't use this outside of a draw function.  Just hardcode the offsets
     --local size_text_x, size_text_y = ImGui.CalcTextSize(text)
 
-    local prompt
-    if isCheckbox then
-        -- CheckBox
-        prompt =
-        {
-            invisible_name = invisibleName_base .. "_CheckBox",
-
-            text = text,
-
-            position =
-            {
-                pos_x = x,
-                pos_y = y - 24,
-                horizontal = const.alignment_horizontal.center,
-                vertical = const.alignment_vertical.center,
-            },
-
-            foreground_override = "edit_prompt",
-
-            CalcSize = CalcSize_CheckBox,
-        }
-    else
-        -- Label
-        prompt =
-        {
-            text = text,
-
-            position =
-            {
-                pos_x = x,
-                pos_y = y - 24,
-                horizontal = const.alignment_horizontal.center,
-                vertical = const.alignment_vertical.center,
-            },
-
-            color = "edit_prompt",
-
-            CalcSize = CalcSize_Label,
-        }
-    end
-
+    --NOTE: Lable is absolute position, everything else is relative to it
     -- Label
     local label_value =
     {
@@ -351,6 +344,59 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
         CalcSize = CalcSize_Label,
     }
 
+    local prompt
+    if isCheckbox then
+        -- CheckBox
+        prompt =
+        {
+            invisible_name = invisibleName_base .. "_CheckBox",
+
+            text = text,
+
+            position =
+            {
+                relative_to = label_value,
+
+                pos_x = 0,
+                pos_y = 11,
+
+                relative_horz = const.alignment_horizontal.center,
+                horizontal = const.alignment_horizontal.center,
+
+                relatvie_vert = const.alignment_vertical.top,
+                vertical = const.alignment_vertical.bottom,
+            },
+
+            foreground_override = "edit_prompt",
+
+            CalcSize = CalcSize_CheckBox,
+        }
+    else
+        -- Label
+        prompt =
+        {
+            text = text,
+
+            position =
+            {
+                relative_to = label_value,
+
+                pos_x = 0,
+                pos_y = 11,
+
+                relative_horz = const.alignment_horizontal.center,
+                horizontal = const.alignment_horizontal.center,
+
+                relatvie_vert = const.alignment_vertical.top,
+                vertical = const.alignment_vertical.bottom,
+            },
+
+            color = "edit_prompt",
+
+            CalcSize = CalcSize_Label,
+        }
+    end
+
     -- UpDownButtons
     local updown =
     {
@@ -361,10 +407,16 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
 
         position =
         {
-            pos_x = x,
-            pos_y = y + 32,
+            relative_to = label_value,
+
+            pos_x = 0,
+            pos_y = 15,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
+
+            relatvie_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
         },
 
         isHorizontal = true,
@@ -379,13 +431,7 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
 
         tooltip = help_tooltip_text,
 
-        position =
-        {
-            pos_x = x + 66,
-            pos_y = y - 23,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_HelpButton(prompt, const),
 
         CalcSize = CalcSize_HelpButton,
     }

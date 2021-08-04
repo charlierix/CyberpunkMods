@@ -21,7 +21,7 @@ function DefineWindow_Grapple_Straight(vars_ui, const)
     grapple_straight.title = Define_Title("Straight Grapple", const)
 
     grapple_straight.name = this.Define_Name(const)
-    grapple_straight.description = this.Define_Description(const)
+    grapple_straight.description = this.Define_Description(grapple_straight.name, const)
 
     grapple_straight.stickFigure = Define_StickFigure(false, const)
     grapple_straight.arrows = Define_GrappleArrows(false, false)
@@ -209,7 +209,7 @@ function this.Refresh_Name(def, grapple)
     end
 end
 
-function this.Define_Description(const)
+function this.Define_Description(parent, const)
     -- LabelClickable
     return
     {
@@ -219,9 +219,15 @@ function this.Define_Description(const)
 
         position =
         {
-            pos_x = 30,
-            pos_y = 66,
+            relative_to = parent,
+
+            pos_x = 0,
+            pos_y = 13,
+
+            relative_horz = const.alignment_horizontal.right,
             horizontal = const.alignment_horizontal.right,
+
+            relatvie_vert = const.alignment_vertical.bottom,
             vertical = const.alignment_vertical.top,
         },
 

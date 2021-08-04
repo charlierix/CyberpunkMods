@@ -26,7 +26,7 @@ function DefineWindow_GrappleStraight_AccelAlong(vars_ui, const)
 
     -- Checkbox for whether to have accel along (Grapple.accel_alongGrappleLine)
     gst8_accalong.has_accelalong = this.Define_HasAccelAlong(const)
-    gst8_accalong.has_help = this.Define_HasHelp(const)
+    gst8_accalong.has_help = this.Define_HasHelp(gst8_accalong.has_accelalong, const)
 
     -- Accel (Grapple.accel_alongGrappleLine.accel)
     local prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", -180, 100, const, false, "GrappleStraight_AccelAlong_Accel", this.Tooltip_Accel())
@@ -43,9 +43,9 @@ function DefineWindow_GrappleStraight_AccelAlong(vars_ui, const)
     gst8_accalong.speed_help = help
 
     -- Dead Spot Distance (Grapple.accel_alongGrappleLine.deadSpot_distance)
-    gst8_accalong.deadspot_label = this.Define_DeadSpot_Label(const)
-    gst8_accalong.deadspot_help = this.Define_DeadSpot_Help(const)
     gst8_accalong.deadspot_dist = this.Define_DeadSpot_Dist(const)
+    gst8_accalong.deadspot_label = this.Define_DeadSpot_Label(gst8_accalong.deadspot_dist, const)
+    gst8_accalong.deadspot_help = this.Define_DeadSpot_Help(gst8_accalong.deadspot_label, const)
 
     gst8_accalong.experience = Define_Experience(const, "grapple")
 
@@ -215,19 +215,13 @@ function this.Update_HasAccelAlong(def, accel, changes, startedWithAG)
     PopulateBuySell(def.isChecked, startedWithAG, changes, "experience_buysell", total)
 end
 
-function this.Define_HasHelp(const)
+function this.Define_HasHelp(parent, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "GrappleStraight_AccelAlong_HasHelp",
 
-        position =
-        {
-            pos_x = 150,
-            pos_y = 0,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_HelpButton(parent, const),
 
         CalcSize = CalcSize_HelpButton,
     }
@@ -276,36 +270,24 @@ function this.Update_Speed(def, changes, isDownClicked, isUpClicked)
     Update_UpDownButton("speed", "experience", isDownClicked, isUpClicked, def, changes)
 end
 
-function this.Define_DeadSpot_Label(const)
+function this.Define_DeadSpot_Label(parent, const)
     -- Label
     return
     {
         text = "Dead Spot",
 
-        position =
-        {
-            pos_x = -117,
-            pos_y = 210,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_LabelAbove(parent, const),
 
         color = "edit_prompt",
 
         CalcSize = CalcSize_Label,
     }
 end
-function this.Define_DeadSpot_Help(const)
+function this.Define_DeadSpot_Help(parent, const)
     -- HelpButton
     local retVal =
     {
-        position =
-        {
-            pos_x = -70,
-            pos_y = 210,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_HelpButton(parent, const),
 
         invisible_name = "GrappleStraight_AccelAlong_DeadSpot_Help",
 

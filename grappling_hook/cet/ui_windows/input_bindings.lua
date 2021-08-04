@@ -7,13 +7,13 @@ function DefineWindow_InputBindings(vars_ui, const)
     vars_ui.input_bindings = input_bindings
 
     input_bindings.consoleWarning1 = this.Define_ConsoleWarning1(const)
-    input_bindings.consoleWarning2 = this.Define_ConsoleWarning2(const)
+    input_bindings.consoleWarning2 = this.Define_ConsoleWarning2(input_bindings.consoleWarning1, const)
 
-    input_bindings.help1_label = this.Define_Help1_Label(const)
     input_bindings.help1_button = this.Define_Help1_Button(const)
+    input_bindings.help1_label = this.Define_Help1_Label(input_bindings.help1_button, const)
 
-    input_bindings.help2_label = this.Define_Help2_Label(const)
-    input_bindings.help2_button = this.Define_Help2_Button(const)
+    input_bindings.help2_button = this.Define_Help2_Button(input_bindings.help1_button, const)
+    input_bindings.help2_label = this.Define_Help2_Label(input_bindings.help2_button, const)
 
     input_bindings.watchedActions = this.Define_WatchedActions(const)
 
@@ -127,9 +127,9 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, wi
             local remove_click, remove_hover = Draw_RemoveButton(current.remove, vars_ui.style.removeButton, window.left, window.top)
 
             if remove_hover then
-                this.Draw_Remove_Tooltip(current, vars_ui, window, const)
+                this.Draw_Remove_Tooltip(current, vars_ui)
             elseif summary_hover then
-                this.Draw_Summary_Tooltips(current, vars, vars_ui, window, const)
+                this.Draw_Summary_Tooltips(current, vars, vars_ui, window)
             end
 
             if remove_click then
@@ -181,7 +181,7 @@ function this.Define_ConsoleWarning1(const)
         CalcSize = CalcSize_Label,
     }
 end
-function this.Define_ConsoleWarning2(const)
+function this.Define_ConsoleWarning2(parent, const)
     -- Label
     return
     {
@@ -189,9 +189,15 @@ function this.Define_ConsoleWarning2(const)
 
         position =
         {
-            pos_x = -160,
-            pos_y = 66,
+            relative_to = parent,
+
+            pos_x = 0,
+            pos_y = 8,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
+
+            relatvie_vert = const.alignment_vertical.bottom,
             vertical = const.alignment_vertical.top,
         },
 
@@ -201,7 +207,7 @@ function this.Define_ConsoleWarning2(const)
     }
 end
 
-function this.Define_Help1_Label(const)
+function this.Define_Help1_Label(parent, const)
     -- Label
     return
     {
@@ -209,10 +215,16 @@ function this.Define_Help1_Label(const)
 
         position =
         {
-            pos_x = 45,
-            pos_y = 24,
+            relative_to = parent,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.right,
-            vertical = const.alignment_vertical.top,
+
+            relatvie_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
         },
 
         color = "help",
@@ -229,7 +241,7 @@ function this.Define_Help1_Button(const)
         position =
         {
             pos_x = 24,
-            pos_y = 24,
+            pos_y = 36,
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.top,
         },
@@ -249,7 +261,7 @@ Any combination of CET inputs and in game keys can be mixed in this window's bin
     return retVal
 end
 
-function this.Define_Help2_Label(const)
+function this.Define_Help2_Label(parent, const)
     -- Label
     return
     {
@@ -257,10 +269,16 @@ function this.Define_Help2_Label(const)
 
         position =
         {
-            pos_x = 45,
-            pos_y = 45,
+            relative_to = parent,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.right,
-            vertical = const.alignment_vertical.top,
+
+            relatvie_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
         },
 
         color = "help",
@@ -268,7 +286,7 @@ function this.Define_Help2_Label(const)
         CalcSize = CalcSize_Label,
     }
 end
-function this.Define_Help2_Button(const)
+function this.Define_Help2_Button(parent, const)
     -- HelpButton
     local retVal =
     {
@@ -276,9 +294,15 @@ function this.Define_Help2_Button(const)
 
         position =
         {
-            pos_x = 24,
-            pos_y = 45,
+            relative_to = parent,
+
+            pos_x = 0,
+            pos_y = 8,
+
+            relative_horz = const.alignment_horizontal.right,
             horizontal = const.alignment_horizontal.right,
+
+            relatvie_vert = const.alignment_vertical.bottom,
             vertical = const.alignment_vertical.top,
         },
 
@@ -468,37 +492,29 @@ function this.Refresh_BindButtons_Summary(def, startStopTracker)
     end
 end
 
-function this.Draw_Remove_Tooltip(current, vars_ui, window, const)
-
-    -- The tooltip looks out of place when the summary uses a label
-
-    -- --TODO: Drawing controls should be broken into two calls: GetPosition, Draw.  Then the position would already be known by this point
-    -- --That also adds the ability to place controls relative to each other (position = const.alignment_horizontal.right_of <control>)
-    -- local radius = vars_ui.style.removeButton.radius
-    -- local notouch = radius + 12
-
-    -- local left, top = GetControlPosition(current.remove.position, radius * 2, radius * 2, window.width, window.height, const)
-
-    -- Draw_Tooltip("Clear Binding", vars_ui.style.tooltip, window.left + left + radius, window.top + top + radius, notouch, notouch, vars_ui)
-
-
+function this.Draw_Remove_Tooltip(current, vars_ui)
     Draw_Label(current.remove_hover_label, vars_ui.style.colors)
 end
-function this.Draw_Summary_Tooltips(current, vars, vars_ui, window, const)
+function this.Draw_Summary_Tooltips(current, vars, vars_ui, window)
     Draw_Label(current.summary_hover_label, vars_ui.style.colors)
 
     local actionList = this.GetActionList(current, vars.startStopTracker)
     if actionList then
         local actionSummary = String_Join("\n", actionList)
-        local sum_width = current.summary.min_width + vars_ui.style.summaryButton.padding
-        local sum_height = current.summary.min_height + vars_ui.style.summaryButton.padding
 
-        local gap = 39
+        local sum_width = current.summary.render_pos.width
+        local sum_height = current.summary.render_pos.height
 
-        --TODO: Same note about relative positioning as above.  This calculation on the fly is error prone and ugly
-        local left, top = GetControlPosition(current.summary.position, sum_width, sum_height, window.width, window.height, const)
+        local gap = 24
 
-        Draw_Tooltip(actionSummary, vars_ui.style.tooltip, window.left + left + (sum_width / 2), window.top + top + (sum_height / 2), (sum_width / 2) + gap, (sum_height / 2) + gap, vars_ui)
+        Draw_Tooltip(
+            actionSummary,
+            vars_ui.style.tooltip,
+            window.left + current.summary.render_pos.left + (sum_width / 2),
+            window.top + current.summary.render_pos.top + (sum_height / 2),
+            (sum_width / 2) + gap,
+            (sum_height / 2) + gap,
+            vars_ui)
     end
 end
 

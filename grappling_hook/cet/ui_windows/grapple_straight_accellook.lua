@@ -21,7 +21,7 @@ function DefineWindow_GrappleStraight_AccelLook(vars_ui, const)
 
     -- Checkbox for whether to have accel look (Grapple.accel_alongLook)
     gst8_acclook.has_accellook = this.Define_HasAccelLook(const)
-    gst8_acclook.has_help = this.Define_HasHelp(const)
+    gst8_acclook.has_help = this.Define_HasHelp(gst8_acclook.has_accellook, const)
 
     -- Accel (Grapple.accel_alongLook.accel)
     local prompt, value, updown, help = Define_PropertyPack_Vertical("Acceleration", -180, 100, const, false, "GrappleStraight_AccelLook_Accel", this.Tooltip_Accel())
@@ -192,19 +192,13 @@ function this.Update_HasAccelLook(def, accel, changes, startedWithAL)
     PopulateBuySell(def.isChecked, startedWithAL, changes, "experience_buysell", total)
 end
 
-function this.Define_HasHelp(const)
+function this.Define_HasHelp(parent, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "GrappleStraight_AccelLook_HasHelp",
 
-        position =
-        {
-            pos_x = 150,
-            pos_y = 0,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_HelpButton(parent, const),
 
         CalcSize = CalcSize_HelpButton,
     }

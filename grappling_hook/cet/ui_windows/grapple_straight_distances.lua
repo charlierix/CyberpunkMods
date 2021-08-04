@@ -19,9 +19,9 @@ function DefineWindow_GrappleStraight_Distances(vars_ui, const)
     gst8_dist.desired_line = Define_GrappleDesiredLength(true)
 
     -- Desired Length
-    gst8_dist.desired_checkbox = this.Define_Desired_CheckBox(const)
-    gst8_dist.desired_help = this.Define_Desired_Help(const)
     gst8_dist.desired_slider = this.Define_Desired_Slider(const)
+    gst8_dist.desired_checkbox = this.Define_Desired_CheckBox(gst8_dist.desired_slider, const)
+    gst8_dist.desired_help = this.Define_Desired_Help(gst8_dist.desired_checkbox, const)
 
     -- Max Distance (Aim_Straight.max_distance)
     local prompt, value, updown, help = Define_PropertyPack_Vertical("Max Aim Distance", 220, 100, const, false, "GrappleStraight_Distances_MaxDist", this.Tooltip_MaxDistance())
@@ -137,7 +137,7 @@ function this.Refresh_Experience(def, player, grapple, changes)
     def.content.used.value = tostring(Round(grapple.experience - changes:Get("experience")))
 end
 
-function this.Define_Desired_CheckBox(const)
+function this.Define_Desired_CheckBox(parent, const)
     -- CheckBox
     return
     {
@@ -147,13 +147,7 @@ function this.Define_Desired_CheckBox(const)
 
         isEnabled = true,
 
-        position =
-        {
-            pos_x = 200,
-            pos_y = 90,
-            horizontal = const.alignment_horizontal.left,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_LabelAbove(parent, const),
 
         CalcSize = CalcSize_CheckBox,
     }
@@ -172,19 +166,13 @@ function this.Update_DesiredLength(def_checkbox, def_slider, changes)
     end
 end
 
-function this.Define_Desired_Help(const)
+function this.Define_Desired_Help(parent, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "GrappleStraight_Distances_Desired_Help",
 
-        position =
-        {
-            pos_x = 330,
-            pos_y = 90,
-            horizontal = const.alignment_horizontal.left,
-            vertical = const.alignment_vertical.center,
-        },
+        position = GetRelativePosition_HelpButton(parent, const),
 
         CalcSize = CalcSize_HelpButton,
     }

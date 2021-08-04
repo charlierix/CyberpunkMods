@@ -1,3 +1,5 @@
+local this = {}
+
 -- The hex can be in any of the standard hex formats (# is optional):
 --  "444" becomes "FF444444" (very dark gray)
 --  "806A" becomes "880066AA" (dusty blue)
@@ -152,49 +154,11 @@ end
 --  control_width, control_height = size of control
 --  parent_width, parent_height = size of parent window or div container
 function GetControlPosition(def, control_width, control_height, parent_width, parent_height, const)
-    -- Left
-    local left = nil
-
-    if def.horizontal then
-        if def.horizontal == const.alignment_horizontal.left then
-            left = def.pos_x
-
-        elseif def.horizontal == const.alignment_horizontal.center then
-            left = (parent_width / 2) - (control_width / 2) + def.pos_x
-
-        elseif def.horizontal == const.alignment_horizontal.right then
-            left = parent_width - def.pos_x - control_width
-
-        else
-            print("GetControlPosition: Unknown horizontal: " .. tostring(def.horizontal))
-            left = 0
-        end
+    if def.relative_to then
+        return this.GetControlPosition_Relative(def, control_width, control_height, const)
     else
-        left = def.pos_x        -- default to left align
+        return this.GetControlPosition_Absolute(def, control_width, control_height, parent_width, parent_height, const)
     end
-
-    -- Top
-    local top = nil
-
-    if def.vertical then
-        if def.vertical == const.alignment_vertical.top then
-            top = def.pos_y
-
-        elseif def.vertical == const.alignment_vertical.center then
-            top = (parent_height / 2) - (control_height / 2) + def.pos_y
-
-        elseif def.vertical == const.alignment_vertical.bottom then
-            top = parent_height - def.pos_y - control_height
-
-        else
-            print("GetControlPosition: Unknown vertical: " .. tostring(def.vertical))
-            top = 0
-        end
-    else
-        top = def.pos_y     -- default to top align
-    end
-
-    return left, top
 end
 
 -- This returns the named color else magenta (style_colors is sylesheet.colors)
@@ -253,4 +217,123 @@ function PopulateBuySell(hasNow, startedWith, changes, key, initialCost)
             changes[key] = 0        -- started without, purchased, now removing again
         end
     end
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.GetControlPosition_Absolute(def, control_width, control_height, parent_width, parent_height, const)
+    -- Left
+    local left = nil
+
+    if def.horizontal then
+        if def.horizontal == const.alignment_horizontal.left then
+            left = def.pos_x
+
+        elseif def.horizontal == const.alignment_horizontal.center then
+            left = (parent_width / 2) - (control_width / 2) + def.pos_x
+
+        elseif def.horizontal == const.alignment_horizontal.right then
+            left = parent_width - control_width - def.pos_x
+
+        else
+            print("GetControlPosition_Absolute: Unknown horizontal: " .. tostring(def.horizontal))
+            left = 0
+        end
+    else
+        left = def.pos_x        -- default to left align
+    end
+
+    -- Top
+    local top = nil
+
+    if def.vertical then
+        if def.vertical == const.alignment_vertical.top then
+            top = def.pos_y
+
+        elseif def.vertical == const.alignment_vertical.center then
+            top = (parent_height / 2) - (control_height / 2) + def.pos_y
+
+        elseif def.vertical == const.alignment_vertical.bottom then
+            top = parent_height - control_height - def.pos_y
+
+        else
+            print("GetControlPosition_Absolute: Unknown vertical: " .. tostring(def.vertical))
+            top = 0
+        end
+    else
+        top = def.pos_y     -- default to top align
+    end
+
+    return left, top
+end
+function this.GetControlPosition_Relative(def, control_width, control_height, const)
+    local parent_pos = def.relative_to.render_pos
+
+    -- Left
+    local left = 0
+
+    if def.relative_horz then
+        -- Pos of parent
+        if def.relative_horz == const.alignment_horizontal.left then
+            left = parent_pos.left
+
+        elseif def.relative_horz == const.alignment_horizontal.center then
+            left = parent_pos.left + (parent_pos.width / 2)
+
+        elseif def.relative_horz == const.alignment_horizontal.right then
+            left = parent_pos.left + parent_pos.width
+
+        else
+            print("GetControlPosition_Relative: Unknown relative_horz: " .. tostring(def.relative_horz))
+        end
+
+        -- Offset of this control's width
+        if def.horizontal == const.alignment_horizontal.left then
+            left = left + def.pos_x
+
+        elseif def.horizontal == const.alignment_horizontal.center then
+            left = left - (control_width / 2) + def.pos_x
+
+        elseif def.horizontal == const.alignment_horizontal.right then
+            left = left - control_width - def.pos_x
+
+        else
+            print("GetControlPosition_Relative: Unknown horizontal: " .. tostring(def.horizontal))
+        end
+    end
+
+    -- Top
+    local top = 0
+
+    if def.relatvie_vert then
+        -- Pos of parent
+        if def.relatvie_vert == const.alignment_vertical.top then
+            top = parent_pos.top
+
+        elseif def.relatvie_vert == const.alignment_vertical.center then
+            top = parent_pos.top + (parent_pos.height / 2)
+
+        elseif def.relatvie_vert == const.alignment_vertical.bottom then
+            top = parent_pos.top + parent_pos.height
+
+        else
+            print("GetControlPosition_Relative: Unknown relatvie_vert: " .. tostring(def.relatvie_vert))
+        end
+
+        -- Offset of this control's width
+        if def.vertical == const.alignment_vertical.top then
+            top = top + def.pos_y
+
+        elseif def.vertical == const.alignment_vertical.center then
+            top = top - (control_height / 2) + def.pos_y
+
+        elseif def.vertical == const.alignment_vertical.bottom then
+            top = top - control_height - def.pos_y
+
+        else
+            print("GetControlPosition_Relative: Unknown vertical: " .. tostring(def.vertical))
+        end
+    end
+
+    return left, top
 end
