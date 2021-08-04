@@ -10,9 +10,7 @@ function InitializeUI(vars_ui, const)
 
     vars_ui.style = this.LoadStylesheet()
 
-    --TODO: Come up with a better name for this.  It's too easily confused with vars_ui.main (the first window)
-    --TODO: Call it configWindow
-    vars_ui.mainWindow = this.Define_MainWindow(vars_ui.screen)      -- going with a SPA, so it's probably going to be the only window (maybe also a dialog box at some point?)
+    vars_ui.configWindow = this.Define_ConfigWindow(vars_ui.screen)      -- going with a SPA, so it's probably going to be the only window
 
     -- This can't be called yet.  It has to be done by the caller
     --TransitionWindows_Main(vars_ui, const)
@@ -88,7 +86,7 @@ function this.FinishStylesheetColors(style)
     end
 end
 
-function this.Define_MainWindow(screen)
+function this.Define_ConfigWindow(screen)
     local width = 1000
     local height = 800
 

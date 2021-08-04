@@ -87,11 +87,11 @@ function ConvertHexStringToNumbers_Magenta()
 end
 
 -- Called from draw each frame that the config is open
-function Refresh_WindowPos(mainWindow)
+function Refresh_WindowPos(configWindow)
     local curLeft, curTop = ImGui.GetWindowPos()
 
-    mainWindow.left = curLeft
-    mainWindow.top = curTop
+    configWindow.left = curLeft
+    configWindow.top = curTop
 end
 function Refresh_LineHeights(vars_ui)
     if not vars_ui.line_heights then

@@ -320,7 +320,7 @@ local vars_ui =
 {
     --screen    -- info about the current screen resolution -- see GetScreenInfo()
     --style     -- this gets loaded from json during init
-    --mainWindow    -- info about the location of the main window (top/left gets stored in a table if they move it) -- see Define_MainWindow()
+    --configWindow  -- info about the location of the config window (top/left gets stored in a table if they move it) -- see Define_ConfigWindow()
     --line_heights  -- the height of strings -- see Refresh_LineHeights()
 
     isTooltipShowing = false,       -- the tooltip is actually a sub window.  This is needed so the parent window's titlebar can stay the active color

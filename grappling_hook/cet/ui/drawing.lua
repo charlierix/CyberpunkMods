@@ -63,7 +63,7 @@ function DrawConfig(isCloseRequested, vars, vars_ui, player, o, const)
 
     local continueShowing = true        -- this should go to false when isCloseRequested true, unless the window is in a dirty state
 
-    local window = vars_ui.mainWindow
+    local window = vars_ui.configWindow
 
     ImGui.PushStyleColor(ImGuiCol.TitleBgActive, vars_ui.style.title_color_focused_abgr)
 
