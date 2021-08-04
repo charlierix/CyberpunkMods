@@ -39,20 +39,20 @@ namespace grapple_ui.models.misc
 
         // These are what part of the parent control to align to
         public AlignmentHorizontal relative_horz { get; init; }
-        public AlignmentVertical relatvie_vert { get; init; }
+        public AlignmentVertical relative_vert { get; init; }
 
         // Examples:
         //
         // Place to the right of the parent, centered vertically
         //  relative_horz = right
         //  horizontal = left
-        //  relatvie_vert = center
+        //  relative_vert = center
         //  vertical = center
         //
         // Place above parent, align left (like a label over a textbox)
         //  relative_horz = left
         //  horizontal = left
-        //  relatvie_vert = top
+        //  relative_vert = top
         //  vertical = bottom
 
         // ******************************************************************************

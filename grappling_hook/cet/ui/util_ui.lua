@@ -305,19 +305,19 @@ function this.GetControlPosition_Relative(def, control_width, control_height, co
     -- Top
     local top = 0
 
-    if def.relatvie_vert then
+    if def.relative_vert then
         -- Pos of parent
-        if def.relatvie_vert == const.alignment_vertical.top then
+        if def.relative_vert == const.alignment_vertical.top then
             top = parent_pos.top
 
-        elseif def.relatvie_vert == const.alignment_vertical.center then
+        elseif def.relative_vert == const.alignment_vertical.center then
             top = parent_pos.top + (parent_pos.height / 2)
 
-        elseif def.relatvie_vert == const.alignment_vertical.bottom then
+        elseif def.relative_vert == const.alignment_vertical.bottom then
             top = parent_pos.top + parent_pos.height
 
         else
-            print("GetControlPosition_Relative: Unknown relatvie_vert: " .. tostring(def.relatvie_vert))
+            print("GetControlPosition_Relative: Unknown relative_vert: " .. tostring(def.relative_vert))
         end
 
         -- Offset of this control's width

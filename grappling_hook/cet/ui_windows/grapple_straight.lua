@@ -227,7 +227,7 @@ function this.Define_Description(parent, const)
             relative_horz = const.alignment_horizontal.right,
             horizontal = const.alignment_horizontal.right,
 
-            relatvie_vert = const.alignment_vertical.bottom,
+            relative_vert = const.alignment_vertical.bottom,
             vertical = const.alignment_vertical.top,
         },
 

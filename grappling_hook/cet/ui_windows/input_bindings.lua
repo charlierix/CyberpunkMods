@@ -197,7 +197,7 @@ function this.Define_ConsoleWarning2(parent, const)
             relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
 
-            relatvie_vert = const.alignment_vertical.bottom,
+            relative_vert = const.alignment_vertical.bottom,
             vertical = const.alignment_vertical.top,
         },
 
@@ -223,7 +223,7 @@ function this.Define_Help1_Label(parent, const)
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.right,
 
-            relatvie_vert = const.alignment_vertical.center,
+            relative_vert = const.alignment_vertical.center,
             vertical = const.alignment_vertical.center,
         },
 
@@ -277,7 +277,7 @@ function this.Define_Help2_Label(parent, const)
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.right,
 
-            relatvie_vert = const.alignment_vertical.center,
+            relative_vert = const.alignment_vertical.center,
             vertical = const.alignment_vertical.center,
         },
 
@@ -302,7 +302,7 @@ function this.Define_Help2_Button(parent, const)
             relative_horz = const.alignment_horizontal.right,
             horizontal = const.alignment_horizontal.right,
 
-            relatvie_vert = const.alignment_vertical.bottom,
+            relative_vert = const.alignment_vertical.bottom,
             vertical = const.alignment_vertical.top,
         },
 

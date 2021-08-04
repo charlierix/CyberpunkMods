@@ -293,7 +293,7 @@ function GetRelativePosition_HelpButton(parent, const)
         relative_horz = const.alignment_horizontal.right,
         horizontal = const.alignment_horizontal.left,
 
-        relatvie_vert = const.alignment_vertical.center,
+        relative_vert = const.alignment_vertical.center,
         vertical = const.alignment_vertical.center,
     }
 end
@@ -309,7 +309,7 @@ function GetRelativePosition_LabelAbove(parent, const)
         relative_horz = const.alignment_horizontal.left,
         horizontal = const.alignment_horizontal.left,
 
-        relatvie_vert = const.alignment_vertical.top,
+        relative_vert = const.alignment_vertical.top,
         vertical = const.alignment_vertical.bottom,
     }
 end
@@ -363,7 +363,7 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
                 relative_horz = const.alignment_horizontal.center,
                 horizontal = const.alignment_horizontal.center,
 
-                relatvie_vert = const.alignment_vertical.top,
+                relative_vert = const.alignment_vertical.top,
                 vertical = const.alignment_vertical.bottom,
             },
 
@@ -387,7 +387,7 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
                 relative_horz = const.alignment_horizontal.center,
                 horizontal = const.alignment_horizontal.center,
 
-                relatvie_vert = const.alignment_vertical.top,
+                relative_vert = const.alignment_vertical.top,
                 vertical = const.alignment_vertical.bottom,
             },
 
@@ -415,7 +415,7 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
             relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
 
-            relatvie_vert = const.alignment_vertical.bottom,
+            relative_vert = const.alignment_vertical.bottom,
             vertical = const.alignment_vertical.top,
         },
 
