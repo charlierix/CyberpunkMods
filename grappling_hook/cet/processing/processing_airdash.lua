@@ -175,7 +175,7 @@ end
 --     end
 
 
---     local speed_xy = Get2DLength(vel_along.x, vel_along.y)
+--     local speed_xy = GetVectorLength2D(vel_along.x, vel_along.y)
 --     local speed_z = math.abs(vel_along.z)
 
 --     local air_x, air_y = GetPullAccel_Constant(dash.accel, o.lookdir_forward, 1000, speed_xy, not isSameDir)

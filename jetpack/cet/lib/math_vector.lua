@@ -38,11 +38,11 @@ function GetVectorDiffLengthSqr(vector1, vector2)
     return (diffX * diffX) + (diffY * diffY) + (diffZ * diffZ)
 end
 
-function Get2DLengthSqr(x, y)
+function GetVectorLength2DSqr(x, y)
     return (x * x) + (y * y)
 end
 
-function Get2DLength(x, y)
+function GetVectorLength2D(x, y)
     return math.sqrt((x * x) + (y * y))
 end
 
@@ -73,7 +73,7 @@ end
 
 function RadiansBetween2D(x1, y1, x2, y2)
     --cos(theta) = dot / (len * len)
-    return math.acos(DotProduct2D(x1, y1, x2, y2) / (Get2DLength(x1, y1) * Get2DLength(x2, y2)))
+    return math.acos(DotProduct2D(x1, y1, x2, y2) / (GetVectorLength2D(x1, y1) * GetVectorLength2D(x2, y2)))
 end
 
 function RadiansBetween3D(v1, v2)
@@ -103,6 +103,84 @@ function Make2DUnit(vector)
     return Vector4.new(retVal.x / length, retVal.y / length, 0, 1)
 end
 
+-- This converts the vector into a unit vector (or leaves it zero length if zero length)
+function Normalize(vector)
+    local length = GetVectorLength(vector)
+
+    if IsNearZero(length) then
+        vector.x = 0        -- just making sure it's exactly zero
+        vector.y = 0
+        vector.z = 0
+    else
+        vector.x = vector.x / length
+        vector.y = vector.y / length
+        vector.z = vector.z / length
+    end
+end
+
+-- Returns the portion of this vector that lies along the other vector
+-- NOTE: The return will be the same direction as alongVector, but the length from zero to this vector's full length
+--
+-- Also returns if is in same direction (false means opposite direction)
+--
+-- Lookup "vector projection" to see the difference between this and dot product
+-- http://en.wikipedia.org/wiki/Vector_projection
+function GetProjectedVector_AlongVector(vector, alongVectorUnit, eitherDirection)
+    -- c = (a dot unit(b)) * unit(b)
+
+    if IsNearZero_vec4(vector) then
+        return Vector4.new(0, 0, 0, 1), true
+    end
+
+    local length = DotProduct3D(vector, alongVectorUnit);
+
+    if (not eitherDirection) and (length < 0) then
+        -- It's in the opposite direction, and that isn't allowed
+        return Vector4.new(0, 0, 0, 1), false
+    end
+
+    return
+        MultiplyVector(alongVectorUnit, length),
+        length > 0
+end
+function GetProjectedVector_AlongPlane(vector, alongPlanes_normal)
+    -- Get a line that is parallel to the plane, but along the direction of the vector
+    local alongLine = CrossProduct3D(alongPlanes_normal, CrossProduct3D(vector, alongPlanes_normal))
+
+    Normalize(alongLine)
+
+    -- Use the other overload to get the portion of the vector along this line
+    return GetProjectedVector_AlongVector(vector, alongLine)
+end
+
+-- Turns dot product into a user friendly angle in degrees
+--  dot     angle
+--   1       0
+--   0       90
+--  -1       180
+function Dot_to_Angle(dot)
+    local radians = Dot_to_Radians(dot)
+    return Radians_to_Degrees(radians)
+end
+function Angle_to_Dot(degrees)
+    local radians = Degrees_to_Radians(degrees)
+    return Radians_to_Dot(radians)
+end
+
+function Dot_to_Radians(dot)
+    return math.acos(dot)
+end
+function Radians_to_Dot(radians)
+    return math.cos(radians)
+end
+
+function Degrees_to_Radians(degrees)
+    return degrees * math.pi / 180
+end
+function Radians_to_Degrees(radians)
+    return radians * 180 / math.pi
+end
+
 ------------------------------------- Convert -------------------------------------
 
 function GetPoint(fromPos, unitDirection, length)
@@ -113,11 +191,10 @@ function GetDirection(unitDirection, length)
     return Vector4.new(unitDirection.x * length, unitDirection.y * length, unitDirection.z * length, 1)
 end
 
-
 -- This removes the z and makes sure that that 2D portion is a length of 1
 -- Returns two numbers.  x and y
 function To2DUnit(vector)
-    local lenSqr = Get2DLengthSqr(vector.x, vector.y)
+    local lenSqr = GetVectorLength2DSqr(vector.x, vector.y)
 
     if IsNearValue(lenSqr, 1) then
         -- Already unit

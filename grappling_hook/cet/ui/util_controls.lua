@@ -148,7 +148,7 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function this.GetArrowCoords(x1, y1, x2, y2, length, width)
-    local magnitude = Get2DLength(x2 - x1, y2 - y1)
+    local magnitude = GetVectorLength2D(x2 - x1, y2 - y1)
 
     -- Get a unit vector that points from the to point back to the base of the arrow head
     local baseDir_x = (x1 - x2) / magnitude

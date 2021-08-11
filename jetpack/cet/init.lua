@@ -17,7 +17,9 @@ require "lib/flightutil_cet"
 require "lib/gameobj_accessor"
 require "lib/key_accel"
 require "lib/keydash_tracker"
+require "lib/keydash_tracker_analog"
 require "lib/keys"
+require "lib/lists"
 require "lib/math_basic"
 require "lib/math_raycast"
 require "lib/math_vector"
@@ -216,6 +218,8 @@ local const =
 
     modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v", "wall_hang" }),
 
+    rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
+
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 
@@ -237,7 +241,8 @@ local vars =
 {
     isInFlight = false,
 
-    --thrust, left, right, forward, backward are created in init
+    --thrust,           -- these are created in init
+    --horz_analog
 
     --vel = Vector4.new(0, 0, 0, 1),        -- moved this to init (Vector4 isn't available before init)
     startThrustTime = 0,
@@ -280,7 +285,7 @@ registerForEvent("onInit", function()
     mode = GetConfigValues(GetModeIndex())
     vars.remainBurnTime = mode.maxBurnTime
 
-    keys = Keys:new()
+    keys = Keys:new(debug, const)
 
     vars.vel = Vector4.new(0, 0, 0, 1)
 
@@ -310,10 +315,7 @@ registerForEvent("onInit", function()
     o = GameObjectAccessor:new(wrappers)
 
     vars.thrust = KeyDashTracker:new(o, keys, "jump", "prev_jump")
-    vars.left = KeyDashTracker:new(o, keys, "left", "prev_left")
-    vars.right = KeyDashTracker:new(o, keys, "right", "prev_right")
-    vars.forward = KeyDashTracker:new(o, keys, "forward", "prev_forward")
-    vars.backward = KeyDashTracker:new(o, keys, "backward", "prev_backward")
+    vars.horz_analog = KeyDashTracker_Analog:new(o, keys)
 end)
 
 registerForEvent("onShutdown", function()

@@ -9,6 +9,8 @@ local gain_achievement_straight_180 = 48        -- when the dot product between 
 local gain_achievement_straight_quad = 6        -- 4 grapples in a row
 local gain_achievement_straight_cheatdeath = 18 -- grapple when vel.z < -40
 local gain_achievement_straight_triple180 = 288 -- 3 180s in a single grapple (may need to also make sure they aren't pressing direction keys to just circle a pole)
+local gain_achievement_midairkill_single = 36   -- while midair because of grapple, they slow time and get a ranged kill
+local gain_achievement_midairkill_triple = 96
 
 --local final_percent = 1 / 9                    -- the pool and gains are stored as integers to be easy to think about.  This converts from those units into what the xp will actually be incremented by
 local final_percent = 2 / 9   --TODO: Put this back the the lower value when achievments are implemented

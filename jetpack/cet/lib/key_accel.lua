@@ -1,25 +1,24 @@
+local this = {}
+
 -- This returns accelerations from direct keyboard inputs
-function GetAccel_Keys(vars, mode, o)
+function GetAccel_Keys(vars, mode, o, debug)
     --vars.thrust:Tick()       -- this was already done in init.lua
-    vars.left:Tick()
-    vars.right:Tick()
-    vars.forward:Tick()
-    vars.backward:Tick()
+    vars.horz_analog:Tick()
 
-    local accel_up, energyUp = CalculateAccel(vars.thrust.isDown, vars.thrust.isDashing, mode.accel_vert_stand, mode.accel_vert_dash, 1, mode.burnRate_dash)
-    local accel_left, energyLeft = CalculateAccel(vars.left.isDown, vars.left.isDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
-    local accel_right, energyRight = CalculateAccel(vars.right.isDown, vars.rightisDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
-    local accel_forward, energyForward = CalculateAccel(vars.forward.isDown, vars.forward.isDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
-    local accel_backward, energyBackward = CalculateAccel(vars.backward.isDown, vars.backward.isDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
+    local accel_up, energyUp = this.CalculateAccel(vars.thrust.isDown, vars.thrust.isDashing, mode.accel_vert_stand, mode.accel_vert_dash, 1, mode.burnRate_dash)
 
-    -- Map those into world coords
-    local accelX, accelY = ConvertAccelToWorld(accel_forward - accel_backward, accel_right - accel_left, o)
+    local accel_x, accel_y, energyHorz = this.CalculateAccel_Analog(vars.horz_analog.analog_x, vars.horz_analog.analog_y, vars.horz_analog.analog_len, vars.horz_analog.isDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
+
+    -- Map into world coords
+    local accelX, accelY = this.ConvertAccelToWorld(accel_y, accel_x, o)
     --local accelZ = accel_up     -- accel_up is already in world coords
 
-    local requestedEnergy = energyUp + energyLeft + energyRight + energyForward + energyBackward        -- this will burn energy if they hold opposing keys at the same time, but that's excessive logic to detect
+    local requestedEnergy = energyUp + energyHorz
 
     return accelX, accelY, accel_up, requestedEnergy
 end
+
+---------------------------------- Private Functions ----------------------------------
 
 -- Calculates the acceleration in the desired direction
 --
@@ -36,21 +35,50 @@ end
 -- Returns:
 --      accel: how much acceleration to apply
 --      energyUsed: how much energy was consumed
-function CalculateAccel(isDown, isDashing, accel_stand, accel_dash, burnRate_stand, burnRate_dash)
+function this.CalculateAccel(isDown, isDashing, accel_stand, accel_dash, burnRate_stand, burnRate_dash)
     if not isDown then
         return 0, 0
     end
 
     if isDashing then
         return accel_dash, burnRate_dash
+    else
+        return accel_stand, burnRate_stand
+    end
+end
+
+-- Copy of the scalar, but deals with 2D vector instead
+-- The other deals with keyboard input, simple boolean for pressed or not.  This handles thumbstick input (analog
+-- 2D)
+--
+-- NOTE: It is expected that the analog input's max length is 1, so it's just being treated like a percent by this
+-- function
+--
+-- Returns:
+--      accel_x: negative is left, positive is right
+--      accel_y: negative is backward, positive is forward
+--      energyUsed
+function this.CalculateAccel_Analog(analog_x, analog_y, analog_len, isDashing, accel_stand, accel_dash, burnRate_stand, burnRate_dash)
+    if IsNearZero(analog_len) then
+        return 0, 0, 0
     end
 
-    return accel_stand, burnRate_stand
+    local accel = accel_stand
+    local burnrate = burnRate_stand
+    if isDashing then
+        accel = accel_dash
+        burnrate = burnRate_dash
+    end
+
+    return
+        analog_x * accel,
+        analog_y * accel,
+        analog_len * burnrate
 end
 
 -- accel_forward is W-S, accel_right is D-A.  Which are in model coords
 -- Turn those into world coords
-function ConvertAccelToWorld(accel_forward, accel_right, o)
+function this.ConvertAccelToWorld(accel_forward, accel_right, o)
     o:GetCamera()
 
     local lookForward = Make2DUnit(o.lookdir_forward)

@@ -38,18 +38,18 @@ function GetVectorLengthSqr(vector)
     return (vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z)
 end
 
-function Get2DLengthSqr(x, y)
+function GetVectorLength2DSqr(x, y)
     return (x * x) + (y * y)
 end
 
-function Get2DLength(x, y)
+function GetVectorLength2D(x, y)
     return math.sqrt((x * x) + (y * y))
 end
 
 -- This removes the z and makes sure that that 2D portion is a length of 1
 -- Returns two numbers.  x and y
 function To2DUnit(vector)
-    local lenSqr = Get2DLengthSqr(vector.x, vector.y)
+    local lenSqr = GetVectorLength2DSqr(vector.x, vector.y)
 
     if IsNearValue(lenSqr, 1) then
         -- Already unit

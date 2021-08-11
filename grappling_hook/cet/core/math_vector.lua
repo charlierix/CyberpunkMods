@@ -38,11 +38,11 @@ function GetVectorDiffLengthSqr(vector1, vector2)
     return (diffX * diffX) + (diffY * diffY) + (diffZ * diffZ)
 end
 
-function Get2DLengthSqr(x, y)
+function GetVectorLength2DSqr(x, y)
     return (x * x) + (y * y)
 end
 
-function Get2DLength(x, y)
+function GetVectorLength2D(x, y)
     return math.sqrt((x * x) + (y * y))
 end
 
@@ -73,7 +73,7 @@ end
 
 function RadiansBetween2D(x1, y1, x2, y2)
     --cos(theta) = dot / (len * len)
-    return math.acos(DotProduct2D(x1, y1, x2, y2) / (Get2DLength(x1, y1) * Get2DLength(x2, y2)))
+    return math.acos(DotProduct2D(x1, y1, x2, y2) / (GetVectorLength2D(x1, y1) * GetVectorLength2D(x2, y2)))
 end
 
 function RadiansBetween3D(v1, v2)
@@ -195,7 +195,7 @@ end
 -- This removes the z and makes sure that that 2D portion is a length of 1
 -- Returns two numbers.  x and y
 function To2DUnit(vector)
-    local lenSqr = Get2DLengthSqr(vector.x, vector.y)
+    local lenSqr = GetVectorLength2DSqr(vector.x, vector.y)
 
     if IsNearValue(lenSqr, 1) then
         -- Already unit

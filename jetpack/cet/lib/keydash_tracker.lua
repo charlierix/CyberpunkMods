@@ -34,7 +34,7 @@ function KeyDashTracker:Tick()
         self.downTime = self.o.timer
     end
 
-    if self.keys[self.keyname] and self.o.timer >= self.downTime then        -- need to wait a tick for ImGui.IsKeyPressed to also return true)
+    if self.keys[self.keyname] and self.o.timer >= self.downTime then        -- need to wait a tick for ImGui.IsKeyPressed to also return true
         local elapsedTimeDown = self.o.timer - self.downTime
 
         -- Don't want to allow too long of a gap between presses or it will see pulsing the thrusters as attempted dashing

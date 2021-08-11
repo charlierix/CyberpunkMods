@@ -16,7 +16,10 @@ function PopulateDebug(debug, o, keys, vars)
     -- debug.key_right = keys.right
     -- debug.key_jump = keys.jump
     -- debug.key_rmb = keys.rmb
-    -- debug.mouse_x = keys.mouse_x
+    debug.mouse_x = keys.mouse_x
+    debug.analog_x = keys.analog_x
+    debug.analog_y = keys.analog_y
+    debug.analog_len = GetVectorLength2D(keys.analog_x, keys.analog_y)
 
     -- debug.thrust_isDown = vars.thrust.isDown
     -- debug.thrust_isDashing = vars.thrust.isDashing

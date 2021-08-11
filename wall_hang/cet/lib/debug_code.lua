@@ -38,7 +38,7 @@ function PopulateDebug(debug, o, keys, vars, startStopTracker)
     --     local x, y = Yaw_to_Vect(o.yaw)
     --     debug.zlook_calc = Round(x, 2) .. ", " .. Round(y, 2)
 
-    --     local len = Get2DLength(o.lookdir_forward.x, o.lookdir_forward.y)
+    --     local len = GetVectorLength2D(o.lookdir_forward.x, o.lookdir_forward.y)
     --     debug.zlook_direct = Round(o.lookdir_forward.x / len, 2) .. ", " .. Round(o.lookdir_forward.y / len, 2)
     -- end
 
