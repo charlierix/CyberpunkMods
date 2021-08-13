@@ -21,7 +21,7 @@ function Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
     end
 
     -- Convert key presses into acceleration, energy burn
-    local accelX, accelY, accelZ, requestedEnergy = GetAccel_Keys(vars, mode, o)
+    local accelX, accelY, accelZ, requestedEnergy = GetAccel_Keys(vars, mode, o, debug, deltaTime)
 
     -- Right Mouse Button (rmb holding altitude, rmb extra accel in look dir, rmb slam down...)
     if mode.rmb_extra then

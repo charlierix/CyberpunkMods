@@ -1,5 +1,8 @@
 KeyDashTracker = {}
 
+local DASH_GAP = 0.27
+local DASH_WAIT = 0.12
+
 function KeyDashTracker:new(o, keys, keyname, prevkeyname)
     local obj = { }
     setmetatable(obj, self)
@@ -39,7 +42,7 @@ function KeyDashTracker:Tick()
 
         -- Don't want to allow too long of a gap between presses or it will see pulsing the thrusters as attempted dashing
         -- Once the dash is initiated, there's no need to wait very long to kick in the dash.  That's why the second time is less than the gap time
-        local isDashing = ((self.downTime - self.prevDownTime) < 0.27) and (elapsedTimeDown > 0.12)
+        local isDashing = ((self.downTime - self.prevDownTime) < DASH_GAP) and (elapsedTimeDown > DASH_WAIT)
 
         self.isDown = true
         self.isDashing = isDashing

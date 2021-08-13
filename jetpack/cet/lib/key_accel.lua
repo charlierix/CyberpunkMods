@@ -1,9 +1,9 @@
 local this = {}
 
 -- This returns accelerations from direct keyboard inputs
-function GetAccel_Keys(vars, mode, o, debug)
+function GetAccel_Keys(vars, mode, o, debug, deltaTime)
     --vars.thrust:Tick()       -- this was already done in init.lua
-    vars.horz_analog:Tick()
+    vars.horz_analog:Tick(deltaTime)
 
     local accel_up, energyUp = this.CalculateAccel(vars.thrust.isDown, vars.thrust.isDashing, mode.accel_vert_stand, mode.accel_vert_dash, 1, mode.burnRate_dash)
 
