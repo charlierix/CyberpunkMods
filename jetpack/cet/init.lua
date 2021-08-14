@@ -220,7 +220,7 @@ local const =
 
     rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
 
-    shouldShowDebugWindow = true,      -- shows a window with extra debug info
+    shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 
 --------------------------------------------------------------------

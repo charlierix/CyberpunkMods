@@ -65,5 +65,5 @@ function Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
     accelZ = accelZ * deltaTime
 
     local actual = o.player:Jetpack_AddImpulse(accelX, accelY, accelZ)
-    debug.actual = vec_str(actual)
+    debug.red_actual = vec_str(actual)
 end

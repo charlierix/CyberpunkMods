@@ -6,11 +6,10 @@ local PERCENT_LOW = 0.5
 local PERCENT_HIGH = 0.8
 local MAX_DOT_DIFF = 0.92
 
-local PULL_DIR_RADIANS = math.pi / 4        -- how quickly to pull the dashing direction toward the current direction (per second)
+local PULL_DIR_RADIANS = math.pi / 8        -- how quickly to pull the dashing direction toward the current direction (per second)
 
-local DASH_GAP = 0.33 --0.27
+local DASH_GAP = 0.33
 local DASH_WAIT = 0.12
-
 
 function KeyDashTracker_Analog:new(o, keys, debug)
     local obj = { }
@@ -94,13 +93,6 @@ function KeyDashTracker_Analog:Tick_Standard()
         do return end
     end
 
-
-    -- It seems like dash is starting when it shouldn't
-    -- is length glitching between 0 and 1?
-    print("starting dash, x=" .. tostring(self.analog_x) .. ", y=" .. tostring(self.analog_y))
-
-
-
     -- Go into dashing mode
     self.isDashing = true
 
@@ -110,7 +102,6 @@ end
 
 function KeyDashTracker_Analog:Tick_Dashing(deltaTime)
     if self.analog_len < PERCENT_HIGH then
-        print("stopping dash (% < high), x=" .. tostring(self.analog_x) .. ", y=" .. tostring(self.analog_y))
         self.isDashing = false
         do return end
     end
@@ -121,10 +112,7 @@ function KeyDashTracker_Analog:Tick_Dashing(deltaTime)
 
     local dot = DotProduct2D(dir_x, dir_y, self.dashing_dir_x, self.dashing_dir_y)
 
-    self.debug.dash_dot = Round(dot, 3)
-
     if math.abs(1 - dot) > MAX_DOT_DIFF then
-        print("stopping dash (large dot): " .. tostring(dot) .. ", x=" .. tostring(self.analog_x) .. ", y=" .. tostring(self.analog_y))
         self.isDashing = false
         do return end
     end
