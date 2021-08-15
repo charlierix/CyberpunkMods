@@ -9,7 +9,7 @@ function Process_Standard(o, vars, mode, const, debug, deltaTime)
 
     if vars.thrust.isDown and (vars.thrust.downDuration > mode.holdJumpDelay) then
         -- Only activate flight if it makes sense based on with other mod may be flying
-        if CheckOtherModsFor_FlightStart(currentlyFlying, const.modNames) then
+        if CheckOtherModsFor_FlightStart(o, currentlyFlying, const.modNames) then
             ActivateFlight(o, vars, mode)
         end
 

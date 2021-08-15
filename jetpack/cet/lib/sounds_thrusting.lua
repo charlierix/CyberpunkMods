@@ -91,7 +91,7 @@ this.hover_sounds =
 {
     "v_car_archer_hella_traffic_engine_loop",
     "amb_bl_ext_ghost_town_power_cables",
-    "amb_bl_loc_sts_bla_ina_04_neon_light_01",
+    "amb_bl_int_ghost_town_power_station_room_powered",
 }
 
 ---------- Other thruster candidates ----------
@@ -115,16 +115,13 @@ this.hover_sounds =
 
 
 ---------- Other hover candidates ----------
--- "amb_bl_int_ghost_town_power_station_room_powered",		-- really good, maybe too high pitch
 -- "amb_bl_ext_ghost_town_power_station_structure_02",			-- good, maybe too busy
 
 -- "amb_bl_ext_ghost_town_power_station_structure_01",		-- a bit too much
 
-
 -- "amb_g_fx_flare_loop",
 -- "q101_sc_07_surgery_lamp_hum_loop",
 -- "q001_sc_00c_trauma_arrives_intro_av_engines_loop",
-
 
 -- "amb_g_fx_steam_small_02_loop",		-- too similar to the others
 
@@ -132,3 +129,4 @@ this.hover_sounds =
 -- "amb_bl_ext_border_crossing_neon_light_03",
 
 -- "amb_bl_int_raffen_shiv_camp_neon_light_01",		-- too weak
+--"amb_bl_loc_sts_bla_ina_04_neon_light_01",        -- too weak

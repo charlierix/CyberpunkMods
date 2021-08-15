@@ -143,14 +143,15 @@ function GameObjectAccessor:HasHeadUnderwater()
     self:EnsurePlayerLoaded()
 
     if self.player then
+        -- CET 1.15 likely fixed this issue
         -- This has a chance of causing crashes, so only call it when there's a posibility of being underwater
         -- NOTE: Judy's lake is at an altitude of 180, so this shortcut won't work there
         -- if self.pos.z > 6 then
 
         -- Jetpack can afford to ignore judy's lake, but low flying v needs the check
-        if self.pos.z > 186 then
-            return false
-        end
+        -- if self.pos.z > 186 then
+        --     return false
+        -- end
 
         return self.wrappers.HasHeadUnderwater(self.player)
     end

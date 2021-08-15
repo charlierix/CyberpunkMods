@@ -1,7 +1,7 @@
-Keys = { }
+Keys = {}
 
 function Keys:new(debug, const)
-    local obj = { }
+    local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
@@ -36,10 +36,6 @@ function Keys:MapAction(action)
 
     elseif actionName == "MoveY" then
         self.analog_y = action:GetValue(action)
-
-    elseif actionType == "AXIS_CHANGE" then
-        self.analog_x = 0
-        self.analog_y = 0
     end
 
     --NOTE: There doesn't seem to be a need to set to zero

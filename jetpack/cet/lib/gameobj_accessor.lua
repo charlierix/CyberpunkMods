@@ -9,6 +9,7 @@ local pullInterval_camera = this.GetRandom_Variance(12, 1)
 local pullInterval_teleport = this.GetRandom_Variance(12, 1)
 local pullInterval_sensor = this.GetRandom_Variance(12, 1)
 local pullInterval_targeting = this.GetRandom_Variance(12, 1)
+local pullInterval_timeSys = this.GetRandom_Variance(12, 1)
 
 GameObjectAccessor = {}
 
@@ -26,6 +27,7 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_teleport = -(pullInterval_teleport * 2)
     obj.lastPulled_sensor = -(pullInterval_sensor * 2)
     obj.lastPulled_targeting = -(pullInterval_targeting * 2)
+    obj.lastPulled_timeSys = -(pullInterval_timeSys * 2)
 
     obj.lastGot_lookDir = -1
 
@@ -152,16 +154,30 @@ end
 function GameObjectAccessor:SetTimeDilation(timeSpeed)
     self.wrappers.SetTimeDilation(timeSpeed)
 end
+function GameObjectAccessor:IsTimeDilationActive()
+    if not self.timeSys or (self.timer - self.lastPulled_timeSys) >= pullInterval_timeSys then
+        self.lastPulled_timeSys = self.timer
+
+        self.timeSys = self.wrappers.GetTimeSystem()
+    end
+
+    if self.timeSys then
+        return self.wrappers.Time_IsTimeDilationActive(self.timeSys)
+    else
+        return false
+    end
+end
 
 function GameObjectAccessor:HasHeadUnderwater()
     self:EnsurePlayerLoaded()
 
     if self.player then
+        -- CET 1.15 likely fixed this issue
         -- This has a chance of causing crashes, so only call it when there's a posibility of being underwater
         -- NOTE: Judy's lake is at an altitude of 180, so this shortcut won't work there
-        if self.pos.z > 6 then
-            return false
-        end
+        -- if self.pos.z > 6 then
+        --     return false
+        -- end
 
         return self.wrappers.HasHeadUnderwater(self.player)
     end
