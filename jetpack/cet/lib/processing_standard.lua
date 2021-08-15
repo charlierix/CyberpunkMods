@@ -49,6 +49,4 @@ function ActivateFlight(o, vars, mode)
     if (mode.timeSpeed > 0) and (not IsNearValue(mode.timeSpeed, 1)) then
         o:SetTimeDilation(mode.timeSpeed)
     end
-
-    o:PlaySound("ui_menu_tutorial_close", vars)      -- could also use "q115_thruster_start" or "q115_thruster_stop", but that would get old quick.  This is also good, but not quite right "lcm_wallrun_out"
 end

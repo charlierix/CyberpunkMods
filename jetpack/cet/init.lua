@@ -32,6 +32,7 @@ require "lib/rmb_dash"
 require "lib/rmb_hover"
 require "lib/rmb_pushup"
 require "lib/safetyfire"
+require "lib/sounds_thrusting"
 require "lib/util"
 
 local this = {}
@@ -41,7 +42,7 @@ local this = {}
 --------------------------------------------------------------------
 
 -- Every time keys.cycleConfig is pressed, this function will get called with the next mode
-function GetConfigValues(index)
+function GetConfigValues(index, sounds_thrusting)
     local i = 0
 
     ----------------- Default Values - Can be overridden by each mode below
@@ -116,7 +117,7 @@ function GetConfigValues(index)
 
         accel_gravity = -7
 
-        rmb_extra = RMB_Hover:new(10, 6, 2, 1, 9999, useRedscript, accel_gravity)
+        rmb_extra = RMB_Hover:new(10, 6, 2, 1, 9999, useRedscript, accel_gravity, sounds_thrusting)
     end
 
     i = i + 1 ; if index == i then ; i = 1000
@@ -133,7 +134,7 @@ function GetConfigValues(index)
         accel_vert_stand = 1.5
         accel_vert_dash = 3
 
-        rmb_extra = RMB_Hover:new(2, 2, 0.4, 0.3, 12, useRedscript, accel_gravity)
+        rmb_extra = RMB_Hover:new(2, 2, 0.4, 0.3, 12, useRedscript, accel_gravity, sounds_thrusting)
     end
 
     i = i + 1 ; if index == i then ; i = 1000
@@ -153,7 +154,7 @@ function GetConfigValues(index)
 
         accel_gravity = -16
 
-        rmb_extra = RMB_Hover:new(12, 6, 2, 1, 9999, useRedscript, accel_gravity)
+        rmb_extra = RMB_Hover:new(12, 6, 2, 1, 9999, useRedscript, accel_gravity, sounds_thrusting)
 
         rotateVelToLookDir = true
     end
@@ -198,7 +199,7 @@ function GetConfigValues(index)
     -----------------
 
     if i < 1000 then
-        return GetConfigValues(1)
+        return GetConfigValues(1, sounds_thrusting)
     end
 
     -- The vertical accelerations need to defeat gravity
@@ -254,6 +255,8 @@ local vars =
 
     --sound_current = nil,      -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
     sound_started = 0,
+
+    --sounds_thrusting = SoundsThrusting:new(),      -- moved to init
 }
 
 --------------------------------------------------------------------
@@ -281,9 +284,6 @@ registerForEvent("onInit", function()
     isShutdown = false
 
     InitializeRandom()
-
-    mode = GetConfigValues(GetModeIndex())
-    vars.remainBurnTime = mode.maxBurnTime
 
     keys = Keys:new(debug, const)
 
@@ -316,6 +316,11 @@ registerForEvent("onInit", function()
 
     vars.thrust = KeyDashTracker:new(o, keys, "jump", "prev_jump")
     vars.horz_analog = KeyDashTracker_Analog:new(o, keys, debug)
+
+    vars.sounds_thrusting = SoundsThrusting:new(o, keys, vars.horz_analog)
+
+    mode = GetConfigValues(GetModeIndex(), vars.sounds_thrusting)
+    vars.remainBurnTime = mode.maxBurnTime
 end)
 
 registerForEvent("onShutdown", function()
@@ -359,7 +364,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
         local newIndex = mode.index + 1
         UpdateModeIndex(newIndex)
-        mode = GetConfigValues(newIndex)
+        mode = GetConfigValues(newIndex, vars.sounds_thrusting)
         vars.showConfigNameUntil = o.timer + 3
         ExitFlight()
     end
@@ -379,6 +384,8 @@ registerForEvent("onUpdate", function(deltaTime)
         -- Standard (walking around)
         Process_Standard(o, vars, mode, const, debug, deltaTime)
     end
+
+    vars.sounds_thrusting:Tick(vars.isInFlight)
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)

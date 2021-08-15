@@ -73,7 +73,7 @@ end
 -- local specificDay = days.bday
 -- if specificDay == days.bday then print("yay") end
 function CreateEnum(names)
-    local enum = { }
+    local enum = {}
 
     for i=1, #names do
         enum[names[i]] = names[i]

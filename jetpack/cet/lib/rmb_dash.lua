@@ -11,10 +11,10 @@
 --     return accelX, accelY, accelZ, requestedEnergy
 -------------------------------------------------------------
 
-RMB_Dash = { }
+RMB_Dash = {}
 
 function RMB_Dash:new(acceleration, burnRate)
-    local obj = { }
+    local obj = {}
     setmetatable(obj, self)
     self.__index = self
 

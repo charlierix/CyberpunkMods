@@ -118,6 +118,7 @@ function ExitFlight(vars, debug, o)
     vars.lastThrustTime = 0
     vars.startThrustTime = 0
     o:SetTimeDilation(0)        -- 0 is invalid, which fully sets time to normal
+    vars.sounds_thrusting:StopAll()
 
     RemoveFlightDebug(debug)
 end

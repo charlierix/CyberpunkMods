@@ -169,11 +169,11 @@ registerForEvent("onDraw", function()
     ImGui.SetNextWindowPos(20, 200, ImGuiCond.FirstUseEver)
     ImGui.SetNextWindowSize(1000, 100, ImGuiCond.Appearing)
 
-    local name
+    local name = "Sound Clip Tester - "
     if useQueue then
-        name = "Queue"
+        name = name .. "queue"
     else
-        name = "Play"
+        name = name .. "play"
     end
 
     if (ImGui.Begin(name)) then

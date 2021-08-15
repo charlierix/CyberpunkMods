@@ -11,10 +11,10 @@
 --     return accelX, accelY, accelZ, requestedEnergy
 -------------------------------------------------------------
 
-RMB_PushUp = { }
+RMB_PushUp = {}
 
 function RMB_PushUp:new(force, randHorz, randVert, burnRate)
-    local obj = { }
+    local obj = {}
     setmetatable(obj, self)
     self.__index = self
 

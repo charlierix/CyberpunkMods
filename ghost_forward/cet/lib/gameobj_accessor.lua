@@ -115,8 +115,8 @@ function GameObjectAccessor:SetLocalCamPosition(localPos)
     end
 end
 
--- This plays a sound, pass in the CName (to find possible strings, search adamsmasher for
--- SoundPlayEvent or SoundStopEvent then walk the call stack)
+-- This plays a sound, pass in the CName.  To find possible strings, use the sound tester mod
+-- https://www.nexusmods.com/cyberpunk2077/mods/1977
 --
 -- param: vars is optional.  If passed in, it will store this sound, and logic will be used to
 -- only have one sound playing at a time.  If nil, then the caller is responsible for stopping

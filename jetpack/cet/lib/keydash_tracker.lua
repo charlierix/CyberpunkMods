@@ -4,7 +4,7 @@ local DASH_GAP = 0.27
 local DASH_WAIT = 0.12
 
 function KeyDashTracker:new(o, keys, keyname, prevkeyname)
-    local obj = { }
+    local obj = {}
     setmetatable(obj, self)
     self.__index = self
 

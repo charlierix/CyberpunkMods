@@ -11,26 +11,28 @@
 --     return accelX, accelY, accelZ, requestedEnergy
 -------------------------------------------------------------
 
-RMB_Hover = { }
+RMB_Hover = {}
 
-function RMB_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, usesRedscript, gravity)
-    local obj = { }
+function RMB_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, usesRedscript, gravity, sounds_thrusting)
+    local obj = {}
     setmetatable(obj, self)
     self.__index = self
+
+    obj.sounds_thrusting = sounds_thrusting
 
     local extraUp = 0
     if usesRedscript then
         extraUp = 16 + gravity      -- The vertical accelerations need to defeat gravity.  If gravity is 16, then this is zero.  If gravity is higher, then this is some negative amount
     end
 
-    self.mult = mult
-    self.accel_up = accel_up + extraUp
-    self.accel_down = accel_down
-    self.burnRate = burnRate
+    obj.mult = mult
+    obj.accel_up = accel_up + extraUp
+    obj.accel_down = accel_down
+    obj.burnRate = burnRate
 
-    self.holdAltitude = 0
-    self.rmbLastDownTime = -holdDuration
-    self.holdDuration = holdDuration
+    obj.holdAltitude = 0
+    obj.rmbLastDownTime = -holdDuration
+    obj.holdDuration = holdDuration
 
     return obj
 end
@@ -42,8 +44,11 @@ end
 function RMB_Hover:Tick(o, vel, keys, vars)
     if keys.jump then
         self.rmbLastDownTime = -self.holdDuration      -- pressing jump needs to turn off cruise control
+        self.sounds_thrusting:StopHover()
+
     elseif keys.rmb then
         self.rmbLastDownTime = o.timer
+        self.sounds_thrusting:StartHover()
     end
 
     if (o.timer - self.rmbLastDownTime) > self.holdDuration then
