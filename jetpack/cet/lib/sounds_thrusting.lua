@@ -2,7 +2,9 @@ SoundsThrusting = {}
 
 local this = {}
 
-function SoundsThrusting:new(o, keys, horz_analog)
+-- Plays sounds while they are using thrust (jump, directions, hover)
+-- It's difficult to have something named like this and not make jokes :)
+function SoundsThrusting:new(o, keys, horz_analog, isQuiet)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -10,6 +12,16 @@ function SoundsThrusting:new(o, keys, horz_analog)
     obj.o = o
     obj.keys = keys
     obj.horz_analog = horz_analog
+
+    if isQuiet then
+        obj.cname_thrust1 = "amb_g_fx_steam_small_01_loop"
+        obj.cname_thrust2 = nil
+        obj.cname_maneuver = "amb_g_fx_steam_small_02_loop"
+    else
+        obj.cname_thrust1 = "amb_g_fx_steam_small_03_loop"
+        obj.cname_thrust2 = "grenade_incendiary_fire"
+        obj.cname_maneuver = "amb_g_fx_steam_small_01_loop"
+    end
 
     obj.isHovering = false
 
@@ -31,8 +43,10 @@ function SoundsThrusting:Tick(isInFlight)
 
     -- Jump
     if self.keys.jump then
-        self:Ensure_Playing("thrust1", "amb_g_fx_steam_small_03_loop")
-        self:Ensure_Playing("thrust2", "grenade_incendiary_fire")
+        self:Ensure_Playing("thrust1", self.cname_thrust1)
+        if self.cname_thrust2 then
+            self:Ensure_Playing("thrust2", self.cname_thrust2)
+        end
     else
         self:Ensure_Stopped("thrust1")
         self:Ensure_Stopped("thrust2")
@@ -40,7 +54,7 @@ function SoundsThrusting:Tick(isInFlight)
 
     -- Maneuver
     if self.horz_analog.analog_len > 0.5 then
-        self:Ensure_Playing("maneuver", "amb_g_fx_steam_small_01_loop")
+        self:Ensure_Playing("maneuver", self.cname_maneuver)
     else
         self:Ensure_Stopped("maneuver")
     end

@@ -215,11 +215,13 @@ local mode = nil -- = GetConfigValues(GetModeIndex())      -- moved to init
 
 local const =
 {
-    maxSpeed = 144,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
+    maxSpeed = 432,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
 
     modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v", "wall_hang" }),
 
     rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
+
+    quiet_thrust = false,               -- set to true for softer thrusting sounds
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
@@ -319,7 +321,7 @@ registerForEvent("onInit", function()
     vars.thrust = KeyDashTracker:new(o, keys, "jump", "prev_jump")
     vars.horz_analog = KeyDashTracker_Analog:new(o, keys, debug)
 
-    vars.sounds_thrusting = SoundsThrusting:new(o, keys, vars.horz_analog)
+    vars.sounds_thrusting = SoundsThrusting:new(o, keys, vars.horz_analog, const.quiet_thrust)
 
     mode = GetConfigValues(GetModeIndex(), vars.sounds_thrusting)
     vars.remainBurnTime = mode.maxBurnTime
