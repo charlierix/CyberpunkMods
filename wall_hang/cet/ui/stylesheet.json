@@ -1,0 +1,303 @@
+{
+    "title_color_focused": "FD1B1B1B",
+    "title_color_notFocused": "981B1B1B",
+    "title_color_collapsed": "30141414",
+    
+    "title_color_foreground": "98A0A0A0",
+    
+    "title_color_button_hover": "904D483B",
+    "title_color_button_click": "B0635B46",
+
+    "back_color": "FC141414",
+    "border_color": "8444",
+
+    "textbox":
+    {
+        "padding": 6,
+
+        "border_cornerRadius": 2,
+        "border_thickness": 1,
+    
+        "border_color": "24505050",
+
+        "foreground_color": "BBB",
+
+        "background_color": "20404040"
+    },
+
+    "checkbox":
+    {
+        "foreground_color": "BBB",
+
+        "background_color_standard": "3555",
+        "background_color_hover": "4999",
+        "background_color_click": "7999",
+
+        "checkmark_color": "AAE",
+
+        "disabled_back_color": "30484848",
+        "disabled_fore_color": "6CCC",
+        "disabled_checkmark_color": "9C9CBA"
+    },
+
+    "slider":
+    {
+        "border_cornerRadius": 2,
+        "border_thickness": 1,
+
+        "border_color": "38606060",
+
+        "foreground_color": "C4C4FF",
+
+        "background_color_standard": "3555",
+        "background_color_hover": "4777",
+        "background_color_click": "4999",
+
+        "grab_color_standard": "5666",
+        "grab_color_click": "8999",
+
+        "highlight_text_background_color": "9666"
+    },
+
+    "button":
+    {
+        "width": 72,
+        "height": 36,
+
+        "border_cornerRadius": 6,
+        "border_thickness": 2,
+
+        "border_color": "888",
+
+        "foreground_color": "CCC",
+
+        "back_color_standard": "333",
+        "back_color_hover": "555",
+        "back_color_click": "666"
+    },
+
+    "okcancelButtons":
+    {
+        "pos_x": 24,
+        "pos_y": 24,
+
+        "width": 72,
+        "height": 36,
+
+        "gap": 12,
+
+        "border_cornerRadius": 6,
+        "border_thickness": 2,
+
+        "border_color": "888",
+
+        "foreground_color": "CCC",
+
+        "back_color_standard": "333",
+        "back_color_hover": "555",
+        "back_color_click": "666"
+    },
+
+    "summaryButton":
+    {
+        "border_cornerRadius": 8,
+        "border_thickness": 2,
+    
+        "border_color_standard": "14808080",
+        "border_color_hover": "40A0A0A0",
+    
+        "background_color_standard": "10606060",
+        "background_color_hover": "20A0A0A0",
+    
+        "padding": 19,
+    
+        "unused_color": "555",
+        
+        "header_color_prompt": "EEE",
+        "header_color_value": "BBF",
+        "header_gap": 12,
+    
+        "content_color_prompt": "888",
+        "content_color_prompt_novalue": "555",
+        "content_color_value": "AAE",
+
+        "suffix_color": "882",
+        "suffix_gap": 8,
+
+        "prompt_value_gap": 16
+    },
+
+    "updownButtons":
+    {
+        "padding_horizontal": 5,
+        "padding_vertical": 5,
+
+        "gap": 6,
+
+        "border_cornerRadius": 3,
+        "border_thickness": 2,
+
+        "border_color": "3666",
+        "foreground_color": "DDD",
+
+        "down_color_standard": "20FF511C",
+        "down_color_hover": "B0E04618",
+        "down_color_click": "EEFF511C",
+
+        "up_color_standard": "2027A327",
+        "up_color_hover": "B0228B22",
+        "up_color_click": "EE27A327",
+
+        "free_color_standard": "40C2B088",
+        "free_color_hover": "B082765B",
+        "free_color_click": "EEC2B088",
+
+        "disabled_back_color": "40808080",
+        "disabled_fore_color": "6CCC",
+        "disabled_border_color": "40666666"
+    },
+
+    "listbox":
+    {
+        "padding": 6,
+
+        "border_cornerRadius": 3,
+        "border_thickness": 1,
+
+        "border_color": "40686868",
+
+        "background_color_standard": "12707070",
+
+        "background_color_selected": "40B5BF7C",
+        "background_color_hover": "50DAE889",
+        "background_color_click": "70E2F283",
+
+        "foreground_color_standard": "909090",
+        "foreground_color_selected": "CCC",
+        "foreground_color_disabled": "444",
+
+        "scrollbar_background_color": "2444",
+        "scrollbar_grab_color_standard": "4555",
+        "scrollbar_grab_color_hover": "6777",
+        "scrollbar_grab_color_click": "7888"
+    },
+
+    "multiitem_displaylist":
+    {
+        "padding": 12,
+
+        "border_cornerRadius": 4,
+        "border_thickness": 1,
+
+        "border_color": "40686868",
+
+        "separator_gap_vert": 18,
+        "separator_gap_horz": 12,
+        "separator_thickness": 1,
+
+        "separator_color": "589C8F76",
+
+        "foreground_color": "DBCAA7",
+        "background_color": "18787668"
+    },
+
+    "progressbar_slim":
+    {
+        "border_cornerRadius": 2,
+        "border_thickness": 2,
+
+        "height": 9
+    },
+
+    "helpButton":
+    {
+        "radius": 7,
+        "border_thickness": 1,
+
+        "foreground_color_standard": "40A1A1A1",
+        "foreground_color_hover": "A0CCCCCC",
+
+        "border_color_standard": "80596C80",
+        "border_color_hover": "A046698C",
+
+        "back_color_standard": "30324152",
+        "back_color_hover": "705078A1"
+    },
+
+    "removeButton":
+    {
+        "radius": 11,
+
+        "border_thickness": 1,
+        "x_thickness": 2,
+
+        "border_color_standard": "1E808080",
+        "border_color_hover": "40A0A0A0",
+
+        "foreground_color_standard": "A0806B69",
+        "foreground_color_hover": "E0DBBEBA",
+
+        "back_color_standard": "60291816",
+        "back_color_hover": "69231B"
+    },
+
+    "tooltip":
+    {
+        "max_width": 432,
+        "padding": 9,
+
+        "border_cornerRadius": 3,
+        "border_thickness": 2,
+
+        "text_color": "B5B098",
+        "back_color": "F4262625",
+        "border_color": "40575448"
+    },
+
+    "mindotGraphic":
+    {
+        "up_color": "707070",
+        "zero_color": "505050",
+        "angle_color": "AAE"
+    },
+
+    "graphics":
+    {
+        "line_thickness_main": 1,
+        "line_thickness_minor": 0.8,
+
+        "arrow_length": 10,
+        "arrow_width": 7,
+
+        "TODO": "Probably just want to use one set of colors, since they are the same",
+
+        "stickfigure_color_standard": "777",
+        "stickfigure_color_gray": "383838",
+        "stickfigure_color_highlight": "DAE889",
+
+        "line_color_standard": "777",
+        "line_color_gray": "383838",
+        "line_color_highlight": "DAE889"
+    },
+
+    "colors":
+    {
+        "title": { "the_color": "F0F0F0" },
+        "subTitle": { "the_color": "FF4" },
+        "info": { "the_color": "C4A380" },
+
+        "experience_prompt": { "the_color": "F5EA65" },
+        "experience_value": { "the_color": "E6BB50" },
+
+        "edit_prompt": { "the_color": "BBB" },
+        "edit_value": { "the_color": "A8A8FF" },
+
+        "xp_progress_border": { "the_color": "20EDD25A" },
+        "xp_progress_back": { "the_color": "504A4531" },
+        "xp_progress_fore": { "the_color": "8C7F42" },
+        
+        "hint": { "the_color": "CFC29D" },
+        "instruction": { "the_color": "EEE" },
+        "help": { "the_color": "67707A" }
+    }
+}

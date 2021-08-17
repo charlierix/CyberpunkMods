@@ -76,6 +76,9 @@ require "ui_controls/summary_button"
 require "ui_controls/textbox"
 require "ui_controls/updownbuttons"
 
+require "ui_framework/util_misc"
+require "ui_framework/util_setup"
+
 require "ui_windows/energytank"
 require "ui_windows/grapple_choose"
 require "ui_windows/grapple_straight"
@@ -237,8 +240,9 @@ local const =
 
     modNames = CreateEnum("grappling_hook", "jetpack", "low_flying_v", "wall_hang"),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
 
-    alignment_horizontal = CreateEnum("left", "center", "right"),
-    alignment_vertical = CreateEnum("top", "center", "bottom"),
+    -- These are set in Define_UI_Framework_Constants() called during init
+    -- alignment_horizontal = CreateEnum("left", "center", "right"),
+    -- alignment_vertical = CreateEnum("top", "center", "bottom"),
 
     -- When adding a new window, there is this enum and window lua file.  Also need to update drawing.lua, transition_windows.lua
     windows = CreateEnum
@@ -324,8 +328,10 @@ local vars_ui =
 {
     --screen    -- info about the current screen resolution -- see GetScreenInfo()
     --style     -- this gets loaded from json during init
-    --configWindow  -- info about the location of the config window (top/left gets stored in a table if they move it) -- see Define_ConfigWindow()
+    --configWindow  -- info about the location of the config window -- see Define_ConfigWindow()
     --line_heights  -- the height of strings -- see Refresh_LineHeights()
+
+    --autoshow_withconsole      -- bool that tells whether config shows the same time as the cet console, or requires a separate hotkey
 
     isTooltipShowing = false,       -- the tooltip is actually a sub window.  This is needed so the parent window's titlebar can stay the active color
 
@@ -371,6 +377,7 @@ registerForEvent("onInit", function()
 
     InitializeRandom()
     EnsureTablesCreated()
+    Define_UI_Framework_Constants(const)
     InitializeUI(vars_ui, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
 
     local wrappers = {}

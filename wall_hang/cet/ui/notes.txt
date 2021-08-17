@@ -1,0 +1,69 @@
+--- Windows ---
+
+Config
+
+	Input Binding
+
+	put the misc items directly on the config window
+		hold to wall hang
+		mouse sensitivity
+		jump strength
+		jump sound
+
+	realism
+
+
+
+-----------------------
+
+May want to put some common controls, stylesheet settings in ui_framework
+
+-----------------------
+
+
+
+input bindings
+	Hang Override input action
+
+
+-- Latch hang key
+--	Make an option for the hang key to be toggled instead of held in
+--	They will need to press the key at some point while mid air, but then it will stay true until they:
+--		Jump off the wall
+--		Touch the ground
+--		Press it again
+
+
+mouse sensitivity
+
+jump strength
+
+
+sound selection
+	todo: wall hang
+	jump
+		none
+		double jump
+		male grunt
+		female grunt
+
+
+arcade vs realism
+	checkbox for use realism
+		grip strength/duration props for each of these:
+			carrying body
+			pistol
+			rifle/shotgun
+			open hand/monowire/launcher
+			knife
+			sword/bat
+			gorrila arms
+			mantis blads
+
+
+
+
+gain experience
+
+
+force them to purchase first

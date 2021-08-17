@@ -12,27 +12,37 @@
 
 --https://github.com/jac3km4/redscript
 
-require "lib/check_other_mods"
-require "lib/customprops_wrapper"
-require "lib/debug_code"
-require "lib/drawing"
-require "lib/flightmode_transitions"
-require "lib/flightutil"
-require "lib/gameobj_accessor"
-require "lib/inputtracker_startstop"
-require "lib/keys"
-require "lib/math_basic"
-require "lib/math_raycast"
-require "lib/math_vector"
-require "lib/math_yaw"
-require "lib/processing_hang"
-require "lib/processing_jump_calculate"
-require "lib/processing_jump_impulse"
-require "lib/processing_jump_teleturn"
-require "lib/processing_standard"
-require "lib/reporting"
-require "lib/sounds"
-require "lib/util"
+require "core/check_other_mods"
+require "core/customprops_wrapper"
+require "core/debug_code"
+require "core/gameobj_accessor"
+require "core/math_basic"
+require "core/math_raycast"
+require "core/math_vector"
+require "core/math_yaw"
+require "core/util"
+
+require "data/dal"
+
+require "processing/flightmode_transitions"
+require "processing/flightutil"
+require "processing/processing_hang"
+require "processing/processing_jump_calculate"
+require "processing/processing_jump_impulse"
+require "processing/processing_jump_teleturn"
+require "processing/processing_standard"
+
+require "ui/drawing"
+require "ui/init_ui"
+require "ui/inputtracker_startstop"
+require "ui/keys"
+require "ui/reporting"
+require "ui/sounds"
+
+require "ui_framework/util_misc"
+require "ui_framework/util_setup"
+
+extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 local this = {}
 
@@ -52,7 +62,7 @@ local this = {}
 local hangAction = "QuickMelee"      -- Q key (or equivalent button on a controller)
 
 --------------------------------------------------------------------
----                     (leave these alone)                      ---
+---                          Constants                           ---
 --------------------------------------------------------------------
 
 local const =
@@ -60,6 +70,18 @@ local const =
     flightModes = CreateEnum("standard", "hang", "jump_calculate", "jump_teleturn", "jump_impulse"),
 
     modNames = CreateEnum("wall_hang", "grappling_hook", "jetpack", "low_flying_v"),     -- this really doesn't need to know the other mod names, since wall hang will override flight
+
+    -- These are set in Define_UI_Framework_Constants() called during init
+    -- alignment_horizontal = CreateEnum("left", "center", "right"),
+    -- alignment_vertical = CreateEnum("top", "center", "bottom"),
+
+    windows = CreateEnum
+    (
+        "main",
+            "input_bindings"
+    ),
+
+    settings = CreateEnum("AutoShowConfig_WithConsole"),
 
     rayFrom_Z = 1.5,
     rayLen = 1.2,
@@ -71,9 +93,15 @@ local const =
     shouldShowDebugWindow = false
 }
 
+--------------------------------------------------------------------
+---                        Current State                         ---
+--------------------------------------------------------------------
+
 local isShutdown = true
 local isLoaded = false
 local shouldDraw = false
+local shouldShowConfig = false
+local isConfigRepress = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
@@ -97,6 +125,29 @@ local vars =
     --      be other sounds that are managed elsewhere
     --sound_current = nil,  -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
     sound_started = 0,
+}
+
+local vars_ui =
+{
+    --screen    -- info about the current screen resolution -- see GetScreenInfo()
+    --style     -- this gets loaded from json during init
+    --configWindow  -- info about the location of the config window -- see Define_ConfigWindow()
+    --line_heights  -- the height of strings -- see Refresh_LineHeights()
+
+    --autoshow_withconsole      -- bool that tells whether config shows the same time as the cet console, or requires a separate hotkey
+
+    isTooltipShowing = false,       -- the tooltip is actually a sub window.  This is needed so the parent window's titlebar can stay the active color
+
+    -- ***** See window_transitions.lua *****
+    currentWindow = const.windows.main,
+    transition_info = {}       -- this holds properties needed for the window (like grappleIndex for grapple_straight)
+
+    -- ***** Each of these is a container of controls (name matches the values in windows enum) *****
+    --main
+    --energy_tank
+    --grapple_straight
+
+    --keys          -- gets added so it doesn't have to be included in a ton of function params (only used by the input bindings and transition to/from)
 }
 
 --------------------------------------------------------------------
@@ -125,6 +176,9 @@ registerForEvent("onInit", function()
     isShutdown = false
 
     InitializeRandom()
+    EnsureTablesCreated()
+    Define_UI_Framework_Constants(const)
+    InitializeUI(vars_ui, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -227,6 +281,31 @@ end)
 -- registerHotkey("WallHangTesterButton", "tester hotkey", function()
 -- end)
 
+registerHotkey("WallHang_Config", "Show Config", function()
+    if shouldShowConfig then
+        isConfigRepress = true      -- this is used as a request to close.  The window will only close if they are on a main screen, and not dirty
+    end
+
+    -- This only shows the config.  They need to push a close button (and possibly ok/cancel for saving)
+    shouldShowConfig = true
+end)
+registerForEvent("onOverlayOpen", function()
+    if not vars_ui.autoshow_withconsole then
+        do return end
+    end
+
+    shouldShowConfig = true
+end)
+registerForEvent("onOverlayClose", function()
+    if not vars_ui.autoshow_withconsole then
+        do return end
+    end
+
+    if shouldShowConfig then
+        isConfigRepress = true
+    end
+end)
+
 registerInput("WallHang_CustomHang", "Hang (override default)", function(isDown)
     keys:PressedCustom(isDown)
     startStopTracker:SawCustom()
@@ -235,6 +314,16 @@ end)
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then
         do return end
+    end
+
+    if shouldShowConfig then
+        shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, o, const)
+        isConfigRepress = false
+
+        if not shouldShowConfig then
+            -- They closed from an arbitrary window, make sure the next time config starts at main
+            --TransitionWindows_Main(vars_ui, const)
+        end
     end
 
     if const.shouldShowDebugWindow then
@@ -291,7 +380,7 @@ function TODO()
     --  Instead of a simple hardcoded angle adjustment and constant power...
     --  Determine what they are looking at (if they are looking away from the wall)
     --  Find a trajectory that will place them where they are looking
-	
+
 	-- Purchase
 	--	For bare hand, require them to purchase this before it starts working
 
