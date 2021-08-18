@@ -1,0 +1,3 @@
+play with the object spawner to see what it takes to define object
+
+see if that has an export/import tool

@@ -38,9 +38,33 @@ require "ui/inputtracker_startstop"
 require "ui/keys"
 require "ui/reporting"
 require "ui/sounds"
+require "ui/transition_windows"
 
+require "ui_controls_generic/button"
+require "ui_controls_generic/checkbox"
+require "ui_controls_generic/help_button"
+require "ui_controls_generic/label"
+require "ui_controls_generic/label_clickable"
+require "ui_controls_generic/listbox"
+require "ui_controls_generic/multiitem_displaylist"
+require "ui_controls_generic/okcancel_buttons"
+require "ui_controls_generic/orderedlist"
+require "ui_controls_generic/progressbar_slim"
+require "ui_controls_generic/remove_button"
+require "ui_controls_generic/slider"
+require "ui_controls_generic/summary_button"
+require "ui_controls_generic/textbox"
+require "ui_controls_generic/updownbuttons"
+
+require "ui_framework/changes"
+require "ui_framework/common_definitions"
+require "ui_framework/updown_delegates"
+require "ui_framework/util_controls"
+require "ui_framework/util_layout"
 require "ui_framework/util_misc"
 require "ui_framework/util_setup"
+
+require "ui_windows/main"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
@@ -78,7 +102,8 @@ local const =
     windows = CreateEnum
     (
         "main",
-            "input_bindings"
+            "input_bindings"    --,
+            --"realism"
     ),
 
     settings = CreateEnum("AutoShowConfig_WithConsole"),
@@ -208,6 +233,7 @@ registerForEvent("onInit", function()
     startStopTracker = InputTracker_StartStop:new(o, keys, const, hangAction == nil)
 
     Transition_ToStandard(vars, const, debug, o)
+    TransitionWindows_Main(vars_ui, const)
 end)
 
 registerForEvent("onShutdown", function()
@@ -322,7 +348,7 @@ registerForEvent("onDraw", function()
 
         if not shouldShowConfig then
             -- They closed from an arbitrary window, make sure the next time config starts at main
-            --TransitionWindows_Main(vars_ui, const)
+            TransitionWindows_Main(vars_ui, const)
         end
     end
 

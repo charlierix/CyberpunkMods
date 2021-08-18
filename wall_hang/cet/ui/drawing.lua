@@ -35,12 +35,9 @@ function DrawConfig(isCloseRequested, vars, vars_ui, o, const)
         Refresh_WindowPos(window)
         Refresh_LineHeights(vars_ui)
 
-        -- if vars_ui.currentWindow == const.windows.main then
-        --     continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, window, const)
-        -- end
-
-        continueShowing = not isCloseRequested
-
+        if vars_ui.currentWindow == const.windows.main then
+            continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, window, const)
+        end
     end
     ImGui.End()
 

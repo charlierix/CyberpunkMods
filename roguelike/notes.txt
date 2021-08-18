@@ -1,0 +1,57 @@
+---------------------- General ----------------------
+
+Push a button to start
+	Have a few options on the start page, like time limit, constraints
+
+
+Pick a random spawn point, random boss
+	If they haven't completed the heist quest, contain to the intro polygon
+
+
+If they complete the mission show a page that lets them pick a prize
+	Money
+	Random
+		Weapon
+		Clothing
+		Cyberware
+	Perk Points
+	Attribute Point
+
+
+------------------ Pre Conditions -------------------
+
+- No weapons equipped or in inventory
+- No clothes equipped or in inventory
+
+
+
+---------------------- Actions ----------------------
+
+
+Auto equip weapon if slot is available
+
+Auto equip clothes if slot is available
+
+
+
+
+------------------ Fail Conditions ------------------
+
+Time runs out
+
+Die
+
+Craft weapon or clothing
+
+Purchase weapon or clothing
+
+Switch weapon in slot (based on strictness setting)
+	Name
+	Type
+
+
+
+
+
+
+
