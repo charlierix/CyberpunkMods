@@ -2,7 +2,7 @@ Keys = {}
 
 local this = {}
 
-function Keys:new(o, hangAction)
+function Keys:new(o, hangAction, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -74,10 +74,11 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function Keys:MapAction_Fixed(action, actionName, pressed, released)
-    if actionName == "CameraMouseX" then
-        self.mouse_x = tonumber(action:GetValue(action))
-    else
-        self.mouse_x = 0
+    if actionName == "CameraMouseX" then        -- actionType: "RELATIVE_CHANGE"
+        self.mouse_x = action:GetValue(action)
+
+    elseif actionName == "right_stick_x" then       -- actionType: "AXIS_CHANGE"
+        self.mouse_x = action:GetValue(action) * self.const.rightstick_sensitivity
     end
 
     for key, value in pairs(self.hardcodedMapping) do

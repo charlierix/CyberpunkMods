@@ -2,8 +2,8 @@ local this = {}
 
 -- This adds enums that are used by ui framework
 function Define_UI_Framework_Constants(const)
-    const.alignment_horizontal = this.CreateEnum("left", "center", "right")
-    const.alignment_vertical = this.CreateEnum("top", "center", "bottom")
+    const.alignment_horizontal = CreateEnum("left", "center", "right")
+    const.alignment_vertical = CreateEnum("top", "center", "bottom")
 end
 
 function LoadStylesheet()
@@ -62,24 +62,6 @@ function this.FinishStylesheetColors(style)
     for key, value in pairs(stored) do
         style[key] = value
     end
-end
-
--- This takes a set of names ("a", "b", "c") and turns it into a key value table where the key and value are
--- the same
---
--- Usage:
--- local days = CreateEnum("aday", "bday", "friday")
--- local specificDay = days.bday
--- if specificDay == days.bday then print("yay") end
-function this.CreateEnum(...)
-    local enum = {}
-
-    for i = 1, select("#", ...) do
-        local text = select(i, ...)
-        enum[text] = text
-    end
-
-    return enum
 end
 
 ------------------------ Private Methods (FinishDefiningWindow) -----------------------

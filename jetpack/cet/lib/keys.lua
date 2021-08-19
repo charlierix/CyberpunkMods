@@ -38,7 +38,6 @@ function Keys:MapAction(action)
         self.analog_y = action:GetValue(action)
     end
 
-    --NOTE: There doesn't seem to be a need to set to zero
     if actionName == "CameraMouseX" then        -- actionType: "RELATIVE_CHANGE"
         self.mouse_x = action:GetValue(action)
 

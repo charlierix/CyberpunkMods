@@ -1,9 +1,9 @@
 --https://stackoverflow.com/questions/26160327/sorting-a-lua-table-by-key
 function DrawDebugWindow(debugInfo)
     ImGui.SetNextWindowPos(20, 300, ImGuiCond.FirstUseEver)
-    ImGui.SetNextWindowSize(300, 350, ImGuiCond.FirstUseEver)
+    ImGui.SetNextWindowSize(300, 400, ImGuiCond.FirstUseEver)
 
-    if (ImGui.Begin("Low Flying V")) then
+    if (ImGui.Begin("Grappling Hook Debug")) then
         local keys = {}
 
         -- populate the table that holds the keys

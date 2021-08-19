@@ -16,10 +16,12 @@ require "core/check_other_mods"
 require "core/customprops_wrapper"
 require "core/debug_code"
 require "core/gameobj_accessor"
+require "core/lists"
 require "core/math_basic"
 require "core/math_raycast"
 require "core/math_vector"
 require "core/math_yaw"
+require "core/strings"
 require "core/util"
 
 require "data/dal"
@@ -94,6 +96,8 @@ local const =
     flightModes = CreateEnum("standard", "hang", "jump_calculate", "jump_teleturn", "jump_impulse"),
 
     modNames = CreateEnum("wall_hang", "grappling_hook", "jetpack", "low_flying_v"),     -- this really doesn't need to know the other mod names, since wall hang will override flight
+
+    rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
 
     -- These are set in Define_UI_Framework_Constants() called during init
     -- alignment_horizontal = CreateEnum("left", "center", "right"),
@@ -229,7 +233,7 @@ registerForEvent("onInit", function()
 
     o = GameObjectAccessor:new(wrappers)
 
-    keys = Keys:new(o, hangAction)
+    keys = Keys:new(o, hangAction, const)
     startStopTracker = InputTracker_StartStop:new(o, keys, const, hangAction == nil)
 
     Transition_ToStandard(vars, const, debug, o)
@@ -372,7 +376,12 @@ end
 
 function TODO()
 
-    -- Jump+Forward
+    -- Jump+Look Up
+    --  If they are facing toward the wall and looking up:
+    --      Go up
+    --      Don't change yaw
+
+    -- Jump+Forward (probably don't do this one, it doesn't seem very intuitive)
     --  When jumping off a wall, if they are holding forward:
     --      Go up
     --      Don't change yaw

@@ -36,6 +36,12 @@ function this.CalculateJumpDirection_Direct(lookdir, normal)
         return lookdir
     end
 
+    -- if not up then
+    --     up = Vector4.new(0, 0, 1, 0)
+    -- end
+
+    -- local upDot = DotProduct3D(lookdir, up)
+
     if dot < 0 then
         -- Need to flip the look direction so it's going the same direction as the normal
         local onPlane = GetProjectedVector_AlongPlane(lookdir, normal)
@@ -46,6 +52,15 @@ function this.CalculateJumpDirection_Direct(lookdir, normal)
     -- Need to jump backward off the wall.  Figure out how to blend normal and look direction
     local percentNormal = GetScaledValue(0, 1, MINDOT, -1, dot)
     percentNormal = percentNormal ^ BACKWARD_POW
+
+    --TODO: Do this right (jump up when looking up instead of jumping away)
+    -- local percentNormal
+    -- if upDot > 0.9 then
+    --     percentNormal = 0.05
+    -- else
+    --     percentNormal = GetScaledValue(0, 1, MINDOT, -1, dot)
+    --     percentNormal = percentNormal ^ BACKWARD_POW
+    -- end
 
     local rotate = GetRotation(lookdir, normal, percentNormal)
 

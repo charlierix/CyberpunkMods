@@ -146,7 +146,7 @@ end
 --https://stackoverflow.com/questions/26160327/sorting-a-lua-table-by-key
 function DrawDebugWindow(debugInfo)
     ImGui.SetNextWindowPos(20, 300, ImGuiCond.FirstUseEver)
-    ImGui.SetNextWindowSize(300, 400, ImGuiCond.Appearing)
+    ImGui.SetNextWindowSize(300, 400, ImGuiCond.FirstUseEver)
 
     if (ImGui.Begin("Grappling Hook Debug")) then
         local keys = {}
