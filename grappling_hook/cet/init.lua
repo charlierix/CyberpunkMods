@@ -360,6 +360,10 @@ local player = nil      -- This holds current grapple settings, loaded from DB. 
 --------------------------------------------------------------------
 
 registerForEvent("onInit", function()
+    Observe("PlayerPuppet", "OnGameAttached", function(self)
+        self:RegisterInputListener(self)
+    end)
+
     Observe("PlayerPuppet", "OnAction", function(_, action)        -- observe must be inside init and before other code
         keys:MapAction(action)
     end)

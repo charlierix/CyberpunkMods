@@ -2,5 +2,9 @@
 	"author": "Perfectly Normal Beast",
 	"description": "",
 
-	"requires_modded_parkour": true,
+	"modded_parkour": "none",
+
+	"center_x": 0,
+	"center_y": 0,
+	"center_z": 0	
 }

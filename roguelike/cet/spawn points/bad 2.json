@@ -1,7 +1,7 @@
 {
 	"author": "Perfectly Normal Beast",
 	"description": "sample json",
-	"tags": ["test", "sample"],
+	"tags": ["test", 6, "sample"],
 
 	"modded_parkour": "none",
 	

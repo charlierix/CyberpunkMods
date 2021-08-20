@@ -1,7 +1,7 @@
 {
 	"author": "Perfectly Normal Beast",
 	"description": "sample json",
-	"tags": ["test", "sample"],
+	"tags": ["this is a really long tag.  It will get truncated", "sample"],
 
 	"modded_parkour": "none",
 	

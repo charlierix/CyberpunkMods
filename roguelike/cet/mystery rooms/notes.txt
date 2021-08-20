@@ -1,0 +1,5 @@
+these should be areas that are inaccessible, teleport in and out
+
+they should present some kind of puzzle, dilemma, random doors, etc
+
+then give a reward or curse

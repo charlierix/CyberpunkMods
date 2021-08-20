@@ -7,6 +7,7 @@ sample.json
 {
 	"author": "Perfectly Normal Beast",
 	"description": "sample json",
+	"tags": ["test", "sample"],
 
 	"modded_parkour": "none",
 	

@@ -22,7 +22,13 @@ require "src/core/math_yaw"
 require "src/core/strings"
 require "src/core/util"
 
+require "src/data/collection_spawn_point"
+require "src/data/logging"
+
 require "src/ui/drawing"
+require "src/ui/reporting"
+
+extern_json = require "src/external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 local this = {}
 
@@ -32,6 +38,8 @@ local this = {}
 
 local const =
 {
+    modded_parkour = CreateEnum("none", "light", "heavy"),
+
     shouldShowDebugWindow = false
 }
 
@@ -51,6 +59,8 @@ local debug = {}
 
 local vars =
 {
+    -- These hold
+    --spawn_points
 }
 
 local vars_ui =
@@ -78,6 +88,7 @@ registerForEvent("onInit", function()
     isShutdown = false
 
     InitializeRandom()
+    ClearDeserializeErrorLogs()
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -100,10 +111,7 @@ registerForEvent("onInit", function()
 
     o = GameObjectAccessor:new(wrappers)
 
-
-
-
-
+    vars.spawn_points = Collection_SpawnPoint:new(const)
 end)
 
 registerForEvent("onShutdown", function()
@@ -138,8 +146,13 @@ registerForEvent("onUpdate", function(deltaTime)
     end
 end)
 
--- registerHotkey("Roguelike_TesterButton", "tester hotkey", function()
--- end)
+registerHotkey("Roguelike_Tester_Teleports", "teleports", function()
+
+    vars.spawn_points:EnsureLoaded()
+
+    ReportTable(vars.spawn_points.spawn_points)
+
+end)
 
 -- registerInput("Roguelike_TesterInput", "tester input", function(isDown)
 -- end)
@@ -168,4 +181,6 @@ end
 --------------------------------------------------------------------
 
 function TODO()
+
+
 end
