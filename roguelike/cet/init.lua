@@ -182,5 +182,18 @@ end
 
 function TODO()
 
+	-- Totems
+	--	These would have a small radius around them that give some affect
+	--		Heal
+	--		Slowly lose health
+	--
+	-- Children would make good mobile totems
+	--	Since they move randomly and are unaffected by everything, they would make good totems
+	--	Use females as player buff / npc debuff, males as the opposite
+
+	-- External Sites
+	--	Create a discord server as a place for people to upload their stuff
+	--	Provide a way for people to vote
+	--	If it becomes popular, others could make their own nexus pages that are hand picked collections
 
 end

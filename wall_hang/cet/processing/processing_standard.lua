@@ -23,7 +23,7 @@ function Process_Standard(o, vars, const, debug, startStopTracker)
     local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
     local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + const.rayFrom_Z + (o.lookdir_forward.z * const.rayLen), 1)
 
-    local hit, normal, material = o:RayCast(fromPos, toPos, true)
+    local hit, normal = o:RayCast(fromPos, toPos, true)
     if not hit then
         do return end
     end

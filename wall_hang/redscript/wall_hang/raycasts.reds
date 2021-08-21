@@ -1,6 +1,7 @@
+
 //NOTE: Collision hulls don't reliably load in beyond about 50
 @addMethod(PlayerPuppet)
-public func WallHang_RayCast(from: Vector4, to: Vector4, staticOnly: Bool) -> String {
+public func WallHang_RayCast(from: Vector4, to: Vector4, staticOnly: Bool) -> TraceResult {
     let spacialQuery: ref<SpatialQueriesSystem>;
     spacialQuery = GameInstance.GetSpatialQueriesSystem(this.GetGame());
 
@@ -9,9 +10,6 @@ public func WallHang_RayCast(from: Vector4, to: Vector4, staticOnly: Bool) -> St
 
     let distSqr: Float;
     distSqr = -1.00;
-
-    // let filterType: String;
-    // filterType = "";
 
     let attemptDistSqr: Float;
 
@@ -22,7 +20,7 @@ public func WallHang_RayCast(from: Vector4, to: Vector4, staticOnly: Bool) -> St
         if distSqr < 0.00 || attemptDistSqr < distSqr {
             distSqr = attemptDistSqr;
             result = attempt;
-            //filterType = "static";
+            //Log("WallHang_RayCast: static");
         };
     };
 
@@ -34,7 +32,7 @@ public func WallHang_RayCast(from: Vector4, to: Vector4, staticOnly: Bool) -> St
         if distSqr < 0.00 || attemptDistSqr < distSqr {
             distSqr = attemptDistSqr;
             result = attempt;
-            //filterType = "dynamic";
+            //Log("WallHang_RayCast: dynamic");
         };
     };
 
@@ -45,7 +43,7 @@ public func WallHang_RayCast(from: Vector4, to: Vector4, staticOnly: Bool) -> St
     //     if distSqr < 0.00 || attemptDistSqr < distSqr {
     //         distSqr = attemptDistSqr;
     //         result = attempt;
-    //         //filterType = "vehicle";
+    //         //Log("WallHang_RayCast: vehicle");
     //     };
     // };
 
@@ -56,19 +54,18 @@ public func WallHang_RayCast(from: Vector4, to: Vector4, staticOnly: Bool) -> St
     //     if distSqr < 0.00 || attemptDistSqr < distSqr {
     //         distSqr = attemptDistSqr;
     //         result = attempt;
-    //         filterType = "Simple Environment Collision";
+    //         Log("WallHang_RayCast: Simple Environment Collision");
     //     };
     // };
 
-    if distSqr < 0.00 {
-        return "";
-    } else {
-        //Log(filterType);
-        return result.position.X + "|" + result.position.Y + "|" + result.position.Z + "|" + result.normal.X + "|" + result.normal.Y + "|" + result.normal.Z + "|" + NameToString(result.material);
-    };
+    // If the position's coords are infinite, then there was no hit
+    //NOTE: CET can look at: tostring(result.position.x) == "inf", or result.position.x == tonumber("inf")
+    return result;
 }
 
-func WallHang_LenSqr(from: Vector4, to: Vector3) -> Float
+// Can't use Vector4.DistanceSquared, since TraceResult's position is a Vector3 (calling cast would work, but
+// it's seems cleaner to just make my own)
+private func WallHang_LenSqr(from: Vector4, to: Vector3) -> Float
 {
     return
         ((to.X - from.X) * (to.X - from.X)) +
@@ -100,7 +97,6 @@ func WallHang_LenSqr(from: Vector4, to: Vector3) -> Float
 //     'PlayerBlocker', -- Trees, Billboards, Barriers
 // }
 
-
 //         // this also gives a compile error
 //         //filter = n"World Static" | n"Static" | n"Dynamic" | n"Vehicle" | n"Simple Environment Collision" | n"Vehicle Chassis" | n"Player Hitbox";
 
@@ -124,11 +120,6 @@ func WallHang_LenSqr(from: Vector4, to: Vector3) -> Float
 //     // This was just returning the from point, no matter what the to point was
 //     // let result: TraceResult;
 //     // GameInstance.GetSpatialQueriesSystem(this.GetGame()).SyncRaycastByCollisionPreset(from, to, filter, result);
-//     // if TraceResult.IsValid(result) {
-//     //     //Log("Preset hit" + result.position.X + "|" + result.position.Y + "|" + result.position.Z + "|" + result.normal.X + "|" + result.normal.Y + "|" + result.normal.Z + "|" + NameToString(result.material));
-//     //     return result.position.X + "|" + result.position.Y + "|" + result.position.Z;
-//     // } else {
-//     //     //Log("Preset missed");
-//     //     return "";
-//     // };
+
+//     // return result;
 // }

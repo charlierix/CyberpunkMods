@@ -312,8 +312,64 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
--- registerHotkey("WallHangTesterButton", "tester hotkey", function()
--- end)
+
+
+
+registerHotkey("WallHangTesterButton", "tester hotkey", function()
+
+    print("test cast a")
+
+    o:GetCamera()
+    if not o.lookdir_forward then
+        print("test cast BB")
+
+        do return end
+    end
+
+    print("test cast aa")
+
+    local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
+    local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + const.rayFrom_Z + (o.lookdir_forward.z * const.rayLen), 1)
+
+    -- local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 0)
+    -- local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + const.rayFrom_Z + (o.lookdir_forward.z * const.rayLen), 0)
+
+    print("test cast b")
+
+    local hit, normal = o:RayCast(fromPos, toPos, true)
+    --local result = o:RayCast_TRACERESULT(fromPos, toPos, true)
+
+    print("test cast c")
+
+    -- print(tostring(result))
+
+    -- print("pos: " .. vec_str(result.position))
+    -- print("norm: " .. vec_str(result.normal))
+    -- print("mat: " .. tostring(result.material))
+
+    -- local infinite = tonumber('inf')
+
+    -- if result.position.x == infinite then
+    --     print("It's infinite 1")
+    -- else
+    --     print("it's a real num 1")
+    -- end
+
+    -- if tostring(result.position.x) == "inf" then
+    --     print("It's infinite 2")
+    -- else
+    --     print("it's a real num 2")
+    -- end
+
+    print(vec_str(hit))
+    print(vec_str(normal))
+
+
+
+end)
+
+
+
 
 registerHotkey("WallHang_Config", "Show Config", function()
     if shouldShowConfig then

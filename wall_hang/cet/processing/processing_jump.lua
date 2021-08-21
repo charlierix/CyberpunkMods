@@ -32,7 +32,12 @@ function Process_Jump(o, vars, const, debug, startStopTracker)
 
     --o:Teleport(vars.hangPos, yaw)
 
-    o.player:WallHang_AddImpulse(impulse.x, impulse.y, impulse.z)
+
+
+
+
+    --TODO: Uncomment
+    --o.player:WallHang_AddImpulse(impulse.x, impulse.y, impulse.z)
 
 
 

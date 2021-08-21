@@ -8,6 +8,7 @@ function Keys:new(o, hangAction, const)
     self.__index = self
 
     obj.o = o
+    obj.const = const
 
     -- hardcoded keys (explicit propertes to make it easy to code against)
     obj.mouse_x = 0
@@ -87,8 +88,6 @@ function Keys:MapAction_Fixed(action, actionName, pressed, released)
                 self[value] = true
             elseif released then
                 self[value] = false
-            -- else
-            --     print(actionName .. " else: " .. actionType)
             end
 
             do return end
