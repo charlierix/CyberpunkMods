@@ -144,7 +144,6 @@ local vars =
     -- These get populated in Transition_ToHang() and/or Transition_ToJump_Calculate()
     --hangPos,
     --normal,
-    --material,
 
     -- These get populated in Transition_ToJump_TeleTurn()
     --impulse,
@@ -312,89 +311,47 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
+-- registerHotkey("WallHangTesterButton", "tester hotkey", function()
 
+--     o:GetCamera()
+--     if not o.lookdir_forward then
+--         do return end
+--     end
 
+--     local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
+--     local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + const.rayFrom_Z + (o.lookdir_forward.z * const.rayLen), 1)
 
-registerHotkey("WallHangTesterButton", "tester hotkey", function()
+--     local hit, normal = o:RayCast(fromPos, toPos, true)
 
-    print("test cast a")
+--     print(vec_str(hit))
+--     print(vec_str(normal))
 
-    o:GetCamera()
-    if not o.lookdir_forward then
-        print("test cast BB")
+-- end)
 
-        do return end
-    end
+-- registerHotkey("WallHang_Config", "Show Config", function()
+--     if shouldShowConfig then
+--         isConfigRepress = true      -- this is used as a request to close.  The window will only close if they are on a main screen, and not dirty
+--     end
 
-    print("test cast aa")
+--     -- This only shows the config.  They need to push a close button (and possibly ok/cancel for saving)
+--     shouldShowConfig = true
+-- end)
+-- registerForEvent("onOverlayOpen", function()
+--     if not vars_ui.autoshow_withconsole then
+--         do return end
+--     end
 
-    local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
-    local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + const.rayFrom_Z + (o.lookdir_forward.z * const.rayLen), 1)
+--     shouldShowConfig = true
+-- end)
+-- registerForEvent("onOverlayClose", function()
+--     if not vars_ui.autoshow_withconsole then
+--         do return end
+--     end
 
-    -- local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 0)
-    -- local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + const.rayFrom_Z + (o.lookdir_forward.z * const.rayLen), 0)
-
-    print("test cast b")
-
-    local hit, normal = o:RayCast(fromPos, toPos, true)
-    --local result = o:RayCast_TRACERESULT(fromPos, toPos, true)
-
-    print("test cast c")
-
-    -- print(tostring(result))
-
-    -- print("pos: " .. vec_str(result.position))
-    -- print("norm: " .. vec_str(result.normal))
-    -- print("mat: " .. tostring(result.material))
-
-    -- local infinite = tonumber('inf')
-
-    -- if result.position.x == infinite then
-    --     print("It's infinite 1")
-    -- else
-    --     print("it's a real num 1")
-    -- end
-
-    -- if tostring(result.position.x) == "inf" then
-    --     print("It's infinite 2")
-    -- else
-    --     print("it's a real num 2")
-    -- end
-
-    print(vec_str(hit))
-    print(vec_str(normal))
-
-
-
-end)
-
-
-
-
-registerHotkey("WallHang_Config", "Show Config", function()
-    if shouldShowConfig then
-        isConfigRepress = true      -- this is used as a request to close.  The window will only close if they are on a main screen, and not dirty
-    end
-
-    -- This only shows the config.  They need to push a close button (and possibly ok/cancel for saving)
-    shouldShowConfig = true
-end)
-registerForEvent("onOverlayOpen", function()
-    if not vars_ui.autoshow_withconsole then
-        do return end
-    end
-
-    shouldShowConfig = true
-end)
-registerForEvent("onOverlayClose", function()
-    if not vars_ui.autoshow_withconsole then
-        do return end
-    end
-
-    if shouldShowConfig then
-        isConfigRepress = true
-    end
-end)
+--     if shouldShowConfig then
+--         isConfigRepress = true
+--     end
+-- end)
 
 registerInput("WallHang_CustomHang", "Hang (override default)", function(isDown)
     keys:PressedCustom(isDown)
@@ -406,15 +363,15 @@ registerForEvent("onDraw", function()
         do return end
     end
 
-    if shouldShowConfig then
-        shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, o, const)
-        isConfigRepress = false
+    -- if shouldShowConfig then
+    --     shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, o, const)
+    --     isConfigRepress = false
 
-        if not shouldShowConfig then
-            -- They closed from an arbitrary window, make sure the next time config starts at main
-            TransitionWindows_Main(vars_ui, const)
-        end
-    end
+    --     if not shouldShowConfig then
+    --         -- They closed from an arbitrary window, make sure the next time config starts at main
+    --         TransitionWindows_Main(vars_ui, const)
+    --     end
+    -- end
 
     if const.shouldShowDebugWindow then
         DrawDebugWindow(debug)

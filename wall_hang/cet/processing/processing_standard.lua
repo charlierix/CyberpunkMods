@@ -20,29 +20,41 @@ function Process_Standard(o, vars, const, debug, startStopTracker)
         do return end
     end
 
-    local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
-    local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + const.rayFrom_Z + (o.lookdir_forward.z * const.rayLen), 1)
+    if not up then
+        up = Vector4.new(0, 0, 1, 0)
+    end
 
+    local rayDir = this.GetDirectionHorz(o.lookdir_forward)
+
+    local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
+    --local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + const.rayFrom_Z + (o.lookdir_forward.z * const.rayLen), 1)
+    local toPos = Vector4.new(fromPos.x + (rayDir.x * const.rayLen), fromPos.y + (rayDir.y * const.rayLen), fromPos.z + const.rayFrom_Z + (rayDir.z * const.rayLen), 1)
+
+    --TODO: This misses the wall when they are looking mostly straight up.  Should probably fire a ray out (along the component of up that is perp to up)
     local hit, normal = o:RayCast(fromPos, toPos, true)
     if not hit then
         do return end
     end
 
-    if not up then
-        up = Vector4.new(0, 0, 1, 0)
-    end
-
     if isHangDown and this.ValidateSlope_Hang(normal) then      --NOTE: slope check for hang is pretty much unnecessary.  The IsAirborne eliminates slopes already
         local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
-        Transition_ToHang(vars, const, o, hangPos, normal, material)
+        Transition_ToHang(vars, const, o, hangPos, normal)
 
     elseif isJumpDown and this.ValidateSlope_Jump(normal) then
         local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
-        Transition_ToJump_Calculate(vars, const, o, hangPos, normal, material)
+        Transition_ToJump_Calculate(vars, const, o, hangPos, normal)
     end
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.GetDirectionHorz(lookdir)
+    local onPlane = GetProjectedVector_AlongPlane(lookdir, up)
+
+    local len = GetVectorLength(onPlane)
+
+    return Vector4.new(onPlane.x / len, onPlane.y / len, onPlane.z / len, 1)
+end
 
 -- If the slope is horizontal enough to stand on, this returns false
 function this.ValidateSlope_Hang(normal)

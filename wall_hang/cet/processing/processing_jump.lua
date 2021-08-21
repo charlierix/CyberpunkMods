@@ -6,9 +6,7 @@ local up = nil      -- can't use vector4 before init
 
 function Process_Jump(o, vars, const, debug, startStopTracker)
 
-
     ------------------ Initial Calculations ------------------
-
 
     o:GetCamera()
     if not o.lookdir_forward then       -- shouldn't happen
@@ -19,32 +17,17 @@ function Process_Jump(o, vars, const, debug, startStopTracker)
     local jump_dir = this.CalculateJumpDirection_Direct(o.lookdir_forward, vars.normal)
 
     -- turn that into a destination yaw
-    local yaw = Vect_to_Yaw(jump_dir.x, jump_dir.y)
-
+    --local yaw = Vect_to_Yaw(jump_dir.x, jump_dir.y)
 
     local impulse = this.GetImpulse(jump_dir, const.jump_strength)
 
-
-
     ------------------ Spread over a few frames ------------------
-
-
 
     --o:Teleport(vars.hangPos, yaw)
 
-
-
-
-
-    --TODO: Uncomment
-    --o.player:WallHang_AddImpulse(impulse.x, impulse.y, impulse.z)
-
-
-
-
+    o.player:WallHang_AddImpulse(impulse.x, impulse.y, impulse.z)
 
     ------------------ Finally ------------------
-
 
     Transition_ToStandard(vars, const, debug, o)
 end

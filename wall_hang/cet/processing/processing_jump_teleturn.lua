@@ -7,6 +7,12 @@ function Process_Jump_TeleTurn(o, vars, const, debug, deltaTime)
         up = Vector4.new(0, 0, 1, 0)
     end
 
+    if DotProduct3D(vars.final_lookdir, up) > 0.9 then
+        -- They want to go nearly straight up.  Don't spin around
+        Transition_ToJump_Impulse(vars, const, o, vars.impulse)
+        do return end
+    end
+
     o:GetCamera()
     if not o.lookdir_forward then       -- shouldn't happen
         Transition_ToStandard(vars, const, debug, o)

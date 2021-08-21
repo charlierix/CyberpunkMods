@@ -12,24 +12,22 @@ function Transition_ToStandard(vars, const, debug, o)
     o:Custom_CurrentlyFlying_Clear()
 end
 
-function Transition_ToHang(vars, const, o, hangPos, normal, material)
+function Transition_ToHang(vars, const, o, hangPos, normal)
     vars.flightMode = const.flightModes.hang
     o:Custom_CurrentlyFlying_StartFlight()
 
     vars.hangPos = hangPos
     vars.normal = normal
-    vars.material = material
 
     PlaySound_Hang(vars, o)
 end
 
-function Transition_ToJump_Calculate(vars, const, o, hangPos, normal, material)
+function Transition_ToJump_Calculate(vars, const, o, hangPos, normal)
     vars.flightMode = const.flightModes.jump_calculate
     o:Custom_CurrentlyFlying_StartFlight()
 
     vars.hangPos = hangPos
     vars.normal = normal
-    vars.material = material
 
     PlaySound_Jump(vars, o)
 end

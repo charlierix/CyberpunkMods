@@ -3,6 +3,7 @@ local this = {}
 local MINDOT = 0.1
 local BACKWARD_POW = 1.5
 
+local STRAIGHTUPDOT = 0.75
 local up = nil      -- can't use vector4 before init
 
 function Process_Jump_Calculate(o, vars, const, debug)
@@ -12,7 +13,7 @@ function Process_Jump_Calculate(o, vars, const, debug)
         do return end
     end
 
-    -- Complare the look direction with the wall's normal, figure out the direction to go
+    -- Compare the look direction with the wall's normal, figure out the direction to go
     local jump_dir = this.CalculateJumpDirection_Direct(o.lookdir_forward, vars.normal)
 
     -- Rotate up so the jump will be in an arc
@@ -36,11 +37,16 @@ function this.CalculateJumpDirection_Direct(lookdir, normal)
         return lookdir
     end
 
-    -- if not up then
-    --     up = Vector4.new(0, 0, 1, 0)
-    -- end
+    if not up then
+        up = Vector4.new(0, 0, 1, 0)
+    end
 
-    -- local upDot = DotProduct3D(lookdir, up)
+    local upDot = DotProduct3D(lookdir, up)
+
+    if dot < 0 and upDot >= STRAIGHTUPDOT then
+        -- They are facing the wall and looking up.  Jump straight up instead of spinning around and jumping away
+        return up
+    end
 
     if dot < 0 then
         -- Need to flip the look direction so it's going the same direction as the normal
@@ -53,15 +59,6 @@ function this.CalculateJumpDirection_Direct(lookdir, normal)
     local percentNormal = GetScaledValue(0, 1, MINDOT, -1, dot)
     percentNormal = percentNormal ^ BACKWARD_POW
 
-    --TODO: Do this right (jump up when looking up instead of jumping away)
-    -- local percentNormal
-    -- if upDot > 0.9 then
-    --     percentNormal = 0.05
-    -- else
-    --     percentNormal = GetScaledValue(0, 1, MINDOT, -1, dot)
-    --     percentNormal = percentNormal ^ BACKWARD_POW
-    -- end
-
     local rotate = GetRotation(lookdir, normal, percentNormal)
 
     return RotateVector3D(lookdir, rotate)
@@ -73,10 +70,15 @@ function this.GetImpulse(direction, jump_strength)
         up = Vector4.new(0, 0, 1, 0)
     end
 
+    local dot = DotProduct3D(direction, up)
+    if IsNearValue(dot, 1) then
+        return MultiplyVector(direction, jump_strength)
+    end
+
     -- pi       straight down
     -- pi/2     horizontal
     -- 0        straight up
-    local radian = Dot_to_Radians(DotProduct3D(direction, up))
+    local radian = Dot_to_Radians(dot)
 
     --https://mycurvefit.com/
     --https://www.desmos.com/calculator
