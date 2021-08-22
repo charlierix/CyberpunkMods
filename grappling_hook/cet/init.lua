@@ -102,9 +102,6 @@ extern_json = require "external/json"       -- storing this in a global variable
 function TODO()
 
 	-- Controller:
-	--	Listen to right stick for mouse look
-
-	-- Controller:
 	--	Listen to MoveX, MoveY
 	--	Do a length chcek + dot product and populate:  Forward, Back, Left, Right
 

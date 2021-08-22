@@ -150,6 +150,8 @@ function GameObjectAccessor:IsPointVisible(fromPos, toPos)
 end
 
 -- This ray cast also returns normal (but doesn't see quite as much as IsPointVisible)
+-- Returns
+--  HitPoint, Normal (or nils)
 function GameObjectAccessor:RayCast(fromPos, toPos, staticOnly)
     self:EnsurePlayerLoaded()
 
@@ -157,40 +159,16 @@ function GameObjectAccessor:RayCast(fromPos, toPos, staticOnly)
         -- Result is empty string for a miss, or "px|py|pz|nx|ny|nz|mat"
         local result = self.wrappers.RayCast(self.player, fromPos, toPos, staticOnly)
 
-        if result == "" then
-            return nil
+        if result.position.x == tonumber("inf") then
+            return nil, nil
         end
 
-        -- position
-        local i0 = 0
-        local i1 = string.find(result, "|", i0)
-        local px = string.sub(result, i0, i1 - 1)
+        --NOTE: There is also a material, but tostring returns too much.  Would need to extract the relavent part (only bother doing that once needed)
+        --print(tostring(result.material))
 
-        i0 = i1 + 1
-        i1 = string.find(result, "|", i0)
-        local py = string.sub(result, i0, i1 - 1)
-
-        i0 = i1 + 1
-        i1 = string.find(result, "|", i0)
-        local pz = string.sub(result, i0, i1 - 1)
-
-        -- normal
-        i0 = i1 + 1
-        i1 = string.find(result, "|", i0)
-        local nx = string.sub(result, i0, i1 - 1)
-
-        i0 = i1 + 1
-        i1 = string.find(result, "|", i0)
-        local ny = string.sub(result, i0, i1 - 1)
-
-        i0 = i1 + 1
-        i1 = string.find(result, "|", i0)
-        local nz = string.sub(result, i0, i1 - 1)
-
-        -- material
-        local material = string.sub(result, i1 + 1, string.len(result))
-
-        return Vector4.new(tonumber(px), tonumber(py), tonumber(pz), 1), Vector4.new(tonumber(nx), tonumber(ny), tonumber(nz), 1), material
+        return
+            Vector4.new(result.position.x, result.position.y, result.position.z, 1),        -- position, normal come back as Vector3.  Return a vec4 to be consistent with everything else
+            Vector4.new(result.normal.x, result.normal.y, result.normal.z, 1)
     end
 end
 
