@@ -2,7 +2,6 @@
 --avoid unnecessary memory allocations / deallocations.  I don't know how lua handles garbage
 --collection, but this should avoid all that
 
-
 RaycastHitStorage = {}
 
 function RaycastHitStorage:new(garbageCollectInterval_seconds, garbageCountThreshold)
@@ -83,7 +82,7 @@ end
 --      That point is actually another array { point, garbageCount, wasRequestedThisPeriod, sources }
 function RaycastHitStorage:GetNearbyPoints(center, radius)
     local radSqr = radius * radius
-    
+
     self.getnearby_return:Clear()
 
     for i=1, self.points:GetCount() do

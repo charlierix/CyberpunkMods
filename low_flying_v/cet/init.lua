@@ -7,31 +7,35 @@
 --https://codeberg.org/adamsmasher/cyberpunk/src/branch/master
 --https://redscript.redmodding.org/
 
-require "lib/check_other_mods"
-require "lib/customprops_wrapper"
-require "lib/debug_code"
-require "lib/drawing"
-require "lib/flightutil"
-require "lib/floatplayer"
-require "lib/gameobj_accessor"
-require "lib/input_actionMapper"
-require "lib/input_processing"
-require "lib/kdashinputtracker"
-require "lib/keys"
-require "lib/laser_finder_manager"
-require "lib/laser_finder_worker"
-require "lib/math_basic"
-require "lib/math_raycast"
-require "lib/math_vector"
-require "lib/math_yaw"
-require "lib/processing_inflight"
-require "lib/processing_standard"
-require "lib/raycast_hit_storage"
-require "lib/reporting"
-require "lib/rollingbuffer"
-require "lib/sticky_list"
+require "core/check_other_mods"
+require "core/customprops_wrapper"
+require "core/debug_code"
+require "core/gameobj_accessor"
+require "core/math_basic"
+require "core/math_raycast"
+require "core/math_vector"
+require "core/math_yaw"
+require "core/raycast_hit_storage"
+require "core/rollingbuffer"
+require "core/sticky_list"
+require "core/util"
+
 require "lib/unittests"
-require "lib/util"
+
+require "processing/flightmode_transitions"
+require "processing/flightutil"
+require "processing/floatplayer"
+require "processing/laser_finder_manager"
+require "processing/laser_finder_worker"
+require "processing/processing_inflight"
+require "processing/processing_standard"
+
+require "ui/drawing"
+require "ui/input_actionMapper"
+require "ui/input_processing"
+require "ui/kdashinputtracker"
+require "ui/keys"
+require "ui/reporting"
 
 function TODO()
     -- GetGravity is using 9.8 instead of 16
@@ -106,9 +110,13 @@ local const =
     minSpeedOverride_duration = 18,     -- when forward or backward buttons are pressed (and the new speed is greater than this minSpeed), that new desired speed will be held.  This is the total time the override is active, but the speed will decay to default during the last portion of this time
     minSpeed_absolute = 12,             -- if slowing down below min speed, the cruise control will be more coarse and not auto speed up.  This is as slow as it will go (much slower, and you'll drop out of flight)
 
-    maxSpeed = 144,                     -- player:GetVelocity() isn't the same as the car's reported speed.  A car speed of 100 is around 26 world speed.  150 is about 33.  So a world speed of 180 would be a car speed of around 720
+    maxSpeed = 288,                     -- player:GetVelocity() isn't the same as the car's reported speed.  A car speed of 100 is around 26 world speed.  150 is about 33.  So a world speed of 180 would be a car speed of around 720
 
-    modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v", "wall_hang" }),
+    startup_speed_add = 24,
+
+    flightModes = CreateEnum("standard", "launch_impulse", "flying"),
+
+    modNames = CreateEnum("grappling_hook", "jetpack", "low_flying_v", "wall_hang"),
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
@@ -129,7 +137,7 @@ local debug = { }
 
 local vars =
 {
-    isInFlight = false,
+    flightMode = const.flightModes.standard,
     --kdash = KDashInputTracker:new(),          -- moved to init
     --rayHitStorage = RaycastHitStorage:new(),  -- moved to init
 
@@ -224,7 +232,7 @@ end)
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = false
     if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
-        ExitFlight(vars, debug, o)
+        Transition_ToStandard(vars, debug, o, const)
         do return end
     end
 
@@ -232,13 +240,13 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
     if not o.player then
-        ExitFlight(vars, debug, o)
+        Transition_ToStandard(vars, debug, o, const)
         do return end
     end
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
-        ExitFlight(vars, debug, o)
+        Transition_ToStandard(vars, debug, o, const)
         do return end
     end
 
@@ -246,12 +254,17 @@ registerForEvent("onUpdate", function(deltaTime)
 
     PopulateDebug(debug, o, keys, vars)
 
-    if vars.isInFlight then
-        -- In Flight
-        Process_InFlight(o, vars, const, keys, debug, deltaTime)
-    else
+    if vars.flightMode == const.flightModes.standard then
         -- Standard (walking around)
         Process_Standard(o, vars, keys, debug, const)
+
+    elseif vars.flightMode == const.flightModes.flying then
+        -- In Flight
+        Process_InFlight(o, vars, const, keys, debug, deltaTime)
+
+    else
+        print("Low Flying V ERROR, unknown flightMode: " .. tostring(vars.flightMode))
+        Transition_ToStandard(vars, debug, o, const)
     end
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
@@ -275,7 +288,7 @@ end)
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
-    ExitFlight(vars, debug, o)
+    Transition_ToStandard(vars, debug, o, const)
 
     if o then
         o:Clear()

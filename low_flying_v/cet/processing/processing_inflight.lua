@@ -1,7 +1,9 @@
+local this = {}
+
 -- This is called each tick when they flying (and not in the menu)
 function Process_InFlight(o, vars, const, keys, debug, deltaTime)
     if keys.forceFlight or not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
-        ExitFlight(vars, debug, o)
+        Transition_ToStandard(vars, debug, o, const)
         do return end
     end
 
@@ -13,8 +15,8 @@ function Process_InFlight(o, vars, const, keys, debug, deltaTime)
 
         --NOTE: By requiring continuous holding the back key, they can safely tap back key to have nice and
         --controlled slow flight
-        if(o.timer - vars.lowSpeedTime > 0.55) then        -- this is in seconds
-            ExitFlight(vars, debug, o)
+        if(o.timer - vars.lowSpeedTime > 0.5) then        -- this is in seconds
+            Transition_ToStandard(vars, debug, o, const)
             do return end
         end
     else
@@ -45,7 +47,7 @@ function Process_InFlight(o, vars, const, keys, debug, deltaTime)
     accelZ = accelZ + dz
 
     if const.shouldShowDebugWindow then
-        PopulateFlightDebug(vars, debug, accelX, accelY, accelZ)
+        this.PopulateFlightDebug(vars, debug, accelX, accelY, accelZ)
     end
 
     -- Apply accelerations to the current velocity
@@ -95,22 +97,7 @@ end
 
 ---------------------------------------- Private Methods ----------------------------------------
 
-function ExitFlight(vars, debug, o)
-    -- This gets called every frame when they are in the menu, driving, etc.  So it needs to be
-    -- safe and cheap
-    if (not vars) or (not vars.isInFlight) then
-        do return end
-    end
-
-    vars.isInFlight = false
-    o:Custom_CurrentlyFlying_Clear()
-    vars.kdash:Clear()
-    vars.lasercats:Stop()
-
-    RemoveFlightDebug(debug)
-end
-
-function PopulateFlightDebug(vars, debug, accelX, accelY, accelZ)
+function this.PopulateFlightDebug(vars, debug, accelX, accelY, accelZ)
     --TODO: Report high level stats
 
     --  num shots fired
@@ -126,12 +113,4 @@ function PopulateFlightDebug(vars, debug, accelX, accelY, accelZ)
 
     debug.vel2 = vec_str(vars.vel)
     debug.speed2 = Round(GetVectorLength(vars.vel), 1)
-end
-function RemoveFlightDebug(debug)
-    debug.hitstorage = nil
-    debug.accelX = nil
-    debug.accelY = nil
-    debug.accelZ = nil
-    debug.vel2 = nil
-    debug.speed2 = nil
 end

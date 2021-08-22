@@ -58,18 +58,19 @@ function InitializeRandom()
     end
 end
 
--- This takes a table of names {1:"a", 2:"b", 3:"c"} and turns it into a key value table where the key and value are
+-- This takes a set of names ("a", "b", "c") and turns it into a key value table where the key and value are
 -- the same
 --
 -- Usage:
--- local days = CreateEnum({"aday", "bday", "friday"})
+-- local days = CreateEnum("aday", "bday", "friday")
 -- local specificDay = days.bday
 -- if specificDay == days.bday then print("yay") end
-function CreateEnum(names)
-    local enum = { }
+function CreateEnum(...)
+    local enum = {}
 
-    for i=1, #names do
-        enum[names[i]] = names[i]
+    for i = 1, select("#", ...) do
+        local text = select(i, ...)
+        enum[text] = text
     end
 
     return enum

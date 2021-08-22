@@ -141,6 +141,8 @@ local debug = {}
 
 local vars =
 {
+    --flightMode,       -- Holds what state of flight it is in.  One of const.flightModes
+
     -- These get populated in Transition_ToHang() and/or Transition_ToJump_Calculate()
     --hangPos,
     --normal,
