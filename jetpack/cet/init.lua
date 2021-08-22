@@ -172,7 +172,7 @@ function GetConfigValues(index, sounds_thrusting)
 
         holdJumpDelay = 0.24
 
-        rmb_extra = RMB_PushUp:new(12, 6, 6, 60)      -- the burn rate is only applied for one frame, so need something large
+        rmb_extra = RMB_PushUp:new(18, 6, 6, 60)      -- the burn rate is only applied for one frame, so need something large
     end
 
     i = i + 1 ; if index == i then ; i = 1000

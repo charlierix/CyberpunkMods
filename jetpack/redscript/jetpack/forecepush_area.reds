@@ -53,7 +53,7 @@ public func RagdollNPCs_StraightUp(radius: Float, pushForce: Float, randHorz: Fl
                 let pos: Vector4;
                 pos = npc.GetWorldPosition();
 
-                npc.QueueEvent(CreateForceRagdollEvent(Cast("Launch Up")));
+                npc.QueueEvent(CreateForceRagdollEvent(n"Launch Up"));
                 npc.QueueEvent(CreateRagdollApplyImpulseEvent(pos, new Vector4(0.00, 0.00, 1.00, 1.00), 3.00));
 
                 let direction: Vector4;
@@ -140,7 +140,7 @@ public func RagdollNPCs_ExplodeOut(radius: Float, pushForce: Float, upForce: Flo
                         ((direction.Z * finalForce) + upForce) * mult,      // give the z a bit extra up so they get picked up off the ground
                         1.00);      
 
-                    npc.QueueEvent(CreateForceRagdollEvent(Cast("Explosion")));
+                    npc.QueueEvent(CreateForceRagdollEvent(n"Explosion"));
                     npc.QueueEvent(CreateRagdollApplyImpulseEvent(pos, new Vector4(0.00, 0.00, 1.00, 1.00), 3.00));
 
                     // The first one just staggers them, set a delay and hit them again

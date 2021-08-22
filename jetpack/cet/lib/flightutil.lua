@@ -61,9 +61,9 @@ function RecoverBurnTime(current, max, recoverRate, deltaTime)
     return current
 end
 
--- This will blow people back if the impace speed is large enough
+-- This will blow people back if the impact speed is large enough
 function ExplosivelyLand(o, velZ, vars)
-    local maxForce = 6
+    local maxForce = 9
 
     local force = GetScaledValue(0, maxForce, 0, 36, -velZ)
     force = Clamp(0, maxForce, force)
@@ -72,7 +72,7 @@ function ExplosivelyLand(o, velZ, vars)
         do return end
     end
 
-    local radius = GetScaledValue(3, 9, 0, maxForce, force)
+    local radius = GetScaledValue(5, 12, 0, maxForce, force)
 
     o:RagdollNPCs_ExplodeOut(radius, force, force * 0.75)
 

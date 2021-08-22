@@ -393,16 +393,6 @@ end
 
 function TODO()
 
-    -- Jump+Look Up
-    --  If they are facing toward the wall and looking up:
-    --      Go up
-    --      Don't change yaw
-
-    -- Jump+Forward (probably don't do this one, it doesn't seem very intuitive)
-    --  When jumping off a wall, if they are holding forward:
-    --      Go up
-    --      Don't change yaw
-
     -- Hang+Direction
     --  While hanging, if they hold a direction, then crawl along the wall in that direction
     --  (think of mario on those wire fences)
