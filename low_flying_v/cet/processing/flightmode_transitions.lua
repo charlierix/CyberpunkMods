@@ -12,6 +12,13 @@ function Transition_ToStandard(vars, debug, o, const)
     vars.lasercats:Stop()
 end
 
+function Transition_ToImpulseLaunch(o, vars, const)
+    vars.flightMode = const.flightModes.impulse_launch
+    o:Custom_CurrentlyFlying_StartFlight()
+
+    vars.startFlightTime = o.timer
+end
+
 function Transition_ToFlight(o, vars, const)
     vars.flightMode = const.flightModes.flying
     o:Custom_CurrentlyFlying_StartFlight()

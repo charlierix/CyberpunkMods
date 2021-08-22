@@ -27,6 +27,7 @@ require "processing/flightutil"
 require "processing/floatplayer"
 require "processing/laser_finder_manager"
 require "processing/laser_finder_worker"
+require "processing/processing_impulse_launch"
 require "processing/processing_inflight"
 require "processing/processing_standard"
 
@@ -110,11 +111,15 @@ local const =
     minSpeedOverride_duration = 18,     -- when forward or backward buttons are pressed (and the new speed is greater than this minSpeed), that new desired speed will be held.  This is the total time the override is active, but the speed will decay to default during the last portion of this time
     minSpeed_absolute = 12,             -- if slowing down below min speed, the cruise control will be more coarse and not auto speed up.  This is as slow as it will go (much slower, and you'll drop out of flight)
 
-    maxSpeed = 288,                     -- player:GetVelocity() isn't the same as the car's reported speed.  A car speed of 100 is around 26 world speed.  150 is about 33.  So a world speed of 180 would be a car speed of around 720
+    -- Launch Settings
+    launch_horz = 48,                    -- this is the impulse strength to apply when starting flight from a hotkey
+    launch_vert = 48,
+
+    maxSpeed = 144,                     -- player:GetVelocity() isn't the same as the car's reported speed.  A car speed of 100 is around 26 world speed.  150 is about 33.  So a world speed of 180 would be a car speed of around 720
 
     startup_speed_add = 24,
 
-    flightModes = CreateEnum("standard", "launch_impulse", "flying"),
+    flightModes = CreateEnum("standard", "impulse_launch", "flying"),
 
     modNames = CreateEnum("grappling_hook", "jetpack", "low_flying_v", "wall_hang"),
 
@@ -258,9 +263,13 @@ registerForEvent("onUpdate", function(deltaTime)
         -- Standard (walking around)
         Process_Standard(o, vars, keys, debug, const)
 
+    elseif vars.flightMode == const.flightModes.impulse_launch then
+        -- Getting airborne and up to speed before flight
+        Process_ImpulseLaunch(o, vars, keys, debug, const)
+
     elseif vars.flightMode == const.flightModes.flying then
         -- In Flight
-        Process_InFlight(o, vars, const, keys, debug, deltaTime)
+        Process_InFlight(o, vars, keys, debug, const, deltaTime)
 
     else
         print("Low Flying V ERROR, unknown flightMode: " .. tostring(vars.flightMode))
@@ -284,7 +293,7 @@ registerForEvent("onDraw", function()
     end
 end)
 
------------------------------------- Private Methods -----------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
