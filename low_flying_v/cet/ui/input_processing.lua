@@ -9,37 +9,41 @@ function KeyboardFlight(keys, lookDir, rightDir, const, startFlightTime, timer, 
         return x, y, z, yaw
     end
 
-    if keys.forward then
-        x = x + (lookDir.x * const.accel_forward)
-        y = y + (lookDir.y * const.accel_forward)
-        z = z + (lookDir.z * const.accel_forward)
+    if keys.analog_y > 0 then
+        x = x + (lookDir.x * const.accel_forward * keys.analog_y)
+        y = y + (lookDir.y * const.accel_forward * keys.analog_y)
+        z = z + (lookDir.z * const.accel_forward * keys.analog_y)
     end
 
-    if keys.backward then
-        x = x - (lookDir.x * const.accel_backward)
-        y = y - (lookDir.y * const.accel_backward)
-        --z = z - (lookDir.z * const.accel_backward)        -- just let them fall
+    if keys.analog_y < 0 then
+        x = x - (lookDir.x * const.accel_backward * -keys.analog_y)
+        y = y - (lookDir.y * const.accel_backward * -keys.analog_y)
+        --z = z - (lookDir.z * const.accel_backward * -keys.analog_y)        -- just let them fall
     end
 
     if keys.jump then
         z = z + const.accel_jump
     end
 
-    if keys.left then
-        x = x - (rightDir.x * const.accel_side)
-        y = y - (rightDir.y * const.accel_side)
-        z = z - (rightDir.z * const.accel_side)
-        yaw = yaw + KeyboardFlight_YawTurn(const.yaw_turn_min, const.yaw_turn_max, vel)
+    if keys.analog_x < 0 then
+        x = x - (rightDir.x * const.accel_side * -keys.analog_x)
+        y = y - (rightDir.y * const.accel_side * -keys.analog_x)
+        z = z - (rightDir.z * const.accel_side * -keys.analog_x)
+        if const.should_yaw_turn then
+            yaw = yaw + KeyboardFlight_YawTurn(const.yaw_turn_min, const.yaw_turn_max, vel)
+        end
     end
 
-    if keys.right then
-        x = x + (rightDir.x * const.accel_side)
-        y = y + (rightDir.y * const.accel_side)
-        z = z + (rightDir.z * const.accel_side)
-        yaw = yaw - KeyboardFlight_YawTurn(const.yaw_turn_min, const.yaw_turn_max, vel)
+    if keys.analog_x > 0 then
+        x = x + (rightDir.x * const.accel_side * keys.analog_x)
+        y = y + (rightDir.y * const.accel_side * keys.analog_x)
+        z = z + (rightDir.z * const.accel_side * keys.analog_x)
+        if const.should_yaw_turn then
+            yaw = yaw - KeyboardFlight_YawTurn(const.yaw_turn_min, const.yaw_turn_max, vel)
+        end
     end
 
-    yaw = yaw + keys.mouse_x * -0.08
+    yaw = yaw + keys.mouse_x * const.mouse_sensitivity
 
     return x, y, z, yaw
 end

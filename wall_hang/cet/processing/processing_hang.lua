@@ -6,11 +6,11 @@ function Process_Hang(o, vars, const, debug, keys, startStopTracker)
         do return end
 
     elseif isJumpDown then
-        Transition_ToJump_Calculate(vars, const, o, vars.hangPos, vars.normal, vars.material)
+        Transition_ToJump_Calculate(vars, const, o, vars.hangPos, vars.normal)
         do return end
     end
 
-    local deltaYaw = keys.mouse_x * -0.08
+    local deltaYaw = keys.mouse_x * const.mouse_sensitivity
 
     local yaw = AddYaw(o.yaw, deltaYaw)
 

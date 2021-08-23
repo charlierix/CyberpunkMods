@@ -1,38 +1,27 @@
 Keys = {}
 
-function Keys:new()
+function Keys:new(debug, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
+    obj.debug = debug
+    obj.const = const
+
     obj.mouse_x = 0
 
-    obj.forward = false
-    obj.backward = false
-    obj.left = false
-    obj.right = false
+    obj.analog_x = 0        -- this is a controller's analog stick
+    obj.analog_y = 0
+
+    obj.forward = false     -- keeping this around for the kerenzikov dash detector (only supporting keyboard input)
     obj.jump = false
     obj.rmb = false
 
     obj.prev_forward = false
-    obj.prev_backward = false
-    obj.prev_left = false
-    obj.prev_right = false
     obj.prev_jump = false
     obj.prev_rmb = false
 
     obj.forceFlight = false     -- this is set to true from a hotkey, but this class will still set it back to false each tick
-
-    -- This is a mapping between action name and the hardcoded properties above (the strings must match exactly)
-    obj.hardcodedMapping =
-    {
-        Forward = "forward",
-        Back = "backward",
-        Left = "left",
-        Right = "right",
-        Jump = "jump",
-        CameraAim = "rmb",      -- "CameraAim" "RangedADS" "MeleeBlock"
-    }
 
     return obj
 end
@@ -44,42 +33,73 @@ function Keys:MapAction(action)
     local pressed = actionType == "BUTTON_PRESSED"
     local released = actionType == "BUTTON_RELEASED"
 
-    --print("pressed: " .. tostring(pressed) .. ", released: " .. tostring(released))
+    -- This fires from controller's left thumbsick as well as ASDW
+    if actionName == "MoveX" then       -- actionType: "AXIS_CHANGE"
+        self.analog_x = action:GetValue(action)
 
-    self:MapAction_HardCoded(action, actionName, pressed, released)
+    elseif actionName == "MoveY" then
+        self.analog_y = action:GetValue(action)
+    end
+
+    if actionName == "CameraMouseX" then        -- actionType: "RELATIVE_CHANGE"
+        self.mouse_x = action:GetValue(action)
+
+    elseif actionName == "right_stick_x" then       -- actionType: "AXIS_CHANGE"
+        self.mouse_x = action:GetValue(action) * self.const.rightstick_sensitivity
+    end
+
+    --NOTE: This mostly duplicates the MoveX, MoveY above, but it ensures that keyboard movement is reliable
+    if actionName == "Forward" then
+        if pressed then
+            self.analog_y = 1
+            self.forward = true
+        elseif released then
+            self.analog_y = 0
+            self.forward = false
+        end
+
+    elseif actionName == "Back" then
+        if pressed then
+            self.analog_y = -1
+        elseif released then
+            self.analog_y = 0
+        end
+
+    elseif actionName == "Left" then
+        if pressed then
+            self.analog_x = -1
+        elseif released then
+            self.analog_x = 0
+        end
+
+    elseif actionName == "Right" then
+        if pressed then
+            self.analog_x = 1
+        elseif released then
+            self.analog_x = 0
+        end
+
+    elseif actionName == "Jump" then
+        if pressed then
+            self.jump = true
+        elseif released then
+            self.jump = false
+        end
+
+    --elseif (actionName == "CameraAim") or (actionName == "RangedADS") or (actionName == "MeleeBlock") then
+    elseif actionName == "CameraAim" then
+        if pressed then
+            self.rmb = true
+        elseif released then
+            self.rmb = false
+        end
+    end
 end
 
 function Keys:Tick()
     self.prev_forward = self.forward
-    self.prev_backward = self.backward
-    self.prev_left = self.left
-    self.prev_right = self.right
     self.prev_jump = self.jump
     self.prev_rmb = self.rmb
 
     self.forceFlight = false        -- this is a hotkey, so needs to be manually turned off after one tick
-end
-
------------------------------------ Private Methods -----------------------------------
-
-function Keys:MapAction_HardCoded(action, actionName, pressed, released)
-    if actionName == "CameraMouseX" then
-        self.mouse_x = tonumber(action:GetValue(action))
-    else
-        self.mouse_x = 0
-    end
-
-    for key, value in pairs(self.hardcodedMapping) do
-        if actionName == key then
-            if pressed then
-                self[value] = true
-            elseif released then
-                self[value] = false
-            -- else
-            --     print(actionName .. " else: " .. actionType)
-            end
-
-            do return end
-        end
-    end
 end

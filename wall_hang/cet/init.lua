@@ -98,6 +98,7 @@ local const =
     modNames = CreateEnum("wall_hang", "grappling_hook", "jetpack", "low_flying_v"),     -- this really doesn't need to know the other mod names, since wall hang will override flight
 
     rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
+    mouse_sensitivity = -0.08,
 
     -- These are set in Define_UI_Framework_Constants() called during init
     -- alignment_horizontal = CreateEnum("left", "center", "right"),

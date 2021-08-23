@@ -52,16 +52,20 @@ local this = {}
 
 local const =
 {
+    rightstick_sensitivity = 35,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
+    mouse_sensitivity = -0.08,
+
     -- Accelerations when keys are pressed
     --NOTE: Keybinds currently only report on keyup, so these have to be applied instantly (not ideal, need to change when better events are available)
     accel_forward = 10,
     accel_backward = 20,
-    accel_side = 0,     --TODO: Figure out why this is just speeding the player up
+    accel_side = 25,
     accel_jump = 60,
 
     -- How much to turn when left and right keys are pressed (in degrees)
-    yaw_turn_min = 1.8,     -- amount at low speed
-    yaw_turn_max = 0.7,      -- amount at high speed
+    should_yaw_turn = false,        -- Useful for keyboard, annoying for controller
+    yaw_turn_min = 1.8,             -- amount at low speed
+    yaw_turn_max = 0.7,             -- amount at high speed
 
     -- How sensitive the mouse turn should be
     yaw_mouse_mult = 0.07,
@@ -116,8 +120,6 @@ local const =
     launch_vert = 48,
 
     maxSpeed = 144,                     -- player:GetVelocity() isn't the same as the car's reported speed.  A car speed of 100 is around 26 world speed.  150 is about 33.  So a world speed of 180 would be a car speed of around 720
-
-    startup_speed_add = 24,
 
     flightModes = CreateEnum("standard", "impulse_launch", "flying"),
 
@@ -202,7 +204,7 @@ registerForEvent("onInit", function()
 
     InitializeRandom()
 
-    keys = Keys:new()
+    keys = Keys:new(debug, const)
     vars.kdash = KDashInputTracker:new()
     vars.rayHitStorage = RaycastHitStorage:new()
 

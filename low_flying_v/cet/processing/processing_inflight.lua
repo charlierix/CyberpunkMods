@@ -8,7 +8,7 @@ function Process_InFlight(o, vars, keys, debug, const, deltaTime)
     end
 
     -- Detect low speed near the ground for a few frames and drop out of flight
-    if keys.backward and GetVectorLengthSqr(vars.vel) < (12 * 12) and not o:IsPointVisible(o.pos, Vector4.new(o.pos.x, o.pos.y, o.pos.z - 8, 1)) then       -- walking speed is 5, running is about 7.5.  Flying is closer to 20+, except for brief collisions
+    if keys.analog_y < -0.8 and GetVectorLengthSqr(vars.vel) < (12 * 12) and not o:IsPointVisible(o.pos, Vector4.new(o.pos.x, o.pos.y, o.pos.z - 8, 1)) then       -- walking speed is 5, running is about 7.5.  Flying is closer to 20+, except for brief collisions
         if not vars.lowSpeedTime then
             vars.lowSpeedTime = o.timer
         end
@@ -41,7 +41,7 @@ function Process_InFlight(o, vars, keys, debug, const, deltaTime)
     accelZ = accelZ + keyZ
 
     -- Don't let it get too slow (this mod needs to feel a bit frenetic)
-    local dx, dy, dz = EnforceMinSpeed(vars, const, keys.backward, o.timer)
+    local dx, dy, dz = EnforceMinSpeed(vars, const, keys.analog_y < -0.8, o.timer)
     accelX = accelX + dx
     accelY = accelY + dy
     accelZ = accelZ + dz

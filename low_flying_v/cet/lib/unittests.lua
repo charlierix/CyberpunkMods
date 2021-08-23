@@ -52,7 +52,7 @@ function UnitTest_KDashDetector(keys, o, vars, debug)
     local fastestSpeed = nil
     local wasKDash = false
 
-    if keys.backward then
+    if keys.analog_y < -0.8 then
         fastestSpeed = nil
         wasKDash = false
         vars.kdash:Clear()

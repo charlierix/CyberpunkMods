@@ -123,13 +123,13 @@ end
 -- This will set the min speed
 function AdjustMinSpeed(o, vars, const, keys)
     -- Wait a bit before allowing adjustments
-    if ((o.timer - vars.startFlightTime) < 4) or ((not keys.forward) and (not keys.backward)) then
+    if (o.timer - vars.startFlightTime) < 4 or math.abs(keys.analog_y) < 0.3 then
         do return end
     end
 
     local currentSpeed = GetVectorLength(vars.vel)
 
-    if (currentSpeed < const.minSpeed) and keys.backward then
+    if (currentSpeed < const.minSpeed) and keys.analog_y < -0.8 then
         -- When trying to slow done below min speed, they are probably in a stressful situation and
         -- just want it to slow down.  So instead of slow increments, just have absolute min speed
         -- and halfway between absolute and min speed
