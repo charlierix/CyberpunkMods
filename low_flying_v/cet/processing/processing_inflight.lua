@@ -3,6 +3,7 @@ local this = {}
 -- This is called each tick when they flying (and not in the menu)
 function Process_InFlight(o, vars, keys, debug, const, deltaTime)    
     if keys.forceFlight or not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
+        this.PlayEndSound(o, vars)
         Transition_ToStandard(vars, debug, o, const)
         do return end
     end
@@ -16,6 +17,7 @@ function Process_InFlight(o, vars, keys, debug, const, deltaTime)
         --NOTE: By requiring continuous holding the back key, they can safely tap back key to have nice and
         --controlled slow flight
         if(o.timer - vars.lowSpeedTime > 0.5) then        -- this is in seconds
+            this.PlayEndSound(o, vars)
             Transition_ToStandard(vars, debug, o, const)
             do return end
         end
@@ -113,4 +115,8 @@ function this.PopulateFlightDebug(vars, debug, accelX, accelY, accelZ)
 
     debug.vel2 = vec_str(vars.vel)
     debug.speed2 = Round(GetVectorLength(vars.vel), 1)
+end
+
+function this.PlayEndSound(o, vars)
+    o:PlaySound("w_gun_npc_spec_plasma_foley_post_fire", vars)
 end

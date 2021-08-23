@@ -7,6 +7,8 @@ function Process_Standard(o, vars, keys, debug, const)
     if keys.forceFlight and CheckOtherModsFor_FlightStart(o, const.modNames) then
         this.ApplyImpulse(o, const)
 
+        o:PlaySound("w_gun_npc_spec_plasma_charge", vars)
+
         -- Need to let a small amount of time to pass for the impulse to take effect
         Transition_ToImpulseLaunch(o, vars, const)
         do return end
@@ -14,6 +16,7 @@ function Process_Standard(o, vars, keys, debug, const)
 
     vars.kdash:StoreInputs(o.timer, keys.forward and not keys.prev_forward, keys.jump and not keys.prev_jump, keys.rmb and not keys.prev_rmb)
     if vars.kdash:WasKDashPerformed(o.timer, o.vel, debug) and CheckOtherModsFor_FlightStart(o, const.modNames) then
+        --NOTE: Not playing an impulse sound here, there's already a lot going on during kerenzikov transition
         Transition_ToFlight(o, vars, const)
         do return end
     end

@@ -58,6 +58,13 @@ function InitializeRandom()
     end
 end
 
+function StopSound(o, vars)
+    if vars.sound_current and (o.timer - vars.sound_started) > 2 then     -- all the sounds this mod plays are really quick
+        o:StopSound(vars.sound_current)
+        vars.sound_current = nil
+    end
+end
+
 -- This takes a set of names ("a", "b", "c") and turns it into a key value table where the key and value are
 -- the same
 --

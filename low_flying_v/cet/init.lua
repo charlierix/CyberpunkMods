@@ -172,6 +172,11 @@ local vars =
     -- default
     minSpeedOverride_current = 0,       -- this is the new current min speed
     minSpeedOverride_start = -1000,     -- this is when the override started (really negative init ensures there's no override)
+
+    --sound_current = nil,      -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
+    sound_started = 0,
+
+    --sound_hover = nil,        -- this one stays playing while they are hovering
 }
 
 --------------------------------------------------------------------
@@ -225,6 +230,8 @@ registerForEvent("onInit", function()
     function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
     function wrappers.Custom_CurrentlyFlying_StartFlight(player) Custom_CurrentlyFlying_StartFlight(player, const.modNames) end
     function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
+    function wrappers.QueueSound(player, sound) player:LowFlyingV_QueueSound(sound) end
+    function wrappers.StopQueuedSound(player, sound) player:LowFlyingV_StopQueuedSound(sound) end
 
     o = GameObjectAccessor:new(wrappers)
 
@@ -250,6 +257,8 @@ registerForEvent("onUpdate", function(deltaTime)
         Transition_ToStandard(vars, debug, o, const)
         do return end
     end
+
+    StopSound(o, vars)
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
