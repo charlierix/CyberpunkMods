@@ -1,0 +1,13 @@
+{
+	"author": "aaa",
+	"description": "xyz",
+	"tags": ["coords"],
+
+	"modded_parkour": "none",
+	
+	"position_x": 36,
+	"position_y": 36,
+	"position_z": 36,
+	
+	"yaw": 0
+}

@@ -24,6 +24,7 @@ require "src/core/util"
 
 require "src/data/collection_spawn_point"
 require "src/data/logging"
+require "src/data/util_data"
 
 require "src/ui/drawing"
 require "src/ui/reporting"
@@ -147,10 +148,28 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 registerHotkey("Roguelike_Tester_Teleports", "teleports", function()
+    -- vars.spawn_points:EnsureLoaded()
+    -- ReportTable(vars.spawn_points.spawn_points)
 
-    vars.spawn_points:EnsureLoaded()
+    -- print("no search criteria")
 
-    ReportTable(vars.spawn_points.spawn_points)
+    -- local spawnPoint = vars.spawn_points:GetRandom()
+    -- ReportTable(spawnPoint)
+
+
+    print("24, -1, 3 | nil | 16")
+
+    local spawnPoint = vars.spawn_points:GetRandom(Vector4.new(24, -1, 3, 1), 30, 50, false)
+    ReportTable(spawnPoint)
+
+
+
+
+
+
+
+    --TODO: If non null, teleport there
+
 
 end)
 

@@ -16,6 +16,13 @@ function Collection_SpawnPoint:new(const)
     return obj
 end
 
+-- This will return a random spawn point
+function Collection_SpawnPoint:GetRandom(center, radius_min, radius_max, is3D)
+    self:EnsureLoaded()
+
+    return FindRandom_Position(self.spawn_points, center, radius_min, radius_max, is3D)
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function Collection_SpawnPoint:EnsureLoaded()
@@ -28,7 +35,7 @@ function Collection_SpawnPoint:EnsureLoaded()
     self.spawn_points = {}
 
     for _, file in pairs(dir(FOLDER)) do
-        if file.type == "file" and string.lower(file.name:match("^.+(%..+)$")) == ".json" then
+        if file.type == "file" and file.name:match("%.json$") then
             -- Deserialize, validate the file.  Either store it or log an error
             this.LoadFile(FOLDER, file, self.spawn_points, self.const)
         end

@@ -31,9 +31,9 @@ function GetVectorDiffLengthSqr(vector1, vector2)
         return 0
     end
 
-    local diffX = vector1.x - vector2.x
-    local diffY = vector1.y - vector2.y
-    local diffZ = vector1.z - vector2.z
+    local diffX = vector2.x - vector1.x
+    local diffY = vector2.y - vector1.y
+    local diffZ = vector2.z - vector1.z
 
     return (diffX * diffX) + (diffY * diffY) + (diffZ * diffZ)
 end
@@ -44,6 +44,14 @@ end
 
 function GetVectorLength2D(x, y)
     return math.sqrt((x * x) + (y * y))
+end
+
+-- Get the length^2 of vector2-vector1 (in 2D)
+function GetVectorDiffLength2DSqr(x1, y1, x2, y2)
+    local diffX = x2 - x1
+    local diffY = y2 - y1
+
+    return (diffX * diffX) + (diffY * diffY)
 end
 
 -------------------------------------- Misc ---------------------------------------
