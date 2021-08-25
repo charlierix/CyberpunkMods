@@ -22,13 +22,6 @@ require "src/core/math_yaw"
 require "src/core/strings"
 require "src/core/util"
 
-require "src/data/collection_spawn_point"
-require "src/data/logging"
-require "src/data/util_data"
-
-require "src/ui/drawing"
-require "src/ui/reporting"
-
 extern_json = require "src/external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 local this = {}
@@ -39,9 +32,7 @@ local this = {}
 
 local const =
 {
-    modded_parkour = CreateEnum("none", "light", "heavy"),
-
-    shouldShowDebugWindow = false
+    author = "",        -- This will go in the author property of all generated json files
 }
 
 --------------------------------------------------------------------
@@ -60,7 +51,6 @@ local debug = {}
 
 local vars =
 {
-    --spawn_points      -- This holds spawn points from the corresponding folder.  Can return random spawn according to position/radius search params
 }
 
 local vars_ui =
@@ -88,7 +78,6 @@ registerForEvent("onInit", function()
     isShutdown = false
 
     InitializeRandom()
-    ClearDeserializeErrorLogs()
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -110,8 +99,6 @@ registerForEvent("onInit", function()
     --function wrappers.StopQueuedSound(player, sound) player:Roguelike_StopQueuedSound(sound) end
 
     o = GameObjectAccessor:new(wrappers)
-
-    vars.spawn_points = Collection_SpawnPoint:new(const)
 end)
 
 registerForEvent("onShutdown", function()
@@ -141,55 +128,17 @@ registerForEvent("onUpdate", function(deltaTime)
 
     shouldDraw = true       -- don't want a hung progress bar while in menu or driving
 
-    if const.shouldShowDebugWindow then
-        PopulateDebug(debug, o, vars)
-    end
-end)
-
-registerHotkey("Roguelike_Tester_Teleports", "teleports", function()
-    -- vars.spawn_points:EnsureLoaded()
-    -- ReportTable(vars.spawn_points.spawn_points)
-
-    -- print("no search criteria")
-
-    -- local spawnPoint = vars.spawn_points:GetRandom()
-    -- ReportTable(spawnPoint)
-
-
-    -- print("24, -1, 3 | 30 | 50")
-
-    -- local spawnPoint = vars.spawn_points:GetRandom(Vector4.new(24, -1, 3, 1), 30, 50, true)
-    -- ReportTable(spawnPoint)
-
-
-
-
-    print("-18, -12, 3 | 24 | 36")
-
-    local spawnPoint = vars.spawn_points:GetRandom(Vector4.new(-18, -12, 3, 1), 24, 36, true)
-    ReportTable(spawnPoint)
-
-
-
-
-
-    --TODO: If non null, teleport there
 
 
 end)
 
--- registerInput("Roguelike_TesterInput", "tester input", function(isDown)
+-- registerForEvent("onDraw", function()
+--     if isShutdown or not isLoaded or not shouldDraw then
+--         do return end
+--     end
+
+--     --TODO: Show a config
 -- end)
-
-registerForEvent("onDraw", function()
-    if isShutdown or not isLoaded or not shouldDraw then
-        do return end
-    end
-
-    if const.shouldShowDebugWindow then
-        DrawDebugWindow(debug)
-    end
-end)
 
 ------------------------- Private Methods --------------------------
 
@@ -205,19 +154,4 @@ end
 --------------------------------------------------------------------
 
 function TODO()
-
-	-- Totems
-	--	These would have a small radius around them that give some affect
-	--		Heal
-	--		Slowly lose health
-	--
-	-- Children would make good mobile totems
-	--	Since they move randomly and are unaffected by everything, they would make good totems
-	--	Use females as player buff / npc debuff, males as the opposite
-
-	-- External Sites
-	--	Create a discord server as a place for people to upload their stuff
-	--	Provide a way for people to vote
-	--	If it becomes popular, others could make their own nexus pages that are hand picked collections
-
 end
