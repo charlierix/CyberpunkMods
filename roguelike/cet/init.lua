@@ -157,12 +157,18 @@ registerHotkey("Roguelike_Tester_Teleports", "teleports", function()
     -- ReportTable(spawnPoint)
 
 
-    print("24, -1, 3 | nil | 16")
+    -- print("24, -1, 3 | 30 | 50")
 
-    local spawnPoint = vars.spawn_points:GetRandom(Vector4.new(24, -1, 3, 1), 30, 50, false)
+    -- local spawnPoint = vars.spawn_points:GetRandom(Vector4.new(24, -1, 3, 1), 30, 50, true)
+    -- ReportTable(spawnPoint)
+
+
+
+
+    print("-18, -12, 3 | 24 | 36")
+
+    local spawnPoint = vars.spawn_points:GetRandom(Vector4.new(-18, -12, 3, 1), 24, 36, true)
     ReportTable(spawnPoint)
-
-
 
 
 
