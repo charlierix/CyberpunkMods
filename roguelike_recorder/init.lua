@@ -22,6 +22,8 @@ require "src/core/math_yaw"
 require "src/core/strings"
 require "src/core/util"
 
+require "src/data/json_writer"
+
 extern_json = require "src/external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 local this = {}
@@ -33,6 +35,8 @@ local this = {}
 local const =
 {
     author = "",        -- This will go in the author property of all generated json files
+
+    modded_parkour = CreateEnum("none", "light", "heavy"),
 }
 
 --------------------------------------------------------------------
@@ -132,6 +136,33 @@ registerForEvent("onUpdate", function(deltaTime)
 
 end)
 
+registerHotkey("RoguelikeReporter_SavePosition_SpawnPoint", "Save Position - Spawn Point", function()
+    o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
+    if not o.player then
+        print("Can't get player")
+        do return end
+    end
+
+    local spawn =
+    {
+        author = "",
+        description = "",
+        tags = {""},
+
+        modded_parkour = const.modded_parkour.none,
+
+        position_x = o.pos.x,       -- it's rounded during the serialize
+        position_y = o.pos.y,
+        position_z = o.pos.z,
+
+        yaw = o.yaw,
+    }
+
+
+    Save_SpawnPoint(spawn)
+
+end)
+
 -- registerForEvent("onDraw", function()
 --     if isShutdown or not isLoaded or not shouldDraw then
 --         do return end
@@ -154,4 +185,10 @@ end
 --------------------------------------------------------------------
 
 function TODO()
+
+    -- Add a wpf app to help visualize a scene, move objects, etc
+
+    -- Add mode to this mod that does ray tracing and records hitpoints, materials
+    -- This raw data dump can then be read in by the wpf app, cleaned up and use to recreate a scene
+
 end

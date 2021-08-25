@@ -18,8 +18,8 @@ function AddError_Spawn(message)
     filehandle_spawn = this.WriteLog(filehandle_spawn, LOGNAME_SPAWN, message)
 end
 
-function FlushErrorFiles()
-    this.FlushLog(filehandle_spawn)
+function CloseErrorFiles()
+    this.CloseLog(filehandle_spawn)
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -44,8 +44,8 @@ function this.WriteLog(handle, filename, message)
     return handle
 end
 
-function this.FlushLog(handle)
+function this.CloseLog(handle)
     if handle then
-        handle:flush()
+        handle:close()
     end
 end

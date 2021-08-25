@@ -41,7 +41,7 @@ function Collection_SpawnPoint:EnsureLoaded()
         end
     end
 
-    FlushErrorFiles()
+    CloseErrorFiles()
 end
 
 function this.LoadFile(folder, file, list, const)
