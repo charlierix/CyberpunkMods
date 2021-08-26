@@ -187,6 +187,7 @@ end
 function TODO()
 
     -- Add a wpf app to help visualize a scene, move objects, etc
+    -- May want to use unity instead
 
     -- Add mode to this mod that does ray tracing and records hitpoints, materials
     -- This raw data dump can then be read in by the wpf app, cleaned up and use to recreate a scene

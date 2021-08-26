@@ -30,6 +30,7 @@ require "data/datautil"
 require "data/defaults"
 require "data/player"
 --require "data/serialization"      -- using json instead.  Keeping this around in case there is something that needs the more direct way of encoding
+require "data/util_data"
 
 require "processing/flightmode_transitions"
 require "processing/flightutil"

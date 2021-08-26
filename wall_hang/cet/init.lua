@@ -239,7 +239,13 @@ registerForEvent("onInit", function()
 
     o = GameObjectAccessor:new(wrappers)
 
-    keys = Keys:new(o, hangAction, const)
+    keys = Keys:new(o, const)
+
+
+    -- Temporary
+    keys:SetHangActions({hangAction})
+
+
     startStopTracker = InputTracker_StartStop:new(o, keys, const, hangAction == nil)
 
     Transition_ToStandard(vars, const, debug, o)

@@ -2,7 +2,7 @@ Keys = {}
 
 local this = {}
 
-function Keys:new(o, hangAction, const)
+function Keys:new(o, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -38,12 +38,16 @@ function Keys:new(o, hangAction, const)
         Left = "left",
         Right = "right",
         Jump = "jump",
-        --QuickMelee = "hang",       -- Q
     }
 
-    if hangAction then
-        obj.hardcodedMapping[hangAction] = "hang"
-    end
+    -- This holds the action name as the key, bool for value (true is pressed)
+    -- Only one of the set needs to be true for the wall hang to be considered true
+    obj.hangActions = {}
+
+    --QuickMelee = HANG,       -- Q
+    -- if hangAction then
+    --     obj.hardcodedMapping[hangAction] = HANG
+    -- end
 
     return obj
 end
@@ -58,6 +62,35 @@ function Keys:MapAction(action)
     --print(actionName .. ", pressed: " .. tostring(pressed) .. ", released: " .. tostring(released))
 
     self:MapAction_Fixed(action, actionName, pressed, released)
+
+    self:MapAction_Hang(actionName, pressed, released)
+end
+
+-- If any of these actions are seen, it will be considered an instruction to hang
+function Keys:SetHangActions(hangActions)
+    self:ClearHangActions()
+
+    if hangActions then
+        for i = 1, #hangActions do
+            self.hangActions[hangActions[i]] = false
+        end
+    end
+end
+function Keys:ClearHangActions()
+    for key, _ in pairs(self.hangActions) do
+        print("before remove")
+        ReportTable(self.hangActions)
+
+        self.hangActions[key] = nil
+
+        print("")
+        print("after remove")
+        ReportTable(self.hangActions)
+    end
+
+    print("")
+    print("after clear")
+    ReportTable(self.hangActions)
 end
 
 function Keys:PressedCustom(isDown)
@@ -70,6 +103,18 @@ function Keys:Tick()
     end
 
     self.prev_custom = self.custom
+
+    self.prev_hang = self.hang
+
+    -- Hang just needs one of them to be true (pressing a key will cause multiple actions to fire.  It would be
+    -- difficult to programatically know which action is the best one, so just look for any)
+    self.hang = false
+    for _, value in pairs(self.hangActions) do
+        if value == true then
+            self.hang = true
+            break
+        end
+    end
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -91,6 +136,20 @@ function Keys:MapAction_Fixed(action, actionName, pressed, released)
             end
 
             do return end
+        end
+    end
+end
+
+function Keys:MapAction_Hang(actionName, pressed, released)
+    for key, _ in pairs(self.hangActions) do
+        if key == actionName then
+            if pressed then
+                self.hangActions[key] = true
+            elseif released then
+                self.hangActions[key] = false
+            end
+
+            break
         end
     end
 end
