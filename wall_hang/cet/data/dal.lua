@@ -8,6 +8,8 @@ function EnsureTablesCreated()
     --https://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Settings_Int (Key TEXT NOT NULL UNIQUE, Value INTEGER NOT NULL);") end)
+
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS InputBindings (Binding TEXT NOT NULL, ActionName TEXT NOT NULL);") end)
 end
 
 -------------------------------------- Settings ---------------------------------------
@@ -91,6 +93,92 @@ function SetSetting_Bool(key, value)
         return errMsg
     else
         return "SetSetting_Bool: Unknown Error"
+    end
+end
+
+----------------------------------- Input Bindings ------------------------------------
+
+-- Returns { binding1 = {"action1", "action2"}, binding2 = {"action3", "action4"} }
+function GetAllInputBindings()
+    local sucess, rows = pcall(function ()
+        local stmt = db:prepare
+        [[
+            SELECT Binding, ActionName
+            FROM InputBindings
+        ]]
+
+        local retVal = {}
+        local foundOne = false
+
+        for row in this.Bind_Select_MultiplRows_Iterator(stmt, "GetAllInputBindings", empty_param) do
+            foundOne = true
+
+            if not retVal[row.Binding] then
+                retVal[row.Binding] = {}
+            end
+
+            table.insert(retVal[row.Binding], row.ActionName)
+        end
+
+        if foundOne then
+            return retVal
+        else
+            return nil
+        end
+    end)
+
+    if sucess then
+        return rows
+    else
+        return nil
+    end
+end
+
+-- This overwrites the current binding with the one passed in
+function SetInputBinding(binding, actionNames)
+    local sucess, errMsg = pcall(function ()
+        -- Delete Old
+        local stmt = db:prepare
+        [[
+            DELETE FROM InputBindings
+            WHERE Binding = ?
+        ]]
+
+        local errMsg = this.Bind_NonSelect(stmt, "SetInputBinding (delete)", binding)
+        if errMsg then
+            return errMsg
+        end
+
+        if actionNames then
+            -- Insert New
+            local sql = "INSERT INTO InputBindings VALUES "
+            local param_values = {}
+
+            for i = 1, #actionNames do
+                local append = "(?, ?)"
+
+                if i < #actionNames then
+                    append = append .. ", "
+                end
+
+                sql = sql .. append
+
+                table.insert(param_values, binding)
+                table.insert(param_values, actionNames[i])
+            end
+
+            stmt = db:prepare(sql)
+
+            return this.Bind_NonSelect(stmt, "SetInputBinding (insert", unpack(param_values))
+        else
+            return nil      -- nothing inserted, so no error message to return
+        end
+    end)
+
+    if sucess then
+        return errMsg
+    else
+        return "DeleteOldPlayerRows: Unknown Error"
     end
 end
 

@@ -16,7 +16,7 @@ function DefineWindow_Main(vars_ui, const)
     main.consoleWarning = this.Define_ConsoleWarning(const)
     main.should_autoshow = this.Define_ShouldAutoShow(main.consoleWarning, const)
 
-    --main.input_bindings = this.Define_InputBindings(const)
+    main.input_bindings = this.Define_InputBindings(const)
 
     main.okcancel = Define_OkCancelButtons(true, vars_ui, const)
 
@@ -58,9 +58,9 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const)
         this.Update_ShouldAutoShow(main.should_autoshow, vars_ui, const)
     end
 
-    -- if Draw_SummaryButton(main.input_bindings, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
-    --     TransitionWindows_InputBindings(vars_ui, const)
-    -- end
+    if Draw_SummaryButton(main.input_bindings, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
+        TransitionWindows_InputBindings(vars_ui, const)
+    end
 
     local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons)
 
@@ -134,22 +134,22 @@ function this.Update_ShouldAutoShow(def, vars_ui, const)
     SetSetting_Bool(const.settings.AutoShowConfig_WithConsole, def.isChecked)
 end
 
--- function this.Define_InputBindings(const)
---     -- SummaryButton
---     return
---     {
---         header_prompt = "Input Bindings",
+function this.Define_InputBindings(const)
+    -- SummaryButton
+    return
+    {
+        header_prompt = "Input Bindings",
 
---         position =
---         {
---             pos_x = 48,
---             pos_y = 72,
---             horizontal = const.alignment_horizontal.left,
---             vertical = const.alignment_vertical.top,
---         },
+        position =
+        {
+            pos_x = 48,
+            pos_y = 72,
+            horizontal = const.alignment_horizontal.left,
+            vertical = const.alignment_vertical.top,
+        },
 
---         invisible_name = "Main_InputBindings",
+        invisible_name = "Main_InputBindings",
 
---         CalcSize = CalcSize_SummaryButton,
---     }
--- end
+        CalcSize = CalcSize_SummaryButton,
+    }
+end

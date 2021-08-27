@@ -44,10 +44,11 @@ function Keys:new(o, const)
     -- Only one of the set needs to be true for the wall hang to be considered true
     obj.hangActions = {}
 
-    --QuickMelee = HANG,       -- Q
-    -- if hangAction then
-    --     obj.hardcodedMapping[hangAction] = HANG
-    -- end
+    -- This is a list that holds action names that are currently in a pressed state.  It is only managed between
+    -- calls to StartWatching and StopWatching (used by the input bindings window)
+    obj.watching = {}
+    obj.isWatching = false
+    obj.isWatching_latch = false        -- while latching, this won't remove unpressed buttons.  Without this, the input binding will miss quickly pressed buttons
 
     return obj
 end
@@ -64,6 +65,10 @@ function Keys:MapAction(action)
     self:MapAction_Fixed(action, actionName, pressed, released)
 
     self:MapAction_Hang(actionName, pressed, released)
+
+    if self.isWatching then
+        self:MapAction_Watching(actionName, pressed, released)
+    end
 end
 
 -- If any of these actions are seen, it will be considered an instruction to hang
@@ -117,6 +122,27 @@ function Keys:Tick()
     end
 end
 
+function Keys:StartWatching()
+    self.isWatching = true
+    self.isWatching_latch = false
+    self:ClearWatching()
+end
+function Keys:StopWatching()
+    self.isWatching = false
+    self.isWatching_latch = false
+    self:ClearWatching()
+end
+
+--NOTE: These only make sense while inside of StartWatching/StopWatching
+function Keys:StartLatchingWatched()
+    self.isWatching_latch = true
+    self:ClearWatching()
+end
+function Keys:StopLatchingWatched()
+    self.isWatching_latch = false
+    self:ClearWatching()
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function Keys:MapAction_Fixed(action, actionName, pressed, released)
@@ -152,4 +178,122 @@ function Keys:MapAction_Hang(actionName, pressed, released)
             break
         end
     end
+end
+
+function Keys:MapAction_Watching(actionName, pressed, released)
+    if pressed then
+        if not this.ShouldExclude(actionName) and not self.watching[actionName] then
+            self.watching[actionName] = self.o.timer
+        end
+
+    elseif released and not self.isWatching_latch then      -- only release when latch is false
+        if not this.ShouldExclude(actionName) then
+            self.watching[actionName] = nil
+        end
+    end
+end
+
+function Keys:ClearWatching()
+    for key, _ in pairs(self.watching) do
+        self.watching[key] = nil
+    end
+end
+
+local exclude_whole =
+{
+    -- Left Click
+    "MeleeAttack",
+    "RangedAttack",
+    "click",
+    "mouse_left",
+
+    -- Right Click
+    "MeleeBlock",
+    "RangedADS",
+
+    -- A
+    "UI_FakeMovement",
+    "option_switch_prev",
+    "option_switch_prev_settings",
+
+    -- D
+    "UI_Drop",
+    "option_switch_next",
+    "option_switch_next_settings",
+
+    -- S,W        -- A and D filters also eliminated these
+
+    -- Q
+    "ChoiceScrollUp",
+    "UI_MoveUp",
+    "popup_moveUp",
+
+    -- E
+    "ChoiceScrollDown",
+    "UI_MoveDown",
+    "popup_moveDown",
+    "IconicCyberware",
+    "PickUpBodyFromTakedown",
+
+    -- F
+    "ChoiceApply",
+    "Choice1_Release",
+    "UI_Apply",
+    "one_click_confirm",
+    "track_quest",
+
+    -- Space
+    "UI_Skip",
+
+    -- Arrow Left
+    "UI_MoveLeft",
+    "navigate_left",
+    "popup_moveLeft",
+
+    -- Arrow Right
+    "UI_MoveRight",
+    "navigate_right",
+    "popup_moveRight",
+
+    -- Arrow Up
+    "UI_DialogFocus",
+    "navigate_up",
+
+    -- Arrow Down
+    "navigate_down",
+
+}
+local exclude_startswith =
+{
+    "world_map_",           -- left click, right click (maybe more)
+}
+
+function this.ShouldExclude(actionName)
+    for i = 1, #exclude_whole do
+        if actionName == exclude_whole[i] then
+            return true
+        end
+    end
+
+    for i = 1, #exclude_startswith do
+        if this.StartsWith(actionName, exclude_startswith[i]) then
+            return true
+        end
+    end
+
+    -- for i = 1, #exclude_endswith do
+    --     if this.EndsWith(actionName, exclude_endswith[i]) then
+    --         return true
+    --     end
+    -- end
+
+    return false
+end
+
+function this.StartsWith(text, prefix)
+    --return text:find(prefix, 1, true) == 1        -- don't use find, it's a regex variant, and would require escaping
+    return text:sub(1, #prefix) == prefix
+end
+function this.EndsWith(text, suffix)
+    return text:sub(-#suffix) == suffix
 end

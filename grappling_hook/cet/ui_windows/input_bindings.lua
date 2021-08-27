@@ -343,7 +343,7 @@ function this.Define_WatchedActions(const)
 end
 function this.Refresh_WatchedActions(def, keys)
     --TODO: It's really inefficient to rebuild this every frame.  Do some compares to see if anything changed
-    --But the list will likely be empty most of the time, so that might be a lot of errort for nothing
+    --But the list will likely be empty most of the time, so that might be a lot of effort for nothing
 
     local sets = {}
 

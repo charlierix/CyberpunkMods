@@ -421,7 +421,6 @@ registerForEvent("onInit", function()
     o = GameObjectAccessor:new(wrappers)
 
     keys = Keys:new(o)
-
     vars_ui.keys = keys
 
     InitializeKeyTrackers(vars, keys, o, const)

@@ -25,6 +25,7 @@ require "core/strings"
 require "core/util"
 
 require "data/dal"
+require "data/util_data"
 
 require "processing/flightmode_transitions"
 require "processing/flightutil"
@@ -66,26 +67,12 @@ require "ui_framework/util_layout"
 require "ui_framework/util_misc"
 require "ui_framework/util_setup"
 
+require "ui_windows/input_bindings"
 require "ui_windows/main"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 local this = {}
-
---------------------------------------------------------------------
----                  User Preference Constants                   ---
---------------------------------------------------------------------
-
--- If you want to use an action that the game sees (like Q, F, Shift), then set this here
---
--- This doesn't map directly to the key, instead it maps to an action that the key produces
---
--- If you want a different action, the easiest way is to use grappling hook's input bindings
--- config to see what it's called
-
---NOTE: This is case sensitive
---NOTE: Comment this out if you want it ignored (and use the override instead)
-local hangAction = "QuickMelee"      -- Q key (or equivalent button on a controller)
 
 --------------------------------------------------------------------
 ---                          Constants                           ---
@@ -111,7 +98,9 @@ local const =
             --"realism"
     ),
 
-    settings = CreateEnum("AutoShowConfig_WithConsole"),
+    bindings = CreateEnum("hang", "wall_run"),
+
+    settings = CreateEnum("AutoShowConfig_WithConsole", "WallHangKey_UseCustom"),
 
     rayFrom_Z = 1.5,
     rayLen = 1.2,
@@ -143,6 +132,8 @@ local debug = {}
 local vars =
 {
     --flightMode,       -- Holds what state of flight it is in.  One of const.flightModes
+
+    --wallhangkey_usecustom     -- true: use the cet binding, false: use the action binding
 
     -- These get populated in Transition_ToHang() and/or Transition_ToJump_Calculate()
     --hangPos,
@@ -240,13 +231,11 @@ registerForEvent("onInit", function()
     o = GameObjectAccessor:new(wrappers)
 
     keys = Keys:new(o, const)
+    vars_ui.keys = keys
 
+    InitializeKeyBindings(keys, vars, const)
 
-    -- Temporary
-    keys:SetHangActions({hangAction})
-
-
-    startStopTracker = InputTracker_StartStop:new(o, keys, const, hangAction == nil)
+    startStopTracker = InputTracker_StartStop:new(o, keys, const, vars.wallhangkey_usecustom)
 
     Transition_ToStandard(vars, const, debug, o)
     TransitionWindows_Main(vars_ui, const)
@@ -337,30 +326,30 @@ end)
 
 -- end)
 
--- registerHotkey("WallHang_Config", "Show Config", function()
---     if shouldShowConfig then
---         isConfigRepress = true      -- this is used as a request to close.  The window will only close if they are on a main screen, and not dirty
---     end
+registerHotkey("WallHang_Config", "Show Config", function()
+    if shouldShowConfig then
+        isConfigRepress = true      -- this is used as a request to close.  The window will only close if they are on a main screen, and not dirty
+    end
 
---     -- This only shows the config.  They need to push a close button (and possibly ok/cancel for saving)
---     shouldShowConfig = true
--- end)
--- registerForEvent("onOverlayOpen", function()
---     if not vars_ui.autoshow_withconsole then
---         do return end
---     end
+    -- This only shows the config.  They need to push a close button (and possibly ok/cancel for saving)
+    shouldShowConfig = true
+end)
+registerForEvent("onOverlayOpen", function()
+    if not vars_ui.autoshow_withconsole then
+        do return end
+    end
 
---     shouldShowConfig = true
--- end)
--- registerForEvent("onOverlayClose", function()
---     if not vars_ui.autoshow_withconsole then
---         do return end
---     end
+    shouldShowConfig = true
+end)
+registerForEvent("onOverlayClose", function()
+    if not vars_ui.autoshow_withconsole then
+        do return end
+    end
 
---     if shouldShowConfig then
---         isConfigRepress = true
---     end
--- end)
+    if shouldShowConfig then
+        isConfigRepress = true
+    end
+end)
 
 registerInput("WallHang_CustomHang", "Hang (override default)", function(isDown)
     keys:PressedCustom(isDown)
@@ -372,15 +361,15 @@ registerForEvent("onDraw", function()
         do return end
     end
 
-    -- if shouldShowConfig then
-    --     shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, o, const)
-    --     isConfigRepress = false
+    if shouldShowConfig then
+        shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, o, const)
+        isConfigRepress = false
 
-    --     if not shouldShowConfig then
-    --         -- They closed from an arbitrary window, make sure the next time config starts at main
-    --         TransitionWindows_Main(vars_ui, const)
-    --     end
-    -- end
+        if not shouldShowConfig then
+            -- They closed from an arbitrary window, make sure the next time config starts at main
+            TransitionWindows_Main(vars_ui, const)
+        end
+    end
 
     if const.shouldShowDebugWindow then
         DrawDebugWindow(debug)
@@ -401,6 +390,12 @@ end
 --------------------------------------------------------------------
 
 function TODO()
+
+    -- Enable double jump
+    --  After they jump off a wall, reset the game's jump count so they can do a double jump
+
+    -- Magnetism
+    --  While they are holding in the wall hang key, search out about 4 and apply a force toward the wall
 
     -- Hang+Direction
     --  While hanging, if they hold a direction, then crawl along the wall in that direction
