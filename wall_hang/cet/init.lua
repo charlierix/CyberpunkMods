@@ -235,7 +235,7 @@ registerForEvent("onInit", function()
 
     InitializeKeyBindings(keys, vars, const)
 
-    startStopTracker = InputTracker_StartStop:new(o, keys, const, vars.wallhangkey_usecustom)
+    startStopTracker = InputTracker_StartStop:new(o, vars, keys, const)
 
     Transition_ToStandard(vars, const, debug, o)
     TransitionWindows_Main(vars_ui, const)
@@ -352,8 +352,7 @@ registerForEvent("onOverlayClose", function()
 end)
 
 registerInput("WallHang_CustomHang", "Hang (override default)", function(isDown)
-    keys:PressedCustom(isDown)
-    startStopTracker:SawCustom()
+    keys:PressedCustom_Hang(isDown)
 end)
 
 registerForEvent("onDraw", function()

@@ -1,6 +1,6 @@
 InputTracker_StartStop = {}
 
-function InputTracker_StartStop:new(o, keys, const, is_keysHang_empty)
+function InputTracker_StartStop:new(o, vars, keys, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -8,10 +8,9 @@ function InputTracker_StartStop:new(o, keys, const, is_keysHang_empty)
     obj.max_jump = 0.1
 
     obj.o = o
+    obj.vars = vars
     obj.keys = keys
     obj.const = const
-
-    obj.uses_custom = is_keysHang_empty      -- custom could also be unused, but don't even bother looking at keys.hang
 
     obj.jump_downTime = nil
     obj.saw_jump = false        -- this is a latch so jump is only reported the first time (when they hold in the jump key)
@@ -32,18 +31,14 @@ function InputTracker_StartStop:Tick()
     end
 end
 
-function InputTracker_StartStop:SawCustom()
-    self.uses_custom = true
-end
-
 -- Returns
 --  isHangDown, isJumpDown
 function InputTracker_StartStop:GetButtonState()
     -- Hang doesn't care how long the button has been held down
     local isHangDown = false
 
-    if self.uses_custom then
-        isHangDown = self.keys.custom
+    if self.vars.wallhangkey_usecustom then
+        isHangDown = self.keys.custom_hang
     else
         isHangDown = self.keys.hang
     end

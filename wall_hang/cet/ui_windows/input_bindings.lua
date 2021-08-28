@@ -25,6 +25,9 @@ function DefineWindow_InputBindings(vars_ui, const)
     --  This controls whether to show action name binding
     --  vars.wallhangkey_usecustom
 
+    -- Checkbox for whether to have antigrav (Grapple.anti_gravity)
+    input_bindings.usecustom_wallhang = this.Define_UseCustomWallHang(const)
+    input_bindings.usecustom_wallhang_help = this.Define_UseCustomWallHang_Help(input_bindings.usecustom_wallhang, const)
 
 
 
@@ -69,6 +72,8 @@ function ActivateWindow_InputBindings(vars_ui, const)
         DefineWindow_InputBindings(vars_ui, const)
     end
 
+    vars_ui.input_bindings.usecustom_wallhang.isChecked = nil
+
     -- local bind_buttons = vars_ui.input_bindings.bind_buttons
 
     -- for i = 1, #bind_buttons do
@@ -86,11 +91,13 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, co
 
     this.Refresh_WatchedActions(input_bindings.watchedActions, vars_ui.keys)
 
+    this.Refresh_UseCustomWallHang(input_bindings.usecustom_wallhang, vars)
+
     -- for i = 1, #input_bindings.bind_buttons do
     --     this.Refresh_BindButtons_Summary(input_bindings.bind_buttons[i], vars.startStopTracker)
     -- end
 
-    this.Refresh_IsDirty(input_bindings.okcancel, input_bindings.bind_buttons)
+    this.Refresh_IsDirty(input_bindings.okcancel, vars, input_bindings.usecustom_wallhang, nil)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -109,6 +116,11 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, co
     Draw_HelpButton(input_bindings.help2_button, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     Draw_MultiItemDisplayList(input_bindings.watchedActions, vars_ui.style.multiitem_displaylist, window.left, window.top, vars_ui.line_heights)
+
+
+    Draw_CheckBox(input_bindings.usecustom_wallhang, vars_ui.style.checkbox, vars_ui.style.colors)
+    Draw_HelpButton(input_bindings.usecustom_wallhang_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+
 
     -- if setting_bind then
     --     -------------- Changing Binding --------------
@@ -162,7 +174,8 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, co
     -- OK/Cancel
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(input_bindings.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
-        this.Save(input_bindings.bind_buttons, vars.startStopTracker, vars_ui.keys)
+        --this.Save(input_bindings.bind_buttons, vars.startStopTracker, vars_ui.keys)
+        this.Save(vars, const, input_bindings.usecustom_wallhang)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
@@ -183,7 +196,7 @@ function this.Define_ConsoleWarning1(const)
 
         position =
         {
-            pos_x = -160,
+            pos_x = -140,
             pos_y = 48,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.top,
@@ -338,13 +351,13 @@ function this.Define_WatchedActions(const)
     {
         sets = {},
 
-        width = 288,
-        height = 600,
+        width = 240,
+        height = 370,
 
         position =
         {
-            pos_x = 48,
-            pos_y = 0,
+            pos_x = 42,
+            pos_y = 12,
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.center,
         },
@@ -376,8 +389,69 @@ function this.Refresh_WatchedActions(def, keys)
     MultiItemDisplayList_SetsChanged(def)
 end
 
-function this.Refresh_IsDirty(def, bind_buttons)
+
+
+
+
+function this.Define_UseCustomWallHang(const)
+    -- CheckBox
+    return
+    {
+        invisible_name = "InputBindings_UseCustomWallHang",
+
+        text = "Use CET Binding (wallhang)",
+
+        isEnabled = true,
+
+        position =
+        {
+            pos_x = -180,
+            pos_y = -120,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_CheckBox,
+    }
+end
+function this.Refresh_UseCustomWallHang(def, vars)
+    --NOTE: TransitionWindows_Straight_AntiGrav sets this to nil
+    if def.isChecked == nil then
+        def.isChecked = vars.wallhangkey_usecustom
+    end
+end
+
+function this.Define_UseCustomWallHang_Help(parent, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "InputBindings_UseCustomWallHang_Help",
+
+        position = GetRelativePosition_HelpButton(parent, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[  Checked: Use the key in cet -> bindings -> inputs
+Unchecked: Use the binding defined in the button below
+
+You would only want to check this if the key to use isn't an action known by the game (like F1 or something)]]
+
+    return retVal
+end
+
+
+
+
+
+function this.Refresh_IsDirty(def, vars, usecustom_wallhang, bind_buttons)
     def.isDirty = false
+
+    if vars.wallhangkey_usecustom ~= usecustom_wallhang.isChecked then
+        def.isDirty = true
+        do return end
+    end
 
     -- for i = 1, #bind_buttons do
     --     if bind_buttons[i].isDeleteChange or bind_buttons[i].newActions then
@@ -387,7 +461,16 @@ function this.Refresh_IsDirty(def, bind_buttons)
     -- end
 end
 
-function this.Save(bind_buttons, startStopTracker, keys)
+--function this.Save(bind_buttons, startStopTracker, keys)
+function this.Save(vars, const, usecustom_wallhang)
+
+    vars.wallhangkey_usecustom = usecustom_wallhang.isChecked
+
+    SetSetting_Bool(const.settings.WallHangKey_UseCustom, vars.wallhangkey_usecustom)
+
+
+
+
     -- -- Update DB and startStopTracker
     -- for i = 1, #bind_buttons do
     --     if bind_buttons[i].isDeleteChange then

@@ -19,7 +19,7 @@ function Keys:new(o, const)
     obj.right = false
     obj.jump = false
     obj.hang = false
-    obj.custom = false      -- this is set from PressedCustom()
+    obj.custom_hang = false      -- this is set from PressedCustom()
 
     obj.prev_forward = false
     obj.prev_backward = false
@@ -27,7 +27,7 @@ function Keys:new(o, const)
     obj.prev_right = false
     obj.prev_jump = false
     obj.prev_hang = false
-    obj.prev_custom = false
+    obj.prev_custom_hang = false
 
     -- This is a mapping between action name and the hardcoded properties above (the strings must match exactly)
     -- Key is the actionName, value is self.xxx
@@ -98,8 +98,8 @@ function Keys:ClearHangActions()
     ReportTable(self.hangActions)
 end
 
-function Keys:PressedCustom(isDown)
-    self.custom = isDown
+function Keys:PressedCustom_Hang(isDown)
+    self.custom_hang = isDown
 end
 
 function Keys:Tick()
@@ -107,7 +107,7 @@ function Keys:Tick()
         self["prev_" .. propName] = self[propName]
     end
 
-    self.prev_custom = self.custom
+    self.prev_custom_hang = self.custom_hang
 
     self.prev_hang = self.hang
 

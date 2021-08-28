@@ -176,7 +176,7 @@ function this.Define_HasAntiGrav(const)
     }
 end
 function this.Refresh_HasAntiGrav(def, player, grapple, antigrav, changes)
-    --NOTE: TransitionWindows_Straight_AntiGrav sets this to nil
+    --NOTE: ActivateWindow_GrappleStraight_AntiGrav sets this to nil
     if def.isChecked == nil then
         def.isChecked = grapple.anti_gravity ~= nil
     end

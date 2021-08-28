@@ -19,8 +19,8 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function this.Define_ConfigWindow(screen)
-    local width = 700
-    local height = 525
+    local width = 800
+    local height = 600
 
     return
     {
