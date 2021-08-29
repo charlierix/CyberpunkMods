@@ -71,6 +71,7 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, window, const)
     end
 
     Draw_CheckBox(main.latch_wallhang, vars_ui.style.checkbox, vars_ui.style.colors)
+    Draw_HelpButton(main.latch_wallhang_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     local isOKClicked, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
@@ -208,7 +209,8 @@ function this.Define_LatchWallHang_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[  checked: Once you jump, you only need to press the wall hang key once
+[[checked: Once you jump, you only need to press the wall hang key once
+
 uncheckd: The wall hang key must be held in
 
 If latch is set, then pressing the key again will disengage (also jumping from the wall)]]

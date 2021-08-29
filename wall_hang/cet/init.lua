@@ -383,6 +383,12 @@ function TODO()
 
     -- Enable double jump
     --  After they jump off a wall, reset the game's jump count so they can do a double jump
+    --
+    --  public class DoubleJumpDecisions extends JumpDecisions {
+    --      protected const func EnterCondition(
+    --          stateContext.SetPermanentIntParameter(n"currentNumberOfJumps", 0, true);
+    --      ToDoubleJump
+    --          if stateContext.GetIntParameter(n"currentNumberOfJumps", true) >= 2 {
 
     -- Magnetism
     --  While they are holding in the wall hang key, search out about 4 and apply a force toward the wall
@@ -419,12 +425,5 @@ function TODO()
 
 	-- Purchase
 	--	For bare hand, require them to purchase this before it starts working
-
-	-- Latch hang key
-	--	Make an option for the hang key to be toggled instead of held in
-	--	They will need to press the key at some point while mid air, but then it will stay true until they:
-	--		Jump off the wall
-	--		Touch the ground
-	--		Press it again
 
 end
