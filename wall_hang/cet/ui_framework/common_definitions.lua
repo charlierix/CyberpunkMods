@@ -95,10 +95,10 @@ function Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, roundDigits
 end
 
 -- This is for help buttons to the right of a label/checkbox
-function GetRelativePosition_HelpButton(parent, const)
+function GetRelativePosition_HelpButton(relative_to, const)
     return
     {
-        relative_to = parent,
+        relative_to = relative_to,
 
         pos_x = 10,
         pos_y = 0,
@@ -111,10 +111,10 @@ function GetRelativePosition_HelpButton(parent, const)
     }
 end
 -- This is for labels/checkboxes above something (like slider, textbox)
-function GetRelativePosition_LabelAbove(parent, const)
+function GetRelativePosition_LabelAbove(relative_to, const)
     return
     {
-        relative_to = parent,
+        relative_to = relative_to,
 
         pos_x = 1,
         pos_y = 13,

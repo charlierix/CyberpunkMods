@@ -37,10 +37,10 @@ function InputTracker_StartStop:GetButtonState()
     -- Hang doesn't care how long the button has been held down
     local isHangDown = false
 
-    if self.vars.wallhangkey_usecustom then
-        isHangDown = self.keys.custom_hang
-    else
-        isHangDown = self.keys.hang
+    if self.keys.custom_hang then       -- don't want to force the checkbox to be checked.  From the user's perspective, they assigned a custom key, they're pressing that key.  How do they know to look two screens deep to also check some checkbox?
+        isHangDown = true
+    elseif not self.vars.wallhangkey_usecustom and self.keys.hang then      -- this looks at the checkbox==false, because the only way for it to be checked is if they checked it
+        isHangDown = true
     end
 
     -- Jump only reports true if it was very recently pressed

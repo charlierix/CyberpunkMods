@@ -83,19 +83,8 @@ function Keys:SetHangActions(hangActions)
 end
 function Keys:ClearHangActions()
     for key, _ in pairs(self.hangActions) do
-        print("before remove")
-        ReportTable(self.hangActions)
-
         self.hangActions[key] = nil
-
-        print("")
-        print("after remove")
-        ReportTable(self.hangActions)
     end
-
-    print("")
-    print("after clear")
-    ReportTable(self.hangActions)
 end
 
 function Keys:PressedCustom_Hang(isDown)
@@ -143,6 +132,23 @@ function Keys:StopLatchingWatched()
     self:ClearWatching()
 end
 
+function Keys:GetActionNames(binding)
+    local retVal = {}
+
+    if binding == self.const.bindings.hang then
+        for actionName, _ in pairs(self.hangActions) do
+            retVal[#retVal+1] = actionName
+        end
+    else
+        return { "ERROR: " .. binding}
+    end
+
+    if #retVal > 0 then
+        return retVal
+    else
+        return nil
+    end
+end
 ----------------------------------- Private Methods -----------------------------------
 
 function Keys:MapAction_Fixed(action, actionName, pressed, released)

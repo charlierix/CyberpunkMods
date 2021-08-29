@@ -219,5 +219,19 @@ function TODO()
 	--	Create a discord server as a place for people to upload their stuff
 	--	Provide a way for people to vote
 	--	If it becomes popular, others could make their own nexus pages that are hand picked collections
+	
+	-- Signs
+	--	Give items an optional sign property
+	--	Text
+	--	Enum for color scheme
+	--	Or background/foreground color
+	
+	-- Audio
+	--	Give items an optional audio property
+	--
+	--	Make an optional script language that lets them play notes
+	--	tone+duration, gap+duration
+	--	https://en.wikipedia.org/wiki/ABC_notation
+	--	https://editor.drawthedots.com/
 
 end

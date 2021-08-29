@@ -310,20 +310,6 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 -- registerHotkey("WallHangTesterButton", "tester hotkey", function()
-
---     o:GetCamera()
---     if not o.lookdir_forward then
---         do return end
---     end
-
---     local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
---     local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + const.rayFrom_Z + (o.lookdir_forward.z * const.rayLen), 1)
-
---     local hit, normal = o:RayCast(fromPos, toPos, true)
-
---     print(vec_str(hit))
---     print(vec_str(normal))
-
 -- end)
 
 registerHotkey("WallHang_Config", "Show Config", function()

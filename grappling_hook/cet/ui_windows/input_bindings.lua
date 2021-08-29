@@ -447,7 +447,7 @@ function this.Define_BindButtons_SummaryHoverLabel(x, y, const)
     -- Label
     return
     {
-        text = "Click to edit bindings",
+        text = "Click to edit binding",
 
         position =
         {

@@ -17,23 +17,11 @@ function DefineWindow_InputBindings(vars_ui, const)
 
     input_bindings.watchedActions = this.Define_WatchedActions(const)
 
+    -------------- Standard Display --------------
 
-
-
-
-    --TODO: Checkbox - Use custom
-    --  This controls whether to show action name binding
-    --  vars.wallhangkey_usecustom
-
-    -- Checkbox for whether to have antigrav (Grapple.anti_gravity)
+    -- Checkbox for whether to use action name binding (vars.wallhangkey_usecustom)
     input_bindings.usecustom_wallhang = this.Define_UseCustomWallHang(const)
     input_bindings.usecustom_wallhang_help = this.Define_UseCustomWallHang_Help(input_bindings.usecustom_wallhang, const)
-
-
-
-
-
-    -------------- Standard Display --------------
 
     -- {
     --     {
@@ -48,17 +36,16 @@ function DefineWindow_InputBindings(vars_ui, const)
     --     {...},
     --     {...},
     -- }
-    --input_bindings.bind_buttons = this.Define_BindButtons(const)
+    input_bindings.bind_buttons = this.Define_BindButtons(input_bindings.usecustom_wallhang, const)
 
-    --input_bindings.restore_defaults = this.Define_RestoreDefaults(vars_ui, const)
+    input_bindings.restore_defaults = this.Define_RestoreDefaults(vars_ui, const)
 
     -------------- Changing Binding --------------
 
-    -- input_bindings.instruction1 = this.Define_Instruction1(const)
-    -- input_bindings.instruction2 = this.Define_Instruction2(const)
-    -- input_bindings.instruction3 = this.Define_Instruction3(const)
+    input_bindings.instruction1 = this.Define_Instruction1(const)
+    input_bindings.instruction2 = this.Define_Instruction2(const)
 
-    -- input_bindings.cancel_bind = this.Define_CancelBind(const)
+    input_bindings.cancel_bind = this.Define_CancelBind(const)
 
     ----------------------------------------------
 
@@ -74,12 +61,12 @@ function ActivateWindow_InputBindings(vars_ui, const)
 
     vars_ui.input_bindings.usecustom_wallhang.isChecked = nil
 
-    -- local bind_buttons = vars_ui.input_bindings.bind_buttons
+    local bind_buttons = vars_ui.input_bindings.bind_buttons
 
-    -- for i = 1, #bind_buttons do
-    --     bind_buttons[i].isDeleteChange = false
-    --     bind_buttons[i].newActions = nil
-    -- end
+    for i = 1, #bind_buttons do
+        bind_buttons[i].isDeleteChange = false
+        bind_buttons[i].newActions = nil
+    end
 
     vars_ui.keys:StartWatching()
 end
@@ -93,11 +80,11 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, co
 
     this.Refresh_UseCustomWallHang(input_bindings.usecustom_wallhang, vars)
 
-    -- for i = 1, #input_bindings.bind_buttons do
-    --     this.Refresh_BindButtons_Summary(input_bindings.bind_buttons[i], vars.startStopTracker)
-    -- end
+    for i = 1, #input_bindings.bind_buttons do
+        this.Refresh_BindButtons_Summary(input_bindings.bind_buttons[i], vars_ui.keys)
+    end
 
-    this.Refresh_IsDirty(input_bindings.okcancel, vars, input_bindings.usecustom_wallhang, nil)
+    this.Refresh_IsDirty(input_bindings.okcancel, vars, input_bindings.usecustom_wallhang, input_bindings.bind_buttons)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -117,65 +104,71 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, co
 
     Draw_MultiItemDisplayList(input_bindings.watchedActions, vars_ui.style.multiitem_displaylist, window.left, window.top, vars_ui.line_heights)
 
+    if setting_bind then
+        -------------- Changing Binding --------------
 
-    Draw_CheckBox(input_bindings.usecustom_wallhang, vars_ui.style.checkbox, vars_ui.style.colors)
-    Draw_HelpButton(input_bindings.usecustom_wallhang_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        local newActions, isFinishedWaiting = this.GetFinalObservedActionNames(vars_ui.keys, o)
+        if isFinishedWaiting then
+            setting_bind.newActions = newActions
+            setting_bind.isDeleteChange = false
 
+            setting_bind = nil
 
-    -- if setting_bind then
-    --     -------------- Changing Binding --------------
+            vars_ui.keys:StopLatchingWatched()
+        end
 
-    --     local newActions, isFinishedWaiting = this.GetFinalObservedActionNames(vars_ui.keys, vars.startStopTracker, o)
-    --     if isFinishedWaiting then
-    --         setting_bind.newActions = newActions
-    --         setting_bind.isDeleteChange = false
+        Draw_Label(input_bindings.instruction1, vars_ui.style.colors)
+        Draw_Label(input_bindings.instruction2, vars_ui.style.colors)
 
-    --         setting_bind = nil
+        if Draw_Button(input_bindings.cancel_bind, vars_ui.style.button) then
+            setting_bind = nil
+        end
+    else
+        -------------- Standard Display --------------
 
-    --         vars_ui.keys:StopLatchingWatched()
-    --     end
+        Draw_CheckBox(input_bindings.usecustom_wallhang, vars_ui.style.checkbox, vars_ui.style.colors)
+        Draw_HelpButton(input_bindings.usecustom_wallhang_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
-    --     Draw_Label(input_bindings.instruction1, vars_ui.style.colors)
-    --     Draw_Label(input_bindings.instruction2, vars_ui.style.colors)
-    --     Draw_Label(input_bindings.instruction3, vars_ui.style.colors)
+        for i = 1, #input_bindings.bind_buttons do
+            local current = input_bindings.bind_buttons[i]
 
-    --     if Draw_Button(input_bindings.cancel_bind, vars_ui.style.button) then
-    --         setting_bind = nil
-    --     end
-    -- else
-    --     -------------- Standard Display --------------
+            local shouldShow = false
+            if current.binding == const.bindings.hang then
+                shouldShow = not input_bindings.usecustom_wallhang.isChecked
+            else
+                print("ERROR: " .. current.binding)
+            end
 
-    --     for i = 1, #input_bindings.bind_buttons do
-    --         local current = input_bindings.bind_buttons[i]
+            if shouldShow then
+                local summary_click, summary_hover = Draw_SummaryButton(current.summary, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
+                local remove_click, remove_hover = Draw_RemoveButton(current.remove, vars_ui.style.removeButton, window.left, window.top)
 
-    --         local summary_click, summary_hover = Draw_SummaryButton(current.summary, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
-    --         local remove_click, remove_hover = Draw_RemoveButton(current.remove, vars_ui.style.removeButton, window.left, window.top)
+                if remove_hover then
+                    this.Draw_Remove_Tooltip(current, vars_ui)
+                elseif summary_hover then
+                    this.Draw_Summary_Tooltips(current, vars_ui, window)
+                end
 
-    --         if remove_hover then
-    --             this.Draw_Remove_Tooltip(current, vars_ui)
-    --         elseif summary_hover then
-    --             this.Draw_Summary_Tooltips(current, vars, vars_ui, window)
-    --         end
+                if remove_click then
+                    current.isDeleteChange = true
+                    current.newActions = nil
+                elseif summary_click then
+                    setting_bind = current
+                    vars_ui.keys:StartLatchingWatched()     -- don't want quickly pressed keys to be forgotten
+                end
+            end
+        end
 
-    --         if remove_click then
-    --             current.isDeleteChange = true
-    --             current.newActions = nil
-    --         elseif summary_click then
-    --             setting_bind = current
-    --             vars_ui.keys:StartLatchingWatched()     -- don't want quickly pressed keys to be forgotten
-    --         end
-    --     end
-
-    --     if Draw_Button(input_bindings.restore_defaults, vars_ui.style.button) then
-    --         this.RestoreDefaults(input_bindings.bind_buttons, const)
-    --     end
-    -- end
+        if Draw_Button(input_bindings.restore_defaults, vars_ui.style.button) then
+            this.RestoreDefaults(input_bindings.bind_buttons, const)
+        end
+    end
 
     -- OK/Cancel
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(input_bindings.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
         --this.Save(input_bindings.bind_buttons, vars.startStopTracker, vars_ui.keys)
-        this.Save(vars, const, input_bindings.usecustom_wallhang)
+        this.Save(vars, const, input_bindings.usecustom_wallhang, input_bindings.bind_buttons, vars_ui.keys)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
@@ -207,7 +200,7 @@ function this.Define_ConsoleWarning1(const)
         CalcSize = CalcSize_Label,
     }
 end
-function this.Define_ConsoleWarning2(parent, const)
+function this.Define_ConsoleWarning2(relative_to, const)
     -- Label
     return
     {
@@ -215,7 +208,7 @@ function this.Define_ConsoleWarning2(parent, const)
 
         position =
         {
-            relative_to = parent,
+            relative_to = relative_to,
 
             pos_x = 0,
             pos_y = 8,
@@ -233,7 +226,7 @@ function this.Define_ConsoleWarning2(parent, const)
     }
 end
 
-function this.Define_Help1_Label(parent, const)
+function this.Define_Help1_Label(relative_to, const)
     -- Label
     return
     {
@@ -241,7 +234,7 @@ function this.Define_Help1_Label(parent, const)
 
         position =
         {
-            relative_to = parent,
+            relative_to = relative_to,
 
             pos_x = 10,
             pos_y = 0,
@@ -276,16 +269,16 @@ function this.Define_Help1_Button(const)
     }
 
     retVal.tooltip =
-    [[A key can only be tied to a CET input once for a single mod
-    
-    Since wall hang will only be used when close to a wall, you'll probably want to repurpose an existing key (quick melee - Q is the default)
-    
-    If you want to use a custom key from the cet bindings, then remove the binding on this page and just use the cet binding]]
+[[A key can only be tied to a CET input once for a single mod
+
+Since wall hang will only be used when close to a wall, you'll probably want to repurpose an existing key (quick melee - Q is the default)
+
+If you want to use a custom key from the cet bindings, then remove the binding on this page and just use the cet binding]]
 
     return retVal
 end
 
-function this.Define_Help2_Label(parent, const)
+function this.Define_Help2_Label(relative_to, const)
     -- Label
     return
     {
@@ -293,7 +286,7 @@ function this.Define_Help2_Label(parent, const)
 
         position =
         {
-            relative_to = parent,
+            relative_to = relative_to,
 
             pos_x = 10,
             pos_y = 0,
@@ -310,7 +303,7 @@ function this.Define_Help2_Label(parent, const)
         CalcSize = CalcSize_Label,
     }
 end
-function this.Define_Help2_Button(parent, const)
+function this.Define_Help2_Button(relative_to, const)
     -- HelpButton
     local retVal =
     {
@@ -318,7 +311,7 @@ function this.Define_Help2_Button(parent, const)
 
         position =
         {
-            relative_to = parent,
+            relative_to = relative_to,
 
             pos_x = 0,
             pos_y = 8,
@@ -334,13 +327,13 @@ function this.Define_Help2_Button(parent, const)
     }
 
     retVal.tooltip =
-    [[When in game keys are pressed, there tend to be several actions tied to that single key.  Even more if you interact with in game objects
+[[When in game keys are pressed, there tend to be several actions tied to that single key.  Even more if you interact with in game objects
 
-    If one of these secondary action names is causing problems with grapple activating, you can suppress them by adding to a list of action names near the bottom of ui\keys.lua
+If one of these secondary action names is causing problems with grapple activating, you can suppress them by adding to a list of action names near the bottom of ui\keys.lua
 
-    This list is case sensitive
+This list is case sensitive
 
-    Also, post a message on nexus, so it can be fixed for everyone]]
+Also, post a message on nexus, so it can be fixed for everyone]]
 
     return retVal
 end
@@ -389,10 +382,6 @@ function this.Refresh_WatchedActions(def, keys)
     MultiItemDisplayList_SetsChanged(def)
 end
 
-
-
-
-
 function this.Define_UseCustomWallHang(const)
     -- CheckBox
     return
@@ -421,13 +410,13 @@ function this.Refresh_UseCustomWallHang(def, vars)
     end
 end
 
-function this.Define_UseCustomWallHang_Help(parent, const)
+function this.Define_UseCustomWallHang_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "InputBindings_UseCustomWallHang_Help",
 
-        position = GetRelativePosition_HelpButton(parent, const),
+        position = GetRelativePosition_HelpButton(relative_to, const),
 
         CalcSize = CalcSize_HelpButton,
     }
@@ -441,9 +430,272 @@ You would only want to check this if the key to use isn't an action known by the
     return retVal
 end
 
+function this.Define_BindButtons(checkbox_wallhang, const)
+    local retVal = {}
 
+    -- Wall Hang
+    retVal[#retVal+1] = this.Define_BindButtons_Set(const.bindings.hang, checkbox_wallhang, const)
 
+    --TODO: Wall Run
 
+    return retVal
+end
+function this.Define_BindButtons_Set(binding, relative_to, const)
+    local summary = this.Define_BindButtons_Summary(relative_to, binding, const)
+    local remove = this.Define_BindButtons_Remove(summary, binding, const)
+    local summary_hover_label = this.Define_BindButtons_SummaryHoverLabel(summary, const)
+    local remove_hover_label = this.Define_BindButtons_RemoveHoverLabel(summary, const)
+
+    return
+    {
+        binding = binding,
+
+        summary = summary,
+        remove = remove,
+        summary_hover_label = summary_hover_label,
+        remove_hover_label = remove_hover_label,
+
+        isDeleteChange = false,
+        --newActions = nil,     -- this won't stick unless there's a value.  But this property will exist if they change values
+    }
+end
+function this.Define_BindButtons_Summary(relative_to, name, const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 18,
+
+            relative_horz = const.alignment_horizontal.center,
+            horizontal = const.alignment_horizontal.center,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        min_width = 80,
+        min_height = 20,
+
+        -- Refresh will either populate the header or the unused
+
+        invisible_name = "InputBindings_Summary_" .. name,
+
+        CalcSize = CalcSize_SummaryButton,
+    }
+end
+function this.Define_BindButtons_Remove(relative_to, name, const)
+    -- RemoveButton
+    return
+    {
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = -8,
+            pos_y = -8,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        invisible_name = "InputBindings_Remove_" .. name,
+
+        CalcSize = CalcSize_RemoveButton,
+    }
+end
+function this.Define_BindButtons_SummaryHoverLabel(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Click to edit binding",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 18,
+
+            relative_horz = const.alignment_horizontal.center,
+            horizontal = const.alignment_horizontal.center,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "hint",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_BindButtons_RemoveHoverLabel(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Clear Binding",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 18,
+
+            relative_horz = const.alignment_horizontal.center,
+            horizontal = const.alignment_horizontal.center,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "hint",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+
+function this.Refresh_BindButtons_Summary(def, keys)
+    if this.GetActionList(def, keys) then
+        def.summary.header_prompt = def.binding
+        def.summary.unused_text = nil
+    else
+        def.summary.unused_text = def.binding
+        def.summary.header_prompt = nil
+    end
+end
+
+function this.Draw_Remove_Tooltip(current, vars_ui)
+    Draw_Label(current.remove_hover_label, vars_ui.style.colors)
+end
+function this.Draw_Summary_Tooltips(current, vars_ui, window)
+    Draw_Label(current.summary_hover_label, vars_ui.style.colors)
+
+    local actionList = this.GetActionList(current, vars_ui.keys)
+    if actionList then
+        local actionSummary = String_Join("\n", actionList)
+
+        local sum_width = current.summary.render_pos.width
+        local sum_height = current.summary.render_pos.height
+
+        local gap = 24
+
+        Draw_Tooltip(
+            actionSummary,
+            vars_ui.style.tooltip,
+            window.left + current.summary.render_pos.left + (sum_width / 2),
+            window.top + current.summary.render_pos.top + (sum_height / 2),
+            (sum_width / 2) + gap,
+            (sum_height / 2) + gap,
+            vars_ui)
+    end
+end
+
+function this.Define_RestoreDefaults(vars_ui, const)
+    -- Button
+    return
+    {
+        text = "Restore Defaults",
+
+        width_override = 140,
+
+        position =
+        {
+            pos_x = vars_ui.style.okcancelButtons.pos_x,        -- same margin as ok/cancel, but aligned left instead
+            pos_y = vars_ui.style.okcancelButtons.pos_y,
+            horizontal = const.alignment_horizontal.left,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        color = "hint",
+
+        CalcSize = CalcSize_Button,
+    }
+end
+
+function this.RestoreDefaults(bind_buttons, const)
+    -- Default them all to delete in case default bindings miss any
+    for i = 1, #bind_buttons do
+        bind_buttons[i].isDeleteChange = true
+        bind_buttons[i].newActions = nil
+    end
+
+    -- Apply the defaults
+    for binding, actionNames in pairs(GetDefaultInputBindings(const)) do
+        for i = 1, #bind_buttons do
+            if bind_buttons[i].binding == binding then
+                bind_buttons[i].isDeleteChange = false
+                bind_buttons[i].newActions = actionNames
+                break
+            end
+        end
+    end
+end
+
+function this.Define_Instruction1(const)
+    -- Label
+    return
+    {
+        text = "Close CET console before pressing keys",
+
+        position =
+        {
+            pos_x = -140,
+            pos_y = -110,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "instruction",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_Instruction2(const)
+    -- Label
+    return
+    {
+        text = "Make sure you don't interact with items (doors, etc)",
+
+        position =
+        {
+            pos_x = -140,
+            pos_y = -30,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "instruction",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+
+function this.Define_CancelBind(const)
+    -- Button
+    return
+    {
+        text = "Cancel",
+
+        position =
+        {
+            pos_x = -140,
+            pos_y = 180,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "hint",
+
+        CalcSize = CalcSize_Button,
+    }
+end
 
 function this.Refresh_IsDirty(def, vars, usecustom_wallhang, bind_buttons)
     def.isDirty = false
@@ -453,40 +705,93 @@ function this.Refresh_IsDirty(def, vars, usecustom_wallhang, bind_buttons)
         do return end
     end
 
-    -- for i = 1, #bind_buttons do
-    --     if bind_buttons[i].isDeleteChange or bind_buttons[i].newActions then
-    --         def.isDirty = true
-    --         break
-    --     end
-    -- end
+    for i = 1, #bind_buttons do
+        if bind_buttons[i].isDeleteChange or bind_buttons[i].newActions then
+            def.isDirty = true
+            break
+        end
+    end
 end
 
 --function this.Save(bind_buttons, startStopTracker, keys)
-function this.Save(vars, const, usecustom_wallhang)
+function this.Save(vars, const, usecustom_wallhang, bind_buttons, keys)
+    -- Update DB is vars
+    SetSetting_Bool(const.settings.WallHangKey_UseCustom, vars.wallhangkey_usecustom)
 
     vars.wallhangkey_usecustom = usecustom_wallhang.isChecked
 
-    SetSetting_Bool(const.settings.WallHangKey_UseCustom, vars.wallhangkey_usecustom)
+    -- Update DB and keys
+    for i = 1, #bind_buttons do
+        if bind_buttons[i].isDeleteChange then
+            SetInputBinding(bind_buttons[i].binding, nil)
 
+            if bind_buttons[i].binding == const.bindings.hang then
+                keys:ClearHangActions()
+            else
+                print("ERROR: " .. bind_buttons[i].binding)
+            end
 
+        elseif bind_buttons[i].newActions then
+            SetInputBinding(bind_buttons[i].binding, bind_buttons[i].newActions)
 
+            if bind_buttons[i].binding == const.bindings.hang then
+                keys:SetHangActions(bind_buttons[i].newActions)
+            else
+                print("ERROR: " .. bind_buttons[i].binding)
+            end
+        end
+    end
+end
 
-    -- -- Update DB and startStopTracker
-    -- for i = 1, #bind_buttons do
-    --     if bind_buttons[i].isDeleteChange then
-    --         SetInputBinding(bind_buttons[i].binding, nil)
-    --         startStopTracker:ClearBinding(bind_buttons[i].binding)
+function this.GetActionList(def, keys)
+    if def.isDeleteChange then
+        return nil
+    end
 
-    --     elseif bind_buttons[i].newActions then
-    --         SetInputBinding(bind_buttons[i].binding, bind_buttons[i].newActions)
-    --         startStopTracker:UpdateBinding(bind_buttons[i].binding, bind_buttons[i].newActions)
-    --     end
-    -- end
+    if def.newActions then
+        return def.newActions
+    end
 
-    -- -- Update keys, so it knows what to look for
-    -- keys:ClearActions()
+    return keys:GetActionNames(def.binding)
+end
 
-    -- for i=1, #startStopTracker.keynames do
-    --     keys:AddAction(startStopTracker.keynames[i])
-    -- end
+-- This returns the action names that were pressed down within the time window (relative
+-- to the first key press)
+-- Returns:
+--  newActions          A list of action names
+--  isFinishedWaiting   True if they have pressed keys and enough time has elapsed that any more key presses would be ignored
+function this.GetFinalObservedActionNames(keys, o)
+    --NOTE: This is copied from grappling hook, which allows for multiple buttons to be pressed at the same time
+    --Wall hang should just tie to one, but should still give enough time for all the action events to fire when
+    --pushing a button
+    local timespan = 0.06
+
+    -- First pass, look for the min time
+    local min_time = nil
+
+    for _, downTime in pairs(keys.watching) do
+        if not min_time or downTime < min_time then
+            min_time = downTime
+        end
+    end
+
+    if not min_time then
+        -- They haven't pressed any keys yet
+        return nil, false
+
+    elseif o.timer - min_time < timespan then
+        -- They pressed a key, but need to wait longer in case they press more keys
+        return nil, false       -- don't bother building an array here, it will be ignored anyway
+    end
+
+    -- Second pass, build array
+    local actionNames = {}
+
+    for actionName, downTime in pairs(keys.watching) do
+        if downTime - min_time <= timespan then
+            actionNames[#actionNames+1] = actionName
+        end
+    end
+
+    return actionNames, true
 end
