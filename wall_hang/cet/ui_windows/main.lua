@@ -18,6 +18,9 @@ function DefineWindow_Main(vars_ui, const)
 
     main.input_bindings = this.Define_InputBindings(const)
 
+    main.latch_wallhang = this.Define_LatchWallHang(const)
+    main.latch_wallhang_help = this.Define_LatchWallHang_Help(main.latch_wallhang, const)
+
     main.okcancel = Define_OkCancelButtons(true, vars_ui, const)
 
     FinishDefiningWindow(main)
@@ -31,17 +34,22 @@ function ActivateWindow_Main(vars_ui, const)
     vars_ui.main.changes:Clear()
 
     vars_ui.main.should_autoshow.isChecked = nil
+    vars_ui.main.latch_wallhang.isChecked = nil
 
-    --vars_ui.keys:StopWatching()     -- doing this in case it came from the input bindings window (which put keys in a watching state)
+    vars_ui.keys:StopWatching()     -- doing this in case it came from the input bindings window (which put keys in a watching state)
 end
 
 -- This gets called each frame from DrawConfig()
-function DrawWindow_Main(isCloseRequested, vars_ui, window, const)
+function DrawWindow_Main(isCloseRequested, vars, vars_ui, window, const)
     local main = vars_ui.main
 
     ------------------------- Finalize models for this frame -------------------------
 
     this.Refresh_ShouldAutoShow(main.should_autoshow, vars_ui)
+
+    this.Refresh_LatchWallHang(main.latch_wallhang, vars)
+
+    this.Refresh_IsDirty(main.okcancel, vars, main.latch_wallhang)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -62,9 +70,15 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const)
         TransitionWindows_InputBindings(vars_ui, const)
     end
 
-    local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons)
+    Draw_CheckBox(main.latch_wallhang, vars_ui.style.checkbox, vars_ui.style.colors)
 
-    return not (isCloseRequested or isCloseClicked)       -- stop showing when they click the close button (or press config key a second time.  This main page doesn't have anything to save, so it's ok to exit at any time)
+    local isOKClicked, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons)
+    if isOKClicked then
+        this.Save(vars, main.latch_wallhang, const)
+    end
+
+    local shouldClose = isOKClicked or isCloseClicked or (isCloseRequested and not main.okcancel.isDirty)       -- they can't close with keyboard if dirty.  Once dirty, they must click Ok or Cancel
+    return not shouldClose       -- returns if it should continue showing
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -152,4 +166,67 @@ function this.Define_InputBindings(const)
 
         CalcSize = CalcSize_SummaryButton,
     }
+end
+
+function this.Define_LatchWallHang(const)
+    -- CheckBox
+    return
+    {
+        invisible_name = "Main_LatchWallHang",
+
+        text = "Latch WallHang Key",
+
+        isEnabled = true,
+
+        position =
+        {
+            pos_x = 0,
+            pos_y = 0,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_CheckBox,
+    }
+end
+function this.Refresh_LatchWallHang(def, vars)
+    --NOTE: ActivateWindow_Main sets this to nil
+    if def.isChecked == nil then
+        def.isChecked = vars.latch_wallhang
+    end
+end
+
+function this.Define_LatchWallHang_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Main_LatchWallHang_Help",
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[  checked: Once you jump, you only need to press the wall hang key once
+uncheckd: The wall hang key must be held in
+
+If latch is set, then pressing the key again will disengage (also jumping from the wall)]]
+
+    return retVal
+end
+
+function this.Refresh_IsDirty(def, vars, latch_wallhang)
+    local isDirty = false
+
+    if vars.latch_wallhang ~= latch_wallhang.isChecked then
+        isDirty = true
+    end
+
+    def.isDirty = isDirty
+end
+
+function this.Save(vars, latch_wallhang, const)
+    vars.latch_wallhang = latch_wallhang.isChecked
+    SetSetting_Bool(const.settings.Latch_WallHang, vars.latch_wallhang)
 end

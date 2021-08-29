@@ -22,9 +22,11 @@ function Transition_ToHang(vars, const, o, hangPos, normal)
     PlaySound_Hang(vars, o)
 end
 
-function Transition_ToJump_Calculate(vars, const, o, hangPos, normal)
+function Transition_ToJump_Calculate(vars, const, o, hangPos, normal, startStopTracker)
     vars.flightMode = const.flightModes.jump_calculate
     o:Custom_CurrentlyFlying_StartFlight()
+
+    startStopTracker:ResetHangLatch()
 
     vars.hangPos = hangPos
     vars.normal = normal

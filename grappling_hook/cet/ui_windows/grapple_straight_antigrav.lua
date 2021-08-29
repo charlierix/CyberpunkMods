@@ -194,13 +194,13 @@ function this.Update_HasAntiGrav(def, antigrav, changes, startedWithAG)
     PopulateBuySell(def.isChecked, startedWithAG, changes, "experience_buysell", total)
 end
 
-function this.Define_Has_Help(parent, const)
+function this.Define_Has_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "GrappleStraight_AntiGrav_Has_Help",
 
-        position = GetRelativePosition_HelpButton(parent, const),
+        position = GetRelativePosition_HelpButton(relative_to, const),
 
         CalcSize = CalcSize_HelpButton,
     }

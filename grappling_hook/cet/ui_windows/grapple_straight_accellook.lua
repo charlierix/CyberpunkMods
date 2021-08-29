@@ -192,13 +192,13 @@ function this.Update_HasAccelLook(def, accel, changes, startedWithAL)
     PopulateBuySell(def.isChecked, startedWithAL, changes, "experience_buysell", total)
 end
 
-function this.Define_HasHelp(parent, const)
+function this.Define_HasHelp(relative_to, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "GrappleStraight_AccelLook_HasHelp",
 
-        position = GetRelativePosition_HelpButton(parent, const),
+        position = GetRelativePosition_HelpButton(relative_to, const),
 
         CalcSize = CalcSize_HelpButton,
     }

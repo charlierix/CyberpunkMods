@@ -100,7 +100,7 @@ local const =
 
     bindings = CreateEnum("hang", "wall_run"),
 
-    settings = CreateEnum("AutoShowConfig_WithConsole", "WallHangKey_UseCustom"),
+    settings = CreateEnum("AutoShowConfig_WithConsole", "WallHangKey_UseCustom", "Latch_WallHang"),
 
     rayFrom_Z = 1.5,
     rayLen = 1.2,
@@ -133,7 +133,11 @@ local vars =
 {
     --flightMode,       -- Holds what state of flight it is in.  One of const.flightModes
 
-    --wallhangkey_usecustom     -- true: use the cet binding, false: use the action binding
+    -- Populated in InitializeKeyBindings()
+    --wallhangkey_usecustom,     -- true: use the cet binding, false: use the action binding
+
+    -- Populated in InitializeSavedFields()
+    --latch_wallhang,       -- false: must keep the hang key held in
 
     -- These get populated in Transition_ToHang() and/or Transition_ToJump_Calculate()
     --hangPos,
@@ -205,6 +209,7 @@ registerForEvent("onInit", function()
     EnsureTablesCreated()
     Define_UI_Framework_Constants(const)
     InitializeUI(vars_ui, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
+    InitializeSavedFields(vars, const)
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end

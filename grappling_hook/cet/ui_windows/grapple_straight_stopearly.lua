@@ -214,11 +214,11 @@ function this.Refresh_HasStopAngle(def, grapple)
     end
 end
 
-function this.Define_StopAngle_Help(parent, const)
+function this.Define_StopAngle_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        position = GetRelativePosition_HelpButton(parent, const),
+        position = GetRelativePosition_HelpButton(relative_to, const),
 
         invisible_name = "GrappleStraight_StopEarly_StopAngle_Help",
 
@@ -324,11 +324,11 @@ function this.Refresh_HasStopDistance(def, grapple)
     end
 end
 
-function this.Define_StopDistance_Help(parent, const)
+function this.Define_StopDistance_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        position = GetRelativePosition_HelpButton(parent, const),
+        position = GetRelativePosition_HelpButton(relative_to, const),
 
         invisible_name = "GrappleStraight_StopEarly_StopDistance_Help",
 
@@ -411,11 +411,11 @@ function this.Refresh_ShouldStopOnWallHit(def, grapple)
     end
 end
 
-function this.Define_StopOnWallHit_Help(parent, const)
+function this.Define_StopOnWallHit_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        position = GetRelativePosition_HelpButton(parent, const),
+        position = GetRelativePosition_HelpButton(relative_to, const),
 
         invisible_name = "GrappleStraight_StopEarly_StopOnWallHit_Help",
 

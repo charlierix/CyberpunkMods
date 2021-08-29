@@ -137,7 +137,7 @@ function this.Refresh_Experience(def, player, grapple, changes)
     def.content.used.value = tostring(Round(grapple.experience - changes:Get("experience")))
 end
 
-function this.Define_Desired_CheckBox(parent, const)
+function this.Define_Desired_CheckBox(relative_to, const)
     -- CheckBox
     return
     {
@@ -147,7 +147,7 @@ function this.Define_Desired_CheckBox(parent, const)
 
         isEnabled = true,
 
-        position = GetRelativePosition_LabelAbove(parent, const),
+        position = GetRelativePosition_LabelAbove(relative_to, const),
 
         CalcSize = CalcSize_CheckBox,
     }
@@ -166,13 +166,13 @@ function this.Update_DesiredLength(def_checkbox, def_slider, changes)
     end
 end
 
-function this.Define_Desired_Help(parent, const)
+function this.Define_Desired_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "GrappleStraight_Distances_Desired_Help",
 
-        position = GetRelativePosition_HelpButton(parent, const),
+        position = GetRelativePosition_HelpButton(relative_to, const),
 
         CalcSize = CalcSize_HelpButton,
     }

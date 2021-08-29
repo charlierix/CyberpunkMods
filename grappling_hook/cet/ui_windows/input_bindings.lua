@@ -181,7 +181,7 @@ function this.Define_ConsoleWarning1(const)
         CalcSize = CalcSize_Label,
     }
 end
-function this.Define_ConsoleWarning2(parent, const)
+function this.Define_ConsoleWarning2(relative_to, const)
     -- Label
     return
     {
@@ -189,7 +189,7 @@ function this.Define_ConsoleWarning2(parent, const)
 
         position =
         {
-            relative_to = parent,
+            relative_to = relative_to,
 
             pos_x = 0,
             pos_y = 8,
@@ -207,7 +207,7 @@ function this.Define_ConsoleWarning2(parent, const)
     }
 end
 
-function this.Define_Help1_Label(parent, const)
+function this.Define_Help1_Label(relative_to, const)
     -- Label
     return
     {
@@ -215,7 +215,7 @@ function this.Define_Help1_Label(parent, const)
 
         position =
         {
-            relative_to = parent,
+            relative_to = relative_to,
 
             pos_x = 10,
             pos_y = 0,
@@ -261,7 +261,7 @@ Any combination of CET inputs and in game keys can be mixed in this window's bin
     return retVal
 end
 
-function this.Define_Help2_Label(parent, const)
+function this.Define_Help2_Label(relative_to, const)
     -- Label
     return
     {
@@ -269,7 +269,7 @@ function this.Define_Help2_Label(parent, const)
 
         position =
         {
-            relative_to = parent,
+            relative_to = relative_to,
 
             pos_x = 10,
             pos_y = 0,
@@ -286,7 +286,7 @@ function this.Define_Help2_Label(parent, const)
         CalcSize = CalcSize_Label,
     }
 end
-function this.Define_Help2_Button(parent, const)
+function this.Define_Help2_Button(relative_to, const)
     -- HelpButton
     local retVal =
     {
@@ -294,7 +294,7 @@ function this.Define_Help2_Button(parent, const)
 
         position =
         {
-            relative_to = parent,
+            relative_to = relative_to,
 
             pos_x = 0,
             pos_y = 8,

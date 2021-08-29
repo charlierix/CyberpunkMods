@@ -15,10 +15,23 @@ function InputTracker_StartStop:new(o, vars, keys, const)
     obj.jump_downTime = nil
     obj.saw_jump = false        -- this is a latch so jump is only reported the first time (when they hold in the jump key)
 
+    obj.hang_latched = false
+
     return obj
 end
 
 function InputTracker_StartStop:Tick()
+    -- Hang
+    if self.vars.latch_wallhang then
+        -- This matches logic in GetButtonState, but only flips the bit on keydown
+        if self.keys.custom_hang and not self.keys.prev_custom_hang then
+            self.hang_latched = not self.hang_latched
+        elseif not self.vars.wallhangkey_usecustom and self.keys.hang and not self.keys.prev_hang then
+            self.hang_latched = not self.hang_latched
+        end
+    end
+
+    -- Jump
     if not self.saw_jump and self.keys.jump and not self.jump_downTime then
         self.jump_downTime = self.o.timer
         self.saw_jump = true
@@ -31,16 +44,24 @@ function InputTracker_StartStop:Tick()
     end
 end
 
+function InputTracker_StartStop:ResetHangLatch()
+    self.hang_latched = false
+end
+
 -- Returns
 --  isHangDown, isJumpDown
 function InputTracker_StartStop:GetButtonState()
     -- Hang doesn't care how long the button has been held down
     local isHangDown = false
 
-    if self.keys.custom_hang then       -- don't want to force the checkbox to be checked.  From the user's perspective, they assigned a custom key, they're pressing that key.  How do they know to look two screens deep to also check some checkbox?
-        isHangDown = true
-    elseif not self.vars.wallhangkey_usecustom and self.keys.hang then      -- this looks at the checkbox==false, because the only way for it to be checked is if they checked it
-        isHangDown = true
+    if self.vars.latch_wallhang then
+        isHangDown = self.hang_latched
+    else
+        if self.keys.custom_hang then       -- don't want to force the checkbox to be checked.  From the user's perspective, they assigned a custom key, they're pressing that key.  How do they know to look two screens deep to also check some checkbox?
+            isHangDown = true
+        elseif not self.vars.wallhangkey_usecustom and self.keys.hang then      -- this looks at the checkbox==false, because the only way for it to be checked is if they checked it
+            isHangDown = true
+        end
     end
 
     -- Jump only reports true if it was very recently pressed

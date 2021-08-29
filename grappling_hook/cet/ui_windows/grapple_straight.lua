@@ -209,7 +209,7 @@ function this.Refresh_Name(def, grapple)
     end
 end
 
-function this.Define_Description(parent, const)
+function this.Define_Description(relative_to, const)
     -- LabelClickable
     return
     {
@@ -219,7 +219,7 @@ function this.Define_Description(parent, const)
 
         position =
         {
-            relative_to = parent,
+            relative_to = relative_to,
 
             pos_x = 0,
             pos_y = 13,

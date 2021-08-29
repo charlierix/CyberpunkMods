@@ -215,13 +215,13 @@ function this.Update_HasAccelAlong(def, accel, changes, startedWithAG)
     PopulateBuySell(def.isChecked, startedWithAG, changes, "experience_buysell", total)
 end
 
-function this.Define_HasHelp(parent, const)
+function this.Define_HasHelp(relative_to, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "GrappleStraight_AccelAlong_HasHelp",
 
-        position = GetRelativePosition_HelpButton(parent, const),
+        position = GetRelativePosition_HelpButton(relative_to, const),
 
         CalcSize = CalcSize_HelpButton,
     }
@@ -270,24 +270,24 @@ function this.Update_Speed(def, changes, isDownClicked, isUpClicked)
     Update_UpDownButton("speed", "experience", isDownClicked, isUpClicked, def, changes)
 end
 
-function this.Define_DeadSpot_Label(parent, const)
+function this.Define_DeadSpot_Label(relative_to, const)
     -- Label
     return
     {
         text = "Dead Spot",
 
-        position = GetRelativePosition_LabelAbove(parent, const),
+        position = GetRelativePosition_LabelAbove(relative_to, const),
 
         color = "edit_prompt",
 
         CalcSize = CalcSize_Label,
     }
 end
-function this.Define_DeadSpot_Help(parent, const)
+function this.Define_DeadSpot_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        position = GetRelativePosition_HelpButton(parent, const),
+        position = GetRelativePosition_HelpButton(relative_to, const),
 
         invisible_name = "GrappleStraight_AccelAlong_DeadSpot_Help",
 

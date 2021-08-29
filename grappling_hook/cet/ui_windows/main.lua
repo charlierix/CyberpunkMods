@@ -130,7 +130,7 @@ function this.Define_ConsoleWarning(const)
     }
 end
 
-function this.Define_ShouldAutoShow(parent, const)
+function this.Define_ShouldAutoShow(relative_to, const)
     -- CheckBox
     return
     {
@@ -142,7 +142,7 @@ function this.Define_ShouldAutoShow(parent, const)
 
         position =
         {
-            relative_to = parent,
+            relative_to = relative_to,
 
             pos_x = 0,
             pos_y = 6,

@@ -15,8 +15,9 @@ function PopulateDebug(debug, o, keys, vars, startStopTracker)
     -- debug.key_left = keys.left
     -- debug.key_right = keys.right
     -- debug.key_jump = keys.jump
-    --debug.key_hang = keys.hang
-    --debug.key_custom = keys.custom
+    -- debug.key_hang = keys.hang
+    -- debug.key_custom = keys.custom
+    debug.hang_latched = startStopTracker.hang_latched
     -- debug.mouse_x = keys.mouse_x
 
     -- local isHangDown, isJumpDown = startStopTracker:GetButtonState()

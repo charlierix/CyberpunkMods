@@ -27,3 +27,8 @@ function GetDefaultInputBindings(const)
 
     return bindings
 end
+
+-- This pulls other settings out of the database
+function InitializeSavedFields(vars, const)
+    vars.latch_wallhang = GetSetting_Bool(const.settings.Latch_WallHang, true)
+end

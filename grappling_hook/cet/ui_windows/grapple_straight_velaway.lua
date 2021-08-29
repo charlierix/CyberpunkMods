@@ -267,13 +267,13 @@ function this.Update_HasVelocityAway(def, velaway, changes, startedWithVA)
     PopulateBuySell(def.isChecked, startedWithVA, changes, "experience_buysell", total)
 end
 
-function this.Define_Has_Help(parent, const)
+function this.Define_Has_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "GrappleStraight_VelocityAway_Has_Help",
 
-        position = GetRelativePosition_HelpButton(parent, const),
+        position = GetRelativePosition_HelpButton(relative_to, const),
 
         CalcSize = CalcSize_HelpButton,
     }
@@ -379,24 +379,24 @@ function this.Update_Tension(def, changes, isDownClicked, isUpClicked)
     Update_UpDownButton("accel_tension", "experience_tension", isDownClicked, isUpClicked, def, changes)
 end
 
-function this.Define_DeadSpot_Label(parent, const)
+function this.Define_DeadSpot_Label(relative_to, const)
     -- Label
     return
     {
         text = "Dead Spot",
 
-        position = GetRelativePosition_LabelAbove(parent, const),
+        position = GetRelativePosition_LabelAbove(relative_to, const),
 
         color = "edit_prompt",
 
         CalcSize = CalcSize_Label,
     }
 end
-function this.Define_DeadSpot_Help(parent, const)
+function this.Define_DeadSpot_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        position = GetRelativePosition_HelpButton(parent, const),
+        position = GetRelativePosition_HelpButton(relative_to, const),
 
         invisible_name = "GrappleStraight_VelocityAway_DeadSpot_Help",
 

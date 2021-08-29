@@ -243,13 +243,13 @@ function this.Update_HasAirDash(def, airdash, changes, startedWithAD)
     PopulateBuySell(def.isChecked, startedWithAD, changes, "experience_buysell", total)
 end
 
-function this.Define_Has_Help(parent, const)
+function this.Define_Has_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
         invisible_name = "GrappleStraight_AirDash_Has_Help",
 
-        position = GetRelativePosition_HelpButton(parent, const),
+        position = GetRelativePosition_HelpButton(relative_to, const),
 
         CalcSize = CalcSize_HelpButton,
     }
