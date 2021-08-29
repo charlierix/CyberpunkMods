@@ -19,17 +19,17 @@ end
 function this.GetJSON_SpawnPoint(spawn)
     local retVal = '{\n'
 
-    retVal = retVal .. '\t"author": "' .. this.GetString(spawn.author) .. '"\n'
-    retVal = retVal .. '\t"description": "' .. this.GetString(spawn.description) .. '"\n'
-    retVal = retVal .. '\t"tags": [' .. this.GetStringArrayContents(spawn.tags) .. ']\n'
+    retVal = retVal .. '\t"author": "' .. this.GetString(spawn.author) .. '",\n'
+    retVal = retVal .. '\t"description": "' .. this.GetString(spawn.description) .. '",\n'
+    retVal = retVal .. '\t"tags": [' .. this.GetStringArrayContents(spawn.tags) .. '],\n'
     retVal = retVal .. '\n'
-    retVal = retVal .. '\t"modded_parkour": "' .. this.GetString(spawn.modded_parkour) .. '"\n'
+    retVal = retVal .. '\t"modded_parkour": "' .. this.GetString(spawn.modded_parkour) .. '",\n'
     retVal = retVal .. '\n'
-    retVal = retVal .. '\t"position_x": "' .. this.GetNumber(spawn.position_x, 2) .. '"\n'
-    retVal = retVal .. '\t"position_y": "' .. this.GetNumber(spawn.position_y, 2) .. '"\n'
-    retVal = retVal .. '\t"position_z": "' .. this.GetNumber(spawn.position_z, 2) .. '"\n'
+    retVal = retVal .. '\t"position_x": ' .. this.GetNumber(spawn.position_x, 2) .. ',\n'
+    retVal = retVal .. '\t"position_y": ' .. this.GetNumber(spawn.position_y, 2) .. ',\n'
+    retVal = retVal .. '\t"position_z": ' .. this.GetNumber(spawn.position_z, 2) .. ',\n'
     retVal = retVal .. '\n'
-    retVal = retVal .. '\t"yaw": "' .. this.GetNumber(spawn.yaw, 1) .. '"\n'
+    retVal = retVal .. '\t"yaw": ' .. this.GetNumber(spawn.yaw, 1) .. '\n'
     retVal = retVal .. '}'
 
     return retVal

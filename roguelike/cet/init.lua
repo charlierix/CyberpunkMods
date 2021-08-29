@@ -152,8 +152,8 @@ registerHotkey("Roguelike_Tester_Teleports", "teleports", function()
 
     -- print("no search criteria")
 
-    -- local spawnPoint = vars.spawn_points:GetRandom()
-    -- ReportTable(spawnPoint)
+    local spawnPoint = vars.spawn_points:GetRandom()
+    ReportTable(spawnPoint)
 
 
     -- print("24, -1, 3 | 30 | 50")
@@ -164,16 +164,17 @@ registerHotkey("Roguelike_Tester_Teleports", "teleports", function()
 
 
 
-    print("-18, -12, 3 | 24 | 36")
+    -- print("-18, -12, 3 | 24 | 36")
 
-    local spawnPoint = vars.spawn_points:GetRandom(Vector4.new(-18, -12, 3, 1), 24, 36, true)
-    ReportTable(spawnPoint)
-
-
+    -- local spawnPoint = vars.spawn_points:GetRandom(Vector4.new(-18, -12, 3, 1), 24, 36, true)
+    -- ReportTable(spawnPoint)
 
 
 
     --TODO: If non null, teleport there
+    if spawnPoint then
+        o:Teleport(spawnPoint.position, spawnPoint.yaw)
+    end
 
 
 end)
