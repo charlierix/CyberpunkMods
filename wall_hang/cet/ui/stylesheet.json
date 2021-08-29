@@ -254,32 +254,6 @@
         "border_color": "40575448"
     },
 
-    "mindotGraphic":
-    {
-        "up_color": "707070",
-        "zero_color": "505050",
-        "angle_color": "AAE"
-    },
-
-    "graphics":
-    {
-        "line_thickness_main": 1,
-        "line_thickness_minor": 0.8,
-
-        "arrow_length": 10,
-        "arrow_width": 7,
-
-        "TODO": "Probably just want to use one set of colors, since they are the same",
-
-        "stickfigure_color_standard": "777",
-        "stickfigure_color_gray": "383838",
-        "stickfigure_color_highlight": "DAE889",
-
-        "line_color_standard": "777",
-        "line_color_gray": "383838",
-        "line_color_highlight": "DAE889"
-    },
-
     "colors":
     {
         "title": { "the_color": "F0F0F0" },
