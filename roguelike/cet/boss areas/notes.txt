@@ -5,5 +5,4 @@ see if that has an export/import tool
 also have some optional items that will appear once room's objectives have be met
     - treasure boxes
     - portal
-        If they step through the portal, they will be taken to a random spawn point that's a reasonable distance from the next boss room
-        
+        If they step through the portal, they will be taken to a random spawn point that's a reasonable distance from the next boss area

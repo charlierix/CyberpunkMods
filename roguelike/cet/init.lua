@@ -12,24 +12,29 @@
 
 --https://github.com/jac3km4/redscript
 
-require "src/core/debug_code"
-require "src/core/gameobj_accessor"
-require "src/core/lists"
-require "src/core/math_basic"
-require "src/core/math_raycast"
-require "src/core/math_vector"
-require "src/core/math_yaw"
-require "src/core/strings"
-require "src/core/util"
+require "!src/core/debug_code"
+require "!src/core/gameobj_accessor"
+require "!src/core/lists"
+require "!src/core/math_basic"
+require "!src/core/math_raycast"
+require "!src/core/math_vector"
+require "!src/core/math_yaw"
+require "!src/core/strings"
+require "!src/core/util"
 
-require "src/data/collection_spawn_point"
-require "src/data/logging"
-require "src/data/util_data"
+require "!src/data/cap_strings"
+require "!src/data/collection_boss_area"
+require "!src/data/collection_spawn_point"
+require "!src/data/logging"
+require "!src/data/util_data"
+require "!src/data/validations"
 
-require "src/ui/drawing"
-require "src/ui/reporting"
+require "!src/spawning/spawn_tests.lua"
 
-extern_json = require "src/external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
+require "!src/ui/drawing"
+require "!src/ui/reporting"
+
+extern_json = require "!src/external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 local this = {}
 
@@ -40,6 +45,10 @@ local this = {}
 local const =
 {
     modded_parkour = CreateEnum("none", "light", "heavy"),
+
+    filetype = CreateEnum("file", "directory"),     -- this is the .type property of items when iterating the dir fuction
+
+    types = CreateEnum("string", "number", "table"),
 
     shouldShowDebugWindow = false
 }
@@ -61,6 +70,7 @@ local debug = {}
 local vars =
 {
     --spawn_points      -- This holds spawn points from the corresponding folder.  Can return random spawn according to position/radius search params
+    --boss_areas        -- same type of collection as spawn_points, but for boss areas
 }
 
 local vars_ui =
@@ -95,6 +105,7 @@ registerForEvent("onInit", function()
     function wrappers.Player_GetPos(player) return player:GetWorldPosition() end
     function wrappers.Player_GetVel(player) return player:GetVelocity() end
     function wrappers.Player_GetYaw(player) return player:GetWorldYaw() end
+    function wrappers.Player_GetWorldTransform(player) return player:GetWorldTransform() end
     function wrappers.GetWorkspotSystem() return Game.GetWorkspotSystem() end
     function wrappers.Workspot_InWorkspot(workspot, player) return workspot:IsActorInWorkspot(player) end
     function wrappers.GetCameraSystem() return Game.GetCameraSystem() end
@@ -112,6 +123,7 @@ registerForEvent("onInit", function()
     o = GameObjectAccessor:new(wrappers)
 
     vars.spawn_points = Collection_SpawnPoint:new(const)
+    vars.boss_areas = Collection_BossArea:new(const)
 end)
 
 registerForEvent("onShutdown", function()
@@ -176,6 +188,30 @@ registerHotkey("Roguelike_Tester_Teleports", "teleports", function()
         o:Teleport(spawnPoint.position, spawnPoint.yaw)
     end
 
+
+end)
+
+registerHotkey("Roguelike_Tester_NPC", "npc", function()
+
+    --local path = "Character.q004_prostitute"      -- civilian
+    local path = "Character.arr_valentinos_grunt2_ranged2_ajax_wa"      -- valentino enemy
+
+    print("a")
+
+    SpawnNPC_PreventionSpawnSystem(o, path)
+    --SpawnNPC_exEntitySpawner(o, path)
+
+    print("b")
+
+end)
+
+registerHotkey("Roguelike_Tester_BossAreas", "boss areas", function()
+
+    print("a")
+
+    vars.boss_areas:EnsureLoaded()
+
+    print("b")
 
 end)
 

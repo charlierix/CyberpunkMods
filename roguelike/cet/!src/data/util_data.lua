@@ -32,6 +32,25 @@ function FindRandom_Position(list, center, radius_min, radius_max, is3D)
     return this.FindRandom_Position_Nearby(list, center, radius_min, radius_max)
 end
 
+-- Small wrapper to file.open and json.decode
+-- Returns
+--  object, nil
+--  nil, errMsg
+function DeserializeJSON(filename)
+    local handle = io.open(filename, "r")
+    local json = handle:read("*all")
+
+    local sucess, retVal = pcall(
+        function(j) return extern_json.decode(j) end,
+        json)
+
+    if sucess then
+        return retVal, nil
+    else
+        return nil, tostring(retVal)      -- when pcall has an error, the second value returned is the error message, otherwise it't the successful return value.  It should already be a sting, but doing a tostring just to be safe
+    end
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.FindRandom_Position_Exact(list, center, radius_min, radius_max, is3D)

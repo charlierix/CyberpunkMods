@@ -381,6 +381,11 @@ end
 
 function TODO()
 
+	-- Wall jump momentum
+	--	When they jump off a wall without using wall hang, keep some of that speed
+	--	Probably want to keep the part of the velocity that is perpendicular to the normal
+	--	May also want to allow that velocity to influence the reflection angle
+
     -- Enable double jump
     --  After they jump off a wall, reset the game's jump count so they can do a double jump
     --

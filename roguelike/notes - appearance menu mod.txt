@@ -1,0 +1,203 @@
+NOTE: exEntitySpawner.Spawn (props class is for items, not people)
+NOTE: these items are spawning in without physics
+
+
+
+function Props:SpawnPropInPosition(ent, pos, angles)
+  local spawnTransform = AMM.player:GetWorldTransform()
+  spawnTransform:SetPosition(pos)
+  spawnTransform:SetOrientationEuler(angles)
+
+  ent.entityID = exEntitySpawner.Spawn(ent.template, spawnTransform)
+
+  Cron.Every(0.1, {tick = 1}, function(timer)
+    local entity = Game.FindEntityByID(ent.entityID)
+    if entity then
+      ent.handle = entity
+      ent.parameters = {ent.pos, ent.angles}
+      if AMM:GetScanClass(ent.handle) == 'entEntity' then
+				ent.type = 'entEntity'
+			end
+      Cron.Halt(timer)
+    end
+  end)
+
+  return ent
+end
+
+
+
+function Props:SpawnProp(spawn)
+	local offSetSpawn = 0
+	local distanceFromPlayer = 1
+	local angles = GetSingleton('Quaternion'):ToEulerAngles(AMM.player:GetWorldOrientation())
+	local distanceFromGround = tonumber(spawn.parameters) or 0
+
+	if spawn.parameters and string.find(spawn.parameters, "dist") then
+		distanceFromPlayer = spawn.parameters:match("%d+")
+	end
+
+	if spawn.parameters and string.find(spawn.parameters, "rot") then
+		rotation = tonumber(spawn.parameters:match("%d+"))
+	end
+
+	local heading = AMM.player:GetWorldForward()
+	local offsetDir = Vector3.new(heading.x * distanceFromPlayer, heading.y * distanceFromPlayer, heading.z)
+	local spawnTransform = AMM.player:GetWorldTransform()
+	local spawnPosition = GetSingleton('WorldPosition'):ToVector4(spawnTransform.Position)
+	local newPosition = Vector4.new((spawnPosition.x - offSetSpawn) + offsetDir.x, (spawnPosition.y - offSetSpawn) + offsetDir.y, spawnPosition.z + distanceFromGround, spawnPosition.w)
+	spawnTransform:SetPosition(spawnTransform, newPosition)
+	spawnTransform:SetOrientationEuler(spawnTransform, EulerAngles.new(0, 0, angles.yaw - 180))
+
+  local record = ''
+  if string.find(spawn.template, 'yacht') then
+    record = 'Vehicle.sq028_yacht'
+  end
+	  
+
+
+    -- Here is an example of a template:
+    --"base\gameplay\devices\home_appliances\movable_wall_screen\movable_wall_screen.ent"
+    print(tostring(ent.template))
+
+
+
+  spawn.entityID = exEntitySpawner.Spawn(spawn.template, spawnTransform, '', record)
+
+	Cron.Every(0.1, {tick = 1}, function(timer)
+		local entity = Game.FindEntityByID(spawn.entityID)
+		if entity then
+			spawn.handle = entity
+			spawn.parameters = {newPosition, GetSingleton('Quaternion'):ToEulerAngles(AMM.player:GetWorldOrientation())}
+			if AMM:GetScanClass(spawn.handle) == 'entEntity' or AMM:GetScanClass(spawn.handle) == 'entGameEntity' then
+				spawn.type = 'entEntity'
+			end
+			Cron.Halt(timer)
+		elseif timer.tick > 20 then
+			spawn.parameters = {newPosition, GetSingleton('Quaternion'):ToEulerAngles(AMM.player:GetWorldOrientation())}
+			Cron.Halt(timer)
+		end
+	end)
+
+	while Props.spawnedProps[spawn.uniqueName()] ~= nil do
+    local num = spawn.name:match("|([^|]+)")
+    if num then num = tonumber(num) + 1 else num = 1 end
+    spawn.name = spawn.name:gsub(" | "..tostring(num - 1), "")
+    spawn.name = spawn.name.." | "..tostring(num)
+	end
+
+	Props.spawnedProps[spawn.uniqueName()] = spawn
+  table.insert(Props.spawnedPropsList, spawn)
+end
+
+
+
+NOTE: Obsolete function
+
+function Tools:TeleportPropTo(prop, pos, angles)
+  prop.handle:Dispose()
+
+  local spawnTransform = AMM.player:GetWorldTransform()
+  spawnTransform:SetPosition(pos)
+  spawnTransform:SetOrientationEuler(angles)
+
+  prop.entityID = WorldFunctionalTests.SpawnEntity(prop.template, spawnTransform, '')
+
+  Tools.movingProp = true
+
+  Cron.Every(0.1, {tick = 1}, function(timer)
+    local entity = Game.FindEntityByID(prop.entityID)
+    if entity then
+      prop.handle = entity
+      prop.parameters = {pos, angles}
+      Tools.movingProp = false
+      Tools:SetCurrentTarget(prop)
+      Cron.Halt(timer)
+    end
+  end)
+
+end
+
+-------------------------
+
+exEntitySpawner.Despawn(ent.handle)
+
+
+
+----------------- This is the function you're looking for.  This is what spawns an NPC
+
+function Spawn:SpawnNPC(spawn)
+	local spawnTransform = AMM.player:GetWorldTransform()
+	local pos = AMM.player:GetWorldPosition()
+	local heading = AMM.player:GetWorldForward()
+	-- local newPos = Vector4.new(pos.x + heading.x, pos.y + heading.y, pos.z + heading.z, pos.w + heading.w)
+	local newPos = Vector4.new(pos.x - heading.x, pos.y - heading.y, pos.z - heading.z, pos.w - heading.w)
+	spawnTransform:SetPosition(newPos)
+
+	local custom = {}
+	if spawn.parameters ~= nil then
+	custom = AMM:GetCustomAppearanceParams(spawn, spawn.parameters)
+	end
+
+	local favoriteApp = false
+	-- if spawn.parameters ~= nil and #custom == 0 then
+	-- 	favoriteApp = true
+	-- 	spawn.entityID = exEntitySpawner.SpawnRecord(spawn.path, spawnTransform, spawn.parameters)
+	-- else
+	-- 	spawn.entityID = exEntitySpawner.SpawnRecord(spawn.path, spawnTransform)
+	-- end
+
+
+	print("spawn.entityID = Game.GetPreventionSpawnSystem():RequestSpawn(AMM:GetNPCTweakDBID(spawn.path), -99, spawnTransform)")
+	print("path: " .. tostring(spawn.path))
+	print("tweakdbid: " .. tostring(AMM:GetNPCTweakDBID(spawn.path)))
+
+
+    --path: Character.q004_prostitute
+    --tweakdbid: ToTweakDBID{ hash = 0x8A95221E, length = 25 }
+    
+
+	spawn.entityID = Game.GetPreventionSpawnSystem():RequestSpawn(AMM:GetNPCTweakDBID(spawn.path), -99, spawnTransform)
+
+	while Spawn.spawnedNPCs[spawn.uniqueName()] ~= nil do
+		local num = spawn.name:match("|([^|]+)")
+		if num then num = tonumber(num) + 1 else num = 1 end
+		spawn.name = spawn.name:gsub(" | "..tostring(num - 1), "")
+		spawn.name = spawn.name.." | "..tostring(num)
+	end
+
+  	Cron.Every(0.1, {tick = 1}, function(timer)
+		local entity = Game.FindEntityByID(spawn.entityID)
+
+		timer.tick = timer.tick + 1
+		
+		if timer.tick > 10 then
+			Cron.Halt(timer)
+		end
+
+		if entity then
+			spawn.handle = entity
+			Spawn.spawnedNPCs[spawn.uniqueName()] = spawn
+
+			spawn.appearance = AMM:GetAppearance(spawn)
+
+			if not(string.find(spawn.name, "Drone")) then
+				Util:TeleportNPCTo(spawn.handle)
+			end
+
+			if #custom > 0 then
+				AMM:ChangeAppearanceTo(spawn, spawn.parameters)
+			-- elseif not favoriteApp then
+				-- AMM:ChangeScanAppearanceTo(spawn, 'Cycle')
+			end
+
+			if AMM.userSettings.spawnAsCompanion and spawn.canBeCompanion then
+				Spawn:SetNPCAsCompanion(spawn.handle)
+			end
+
+			Cron.Halt(timer)
+		end
+  	end)
+end
+
+-----------------

@@ -1,10 +1,10 @@
-public record SpawnPoint
+public record NPC
 {
-    public string author { get; init; }
-    public string description { get; init; }
-    public string[] tags { get; init; }
-
-    public ModdedParkour modded_parkour { get; init; }
+    // This is the class of character to spawn.  ex:
+    // Character.arr_valentinos_grunt2_ranged2_ajax_wa
+    public string entity_path { get; init; }
+    // [Optional] This is the name of a specific appearance within that class
+    public string appearance { get; init; }
 
 	public double position_x { get; init; }
 	public double position_y { get; init; }

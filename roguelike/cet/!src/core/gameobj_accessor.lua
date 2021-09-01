@@ -61,6 +61,16 @@ function GameObjectAccessor:GetPlayerInfo()
     end
 end
 
+function GameObjectAccessor:GetPlayerWorldTransform()
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        return self.wrappers.Player_GetWorldTransform(self.player)
+    else
+        return nil
+    end
+end
+
 -- Populates isInWorkspot
 --WARNING: If this is called while load is first kicked off, it will crash the game.  So probably want to wait until the player is moving or something
 function GameObjectAccessor:GetInWorkspot()

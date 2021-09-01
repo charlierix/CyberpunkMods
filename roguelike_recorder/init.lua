@@ -12,19 +12,19 @@
 
 --https://github.com/jac3km4/redscript
 
-require "src/core/debug_code"
-require "src/core/gameobj_accessor"
-require "src/core/lists"
-require "src/core/math_basic"
-require "src/core/math_raycast"
-require "src/core/math_vector"
-require "src/core/math_yaw"
-require "src/core/strings"
-require "src/core/util"
+require "!src/core/debug_code"
+require "!src/core/gameobj_accessor"
+require "!src/core/lists"
+require "!src/core/math_basic"
+require "!src/core/math_raycast"
+require "!src/core/math_vector"
+require "!src/core/math_yaw"
+require "!src/core/strings"
+require "!src/core/util"
 
-require "src/data/json_writer"
+require "!src/data/json_writer"
 
-extern_json = require "src/external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
+extern_json = require "!src/external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 local this = {}
 

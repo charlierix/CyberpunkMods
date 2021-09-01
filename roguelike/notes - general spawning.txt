@@ -1,0 +1,3 @@
+psiberx 8/11/2021
+exEntitySpawner.Spawn("base\\gameplay\\devices\\arcade_machines\\arcade_machine_1.ent", Game.GetPlayer():GetWorldTransform())
+huh that was unexpected: crashes on release 1.15 (and any github build since exEntitySpawner) but works fine on build from source
