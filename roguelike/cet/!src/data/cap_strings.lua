@@ -9,6 +9,10 @@ function Cap_Description(description)
     return String_Cap(description, 1024)
 end
 
+function Cap_Entity(entity)
+    return String_Cap(entity, 256)
+end
+
 function Cap_Tags(tags)
     if not tags then
         do return end

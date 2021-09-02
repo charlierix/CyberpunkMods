@@ -72,12 +72,22 @@ function this.LoadFile(folder, file, list, const)
 end
 
 function this.ValidateSpawn(spawn, const)
-    local success, errMsg = ValidateTags(spawn.tags)
+    local success, errMsg = ValidateType_prop(spawn, "author", const.types.string, false)
     if not success then
         return false, errMsg
     end
 
-    success, errMsg = ValidateType_prop(spawn, "modded_parkour", const.types.string)
+    success, errMsg = ValidateType_prop(spawn, "description", const.types.string, false)
+    if not success then
+        return false, errMsg
+    end
+
+    success, errMsg = ValidateTags(spawn.tags)
+    if not success then
+        return false, errMsg
+    end
+
+    success, errMsg = ValidateType_prop(spawn, "modded_parkour", const.types.string, true)
     if not success then
         return false, errMsg
     end
@@ -86,22 +96,22 @@ function this.ValidateSpawn(spawn, const)
         return false, "modded_parkour has invalid value: " .. spawn.modded_parkour
     end
 
-    success, errMsg = ValidateType_prop(spawn, "position_x", const.types.number)
+    success, errMsg = ValidateType_prop(spawn, "position_x", const.types.number, true)
     if not success then
         return false, errMsg
     end
 
-    success, errMsg = ValidateType_prop(spawn, "position_y", const.types.number)
+    success, errMsg = ValidateType_prop(spawn, "position_y", const.types.number, true)
     if not success then
         return false, errMsg
     end
 
-    success, errMsg = ValidateType_prop(spawn, "position_z", const.types.number)
+    success, errMsg = ValidateType_prop(spawn, "position_z", const.types.number, true)
     if not success then
         return false, errMsg
     end
 
-    success, errMsg = ValidateType_prop(spawn, "yaw", const.types.number)
+    success, errMsg = ValidateType_prop(spawn, "yaw", const.types.number, true)
     if not success then
         return false, errMsg
     end

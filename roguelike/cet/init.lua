@@ -44,7 +44,11 @@ local this = {}
 
 local const =
 {
-    modded_parkour = CreateEnum("none", "light", "heavy"),
+    modded_parkour = CreateEnum(
+        "none",             -- This point is accessible without any mods installed (also don't need the thruster boots to get down)
+        "light",            -- It will take a little modded effort to get from/to (mods like: wall hang, grappling hook)
+        "heavy",            -- This is basically on top of a skyscraper that will need full flight abilities
+        "unreachable"),     -- The only way is teleport (freefly doesn't count)
 
     filetype = CreateEnum("file", "directory"),     -- this is the .type property of items when iterating the dir fuction
 
@@ -210,6 +214,8 @@ registerHotkey("Roguelike_Tester_BossAreas", "boss areas", function()
     print("a")
 
     vars.boss_areas:EnsureLoaded()
+
+    ReportTable(vars.boss_areas.boss_areas)
 
     print("b")
 

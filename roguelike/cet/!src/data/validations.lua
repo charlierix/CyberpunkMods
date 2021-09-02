@@ -17,12 +17,16 @@ function ValidateTags(tags)
     return true, nil
 end
 
-function ValidateType_prop(object, itemname, typename)
-    return ValidateType_var(object[itemname], itemname, typename)
+function ValidateType_prop(object, itemname, typename, isRequired)
+    return ValidateType_var(object[itemname], itemname, typename, isRequired)
 end
-function ValidateType_var(item, itemname, typename)
+function ValidateType_var(item, itemname, typename, isRequired)
     if item == nil then
-        return false, itemname .. " is nil"
+        if isRequired then
+            return false, itemname .. " is nil"
+        else
+            return true, nil
+        end
 
     elseif type(item) ~= typename then
         return false, itemname .. " isn't a " .. typename .. ": " .. type(item)
