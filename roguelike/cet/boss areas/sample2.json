@@ -1,0 +1,48 @@
+{
+	"about":
+	{
+		"author": "Perfectly Normal Beast",
+		"description": "",
+
+		"modded_parkour": "none",
+
+		"center_x": 0,
+		"center_y": 0,
+		"center_z": 0,
+		
+		"yaw": 0
+	},
+
+	"npcs":
+	[
+		{
+			"entity_path": "Character.q004_prostitute",
+			
+			"position_x": 3,
+			"position_y": 4,
+			"position_z": 5,
+			
+			"yaw": 90
+		},
+		{
+			"entity_path": "Character.arr_valentinos_grunt2_ranged2_ajax_wa",
+			
+			"position_x": 5,
+			"position_y": 7,
+			"position_z": 12,
+			
+			"yaw": 22
+		}
+	],
+	
+	"spawns":
+	[
+		{
+			"position_x": 0,
+			"position_y": 0,
+			"position_z": 0,
+			
+			"yaw": 0
+		}	
+	]
+}

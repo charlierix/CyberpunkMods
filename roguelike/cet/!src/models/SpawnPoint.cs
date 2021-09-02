@@ -1,7 +1,7 @@
 public record SpawnPoint
 {
     // ------------------------------------------------------
-    // This section is only used for standalone spawn points (BossArea's main json already has this)
+    // This section is only used for standalone spawn points (BossArea's about json already has this)
 
     public string author { get; init; }
     public string description { get; init; }

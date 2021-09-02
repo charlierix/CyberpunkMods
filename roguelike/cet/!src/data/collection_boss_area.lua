@@ -33,19 +33,74 @@ function Collection_BossArea:EnsureLoaded()
 
     self.boss_areas = {}
 
-    for _, folder in pairs(dir(FOLDER)) do
+    for _, file_folder in pairs(dir(FOLDER)) do
+        if file_folder.type == self.const.filetype.directory then
+            -- Folder containing subfolders and little json files
+            this.LoadArea_folder(FOLDER .. "/" .. file_folder.name, self.boss_areas, self.const)
 
-        --TODO: Also accept single json containing the same thing as the folder structure
-
-        if folder.type == self.const.filetype.directory then
-            this.LoadArea(FOLDER .. "/" .. folder.name, self.boss_areas, self.const)
+        elseif file_folder.type == self.const.filetype.file and file_folder.name:match("%.json$") then
+            -- Single json file containing everything
+            this.LoadArea_file(FOLDER .. "/" .. file_folder.name, self.boss_areas, self.const)
         end
     end
 
     CloseErrorFiles()
 end
 
-function this.LoadArea(folder, list, const)
+function this.LoadArea_file(file, list, const)
+    -- Parse json
+    local area, errMsg = DeserializeJSON(file)
+    if not area then
+        AddError_BossArea(file .. "\n\tCouldn't parse as json\n\t" .. errMsg)
+        do return end
+    end
+
+    -- About
+    if not this.FinishAbout(file, area.about, const) then
+        do return end
+    end
+
+    -- NPCs
+    local success, errMsg = ValidateType_prop(area, "npcs", const.types.table, true)
+    if not success then
+        AddError_BossArea(file .. "\n\t" .. errMsg)
+        do return end
+    end
+
+    for i = 1, #area.npcs do
+        if not this.FinishNPC(file, area.npcs[i], area.about.center, const) then
+            do return end
+        end
+    end
+
+    -- Spawns
+    success, errMsg = ValidateType_prop(area, "spawns", const.types.table, false)
+    if not success then
+        AddError_BossArea(file .. "\n\t" .. errMsg)
+        do return end
+    end
+
+    if not area.spawns then
+        area.spawns = {}
+    end
+
+    for i = 1, #area.spawns do
+        if not this.FinishSpawn(file, area.spawns[i], area.about.center, const) then
+            do return end
+        end
+    end
+
+    -- Final validation
+    success, errMsg = this.ValidateArea(area.about, area.npcs, area.spawns, const)
+    if not success then
+        AddError_BossArea(file .. "\n\t" .. errMsg)
+        do return end
+    end
+
+    -- Add to the list
+    list[#list+1] = area
+end
+function this.LoadArea_folder(folder, list, const)
     local about = this.LoadAbout(folder, const)
     if not about then
         do return end
@@ -110,9 +165,19 @@ function this.LoadAbout(folder, const)
 
     for _, file in pairs(dir(folder)) do
         if file.type == const.filetype.file and file.name == "about.json" then
-            -- Deserialize, validate the file
-            retVal = this.LoadAbout_Deserialize(folder .. "/" .. file.name, const)
-            if not retVal then
+            local finalFilename = folder .. "/" .. file.name
+
+            -- Parse json
+            local about, errMsg = DeserializeJSON(finalFilename)
+            if not about then
+                AddError_BossArea(finalFilename .. "\n\tCouldn't parse as json\n\t" .. errMsg)
+                return nil
+            end
+
+            -- Validate and set final property values
+            if this.FinishAbout(finalFilename, about, const) then
+                retVal = about
+            else
                 return nil
             end
         end
@@ -125,33 +190,31 @@ function this.LoadAbout(folder, const)
 
     return retVal
 end
-function this.LoadAbout_Deserialize(file, const)
-    -- Parse json
-    local retVal, errMsg = DeserializeJSON(file)
-    if not retVal then
-        AddError_BossArea(file .. "\n\tCouldn't parse as json\n\t" .. errMsg)
-        return nil
-    end
-
+function this.FinishAbout(file, about, const)
     -- Check required fields, datatypes
-    local success, errMsg = this.ValidateAbout(retVal, const)
+    local success, errMsg = this.ValidateAbout(about, const)
     if not success then
         AddError_BossArea(file .. "\n\t" .. errMsg)
-        return nil
+        return false
     end
 
     -- Cap string lengths
-    retVal.author = Cap_Author(retVal.author)
-    retVal.description = Cap_Description(retVal.description)
-    Cap_Tags(retVal.tags)
+    about.author = Cap_Author(about.author)
+    about.description = Cap_Description(about.description)
+    Cap_Tags(about.tags)
 
     -- Create vector
-    retVal.center = Vector4.new(retVal.center_x, retVal.center_y, retVal.center_z, 1)
+    about.center = Vector4.new(about.center_x, about.center_y, about.center_z, 1)
 
-   return retVal
+   return true
 end
 function this.ValidateAbout(about, const)
-    local success, errMsg = ValidateType_prop(about, "author", const.types.string, false)
+    local success, errMsg = ValidateType_var(about, "about", const.types.table, true)
+    if not success then
+        return false, errMsg
+    end
+
+    success, errMsg = ValidateType_prop(about, "author", const.types.string, false)
     if not success then
         return false, errMsg
     end
@@ -201,49 +264,55 @@ end
 function this.LoadNPCs(folder, list, center, const)
     for _, file in pairs(dir(folder)) do
         if file.type == const.filetype.file and file.name:match("%.json$") then
-            -- Deserialize, validate the file
-            local npc = this.LoadNPCs_Deserialize(folder .. "/" .. file.name, center, const)
+            local finalFilename = folder .. "/" .. file.name
+
+            -- Parse json
+            local npc, errMsg = DeserializeJSON(finalFilename)
             if not npc then
+                AddError_BossArea(finalFilename .. "\n\tCouldn't parse as json\n\t" .. errMsg)
                 return false
             end
 
-            list[#list+1] = npc
+            -- Validate and set final property values
+            if this.FinishNPC(finalFilename, npc, center, const) then
+                list[#list+1] = npc
+            else
+                return false
+            end
         end
     end
 
     return true
 end
-function this.LoadNPCs_Deserialize(file, center, const)
-    -- Parse json
-    local retVal, errMsg = DeserializeJSON(file)
-    if not retVal then
-        AddError_BossArea(file .. "\n\tCouldn't parse as json\n\t" .. errMsg)
-        return nil
-    end
-
+function this.FinishNPC(file, npc, center, const)
     -- Check required fields, datatypes
-    local success, errMsg = this.ValidateNPC(retVal, const)
+    local success, errMsg = this.ValidateNPC(npc, const)
     if not success then
         AddError_BossArea(file .. "\n\t" .. errMsg)
-        return nil
+        return false
     end
 
-    retVal.entity_path = Cap_Entity(retVal.entity_path)
-    retVal.appearance = Cap_Entity(retVal.appearance)       -- reusing the same entity function until there's a reason not to
+    npc.entity_path = Cap_Entity(npc.entity_path)
+    npc.appearance = Cap_Entity(npc.appearance)       -- reusing the same entity function until there's a reason not to
 
     -- Create vector
-    retVal.position = Vector4.new(retVal.position_x, retVal.position_y, retVal.position_z, 1)
+    npc.position = Vector4.new(npc.position_x, npc.position_y, npc.position_z, 1)
 
-    local distanceSqr = GetVectorDiffLengthSqr(center, retVal.position)
+    local distanceSqr = GetVectorDiffLengthSqr(center, npc.position)
     if distanceSqr > MAX_RADIUS * MAX_RADIUS then
         AddError_BossArea(file .. "\n\t" .. "NPC is too far away from the center: " .. tostring(math.sqrt(distanceSqr)))
-        return nil
+        return false
     end
 
-    return retVal
+    return true
 end
 function this.ValidateNPC(npc, const)
-    local success, errMsg = ValidateType_prop(npc, "entity_path", const.types.string, true)
+    local success, errMsg = ValidateType_var(npc, "npc", const.types.table, true)
+    if not success then
+        return false, errMsg
+    end
+
+    success, errMsg = ValidateType_prop(npc, "entity_path", const.types.string, true)
     if not success then
         return false, errMsg
     end
@@ -279,46 +348,52 @@ end
 function this.LoadSpawns(folder, list, center, const)
     for _, file in pairs(dir(folder)) do
         if file.type == const.filetype.file and file.name:match("%.json$") then
-            -- Deserialize, validate the file
-            local spawn = this.LoadSpawns_Deserialize(folder .. "/" .. file.name, center, const)
+            local finalFilename = folder .. "/" .. file.name
+
+            -- Parse json
+            local spawn, errMsg = DeserializeJSON(finalFilename)
             if not spawn then
+                AddError_BossArea(finalFilename .. "\n\tCouldn't parse as json\n\t" .. errMsg)
                 return false
             end
 
-            list[#list+1] = spawn
+            -- Validate and set final property values
+            if this.FinishSpawn(finalFilename, spawn, center, const) then
+                list[#list+1] = spawn
+            else
+                return false
+            end
         end
     end
 
     return true
 end
-function this.LoadSpawns_Deserialize(file, center, const)
-    -- Parse json
-    local retVal, errMsg = DeserializeJSON(file)
-    if not retVal then
-        AddError_BossArea(file .. "\n\tCouldn't parse as json\n\t" .. errMsg)
-        return nil
-    end
-
+function this.FinishSpawn(file, spawn, center, const)
     -- Check required fields, datatypes
-    local success, errMsg = this.ValidateSpawn(retVal, const)
+    local success, errMsg = this.ValidateSpawn(spawn, const)
     if not success then
         AddError_BossArea(file .. "\n\t" .. errMsg)
-        return nil
+        return false
     end
 
     -- Create vector
-    retVal.position = Vector4.new(retVal.position_x, retVal.position_y, retVal.position_z, 1)
+    spawn.position = Vector4.new(spawn.position_x, spawn.position_y, spawn.position_z, 1)
 
-    local distanceSqr = GetVectorDiffLengthSqr(center, retVal.position)
+    local distanceSqr = GetVectorDiffLengthSqr(center, spawn.position)
     if distanceSqr > MAX_RADIUS * MAX_RADIUS then
         AddError_BossArea(file .. "\n\t" .. "Spawn point is too far away from the center: " .. tostring(math.sqrt(distanceSqr)))
-        return nil
+        return false
     end
 
-   return retVal
+   return true
 end
 function this.ValidateSpawn(spawn, const)
-    local success, errMsg = ValidateType_prop(spawn, "position_x", const.types.number, true)
+    local success, errMsg = ValidateType_var(spawn, "spawn", const.types.table, true)
+    if not success then
+        return false, errMsg
+    end
+
+    success, errMsg = ValidateType_prop(spawn, "position_x", const.types.number, true)
     if not success then
         return false, errMsg
     end
