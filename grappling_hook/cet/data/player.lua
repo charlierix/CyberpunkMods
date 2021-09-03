@@ -113,8 +113,6 @@ function Player:MapModelToSelf(model, primkey)
     self.playerID = model.playerID
     self.energy_tank = model.energy_tank
 
-    -- action mapping 1,2,3,4,5,6
-
     self.grapple1 = model.grapple1
     self.grapple2 = model.grapple2
     self.grapple3 = model.grapple3

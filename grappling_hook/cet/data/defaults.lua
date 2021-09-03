@@ -254,7 +254,7 @@ function GetDefault_EnergyTank()
         max_energy_update =
         {
             min = 1,        -- there is no max
-            amount = 2,
+            amount = 3,
         },
 
         recovery_rate = 1,

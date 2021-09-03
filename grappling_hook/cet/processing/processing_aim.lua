@@ -67,17 +67,22 @@ function this.Aim_Straight(aim, o, player, vars, const, debug, deltaTime)
 
     -- They're looking at open air, or something that is too far away
     if o.timer - vars.startTime > aim.aim_duration then
-        if aim.air_dash then
-            -- Took too long to aim, switching to air dash
-            Transition_ToAirDash(aim.air_dash, vars, const, o, from, aim.max_distance)
-        else
+
+
+        --TODO if aim.virtual_anchor
+
+
+        -- if aim.air_dash then
+        --     -- Took too long to aim, switching to air dash
+        --     Transition_ToAirDash(aim.air_dash, vars, const, o, from, aim.max_distance)
+        -- else
             -- Took too long to aim, can't air dash, giving up
 
             -- Since the grapple didn't happen, give back the energy that was taken at the start of the aim
             vars.energy = math.min(vars.energy + vars.grapple.energy_cost, player.energy_tank.max_energy)
 
             Transition_ToStandard(vars, const, debug, o)
-        end
+        -- end
 
     else
         -- Still aiming, make sure the map pin is visible

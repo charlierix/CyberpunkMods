@@ -13,7 +13,7 @@ function GetPlayerEntry(playerID)
 
     local grapples, errMsg = this.GetGrapples(row)
     if not grapples then
-        return nil, errMsg
+        return nil, nil, errMsg
     end
 
     local player =
@@ -28,6 +28,8 @@ function GetPlayerEntry(playerID)
         grapple6 = grapples[6],
         experience = row.Experience,
     }
+
+    this.RepairPlayer(player)       -- don't bother saving a repaired player.  The next time they hit save, the changes will get stored
 
     return player, row.PlayerKey, nil
 end
@@ -57,6 +59,9 @@ function SavePlayer(playerEntry)
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.GetPlayerEntry(playerID)
+end
 
 -- Returns an array of primary keys or nil if there was an error
 -- Second return is error message if the array returned is nil
@@ -112,6 +117,31 @@ function this.GetGrapples(playerRow)
     end
 
     return grapples, nil
+end
+
+-- If the player has old versions of data, this will bring it up to new versions
+function this.RepairPlayer(player)
+    -- Refund airdash
+    for i = 1, 6 do
+        this.RefundAirDash(player, player["grapple" .. tostring(i)])
+    end
+
+    -- The original update wasn't as generous.  Just swap out with the new
+    -- default.  Don't bother refunding any possible xp gap
+    player.energy_tank.max_energy_update = GetDefault_EnergyTank().max_energy_update
+end
+
+function this.RefundAirDash(player, grapple)
+    if not (grapple and grapple.aim_straight and grapple.aim_straight.air_dash) then
+        -- They don't have airdash
+        do return end
+    end
+
+    -- Give back the xp cost of the airdash
+    player.experience = player.experience + grapple.aim_straight.air_dash.experience
+
+    -- Now get rid of it
+    grapple.aim_straight.air_dash = nil
 end
 
 function this.ReduceGrappleRows()
