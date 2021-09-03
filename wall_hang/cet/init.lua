@@ -381,6 +381,11 @@ end
 
 function TODO()
 
+	-- Jump turning
+	--	When they jump off a wall and dot(look,normal) < -0.8, pay attention to their mouse_x velocity
+	--		zero: don't spin around, jump back and more up
+	--		swiping left/right: spin in that direction
+
 	-- Wall jump momentum
 	--	When they jump off a wall without using wall hang, keep some of that speed
 	--	Probably want to keep the part of the velocity that is perpendicular to the normal
@@ -394,6 +399,10 @@ function TODO()
     --          stateContext.SetPermanentIntParameter(n"currentNumberOfJumps", 0, true);
     --      ToDoubleJump
     --          if stateContext.GetIntParameter(n"currentNumberOfJumps", true) >= 2 {
+
+	-- Wall Friction
+	--	If they are trying to grab on to the wall, but the speed perpendicular to the normal > threshold,
+	--	then they should slow down instead of instant stop
 
     -- Magnetism
     --  While they are holding in the wall hang key, search out about 4 and apply a force toward the wall
@@ -430,5 +439,6 @@ function TODO()
 
 	-- Purchase
 	--	For bare hand, require them to purchase this before it starts working
+	--	Another option is to start with jump unlocked, gain experience from that before they can unlock wall hang
 
 end

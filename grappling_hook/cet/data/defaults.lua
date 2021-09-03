@@ -18,12 +18,13 @@ end
 function GetEnergyCost_GrappleStraight(experience)
     -- https://mycurvefit.com/
     -- https://www.desmos.com/calculator
+    -- zero=0 (0)
     -- low=12 (3)
-    -- med=24 (9)
-    -- high=48 (14)
+    -- med=24 (6)
+    -- high=48 (9)
 
-    --return 15.92308 + (-15.92308 / (1 + ((experience / 21.59567) ^ 2.485427)))
-    local retVal = 15.92308 - 15.92308 / (1 + (experience / 21.59567) ^ 2.485427)      -- tested with/without extra parenthesis and the order of operation is correct on this simpler version
+    local retVal = 12 + -12/(1 + (experience/24)^1.584963)
+
     return math.max(retVal, 0)
 end
 

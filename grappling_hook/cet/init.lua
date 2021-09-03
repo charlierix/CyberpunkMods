@@ -513,6 +513,9 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 -- registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
+--     for i = 0, 144, 3 do
+--         print(tostring(i) .. ": " .. tostring(GetEnergyCost_GrappleStraight(i)))
+--     end
 -- end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()
