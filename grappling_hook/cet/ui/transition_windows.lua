@@ -68,6 +68,15 @@ function TransitionWindows_Straight_AimDuration(vars_ui, const)
     ActivateWindow_GrappleStraight_AimDuration(vars_ui, const)
 end
 
+function TransitionWindows_Straight_AirAnchor(vars_ui, const)
+    -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
+    -- in vars_ui.transition_info
+
+    vars_ui.currentWindow = const.windows.grapple_straight_airanchor
+
+    ActivateWindow_GrappleStraight_AirAnchor(vars_ui, const)
+end
+
 function TransitionWindows_Straight_AirDash(vars_ui, const)
     -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
     -- in vars_ui.transition_info

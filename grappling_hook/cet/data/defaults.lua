@@ -353,6 +353,38 @@ function GetDefault_AimStraight(max_override)
     }
 end
 
+function GetDefault_AirAnchor()
+    local retVal =
+    {
+        energyCost = 4,
+
+        energyCost_reduction_percent = 0,
+        energyCost_reduction_percent_update =
+        {
+            min = 0,
+            max = 0.9,
+            amount = 0.15,
+        },
+
+        energyBurnRate = 3,
+
+        burnReducePercent = 0,
+        burnReducePercent_update =
+        {
+            min = 0,
+            max = 0.9,
+            amount = 0.1,
+        },
+    }
+
+    retVal.experience =
+        1 +     -- there is a base cost of 1
+        CalculateExperienceCost_Value(retVal.energyCost_reduction_percent, retVal.energyCost_reduction_percent_update) +
+        CalculateExperienceCost_Value(retVal.burnReducePercent, retVal.burnReducePercent_update)
+
+    return retVal
+end
+
 function GetDefault_AirDash()
     local retVal =
     {

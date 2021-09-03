@@ -22,12 +22,9 @@ namespace grapple_ui.models
 
         public string mappin_name { get; init; }
 
+        public AirAnchor air_anchor { get; init; }
 
+        // OBSOLETE
         public AirDash air_dash { get; init; }
-
-
-        //TODO: PersonPull
-
-
     }
 }

@@ -117,8 +117,11 @@ function DrawConfig(isCloseRequested, vars, vars_ui, player, o, const)
         elseif vars_ui.currentWindow == const.windows.grapple_straight_aimduration then
             continueShowing = DrawWindow_GrappleStraight_AimDuration(isCloseRequested, vars_ui, player, window, const)
 
-        elseif vars_ui.currentWindow == const.windows.grapple_straight_airdash then
-            continueShowing = DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, window, const)
+        elseif vars_ui.currentWindow == const.windows.grapple_straight_airanchor then
+            continueShowing = DrawWindow_GrappleStraight_AirAnchor(isCloseRequested, vars_ui, player, window, const)
+
+        -- elseif vars_ui.currentWindow == const.windows.grapple_straight_airdash then
+        --     continueShowing = DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, window, const)
 
         elseif vars_ui.currentWindow == const.windows.grapple_straight_antigrav then
             continueShowing = DrawWindow_GrappleStraight_AntiGrav(isCloseRequested, vars_ui, player, window, const)

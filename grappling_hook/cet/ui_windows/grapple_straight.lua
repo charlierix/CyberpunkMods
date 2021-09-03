@@ -4,7 +4,8 @@ local isHovered_distance = false
 local isHovered_look = false
 local isHovered_along = false
 local isHovered_drag = false
-local isHovered_airdash = false
+local isHovered_airanchor = false
+--local isHovered_airdash = false
 local isHovered_antigrav = false
 local isHovered_stopEarly = false
 
@@ -36,7 +37,9 @@ function DefineWindow_Grapple_Straight(vars_ui, const)
 
     grapple_straight.aim_duration = this.Define_AimDuration(const)
 
-    grapple_straight.air_dash = this.Define_AirDash(const)
+    grapple_straight.air_anchor = this.Define_AirAnchor(const)
+
+    --grapple_straight.air_dash = this.Define_AirDash(const)
 
     grapple_straight.anti_grav = this.Define_AntiGrav(const)
 
@@ -79,7 +82,7 @@ function DrawWindow_Grapple_Straight(isCloseRequested, vars_ui, player, window, 
 
     local shouldHighlightAlong = isHovered_distance or isHovered_along or isHovered_drag
     Refresh_StickFigure(grapple_straight.stickFigure, isHovered_antigrav or isHovered_stopEarly)
-    Refresh_GrappleArrows(grapple_straight.arrows, grapple, true, shouldHighlightAlong, isHovered_look or isHovered_airdash)
+    Refresh_GrappleArrows(grapple_straight.arrows, grapple, true, shouldHighlightAlong or isHovered_airanchor, isHovered_look)
     Refresh_GrappleDesiredLength(grapple_straight.desired_line, grapple, nil, changes, shouldHighlightAlong)
 
     this.Refresh_Distances(grapple_straight.distances, grapple)
@@ -92,7 +95,9 @@ function DrawWindow_Grapple_Straight(isCloseRequested, vars_ui, player, window, 
 
     this.Refresh_AimDuration(grapple_straight.aim_duration, grapple)
 
-    this.Refresh_AirDash(grapple_straight.air_dash, grapple)
+    this.Refresh_AirAnchor(grapple_straight.air_anchor, grapple)
+
+    --this.Refresh_AirDash(grapple_straight.air_dash, grapple)
 
     this.Refresh_AntiGrav(grapple_straight.anti_grav, grapple)
 
@@ -145,10 +150,15 @@ function DrawWindow_Grapple_Straight(isCloseRequested, vars_ui, player, window, 
         TransitionWindows_Straight_AimDuration(vars_ui, const)
     end
 
-    isClicked, isHovered_airdash = Draw_SummaryButton(grapple_straight.air_dash, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
+    isClicked, isHovered_airanchor = Draw_SummaryButton(grapple_straight.air_anchor, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
     if isClicked then
-        TransitionWindows_Straight_AirDash(vars_ui, const)
+        TransitionWindows_Straight_AirAnchor(vars_ui, const)
     end
+
+    -- isClicked, isHovered_airdash = Draw_SummaryButton(grapple_straight.air_dash, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
+    -- if isClicked then
+    --     TransitionWindows_Straight_AirDash(vars_ui, const)
+    -- end
 
     isClicked, isHovered_antigrav = Draw_SummaryButton(grapple_straight.anti_grav, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
     if isClicked then
@@ -424,6 +434,47 @@ function this.Define_AimDuration(const)
 end
 function this.Refresh_AimDuration(def, grapple)
     def.header_value = tostring(Round(grapple.aim_straight.aim_duration, 2))
+end
+
+function this.Define_AirAnchor(const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            pos_x = -250,
+            pos_y = 240,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        header_prompt = "Air Anchor",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            -- a_accel = { prompt = "acceleration" },
+            -- b_speed = { prompt = "max speed" },
+            -- c_burnRate = { prompt = "energy burn rate" },
+        },
+
+        invisible_name = "Grapple_Straight_AirAnchor",
+
+        CalcSize = CalcSize_SummaryButton,
+    }
+end
+function this.Refresh_AirAnchor(def, grapple)
+    local anchor = grapple.aim_straight.air_anchor
+
+    if anchor then
+        -- def.content.a_accel.value = tostring(Round(dash.accel.accel))
+        -- def.content.b_speed.value = tostring(Round(dash.accel.speed))
+        -- def.content.c_burnRate.value = tostring(Round(dash.energyBurnRate * (1 - dash.burnReducePercent), 2))
+        def.unused_text = nil
+
+    else
+        def.unused_text = def.header_prompt
+    end
 end
 
 function this.Define_AirDash(const)

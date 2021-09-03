@@ -89,7 +89,8 @@ require "ui_windows/grapple_straight"
 require "ui_windows/grapple_straight_accelalong"
 require "ui_windows/grapple_straight_accellook"
 require "ui_windows/grapple_straight_aimduration"
-require "ui_windows/grapple_straight_airdash"
+--require "ui_windows/grapple_straight_airdash"     -- no longer used
+require "ui_windows/grapple_straight_airanchor"
 require "ui_windows/grapple_straight_antigrav"
 require "ui_windows/grapple_straight_description"
 require "ui_windows/grapple_straight_distances"
@@ -259,6 +260,7 @@ local const =
                 "grapple_straight_accelalong",
                 "grapple_straight_accellook",
                 "grapple_straight_aimduration",
+                "grapple_straight_airanchor",
                 "grapple_straight_airdash",
                 "grapple_straight_antigrav",
                 "grapple_straight_description",
