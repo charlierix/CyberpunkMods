@@ -1,7 +1,11 @@
 local this = {}
 local default_airanchor = GetDefault_AirAnchor()
 
+local COLUMN_X = 140
+
 local isHovered_has = false
+local isHovered_cost = false
+local isHovered_rate = false
 
 function DefineWindow_GrappleStraight_AirAnchor(vars_ui, const)
     local gst8_airanchor = {}
@@ -24,13 +28,23 @@ function DefineWindow_GrappleStraight_AirAnchor(vars_ui, const)
     gst8_airanchor.has_airanchor = this.Define_HasAirAnchor(const)
     gst8_airanchor.has_help = this.Define_Has_Help(gst8_airanchor.has_airanchor, const)
 
+    -- Energy Cost
+    gst8_airanchor.cost = this.Define_Cost(const)
 
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Reduce Percent", -COLUMN_X, 130, const, false, "GrappleStraight_AirAnchor_Cost", this.Tooltip_Cost())
+    gst8_airanchor.cost_prompt = prompt
+    gst8_airanchor.cost_value = value
+    gst8_airanchor.cost_updown = updown
+    gst8_airanchor.cost_help = help
 
+    -- Burn Rate
+    gst8_airanchor.rate = this.Define_Rate(const)
 
-
-
-
-
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Reduce Percent", COLUMN_X, 130, const, false, "GrappleStraight_AirAnchor_Rate", this.Tooltip_Rate())
+    gst8_airanchor.rate_prompt = prompt
+    gst8_airanchor.rate_value = value
+    gst8_airanchor.rate_updown = updown
+    gst8_airanchor.rate_help = help
 
     gst8_airanchor.experience = Define_Experience(const, "grapple")
 
@@ -72,12 +86,22 @@ function DrawWindow_GrappleStraight_AirAnchor(isCloseRequested, vars_ui, player,
 
     Refresh_Name(gst8_airanchor.name, grapple.name)
 
-    Refresh_GrappleArrows(gst8_airanchor.arrows, grapple, false, isHovered_has, false)
+    Refresh_GrappleArrows(gst8_airanchor.arrows, grapple, false, isHovered_has or isHovered_cost or isHovered_rate, false)
     Refresh_GrappleDesiredLength(gst8_airanchor.desired_line, grapple, nil, changes, false)
 
     this.Refresh_HasAirAnchor(gst8_airanchor.has_airanchor, player, grapple.aim_straight, airanchor, changes)
 
+    -- Cost
+    this.Refresh_Cost(gst8_airanchor.cost, airanchor, changes)
 
+    this.Refresh_Cost_Value(gst8_airanchor.cost_value, airanchor, changes)
+    this.Refresh_Cost_UpDown(gst8_airanchor.cost_updown, airanchor, player, changes)
+
+    -- Rate
+    this.Refresh_Rate(gst8_airanchor.rate, airanchor, changes)
+
+    this.Refresh_Rate_Value(gst8_airanchor.rate_value, airanchor, changes)
+    this.Refresh_Rate_UpDown(gst8_airanchor.rate_updown, airanchor, player, changes)
 
     this.Refresh_Experience(gst8_airanchor.experience, player, grapple, changes, gst8_airanchor.has_airanchor.isChecked, startedWithAA)
 
@@ -108,9 +132,32 @@ function DrawWindow_GrappleStraight_AirAnchor(isCloseRequested, vars_ui, player,
     Draw_HelpButton(gst8_airanchor.has_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     if gst8_airanchor.has_airanchor.isChecked then
+        -- Cost
+        Draw_OrderedList(gst8_airanchor.cost, vars_ui.style.colors)
 
+        Draw_Label(gst8_airanchor.cost_prompt, vars_ui.style.colors)
+        Draw_Label(gst8_airanchor.cost_value, vars_ui.style.colors)
+
+        local isDownClicked, isUpClicked
+        isDownClicked, isUpClicked, isHovered_cost = Draw_UpDownButtons(gst8_airanchor.cost_updown, vars_ui.style.updownButtons)
+        this.Update_Cost(gst8_airanchor.cost_updown, changes, isDownClicked, isUpClicked)
+
+        Draw_HelpButton(gst8_airanchor.cost_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+
+        -- Rate
+        Draw_OrderedList(gst8_airanchor.rate, vars_ui.style.colors)
+
+        Draw_Label(gst8_airanchor.rate_prompt, vars_ui.style.colors)
+        Draw_Label(gst8_airanchor.rate_value, vars_ui.style.colors)
+
+        local isDownClicked, isUpClicked
+        isDownClicked, isUpClicked, isHovered_rate = Draw_UpDownButtons(gst8_airanchor.rate_updown, vars_ui.style.updownButtons)
+        this.Update_Rate(gst8_airanchor.rate_updown, changes, isDownClicked, isUpClicked)
+
+        Draw_HelpButton(gst8_airanchor.rate_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
     else
-
+        isHovered_cost = false
+        isHovered_rate = false
     end
 
     Draw_OrderedList(gst8_airanchor.experience, vars_ui.style.colors)
@@ -186,7 +233,99 @@ This will cost extra energy each time you use it, as well as energy drain while 
     return retVal
 end
 
+function this.Define_Cost(const)
+    -- OrderedList
+    return
+    {
+        content =
+        {
+            a_rate = { prompt = "Extra Energy Cost" },
+            b_reduced = { prompt = "Reduced" },
+        },
 
+        position =
+        {
+            pos_x = -COLUMN_X,
+            pos_y = 60,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        gap = 12,
+
+        color_prompt = "edit_prompt",
+        color_value = "edit_value",
+
+        CalcSize = CalcSize_OrderedList,
+    }
+end
+function this.Refresh_Cost(def, airanchor, changes)
+    local cost = airanchor.energyCost * (1 - (airanchor.energyCost_reduction_percent + changes:Get("energyCost_reduction_percent")))
+
+    def.content.a_rate.value = tostring(Round(airanchor.energyCost, 1))
+    def.content.b_reduced.value = tostring(Round(cost, 1))
+end
+
+function this.Tooltip_Cost()
+    return "Reduces the extra cost of using air anchor"
+end
+function this.Refresh_Cost_Value(def, airanchor, changes)
+    def.text = tostring(Round((airanchor.energyCost_reduction_percent + changes:Get("energyCost_reduction_percent")) * 100)) .. "%"
+end
+function this.Refresh_Cost_UpDown(def, airanchor, player, changes)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(airanchor.energyCost_reduction_percent_update, airanchor.energyCost_reduction_percent + changes:Get("energyCost_reduction_percent"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0, 100)
+end
+function this.Update_Cost(def, changes, isDownClicked, isUpClicked)
+    Update_UpDownButton("energyCost_reduction_percent", "experience", isDownClicked, isUpClicked, def, changes)
+end
+
+function this.Define_Rate(const)
+    -- OrderedList
+    return
+    {
+        content =
+        {
+            a_rate = { prompt = "Burn Rate" },
+            b_reduced = { prompt = "Reduced" },
+        },
+
+        position =
+        {
+            pos_x = COLUMN_X,
+            pos_y = 60,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        gap = 12,
+
+        color_prompt = "edit_prompt",
+        color_value = "edit_value",
+
+        CalcSize = CalcSize_OrderedList,
+    }
+end
+function this.Refresh_Rate(def, airanchor, changes)
+    local rate = airanchor.energyBurnRate * (1 - (airanchor.burnReducePercent + changes:Get("burnReducePercent")))
+
+    def.content.a_rate.value = tostring(Round(airanchor.energyBurnRate, 2))
+    def.content.b_reduced.value = tostring(Round(rate, 2))
+end
+
+function this.Tooltip_Rate()
+    return "Reduces the cost per second of using air anchor"
+end
+function this.Refresh_Rate_Value(def, airanchor, changes)
+    def.text = tostring(Round((airanchor.burnReducePercent + changes:Get("burnReducePercent")) * 100)) .. "%"
+end
+function this.Refresh_Rate_UpDown(def, airanchor, player, changes)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(airanchor.burnReducePercent_update, airanchor.burnReducePercent + changes:Get("burnReducePercent"), player.experience + changes:Get("experience_buysell") + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0, 100)
+end
+function this.Update_Rate(def, changes, isDownClicked, isUpClicked)
+    Update_UpDownButton("burnReducePercent", "experience", isDownClicked, isUpClicked, def, changes)
+end
 
 function this.Refresh_Experience(def, player, grapple, changes, hasAA, startedWithAA)
     local cost = this.GetXPGainLoss(hasAA, startedWithAA, changes)
@@ -194,8 +333,6 @@ function this.Refresh_Experience(def, player, grapple, changes, hasAA, startedWi
     def.content.available.value = tostring(math.floor(player.experience + cost))
     def.content.used.value = tostring(Round(grapple.experience - cost))
 end
-
-
 
 function this.Refresh_IsDirty(def, changes, aim, def_checkbox)
     local isDirty = false
@@ -214,44 +351,39 @@ function this.Refresh_IsDirty(def, changes, aim, def_checkbox)
 end
 
 function this.Save(player, grapple, aim, airanchor, changes, hasAA, startedWithAA)
-    -- local cost = this.GetXPGainLoss(hasAA, startedWithAA, changes)
-    -- if not player:TransferExperience_GrappleStraight(grapple, -cost) then
-    --     do return end
-    -- end
+    local cost = this.GetXPGainLoss(hasAA, startedWithAA, changes)
+    if not player:TransferExperience_GrappleStraight(grapple, -cost) then
+        do return end
+    end
 
-    -- if hasAA then
-    --     if aim.air_anchor then
-    --         aim.air_anchor.experience = airanchor.experience - changes:Get("experience")
-    --     else
-    --         aim.air_anchor =
-    --         {
-    --             energyBurnRate = airanchor.energyBurnRate,        -- it's safe to directly copy this, because update structure is readonly
+    if hasAA then
+        if aim.air_anchor then
+            aim.air_anchor.experience = airanchor.experience - changes:Get("experience")
+            aim.air_anchor.energyCost_reduction_percent = airanchor.energyCost_reduction_percent + changes:Get("energyCost_reduction_percent")
+            aim.air_anchor.burnReducePercent = airanchor.burnReducePercent + changes:Get("burnReducePercent")
 
-    --             burnReducePercent = airanchor.burnReducePercent + changes:Get("burnReducePercent"),
-    --             burnReducePercent_update = airanchor.burnReducePercent_update,
+        else
+            -- Stitch together a new one based on the default and changed values
+            aim.air_anchor =
+            {
+                energyCost = airanchor.energyCost,
 
-    --             accel =
-    --             {
-    --                 accel = airanchor.accel.accel + changes:Get("accel"),
-    --                 accel_update = airanchor.accel.accel_update,
+                energyCost_reduction_percent = airanchor.energyCost_reduction_percent + changes:Get("energyCost_reduction_percent"),
+                energyCost_reduction_percent_update = airanchor.energyCost_reduction_percent_update,
 
-    --                 speed = airanchor.accel.speed + changes:Get("speed"),
-    --                 speed_update = airanchor.accel.speed_update,
+                energyBurnRate = airanchor.energyBurnRate,
 
-    --                 deadSpot_distance = airanchor.accel.deadSpot_distance,
-    --                 deadSpot_speed = airanchor.accel.deadSpot_speed,
-    --             },
+                burnReducePercent = airanchor.burnReducePercent + changes:Get("burnReducePercent"),
+                burnReducePercent_update = airanchor.burnReducePercent_update,
 
-    --             mappin_name = airanchor.mappin_name,
+                experience = airanchor.experience - changes:Get("experience")
+            }
+        end
+    else
+        aim.air_anchor = nil
+    end
 
-    --             experience = airanchor.experience - changes:Get("experience")
-    --         }
-    --     end
-    -- else
-    --     aim.air_anchor = nil
-    -- end
-
-    -- player:Save()
+    player:Save()
 end
 
 function this.GetXPGainLoss(hasAA, startedWithAA, changes)

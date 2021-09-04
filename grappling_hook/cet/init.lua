@@ -101,135 +101,6 @@ require "ui_windows/main"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
-function TODO()
-
-	-- Controller:
-	--	Listen to MoveX, MoveY
-	--	Do a length chcek + dot product and populate:  Forward, Back, Left, Right
-
-    -- Aim:
-    --  Add an option to slow down time while aiming
-
-    -- Aim:
-    --  Add an option to create a false anchor if no hits
-    --  This will cost twice the energy of a normal grapple
-    --  One property for % of max dist
-    --  One property to reduce the cost
-
-    -- Grapple Straight:
-    --  Add a repulsion to walls when > some distance from desired distance
-    --  This would be helpful with going straight up walls
-
-    -- Grapple Straight:
-    --  Add an ability to jump straight away from a wall when at the desired distance (and close to a wall)
-    --  This will help with scaling tall walls.  You grapple straight up, reach the anchor, recover energy,
-    --  jump and aquire a new grapple point, repeat
-    --
-    --  Also give an option to slow time while jumping.  This will be useful for ambushing enemies
-
-    -- Grapple Straight:
-    --  Have an option for the anchor to be higher than the hit point
-    --  This will help get over ledges when the grapple distance isn't enough to get fast enough
-    --
-    --  Also an option to anchor some distance away from the wall
-    --  This would be useful for rope to get some better angles
-    --
-    --  Another way to go is some offset from the anchor point's normal
-
-    -- All:
-    --  Fall damage should be a percent, not a bool
-
-    -- Pull:
-    --  May need further ray casts along the initial line segment if it was beyond 50 (a collision hull could load in as the player gets closer)
-
-    -- Pull:
-    --  If grapple point is a person (determined in aim), ragdoll them toward you
-    --  GET OVER HERE!!!
-
-    -- Web Swing:
-    --  Have options for increased gravity, to make the player move faster
-
-    -- Zip Line:
-    --  Choose an anchor point some distance along the look direction
-    --  Calculate a parabola or bezier above the player, then draw it
-    --  This wouldn't necessarily anchor to anything (because collision hulls would be too far away)
-
-    -- Air Dash:
-    --  Stop supporting air dash
-    --  Auto sell back airdash if equipped
-
-    -- Grapple Straight/Swing:
-    --  Add extra weight when carrying a dead body
-
-    -- Energy Tank:
-    --  Drawn Weapon Cost %
-    --
-    --  Grapple costs more when a weapon is drawn (don't do this for fists or cyberarms):
-    --      knife   10%
-    --      sword   30%
-    --      pistol  30%
-    --      smg     60%
-    --      rifle   80%
-    --      shotgun 80%
-    --      sniper  150%
-
-    -- Energy Tank:
-    --  Drawn Weapon Reduction % (5 to 95)
-    --  This is exposed in the config screen as a way to counter the above cost
-
-    -- XP Gain
-    --  Add achievments
-
-    -- UI:
-    --  Add invisible buttons to several controls, highlight graphics based on hover
-
-    -- UI:
-    --  Only allow config changes within a small radius of vendors: ripper doc, clothing, melee, ranged
-    --  Still allow them to look at values, just not change
-    --  Add a note when out of range
-
-    -- UI:
-    --  Controls are placed at absolute positions.  Create some container panel controls, like horizontal list,
-    --  vertical list (that may also support scrollbars)
-    --
-    --  Control's draw methods do both size calculations and drawing.  Split that up.  That way the panel can
-    --  get all the child control's sizes, do some final calculations based on sizes and margins, then pass
-    --  in the location to each control's draw function (could also pass in a final width/height for controls
-    --  that should stretch)
-    --
-    --  A simpler alternative could be placing controls relative to other controls
-
-    -- UI:
-    --  There's a lot of copy/pasted code.  A lot of it is around binding between model and viewmodel.  Look
-    --  for patterns and create a binding util
-
-    -- UI:
-    --  The props in viewmodels that override style are currently suffixed with _override
-    --  Need to make most style properties overridable by the viewmodel, and it should just be the same name
-
-    -- UI:
-    --  All numbers should be presented as dozenal :)
-    --  tostring_doz()
-    --  Round_doz()     -- this is needed, because rounding fractions to a certain number of digits would have to be converted, then truncated
-    --  also, if there's ever a textbox, that would need to be parsed as well
-
-    -- ViewModels:
-    --  The properties that change should have set instead of init
-
-    -- Graphics:
-    --  See if this can be used to draw in game
-    --  https://redscript.redmodding.org/#37505
-
-    -- Hanging MapPins: -- this might be fixed now (it seems to be)
-    --  See if it's because there's an autosave mid grapple
-    --
-    -- NonameNonumber — Today at 6:48 PM
-    -- mappin system should be still available
-    -- I do similar thing in that demo:
-    -- https://github.com/WolvenKit/cet-examples/blob/main/ai-components/init.lua#L130
-    -- TargetingHelper.Dispose() destroys pins
-end
-
 local this = {}
 
 --------------------------------------------------------------------
@@ -605,7 +476,7 @@ registerForEvent("onDraw", function()
     end
 end)
 
------------------------------------- Private Methods -----------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
@@ -621,4 +492,117 @@ function this.ClearObjects()
     if xp_gain then
         xp_gain:Clear()
     end
+end
+
+---------------------------------------------------------------------------------------
+
+function TODO()
+
+	-- Controller:
+	--	Listen to MoveX, MoveY
+	--	Do a length chcek + dot product and populate:  Forward, Back, Left, Right
+
+    -- Aim:
+    --  Add an option to slow down time while aiming
+
+    -- Aim:
+    --  Add an option to create a false anchor if no hits
+    --  This will cost twice the energy of a normal grapple
+    --  One property for % of max dist
+    --  One property to reduce the cost
+
+    -- Grapple Straight:
+    --  Add a repulsion to walls when > some distance from desired distance
+    --  This would be helpful with going straight up walls
+
+    -- Grapple Straight:
+    --  Add an ability to jump straight away from a wall when at the desired distance (and close to a wall)
+    --  This will help with scaling tall walls.  You grapple straight up, reach the anchor, recover energy,
+    --  jump and aquire a new grapple point, repeat
+    --
+    --  Also give an option to slow time while jumping.  This will be useful for ambushing enemies
+
+    -- Grapple Straight:
+    --  Have an option for the anchor to be higher than the hit point
+    --  This will help get over ledges when the grapple distance isn't enough to get fast enough
+    --
+    --  Also an option to anchor some distance away from the wall
+    --  This would be useful for rope to get some better angles
+    --
+    --  Another way to go is some offset from the anchor point's normal
+
+    -- All:
+    --  Fall damage should be a percent, not a bool
+
+    -- Pull:
+    --  May need further ray casts along the initial line segment if it was beyond 50 (a collision hull could load in as the player gets closer)
+
+    -- Pull:
+    --  If grapple point is a person (determined in aim), ragdoll them toward you
+    --  GET OVER HERE!!!
+
+    -- Web Swing:
+    --  Have options for increased gravity, to make the player move faster
+
+    -- Zip Line:
+    --  Choose an anchor point some distance along the look direction
+    --  Calculate a parabola or bezier above the player, then draw it
+    --  This wouldn't necessarily anchor to anything (because collision hulls would be too far away)
+
+    -- Grapple Straight/Swing:
+    --  Add extra weight when carrying a dead body
+
+    -- Energy Tank:
+    --  Drawn Weapon Cost %
+    --
+    --  Grapple costs more when a weapon is drawn (don't do this for fists or cyberarms):
+    --      knife   10%
+    --      sword   30%
+    --      pistol  30%
+    --      smg     60%
+    --      rifle   80%
+    --      shotgun 80%
+    --      sniper  150%
+
+    -- Energy Tank:
+    --  Drawn Weapon Reduction % (5 to 95)
+    --  This is exposed in the config screen as a way to counter the above cost
+
+    -- XP Gain
+    --  Add achievments
+
+    -- UI:
+    --  Add invisible buttons to several controls, highlight graphics based on hover
+
+    -- UI:
+    --  Only allow config changes within a small radius of vendors: ripper doc, clothing, melee, ranged
+    --  Still allow them to look at values, just not change
+    --  Add a note when out of range
+
+    -- UI:
+    --  Controls are placed at absolute positions.  Create some container panel controls, like horizontal list,
+    --  vertical list (that may also support scrollbars)
+    --
+    --  Control's draw methods do both size calculations and drawing.  Split that up.  That way the panel can
+    --  get all the child control's sizes, do some final calculations based on sizes and margins, then pass
+    --  in the location to each control's draw function (could also pass in a final width/height for controls
+    --  that should stretch)
+    --
+    --  A simpler alternative could be placing controls relative to other controls
+
+    -- UI:
+    --  The props in viewmodels that override style are currently suffixed with _override
+    --  Need to make most style properties overridable by the viewmodel, and it should just be the same name
+
+    -- UI:
+    --  All numbers should be presented as dozenal :)
+    --  tostring_doz()
+    --  Round_doz()     -- this is needed, because rounding fractions to a certain number of digits would have to be converted, then truncated
+    --  also, if there's ever a textbox, that would need to be parsed as well
+
+    -- ViewModels:
+    --  The properties that change should have set instead of init
+
+    -- Crouch:
+    --  Reenter crouch if grapple started from crouch
 end

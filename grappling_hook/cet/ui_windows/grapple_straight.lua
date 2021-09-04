@@ -453,9 +453,8 @@ function this.Define_AirAnchor(const)
         content =
         {
             -- the content is presented as sorted by name
-            -- a_accel = { prompt = "acceleration" },
-            -- b_speed = { prompt = "max speed" },
-            -- c_burnRate = { prompt = "energy burn rate" },
+            a_cost = { prompt = "energy cost" },
+            b_burnRate = { prompt = "energy burn rate" },
         },
 
         invisible_name = "Grapple_Straight_AirAnchor",
@@ -467,9 +466,8 @@ function this.Refresh_AirAnchor(def, grapple)
     local anchor = grapple.aim_straight.air_anchor
 
     if anchor then
-        -- def.content.a_accel.value = tostring(Round(dash.accel.accel))
-        -- def.content.b_speed.value = tostring(Round(dash.accel.speed))
-        -- def.content.c_burnRate.value = tostring(Round(dash.energyBurnRate * (1 - dash.burnReducePercent), 2))
+        def.content.a_cost.value = tostring(Round(anchor.energyCost * (1 - anchor.energyCost_reduction_percent), 1))
+        def.content.b_burnRate.value = tostring(Round(anchor.energyBurnRate * (1 - anchor.burnReducePercent), 2))
         def.unused_text = nil
 
     else
