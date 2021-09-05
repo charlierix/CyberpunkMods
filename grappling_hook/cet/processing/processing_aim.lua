@@ -61,28 +61,50 @@ function this.Aim_Straight(aim, o, player, vars, const, debug, deltaTime)
         -- Ensure pin is drawn and placed properly (flight pin, not aim pin)
         EnsureMapPinVisible(hitPoint, vars.grapple.mappin_name, vars, o)
 
-        Transition_ToFlight(vars, const, o, from, hitPoint)
+        Transition_ToFlight(vars, const, o, from, hitPoint, nil)
         do return end
     end
 
     -- They're looking at open air, or something that is too far away
     if o.timer - vars.startTime > aim.aim_duration then
+        -- Took too long to aim
 
-
-        --TODO if aim.virtual_anchor
-
+        local switched = false
 
         -- if aim.air_dash then
-        --     -- Took too long to aim, switching to air dash
+        --     -- Switching to air dash
         --     Transition_ToAirDash(aim.air_dash, vars, const, o, from, aim.max_distance)
-        -- else
+        --     switched = true
+        -- elseif ....
+
+        if aim.air_anchor then
+            -- They have an air anchor equipped.  See if there's enough energy to use it
+            -- (this energy compare is a copy of Transition_ToAim)
+
+            local cost = aim.air_anchor.energyCost * (1 - aim.air_anchor.energyCost_reduction_percent)
+
+            if vars.energy < cost then
+                -- Notify the player that energy is too low
+                vars.animation_lowEnergy:ActivateAnimation()
+            else
+                vars.energy = vars.energy - cost
+
+                hitPoint = Vector4.new(from.x + (o.lookdir_forward.x * aim.max_distance), from.y + (o.lookdir_forward.y * aim.max_distance), from.z + (o.lookdir_forward.z * aim.max_distance), 1)
+                EnsureMapPinVisible(hitPoint, vars.grapple.mappin_name, vars, o)
+                Transition_ToFlight(vars, const, o, from, hitPoint, aim.air_anchor)
+
+                switched = true
+            end
+        end
+
+        if not switched then
             -- Took too long to aim, can't air dash, giving up
 
             -- Since the grapple didn't happen, give back the energy that was taken at the start of the aim
             vars.energy = math.min(vars.energy + vars.grapple.energy_cost, player.energy_tank.max_energy)
 
             Transition_ToStandard(vars, const, debug, o)
-        -- end
+        end
 
     else
         -- Still aiming, make sure the map pin is visible

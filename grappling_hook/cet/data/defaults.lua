@@ -340,12 +340,13 @@ function GetDefault_AimStraight(max_override)
             amount = 1,
         },
 
-        aim_duration = 0.333,     -- 1 seems ideal, but make them pay for it in third second intervals
+        aim_duration = 0.35,     -- 1 seems ideal, but make them pay for it in third second intervals
         aim_duration_update =
         {
-            min = 0.333,
+            min_abs = 0.05,
+            min = 0.35,
             max = 3,
-            amount = 0.333333,
+            amount = 0.3,
         },
 
         mappin_name = "CustomPositionVariant",
@@ -356,7 +357,7 @@ end
 function GetDefault_AirAnchor()
     local retVal =
     {
-        energyCost = 4,
+        energyCost = 3,
 
         energyCost_reduction_percent = 0,
         energyCost_reduction_percent_update =
@@ -366,7 +367,7 @@ function GetDefault_AirAnchor()
             amount = 0.15,
         },
 
-        energyBurnRate = 3,
+        energyBurnRate = 2,
 
         burnReducePercent = 0,
         burnReducePercent_update =

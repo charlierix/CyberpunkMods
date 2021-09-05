@@ -13,6 +13,7 @@ function Transition_ToStandard(vars, const, debug, o)
 
     vars.grapple = nil
     vars.airdash = nil
+    vars.airanchor = nil
 
     vars.startStopTracker:ResetKeyDowns()
 
@@ -48,7 +49,8 @@ end
 
 -- This goes from aim into flight (or airdash to flight)
 -- There's no need to check for energy, that was done when trying to aim
-function Transition_ToFlight(vars, const, o, rayFrom, rayHit)
+-- NOTE: airanchor should only be passed in when flight is using it (a solid wall hit doesn't use air anchor)
+function Transition_ToFlight(vars, const, o, rayFrom, rayHit, airanchor)
     vars.flightMode = const.flightModes.flight
     o:Custom_CurrentlyFlying_StartFlight()
 
@@ -62,6 +64,8 @@ function Transition_ToFlight(vars, const, o, rayFrom, rayHit)
     vars.rayFrom = rayFrom
     vars.rayHit = rayHit
     vars.distToHit = math.sqrt(GetVectorDiffLengthSqr(rayHit, rayFrom))
+
+    vars.airanchor = airanchor
 
     vars.hasBeenAirborne = false
     vars.initialAirborneTime = nil

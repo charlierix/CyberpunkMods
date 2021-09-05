@@ -15,8 +15,10 @@ local this = {}
 -- grapple config probably won't use all the acceleration types, but it's easier
 -- to have a single worker method that can handle lots of possible config scenarios
 function Process_Flight(o, player, vars, const, debug, deltaTime)
-    -- Recover at a reduced rate
-    vars.energy = RecoverEnergy(vars.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * player.energy_tank.flying_percent, deltaTime)
+    -- Gain/Reduce energy.  Exit if there wasn't enough energy left
+    if not this.AdjustEnergy(o, player, vars, const, deltaTime) then
+        do return end
+    end
 
     ---------------------------------- VALIDATIONS ----------------------------------
 
@@ -103,7 +105,28 @@ function Process_Flight(o, player, vars, const, debug, deltaTime)
     o.player:GrapplingHook_AddImpulse(accel_x, accel_y, accel_z)
 end
 
---------------------------------------- Private Methods ---------------------------------------
+----------------------------------- Private Methods -----------------------------------
+
+function this.AdjustEnergy(o, player, vars, const, deltaTime)
+    -- Recover at a reduced rate
+    vars.energy = RecoverEnergy(vars.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * player.energy_tank.flying_percent, deltaTime)
+
+    if vars.airanchor then
+        -- Reduce Energy
+        -- NOTE: Still want to gain energy.  There's just the extra drain of the air anchor
+        local newEnergy, isEnergyEmpty = ConsumeEnergy(vars.energy, vars.airanchor.energyBurnRate * (1 - vars.airanchor.burnReducePercent), deltaTime)
+
+        if isEnergyEmpty then
+            vars.animation_lowEnergy:ActivateAnimation()
+            Transition_ToStandard(vars, const, debug, o)
+            return false
+        else
+            vars.energy = newEnergy
+        end
+    end
+
+    return true
+end
 
 function this.GetVelocityDrag(dirUnit, diffDist, isSameDir, args)
     if not args then

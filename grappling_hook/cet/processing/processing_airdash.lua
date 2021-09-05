@@ -50,7 +50,7 @@ function Process_AirDash(o, player, vars, const, debug, deltaTime)
         -- Ensure pin is drawn and placed properly (flight pin, not aim pin)
         EnsureMapPinVisible(hitPoint, vars.grapple.mappin_name, vars, o)
 
-        Transition_ToFlight(vars, const, o, from, hitPoint)
+        Transition_ToFlight(vars, const, o, from, hitPoint, nil)
         do return end
     end
 

@@ -171,6 +171,7 @@ local vars =
     flightMode = const.flightModes.standard,
     --grapple = nil,    -- an instance of models.Grapple    -- gets populated in Transition_ToAim (back to nil in Transition_ToStandard)
     --airdash = nil,    -- an instance of models.AirDash    -- gets populated in Transition_ToAirDash (just a copy of grapple.aim_straight.air_dash)
+    --airanchor = nil,  -- an instance of models.AirAnchor  -- gets populated in Transition_ToFlight (back to nil in Transition_ToStandard)
 
     energy = 1000,      -- start with too much so the progress doesn't show during initial load
 

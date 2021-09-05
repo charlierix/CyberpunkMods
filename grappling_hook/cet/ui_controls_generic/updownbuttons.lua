@@ -138,16 +138,16 @@ function GetDecrementIncrement(valueUpdates, currentValue, currentExperience)
 	end
 
 	if dec then
-		if valueUpdates.min_abs and currentValue - dec < valueUpdates.min_abs then
+		if valueUpdates.min_abs and currentValue - dec < valueUpdates.min_abs and not IsNearValue(currentValue - dec, valueUpdates.min_abs) then
 			-- Decrementing would make it less than min_abs
 			dec  = nil
-		elseif not valueUpdates.min_abs and valueUpdates.min and currentValue - dec < valueUpdates.min then
+		elseif not valueUpdates.min_abs and valueUpdates.min and currentValue - dec < valueUpdates.min and not IsNearValue(currentValue - dec, valueUpdates.min) then
 			-- Decrementing would make it less than min (and there's no min_abs)
 			dec = nil
 		end
 	end
 
-    if inc and valueUpdates.max and currentValue + inc > valueUpdates.max then
+    if inc and valueUpdates.max and currentValue + inc > valueUpdates.max and not IsNearValue(currentValue + inc, valueUpdates.max) then
 		-- Incrementing would make it greater than max
         inc = nil
     end
