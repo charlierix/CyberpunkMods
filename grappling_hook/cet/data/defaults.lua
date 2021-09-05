@@ -60,6 +60,11 @@ function GetDefault_Grapple_Choices()
         this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_PoleVault()),
         comparer)
 
+    InsertSorted(
+        retVal,
+        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_AngryBird()),
+        comparer)
+    
     return retVal
 end
 
@@ -215,16 +220,35 @@ function GetDefault_Grapple_PoleVault()
 end
 
 function GetDefault_Grapple_AngryBird()
-    -- "Launch yourself at the pigs - with guns blazing"
+    local retVal =
+    {
+        name = "angry bird",
+        description = "Launch yourself at the pigs - with guns blazing",
 
-    -- Fairly high antigravity/fade and acceleration
-    -- Short aim length
+        mappin_name = "OffVariant",
 
-    -- This uses the grapple like a slingshot
+        minDot = -0.13,
+        stop_on_wallHit = true,
+        stop_distance = 0.8,
 
+        anti_gravity = GetDefault_AntiGravity(0.4, 4),
 
-    -- This needs some work.  The player gets propelled to the anchor quickly, but then just sort of
-    -- hits the wall, pops straight up.  Needs the anchor above hit point by a meter or two
+        desired_length = 0,     -- pull all the way to the anchor
+
+        accel_alongGrappleLine = GetDefault_ConstantAccel(40, 14, 2.4),
+        accel_alongLook = nil,
+
+        aim_straight = GetDefault_AimStraight(14),
+
+        fallDamageReduction_percent = 0,
+    }
+
+    retVal.aim_straight.air_anchor = GetDefault_AirAnchor()
+
+    retVal.experience = this.CalculateExperience_GrappleStraight(retVal)
+    retVal.energy_cost = GetEnergyCost_GrappleStraight(retVal.experience)
+
+    return retVal
 end
 
 function GetDefault_Grapple_HeliumFrog()
@@ -351,6 +375,7 @@ function GetDefault_AimStraight(max_override)
 
         mappin_name = "CustomPositionVariant",
         air_dash = nil,
+        air_anchor = nil,
     }
 end
 
@@ -437,7 +462,7 @@ end
 function GetDefault_ConstantAccel(accel_override, speed_override, deadSpot_distance_override)
     local accel_update, accel = this.GetUpdateAndValue(2, 20, 20 + (2 * 16), 2, accel_override, false)
 
-    local speed_update, speed = this.GetUpdateAndValue(1, 6, 6 + (1 * 8), 1, speed_override, false)
+    local speed_update, speed = this.GetUpdateAndValue(1, 6, 6 + (1 * 16), 1, speed_override, false)
 
     local deadspot_dist = deadSpot_distance_override
     if not deadspot_dist then
