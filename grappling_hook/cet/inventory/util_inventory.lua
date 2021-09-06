@@ -47,7 +47,7 @@ function GetUnlockReport(o)
 
 
     -- Grenades
-    --TODO: IsEquipped isn't working
+    --TODO: IsEquipped isn't working (see how save editor sees it, or cet's tweak viewer)
     --found = this.FindItems(items, types_grenade, nil, false, o)
     --this.Debug_ReportItems(found, o)
 
