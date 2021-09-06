@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace grapple_ui.models.stylesheet
+﻿namespace models.stylesheet
 {
     //NOTE: These should probably be the same values OkCancelButtons, so that everything looks the same
     public record Button

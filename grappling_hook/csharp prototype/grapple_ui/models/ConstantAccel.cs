@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace grapple_ui.models
+﻿namespace models
 {
     /// <summary>
     /// This applies a constant acceleration (unless dead zone conditions are met)

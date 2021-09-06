@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace grapple_ui.models.stylesheet
+namespace models.stylesheet
 {
     /// <summary>
     /// These are properties used by the UI

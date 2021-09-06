@@ -1,11 +1,8 @@
-﻿using grapple_ui.models.misc;
+﻿using models.misc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace grapple_ui.models.viewmodels
+namespace models.viewmodels
 {
     /// <summary>
     /// This gets handed to a method that builds a control that looks like some text surrounded by

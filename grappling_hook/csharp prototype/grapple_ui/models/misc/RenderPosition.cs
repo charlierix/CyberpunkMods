@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace grapple_ui.models.misc
+﻿namespace models.misc
 {
     /// <summary>
     /// This gets created in init_ui.FinishDefiningWindow(), then gets populated each frame by util.layout.lua

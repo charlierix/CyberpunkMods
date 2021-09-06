@@ -1,11 +1,8 @@
-﻿using grapple_ui.models.misc;
+﻿using models.misc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace grapple_ui.models.viewmodels
+namespace models.viewmodels
 {
     /// <summary>
     /// This will lay out the prompts and values in columns

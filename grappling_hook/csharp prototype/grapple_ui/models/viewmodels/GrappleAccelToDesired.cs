@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace grapple_ui.models.viewmodels
+﻿namespace models.viewmodels
 {
     /// <summary>
     /// NOTE: There is a lot copied from GrappleDesiredLength.  But adding this functionality

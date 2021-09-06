@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace grapple_ui.models
+﻿namespace models
 {
     /// <summary>
     /// When aim doesn't find a solid hit point, air anchor will serve as a virtual anchor point.  The air anchor point
