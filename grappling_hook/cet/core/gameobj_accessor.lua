@@ -10,6 +10,8 @@ local pullInterval_teleport = this.GetRandom_Variance(12, 1)
 local pullInterval_sensor = this.GetRandom_Variance(12, 1)
 local pullInterval_mapPin = this.GetRandom_Variance(12, 1)
 local pullInterval_quest = this.GetRandom_Variance(12, 1)
+local pullInterval_transaction = this.GetRandom_Variance(12, 1)
+local pullInterval_equipment = this.GetRandom_Variance(12, 1)
 
 GameObjectAccessor = {}
 
@@ -28,6 +30,8 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_sensor = -(pullInterval_sensor * 2)
     obj.lastPulled_mapPin = -(pullInterval_mapPin * 2)
     obj.lastPulled_quest = -(pullInterval_quest * 2)
+    obj.lastPulled_transaction = -(pullInterval_transaction * 2)
+    obj.lastPulled_equipment = -(pullInterval_equipment * 2)
 
     obj.lastGot_lookDir = -1
 
@@ -48,6 +52,8 @@ function GameObjectAccessor:Clear()
     self.sensor = nil
     self.mapPin = nil
     self.quest = nil
+    self.transaction = nil
+    self.equipment = nil
 end
 
 -- Populates this.player, position, velocity, yaw
@@ -279,6 +285,31 @@ function GameObjectAccessor:SetPlayerUniqueID(id)
     end
 end
 
+function GameObjectAccessor:GetInventoryList()
+    self:EnsurePlayerLoaded()
+    self:EnsureTransactionLoaded()
+
+    if self.player and self.transaction then
+        local success, items = self.wrappers.GetGetItemList(self.transaction, self.player)
+
+        if success then
+            return items
+        end
+    end
+
+    return nil
+end
+function GameObjectAccessor:IsItemEquipped(item)
+    self:EnsurePlayerLoaded()
+    self:EnsureEquipmentLoaded()
+
+    if self.player and self.equipment then
+        return self.wrappers.IsItemEquipped(self.equipment, self.player, item)
+    else
+        return nil
+    end
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function GameObjectAccessor:EnsurePlayerLoaded()
@@ -302,5 +333,21 @@ function GameObjectAccessor:EnsureQuestLoaded()
         self.lastPulled_quest = self.timer
 
         self.quest = self.wrappers.GetQuestsSystem()
+    end
+end
+
+function GameObjectAccessor:EnsureTransactionLoaded()
+    if not self.transaction or (self.timer - self.lastPulled_transaction) >= pullInterval_transaction then
+        self.lastPulled_transaction = self.timer
+
+        self.transaction = self.wrappers.GetTransactionSystem()
+    end
+end
+
+function GameObjectAccessor:EnsureEquipmentLoaded()
+    if not self.equipment or (self.timer - self.lastPulled_equipment) >= pullInterval_equipment then
+        self.lastPulled_equipment = self.timer
+
+        self.equipment = self.wrappers.GetEquipmentSystem()
     end
 end

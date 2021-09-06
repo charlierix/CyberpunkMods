@@ -32,6 +32,8 @@ require "data/player"
 --require "data/serialization"      -- using json instead.  Keeping this around in case there is something that needs the more direct way of encoding
 require "data/util_data"
 
+require "inventory/util_inventory"
+
 require "processing/flightmode_transitions"
 require "processing/flightutil"
 require "processing/processing_aim"
@@ -291,6 +293,10 @@ registerForEvent("onInit", function()
     function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
     function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
     function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
+    function wrappers.GetTransactionSystem() return Game.GetTransactionSystem() end
+    function wrappers.GetGetItemList(transaction, player) return transaction:GetItemList(player) end
+    function wrappers.GetEquipmentSystem() return Game.GetScriptableSystemsContainer():Get("EquipmentSystem") end
+    function wrappers.IsItemEquipped(equipment, player, item) return equipment:IsEquipped(player, item:GetID()) end
 
     o = GameObjectAccessor:new(wrappers)
 
@@ -386,11 +392,15 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
--- registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
---     for i = 0, 144, 3 do
---         print(tostring(i) .. ": " .. tostring(GetEnergyCost_GrappleStraight(i)))
---     end
--- end)
+registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
+
+    --ReportInventory_UnlockCandidates(o)
+    --print("------------------")
+
+    local report = GetUnlockReport(o)
+    ReportTable(report)
+
+end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()
     if shouldShowConfig then
