@@ -5,14 +5,21 @@ function GetDefault_Player(playerID)
     {
         playerID = playerID,
         name = "default",
-        energy_tank = GetDefault_EnergyTank(),
 
-        grapple1 = GetDefault_Grapple_Pull(),
-        grapple2 = GetDefault_Grapple_Rope(),
-        --grapple3 = GetDefault_WebSwing(),
+        -- There's no need for an energy tank until it's unlocked.  It would just complicate the function
+        -- that determines if a player entry is unlocked
+
+        -- Don't give them any grapples by default.  At the time of unlocking, they get experience and
+        -- can equip the grapples that they want
 
         experience = 0,
+
+        isUnlocked = false,
     }
+end
+
+function GetDefault_Experience()
+    return 24
 end
 
 function GetEnergyCost_GrappleStraight(experience)

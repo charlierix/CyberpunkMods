@@ -19,7 +19,7 @@ function ReportTable(val, indent)
 
         for key, value in pairs(val) do
             if not value then
-                print(indent .. key .. " | nil")
+                print(indent .. key .. " | " .. tostring(value))        -- either nil or false
             elseif type(value) == "table" then
                 print(indent .. key .. ":")
                 ReportTable(value, indent .. "   ")
@@ -78,7 +78,7 @@ function ReportTable_lite(val, indent, overrideChildReport)
             local value = val[k]
 
             if not value then
-                print(indent .. key .. " | nil")
+                print(indent .. key .. " | " .. tostring(value))        -- either nil or false
             elseif type(value) == "table" then
                 print(indent .. key .. ":")
 

@@ -45,7 +45,7 @@ function XPGain:new(o, vars, debug, const)
 end
 
 function XPGain:Tick(deltaTime)
-    if not self.player then
+    if not self.player or not self.player.isUnlocked then
         self.debug.pending_xp = nil
         do return end
     end

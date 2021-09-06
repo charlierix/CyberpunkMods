@@ -397,8 +397,18 @@ registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
     --ReportInventory_UnlockCandidates(o)
     --print("------------------")
 
-    local report = GetUnlockReport(o)
-    ReportTable(report)
+    -- local report = GetUnlockReport(o)
+    -- ReportTable(report)
+
+    print("----------- before unlocking -----------")
+    ReportTable(player)
+
+    player:UnlockPlayer()
+
+    print(" ")
+    print("----------- after unlocking -----------")
+    ReportTable(player)
+
 
 end)
 
@@ -429,6 +439,15 @@ end)
 
 registerHotkey("GrapplingHookCheatXP", "Instant XP (cheat)", function()
     player.experience = player.experience + 3
+
+    -- The act of giving xp unlocks energy tank (player.isUnlocked is in memory only, no db), so make
+    -- sure there is an energy tank
+    player.isUnlocked = true
+
+    if not player.energy_tank then
+        player.energy_tank = GetDefault_EnergyTank()
+    end
+
     player:Save()
 end)
 
@@ -468,19 +487,19 @@ registerForEvent("onDraw", function()
         do return end
     end
 
-    if player and vars.energy < player.energy_tank.max_energy then
+    if player and player.energy_tank and vars.energy < player.energy_tank.max_energy then
         DrawEnergyProgress(vars.energy, player.energy_tank.max_energy, player.experience, vars)
     end
 
-    if shouldShowConfig and player then
-        shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, player, o, const)
-        isConfigRepress = false
+    -- if shouldShowConfig and player then
+    --     shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, player, o, const)
+    --     isConfigRepress = false
 
-        if not shouldShowConfig then
-            -- They closed from an arbitrary window, make sure the next time config starts at main
-            TransitionWindows_Main(vars_ui, const)
-        end
-    end
+    --     if not shouldShowConfig then
+    --         -- They closed from an arbitrary window, make sure the next time config starts at main
+    --         TransitionWindows_Main(vars_ui, const)
+    --     end
+    -- end
 
     if const.shouldShowDebugWindow then
         DrawDebugWindow(debug)

@@ -26,6 +26,22 @@ function Player:new(o, vars, const, debug)
     return obj
 end
 
+function Player:UnlockPlayer()
+    self.isUnlocked = true
+
+    -- If the player was locked, experience should have been zero, but if something got out of sync, preserve
+    -- existing if it was greater
+    self.experience = math.max(self.experience, GetDefault_Experience())
+
+    -- Same here, energy tank should be nil coming into this function
+    if not self.energy_tank then
+        self.energy_tank = GetDefault_EnergyTank()
+    end
+
+    -- Save to DB
+    self:Save()
+end
+
 -- Saves people from writing an ugly if elseif set
 function Player:GetGrappleByIndex(index)
     local errMsg = this.ValidateIndex(index)
@@ -99,9 +115,16 @@ function Player:Load()
 
     -- Retrieve entry from db
     local playerEntry, primKey, errMsg = GetPlayerEntry(playerID)
-    if not playerEntry then
+    if playerEntry then
+        playerEntry.isUnlocked = this.IsPlayerUnlocked(playerEntry)
+    else
         -- There's no need to store default in the db.  Wait until they change something
         playerEntry = GetDefault_Player(playerID)
+    end
+
+    -- This should never happen, but if it does, just make an energy tank so other logic doesn't break
+    if playerEntry.isUnlocked and not playerEntry.energy_tank then
+        playerEntry.energy_tank = GetDefault_EnergyTank()
     end
 
     self:MapModelToSelf(playerEntry, primKey)
@@ -122,6 +145,8 @@ function Player:MapModelToSelf(model, primkey)
 
     self.experience = model.experience
 
+    self.isUnlocked = model.isUnlocked ~= nil and model.isUnlocked      -- this isn't in the database, so make sure the value stored in self is non nil
+
     self.PlayerPrimaryKey = primkey
 end
 
@@ -130,8 +155,6 @@ function Player:MapSelfToModel()
     {
         playerID = self.playerID,
         energy_tank = self.energy_tank,
-
-        -- action mapping 1,2,3,4,5,6
 
         grapple1 = self.grapple1,
         grapple2 = self.grapple2,
@@ -176,4 +199,24 @@ function this.ValidateIndex(index)
     else
         return nil
     end
+end
+
+function this.IsPlayerUnlocked(playerEntry)
+    -- See if they have experience
+    if not IsNearZero(playerEntry.experience) and playerEntry.experience > 0 then
+        return true
+    end
+
+    -- See if they have any grapples equipped
+    for i = 1, 6 do
+        if playerEntry["grapple" .. tostring(i)] then
+            return true
+        end
+    end
+
+    if playerEntry.energy_tank then
+        return true
+    end
+
+    return false
 end

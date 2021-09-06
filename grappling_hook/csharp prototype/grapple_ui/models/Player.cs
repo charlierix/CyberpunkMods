@@ -52,6 +52,18 @@
         /// </remarks>
         public double experience { get; init; }
 
+        /// <summary>
+        /// True: Grapple can be used normally
+        /// False: Grapple can't be used, the config should only show an unlock screen
+        /// </summary>
+        /// <remarks>
+        /// This flag isn't stored in the database, it is inferred.  This feature was added after the mod was released
+        /// to the public, so existing players need to default to unlock
+        /// 
+        /// So if a player row has any experience, grapples, energy tank, then it is unlocked
+        /// </remarks>
+        public bool isUnlocked { get; init; }
+
         //-------------- DB Only --------------
 
         /// <summary>
