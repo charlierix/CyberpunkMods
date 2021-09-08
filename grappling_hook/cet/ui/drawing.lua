@@ -94,7 +94,7 @@ function DrawConfig(isCloseRequested, vars, vars_ui, player, o, const)
         Refresh_LineHeights(vars_ui)
 
         if vars_ui.currentWindow == const.windows.main then
-            continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
+            continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, player, window, o, const)
 
         elseif vars_ui.currentWindow == const.windows.input_bindings then
             continueShowing = DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, window, const)

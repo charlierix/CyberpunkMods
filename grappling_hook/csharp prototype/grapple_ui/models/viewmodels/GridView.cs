@@ -12,7 +12,7 @@ namespace models.viewmodels
     /// 
     /// Each column has an alignment (left,center,right).  Vertical alignment is always center
     /// </remarks>
-    public record GridView
+    public record GridView : IControl
     {
         public GridView_Header[] headers { get; init; }
 

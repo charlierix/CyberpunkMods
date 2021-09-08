@@ -33,7 +33,7 @@ function GetUnlockReport(o)
     found = this.FindItems(items, types_silencer, nil, false, o)        -- proved that this doesn't return silencers that are attached to weapons
     this.AddToUnlockReport(retVal, "silencer", count_silencer, #found)
 
-    found = this.FindItems(items, types_grenade, "emp", false, o)
+    found = this.FindItems(items, types_grenade, "emp", true, o)        --IsEquipped isn't working for grenades, but it doesn't really matter whether they are equipped or not
     local count = this.GetQuantityValue(found)
     this.AddToUnlockReport(retVal, "emp grenades", count_grenade, count)
 
@@ -46,10 +46,7 @@ function GetUnlockReport(o)
 
 
 
-    -- Grenades
-    --TODO: IsEquipped isn't working (see how save editor sees it, or cet's tweak viewer)
-    --found = this.FindItems(items, types_grenade, nil, false, o)
-    --this.Debug_ReportItems(found, o)
+    --TODO: Skip quest items and uniques
 
 
 

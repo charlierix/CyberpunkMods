@@ -203,11 +203,11 @@
 
     "gridview":
     {
-        "foreground_color_header": "666",
+        "foreground_color_header": "686850",
         "foreground_color_cell": "909090",
 
         "gap_horizontal": 12,
-        "gap_vertical": 8
+        "gap_vertical": 12
     },
 
     "progressbar_slim":
@@ -307,6 +307,9 @@
         
         "hint": { "the_color": "CFC29D" },
         "instruction": { "the_color": "EEE" },
-        "help": { "the_color": "67707A" }
+        "help": { "the_color": "67707A" },
+
+        "requirement_met": { "the_color": "AAE" },
+        "requirement_unmet": { "the_color": "E6592E" }
     }
 }

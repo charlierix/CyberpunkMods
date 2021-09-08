@@ -25,7 +25,7 @@ function CalcSize_GridView(def, style, line_heights)
             def.sizes.cells[i] = {}
         end
 
-        this.Calculate_Size(def.headers, def.cells[i], def.sizes.cells)
+        this.Calculate_Size(def.headers, def.cells[i], def.sizes.cells[i])
     end
 
     -- Store final column widths
@@ -63,7 +63,10 @@ function Draw_GridView(def, style_grid, style_colors, const)
             def.sizes.final_row_header,
             style_grid.gap_horizontal,
             style_colors,
-            const)
+            const,
+            true)
+
+        y = y + def.sizes.final_row_header
 
         ImGui.PopStyleColor()
     end
@@ -89,7 +92,10 @@ function Draw_GridView(def, style_grid, style_colors, const)
                 def.sizes.final_rows_cells[i],
                 style_grid.gap_horizontal,
                 style_colors,
-                const)
+                const,
+                false)
+
+            y = y + def.sizes.final_rows_cells[i]
         end
     end
 
@@ -195,7 +201,7 @@ function this.GetFinalHeight(sizes, gap)
     return retVal
 end
 
-function this.DrawRow(x, y, headers, row, sizes_text, final_columns, final_row, gap_horizontal, style_colors, const)
+function this.DrawRow(x, y, headers, row, sizes_text, final_columns, final_row, gap_horizontal, style_colors, const, isHeader)
     for i = 1, #headers do
         -- Since cells is a jagged array, it's possible that not all rows will be filled out completely
         if #row >= i then
@@ -203,6 +209,11 @@ function this.DrawRow(x, y, headers, row, sizes_text, final_columns, final_row, 
             if row[i].foreground_override then
                 local color = GetNamedColor(style_colors, row[i].foreground_override)
                 ImGui.PushStyleColor(ImGuiCol.Text, color.the_color_abgr)
+            end
+
+            local align = headers[i].horizontal
+            if isHeader then
+                align = const.alignment_horizontal.center
             end
 
             this.DrawCell(
@@ -213,7 +224,7 @@ function this.DrawRow(x, y, headers, row, sizes_text, final_columns, final_row, 
                 sizes_text[i].height,
                 final_columns[i],
                 final_row,
-                headers[i].horizontal,
+                align,
                 headers[i].max_width ~= nil,
                 const)
 

@@ -50,14 +50,13 @@ function ActivateWindow_Main(vars_ui, const)
 
     vars_ui.main.should_autoshow.isChecked = nil
 
-    --TODO: Set this properly (just set it up on activate, it won't change between frames)
-    vars_ui.main.unlock_grid.cells = {}
+    vars_ui.main.last_reset_grid = 0
 
     vars_ui.keys:StopWatching()     -- doing this in case it came from the input bindings window (which put keys in a watching state)
 end
 
 -- This gets called each frame from DrawConfig()
-function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
+function DrawWindow_Main(isCloseRequested, vars_ui, player, window, o, const)
     local main = vars_ui.main
 
     ------------------------- Finalize models for this frame -------------------------
@@ -76,6 +75,15 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
 
         this.Refresh_Experience(main.experience, player)
         this.Refresh_XPProgress(main.xp_progress, player)
+    else
+        if (o.timer - main.last_reset_grid) > 0.5 then
+            main.last_reset_grid = o.timer
+
+            local report = GetUnlockReport(o)
+
+            this.Refresh_UnlockGrid(vars_ui.main.unlock_grid, report)
+            this.Refresh_Unlock(main.unlock, report)
+        end
     end
 
     ------------------------------ Calculate Positions -------------------------------
@@ -96,7 +104,6 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
     if Draw_SummaryButton(main.input_bindings, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
         TransitionWindows_InputBindings(vars_ui, const)
     end
-
 
     if player.isUnlocked then
         -------------- Unlocked --------------
@@ -129,7 +136,6 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
             player:UnlockPlayer()
         end
     end
-
 
     local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons)
 
@@ -422,6 +428,27 @@ function this.Define_UnlockGrid(const)
         CalcSize = CalcSize_GridView,
     }
 end
+function this.Refresh_UnlockGrid(def, report)
+    def.cells = {}
+
+    for i = 1, #report do
+        local color_desc = nil
+        local color_val = nil
+        if report[i].availableCount >= report[i].requiredCount then
+            color_val = "requirement_met"
+        else
+            color_val = "requirement_unmet"
+            color_desc = color_val
+        end
+
+        def.cells[i] =
+        {
+            { text = report[i].description, foreground_override = color_desc },
+            { text = report[i].requiredCount_display },
+            { text = report[i].availableCount_display, foreground_override = color_val },
+        }
+    end
+end
 
 function this.Define_Unlock(const)
     -- Button
@@ -441,4 +468,16 @@ function this.Define_Unlock(const)
 
         CalcSize = CalcSize_Button,
     }
+end
+function this.Refresh_Unlock(def, report)
+    local isEnabled = #report > 0
+
+    for i = 1, #report do
+        if report[i].availableCount < report[i].requiredCount then
+            isEnabled = false
+            break
+        end
+    end
+
+    def.isEnabled = isEnabled
 end

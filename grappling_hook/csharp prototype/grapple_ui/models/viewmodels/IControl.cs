@@ -20,5 +20,7 @@ namespace models.viewmodels
         /// This will set render_pos.width and height
         /// </summary>
         Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
+
+        //TODO: Add a class that handles refresh interval.  That way some controls can be refreshed every frame, but others only half second or so
     }
 }
