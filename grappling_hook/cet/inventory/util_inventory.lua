@@ -17,7 +17,7 @@ local count_money = 12000
 -- This looks at inventory for what's necessary to  unlock grapple, returns a report that can be used
 -- to fill out a ui
 -- Returns
--- { {description, availableCount, availableCount_display, requiredCount}, {}, ... }
+-- { {description, requiredCount, requiredCount_display, availableCount, availableCount_display}, {}, ... }
 function GetUnlockReport(o)
     local retVal = {}
 
@@ -25,24 +25,24 @@ function GetUnlockReport(o)
     --ReportTable(items)
 
     local found = this.FindItems(items, types_shotgun, nil, false, o)
-    this.AddToUnlockReport(retVal, tostring(count_shotgun) .. " shotgun", #found, count_shotgun)
+    this.AddToUnlockReport(retVal, "shotgun", count_shotgun, #found)
 
     found = this.FindItems(items, types_knife, nil, false, o)
-    this.AddToUnlockReport(retVal, tostring(count_knife) .. " knives or tantos", #found, count_knife)
+    this.AddToUnlockReport(retVal, "knives or tantos", count_knife, #found)
 
     found = this.FindItems(items, types_silencer, nil, false, o)        -- proved that this doesn't return silencers that are attached to weapons
-    this.AddToUnlockReport(retVal, tostring(count_silencer) .. " silencer (muzzle)", #found, count_silencer)
+    this.AddToUnlockReport(retVal, "silencer", count_silencer, #found)
 
     found = this.FindItems(items, types_grenade, "emp", false, o)
     local count = this.GetQuantityValue(found)
-    this.AddToUnlockReport(retVal, tostring(count_grenade) .. " emp grenades", count, count_grenade)
+    this.AddToUnlockReport(retVal, "emp grenades", count_grenade, count)
 
-    local found = this.FindItems(items, types_clothes, nil, false, o)
-    this.AddToUnlockReport(retVal, tostring(count_clothes) .. " clothes (not head or footware)", #found, count_clothes)
+    found = this.FindItems(items, types_clothes, nil, false, o)
+    this.AddToUnlockReport(retVal, "clothes (not head or footware)", count_clothes, #found)
 
     found = this.FindItems(items, types_money, "money", true, o)
     count = this.GetQuantityValue(found)
-    this.AddToUnlockReport(retVal, tostring(Round(count_money / 1000)) .. "K eurodollars", count, count_money, tostring(Round(math.floor(count / 1000))) .. "K")
+    this.AddToUnlockReport(retVal, "eurodollars", count_money, count, tostring(Round(count_money / 1000)) .. "K", tostring(Round(math.floor(count / 1000))) .. "K")
 
 
 
@@ -142,7 +142,11 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.AddToUnlockReport(report, description, availableCount, requiredCount, availableCount_display)
+function this.AddToUnlockReport(report, description, requiredCount, availableCount, requiredCount_display, availableCount_display)
+    local required_display = requiredCount_display
+    if not required_display then
+        required_display = tostring(requiredCount)
+    end
 
     local avail_display = availableCount_display
     if not avail_display then
@@ -152,9 +156,10 @@ function this.AddToUnlockReport(report, description, availableCount, requiredCou
     report[#report+1] =
     {
         description = description,
+        requiredCount = requiredCount,
+        requiredCount_display = required_display,
         availableCount = availableCount,
         availableCount_display = avail_display,
-        requiredCount = requiredCount,
     }
 end
 

@@ -18,12 +18,23 @@ function DefineWindow_Main(vars_ui, const)
 
     main.input_bindings = this.Define_InputBindings(const)
 
+    -- Unlocked
     main.energyTank = this.Define_EnergyTank(const)
 
     this.Define_GrappleSlots(main, const)
 
     main.experience = Define_Experience(const, nil, 15)
     main.xp_progress = this.Define_XPProgress(const)
+
+    -- Locked
+
+    --TODO: Some extra text, maybe a help button
+
+    main.unlock_grid = this.Define_UnlockGrid(const)
+
+    main.unlock = this.Define_Unlock(const)
+
+
 
     main.okcancel = Define_OkCancelButtons(true, vars_ui, const)
 
@@ -39,6 +50,9 @@ function ActivateWindow_Main(vars_ui, const)
 
     vars_ui.main.should_autoshow.isChecked = nil
 
+    --TODO: Set this properly (just set it up on activate, it won't change between frames)
+    vars_ui.main.unlock_grid.cells = {}
+
     vars_ui.keys:StopWatching()     -- doing this in case it came from the input bindings window (which put keys in a watching state)
 end
 
@@ -50,17 +64,19 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
 
     this.Refresh_ShouldAutoShow(main.should_autoshow, vars_ui)
 
-    this.Refresh_EnergyTank(main.energyTank, player.energy_tank)
+    if player.isUnlocked then
+        this.Refresh_EnergyTank(main.energyTank, player.energy_tank)
 
-    this.Refresh_GrappleSlot(main.grapple1, player.grapple1)
-    this.Refresh_GrappleSlot(main.grapple2, player.grapple2)
-    this.Refresh_GrappleSlot(main.grapple3, player.grapple3)
-    this.Refresh_GrappleSlot(main.grapple4, player.grapple4)
-    this.Refresh_GrappleSlot(main.grapple5, player.grapple5)
-    this.Refresh_GrappleSlot(main.grapple6, player.grapple6)
+        this.Refresh_GrappleSlot(main.grapple1, player.grapple1)
+        this.Refresh_GrappleSlot(main.grapple2, player.grapple2)
+        this.Refresh_GrappleSlot(main.grapple3, player.grapple3)
+        this.Refresh_GrappleSlot(main.grapple4, player.grapple4)
+        this.Refresh_GrappleSlot(main.grapple5, player.grapple5)
+        this.Refresh_GrappleSlot(main.grapple6, player.grapple6)
 
-    this.Refresh_Experience(main.experience, player)
-    this.Refresh_XPProgress(main.xp_progress, player)
+        this.Refresh_Experience(main.experience, player)
+        this.Refresh_XPProgress(main.xp_progress, player)
+    end
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -81,25 +97,39 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, const)
         TransitionWindows_InputBindings(vars_ui, const)
     end
 
-    if Draw_SummaryButton(main.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
-        TransitionWindows_Energy_Tank(vars_ui, const)
-    end
 
-    for i = 1, 6 do
-        if Draw_RemoveButton(main["remove" .. tostring(i)], vars_ui.style.removeButton, window.left, window.top) then
-            --NOTE: This immediately removes the grapple.  Most actions populate a change list and require ok/cancel.  But that would be difficult in this case (a change that spans windows)
-            this.RemoveGrapple(player, i)
+    if player.isUnlocked then
+        -------------- Unlocked --------------
+
+        if Draw_SummaryButton(main.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
+            TransitionWindows_Energy_Tank(vars_ui, const)
+        end
+
+        for i = 1, 6 do
+            if Draw_RemoveButton(main["remove" .. tostring(i)], vars_ui.style.removeButton, window.left, window.top) then
+                --NOTE: This immediately removes the grapple.  Most actions populate a change list and require ok/cancel.  But that would be difficult in this case (a change that spans windows)
+                this.RemoveGrapple(player, i)
+            end
+        end
+
+        for i = 1, 6 do
+            if Draw_SummaryButton(main["grapple" .. tostring(i)], vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
+                TransitionWindows_Grapple(vars_ui, const, player, i)
+            end
+        end
+
+        Draw_OrderedList(main.experience, vars_ui.style.colors)
+        Draw_ProgressBarSlim(main.xp_progress, vars_ui.style.progressbar_slim, vars_ui.style.colors)
+    else
+        --------------- Locked ---------------
+
+        Draw_GridView(main.unlock_grid, vars_ui.style.gridview, vars_ui.style.colors, const)
+
+        if Draw_Button(main.unlock, vars_ui.style.button) then
+            player:UnlockPlayer()
         end
     end
 
-    for i = 1, 6 do
-        if Draw_SummaryButton(main["grapple" .. tostring(i)], vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
-            TransitionWindows_Grapple(vars_ui, const, player, i)
-        end
-    end
-
-    Draw_OrderedList(main.experience, vars_ui.style.colors)
-    Draw_ProgressBarSlim(main.xp_progress, vars_ui.style.progressbar_slim, vars_ui.style.colors)
 
     local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons)
 
@@ -356,4 +386,59 @@ function this.Define_XPProgress(const)
 end
 function this.Refresh_XPProgress(def, player)
     def.percent = player.experience - math.floor(player.experience)
+end
+
+function this.Define_UnlockGrid(const)
+    -- GridView
+    return
+    {
+        headers =
+        {
+            {
+                text = "item",
+                horizontal = const.alignment_horizontal.left,
+            },
+            {
+                text = "required",
+                horizontal = const.alignment_horizontal.right,
+            },
+            {
+                text = "available",
+                horizontal = const.alignment_horizontal.right,
+            },
+        },
+
+        -- Fill out the rows programatically
+        cells = {},
+
+        position =
+        {
+            pos_x = 0,
+            pos_y = 0,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_GridView,
+    }
+end
+
+function this.Define_Unlock(const)
+    -- Button
+    return
+    {
+        text = "Unlock",
+
+        position =
+        {
+            pos_x = 0,
+            pos_y = 300,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "hint",
+
+        CalcSize = CalcSize_Button,
+    }
 end

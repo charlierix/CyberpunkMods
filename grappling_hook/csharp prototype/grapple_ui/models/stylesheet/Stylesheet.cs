@@ -68,6 +68,8 @@ namespace models.stylesheet
 
         public MultiItemDisplayList multiitem_displaylist { get; init; }
 
+        public GridView gridview { get; init; }
+
         public ProgressBar_Slim progressbar_slim { get; init; }
 
         public HelpButton helpButton { get; init; }

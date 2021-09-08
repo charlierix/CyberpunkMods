@@ -201,6 +201,15 @@
         "background_color": "18787668"
     },
 
+    "gridview":
+    {
+        "foreground_color_header": "666",
+        "foreground_color_cell": "909090",
+
+        "gap_horizontal": 12,
+        "gap_vertical": 8
+    },
+
     "progressbar_slim":
     {
         "border_cornerRadius": 2,

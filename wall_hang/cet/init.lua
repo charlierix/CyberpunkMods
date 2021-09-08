@@ -419,6 +419,11 @@ function TODO()
     -- Wall Run
     --  Hold in shift to enter and stay in wall run
 
+	-- Wall Run Force
+	--	Apply a force toward the wall (opposite of wall's normal)
+	--	This should help the player stick to the surface of the wall
+	--	The same should be done when jumping straight up the wall
+
     -- Hang Drift
     --  Don't perfectly hold position
     --

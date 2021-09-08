@@ -58,6 +58,7 @@ require "ui/util_vm_binding"
 
 require "ui_controls_generic/button"
 require "ui_controls_generic/checkbox"
+require "ui_controls_generic/gridview"
 require "ui_controls_generic/help_button"
 require "ui_controls_generic/label"
 require "ui_controls_generic/label_clickable"
@@ -400,15 +401,17 @@ registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
     -- local report = GetUnlockReport(o)
     -- ReportTable(report)
 
-    print("----------- before unlocking -----------")
-    ReportTable(player)
 
-    player:UnlockPlayer()
 
-    print(" ")
-    print("----------- after unlocking -----------")
-    ReportTable(player)
+    
+    -- print("----------- before unlocking -----------")
+    -- ReportTable(player)
 
+    -- player:UnlockPlayer()
+
+    -- print(" ")
+    -- print("----------- after unlocking -----------")
+    -- ReportTable(player)
 
 end)
 
@@ -491,15 +494,15 @@ registerForEvent("onDraw", function()
         DrawEnergyProgress(vars.energy, player.energy_tank.max_energy, player.experience, vars)
     end
 
-    -- if shouldShowConfig and player then
-    --     shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, player, o, const)
-    --     isConfigRepress = false
+    if shouldShowConfig and player then
+        shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, player, o, const)
+        isConfigRepress = false
 
-    --     if not shouldShowConfig then
-    --         -- They closed from an arbitrary window, make sure the next time config starts at main
-    --         TransitionWindows_Main(vars_ui, const)
-    --     end
-    -- end
+        if not shouldShowConfig then
+            -- They closed from an arbitrary window, make sure the next time config starts at main
+            TransitionWindows_Main(vars_ui, const)
+        end
+    end
 
     if const.shouldShowDebugWindow then
         DrawDebugWindow(debug)
