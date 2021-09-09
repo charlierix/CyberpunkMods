@@ -79,7 +79,7 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, o, const)
         if (o.timer - main.last_reset_grid) > 0.5 then
             main.last_reset_grid = o.timer
 
-            local report = GetUnlockReport(o)
+            local report = GetUnlockReport(o, const)
 
             this.Refresh_UnlockGrid(vars_ui.main.unlock_grid, report)
             this.Refresh_Unlock(main.unlock, report)

@@ -12,6 +12,7 @@ local pullInterval_mapPin = this.GetRandom_Variance(12, 1)
 local pullInterval_quest = this.GetRandom_Variance(12, 1)
 local pullInterval_transaction = this.GetRandom_Variance(12, 1)
 local pullInterval_equipment = this.GetRandom_Variance(12, 1)
+local pullInterval_rpgManager = this.GetRandom_Variance(12, 1)
 
 GameObjectAccessor = {}
 
@@ -32,6 +33,7 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_quest = -(pullInterval_quest * 2)
     obj.lastPulled_transaction = -(pullInterval_transaction * 2)
     obj.lastPulled_equipment = -(pullInterval_equipment * 2)
+    obj.lastPulled_rpgManager = -(pullInterval_rpgManager * 2)
 
     obj.lastGot_lookDir = -1
 
@@ -58,7 +60,7 @@ end
 
 -- Populates this.player, position, velocity, yaw
 function GameObjectAccessor:GetPlayerInfo()
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player then
         self.pos = self.wrappers.Player_GetPos(self.player)
@@ -69,7 +71,7 @@ end
 
 -- Get/Set player.Custom_CurrentlyFlying (added in redscript.  Allows mods to talk to each other, so only one at a time will fly)
 function GameObjectAccessor:Custom_CurrentlyFlying_get()
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player then
         return self.wrappers.Custom_CurrentlyFlying_get(self.player)
@@ -78,14 +80,14 @@ function GameObjectAccessor:Custom_CurrentlyFlying_get()
     end
 end
 function GameObjectAccessor:Custom_CurrentlyFlying_StartFlight()
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player then
         self.wrappers.Custom_CurrentlyFlying_StartFlight(self.player)
     end
 end
 function GameObjectAccessor:Custom_CurrentlyFlying_Clear()
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player then
         self.wrappers.Custom_CurrentlyFlying_Clear(self.player)
@@ -95,7 +97,7 @@ end
 -- Populates isInWorkspot
 --WARNING: If this is called while load is first kicked off, it will crash the game.  So probably want to wait until the player is moving or something
 function GameObjectAccessor:GetInWorkspot()
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if not self.workspot or (self.timer - self.lastPulled_workspot) >= pullInterval_workspot then
         self.lastPulled_workspot = self.timer
@@ -127,7 +129,7 @@ end
 
 -- Teleports to a point, look dir
 function GameObjectAccessor:Teleport(pos, yaw)
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if not self.teleport or (self.timer - self.lastPulled_teleport) >= pullInterval_teleport then
         self.lastPulled_teleport = self.timer
@@ -159,7 +161,7 @@ end
 -- Returns
 --  HitPoint, Normal (or nils)
 function GameObjectAccessor:RayCast(fromPos, toPos, staticOnly)
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player then
         -- Result is empty string for a miss, or "px|py|pz|nx|ny|nz|mat"
@@ -183,7 +185,7 @@ end
 -- Place a map pin at the player's current position: [shared credits with @b0kkr]
 -- https://github.com/WolvenKit/CyberCAT/blob/main/CyberCAT.Core/Enums/Dumped%20Enums/gamedataMappinVariant.cs
 function GameObjectAccessor:CreatePin(pos, variant)
-    self:EnsureMapPinLoaded()
+    self:EnsureLoaded_MapPin()
 
     if self.mapPin then
         local data = NewObject("gamemappinsMappinData")
@@ -195,14 +197,14 @@ function GameObjectAccessor:CreatePin(pos, variant)
     end
 end
 function GameObjectAccessor:MovePin(id, pos)
-    self:EnsureMapPinLoaded()
+    self:EnsureLoaded_MapPin()
 
     if self.mapPin then
         self.wrappers.SetMapPinPosition(self.mapPin, id, pos)
     end
 end
 function GameObjectAccessor:ChangePinIcon(id, variant)
-    self:EnsureMapPinLoaded()
+    self:EnsureLoaded_MapPin()
 
     if self.mapPin then
         --NOTE: This function doesn't always work
@@ -210,7 +212,7 @@ function GameObjectAccessor:ChangePinIcon(id, variant)
     end
 end
 function GameObjectAccessor:RemovePin(id)
-    self:EnsureMapPinLoaded()
+    self:EnsureLoaded_MapPin()
 
     if self.mapPin then
         self.wrappers.UnregisterMapPin(self.mapPin, id)
@@ -226,7 +228,7 @@ function GameObjectAccessor:SetTimeDilation(timeSpeed)
 end
 
 function GameObjectAccessor:HasHeadUnderwater()
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player then
         return self.wrappers.HasHeadUnderwater(self.player)
@@ -240,7 +242,7 @@ end
 -- only have one sound playing at a time.  If nil, then the caller is responsible for stopping
 -- the sound
 function GameObjectAccessor:PlaySound(soundName, vars)
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player then
         if vars then
@@ -256,7 +258,7 @@ function GameObjectAccessor:PlaySound(soundName, vars)
     end
 end
 function GameObjectAccessor:StopSound(soundName)
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player then
         self.wrappers.StopQueuedSound(self.player, soundName)
@@ -269,7 +271,7 @@ end
 -- Everything in the sqllite db is kept separated with this ID so that settings don't bleed
 -- between playthroughs
 function GameObjectAccessor:GetPlayerUniqueID()
-    self:EnsureQuestLoaded()
+    self:EnsureLoaded_Quest()
 
     if self.quest then
         -- this is a made up key, and can't be the same as other mod's
@@ -278,7 +280,7 @@ function GameObjectAccessor:GetPlayerUniqueID()
     end
 end
 function GameObjectAccessor:SetPlayerUniqueID(id)
-    self:EnsureQuestLoaded()
+    self:EnsureLoaded_Quest()
 
     if self.quest then
         self.wrappers.SetQuestFactStr(self.quest, "grapple_player_uniqueid", id)      -- the ID must be integer
@@ -286,8 +288,8 @@ function GameObjectAccessor:SetPlayerUniqueID(id)
 end
 
 function GameObjectAccessor:GetInventoryList()
-    self:EnsurePlayerLoaded()
-    self:EnsureTransactionLoaded()
+    self:EnsureLoaded_Player()
+    self:EnsureLoaded_Transaction()
 
     if self.player and self.transaction then
         local success, items = self.wrappers.GetGetItemList(self.transaction, self.player)
@@ -299,9 +301,30 @@ function GameObjectAccessor:GetInventoryList()
 
     return nil
 end
-function GameObjectAccessor:IsItemEquipped(item)
-    self:EnsurePlayerLoaded()
-    self:EnsureEquipmentLoaded()
+function GameObjectAccessor:GetItemQuality(item)
+    self:EnsureLoaded_RPGManager()
+
+    if self.rpgManager then
+        -- enum gamedataQuality {
+        --     Common = 0,
+        --     Epic = 1,
+        --     Iconic = 2,
+        --     Legendary = 3,
+        --     Random = 4,
+        --     Rare = 5,
+        --     Uncommon = 6,
+        --     Count = 7,
+        --     Invalid = 8,
+        --   }
+
+        -- This is of type userdata.  Cyberdoc just says it's an enum.  There's probably a property
+        -- that returns the number.  Value returns the string portion (datatype of string)
+        return self.rpgManager:GetItemDataQuality(item).value
+    end
+end
+function GameObjectAccessor:IsItem_Equipped(item)
+    self:EnsureLoaded_Player()
+    self:EnsureLoaded_Equipment()
 
     if self.player and self.equipment then
         return self.wrappers.IsItemEquipped(self.equipment, self.player, item)
@@ -309,10 +332,23 @@ function GameObjectAccessor:IsItemEquipped(item)
         return nil
     end
 end
+function GameObjectAccessor:IsItem_Quest(item)
+    return item:HasTag("Quest")
+end
+function GameObjectAccessor:IsItem_Iconic(item)
+    self:EnsureLoaded_RPGManager()
+
+    if self.rpgManager then
+        return self.rpgManager:IsItemDataIconic(item)
+    end
+end
+function GameObjectAccessor:IsItem_Legendary(item)
+    return self:GetItemQuality(item) == "Legendary"
+end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function GameObjectAccessor:EnsurePlayerLoaded()
+function GameObjectAccessor:EnsureLoaded_Player()
     if not self.player or (self.timer - self.lastPulled_player) >= pullInterval_player then
         self.lastPulled_player = self.timer
 
@@ -320,7 +356,7 @@ function GameObjectAccessor:EnsurePlayerLoaded()
     end
 end
 
-function GameObjectAccessor:EnsureMapPinLoaded()
+function GameObjectAccessor:EnsureLoaded_MapPin()
     if not self.mapPin or (self.timer - self.lastPulled_mapPin) >= pullInterval_mapPin then
         self.lastPulled_mapPin = self.timer
 
@@ -328,7 +364,7 @@ function GameObjectAccessor:EnsureMapPinLoaded()
     end
 end
 
-function GameObjectAccessor:EnsureQuestLoaded()
+function GameObjectAccessor:EnsureLoaded_Quest()
     if not self.quest or (self.timer - self.lastPulled_quest) >= pullInterval_quest then
         self.lastPulled_quest = self.timer
 
@@ -336,7 +372,7 @@ function GameObjectAccessor:EnsureQuestLoaded()
     end
 end
 
-function GameObjectAccessor:EnsureTransactionLoaded()
+function GameObjectAccessor:EnsureLoaded_Transaction()
     if not self.transaction or (self.timer - self.lastPulled_transaction) >= pullInterval_transaction then
         self.lastPulled_transaction = self.timer
 
@@ -344,10 +380,18 @@ function GameObjectAccessor:EnsureTransactionLoaded()
     end
 end
 
-function GameObjectAccessor:EnsureEquipmentLoaded()
+function GameObjectAccessor:EnsureLoaded_Equipment()
     if not self.equipment or (self.timer - self.lastPulled_equipment) >= pullInterval_equipment then
         self.lastPulled_equipment = self.timer
 
         self.equipment = self.wrappers.GetEquipmentSystem()
+    end
+end
+
+function GameObjectAccessor:EnsureLoaded_RPGManager()
+    if not self.rpgManager or (self.timer - self.lastPulled_rpgManager) >= pullInterval_rpgManager then
+        self.lastPulled_rpgManager = self.timer
+
+        self.rpgManager = GetSingleton("gameRPGManager")        -- I'm guessing this is the same class as RPGManager that adam smasher dump references
     end
 end

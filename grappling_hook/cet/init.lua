@@ -148,6 +148,8 @@ local const =
 
     settings = CreateEnum("AutoShowConfig_WithConsole"),
 
+    unlockType = CreateEnum("shotgun", "knife", "silencer", "grenade", "clothes", "money"),
+
     customKeyBase = "Grapple_Custom_",
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
@@ -395,24 +397,55 @@ end)
 
 registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
 
-    --ReportInventory_UnlockCandidates(o)
-    --print("------------------")
 
-    -- local report = GetUnlockReport(o)
-    -- ReportTable(report)
-
-
-
-    
-    -- print("----------- before unlocking -----------")
-    -- ReportTable(player)
-
-    -- player:UnlockPlayer()
+    --ReportInventory_All(o)
 
     -- print(" ")
+    -- print("--- quest items ---")
+
+    -- for _, item in ipairs(o:GetInventoryList()) do
+    --     if o:IsItem_Quest(item) then
+    --         print(" ")
+    --         print(item:GetItemType().value)
+    --         print(item:GetNameAsString())
+    --         print("count: " .. tostring(item:GetQuantity()))
+    --         print(o:GetItemQuality(item))
+    --     end
+    -- end
+
+    -- print(" ")
+    -- print("--- iconic items ---")
+
+    -- for _, item in ipairs(o:GetInventoryList()) do
+    --     if o:IsItem_Iconic(item) then
+    --         print(" ")
+    --         print(item:GetItemType().value)
+    --         print(item:GetNameAsString())
+    --         print("count: " .. tostring(item:GetQuantity()))
+    --         print(o:GetItemQuality(item))
+    --     end
+    -- end
+
+    -- print(" ")
+    -- print("--- legendary items ---")
+
+    -- for _, item in ipairs(o:GetInventoryList()) do
+    --     if o:IsItem_Legendary(item) then
+    --         print(" ")
+    --         print(item:GetItemType().value)
+    --         print(item:GetNameAsString())
+    --         print("count: " .. tostring(item:GetQuantity()))
+    --         print(o:GetItemQuality(item))
+    --     end
+    -- end
+
+
+
+
+
+    -- player:UnlockPlayer()
     -- print("----------- after unlocking -----------")
     -- ReportTable(player)
-
 end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()

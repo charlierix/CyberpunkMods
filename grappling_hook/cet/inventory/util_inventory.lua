@@ -17,44 +17,57 @@ local count_money = 12000
 -- This looks at inventory for what's necessary to  unlock grapple, returns a report that can be used
 -- to fill out a ui
 -- Returns
--- { {description, requiredCount, requiredCount_display, availableCount, availableCount_display}, {}, ... }
-function GetUnlockReport(o)
+-- { {description, requiredCount, requiredCount_display, availableCount, availableCount_display, unlockType, items}, {}, ... }
+function GetUnlockReport(o, const)
     local retVal = {}
 
     local items = o:GetInventoryList()
     --ReportTable(items)
 
     local found = this.FindItems(items, types_shotgun, nil, false, o)
-    this.AddToUnlockReport(retVal, "shotgun", count_shotgun, #found)
+    this.AddToUnlockReport(retVal, "shotgun", count_shotgun, #found, nil, nil, const.unlockType.shotgun, found)
 
     found = this.FindItems(items, types_knife, nil, false, o)
-    this.AddToUnlockReport(retVal, "knives or tantos", count_knife, #found)
+    this.AddToUnlockReport(retVal, "knives or tantos", count_knife, #found, nil, nil, const.unlockType.knife, found)
 
     found = this.FindItems(items, types_silencer, nil, false, o)        -- proved that this doesn't return silencers that are attached to weapons
-    this.AddToUnlockReport(retVal, "silencer", count_silencer, #found)
+    this.AddToUnlockReport(retVal, "silencer", count_silencer, #found, nil, nil, const.unlockType.silencer, found)
 
     found = this.FindItems(items, types_grenade, "emp", true, o)        --IsEquipped isn't working for grenades, but it doesn't really matter whether they are equipped or not
     local count = this.GetQuantityValue(found)
-    this.AddToUnlockReport(retVal, "emp grenades", count_grenade, count)
+    this.AddToUnlockReport(retVal, "emp grenades", count_grenade, count, nil, nil, const.unlockType.grenade, found)
 
     found = this.FindItems(items, types_clothes, nil, false, o)
-    this.AddToUnlockReport(retVal, "clothes (not head or footware)", count_clothes, #found)
+    this.AddToUnlockReport(retVal, "clothes (not head or footware)", count_clothes, #found, nil, nil, const.unlockType.clothes, found)
 
     found = this.FindItems(items, types_money, "money", true, o)
     count = this.GetQuantityValue(found)
-    this.AddToUnlockReport(retVal, "eurodollars", count_money, count, tostring(Round(count_money / 1000)) .. "K", tostring(Round(math.floor(count / 1000))) .. "K")
-
-
-
-    --TODO: Skip quest items and uniques
-
-
+    this.AddToUnlockReport(retVal, "eurodollars", count_money, count, tostring(Round(count_money / 1000)) .. "K", tostring(Round(math.floor(count / 1000))) .. "K", const.unlockType.money, found)
 
     return retVal
 end
 
-function TryUnlockGrapple(o)
-    
+-- This will unlock the grapple if they have enough crafting material in their inventory
+-- If they don't have enough, false and an error message are returned
+--
+-- Returns succuss, errMsg
+--  True: Items were removed from inventory and grappling hook was unlocked
+--  False: Requirements weren't met, nothing was done
+function TryUnlockGrapple(o, player, const)
+    -- No point in writing all the logic twice.  All the filtering is done when getting report
+    local report = GetUnlockReport(o, const)
+
+    -- Make sure all the requirements were met
+
+    -- Remove items
+
+
+    -- Unlock
+    --player:UnlockPlayer()
+
+
+
+
 end
 
 ---------------------------------------------------------------------------------------
@@ -92,6 +105,10 @@ function ReportInventory_All(o)
         -- print(tostring(test))
 
         print("count: " .. tostring(items[i]:GetQuantity()) .. "            GetQuantity()")
+
+        -- local quality = o:GetItemQuality(items[i])
+        -- print(tostring(quality) .. " | " .. type(quality) .. " || " .. tostring(quality.value) .. " | " .. tostring(type(quality.value)))
+        print(o:GetItemQuality(items[i]))
 
 
         print("   ")
@@ -132,6 +149,8 @@ function ReportInventory_UnlockCandidates(o)
             print(tostring(items[i]:GetQuantity()))
             print("is equipped: " .. tostring(equipmentSystem:IsEquipped(o.player, items[i]:GetID())))
 
+            print("quality: " .. tostring(o:GetItemQuality(items[i])))
+
             print("   ")
         end
     end
@@ -139,7 +158,7 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.AddToUnlockReport(report, description, requiredCount, availableCount, requiredCount_display, availableCount_display)
+function this.AddToUnlockReport(report, description, requiredCount, availableCount, requiredCount_display, availableCount_display, unlockType, items)
     local required_display = requiredCount_display
     if not required_display then
         required_display = tostring(requiredCount)
@@ -157,6 +176,8 @@ function this.AddToUnlockReport(report, description, requiredCount, availableCou
         requiredCount_display = required_display,
         availableCount = availableCount,
         availableCount_display = avail_display,
+        unlockType = unlockType,
+        items = items,
     }
 end
 
@@ -188,7 +209,11 @@ function this.IsMatchingItem(item, types, name, canBeEquipped, o)
         return false
     end
 
-    if not canBeEquipped and o:IsItemEquipped(item) then
+    if not canBeEquipped and o:IsItem_Equipped(item) then
+        return false
+    end
+
+    if o:IsItem_Quest(item) or o:IsItem_Iconic(item) or o:IsItem_Legendary(item) then
         return false
     end
 
@@ -233,7 +258,7 @@ function this.Debug_ReportItems(items, o)
         print(items[i]:GetItemType().value)
         print(items[i]:GetNameAsString())
         print("count: " .. tostring(items[i]:GetQuantity()) .. "            GetQuantity()")
-        print("is equipped: " .. tostring(o:IsItemEquipped(items[i])))
+        print("is equipped: " .. tostring(o:IsItem_Equipped(items[i])))
         print("   ")
     end
 end
