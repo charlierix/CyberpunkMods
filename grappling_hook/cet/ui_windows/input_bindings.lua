@@ -536,6 +536,8 @@ function this.Define_RestoreDefaults(vars_ui, const)
 
         color = "hint",
 
+        isEnabled = true,
+
         CalcSize = CalcSize_Button,
     }
 end
@@ -632,6 +634,8 @@ function this.Define_CancelBind(const)
         },
 
         color = "hint",
+
+        isEnabled = true,
 
         CalcSize = CalcSize_Button,
     }

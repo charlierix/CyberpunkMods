@@ -7,8 +7,7 @@ namespace models.viewmodels
     {
         public string text { get; init; }
 
-        //TODO: Implement this
-        //public bool isEnabled { get; init; }
+        public bool isEnabled { get; init; }
 
         public double? width_override { get; init; }
 

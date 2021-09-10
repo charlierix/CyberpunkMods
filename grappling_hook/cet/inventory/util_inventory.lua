@@ -58,16 +58,24 @@ function TryUnlockGrapple(o, player, const)
     local report = GetUnlockReport(o, const)
 
     -- Make sure all the requirements were met
+    local succuss, errMsg = this.FinalValidation(report)
+    if not succuss then
+        return false, errMsg
+    end
 
     -- Remove items
-
+    for i = 1, #report do
+        if In(report[i].unlockType, const.unlockType.grenade, const.unlockType.money) then
+            this.RemoveItems_Single(o, report[i].items, report[i].requiredCount)
+        else
+            this.RemoveItems_Multiple(o, report[i].items, report[i].requiredCount)
+        end
+    end
 
     -- Unlock
-    --player:UnlockPlayer()
+    player:UnlockPlayer()
 
-
-
-
+    return true, nil
 end
 
 ---------------------------------------------------------------------------------------
@@ -262,6 +270,47 @@ function this.Debug_ReportItems(items, o)
         print("   ")
     end
 end
+
+function this.FinalValidation(report)
+    for i = 1, #report do
+        if report[i].availableCount < report[i].requiredCount then
+            return
+                false,
+                "Not enough " .. report[i].description .. "(" .. report[i].availableCount_display .. ", " .. report[i].requiredCount_display .. ")"
+        end
+    end
+
+    return true, nil
+end
+
+-- This removes from a single item (used for money, grenades)
+function this.RemoveItems_Single(o, items, count)
+    --Game.AddToInventory("Items.money", 100000)        -- How to add money
+
+    o.transaction:RemoveItem(o.player, items[1]:GetID(), count)
+end
+-- This removes specific items from the available list (chooses them randomly)
+-- NOTE: This modifies the items array
+function this.RemoveItems_Multiple(o, items, count)
+    local max = #items
+    if max < count then
+        print("ERROR: TryUnlockGrapple -> RemoveItems_Multiple: Not enough items passed in, removing all the items that were passed in anyway")
+        count = max
+    end
+
+    for i = 1, count do
+        local index = math.random(max)
+
+        local itemID = items[index]:GetID()
+
+        o.transaction:RemoveItem(o.player, itemID, 1)       -- removing one, since it's a unique item
+
+        items[index] = items[max]
+        max = max - 1
+    end
+end
+
+---------------------------------------------------------------------------------------
 
 function this.NOTES_TransactionSystem()
     -- TransactionSystem    https://redscript.redmodding.org/#18114
