@@ -298,6 +298,7 @@
         "title": { "the_color": "F0F0F0" },
         "subTitle": { "the_color": "FF4" },
         "info": { "the_color": "C4A380" },
+        "note_header": { "the_color": "D9D2A4" },
 
         "experience_prompt": { "the_color": "F5EA65" },
         "experience_value": { "the_color": "E6BB50" },

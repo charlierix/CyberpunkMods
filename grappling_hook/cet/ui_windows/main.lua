@@ -18,7 +18,7 @@ function DefineWindow_Main(vars_ui, const)
 
     main.input_bindings = this.Define_InputBindings(const)
 
-    -- Unlocked
+    ------- Unlocked -------
     main.energyTank = this.Define_EnergyTank(const)
 
     this.Define_GrappleSlots(main, const)
@@ -26,15 +26,26 @@ function DefineWindow_Main(vars_ui, const)
     main.experience = Define_Experience(const, nil, 15)
     main.xp_progress = this.Define_XPProgress(const)
 
-    -- Locked
-
-    --TODO: Some extra text, maybe a help button
+    ------- Locked -------
+    --NOTE: the gridview is set as the parent, everything is relative to that, so they are defined in a funny order
+    --TODO: this would be a great place for a panel control.  Add these to that control, then just place the panel relative to the center of the page
 
     main.unlock_grid = this.Define_UnlockGrid(const)
 
-    main.unlock = this.Define_Unlock(const)
+    main.unlock_note = this.Define_UnlockNote(main.unlock_grid, const)
+
+    main.unlock_extra_label = this.Define_UnlockExtraLabel(main.unlock_note, const)
+    main.unlock_extra_help = this.Define_UnlockExtraHelp(main.unlock_extra_label, const)
+
+    main.unlock_considered_label = this.Define_UnlockConsideredLabel(main.unlock_extra_label, const)
+    main.unlock_considered_help = this.Define_UnlockConsideredHelp(main.unlock_considered_label, const)
 
 
+    main.unlock_title = this.Define_UnlockTitle(main.unlock_note, const)
+
+    main.unlock = this.Define_UnlockButton(main.unlock_grid, const)
+
+    -------
 
     main.okcancel = Define_OkCancelButtons(true, vars_ui, const)
 
@@ -82,7 +93,7 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, o, const)
             local report = GetUnlockReport(o, const)
 
             this.Refresh_UnlockGrid(vars_ui.main.unlock_grid, report)
-            this.Refresh_Unlock(main.unlock, report)
+            this.Refresh_UnlockButton(main.unlock, report)
         end
     end
 
@@ -129,6 +140,16 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, o, const)
         Draw_ProgressBarSlim(main.xp_progress, vars_ui.style.progressbar_slim, vars_ui.style.colors)
     else
         --------------- Locked ---------------
+
+        Draw_Label(main.unlock_title, vars_ui.style.colors)
+
+        Draw_Label(main.unlock_note, vars_ui.style.colors)
+
+        Draw_Label(main.unlock_considered_label, vars_ui.style.colors)
+        Draw_HelpButton(main.unlock_considered_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+
+        Draw_Label(main.unlock_extra_label, vars_ui.style.colors)
+        Draw_HelpButton(main.unlock_extra_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
         Draw_GridView(main.unlock_grid, vars_ui.style.gridview, vars_ui.style.colors, const)
 
@@ -397,6 +418,149 @@ function this.Refresh_XPProgress(def, player)
     def.percent = player.experience - math.floor(player.experience)
 end
 
+function this.Define_UnlockTitle(relative_to, const)
+    -- Label
+    return
+    {
+        text = "- Grappling Hook Locked -",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 50,
+
+            relative_horz = const.alignment_horizontal.center,
+            horizontal = const.alignment_horizontal.center,
+
+            relative_vert = const.alignment_vertical.top,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        color = "title",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+
+function this.Define_UnlockNote(relative_to, const)
+    -- Label
+    return
+    {
+        text = "These items will be consumed in order to craft the ability to use grappling hook",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 120,
+
+            relative_horz = const.alignment_horizontal.center,
+            horizontal = const.alignment_horizontal.center,
+
+            relative_vert = const.alignment_vertical.top,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        color = "note_header",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+
+function this.Define_UnlockExtraLabel(relative_to, const)
+    -- Label
+    return
+    {
+        text = "extra items",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 20,
+            pos_y = 20,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "note_header",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_UnlockExtraHelp(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Main_UnlockExtraHelp",
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip = "If you have more items than necessary, then the scrapped items are chosen randomly.  Store what you care about in the trunk of your car"
+
+    return retVal
+end
+
+function this.Define_UnlockConsideredLabel(relative_to, const)
+    -- Label
+    return
+    {
+        text = "which items are considered",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 10,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "note_header",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_UnlockConsideredHelp(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Main_UnlockConsideredHelp",
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[only looks in the player's inventory
+
+equipped items won't be scrapped (except grenades)
+
+apartment/car trunk inventory is safe from scrapping
+
+quest, legendary, iconic items are also ignored
+
+silencers that are attached to weapons will be ignored]]
+
+    return retVal
+end
+
 function this.Define_UnlockGrid(const)
     -- GridView
     return
@@ -423,7 +587,7 @@ function this.Define_UnlockGrid(const)
         position =
         {
             pos_x = 0,
-            pos_y = 0,
+            pos_y = 70,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -453,7 +617,7 @@ function this.Refresh_UnlockGrid(def, report)
     end
 end
 
-function this.Define_Unlock(const)
+function this.Define_UnlockButton(relative_to, const)
     -- Button
     return
     {
@@ -461,10 +625,16 @@ function this.Define_Unlock(const)
 
         position =
         {
+            relative_to = relative_to,
+
             pos_x = 0,
-            pos_y = 300,
+            pos_y = 70,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
         },
 
         color = "hint",
@@ -474,7 +644,7 @@ function this.Define_Unlock(const)
         CalcSize = CalcSize_Button,
     }
 end
-function this.Refresh_Unlock(def, report)
+function this.Refresh_UnlockButton(def, report)
     local isEnabled = #report > 0
 
     for i = 1, #report do
