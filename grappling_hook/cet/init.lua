@@ -114,7 +114,7 @@ local const =
 {
     flightModes = CreateEnum("standard", "aim", "airdash", "flight", "antigrav"),
 
-    grappleFrom_Z = 1.5,
+    grappleFrom_Z = 1.85,
     grappleMinResolution = 0.5,
 
     modNames = CreateEnum("grappling_hook", "jetpack", "low_flying_v", "wall_hang"),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
@@ -395,12 +395,8 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
-
-
-    --TryUnlockGrapple(o, player, const)
-
-end)
+-- registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
+-- end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()
     if shouldShowConfig then
@@ -525,12 +521,6 @@ function TODO()
     -- Aim:
     --  Add an option to slow down time while aiming
 
-    -- Aim:
-    --  Add an option to create a false anchor if no hits
-    --  This will cost twice the energy of a normal grapple
-    --  One property for % of max dist
-    --  One property to reduce the cost
-
     -- Grapple Straight:
     --  Add a repulsion to walls when > some distance from desired distance
     --  This would be helpful with going straight up walls
@@ -542,20 +532,8 @@ function TODO()
     --
     --  Also give an option to slow time while jumping.  This will be useful for ambushing enemies
 
-    -- Grapple Straight:
-    --  Have an option for the anchor to be higher than the hit point
-    --  This will help get over ledges when the grapple distance isn't enough to get fast enough
-    --
-    --  Also an option to anchor some distance away from the wall
-    --  This would be useful for rope to get some better angles
-    --
-    --  Another way to go is some offset from the anchor point's normal
-
     -- All:
     --  Fall damage should be a percent, not a bool
-
-    -- Pull:
-    --  May need further ray casts along the initial line segment if it was beyond 50 (a collision hull could load in as the player gets closer)
 
     -- Pull:
     --  If grapple point is a person (determined in aim), ragdoll them toward you
@@ -625,4 +603,19 @@ function TODO()
 
     -- Crouch:
     --  Reenter crouch if grapple started from crouch
+    --      (I think it already does.  The person that reported this may have walked forward after grappling.  Test a bit more)
+
+    -- Adjust Pitch:
+    --  While grappling, adjust the pitch if there is a strong enough yaw change accel
+    --
+    --  local fppcam = o.player:GetFPPCameraComponent()
+    --  o:GetCamera()
+    --  local quat = Quaternion_FromAxisRadians(o.lookdir_forward, Degrees_to_Radians(135))
+    --  fppcam:SetLocalOrientation(quat)
+    --
+    --  The above code works, but would need to multiply a quat based on the current yaw
+
+    -- Test and add a link to no sepia mod
+    --  https://www.nexusmods.com/cyberpunk2077/mods/3161/
+
 end

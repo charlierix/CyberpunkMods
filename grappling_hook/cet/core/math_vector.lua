@@ -6,6 +6,14 @@ function vec_str(vector)
     return tostring(Round(vector.x, 2)) .. ", " .. tostring(Round(vector.y, 2)) .. ", " .. tostring(Round(vector.z, 2))
 end
 
+function quat_str(quat)
+    if not quat then
+        return "nil"
+    end
+
+    return tostring(Round(quat.i, 3)) .. ", " .. tostring(Round(quat.j, 3)) .. ", " .. tostring(Round(quat.k, 3)) .. ", " .. tostring(Round(quat.r, 3))
+end
+
 ------------------------------------- Length -------------------------------------
 
 --TODO: See if vector4 already exposes a magnitude function --- it's GetSingleton('Vector4'):Distance(vector1, vector2)
@@ -78,6 +86,26 @@ end
 
 function RadiansBetween3D(v1, v2)
     return math.acos(DotProduct3D(v1, v2) / (GetVectorLength(v1) * GetVectorLength(v2)))
+end
+
+-- Returns a quaternion that is the rotation from v1 to v2
+-- percent is optional
+function GetRotation(v1, v2, percent)
+    local axis = CrossProduct3D(v1, v2)
+    local radians = RadiansBetween3D(v1, v2)
+
+    if percent then
+        radians = radians * percent
+    end
+
+    return Quaternion_FromAxisRadians(axis, radians)
+end
+
+-- Just wrapping it to be easier to remember/use
+function Quaternion_FromAxisRadians(axis, radians)
+    --https://redscript.redmodding.org/#30122
+    --public static native SetAxisAngle(out q: Quaternion, axis: Vector4, angle: Float): Void
+    return GetSingleton('Quaternion'):SetAxisAngle(axis, radians)     -- looks like cet turns out param into return
 end
 
 -- Rotates a vector by the amount of radians (right hand rule, so positive radians are counter

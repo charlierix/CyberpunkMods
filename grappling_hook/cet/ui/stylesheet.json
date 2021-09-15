@@ -207,7 +207,7 @@
 
     "gridview":
     {
-        "foreground_color_header": "686850",
+        "foreground_color_header": "525249",
         "foreground_color_cell": "909090",
 
         "gap_horizontal": 12,

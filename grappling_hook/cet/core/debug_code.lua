@@ -1,3 +1,5 @@
+local this = {}
+
 function PopulateDebug(debug, o, keys, vars)
     debug.flightMode = vars.flightMode
     debug.currentlyFlying = o:Custom_CurrentlyFlying_get()
@@ -40,4 +42,21 @@ function PopulateDebug(debug, o, keys, vars)
     -- end
 
     debug.timer = Round(o.timer, 1)
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.RollCamera()
+--     local fppcam = o.player:GetFPPCameraComponent()
+
+--     print("fov: " .. tostring(fppcam:GetFOV()))
+--     print("zoom: " .. tostring(fppcam:GetZoom()))
+--     print("initial pos: " .. vec_str(fppcam:GetInitialPosition()))
+--     print("initial orientation: " .. quat_str(fppcam:GetInitialOrientation()))
+--     print("local pos: " .. vec_str(fppcam:GetLocalPosition()))
+--     print("local orientation: " .. quat_str(fppcam:GetLocalOrientation()))
+
+--     -- o:GetCamera()
+--     -- local quat = Quaternion_FromAxisRadians(o.lookdir_forward, Degrees_to_Radians(135))
+--     -- fppcam:SetLocalOrientation(quat)
 end
