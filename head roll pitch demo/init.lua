@@ -20,6 +20,7 @@ require "core/math_vector"
 require "core/math_yaw"
 require "core/util"
 
+require "processing/apply_rotations_absolute"
 require "processing/handle_inputs"
 
 require "ui/drawing"
@@ -33,6 +34,8 @@ local this = {}
 local const =
 {
     roll_rate = 60,        -- degrees per second
+
+    use_absolute = true,        -- only use absolute if you only apply rotations around a single axis (like rolling)
 
     shouldShowDebugWindow = true,      -- shows a window with extra debug info
 }
@@ -98,6 +101,9 @@ registerForEvent("onInit", function()
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
+    function wrappers.GetGetFPPCamera(player) return player:GetFPPCameraComponent() end
+    function wrappers.GetInitialOrientation(fppcam) return fppcam:GetInitialOrientation() end
+    function wrappers.SetLocalOrientation(fppcam, quat) fppcam:SetLocalOrientation(quat) end
 
     o = GameObjectAccessor:new(wrappers)
 end)
@@ -133,12 +139,19 @@ registerForEvent("onUpdate", function(deltaTime)
 
     HandleInputs(vars, keys, const, deltaTime)
 
-
-
+    if const.use_absolute then
+        ApplyRotations_Absolute(o, vars, debug, const)
+    else
+        print("FINISH THIS: ~const.use_absolute")
+    end
 end)
 
 registerHotkey("HeadRollPitchDemo_Reset", "Reset", function()
     vars.roll_desired = 0
+    vars.roll_actual = 0
+
+    --o:FPP_SetLocalOrientation(o:FPP_GetInitialOrientation())      -- this doesn't work, since initial_orientation always seems to be the same as local_orientation
+    o:FPP_SetLocalOrientation(Quaternion.new(0, 0, 0, 1))
 end)
 
 registerInput("HeadRollPitchDemo_RollLeft", "Roll Left", function(isDown)

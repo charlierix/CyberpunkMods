@@ -8,6 +8,7 @@ local pullInterval_workspot = this.GetRandom_Variance(12, 1)
 local pullInterval_camera = this.GetRandom_Variance(12, 1)
 local pullInterval_teleport = this.GetRandom_Variance(12, 1)
 local pullInterval_sensor = this.GetRandom_Variance(12, 1)
+local pullInterval_fppcam = this.GetRandom_Variance(12, 1)
 
 GameObjectAccessor = {}
 
@@ -24,6 +25,7 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_camera = -(pullInterval_camera * 2)
     obj.lastPulled_teleport = -(pullInterval_teleport * 2)
     obj.lastPulled_sensor = -(pullInterval_sensor * 2)
+    obj.lastPulled_fppcam = -(pullInterval_fppcam * 2)
 
     obj.lastGot_lookDir = -1
 
@@ -42,6 +44,7 @@ function GameObjectAccessor:Clear()
     self.camera = nil
     self.teleport = nil
     self.sensor = nil
+    self.fppcam = nil
 end
 
 -- Populates this.player, position, velocity, yaw
@@ -134,6 +137,30 @@ function GameObjectAccessor:HasHeadUnderwater()
     end
 end
 
+function GameObjectAccessor:FPP_GetInitialOrientation()
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        self:EnsureFPPCameraLoaded()
+
+        if self.fppcam then
+            return self.wrappers.GetInitialOrientation(self.fppcam)
+        end
+    end
+end
+
+function GameObjectAccessor:FPP_SetLocalOrientation(quat)
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        self:EnsureFPPCameraLoaded()
+
+        if self.fppcam then
+            self.wrappers.SetLocalOrientation(self.fppcam, quat)
+        end
+    end
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function GameObjectAccessor:EnsurePlayerLoaded()
@@ -141,5 +168,13 @@ function GameObjectAccessor:EnsurePlayerLoaded()
         self.lastPulled_player = self.timer
 
         self.player = self.wrappers.GetPlayer()
+    end
+end
+
+function GameObjectAccessor:EnsureFPPCameraLoaded()
+    if not self.fppcam or (self.timer - self.lastPulled_fppcam) >= pullInterval_fppcam then
+        self.lastPulled_fppcam = self.timer
+
+        self.fppcam = self.wrappers.GetGetFPPCamera(self.player)
     end
 end
