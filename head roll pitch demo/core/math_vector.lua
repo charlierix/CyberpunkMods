@@ -1,3 +1,5 @@
+local this = {}
+
 function vec_str(vector)
     if not vector then
         return "nil"
@@ -213,6 +215,13 @@ function Radians_to_Degrees(radians)
     return radians * 180 / math.pi
 end
 
+function AddAngle_0_360(current, delta)
+    return this.AddAngle(current, delta, 0, 360)
+end
+function AddAngle_neg180_pos180(current, delta)
+    return this.AddAngle(current, delta, -180, 180)
+end
+
 ------------------------------------- Convert -------------------------------------
 
 function GetPoint(fromPos, unitDirection, length)
@@ -261,4 +270,30 @@ end
 -- Returns 1 - 2
 function SubtractVectors(vector1, vector2)
     return Vector4.new(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z, 1)
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.AddAngle(current, delta, min, max)
+    if not min then
+        min = 0
+    end
+
+    if not max then
+        max = 360
+    end
+
+    local retVal = current + delta
+
+    while true do
+        if retVal < min then
+            retVal = retVal + 360
+        elseif retVal > max then
+            retVal = retVal - 360
+        else
+            break
+        end
+    end
+
+    return retVal
 end
