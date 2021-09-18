@@ -154,6 +154,10 @@ function InterpolateQuaternions(from_quat, to_quat, percent)
     return GetSingleton('Quaternion'):Slerp(from_quat, to_quat, percent)
 end
 
+function GetIdentityQuaternion()
+    return Quaternion.new(0, 0, 0, 1)
+end
+
 -- This takes a 3D vector, gets rid of the Z, then makes that 2D projected vector have a length of 1
 function Make2DUnit(vector)
     local retVal = Vector4.new(vector.x, vector.y, 0, 1)

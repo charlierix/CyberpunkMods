@@ -10,13 +10,13 @@ function PopulateDebug(debug, o, keys, vars)
     debug.local_orientation = quat_str(o.fppcam:GetLocalOrientation())
 
     debug.roll_desired = Round(vars.roll_desired, 1)
-    debug.roll_actual = Round(vars.roll_actual, 1)
+    debug.roll_current = Round(vars.roll_current, 1)
 
     debug.pitch_desired = Round(vars.pitch_desired, 1)
-    debug.pitch_actual = Round(vars.pitch_desired, 1)
+    debug.pitch_current = Round(vars.pitch_desired, 1)
 
     debug.yaw_desired = Round(vars.yaw_desired, 1)
-    debug.yaw_actual = Round(vars.yaw_desired, 1)
+    debug.yaw_current = Round(vars.yaw_desired, 1)
 
     debug.timer = Round(o.timer, 1)
 end

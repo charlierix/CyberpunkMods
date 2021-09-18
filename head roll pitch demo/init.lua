@@ -36,7 +36,7 @@ local const =
 {
     turn_rate = 60,        -- degrees per second
 
-    use_absolute = false,        -- only use absolute if you apply rotations around a single axis (like rolling)
+    use_absolute = false,        -- only use absolute if you apply rotations around a single axis (like rolling).  In that case, it's a good optimization
 
     shouldShowDebugWindow = true,      -- shows a window with extra debug info
 }
@@ -68,13 +68,13 @@ local debug = {}
 local vars =
 {
     roll_desired = 0,
-    roll_actual = 0,        -- actual is only used by absolute.  the additive just sets desired back to zero once it's applied
+    roll_current = 0,        -- current is only used by absolute.  the additive just sets desired back to zero once it's applied (because for additive, desired is treated like a delta)
 
     pitch_desired = 0,
-    pitch_actual = 0,
+    pitch_current = 0,
 
     yaw_desired = 0,
-    yaw_actual = 0,
+    yaw_current = 0,
 }
 
 --------------------------------------------------------------------
@@ -162,16 +162,16 @@ end)
 
 registerHotkey("HeadRollPitchDemo_Reset", "Reset", function()
     vars.roll_desired = 0
-    vars.roll_actual = 0
+    vars.roll_current = 0
 
     vars.pitch_desired = 0
-    vars.pitch_actual = 0
+    vars.pitch_current = 0
 
     vars.yaw_desired = 0
-    vars.yaw_actual = 0
+    vars.yaw_current = 0
 
     --o:FPP_SetLocalOrientation(o:FPP_GetInitialOrientation())      -- this doesn't work, since initial_orientation always seems to be the same as local_orientation
-    o:FPP_SetLocalOrientation(Quaternion.new(0, 0, 0, 1))
+    o:FPP_SetLocalOrientation(GetIdentityQuaternion())
 end)
 
 registerInput("HeadRollPitchDemo_RollLeft", "Roll Left", function(isDown)
