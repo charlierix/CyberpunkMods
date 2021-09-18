@@ -149,6 +149,17 @@ function GameObjectAccessor:FPP_GetInitialOrientation()
     end
 end
 
+function GameObjectAccessor:FPP_GetLocalOrientation()
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        self:EnsureFPPCameraLoaded()
+
+        if self.fppcam then
+            return self.wrappers.GetLocalOrientation(self.fppcam)
+        end
+    end
+end
 function GameObjectAccessor:FPP_SetLocalOrientation(quat)
     self:EnsurePlayerLoaded()
 

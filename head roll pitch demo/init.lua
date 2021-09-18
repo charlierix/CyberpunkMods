@@ -21,6 +21,7 @@ require "core/math_yaw"
 require "core/util"
 
 require "processing/apply_rotations_absolute"
+require "processing/apply_rotations_additive"
 require "processing/handle_inputs"
 
 require "ui/drawing"
@@ -33,9 +34,9 @@ local this = {}
 
 local const =
 {
-    roll_rate = 60,        -- degrees per second
+    turn_rate = 60,        -- degrees per second
 
-    use_absolute = true,        -- only use absolute if you only apply rotations around a single axis (like rolling)
+    use_absolute = false,        -- only use absolute if you apply rotations around a single axis (like rolling)
 
     shouldShowDebugWindow = true,      -- shows a window with extra debug info
 }
@@ -54,6 +55,12 @@ local keys =
 {
     roll_left = false,
     roll_right = false,
+
+    pitch_down = false,
+    pitch_up = false,
+
+    yaw_left = false,
+    yaw_right = false,
 }
 
 local debug = {}
@@ -61,7 +68,13 @@ local debug = {}
 local vars =
 {
     roll_desired = 0,
-    roll_actual = 0,
+    roll_actual = 0,        -- actual is only used by absolute.  the additive just sets desired back to zero once it's applied
+
+    pitch_desired = 0,
+    pitch_actual = 0,
+
+    yaw_desired = 0,
+    yaw_actual = 0,
 }
 
 --------------------------------------------------------------------
@@ -103,6 +116,7 @@ registerForEvent("onInit", function()
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
     function wrappers.GetGetFPPCamera(player) return player:GetFPPCameraComponent() end
     function wrappers.GetInitialOrientation(fppcam) return fppcam:GetInitialOrientation() end
+    function wrappers.GetLocalOrientation(fppcam) return fppcam:GetLocalOrientation() end
     function wrappers.SetLocalOrientation(fppcam, quat) fppcam:SetLocalOrientation(quat) end
 
     o = GameObjectAccessor:new(wrappers)
@@ -142,13 +156,19 @@ registerForEvent("onUpdate", function(deltaTime)
     if const.use_absolute then
         ApplyRotations_Absolute(o, vars, debug, const)
     else
-        print("FINISH THIS: ~const.use_absolute")
+        ApplyRotations_Additive(o, vars, debug, const)
     end
 end)
 
 registerHotkey("HeadRollPitchDemo_Reset", "Reset", function()
     vars.roll_desired = 0
     vars.roll_actual = 0
+
+    vars.pitch_desired = 0
+    vars.pitch_actual = 0
+
+    vars.yaw_desired = 0
+    vars.yaw_actual = 0
 
     --o:FPP_SetLocalOrientation(o:FPP_GetInitialOrientation())      -- this doesn't work, since initial_orientation always seems to be the same as local_orientation
     o:FPP_SetLocalOrientation(Quaternion.new(0, 0, 0, 1))
@@ -159,6 +179,20 @@ registerInput("HeadRollPitchDemo_RollLeft", "Roll Left", function(isDown)
 end)
 registerInput("HeadRollPitchDemo_RollRight", "Roll Right", function(isDown)
     keys.roll_right = isDown
+end)
+
+registerInput("HeadRollPitchDemo_PitchDown", "Pitch Down", function(isDown)
+    keys.pitch_down = isDown
+end)
+registerInput("HeadRollPitchDemo_PitchUp", "Pitch Up", function(isDown)
+    keys.pitch_up = isDown
+end)
+
+registerInput("HeadRollPitchDemo_YawLeft", "Yaw Left", function(isDown)
+    keys.yaw_left = isDown
+end)
+registerInput("HeadRollPitchDemo_YawRight", "Yaw Right", function(isDown)
+    keys.yaw_right = isDown
 end)
 
 registerForEvent("onDraw", function()

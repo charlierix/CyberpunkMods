@@ -125,6 +125,35 @@ function RotateVector3D(vector, quat)
     return GetSingleton('Quaternion'):Transform(quat, vector)
 end
 
+-- This returns a quaternion that is the result of rotating by a delta
+function RotateQuaternion(orig_quat, delta_quat)
+    --https://referencesource.microsoft.com/#PresentationCore/Core/CSharp/system/windows/Media3D/Quaternion.cs
+
+    --TODO: Detect if either of the quaternions is identity (probably 0,0,0,1)
+    -- if (orig_quat.IsDistinguishedIdentity)
+    -- {
+    --     return delta_quat;
+    -- }
+    -- if (delta_quat.IsDistinguishedIdentity)
+    -- {
+    --     return orig_quat;
+    -- }
+    
+    local x = orig_quat.r * delta_quat.i + orig_quat.i * delta_quat.r + orig_quat.j * delta_quat.k - orig_quat.k * delta_quat.j;
+    local y = orig_quat.r * delta_quat.j + orig_quat.j * delta_quat.r + orig_quat.k * delta_quat.i - orig_quat.i * delta_quat.k;
+    local z = orig_quat.r * delta_quat.k + orig_quat.k * delta_quat.r + orig_quat.i * delta_quat.j - orig_quat.j * delta_quat.i;
+    local w = orig_quat.r * delta_quat.r - orig_quat.i * delta_quat.i - orig_quat.j * delta_quat.j - orig_quat.k * delta_quat.k;
+
+    return Quaternion.new(x, y, z, w)
+end
+
+-- This returns a quaternion that is somewhere between from and to quaternions
+function InterpolateQuaternions(from_quat, to_quat, percent)
+    -- SLERP ensures the returned quat is a unit quat.  Slower, but can handle percent rotations
+    -- https://www.youtube.com/watch?v=uNHIPVOnt-Y
+    return GetSingleton('Quaternion'):Slerp(from_quat, to_quat, percent)
+end
+
 -- This takes a 3D vector, gets rid of the Z, then makes that 2D projected vector have a length of 1
 function Make2DUnit(vector)
     local retVal = Vector4.new(vector.x, vector.y, 0, 1)
