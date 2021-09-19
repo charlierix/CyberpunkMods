@@ -223,6 +223,8 @@ local const =
 
     quiet_thrust = false,               -- set to true for softer thrusting sounds
 
+    hide_energy_above_percent = 0.985,  -- For the infinite energy modes (well rounded, airplane), the progress bar is just annoying
+
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 
@@ -408,7 +410,7 @@ registerForEvent("onDraw", function()
     end
 
     -- Energy tank (only show when it's not full)
-    if vars.remainBurnTime < mode.maxBurnTime then
+    if vars.remainBurnTime / mode.maxBurnTime < const.hide_energy_above_percent then
         DrawJetpackProgress(mode.name, vars.remainBurnTime, mode.maxBurnTime)
     end
 
