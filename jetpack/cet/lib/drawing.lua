@@ -9,9 +9,9 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime)
 
         -- Progress Bar
         ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 3)
-		
+
         -- The color ints are in ABGR (comments to the side are ARGB for easy copy/pasting into color editor)
-		
+
         ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)
         ImGui.PushStyleColor(ImGuiCol.FrameBg, 0x99ADAD5E)
         ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0xE6D4D473)

@@ -1,0 +1,25 @@
+{
+    "title_color_focused": "FD1B1B1B",
+    "title_color_notFocused": "981B1B1B",
+    "title_color_collapsed": "30141414",
+    
+    "title_color_foreground": "98A0A0A0",
+    
+    "title_color_button_hover": "904D483B",
+    "title_color_button_click": "B0635B46",
+
+    "back_color": "FC141414",
+    "border_color": "8444",
+    
+    "trackball":
+    {
+        "size": 240,
+        "margin": 12,
+
+        "glass_color_back_standard": "1444",
+        "glass_color_back_hovered": "2666",
+        "glass_color_border_standard": "8888",
+        "glass_color_border_hovered": "8FFF",
+        "glass_thickness": 2
+    }
+}

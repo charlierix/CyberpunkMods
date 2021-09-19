@@ -25,6 +25,20 @@ require "processing/apply_rotations_additive"
 require "processing/handle_inputs"
 
 require "ui/drawing"
+require "ui/trackball"
+
+-- NOTE: Copied in all these files, even though only some of the methods are needed.  Some of the functions reference functions
+-- in ui_controls_generic, which also expect the stylesheet to have certain sections, but none of that was copied (currently,
+-- grappling hook and wall hang use this ui framework, but it's overkill to copy the whole thing here)
+require "ui_framework/changes"
+require "ui_framework/common_definitions"
+require "ui_framework/updown_delegates"
+require "ui_framework/util_controls"
+require "ui_framework/util_layout"
+require "ui_framework/util_misc"
+require "ui_framework/util_setup"
+
+extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 local this = {}
 
@@ -38,6 +52,10 @@ local const =
 
     use_absolute = false,        -- only use absolute if you apply rotations around a single axis (like rolling).  In that case, it's a good optimization
 
+    -- These are set in Define_UI_Framework_Constants() called during init
+    -- alignment_horizontal = CreateEnum("left", "center", "right"),
+    -- alignment_vertical = CreateEnum("top", "center", "bottom"),
+
     shouldShowDebugWindow = true,      -- shows a window with extra debug info
 }
 
@@ -48,6 +66,7 @@ local const =
 local isShutdown = true
 local isLoaded = false
 local shouldDraw = false
+local shouldShowConfig = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
@@ -77,6 +96,11 @@ local vars =
     yaw_current = 0,
 }
 
+local vars_ui =
+{
+    --style     -- this gets loaded from json during init
+}
+
 --------------------------------------------------------------------
 
 registerForEvent("onInit", function()
@@ -98,6 +122,8 @@ registerForEvent("onInit", function()
     isShutdown = false
 
     InitializeRandom()
+    Define_UI_Framework_Constants(const)
+    vars_ui.style = LoadStylesheet()
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -195,9 +221,21 @@ registerInput("HeadRollPitchDemo_YawRight", "Yaw Right", function(isDown)
     keys.yaw_right = isDown
 end)
 
+registerForEvent("onOverlayOpen", function()
+    shouldShowConfig = true
+end)
+registerForEvent("onOverlayClose", function()
+    shouldShowConfig = false
+end)
+
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then
+        shouldShowConfig = false
         do return end
+    end
+
+    if shouldShowConfig then
+        DrawConfig(vars, vars_ui, o, const)
     end
 
     if const.shouldShowDebugWindow then

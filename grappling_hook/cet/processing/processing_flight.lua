@@ -58,7 +58,7 @@ function Process_Flight(o, player, vars, const, debug, deltaTime)
 
     ----------------------------------- PREP WORK -----------------------------------
 
-    -- How from desired distance they are (can be negative)
+    -- How far from desired distance they are (can be negative)
     local diffDist
     if grapple.desired_length then
         diffDist = grappleLen - grapple.desired_length
