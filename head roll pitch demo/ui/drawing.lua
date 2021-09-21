@@ -1,6 +1,6 @@
 local window = {}
 
-function DrawConfig(vars, vars_ui, o, const)
+function DrawConfig(vars, vars_ui, o, debug, const)
     ImGui.PushStyleColor(ImGuiCol.TitleBgActive, vars_ui.style.title_color_focused_abgr)
 
     if vars_ui.isTooltipShowing then
@@ -33,7 +33,7 @@ function DrawConfig(vars, vars_ui, o, const)
 
         --TODO: If there are more types of config needed, add tab items
 
-        DrawWindow_Trackball(vars, vars_ui, o, window, const)
+        DrawWindow_Trackball(vars, vars_ui, o, window, debug, const)
 
     end
     ImGui.End()

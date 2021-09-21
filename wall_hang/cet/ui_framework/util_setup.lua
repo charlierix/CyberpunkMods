@@ -47,7 +47,7 @@ function this.FinishStylesheetColors(style)
                 stored[key .. "_argb"] = argb
                 stored[key .. "_abgr"] = abgr
 
-                -- stored[key .. "_a"] = a      -- the individual ints aren't needed
+                -- stored[key .. "_a"] = a      -- the individual floats aren't needed
                 -- stored[key .. "_r"] = r
                 -- stored[key .. "_g"] = g
                 -- stored[key .. "_b"] = b

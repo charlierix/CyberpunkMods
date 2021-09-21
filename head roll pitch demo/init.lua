@@ -12,6 +12,7 @@
 
 --https://github.com/jac3km4/redscript
 
+require "core/color"
 require "core/debug_code"
 require "core/gameobj_accessor"
 require "core/math_basic"
@@ -49,6 +50,7 @@ local this = {}
 local const =
 {
     turn_rate = 60,        -- degrees per second
+    trackball_mult = 8,
 
     use_absolute = false,        -- only use absolute if you apply rotations around a single axis (like rolling).  In that case, it's a good optimization
 
@@ -94,6 +96,8 @@ local vars =
 
     yaw_desired = 0,
     yaw_current = 0,
+
+    deltas = {},       -- this is used by the trackball control.  It is a list of delta quaternions to apply
 }
 
 local vars_ui =
@@ -196,6 +200,10 @@ registerHotkey("HeadRollPitchDemo_Reset", "Reset", function()
     vars.yaw_desired = 0
     vars.yaw_current = 0
 
+    for i = #vars.deltas, 1, -1 do
+        table.remove(vars.deltas, i)
+    end
+    
     --o:FPP_SetLocalOrientation(o:FPP_GetInitialOrientation())      -- this doesn't work, since initial_orientation always seems to be the same as local_orientation
     o:FPP_SetLocalOrientation(GetIdentityQuaternion())
 end)
@@ -221,12 +229,13 @@ registerInput("HeadRollPitchDemo_YawRight", "Yaw Right", function(isDown)
     keys.yaw_right = isDown
 end)
 
-registerForEvent("onOverlayOpen", function()
-    shouldShowConfig = true
-end)
-registerForEvent("onOverlayClose", function()
-    shouldShowConfig = false
-end)
+-- no need to disable when console is closed
+-- registerForEvent("onOverlayOpen", function()
+--     shouldShowConfig = true
+-- end)
+-- registerForEvent("onOverlayClose", function()
+--     shouldShowConfig = false
+-- end)
 
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then
@@ -234,9 +243,9 @@ registerForEvent("onDraw", function()
         do return end
     end
 
-    if shouldShowConfig then
-        DrawConfig(vars, vars_ui, o, const)
-    end
+    --if shouldShowConfig then
+    DrawConfig(vars, vars_ui, o, debug, const)
+    --end
 
     if const.shouldShowDebugWindow then
         DrawDebugWindow(debug)

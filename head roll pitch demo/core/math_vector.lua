@@ -93,11 +93,19 @@ end
 -- Returns a quaternion that is the rotation from v1 to v2
 -- percent is optional
 function GetRotation(v1, v2, percent)
+    if IsNearValue_vec4(v1, v2) then
+        return GetIdentityQuaternion()
+    end
+
     local axis = CrossProduct3D(v1, v2)
     local radians = RadiansBetween3D(v1, v2)
 
     if percent then
         radians = radians * percent
+    end
+
+    if IsNearZero(radians) then
+        return GetIdentityQuaternion()
     end
 
     return Quaternion_FromAxisRadians(axis, radians)
@@ -138,7 +146,7 @@ function RotateQuaternion(orig_quat, delta_quat)
     -- {
     --     return orig_quat;
     -- }
-    
+
     local x = orig_quat.r * delta_quat.i + orig_quat.i * delta_quat.r + orig_quat.j * delta_quat.k - orig_quat.k * delta_quat.j;
     local y = orig_quat.r * delta_quat.j + orig_quat.j * delta_quat.r + orig_quat.k * delta_quat.i - orig_quat.i * delta_quat.k;
     local z = orig_quat.r * delta_quat.k + orig_quat.k * delta_quat.r + orig_quat.i * delta_quat.j - orig_quat.j * delta_quat.i;
@@ -156,6 +164,17 @@ end
 
 function GetIdentityQuaternion()
     return Quaternion.new(0, 0, 0, 1)
+end
+function IsIdentityQuaternion(quat)
+    if not quat then
+        return true     -- pretend nil is identity
+    end
+
+    return
+        IsNearZero(quat.i) and
+        IsNearZero(quat.j) and
+        IsNearZero(quat.k) and
+        IsNearValue(quat.r, 1)
 end
 
 -- This takes a 3D vector, gets rid of the Z, then makes that 2D projected vector have a length of 1

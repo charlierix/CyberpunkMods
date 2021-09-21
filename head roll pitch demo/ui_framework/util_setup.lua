@@ -46,11 +46,10 @@ function this.FinishStylesheetColors(style)
                 -- Store these off so there's no chance of interfering with the for loop
                 stored[key .. "_argb"] = argb
                 stored[key .. "_abgr"] = abgr
-
-                -- stored[key .. "_a"] = a      -- the individual ints aren't needed
-                -- stored[key .. "_r"] = r
-                -- stored[key .. "_g"] = g
-                -- stored[key .. "_b"] = b
+                stored[key .. "_a"] = a
+                stored[key .. "_r"] = r
+                stored[key .. "_g"] = g
+                stored[key .. "_b"] = b
             end
 
         elseif type == "table" then

@@ -13,13 +13,26 @@
     
     "trackball":
     {
-        "size": 240,
-        "margin": 12,
+        "size": 360,
+        "radius_percent": 0.6666,
+        "margin": 3,
+
+        "glass_thickness": 2,
+        "line_thickness_posZ": 5,
+        "line_thickness_zeroZ": 2.5,
+        "line_thickness_negZ": 0.5,
 
         "glass_color_back_standard": "1444",
         "glass_color_back_hovered": "2666",
         "glass_color_border_standard": "8888",
         "glass_color_border_hovered": "8FFF",
-        "glass_thickness": 2
+
+        "forward_color_posZ": "DEFC19",
+        "forward_color_zeroZ": "CCCC1F",
+        "forward_color_negZ": "968118",
+
+        "up_color_posZ": "1BE0C6",
+        "up_color_zeroZ": "2285C7",
+        "up_color_negZ": "325DB3"
     }
 }

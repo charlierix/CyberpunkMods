@@ -5,7 +5,7 @@ local up = nil
 local right = nil
 
 function ApplyRotations_Additive(o, vars, debug, const)
-    if IsNearZero(vars.roll_desired) and IsNearZero(vars.pitch_desired) and IsNearZero(vars.yaw_desired) then
+    if IsNearZero(vars.roll_desired) and IsNearZero(vars.pitch_desired) and IsNearZero(vars.yaw_desired) and #vars.deltas == 0 then
         do return end
     end
 
@@ -13,7 +13,7 @@ function ApplyRotations_Additive(o, vars, debug, const)
 
     local quat = o:FPP_GetLocalOrientation()
 
-    -- If there is more than one at once, randomizing the order each frame should keep fairly things unbiased
+    -- If there is more than one at once, randomizing the order each frame should keep things fairly unbiased
     local rand = math.random(6)
     if rand == 1 then
         quat = this.ApplyRotation(quat, forward, vars.roll_desired)
@@ -46,11 +46,20 @@ function ApplyRotations_Additive(o, vars, debug, const)
         quat = this.ApplyRotation(quat, forward, vars.roll_desired)
     end
 
+    -- If they are dragging the trackball, then apply the deltas.  Using a list in case the control's framerate
+    -- is different than the update event
+    for i = 1, #vars.deltas do
+        quat = RotateQuaternion(quat, vars.deltas[i])
+    end
+
     o:FPP_SetLocalOrientation(quat)
 
     vars.roll_desired = 0
     vars.pitch_desired = 0
     vars.yaw_desired = 0
+    for i = #vars.deltas, 1, -1 do
+        table.remove(vars.deltas, i)
+    end
 end
 
 ----------------------------------- Private Methods -----------------------------------

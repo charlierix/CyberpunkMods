@@ -87,7 +87,7 @@ function ConvertHexStringToNumbers(hex)
     end
 
     return
-        tonumber("0x" .. a .. r .. g .. b),     --NOTE: Functions in draw gmgui_draw.cpp use this ARGB, but ImGui.PushStyleColor (and maybe all functions in imgui.h that take a single color?) needed AGBR
+        tonumber("0x" .. a .. r .. g .. b),     --NOTE: gmgui_draw.cpp rectangle uses this ARGB (maybe others), all other functions I've seen use AGBR
         tonumber("0x" .. a .. b .. g .. r),
         num_a / 255,
         num_r / 255,
