@@ -12,6 +12,7 @@
 
 --https://github.com/jac3km4/redscript
 
+require "!src/core/color"
 require "!src/core/debug_code"
 require "!src/core/gameobj_accessor"
 require "!src/core/lists"

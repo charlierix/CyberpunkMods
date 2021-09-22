@@ -16,6 +16,19 @@ function IsNearValue_custom(value, test, epsilon)
     return math.abs(value - test) < epsilon
 end
 
+function IsNearValue_vec4(value, test)
+    if not value and not test then
+        -- Both nil
+        return true
+    end
+
+    -- Ignoring w
+    return
+        IsNearValue_nillable(value.x, test.x) and
+        IsNearValue_nillable(value.y, test.y) and
+        IsNearValue_nillable(value.z, test.z)
+end
+
 function IsNearZero(value)
     return IsNearValue(value, 0)
 end
@@ -26,7 +39,10 @@ function IsNearZero_vec4(value)
     end
 
     -- Ignore w, it's always 1
-    return IsNearValue(value.x, 0) and IsNearValue(value.y, 0) and IsNearValue(value.z, 0)
+    return
+        IsNearValue(value.x, 0) and
+        IsNearValue(value.y, 0) and
+        IsNearValue(value.z, 0)
 end
 
 --http://lua-users.org/wiki/SimpleRound
