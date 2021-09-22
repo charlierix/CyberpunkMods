@@ -41,29 +41,10 @@ function DrawWindow_Trackball(vars, vars_ui, o, window, debug, const)
     --TODO: Draw a faint arc to simulate sphere glass reflection
     --ImDrawList::PathArcTo (see if this is this a standalone function.  Other functions have the word add in them)
 
-
-
-
     local forward, up = this.GetRotatedLines(o)
 
     this.DrawGradientLine(window.left, window.top, center_x, center_y, radius, forward, style_trackball, "forward_color")
     this.DrawGradientLine(window.left, window.top, center_x, center_y, radius, up, style_trackball, "up_color")
-
-
-
-
-
-    -- local xp, yp, zp, xn, yn, zn = this.GetRotatedLines(o)
-
-    -- this.DrawGradientLine(window.left, window.top, center_x, center_y, radius, xp, style_trackball, "forward_color")
-    -- this.DrawGradientLine(window.left, window.top, center_x, center_y, radius, yp, style_trackball, "forward_color")
-    -- this.DrawGradientLine(window.left, window.top, center_x, center_y, radius, zp, style_trackball, "forward_color")
-
-    -- this.DrawGradientLine(window.left, window.top, center_x, center_y, radius, xn, style_trackball, "up_color")
-    -- this.DrawGradientLine(window.left, window.top, center_x, center_y, radius, yn, style_trackball, "up_color")
-    -- this.DrawGradientLine(window.left, window.top, center_x, center_y, radius, zn, style_trackball, "up_color")
-
-
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -174,38 +155,7 @@ function this.ProjectToTrackball_Wrap(value)
     return retVal, shouldInvertZ
 end
 
---TODO: None of these are right values look right
 function this.GetRotatedLines(o)
-    if not forward then
-        forward = Vector4.new(0, -1, 0, 1)
-    end
-
-    if not up then
-        up = Vector4.new(0, 0, 1, 1)
-        --up = Vector4.new(1, 0, 0, 1)
-    end
-
-    local quat = o:FPP_GetLocalOrientation()
-
-    --RotateVector3D(forward, quat),
-    --RotateVector3D(up, quat)
-
-    local rot_forward = GetSingleton('Quaternion'):TransformInverse(quat, forward)
-    local rot_up = GetSingleton('Quaternion'):TransformInverse(quat, up)
-
-    -- local rot_forward = RotateVector3D(forward, quat)
-    -- local rot_up = RotateVector3D(up, quat)
-
-    --rot_forward.z = -rot_forward.z
-    --rot_up.z = -rot_up.z
-
-    --rot_forward.x = -rot_forward.x
-    --rot_up.x = -rot_up.x
-
-    return rot_forward, rot_up
-end
-
-function this.GetRotatedLines_ATTEMPT(o)
     if not forward then
         forward = Vector4.new(0, 1, 0, 1)
     end
@@ -215,70 +165,14 @@ function this.GetRotatedLines_ATTEMPT(o)
     end
 
     local quat = o:FPP_GetLocalOrientation()
-
-    -- local rot_forward = GetSingleton('Quaternion'):TransformInverse(quat, forward)
-    -- local rot_up = GetSingleton('Quaternion'):TransformInverse(quat, up)
 
     local rot_forward = RotateVector3D(forward, quat)
     local rot_up = RotateVector3D(up, quat)
 
-    quat = Quaternion_FromAxisRadians(Vector4.new(0, 0, 1, 1), math.pi)
-
-    rot_forward = RotateVector3D(rot_forward, quat)
-    rot_up = RotateVector3D(rot_up, quat)
+    rot_forward.y = -rot_forward.y
+    rot_up.y = -rot_up.y
 
     return rot_forward, rot_up
-end
-
-function this.GetRotatedLines_FORWARD(o)
-    if not forward then
-        forward = Vector4.new(0, 1, 0, 1)
-    end
-
-    if not up then
-        up = Vector4.new(0, 0, 1, 1)
-    end
-
-    local quat = o:FPP_GetLocalOrientation()
-
-    -- local rot_forward = GetSingleton('Quaternion'):TransformInverse(quat, forward)
-    -- local rot_up = GetSingleton('Quaternion'):TransformInverse(quat, up)
-
-    -- local rot_forward = RotateVector3D(forward, quat)
-    -- local rot_up = RotateVector3D(up, quat)
-
-    return
-        RotateVector3D(Vector4.new(1, 0, 0, 1), quat),
-        RotateVector3D(Vector4.new(0, 1, 0, 1), quat),
-        RotateVector3D(Vector4.new(0, 0, 1, 1), quat),
-        RotateVector3D(Vector4.new(-1, 0, 0, 1), quat),
-        RotateVector3D(Vector4.new(0, -1, 0, 1), quat),
-        RotateVector3D(Vector4.new(0, 0, -1, 1), quat)
-end
-function this.GetRotatedLines_BACKWARD(o)
-    if not forward then
-        forward = Vector4.new(0, 1, 0, 1)
-    end
-
-    if not up then
-        up = Vector4.new(0, 0, 1, 1)
-    end
-
-    local quat = o:FPP_GetLocalOrientation()
-
-    -- local rot_forward = GetSingleton('Quaternion'):TransformInverse(quat, forward)
-    -- local rot_up = GetSingleton('Quaternion'):TransformInverse(quat, up)
-
-    -- local rot_forward = RotateVector3D(forward, quat)
-    -- local rot_up = RotateVector3D(up, quat)
-
-    return
-        GetSingleton('Quaternion'):TransformInverse(quat, Vector4.new(1, 0, 0, 1)),
-        GetSingleton('Quaternion'):TransformInverse(quat, Vector4.new(0, 1, 0, 1)),
-        GetSingleton('Quaternion'):TransformInverse(quat, Vector4.new(0, 0, 1, 1)),
-        GetSingleton('Quaternion'):TransformInverse(quat, Vector4.new(-1, 0, 0, 1)),
-        GetSingleton('Quaternion'):TransformInverse(quat, Vector4.new(0, -1, 0, 1)),
-        GetSingleton('Quaternion'):TransformInverse(quat, Vector4.new(0, 0, -1, 1))
 end
 
 -- TODO: Clean this up and make it a generic function
