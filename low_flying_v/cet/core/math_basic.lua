@@ -1,9 +1,32 @@
 function IsNearValue(value, test)
     return math.abs(value - test) < 0.001
 end
+-- This also considers nil
+function IsNearValue_nillable(value, test)
+    if value and test then
+        return IsNearValue(value, test)
+    elseif not value and not test then
+        return true     -- both nil
+    else
+        return false        -- one is nil, the other isn't
+    end
+end
 
 function IsNearValue_custom(value, test, epsilon)
     return math.abs(value - test) < epsilon
+end
+
+function IsNearValue_vec4(value, test)
+    if not value and not test then
+        -- Both nil
+        return true
+    end
+
+    -- Ignoring w
+    return
+        IsNearValue_nillable(value.x, test.x) and
+        IsNearValue_nillable(value.y, test.y) and
+        IsNearValue_nillable(value.z, test.z)
 end
 
 function IsNearZero(value)
@@ -16,7 +39,10 @@ function IsNearZero_vec4(value)
     end
 
     -- Ignore w, it's always 1
-    return IsNearValue(value.x, 0) and IsNearValue(value.y, 0) and IsNearValue(value.z, 0)
+    return
+        IsNearValue(value.x, 0) and
+        IsNearValue(value.y, 0) and
+        IsNearValue(value.z, 0)
 end
 
 --http://lua-users.org/wiki/SimpleRound
@@ -44,4 +70,19 @@ function GetScaledValue(minReturn, maxReturn, minRange, maxRange, valueRange)
 
     -- Get the lerp between the return range
     return minReturn + (percent * (maxReturn - minReturn))
+end
+
+function Clamp(min, max, value)
+    if value < min then
+        return min
+    elseif value > max then
+        return max
+    else
+        return value
+    end
+end
+
+-- CET uses lua 5.1, bit shifting doesn't get handled natively until 5.2
+function Bit_LShift(x, n)
+    return x * (2^n)
 end

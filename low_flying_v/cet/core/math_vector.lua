@@ -1,3 +1,5 @@
+local this = {}
+
 function vec_str(vector)
     if not vector then
         return "nil"
@@ -6,9 +8,17 @@ function vec_str(vector)
     return tostring(Round(vector.x, 2)) .. ", " .. tostring(Round(vector.y, 2)) .. ", " .. tostring(Round(vector.z, 2))
 end
 
+function quat_str(quat)
+    if not quat then
+        return "nil"
+    end
+
+    return tostring(Round(quat.i, 3)) .. ", " .. tostring(Round(quat.j, 3)) .. ", " .. tostring(Round(quat.k, 3)) .. ", " .. tostring(Round(quat.r, 3))
+end
+
 ------------------------------------- Length -------------------------------------
 
---TODO: See if vector4 already exposes a magnitude function
+--TODO: See if vector4 already exposes a magnitude function --- it's GetSingleton('Vector4'):Distance(vector1, vector2)
 function GetVectorLength(vector)
     if not vector then
         return 0
@@ -80,6 +90,34 @@ function RadiansBetween3D(v1, v2)
     return math.acos(DotProduct3D(v1, v2) / (GetVectorLength(v1) * GetVectorLength(v2)))
 end
 
+-- Returns a quaternion that is the rotation from v1 to v2
+-- percent is optional
+function GetRotation(v1, v2, percent)
+    if IsNearValue_vec4(v1, v2) then
+        return GetIdentityQuaternion()
+    end
+
+    local axis = CrossProduct3D(v1, v2)
+    local radians = RadiansBetween3D(v1, v2)
+
+    if percent then
+        radians = radians * percent
+    end
+
+    if IsNearZero(radians) then
+        return GetIdentityQuaternion()
+    end
+
+    return Quaternion_FromAxisRadians(axis, radians)
+end
+
+-- Just wrapping it to be easier to remember/use
+function Quaternion_FromAxisRadians(axis, radians)
+    --https://redscript.redmodding.org/#30122
+    --public static native SetAxisAngle(out q: Quaternion, axis: Vector4, angle: Float): Void
+    return GetSingleton('Quaternion'):SetAxisAngle(axis, radians)     -- looks like cet turns out param into return
+end
+
 -- Rotates a vector by the amount of radians (right hand rule, so positive radians are counter
 -- clockwise)
 function RotateVector2D(x, y, radians)
@@ -89,6 +127,151 @@ function RotateVector2D(x, y, radians)
     return
         (cos * x) - (sin * y),
         (sin * x) + (cos * y)
+end
+
+function RotateVector3D(vector, quat)
+    return GetSingleton('Quaternion'):Transform(quat, vector)
+end
+
+-- This returns a quaternion that is the result of rotating by a delta
+function RotateQuaternion(orig_quat, delta_quat)
+    --https://referencesource.microsoft.com/#PresentationCore/Core/CSharp/system/windows/Media3D/Quaternion.cs
+
+    --TODO: Detect if either of the quaternions is identity (probably 0,0,0,1)
+    -- if (orig_quat.IsDistinguishedIdentity)
+    -- {
+    --     return delta_quat;
+    -- }
+    -- if (delta_quat.IsDistinguishedIdentity)
+    -- {
+    --     return orig_quat;
+    -- }
+
+    local x = orig_quat.r * delta_quat.i + orig_quat.i * delta_quat.r + orig_quat.j * delta_quat.k - orig_quat.k * delta_quat.j;
+    local y = orig_quat.r * delta_quat.j + orig_quat.j * delta_quat.r + orig_quat.k * delta_quat.i - orig_quat.i * delta_quat.k;
+    local z = orig_quat.r * delta_quat.k + orig_quat.k * delta_quat.r + orig_quat.i * delta_quat.j - orig_quat.j * delta_quat.i;
+    local w = orig_quat.r * delta_quat.r - orig_quat.i * delta_quat.i - orig_quat.j * delta_quat.j - orig_quat.k * delta_quat.k;
+
+    return Quaternion.new(x, y, z, w)
+end
+
+-- This returns a quaternion that is somewhere between from and to quaternions
+function InterpolateQuaternions(from_quat, to_quat, percent)
+    -- SLERP ensures the returned quat is a unit quat.  Slower, but can handle percent rotations
+    -- https://www.youtube.com/watch?v=uNHIPVOnt-Y
+    return GetSingleton('Quaternion'):Slerp(from_quat, to_quat, percent)
+end
+
+function GetIdentityQuaternion()
+    return Quaternion.new(0, 0, 0, 1)
+end
+function IsIdentityQuaternion(quat)
+    if not quat then
+        return true     -- pretend nil is identity
+    end
+
+    return
+        IsNearZero(quat.i) and
+        IsNearZero(quat.j) and
+        IsNearZero(quat.k) and
+        IsNearValue(quat.r, 1)
+end
+
+-- This takes a 3D vector, gets rid of the Z, then makes that 2D projected vector have a length of 1
+function Make2DUnit(vector)
+    local retVal = Vector4.new(vector.x, vector.y, 0, 1)
+
+    local length = GetVectorLength(retVal)
+    if IsNearZero(length) then
+        return Vector4.new(0, 0, 0, 1)
+    end
+
+    return Vector4.new(retVal.x / length, retVal.y / length, 0, 1)
+end
+
+-- This converts the vector into a unit vector (or leaves it zero length if zero length)
+function Normalize(vector)
+    local length = GetVectorLength(vector)
+
+    if IsNearZero(length) then
+        vector.x = 0        -- just making sure it's exactly zero
+        vector.y = 0
+        vector.z = 0
+    else
+        vector.x = vector.x / length
+        vector.y = vector.y / length
+        vector.z = vector.z / length
+    end
+end
+
+-- Returns the portion of this vector that lies along the other vector
+-- NOTE: The return will be the same direction as alongVector, but the length from zero to this vector's full length
+--
+-- Also returns if is in same direction (false means opposite direction)
+--
+-- Lookup "vector projection" to see the difference between this and dot product
+-- http://en.wikipedia.org/wiki/Vector_projection
+function GetProjectedVector_AlongVector(vector, alongVectorUnit, eitherDirection)
+    -- c = (a dot unit(b)) * unit(b)
+
+    if IsNearZero_vec4(vector) then
+        return Vector4.new(0, 0, 0, 1), true
+    end
+
+    local length = DotProduct3D(vector, alongVectorUnit);
+
+    if (not eitherDirection) and (length < 0) then
+        -- It's in the opposite direction, and that isn't allowed
+        return Vector4.new(0, 0, 0, 1), false
+    end
+
+    return
+        MultiplyVector(alongVectorUnit, length),
+        length > 0
+end
+function GetProjectedVector_AlongPlane(vector, alongPlanes_normal)
+    -- Get a line that is parallel to the plane, but along the direction of the vector
+    local alongLine = CrossProduct3D(alongPlanes_normal, CrossProduct3D(vector, alongPlanes_normal))
+
+    Normalize(alongLine)
+
+    -- Use the other overload to get the portion of the vector along this line
+    return GetProjectedVector_AlongVector(vector, alongLine)
+end
+
+-- Turns dot product into a user friendly angle in degrees
+--  dot     angle
+--   1       0
+--   0       90
+--  -1       180
+function Dot_to_Angle(dot)
+    local radians = Dot_to_Radians(dot)
+    return Radians_to_Degrees(radians)
+end
+function Angle_to_Dot(degrees)
+    local radians = Degrees_to_Radians(degrees)
+    return Radians_to_Dot(radians)
+end
+
+function Dot_to_Radians(dot)
+    return math.acos(dot)
+end
+function Radians_to_Dot(radians)
+    return math.cos(radians)
+end
+
+function Degrees_to_Radians(degrees)
+    return degrees * math.pi / 180
+end
+function Radians_to_Degrees(radians)
+    return radians * 180 / math.pi
+end
+
+function AddAngle_0_360(current, delta)
+    return this.AddAngle(current, delta, 0, 360)
+end
+function AddAngle_neg180_pos180(current, delta)
+    return this.AddAngle(current, delta, -180, 180)
 end
 
 ------------------------------------- Convert -------------------------------------
@@ -136,6 +319,33 @@ function AddVectors(vector1, vector2)
     return Vector4.new(vector1.x + vector2.x, vector1.y + vector2.y, vector1.z + vector2.z, 1)
 end
 
+-- Returns 1 - 2
 function SubtractVectors(vector1, vector2)
     return Vector4.new(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z, 1)
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.AddAngle(current, delta, min, max)
+    if not min then
+        min = 0
+    end
+
+    if not max then
+        max = 360
+    end
+
+    local retVal = current + delta
+
+    while true do
+        if retVal < min then
+            retVal = retVal + 360
+        elseif retVal > max then
+            retVal = retVal - 360
+        else
+            break
+        end
+    end
+
+    return retVal
 end
