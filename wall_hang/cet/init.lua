@@ -13,6 +13,7 @@
 --https://github.com/jac3km4/redscript
 
 require "core/check_other_mods"
+require "core/color"
 require "core/customprops_wrapper"
 require "core/debug_code"
 require "core/gameobj_accessor"
