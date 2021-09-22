@@ -14,6 +14,7 @@
 
 require "core/check_other_mods"
 require "core/customprops_wrapper"
+require "core/color"
 require "core/debug_code"
 require "core/gameobj_accessor"
 require "core/lists"

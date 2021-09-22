@@ -1,3 +1,5 @@
+local this = {}
+
 function vec_str(vector)
     if not vector then
         return "nil"
@@ -91,11 +93,19 @@ end
 -- Returns a quaternion that is the rotation from v1 to v2
 -- percent is optional
 function GetRotation(v1, v2, percent)
+    if IsNearValue_vec4(v1, v2) then
+        return GetIdentityQuaternion()
+    end
+
     local axis = CrossProduct3D(v1, v2)
     local radians = RadiansBetween3D(v1, v2)
 
     if percent then
         radians = radians * percent
+    end
+
+    if IsNearZero(radians) then
+        return GetIdentityQuaternion()
     end
 
     return Quaternion_FromAxisRadians(axis, radians)
@@ -121,6 +131,50 @@ end
 
 function RotateVector3D(vector, quat)
     return GetSingleton('Quaternion'):Transform(quat, vector)
+end
+
+-- This returns a quaternion that is the result of rotating by a delta
+function RotateQuaternion(orig_quat, delta_quat)
+    --https://referencesource.microsoft.com/#PresentationCore/Core/CSharp/system/windows/Media3D/Quaternion.cs
+
+    --TODO: Detect if either of the quaternions is identity (probably 0,0,0,1)
+    -- if (orig_quat.IsDistinguishedIdentity)
+    -- {
+    --     return delta_quat;
+    -- }
+    -- if (delta_quat.IsDistinguishedIdentity)
+    -- {
+    --     return orig_quat;
+    -- }
+
+    local x = orig_quat.r * delta_quat.i + orig_quat.i * delta_quat.r + orig_quat.j * delta_quat.k - orig_quat.k * delta_quat.j;
+    local y = orig_quat.r * delta_quat.j + orig_quat.j * delta_quat.r + orig_quat.k * delta_quat.i - orig_quat.i * delta_quat.k;
+    local z = orig_quat.r * delta_quat.k + orig_quat.k * delta_quat.r + orig_quat.i * delta_quat.j - orig_quat.j * delta_quat.i;
+    local w = orig_quat.r * delta_quat.r - orig_quat.i * delta_quat.i - orig_quat.j * delta_quat.j - orig_quat.k * delta_quat.k;
+
+    return Quaternion.new(x, y, z, w)
+end
+
+-- This returns a quaternion that is somewhere between from and to quaternions
+function InterpolateQuaternions(from_quat, to_quat, percent)
+    -- SLERP ensures the returned quat is a unit quat.  Slower, but can handle percent rotations
+    -- https://www.youtube.com/watch?v=uNHIPVOnt-Y
+    return GetSingleton('Quaternion'):Slerp(from_quat, to_quat, percent)
+end
+
+function GetIdentityQuaternion()
+    return Quaternion.new(0, 0, 0, 1)
+end
+function IsIdentityQuaternion(quat)
+    if not quat then
+        return true     -- pretend nil is identity
+    end
+
+    return
+        IsNearZero(quat.i) and
+        IsNearZero(quat.j) and
+        IsNearZero(quat.k) and
+        IsNearValue(quat.r, 1)
 end
 
 -- This takes a 3D vector, gets rid of the Z, then makes that 2D projected vector have a length of 1
@@ -213,6 +267,13 @@ function Radians_to_Degrees(radians)
     return radians * 180 / math.pi
 end
 
+function AddAngle_0_360(current, delta)
+    return this.AddAngle(current, delta, 0, 360)
+end
+function AddAngle_neg180_pos180(current, delta)
+    return this.AddAngle(current, delta, -180, 180)
+end
+
 ------------------------------------- Convert -------------------------------------
 
 function GetPoint(fromPos, unitDirection, length)
@@ -261,4 +322,30 @@ end
 -- Returns 1 - 2
 function SubtractVectors(vector1, vector2)
     return Vector4.new(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z, 1)
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.AddAngle(current, delta, min, max)
+    if not min then
+        min = 0
+    end
+
+    if not max then
+        max = 360
+    end
+
+    local retVal = current + delta
+
+    while true do
+        if retVal < min then
+            retVal = retVal + 360
+        elseif retVal > max then
+            retVal = retVal - 360
+        else
+            break
+        end
+    end
+
+    return retVal
 end

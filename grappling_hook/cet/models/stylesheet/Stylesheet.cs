@@ -8,7 +8,7 @@ namespace models.stylesheet
     /// <remarks>
     /// At runtime, all the color settings will be converted into ints
     /// 
-    /// The values in json are ARGB (see util_ui.ConvertHexStringToNumbers)
+    /// The values in json are ARGB (see color.ConvertHexStringToNumbers)
     /// 
     /// Pattern is:
     ///     namewith_color = "hex value"
