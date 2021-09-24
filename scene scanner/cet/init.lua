@@ -21,6 +21,17 @@ require "core/math_vector"
 require "core/math_yaw"
 require "core/util"
 
+-- NOTE: Copied in all these files, even though only some of the methods are needed.  Some of the functions reference functions
+-- in ui_controls_generic, which also expect the stylesheet to have certain sections, but none of that was copied (currently,
+-- grappling hook and wall hang use this ui framework, but it's overkill to copy the whole thing here)
+require "ui_framework/changes"
+require "ui_framework/common_definitions"
+require "ui_framework/updown_delegates"
+require "ui_framework/util_controls"
+require "ui_framework/util_layout"
+require "ui_framework/util_misc"
+require "ui_framework/util_setup"
+
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 local this = {}
@@ -98,6 +109,10 @@ registerForEvent("onInit", function()
     function wrappers.GetLocalOrientation(fppcam) return fppcam:GetLocalOrientation() end
     function wrappers.SetLocalOrientation(fppcam, quat) fppcam:SetLocalOrientation(quat) end
 
+
+    --TODO: Add ray trace from wall hang
+
+
     o = GameObjectAccessor:new(wrappers)
 end)
 
@@ -105,3 +120,44 @@ registerForEvent("onShutdown", function()
     isShutdown = true
     this.ClearObjects()
 end)
+
+registerForEvent("onUpdate", function(deltaTime)
+    shouldDraw = false
+    if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
+        do return end
+    end
+
+    o:Tick(deltaTime)
+
+    o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
+    if not o.player then
+        do return end
+    end
+
+    o:GetInWorkspot()
+    if o.isInWorkspot then      -- in a vehicle
+        do return end
+    end
+
+    shouldDraw = true
+
+    if const.shouldShowDebugWindow then
+        PopulateDebug(debug, o, vars)
+    end
+
+
+    
+end)
+
+registerHotkey("SceneScanner_StartStopRecording", "Start/Stop Recording", function()
+
+end)
+
+------------------------- Private Methods --------------------------
+
+-- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
+function this.ClearObjects()
+    if o then
+        o:Clear()
+    end
+end
