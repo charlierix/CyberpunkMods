@@ -121,6 +121,32 @@ function GameObjectAccessor:IsPointVisible(fromPos, toPos)
     end
 end
 
+-- This ray cast also returns normal (but doesn't see quite as much as IsPointVisible)
+-- Returns
+--  HitPoint, Normal, Material Name (or nils)
+function GameObjectAccessor:RayCast(fromPos, toPos, vehicles)
+    self:EnsurePlayerLoaded()
+
+    if self.player then
+        local result = self.wrappers.RayCast(self.player, fromPos, toPos, vehicles)
+
+        if result.position.x == tonumber("inf") then
+            return nil, nil
+        end
+
+        -- Example strings in the material property:
+        --ToCName{ hash_lo = 0x1EFE3452, hash_hi = 0xB7E0B525 --[[ metal_painted.physmat --]] }
+        --ToCName{ hash_lo = 0x380927EA, hash_hi = 0xF4D1D9DF --[[ metal_techpiercable.physmat --]] }
+        --ToCName{ hash_lo = 0xF1230B70, hash_hi = 0xDC9BCE8E --[[ metal.physmat --]] }
+        --ToCName{ hash_lo = 0x6BA02A80, hash_hi = 0x448709C0 --[[ vehicle_chassis.physmat --]] }
+
+        return
+            Vector4.new(result.position.x, result.position.y, result.position.z, 1),        -- position, normal come back as Vector3.  Return a vec4 to be consistent with everything else
+            Vector4.new(result.normal.x, result.normal.y, result.normal.z, 1),
+            string.match(tostring(result.material),'%-%-%[%[ (.*) %-%-%]%]')
+    end
+end
+
 -- This is used to slow time
 --  0.00001 for near stop
 --  up to 1

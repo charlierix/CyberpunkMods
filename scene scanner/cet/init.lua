@@ -42,6 +42,9 @@ local this = {}
 
 local const =
 {
+    rayLen = 60,
+    includeVehicles = true,
+
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 
@@ -103,15 +106,12 @@ registerForEvent("onInit", function()
     function wrappers.Teleport(teleport, player, pos, yaw) return teleport:Teleport(player, pos, EulerAngles.new(0, 0, yaw)) end
     function wrappers.GetSenseManager() return Game.GetSenseManager() end
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
+    function wrappers.RayCast(player, from, to, staticOnly) return player:SceneScanner_RayCast(from, to, staticOnly) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
     function wrappers.GetGetFPPCamera(player) return player:GetFPPCameraComponent() end
     function wrappers.GetLocalOrientation(fppcam) return fppcam:GetLocalOrientation() end
     function wrappers.SetLocalOrientation(fppcam, quat) fppcam:SetLocalOrientation(quat) end
-
-
-    --TODO: Add ray trace from wall hang
-
 
     o = GameObjectAccessor:new(wrappers)
 end)
@@ -150,6 +150,21 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 registerHotkey("SceneScanner_StartStopRecording", "Start/Stop Recording", function()
+    o:GetPlayerInfo()
+    o:GetCamera()
+    if not o.player or not o.camera then
+        print("o failed")
+        do return end
+    end
+
+    local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + 1.7, 1)
+    local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + (o.lookdir_forward.z * const.rayLen), 1)
+
+    local hit, normal, material = o:RayCast(fromPos, toPos, const.includeVehicles)
+
+    print("hit: " .. vec_str(hit))
+    print("normal: " .. vec_str(normal))
+    print("material: " .. tostring(material))
 
 end)
 

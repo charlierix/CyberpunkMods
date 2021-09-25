@@ -29,7 +29,8 @@ function Process_Standard(o, vars, const, debug, startStopTracker)
     local rayDir = this.GetDirectionHorz(o.lookdir_forward)
 
     local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
-    local toPos = Vector4.new(fromPos.x + (rayDir.x * const.rayLen), fromPos.y + (rayDir.y * const.rayLen), fromPos.z + const.rayFrom_Z + (rayDir.z * const.rayLen), 1)
+    --local toPos = Vector4.new(fromPos.x + (rayDir.x * const.rayLen), fromPos.y + (rayDir.y * const.rayLen), fromPos.z + const.rayFrom_Z + (rayDir.z * const.rayLen), 1)       -- z constant was being added twice
+    local toPos = Vector4.new(fromPos.x + (rayDir.x * const.rayLen), fromPos.y + (rayDir.y * const.rayLen), fromPos.z + (rayDir.z * const.rayLen), 1)
 
     local hit, normal = o:RayCast(fromPos, toPos, true)
     if not hit then
