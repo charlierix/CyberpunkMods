@@ -29,6 +29,8 @@ function DrawConfig(vars, vars_ui, o, debug, const)
         local curLeft, curTop = ImGui.GetWindowPos()
         window.left = curLeft
         window.top = curTop
+		
+		--TODO: See if ImGui.GetFrameHeight is the appropriate function
         window.title_height = 19        -- this was just from counting pixels, there may be a built in way of knowing this (I searched for title and didn't see anything)
 
         --TODO: If there are more types of config needed, add tab items

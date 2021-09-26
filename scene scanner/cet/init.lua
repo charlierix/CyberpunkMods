@@ -21,6 +21,10 @@ require "core/math_vector"
 require "core/math_yaw"
 require "core/util"
 
+require "processing/recorder"
+
+require "ui/drawing"
+
 -- NOTE: Copied in all these files, even though only some of the methods are needed.  Some of the functions reference functions
 -- in ui_controls_generic, which also expect the stylesheet to have certain sections, but none of that was copied (currently,
 -- grappling hook and wall hang use this ui framework, but it's overkill to copy the whole thing here)
@@ -60,6 +64,8 @@ local shouldShowConfig = false
 local o     -- This is a class that wraps access to Game.xxx
 
 local debug = {}
+
+local recorder = nil
 
 local vars =
 {
@@ -145,27 +151,45 @@ registerForEvent("onUpdate", function(deltaTime)
         PopulateDebug(debug, o, vars)
     end
 
-
-    
+    if recorder then
+        recorder:Tick()
+    end
 end)
 
 registerHotkey("SceneScanner_StartStopRecording", "Start/Stop Recording", function()
-    o:GetPlayerInfo()
-    o:GetCamera()
-    if not o.player or not o.camera then
-        print("o failed")
+    -- o:GetPlayerInfo()
+    -- o:GetCamera()
+    -- if not o.player or not o.camera then
+    --     print("o failed")
+    --     do return end
+    -- end
+
+    -- local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + 1.7, 1)
+    -- local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + (o.lookdir_forward.z * const.rayLen), 1)
+
+    -- local hit, normal, material = o:RayCast(fromPos, toPos, const.includeVehicles)
+
+    -- print("hit: " .. vec_str(hit))
+    -- print("normal: " .. vec_str(normal))
+    -- print("material: " .. tostring(material))
+
+    if recorder then
+        recorder:Stop()
+        recorder = nil
+    else
+        recorder = Recorder:new()
+    end
+end)
+
+registerForEvent("onDraw", function()
+    if isShutdown or not isLoaded or not shouldDraw then
+        shouldShowConfig = false
         do return end
     end
 
-    local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + 1.7, 1)
-    local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + (o.lookdir_forward.z * const.rayLen), 1)
-
-    local hit, normal, material = o:RayCast(fromPos, toPos, const.includeVehicles)
-
-    print("hit: " .. vec_str(hit))
-    print("normal: " .. vec_str(normal))
-    print("material: " .. tostring(material))
-
+    if recorder then
+        DrawRecording()
+    end
 end)
 
 ------------------------- Private Methods --------------------------
