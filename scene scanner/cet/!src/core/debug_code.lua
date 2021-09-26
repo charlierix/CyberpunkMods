@@ -1,10 +1,10 @@
 function PopulateDebug(debug, o, vars, recorder)
-    local pointCount = 0
+    local hitCount = 0
     if recorder then
-        pointCount = #recorder.points
+        hitCount = #recorder.hits
     end
 
-    debug.point_count = pointCount
+    debug.hit_count = hitCount
 
     debug.timer = Round(o.timer, 1)
 end

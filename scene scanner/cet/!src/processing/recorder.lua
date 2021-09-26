@@ -1,6 +1,9 @@
 local this = {}
 
 local ROUND = 3
+local FOLDER = "scan recordings/"
+local HEADER_MATERIALS = "--- Materials ---"
+local HEADER_HITS = "--- Hits ---"
 
 Recorder = {}
 
@@ -17,7 +20,9 @@ function Recorder:new(o, const)
 
     -- These are stored as strings
     -- "hit_x|hit_y|hit_z|norm_x|norm_y|norm_z|material_index"
-    obj.points = {}
+    obj.hits = {}
+
+    --obj.pos       -- this is the player's position at start time, used to build a filename
 
     return obj
 end
@@ -27,6 +32,10 @@ function Recorder:Tick()
     self.o:GetCamera()
     if not self.o.player or not self.o.camera then
         do return end
+    end
+
+    if not self.pos then
+        self.pos = self.o.pos
     end
 
     local fromPos = Vector4.new(self.o.pos.x, self.o.pos.y, self.o.pos.z + 1.7, 1)
@@ -48,11 +57,25 @@ function Recorder:Tick()
         tostring(Round(normal.z, ROUND)) .. "|" ..
         tostring(mat_index)
 
-    self.points[#self.points+1] = entry
+    self.hits[#self.hits+1] = entry
 end
 
 function Recorder:Stop()
-    
+    if #self.hits == 0 then
+        do return end
+    end
+
+    local filename = this.GetFilename(self.pos)
+
+    local handle = io.open(filename, "w+")
+
+    this.WriteSection_Materials(handle, self.materials_index_mat)
+
+    handle:write("\n\n")
+
+    this.WriteSection_Hits(handle, self.hits)
+
+    handle:close()
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -69,4 +92,29 @@ function this.GetMaterialIndex(material, mat_index, index_mat)
     mat_index[material] = #index_mat
 
     return #index_mat
+end
+
+function this.GetFilename(pos)
+    return
+        FOLDER ..
+        os.date('%Y-%m-%d %H-%M-%S') .. " - " ..
+        tostring(Round(pos.x)) .. ", " ..
+        tostring(Round(pos.y)) .. ", " ..
+        tostring(Round(pos.z)) ..
+        ".txt"
+end
+
+function this.WriteSection_Materials(handle, materials)
+    handle:write(HEADER_MATERIALS .. "\n")
+
+    for i = 1, #materials do
+        handle:write(tostring(i) .. "\t" .. materials[i] .. "\n")
+    end
+end
+function this.WriteSection_Hits(handle, hits)
+    handle:write(HEADER_HITS .. "\n")
+
+    for i = 1, #hits do
+        handle:write(hits[i] .. "\n")
+    end
 end

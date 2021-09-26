@@ -7,7 +7,7 @@ function Define_UI_Framework_Constants(const)
 end
 
 function LoadStylesheet()
-    local file = io.open("ui/stylesheet.json", "r")
+    local file = io.open("!src/ui/stylesheet.json", "r")
     if not file then
         print("HEAD ROLL PITCH DEMO ERROR: Can't find file: ui/stylesheet.json")
         return nil
