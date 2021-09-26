@@ -211,16 +211,29 @@ function Color_LERP(from_a, from_h, from_s, from_v, to_a, to_h, to_s, to_v, perc
 
     local h_diff = this.GetHueDiff(from_h, to_h)
 
-    local a = from_a + ((to_a - from_a) / 2)
-    local h = from_h + (h_diff / 2)
-    local s = from_s + ((to_s - from_s) / 2)
-    local v = from_v + ((to_v - from_v) / 2)
+    local a = from_a + ((to_a - from_a) * percent)
+    local h = from_h + (h_diff * percent)
+    local s = from_s + ((to_s - from_s) * percent)
+    local v = from_v + ((to_v - from_v) * percent)
 
     return
         Clamp(0, 1, a),
         this.GetHueCapped(h),
         Clamp(0, 1, s),
         Clamp(0, 1, v)
+end
+
+-- This pulls the from/to colors out of the stylesheet, then returns an intermediate color
+-- NOTE: using hsv because it makes a better transition
+function ColorLERP_FromStyleSheet(style, key_from, key_to, percent)
+    local from_a, from_h, from_s, from_v = this.GetHSVFromColorKey(style, key_from)
+    local to_a, to_h, to_s, to_v = this.GetHSVFromColorKey(style, key_to)
+
+    local a, h, s, v = Color_LERP(from_a, from_h, from_s, from_v, to_a, to_h, to_s, to_v, percent)
+
+    local r, g, b = HSV_RGB(h, s, v)
+
+    return a, r, g, b
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -257,5 +270,17 @@ end
 
 -- Takes an int between 0 and 255, returns a string between "00" and "FF"
 function this.ByteToHex(byte)
-    return string.format("%x", Clamp(0, 255, byte))
+    return string.format("%02x", Clamp(0, 255, byte))
+end
+
+--NOTE: This expects the individual ints are stored (util_setup.lua this.FinishStylesheetColors)
+function this.GetHSVFromColorKey(style, key)
+    local a = style[key .. "_a"]
+    local r = style[key .. "_r"]
+    local g = style[key .. "_g"]
+    local b = style[key .. "_b"]
+
+    local h, s, v = RGB_HSV(r, g, b)
+
+    return a, h, s, v
 end

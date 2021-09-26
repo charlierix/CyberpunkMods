@@ -217,10 +217,7 @@ function this.DrawGradientLine(screenOffset_x, screenOffset_y, center_x, center_
         percent = (i + 0.5) / num_segments      -- use the midway point
         percent = percent * math.abs(pos3D.z)      -- multiplying by z, because the to color should only be full if to abs(z) is 1
 
-        local a = from_a + ((to_a - from_a) * percent)
-        local h = from_h + ((to_h - from_h) * percent)
-        local s = from_s + ((to_s - from_s) * percent)
-        local v = from_v + ((to_v - from_v) * percent)
+        local a, h, s, v = Color_LERP(from_a, from_h, from_s, from_v, to_a, to_h, to_s, to_v, percent)
         local r, g, b = HSV_RGB(h, s, v)
         local color = ToABGR(a, r, g, b)
 
