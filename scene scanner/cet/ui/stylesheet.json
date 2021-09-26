@@ -1,3 +1,28 @@
 {
-    
+    "recording":
+    {
+        "text": "Recording",
+
+        "font_scale": 3,
+        "shadow_offset": 1.5,
+ 
+        "shadow_color": "000",
+        "text_color": "FFF",
+        
+        "gap_circletext": 14,
+        "radius_mult": 0.75,
+
+        "strobe_duration": 2.5,
+
+        "circle_color_dark_back": "600",
+        "circle_color_bright_back": "D80000",
+
+        "circle_color_dark_border": "400",
+        "circle_color_bright_border": "A00",
+
+        "circle_border_thickness": 1,
+
+        "gap_bottomwindow": 80,
+        "padding": 12
+    }
 }

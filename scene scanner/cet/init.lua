@@ -69,6 +69,7 @@ local recorder = nil
 
 local vars =
 {
+    --recording_start_time      -- gets set when the recording starts
 }
 
 local vars_ui =
@@ -173,11 +174,14 @@ registerHotkey("SceneScanner_StartStopRecording", "Start/Stop Recording", functi
     -- print("normal: " .. vec_str(normal))
     -- print("material: " .. tostring(material))
 
+
+
     if recorder then
         recorder:Stop()
         recorder = nil
     else
         recorder = Recorder:new()
+        vars.recording_start_time = o.timer
     end
 end)
 
@@ -188,7 +192,7 @@ registerForEvent("onDraw", function()
     end
 
     if recorder then
-        DrawRecording()
+        DrawRecording(o, vars_ui, vars.recording_start_time)
     end
 end)
 
