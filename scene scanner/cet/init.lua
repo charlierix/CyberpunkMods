@@ -47,7 +47,10 @@ local this = {}
 
 local const =
 {
+    raysPerFrame = 8,
     rayLen = 60,
+    rayHeightMin = 1,
+    rayHeightMax = 2.5,
     includeVehicles = true,
 
     shouldShowDebugWindow = true,      -- shows a window with extra debug info

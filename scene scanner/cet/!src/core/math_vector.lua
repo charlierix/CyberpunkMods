@@ -274,7 +274,37 @@ function AddAngle_neg180_pos180(current, delta)
     return this.AddAngle(current, delta, -180, 180)
 end
 
-------------------------------------- Convert -------------------------------------
+
+
+---------------------------------------- Random ---------------------------------------
+
+-- Gets a random vector with radius between maxRadius*-1 and maxRadius (bounds are spherical,
+-- rather than cube).  The radius will never be inside minRadius
+--
+-- The sqrt idea came from here:
+-- http://dzindzinovic.blogspot.com/2010/05/xna-random-point-in-circle.html
+function GetRandomVector_Spherical(minRadius, maxRadius)
+    -- A sqrt, sin and cos  :(           can it be made cheaper?
+    local radius = minRadius + ((maxRadius - minRadius) * math.sqrt(math.random()))		-- without the square root, there is more chance at the center than the edges
+
+    return GetRandomVector_Spherical_Shell(radius)
+end
+-- Gets a random vector with the radius passed in (bounds are spherical, rather than cube)
+function GetRandomVector_Spherical_Shell(radius)
+    local theta = math.random() * math.pi * 2
+
+    local phi = this.GetPhiForRandom(Random_Float(-1, 1))
+
+    local sinPhi = math.sin(phi)
+
+    local x = radius * math.cos(theta) * sinPhi
+    local y = radius * math.sin(theta) * sinPhi
+    local z = radius * math.cos(phi)
+
+    return Vector4.new(x, y, z, 1)
+end
+
+--------------------------------------- Convert ---------------------------------------
 
 function GetPoint(fromPos, unitDirection, length)
     return Vector4.new(fromPos.x + (unitDirection.x * length), fromPos.y + (unitDirection.y * length), fromPos.z + (unitDirection.z * length), 1)
@@ -303,7 +333,7 @@ function To2DUnit(vector)
     return vector.x / len, vector.y / len
 end
 
-------------------------------------- Operators -------------------------------------
+-------------------------------------- Operators --------------------------------------
 
 --TODO: See if some of these operators are already part of the Vector4
 
@@ -348,4 +378,26 @@ function this.AddAngle(current, delta, min, max)
     end
 
     return retVal
+end
+
+-- This returns a phi from 0 to pi based on an input from -1 to 1
+--
+-- NOTE: The input is linear (even chance of any value from -1 to 1), but the output is scaled to give an even chance of a Z
+-- on a sphere:
+--
+-- z is cos of phi, which isn't linear.  So the probability is higher that more will be at the poles.  Which means if I want
+-- a linear probability of z, I need to feed the cosine something that will flatten it into a line.  The curve that will do that
+-- is arccos (which basically rotates the cosine wave 90 degrees).  This means that it is undefined for any x outside the range
+-- of -1 to 1.  So I have to shift the random statement to go between -1 to 1, run it through the curve, then shift the result
+-- to go between 0 and pi
+function this.GetPhiForRandom(num_negone_posone)
+    --double phi = rand.NextDouble(-1, 1);		-- value from -1 to 1
+    --phi = -Math.Asin(phi) / (Math.PI * .5d);		-- another value from -1 to 1
+    --phi = (1d + phi) * Math.PI * .5d;		-- from 0 to pi
+
+    return math.pi / 2 - math.asin(num_negone_posone)
+end
+-- This is a complimentary function to GetPhiForRandom.  It's used to figure out the range for random to get a desired phi
+function this.GetRandomForPhi(expectedRadians)
+    return -math.sin(expectedRadians - (math.pi / 2))
 end

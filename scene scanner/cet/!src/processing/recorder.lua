@@ -29,8 +29,12 @@ end
 
 function Recorder:Tick()
     self.o:GetPlayerInfo()
-    self.o:GetCamera()
-    if not self.o.player or not self.o.camera then
+    -- self.o:GetCamera()
+    -- if not self.o.player or not self.o.camera then
+    --     do return end
+    -- end
+
+    if not self.o.player then
         do return end
     end
 
@@ -38,26 +42,11 @@ function Recorder:Tick()
         self.pos = self.o.pos
     end
 
-    local fromPos = Vector4.new(self.o.pos.x, self.o.pos.y, self.o.pos.z + 1.7, 1)
-    local toPos = Vector4.new(fromPos.x + (self.o.lookdir_forward.x * self.const.rayLen), fromPos.y + (self.o.lookdir_forward.y * self.const.rayLen), fromPos.z + (self.o.lookdir_forward.z * self.const.rayLen), 1)
+    --self:FireRay_LookDir()
 
-    local hit, normal, material = self.o:RayCast(fromPos, toPos, self.const.includeVehicles)
-    if not hit then
-        do return end
+    for i = 1, self.const.raysPerFrame do
+        self:FireRay_Random()
     end
-
-    local mat_index = this.GetMaterialIndex(material, self.materials_mat_index, self.materials_index_mat)
-
-    local entry =
-        tostring(Round(hit.x, ROUND)) .. "|" ..
-        tostring(Round(hit.y, ROUND)) .. "|" ..
-        tostring(Round(hit.z, ROUND)) .. "|" ..
-        tostring(Round(normal.x, ROUND)) .. "|" ..
-        tostring(Round(normal.y, ROUND)) .. "|" ..
-        tostring(Round(normal.z, ROUND)) .. "|" ..
-        tostring(mat_index)
-
-    self.hits[#self.hits+1] = entry
 end
 
 function Recorder:Stop()
@@ -79,6 +68,46 @@ function Recorder:Stop()
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function Recorder:FireRay_LookDir()
+    local fromPos = Vector4.new(self.o.pos.x, self.o.pos.y, self.o.pos.z + 1.7, 1)
+    local toPos = Vector4.new(fromPos.x + (self.o.lookdir_forward.x * self.const.rayLen), fromPos.y + (self.o.lookdir_forward.y * self.const.rayLen), fromPos.z + (self.o.lookdir_forward.z * self.const.rayLen), 1)
+
+    local hit, normal, material = self.o:RayCast(fromPos, toPos, self.const.includeVehicles)
+
+    self:StoreHit(hit, normal, material)
+end
+function Recorder:FireRay_Random()
+    local height = math.random(self.const.rayHeightMin, self.const.rayHeightMax)
+
+    local direction = GetRandomVector_Spherical_Shell(self.const.rayLen)
+
+    local fromPos = Vector4.new(self.o.pos.x, self.o.pos.y, self.o.pos.z + height, 1)
+    local toPos = Vector4.new(fromPos.x + direction.x, fromPos.y + direction.y, fromPos.z + direction.z, 1)
+
+    local hit, normal, material = self.o:RayCast(fromPos, toPos, self.const.includeVehicles)
+
+    self:StoreHit(hit, normal, material)
+end
+
+function Recorder:StoreHit(hit, normal, material)
+    if not hit then
+        do return end
+    end
+
+    local mat_index = this.GetMaterialIndex(material, self.materials_mat_index, self.materials_index_mat)
+
+    local entry =
+        tostring(Round(hit.x, ROUND)) .. "|" ..
+        tostring(Round(hit.y, ROUND)) .. "|" ..
+        tostring(Round(hit.z, ROUND)) .. "|" ..
+        tostring(Round(normal.x, ROUND)) .. "|" ..
+        tostring(Round(normal.y, ROUND)) .. "|" ..
+        tostring(Round(normal.z, ROUND)) .. "|" ..
+        tostring(mat_index)
+
+    self.hits[#self.hits+1] = entry
+end
 
 function this.GetMaterialIndex(material, mat_index, index_mat)
     -- Look for existing

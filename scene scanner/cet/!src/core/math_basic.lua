@@ -86,3 +86,7 @@ end
 function Bit_LShift(x, n)
     return x * (2^n)
 end
+
+function Random_Float(min, max)
+    return min + (math.random() * (max - min));
+end
