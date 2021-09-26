@@ -12,32 +12,32 @@
 
 --https://github.com/jac3km4/redscript
 
-require "core/color"
-require "core/debug_code"
-require "core/gameobj_accessor"
-require "core/math_basic"
-require "core/math_raycast"
-require "core/math_vector"
-require "core/math_yaw"
-require "core/util"
+require "!src/core/color"
+require "!src/core/debug_code"
+require "!src/core/gameobj_accessor"
+require "!src/core/math_basic"
+require "!src/core/math_raycast"
+require "!src/core/math_vector"
+require "!src/core/math_yaw"
+require "!src/core/util"
 
-require "processing/recorder"
+require "!src/processing/recorder"
 
-require "ui/window_debug"
-require "ui/window_recording"
+require "!src/ui/window_debug"
+require "!src/ui/window_recording"
 
 -- NOTE: Copied in all these files, even though only some of the methods are needed.  Some of the functions reference functions
 -- in ui_controls_generic, which also expect the stylesheet to have certain sections, but none of that was copied (currently,
 -- grappling hook and wall hang use this ui framework, but it's overkill to copy the whole thing here)
-require "ui_framework/changes"
-require "ui_framework/common_definitions"
-require "ui_framework/updown_delegates"
-require "ui_framework/util_controls"
-require "ui_framework/util_layout"
-require "ui_framework/util_misc"
-require "ui_framework/util_setup"
+require "!src/ui_framework/changes"
+require "!src/ui_framework/common_definitions"
+require "!src/ui_framework/updown_delegates"
+require "!src/ui_framework/util_controls"
+require "!src/ui_framework/util_layout"
+require "!src/ui_framework/util_misc"
+require "!src/ui_framework/util_setup"
 
-extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
+extern_json = require "!src/external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 local this = {}
 
