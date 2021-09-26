@@ -57,7 +57,7 @@ function DrawRecording(o, vars_ui, recording_start_time)
     ImGui.End()
 end
 
-------------------------- Private Methods --------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.GetSizes(style)
     local screen_width, screen_height = GetDisplayResolution()

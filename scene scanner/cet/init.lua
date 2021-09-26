@@ -23,7 +23,8 @@ require "core/util"
 
 require "processing/recorder"
 
-require "ui/drawing"
+require "ui/window_debug"
+require "ui/window_recording"
 
 -- NOTE: Copied in all these files, even though only some of the methods are needed.  Some of the functions reference functions
 -- in ui_controls_generic, which also expect the stylesheet to have certain sections, but none of that was copied (currently,
@@ -40,21 +41,21 @@ extern_json = require "external/json"       -- storing this in a global variable
 
 local this = {}
 
---------------------------------------------------------------------
----                          Constants                           ---
---------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+---                                    Constants                                    ---
+---------------------------------------------------------------------------------------
 
 local const =
 {
     rayLen = 60,
     includeVehicles = true,
 
-    shouldShowDebugWindow = false,      -- shows a window with extra debug info
+    shouldShowDebugWindow = true,      -- shows a window with extra debug info
 }
 
---------------------------------------------------------------------
----                        Current State                         ---
---------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+---                                  Current State                                  ---
+---------------------------------------------------------------------------------------
 
 local isShutdown = true
 local isLoaded = false
@@ -77,7 +78,7 @@ local vars_ui =
     --style     -- this gets loaded from json during init
 }
 
---------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 
 registerForEvent("onInit", function()
     isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
@@ -149,7 +150,7 @@ registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = true
 
     if const.shouldShowDebugWindow then
-        PopulateDebug(debug, o, vars)
+        PopulateDebug(debug, o, vars, recorder)
     end
 
     if recorder then
@@ -158,29 +159,11 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 registerHotkey("SceneScanner_StartStopRecording", "Start/Stop Recording", function()
-    -- o:GetPlayerInfo()
-    -- o:GetCamera()
-    -- if not o.player or not o.camera then
-    --     print("o failed")
-    --     do return end
-    -- end
-
-    -- local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + 1.7, 1)
-    -- local toPos = Vector4.new(fromPos.x + (o.lookdir_forward.x * const.rayLen), fromPos.y + (o.lookdir_forward.y * const.rayLen), fromPos.z + (o.lookdir_forward.z * const.rayLen), 1)
-
-    -- local hit, normal, material = o:RayCast(fromPos, toPos, const.includeVehicles)
-
-    -- print("hit: " .. vec_str(hit))
-    -- print("normal: " .. vec_str(normal))
-    -- print("material: " .. tostring(material))
-
-
-
     if recorder then
         recorder:Stop()
         recorder = nil
     else
-        recorder = Recorder:new()
+        recorder = Recorder:new(o, const)
         vars.recording_start_time = o.timer
     end
 end)
@@ -194,9 +177,13 @@ registerForEvent("onDraw", function()
     if recorder then
         DrawRecording(o, vars_ui, vars.recording_start_time)
     end
+
+    if const.shouldShowDebugWindow then
+        DrawDebugWindow(debug)
+    end
 end)
 
-------------------------- Private Methods --------------------------
+----------------------------------- Private Methods -----------------------------------
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
