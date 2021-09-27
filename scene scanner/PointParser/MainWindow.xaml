@@ -25,7 +25,10 @@
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top">
             <CheckBox x:Name="chkShowNormals" Content="Show Normals"/>
+            
             <Button Content="Show Points" Margin="0, 8, 0, 0" Click="ShowPoints_Click"/>
+
+            <Button Content="Show Faces" Margin="0, 8, 0, 0" Click="ShowFaces_Click"/>
         </StackPanel>
     </Grid>
 </Window>

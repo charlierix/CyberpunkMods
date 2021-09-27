@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Math_WPF.Mathematics;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -84,7 +85,7 @@ namespace PointParser
             double[] doubles = new double[6];
             for (int i = 0; i < 6; i++)
             {
-                if(!double.TryParse(split[i], out double cast))
+                if (!double.TryParse(split[i], out double cast))
                     throw new ApplicationException($"Couldn't parse hit value as a double:\r\n{line}");
 
                 doubles[i] = cast;
@@ -96,7 +97,7 @@ namespace PointParser
             points.Add(new PointEntry()
             {
                 Hit = new Point3D(doubles[0], doubles[1], doubles[2]),
-                Normal = new Vector3D(doubles[3], doubles[4], doubles[5]),
+                Normal = new Vector3D(doubles[3], doubles[4], doubles[5]).ToUnit(),
                 MaterialIndex = index - 1,      // lua is one based, but this needs to point into the c# zero based array
             });
         }

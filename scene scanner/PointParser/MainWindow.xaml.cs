@@ -104,7 +104,7 @@ namespace PointParser
                     window.AddDots(byMaterial.Select(o => o.Hit - center), sizes.dot / 3, colors[byMaterial.First().MaterialIndex]);
                 }
 
-                if(chkShowNormals.IsChecked.Value)
+                if (chkShowNormals.IsChecked.Value)
                 {
                     var lines = points.Points.
                         Select(o => o with { Hit = (o.Hit - center).ToPoint() }).
@@ -114,6 +114,61 @@ namespace PointParser
                 }
 
                 window.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void ShowFaces_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (txtInputFile.Text == "")
+                {
+                    MessageBox.Show("Please select a file", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                ScenePoints points = SceneFileReader.ParsePointsFile(txtInputFile.Text);
+                if (points.Materials.Length == 0 || points.Points.Length == 0)
+                {
+                    MessageBox.Show("The file was incomplete", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                SceneFaces faces = PointsToPlanes.ConvertToFaces(points);
+
+                foreach (var byMaterial in faces.Faces.ToLookup(o => o.MaterialIndex).OrderBy(o => o.Count()))
+                {
+                    var window = new Debug3DWindow()
+                    {
+                        Title = faces.Materials[byMaterial.Key],
+                    };
+
+                    Point3D center = Math3D.GetCenter(byMaterial.SelectMany(o => o.ContainedPoints).ToArray());
+
+                    var colors = UtilityWPF.GetRandomColors(byMaterial.Count(), 128, 225);
+
+                    var sizes = Debug3DWindow.GetDrawSizes(Math.Sqrt(byMaterial.SelectMany(o => o.ContainedPoints).Max(o => (o - center).LengthSquared)));
+
+                    window.AddAxisLines(12, sizes.line);
+
+                    int index = 0;
+                    foreach (var face in byMaterial)
+                    {
+                        window.AddDots(face.ContainedPoints.Select(o => o - center), sizes.dot, colors[index]);
+
+                        if (chkShowNormals.IsChecked.Value)
+                        {
+                            window.AddLine(face.Center - center, (face.Center - center) + face.Normal, sizes.line, Colors.Chartreuse);
+                        }
+
+                        index++;
+                    }
+
+                    window.Show();
+                }
             }
             catch (Exception ex)
             {
