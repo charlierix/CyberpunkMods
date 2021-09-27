@@ -1,0 +1,31 @@
+﻿<Window x:Class="PointParser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PointParser"
+        mc:Ignorable="d"
+        Title="SceneScan - PointParser" ResizeMode="CanResizeWithGrip" Width="800" Height="600">
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Scan File"/>
+                <Label Content="(drag file onto textbox)" Foreground="Gray"/>
+            </StackPanel>
+
+            <!-- TODO: Allow multiple files to be processed as a single scene -->
+            <TextBox x:Name="txtInputFile" AllowDrop="True" PreviewDragEnter="txtInputFile_PreviewDragEnter" PreviewDragOver="txtInputFile_PreviewDragEnter" Drop="txtInputFile_Drop"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <CheckBox x:Name="chkShowNormals" Content="Show Normals"/>
+            <Button Content="Show Points" Margin="0, 8, 0, 0" Click="ShowPoints_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
