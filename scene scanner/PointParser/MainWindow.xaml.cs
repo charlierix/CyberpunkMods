@@ -236,9 +236,9 @@ namespace PointParser
                 foreach (var face in faces_polygon.Faces)
                 {
                     ColorHSV color = new ColorHSV(
-                        rand.NextDrift(colors[face.MaterialIndex].H, 20),
-                        rand.NextDrift(colors[face.MaterialIndex].S, 5),
-                        rand.NextDrift(colors[face.MaterialIndex].V, 5));
+                        rand.NextDrift(colors[face.MaterialIndex].H, 16),
+                        rand.NextDrift(colors[face.MaterialIndex].S, 4),
+                        rand.NextDrift(colors[face.MaterialIndex].V, 4));
 
                     var mesh = UtilityWPF.GetMeshFromTriangles(face.Mesh);
 

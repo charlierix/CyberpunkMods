@@ -18,9 +18,12 @@ namespace PointParser
         public static SceneFace_Polygons ConvertToPolygons(SceneFace_Points faces)
         {
             var cleaned = faces.Faces.
-                OrderByDescending(o => o.ContainedPoints.Length).
-                //Take(4).
-                //AsParallel().
+
+                //OrderByDescending(o => o.ContainedPoints.Length).
+                //Take(24).
+
+                AsParallel().
+
                 SelectMany(o => CleanFace(o)).
                 Where(o => o != null).
                 ToArray();
@@ -36,20 +39,71 @@ namespace PointParser
 
         private static Face3D_Polygon[] CleanFace(Face3D_Points face)
         {
+            var retVal = new List<Face3D_Polygon>();
+
+
             if (face.ContainedPoints.Length < 3)
             {
-                return ExpandToPolygons(face);
+                retVal.AddRange(ExpandToPolygons(face));
             }
             else
             {
+                //retVal.Add(SimplifyToPolygon(face));
+
                 //TODO: Need to isolate clusters of points into their own faces
                 //GetHull(face);
 
+                //TestSOM(face);
 
 
-
-                return new[] { SimplifyToPolygon(face) };
+                foreach (Face3D_Points split in SplitSOM(face))
+                {
+                    if (split.ContainedPoints.Length < 3)
+                    {
+                        retVal.AddRange(ExpandToPolygons(split));
+                    }
+                    else
+                    {
+                        Face3D_Polygon[] subResults = SimplifyToPolygon(split);
+                        if (subResults != null)
+                            retVal.AddRange(subResults);
+                    }
+                }
             }
+
+            return retVal.ToArray();
+        }
+
+        private static Face3D_Points[] SplitSOM(Face3D_Points face)
+        {
+            SOMRules rules = new SOMRules(48, 3500, 0.5, 0.1, SOMAttractionFunction.Guassian);      // this runs really quick, so it's probably not using the full 3500 iterations
+
+            var inputs = face.ContainedPoints.
+                Select(o => new SOMInput<Point3D>()
+                {
+                    Source = o,
+                    Weights = o.ToVectorND(),
+                }).
+                ToArray();
+
+            SOMResult result = SelfOrganizingMaps.TrainSOM(inputs, rules, true, false);
+
+            var retVal = new Face3D_Points[result.Nodes.Length];
+
+            for (int cntr = 0; cntr < result.Nodes.Length; cntr++)
+            {
+                Point3D[] points = result.InputsByNode[cntr].
+                    Select(o => ((SOMInput<Point3D>)o).Source).
+                    ToArray();
+
+                retVal[cntr] = face with
+                {
+                    Center = Math3D.GetCenter(points),
+                    ContainedPoints = points,
+                };
+            }
+
+            return retVal;
         }
 
         private static Face3D_Polygon[] ExpandToPolygons(Face3D_Points face)
@@ -58,7 +112,7 @@ namespace PointParser
             return new Face3D_Polygon[0];
         }
 
-        private static Face3D_Polygon SimplifyToPolygon(Face3D_Points face)
+        private static Face3D_Polygon[] SimplifyToPolygon(Face3D_Points face)
         {
             // Need to flatten all points to the plane, the GetConvexHull function's coplanar check is pretty strict
             var plane = Math3D.GetPlane(face.Center, face.Normal);
@@ -80,36 +134,47 @@ namespace PointParser
 
             var triangles = Math2D.GetDelaunayTriangulation(perimiterPoints2D, perimiterPoints3D);
 
+
+
+            //TODO: Repair these
             if (triangles.Length == 0)
             {
-                // Probably colinear
-                Debug3DWindow window = new Debug3DWindow()
-                {
-                    Title = "Made no triangles",
-                };
+                // Most weren't colinear, they seemed to be long strips that delanauy is throwing out
 
-                Point3D center = Math3D.GetCenter(perimiterPoints3D);
+                //Debug3DWindow window = new Debug3DWindow()
+                //{
+                //    Title = "Made no triangles",
+                //};
 
-                var sizes = Debug3DWindow.GetDrawSizes(Math.Sqrt(perimiterPoints3D.Max(o => (o - center).LengthSquared)));
+                //Point3D center = Math3D.GetCenter(perimiterPoints3D);
 
-                window.AddDots(perimiterPoints3D.Select(o => o - center), sizes.dot, Colors.Red);
+                //var sizes = Debug3DWindow.GetDrawSizes(Math.Sqrt(perimiterPoints3D.Max(o => (o - center).LengthSquared)));
 
-                window.Show();
+                //window.AddDots(perimiterPoints3D.Select(o => o - center), sizes.dot, Colors.Red);
+
+                //window.Show();
 
                 return null;
             }
 
 
-            return new Face3D_Polygon()
+
+            return new[]
             {
-                MaterialIndex = face.MaterialIndex,
-                Center = Math3D.GetCenter(perimiterPoints3D),
-                Normal = face.Normal,
-                Edges = Enumerable.Range(0, perimiterPoints2D.Length).ToArray(),
-                //Mesh = UtilityWPF.GetMeshFromTriangles(triangles),
-                Mesh = triangles,
+                new Face3D_Polygon()
+                {
+                    MaterialIndex = face.MaterialIndex,
+                    Center = Math3D.GetCenter(perimiterPoints3D),
+                    Normal = face.Normal,
+                    Edges = Enumerable.Range(0, perimiterPoints2D.Length).ToArray(),
+                    //Mesh = UtilityWPF.GetMeshFromTriangles(triangles),
+                    Mesh = triangles,
+                }
             };
         }
+
+        #endregion
+        #region Private Methods - test visualizations
 
         // This was just a temp function to figure out how to write the final version
         private static ITriangleIndexed_wpf[] GetHull(Face3D_Points face)
@@ -188,6 +253,43 @@ namespace PointParser
             #endregion
 
             return triangles;
+        }
+
+        // This sort of works, but since it's convex, it still sometimes papers over gaps
+        // Need to come up with a custom algorithem that punches holes and/or breaks up when it sees regions with no points
+        private static void TestSOM(Face3D_Points face)
+        {
+            //TODO: Reduce the number of iterations to something more reasonable
+            SOMRules rules = new SOMRules(48, 3500, 0.5, 0.1, SOMAttractionFunction.Guassian);
+
+            var inputs = face.ContainedPoints.
+                Select(o => new SOMInput<Point3D>()
+                {
+                    Source = o,
+                    Weights = o.ToVectorND(),
+                }).
+                ToArray();
+
+            SOMResult result = SelfOrganizingMaps.TrainSOM(inputs, rules, true, false);
+
+            Debug3DWindow window = new Debug3DWindow()
+            {
+                Title = "Face SOM",
+            };
+
+            var sizes = Debug3DWindow.GetDrawSizes(Math.Sqrt(face.ContainedPoints.Max(o => o.ToVector().LengthSquared)));
+
+            Color[] colors = UtilityWPF.GetRandomColors(result.Nodes.Length, 120, 200);
+
+            for (int cntr = 0; cntr < result.Nodes.Length; cntr++)
+            {
+                var points = result.InputsByNode[cntr].
+                    Select(o => ((SOMInput<Point3D>)o).Source);
+
+                window.AddDots(points, sizes.dot, colors[cntr]);
+            }
+
+            window.Show();
         }
 
         #endregion
