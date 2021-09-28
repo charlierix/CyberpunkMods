@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
-namespace PointParser
+namespace PointParser.Models
 {
-    public record SceneFaces
+    public record SceneFace_Points
     {
         public string[] Materials { get; init; }
-        public Face3D[] Faces { get; init; }
+        public Face3D_Points[] Faces { get; init; }
     }
 
     /// <summary>
     /// This is a plane that contains sample points
     /// </summary>
-    public record Face3D
+    public record Face3D_Points
     {
         public int MaterialIndex { get; init; }
 

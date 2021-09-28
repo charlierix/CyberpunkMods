@@ -1,4 +1,5 @@
 ﻿using Game.Math_WPF.Mathematics;
+using PointParser.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -1,4 +1,5 @@
 ﻿using Game.Math_WPF.Mathematics;
+using PointParser.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,16 +65,15 @@ namespace PointParser
 
         #endregion
 
-        public static SceneFaces ConvertToFaces(ScenePoints points)
+        public static SceneFace_Points ConvertToFaces(ScenePoints points)
         {
             var faceSets = points.Points.
                 ToLookup(o => o.MaterialIndex).
-                //Take(1).
                 AsParallel().
                 Select(o => GetFaces(o.Key, o.ToArray())).
                 ToArray();
 
-            return new SceneFaces()
+            return new SceneFace_Points()
             {
                 Materials = points.Materials,
                 Faces = faceSets.
@@ -84,7 +84,7 @@ namespace PointParser
 
         #region Private Methods
 
-        private static Face3D[] GetFaces(int materialIndex, PointEntry[] points)
+        private static Face3D_Points[] GetFaces(int materialIndex, PointEntry[] points)
         {
             ByPlane[] byPlanes = GroupByNormal(points).     // Doing by normal first to hopefully reduce the total number of compares
                 SelectMany(o => GroupByPlane(o)).
@@ -93,7 +93,7 @@ namespace PointParser
             //TODO: Cluster the points in each normal grouping and divide into multiple faces if there are distinct clusters far apart
 
             return byPlanes.
-                Select(o => new Face3D()
+                Select(o => new Face3D_Points()
                 {
                     MaterialIndex = materialIndex,
                     Center = Math3D.GetCenter(o.Points),

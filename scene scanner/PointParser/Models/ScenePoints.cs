@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
-namespace PointParser
+namespace PointParser.Models
 {
     public record ScenePoints
     {
