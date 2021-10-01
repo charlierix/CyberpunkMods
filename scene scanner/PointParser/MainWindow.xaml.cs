@@ -3,6 +3,7 @@ using Game.Math_WPF.Mathematics;
 using Game.Math_WPF.WPF;
 using Game.Math_WPF.WPF.Controls3D;
 using PointParser.Models;
+using PointParser.Testers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,7 +100,7 @@ namespace PointParser
 
                 var window = new Debug3DWindow();
 
-                var sizes = Debug3DWindow.GetDrawSizes(Math.Sqrt(points.Points.Max(o => (o.Hit - center).LengthSquared)));
+                var sizes = Debug3DWindow.GetDrawSizes(points.Points.Select(o => o.Hit), center);
 
                 window.AddAxisLines(12, sizes.line / 4);
 
@@ -158,7 +159,7 @@ namespace PointParser
 
                     var colors = UtilityWPF.GetRandomColors(byMaterial.Count(), 128, 225);
 
-                    var sizes = Debug3DWindow.GetDrawSizes(Math.Sqrt(byMaterial.SelectMany(o => o.ContainedPoints).Max(o => (o - center).LengthSquared)));
+                    var sizes = Debug3DWindow.GetDrawSizes(byMaterial.SelectMany(o => o.ContainedPoints), center);
 
                     window.AddAxisLines(12, sizes.line);
 
@@ -229,7 +230,7 @@ namespace PointParser
 
                 var window = new Debug3DWindow();
 
-                var sizes = Debug3DWindow.GetDrawSizes(Math.Sqrt(points.Points.Max(o => o.Hit.ToVector().LengthSquared)));
+                var sizes = Debug3DWindow.GetDrawSizes(points.Points.Select(o => o.Hit));
 
                 window.AddAxisLines(12, sizes.line / 4);
 
@@ -261,6 +262,53 @@ namespace PointParser
                 window.Show();
 
                 #endregion
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void PointsToPolygons_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (txtInputFile.Text == "")
+                {
+                    MessageBox.Show("Please select a file", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                string[] filenames;
+                if (System.IO.File.Exists(txtInputFile.Text))
+                {
+                    filenames = new[] { txtInputFile.Text };
+                }
+                else if (System.IO.Directory.Exists(txtInputFile.Text))
+                {
+                    filenames = System.IO.Directory.GetFiles(txtInputFile.Text);
+                }
+                else
+                {
+                    MessageBox.Show("Invalid file/folder", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                foreach(string filename in filenames)
+                {
+                    Face3D_Points face = System.Text.Json.JsonSerializer.Deserialize<Face3D_Points>(System.IO.File.ReadAllText(filename));
+
+                    // Center it on zero to make visualizations easier
+                    face = face with
+                    {
+                        Center = new Point3D(0, 0, 0),
+                        ContainedPoints = face.ContainedPoints.
+                            Select(o => (o - face.Center).ToPoint()).
+                            ToArray(),
+                    };
+
+                    Tester_PointsToPolygons.Attempt1(face, System.IO.Path.GetFileName(filename));
+                }
             }
             catch (Exception ex)
             {

@@ -20,7 +20,7 @@ namespace PointParser
             var cleaned = faces.Faces.
 
                 //OrderByDescending(o => o.ContainedPoints.Length).
-                //Take(24).
+                //Take(12).
 
                 AsParallel().
 
@@ -54,6 +54,10 @@ namespace PointParser
                 //GetHull(face);
 
                 //TestSOM(face);
+
+                //string filename = System.IO.Path.Combine(@"D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\scene scanner\scan recordings\extracts", Guid.NewGuid().ToString() + ".json");
+                //System.IO.File.WriteAllText(filename, System.Text.Json.JsonSerializer.Serialize(face));
+
 
 
                 foreach (Face3D_Points split in SplitSOM(face))
@@ -209,7 +213,7 @@ namespace PointParser
                 Select(o => (o - center).ToPoint()).
                 ToArray();
 
-            var sizes = Debug3DWindow.GetDrawSizes(Math.Sqrt(points3D.Max(o => o.ToVector().LengthSquared)));
+            var sizes = Debug3DWindow.GetDrawSizes(points3D);
 
             window.AddAxisLines(1, sizes.line);
 
@@ -277,7 +281,7 @@ namespace PointParser
                 Title = "Face SOM",
             };
 
-            var sizes = Debug3DWindow.GetDrawSizes(Math.Sqrt(face.ContainedPoints.Max(o => o.ToVector().LengthSquared)));
+            var sizes = Debug3DWindow.GetDrawSizes(face.ContainedPoints);
 
             Color[] colors = UtilityWPF.GetRandomColors(result.Nodes.Length, 120, 200);
 

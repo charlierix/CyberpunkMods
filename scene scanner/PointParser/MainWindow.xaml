@@ -23,15 +23,22 @@
             <TextBox x:Name="txtInputFile" AllowDrop="True" PreviewDragEnter="txtInputFile_PreviewDragEnter" PreviewDragOver="txtInputFile_PreviewDragEnter" Drop="txtInputFile_Drop"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <CheckBox x:Name="chkShowNormals" Content="Show Normals"/>
-            
-            <Button Content="Show Points" Margin="0, 8, 0, 0" Click="ShowPoints_Click"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <StackPanel>
+                <CheckBox x:Name="chkShowNormals" Content="Show Normals"/>
 
-            <Button Content="Show Faces" Margin="0, 8, 0, 0" Click="ShowFaces_Click"/>
+                <Button Content="Show Points" Margin="0, 8, 0, 0" Click="ShowPoints_Click"/>
 
-            <CheckBox x:Name="chkShowPerimiterLines" Margin="0, 8, 0, 0" Content="Show Perimiter Lines"/>
-            <Button Content="Show Face Polygons" Margin="0, 8, 0, 0" Click="ShowFacePolygons_Click"/>
+                <Button Content="Show Faces" Margin="0, 8, 0, 0" Click="ShowFaces_Click"/>
+
+                <CheckBox x:Name="chkShowPerimiterLines" Margin="0, 8, 0, 0" Content="Show Perimiter Lines"/>
+                <Button Content="Show Face Polygons" Margin="0, 8, 0, 0" Click="ShowFacePolygons_Click"/>
+            </StackPanel>
+
+            <StackPanel Margin="12, 0, 0, 0">
+                <Button Content="Points To Polygons" Click="PointsToPolygons_Click"/>
+
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
