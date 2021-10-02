@@ -269,51 +269,94 @@ namespace PointParser
             }
         }
 
-        private void PointsToPolygons_Click(object sender, RoutedEventArgs e)
+        private void PointsToPolygons_Points_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (txtInputFile.Text == "")
-                {
-                    MessageBox.Show("Please select a file", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                string[] filenames;
-                if (System.IO.File.Exists(txtInputFile.Text))
-                {
-                    filenames = new[] { txtInputFile.Text };
-                }
-                else if (System.IO.Directory.Exists(txtInputFile.Text))
-                {
-                    filenames = System.IO.Directory.GetFiles(txtInputFile.Text);
-                }
-                else
-                {
-                    MessageBox.Show("Invalid file/folder", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                foreach(string filename in filenames)
-                {
-                    Face3D_Points face = System.Text.Json.JsonSerializer.Deserialize<Face3D_Points>(System.IO.File.ReadAllText(filename));
-
-                    // Center it on zero to make visualizations easier
-                    face = face with
-                    {
-                        Center = new Point3D(0, 0, 0),
-                        ContainedPoints = face.ContainedPoints.
-                            Select(o => (o - face.Center).ToPoint()).
-                            ToArray(),
-                    };
-
-                    Tester_PointsToPolygons.Attempt1(face, System.IO.Path.GetFileName(filename));
-                }
+                CallTester(txtInputFile, Title, Tester_PointsToPolygons.JustPoints);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+        private void PointsToPolygons_Basic_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CallTester(txtInputFile, Title, Tester_PointsToPolygons.Grid_Basic);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void PointsToPolygons_Boundries_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CallTester(txtInputFile, Title, Tester_PointsToPolygons.Grid_Boundries);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void PointsToPolygons_Islands_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CallTester(txtInputFile, Title, Tester_PointsToPolygons.Grid_Islands);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static void CallTester(TextBox textbox, string title, Action<Face3D_Points, string> method)
+        {
+            if (textbox.Text == "")
+            {
+                MessageBox.Show("Please select a file", title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            string[] filenames;
+            if (System.IO.File.Exists(textbox.Text))
+            {
+                filenames = new[] { textbox.Text };
+            }
+            else if (System.IO.Directory.Exists(textbox.Text))
+            {
+                filenames = System.IO.Directory.GetFiles(textbox.Text);
+            }
+            else
+            {
+                MessageBox.Show("Invalid file/folder", title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            foreach (string filename in filenames)
+            {
+                Face3D_Points face = System.Text.Json.JsonSerializer.Deserialize<Face3D_Points>(System.IO.File.ReadAllText(filename));
+
+                // Center it on zero to make visualizations easier
+                face = face with
+                {
+                    Center = new Point3D(0, 0, 0),
+                    ContainedPoints = face.ContainedPoints.
+                        Select(o => (o - face.Center).ToPoint()).
+                        ToArray(),
+                };
+
+                method(face, System.IO.Path.GetFileName(filename));
+            }
+
         }
 
         #endregion

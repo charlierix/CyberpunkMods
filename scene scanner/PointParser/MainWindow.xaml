@@ -35,9 +35,18 @@
                 <Button Content="Show Face Polygons" Margin="0, 8, 0, 0" Click="ShowFacePolygons_Click"/>
             </StackPanel>
 
-            <StackPanel Margin="12, 0, 0, 0">
-                <Button Content="Points To Polygons" Click="PointsToPolygons_Click"/>
+            <StackPanel Margin="24, 0, 0, 0">
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Margin" Value="0,3"/>
+                    </Style>
+                </StackPanel.Resources>
 
+                <Label Content="Points to Polygons" HorizontalAlignment="Center"/>
+                <Button Content="just points" Click="PointsToPolygons_Points_Click"/>
+                <Button Content="basic" Click="PointsToPolygons_Basic_Click"/>
+                <Button Content="boundries" Click="PointsToPolygons_Boundries_Click"/>
+                <Button Content="islands" Click="PointsToPolygons_Islands_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>
