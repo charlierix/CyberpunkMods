@@ -313,6 +313,29 @@ namespace PointParser
                 MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void PointsToPolygons_LowPopulation_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CallTester(txtInputFile, Title, Tester_PointsToPolygons.Grid_LowPopulation);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void RandomCirclePoints_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MiscTests.RandomCirclePoints();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         #endregion
 

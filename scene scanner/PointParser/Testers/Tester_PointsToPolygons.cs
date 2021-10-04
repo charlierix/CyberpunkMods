@@ -38,27 +38,20 @@ namespace PointParser.Testers
             DrawPoints(points2D.points, filename);
 
 
-            // There doesn't seem to be a single ideal count.  Make something that identifies too course/fine
-            //  Maybe try a couple resolutions and pick the best one
-
-
             // --- IDEA ---
             // Find a convex polygon
             // Break the the area into a series of squares
             // Any square that has no points in it is something that must be blocked off
             //
             // Maybe create a voronoi out of the square centers?
+
+
             //DrawCountGrid_Basic(points2D.points, 18);
             DrawCountGrid_Basic(points2D.points, 0.75, filename);
 
-            // Identify cells that are filled next to cells that are empty
             //DrawCountGrid_HighlightBoundries_CELLCOUNT(points2D.points, 9, filename);
             DrawCountGrid_HighlightBoundries(points2D.points, 0.75, filename);
 
-            // Identify the prominent points in those boundry cells --- may not be needed?
-
-
-            // Identify cell sets that are completely separate from others
             DrawCountGrid_SplitIslands(points2D.points, 0.75, filename);
 
 
@@ -79,6 +72,12 @@ namespace PointParser.Testers
 
             DrawCountGrid_Basic(points2D.points, 0.75, filename);
         }
+        /// <summary>
+        /// Identify cells that are filled next to cells that are empty
+        /// </summary>
+        /// <remarks>
+        /// Maybe identify the prominent points in those boundry cells --- may not be needed?
+        /// </remarks>
         public static void Grid_Boundries(Face3D_Points face, string filename)
         {
             var points2D = ConvertTo2D(face);
@@ -90,12 +89,36 @@ namespace PointParser.Testers
             // Identify the prominent points in those boundry cells --- may not be needed?
 
         }
+        /// <summary>
+        /// Identify cell sets that are completely separate from others
+        /// </summary>
         public static void Grid_Islands(Face3D_Points face, string filename)
         {
             var points2D = ConvertTo2D(face);
 
             // Identify cell sets that are completely separate from others
             DrawCountGrid_SplitIslands(points2D.points, 0.75, filename);
+        }
+        /// <summary>
+        /// This looks for
+        /// </summary>
+        /// <remarks>
+        /// This won't bother with islands, it will only focus on low population expansion
+        /// </remarks>
+        public static void Grid_LowPopulation(Face3D_Points face, string filename)
+        {
+            // Look for (these rules are close, but not the final):
+            //  cells with count <= 3 and
+            //  empty neighbor count >= 5 and
+            //  not a simple corner
+
+            var points2D = ConvertTo2D(face);
+
+            //DrawCountGrid_LowPopulation(points2D.points, 1, 0.3, filename, UtilityWPF.BrushFromHex("505050"));     // this doesn't improve things for low population, but could be useful for the final concave/hole pass
+
+            DrawCountGrid_LowPopulation(points2D.points, 0.75, 0.08, filename, UtilityWPF.BrushFromHex("666"));
+            //DrawCountGrid_LowPopulation(points2D.points, 0.75, 0.1, filename, UtilityWPF.BrushFromHex("777"));
+            //DrawCountGrid_LowPopulation(points2D.points, 0.75, 0.12, filename, UtilityWPF.BrushFromHex("888"));
         }
 
         #region Private Methods - drawings
@@ -244,9 +267,9 @@ namespace PointParser.Testers
         {
             var (cells, aabb_min, aabb_max, size) = GetDivisionCells(points, cellSize);
 
-            int maxCount = cells.
-                SelectMany(o => o).
-                Max(o => o.Count);
+            //int maxCount = cells.
+            //    SelectMany(o => o).
+            //    Max(o => o.Count);
 
             #region draw orig
 
@@ -308,6 +331,60 @@ namespace PointParser.Testers
 
                 #endregion
             }
+        }
+
+        private static void DrawCountGrid_LowPopulation(Point[] points, double cellSize, double extrPointsRadius, string filename, Brush backbrush)
+        {
+            var (cells, aabb_min, aabb_max, size) = GetDivisionCells(points, cellSize);
+
+            Debug3DWindow window = new Debug3DWindow()
+            {
+                Title = $"Low Population Expansion: {filename}",
+                Background = backbrush,
+            };
+
+            window.AddDots(points.Select(o => o.ToPoint3D()), 0.03, Colors.Gray);
+
+            Color color;
+
+            for (int row = 0; row < cells.Length; row++)
+            {
+                for (int col = 0; col < cells[row].Length; col++)
+                {
+                    // Draw Square
+                    bool isLowPopulation = false;
+
+                    if (cells[row][col].Count == 0)
+                    {
+                        color = UtilityWPF.ColorFromHex("08661111");
+                    }
+                    else if (IsLowPopulationCell(col, row, cells))
+                    {
+                        isLowPopulation = true;
+                        color = UtilityWPF.ColorFromHex("A484");
+                    }
+                    else
+                    {
+                        color = UtilityWPF.ColorFromHex("88B8");
+                    }
+
+                    window.AddSquare(cells[row][col].Min, cells[row][col].Max, color);
+
+                    // Draw Points
+                    if (isLowPopulation)
+                    {
+                        var extraPoints = points.
+                            Where(o => ContainsPoint(cells[row][col].Min, cells[row][col].Max, o)).
+                            //SelectMany(o => GetExtraLowPopulationPoints(o, extrPointsRadius)).
+                            SelectMany(o => GetExtraLowPopulationPoints(o, StaticRandom.NextDouble(0.08, 0.12))).
+                            Select(o => o.ToPoint3D());
+
+                        window.AddDots(extraPoints, 0.03, Colors.Black);
+                    }
+                }
+            }
+
+            window.Show();
         }
 
         #endregion
@@ -613,6 +690,119 @@ namespace PointParser.Testers
             }
 
             return false;
+        }
+
+        private static Lazy<(AxisFor, AxisFor)[]> _edgeIterators = new Lazy<(AxisFor, AxisFor)[]>(() => new[]
+            {
+                (new AxisFor(Axis.X, -1, 1), new AxisFor(Axis.Y, -1, -1)),
+                (new AxisFor(Axis.X, -1, 1), new AxisFor(Axis.Y, 1, 1)),
+                (new AxisFor(Axis.X, -1, -1), new AxisFor(Axis.Y, -1, 1)),
+                (new AxisFor(Axis.X, 1, 1), new AxisFor(Axis.Y, -1, 1)),
+            });
+
+        private static bool IsLowPopulationCell(int col, int row, DivisionCell[][] cells)
+        {
+            // Look for:
+            //  cells with count <= 3 and
+            //  empty neighbor count >= 5 and
+            //  not a simple corner
+
+            if (cells[row][col].Count > 3)
+                return false;
+
+            // Don't allow opposing filled cells (a straight line of 3 cells)
+            if (!IsEmpty(row - 1, col, cells) && !IsEmpty(row + 1, col, cells))
+                return false;
+
+            if (!IsEmpty(row, col - 1, cells) && !IsEmpty(row, col + 1, cells))
+                return false;
+
+            // Don't allow all 3 in a corner
+            if (IsLowPopulationCell_IsCornerPopulated(row, col, -1, -1, cells))
+                return false;
+
+            if (IsLowPopulationCell_IsCornerPopulated(row, col, -1, 1, cells))
+                return false;
+
+            if (IsLowPopulationCell_IsCornerPopulated(row, col, 1, -1, cells))
+                return false;
+
+            if (IsLowPopulationCell_IsCornerPopulated(row, col, 1, 1, cells))
+                return false;
+
+            // Don't allow three in a row next to this cell
+            foreach (var axisPair in _edgeIterators.Value)
+            {
+                if (IsLowPopulationCell_IsEdgePopulated_TWOCONSECUTIVE(row, col, axisPair.Item1, axisPair.Item2, cells))
+                    return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsLowPopulationCell_IsCornerPopulated(int row, int col, int rowOffset, int colOffset, DivisionCell[][] cells)
+        {
+            return
+                !IsEmpty(row + rowOffset, col, cells) &&
+                !IsEmpty(row, col + colOffset, cells);
+            //!IsEmpty(row + rowOffset, col + colOffset, cells);        // first attempt was all three needing to be filled, but just the two is enough to be considered a corner
+        }
+        private static bool IsLowPopulationCell_IsEdgePopulated_ALLTHREE(int row, int col, AxisFor axis1, AxisFor axis2, DivisionCell[][] cells)
+        {
+            foreach (int offset1 in axis1.Iterate())
+            {
+                foreach (int offset2 in axis2.Iterate())
+                {
+                    int offset_col = 0;
+                    int offset_row = 0;
+                    axis1.Set2DIndex(ref offset_col, ref offset_row, offset1);
+                    axis2.Set2DIndex(ref offset_col, ref offset_row, offset2);
+
+                    if (IsEmpty(row + offset_row, col + offset_col, cells))
+                        return false;       // one of the edge pieces is empty, so it's not a solid line
+                }
+            }
+
+            return true;        // all are filled
+        }
+        private static bool IsLowPopulationCell_IsEdgePopulated_TWOCONSECUTIVE(int row, int col, AxisFor axis1, AxisFor axis2, DivisionCell[][] cells)
+        {
+            int consecutiveCount = 0;
+            int maxCount = 0;
+
+            foreach (int offset1 in axis1.Iterate())
+            {
+                foreach (int offset2 in axis2.Iterate())
+                {
+                    int offset_col = 0;
+                    int offset_row = 0;
+                    axis1.Set2DIndex(ref offset_col, ref offset_row, offset1);
+                    axis2.Set2DIndex(ref offset_col, ref offset_row, offset2);
+
+                    if (IsEmpty(row + offset_row, col + offset_col, cells))
+                        consecutiveCount = 0;
+                    else
+                        consecutiveCount++;
+
+                    maxCount = Math.Max(consecutiveCount, maxCount);        // this is needed, because it could be 2 then 0, so the 2 needs to be remembered
+                }
+            }
+
+            return maxCount > 1;        // filled empty filled is ok, but filled filled empty isn't (or empty filled filled)
+        }
+
+        private static Point[] GetExtraLowPopulationPoints(Point center, double radius)
+        {
+            Vector[] staticPoint = new[] { new Vector() };
+            double[] staticMult = new[] { 3d };
+
+            // Makes either 5 or 6 points in a ring around the center.  Using a small iteration count so it's not
+            // too uniform
+            Vector[] points = Math3D.GetRandomVectors_Circular_EvenDist(StaticRandom.Next(5, 7), 1, stopIterationCount: 11, existingStaticPoints: staticPoint, staticRepulseMultipliers: staticMult);
+
+            return points.
+                Select(o => center + (o * radius)).
+                ToArray();
         }
 
         /// <summary>
