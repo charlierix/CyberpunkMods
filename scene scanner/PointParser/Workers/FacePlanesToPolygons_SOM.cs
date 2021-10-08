@@ -11,9 +11,9 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
-namespace PointParser
+namespace PointParser.Workers
 {
-    public static class FacePlanesToPolygons
+    public static class FacePlanesToPolygons_SOM
     {
         public static SceneFace_Polygons ConvertToPolygons(SceneFace_Points faces)
         {

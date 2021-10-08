@@ -10,6 +10,24 @@
         <Style TargetType="Button">
             <Setter Property="Margin" Value="0,4"/>
         </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="Foreground" Value="#444477"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style x:Key="buttonText_main" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="Foreground" Value="#111111"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="buttonText_info" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
     </Window.Resources>
 
     <Grid Margin="8">
@@ -21,28 +39,60 @@
 
         <StackPanel Grid.Row="0">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Scan File"/>
-                <Label Content="(drag file onto textbox)" Foreground="Gray"/>
+                <TextBlock Text="Scan File"/>
+                <TextBlock Text="(drag file onto textbox)" Foreground="Gray" Margin="6,0,0,0"/>
             </StackPanel>
 
             <!-- TODO: Allow multiple files to be processed as a single scene -->
-            <TextBox x:Name="txtInputFile" AllowDrop="True" PreviewDragEnter="txtInputFile_PreviewDragEnter" PreviewDragOver="txtInputFile_PreviewDragEnter" Drop="txtInputFile_Drop"/>
+            <TextBox x:Name="txtInputFile" Margin="0,3,0,0" AllowDrop="True" PreviewDragEnter="txtInputFile_PreviewDragEnter" PreviewDragOver="txtInputFile_PreviewDragEnter" Drop="txtInputFile_Drop"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel>
+                <Label Content="Complete Visualizations"/>
                 <CheckBox x:Name="chkShowNormals" Content="Show Normals"/>
 
-                <Button Content="Show Points" Click="ShowPoints_Click"/>
+                <Button Click="ShowPoints_Click">
+                    <Button.Content>
+                        <TextBlock Text="Points" Style="{StaticResource buttonText_main}"/>
+                    </Button.Content>
+                </Button>
 
-                <Button Content="Show Faces" Click="ShowFaces_Click"/>
+                <Button Click="ShowFaces_Click">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock Text="Faces" Style="{StaticResource buttonText_main}"/>
+                            <TextBlock Text="Each window is a material" Style="{StaticResource buttonText_info}"/>
+                            <TextBlock Text="Separates into planes" Style="{StaticResource buttonText_info}"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
 
                 <CheckBox x:Name="chkShowPerimiterLines" Margin="0, 8, 0, 0" Content="Show Perimiter Lines"/>
-                <Button Content="Show Face Polygons" Click="ShowFacePolygons_Click"/>
+                <Button Click="ShowFacePolygons_Click">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock Text="Polygons 1" Style="{StaticResource buttonText_main}"/>
+                            <TextBlock Text="Tries to cluster points using self" Style="{StaticResource buttonText_info}"/>
+                            <TextBlock Text="organizing maps (slow and lossy)" Style="{StaticResource buttonText_info}"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <CheckBox x:Name="chkSplitIntoIslands" IsChecked="True" Margin="0, 8, 0, 0" Content="Split into islands"/>
+                <Button Click="ShowIslandsConvex_Click">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock Text="Polygons 2" Style="{StaticResource buttonText_main}"/>
+                            <TextBlock Text="Clusters points with custom island detector" Style="{StaticResource buttonText_info}"/>
+                            <TextBlock Text="Still uses convex polygons" Style="{StaticResource buttonText_info}"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
             </StackPanel>
 
             <StackPanel Margin="24, 0, 0, 0">
-                <Label Content="Points to Polygons" HorizontalAlignment="Center"/>
+                <Label Content="Points to Polygons"/>
                 <Button Content="just points" Click="PointsToPolygons_Points_Click"/>
                 <Button Content="basic" Click="PointsToPolygons_Basic_Click"/>
                 <Button Content="boundries" Click="PointsToPolygons_Boundries_Click"/>
@@ -51,7 +101,7 @@
             </StackPanel>
 
             <StackPanel Margin="24, 0, 0, 0">
-                <Label Content="Misc, not file related" HorizontalAlignment="Center"/>
+                <Label Content="Misc, not file related"/>
                 <Button Content="random circle points" Click="RandomCirclePoints_Click"/>
             </StackPanel>
         </StackPanel>

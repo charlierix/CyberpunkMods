@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
-namespace PointParser
+namespace PointParser.Workers
 {
     public static class PointsToPlanes
     {
