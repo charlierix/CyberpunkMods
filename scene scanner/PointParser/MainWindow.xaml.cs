@@ -75,6 +75,91 @@ namespace PointParser
                 MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void txtOutputFolder_Drop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                string[] filenames = e.Data.GetData(DataFormats.FileDrop) as string[];
+
+                if (filenames == null || filenames.Length == 0)
+                {
+                    MessageBox.Show("No folders selected", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                else if (filenames.Length > 1)
+                {
+                    MessageBox.Show("Only one folder allowed", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                txtOutputFolder.Text = filenames[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void CreateOBJ_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (txtInputFile.Text == "")
+                {
+                    MessageBox.Show("Please select a file", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (txtOutputFolder.Text == "")
+                {
+                    MessageBox.Show("Please select an output folder", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var out_names = GetOutputNames(txtInputFile.Text, txtOutputFolder.Text, txtName.Text);
+
+                // Read from the file
+                ScenePoints points = SceneFileReader.ParsePointsFile(txtInputFile.Text);
+                if (points.Materials.Length == 0 || points.Points.Length == 0)
+                {
+                    MessageBox.Show("The file was incomplete", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Center around origin
+                Point3D center = Math3D.GetCenter(points.Points.Select(o => o.Hit).ToArray());
+
+                points = points with
+                {
+                    Points = points.Points.
+                        Select(o => o with { Hit = (o.Hit - center).ToPoint() }).
+                        ToArray(),
+                };
+
+                center = new Point3D(0, 0, 0);
+
+                // Convert into polygons
+                SceneFace_Points faces_point = PointsToPlanes.ConvertToFaces(points);
+
+                if (chkSplitIntoIslands.IsChecked.Value)
+                    faces_point = PointIslandSeparator.SeparateAndCleanPoints(faces_point);
+
+                SceneFace_Polygons faces_polygon = FacePlanesToPolygons_BasicConvex.ConvertToPolygons(faces_point);
+
+
+                //TODO: Let the user define colors for each material
+                ObjWriter.Write(faces_polygon, out_names.folder, out_names.obj, out_names.mtl, chkRandColorPerPoly.IsChecked.Value);
+
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void ShowPoints_Click(object sender, RoutedEventArgs e)
         {
@@ -467,6 +552,40 @@ namespace PointParser
                 method(face, System.IO.Path.GetFileName(filename));
             }
 
+        }
+
+        /// <summary>
+        /// This comes up the the subfolder and filenames
+        /// </summary>
+        /// <remarks>
+        /// All values returned are full paths
+        /// </remarks>
+        /// <returns>
+        /// folder: sits below the output folder, contains .obj and .mtl files
+        /// obj, mtl are full folder/filenames
+        /// </returns>
+        private static (string folder, string obj, string mtl) GetOutputNames(string inputFile, string outputFolder, string baseName)
+        {
+            string folder = null;
+
+            if (string.IsNullOrWhiteSpace(baseName))
+            {
+                folder = System.IO.Path.GetFileNameWithoutExtension(inputFile);
+            }
+            else
+            {
+                folder = baseName;
+            }
+
+            folder = System.IO.Path.Combine(outputFolder, folder);
+            folder = UtilityCore.EscapeFilename_Windows(folder, true);      //TODO: Detect linux
+
+            return
+            (
+                folder,
+                System.IO.Path.Combine(folder, "scene.obj"),
+                System.IO.Path.Combine(folder, "scene.mtl")
+            );
         }
 
         #endregion

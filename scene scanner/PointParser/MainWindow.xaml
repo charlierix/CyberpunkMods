@@ -7,10 +7,20 @@
         mc:Ignorable="d"
         Title="SceneScan - PointParser" ResizeMode="CanResizeWithGrip" Width="800" Height="600">
     <Window.Resources>
+        <Style x:Key="mainPanel" TargetType="StackPanel">
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+
         <Style TargetType="Button">
             <Setter Property="Margin" Value="0,4"/>
         </Style>
 
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0,3,0,0"/>
+        </Style>
+        
         <Style TargetType="Label">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="15"/>
@@ -44,66 +54,87 @@
             </StackPanel>
 
             <!-- TODO: Allow multiple files to be processed as a single scene -->
-            <TextBox x:Name="txtInputFile" Margin="0,3,0,0" AllowDrop="True" PreviewDragEnter="txtInputFile_PreviewDragEnter" PreviewDragOver="txtInputFile_PreviewDragEnter" Drop="txtInputFile_Drop"/>
+            <TextBox x:Name="txtInputFile" AllowDrop="True" PreviewDragEnter="txtInputFile_PreviewDragEnter" PreviewDragOver="txtInputFile_PreviewDragEnter" Drop="txtInputFile_Drop"/>
+
+            <TextBlock Text="Output Folder" Margin="0,8,0,0"/>
+            <TextBox x:Name="txtOutputFolder" AllowDrop="True" PreviewDragEnter="txtInputFile_PreviewDragEnter" PreviewDragOver="txtInputFile_PreviewDragEnter" Drop="txtOutputFolder_Drop"/>
+
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <StackPanel>
-                <Label Content="Complete Visualizations"/>
-                <CheckBox x:Name="chkShowNormals" Content="Show Normals"/>
+        <TabControl Grid.Row="2">
+            <TabItem Header="Final">
+                <StackPanel Style="{StaticResource mainPanel}">
+                    <TextBlock Text="[Name]"/>
+                    <TextBox x:Name="txtName"/>
 
-                <Button Click="ShowPoints_Click">
-                    <Button.Content>
-                        <TextBlock Text="Points" Style="{StaticResource buttonText_main}"/>
-                    </Button.Content>
-                </Button>
+                    <CheckBox x:Name="chkRandColorPerPoly" IsChecked="True" Content="Random tint per polygon" Margin="0,8,0,0">
+                        <CheckBox.ToolTip>
+                            <TextBlock>Polygons are colored based on their material<LineBreak/><LineBreak/>Checking this will make each polygon have a slightly random tint<LineBreak/>based on its material</TextBlock>
+                        </CheckBox.ToolTip>
+                    </CheckBox>
+                    <Button Content="Create .obj file" Click="CreateOBJ_Click"/>
+                </StackPanel>
+            </TabItem>
 
-                <Button Click="ShowFaces_Click">
-                    <Button.Content>
-                        <StackPanel>
-                            <TextBlock Text="Faces" Style="{StaticResource buttonText_main}"/>
-                            <TextBlock Text="Each window is a material" Style="{StaticResource buttonText_info}"/>
-                            <TextBlock Text="Separates into planes" Style="{StaticResource buttonText_info}"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
+            <TabItem Header="Testers">
+                <StackPanel Orientation="Horizontal" Style="{StaticResource mainPanel}">
+                    <StackPanel>
+                        <Label Content="Complete Visualizations"/>
+                        <CheckBox x:Name="chkShowNormals" Content="Show Normals"/>
 
-                <CheckBox x:Name="chkShowPerimiterLines" Margin="0, 8, 0, 0" Content="Show Perimiter Lines"/>
-                <Button Click="ShowFacePolygons_Click">
-                    <Button.Content>
-                        <StackPanel>
-                            <TextBlock Text="Polygons 1" Style="{StaticResource buttonText_main}"/>
-                            <TextBlock Text="Tries to cluster points using self" Style="{StaticResource buttonText_info}"/>
-                            <TextBlock Text="organizing maps (slow and lossy)" Style="{StaticResource buttonText_info}"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
+                        <Button Click="ShowPoints_Click">
+                            <Button.Content>
+                                <TextBlock Text="Points" Style="{StaticResource buttonText_main}"/>
+                            </Button.Content>
+                        </Button>
 
-                <CheckBox x:Name="chkSplitIntoIslands" IsChecked="True" Margin="0, 8, 0, 0" Content="Split into islands"/>
-                <Button Click="ShowIslandsConvex_Click">
-                    <Button.Content>
-                        <StackPanel>
-                            <TextBlock Text="Polygons 2" Style="{StaticResource buttonText_main}"/>
-                            <TextBlock Text="Clusters points with custom island detector" Style="{StaticResource buttonText_info}"/>
-                            <TextBlock Text="Still uses convex polygons" Style="{StaticResource buttonText_info}"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
+                        <Button Click="ShowFaces_Click">
+                            <Button.Content>
+                                <StackPanel>
+                                    <TextBlock Text="Faces" Style="{StaticResource buttonText_main}"/>
+                                    <TextBlock Text="Each window is a material" Style="{StaticResource buttonText_info}"/>
+                                    <TextBlock Text="Separates into planes" Style="{StaticResource buttonText_info}"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
 
-            <StackPanel Margin="24, 0, 0, 0">
-                <Label Content="Points to Polygons"/>
-                <Button Content="just points" Click="PointsToPolygons_Points_Click"/>
-                <Button Content="basic" Click="PointsToPolygons_Basic_Click"/>
-                <Button Content="boundries" Click="PointsToPolygons_Boundries_Click"/>
-                <Button Content="islands" Click="PointsToPolygons_Islands_Click"/>
-                <Button Content="low population" Click="PointsToPolygons_LowPopulation_Click"/>
-            </StackPanel>
+                        <CheckBox x:Name="chkShowPerimiterLines" Margin="0,8,0,0" Content="Show Perimiter Lines"/>
+                        <Button Click="ShowFacePolygons_Click">
+                            <Button.Content>
+                                <StackPanel>
+                                    <TextBlock Text="Polygons 1" Style="{StaticResource buttonText_main}"/>
+                                    <TextBlock Text="Tries to cluster points using self" Style="{StaticResource buttonText_info}"/>
+                                    <TextBlock Text="organizing maps (slow and lossy)" Style="{StaticResource buttonText_info}"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
 
-            <StackPanel Margin="24, 0, 0, 0">
-                <Label Content="Misc, not file related"/>
-                <Button Content="random circle points" Click="RandomCirclePoints_Click"/>
-            </StackPanel>
-        </StackPanel>
+                        <CheckBox x:Name="chkSplitIntoIslands" IsChecked="True" Margin="0,8,0,0" Content="Split into islands"/>
+                        <Button Click="ShowIslandsConvex_Click">
+                            <Button.Content>
+                                <StackPanel>
+                                    <TextBlock Text="Polygons 2" Style="{StaticResource buttonText_main}"/>
+                                    <TextBlock Text="Clusters points with custom island detector" Style="{StaticResource buttonText_info}"/>
+                                    <TextBlock Text="Still uses convex polygons" Style="{StaticResource buttonText_info}"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Margin="24,0,0,0">
+                        <Label Content="Points to Polygons"/>
+                        <Button Content="just points" Click="PointsToPolygons_Points_Click"/>
+                        <Button Content="basic" Click="PointsToPolygons_Basic_Click"/>
+                        <Button Content="boundries" Click="PointsToPolygons_Boundries_Click"/>
+                        <Button Content="islands" Click="PointsToPolygons_Islands_Click"/>
+                        <Button Content="low population" Click="PointsToPolygons_LowPopulation_Click"/>
+
+                        <Label Content="Misc, not file related" Margin="0,24,0,0"/>
+                        <Button Content="random circle points" Click="RandomCirclePoints_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Window>
