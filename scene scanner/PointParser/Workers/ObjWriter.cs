@@ -16,6 +16,18 @@ namespace PointParser.Workers
 {
     public static class ObjWriter
     {
+        #region record: Options
+
+        public record Options
+        {
+            public bool DoubleSidedFaces { get; init; }
+            public bool RandColorPerPoly { get; init; }
+            public string CustomName { get; init; }
+            public MaterialColors MaterialColors { get; init; }
+        }
+
+        #endregion
+
         #region record: Definition
 
         private record Definition
@@ -70,17 +82,17 @@ namespace PointParser.Workers
 
         #endregion
 
-        public static void Write(SceneFace_Polygons scene, string folder, string filename_obj, string filename_mtl, bool randColorPerPoly, MaterialColors materialColors = null)
+        public static void Write(SceneFace_Polygons scene, string folder, string filename_obj, string filename_mtl, Options options)
         {
-            materialColors = FinishMaterialColors(scene, materialColors);
+            var materialColors = FinishMaterialColors(scene, options.MaterialColors);
 
-            var definition = CreateDefinition(scene, materialColors, randColorPerPoly);
+            var definition = CreateDefinition(scene, materialColors, options.RandColorPerPoly);
 
             Directory.CreateDirectory(folder);
 
             using (StreamWriter writer = new StreamWriter(filename_obj, false))
             {
-                Write_Obj(writer, definition, Path.GetFileName(filename_mtl));
+                Write_Obj(writer, definition, Path.GetFileName(filename_mtl), options.CustomName, options.DoubleSidedFaces);
             }
 
             using (StreamWriter writer = new StreamWriter(filename_mtl, false))
@@ -221,12 +233,16 @@ namespace PointParser.Workers
             return true;
         }
 
-        private static void Write_Obj(StreamWriter writer, Definition def, string mat_filename)
+        private static void Write_Obj(StreamWriter writer, Definition def, string mat_filename, string customName, bool doubleSidedFaces)
         {
             writer.WriteLine("# Cyberpunk 2077 Scene Scan Recreation Tool");
 
             writer.WriteLine($"mtllib {mat_filename}");
-            writer.WriteLine("o scene");        // not sure what this is used for, but all the examples have an object name
+
+            if (string.IsNullOrWhiteSpace(customName))
+                writer.WriteLine("o scene");
+            else
+                writer.WriteLine($"o {GetSafeName(customName.Trim())}");
 
             foreach (var vertex in def.Vertices)
             {
@@ -238,6 +254,15 @@ namespace PointParser.Workers
             {
                 writer.Write("vn ");
                 writer.WriteLine(VectorString(vertex.Normal));
+            }
+
+            if (doubleSidedFaces)       // putting these after the other normals, so a simple offset can be used
+            {
+                foreach (var vertex in def.Vertices)
+                {
+                    writer.Write("vn ");
+                    writer.WriteLine(VectorString(-vertex.Normal));
+                }
             }
 
             int materialIndex = -1;
@@ -260,6 +285,22 @@ namespace PointParser.Workers
                     // since this project doesn't deal with textures, it's just
                     //f v1//vn1 v2//vn2 v3//vn3 ...
                     writer.WriteLine(string.Format("f {0}//{0} {1}//{1} {2}//{2}", triangle.v1.ToString(), triangle.v2.ToString(), triangle.v3.ToString()));
+                }
+
+                if (doubleSidedFaces)
+                {
+                    foreach (var triangle in face.Triangles)
+                    {
+                        // Reusing the points, but pointing to the set of opposite facing normals
+                        writer.WriteLine(string.Format(
+                            "f {0}//{3} {1}//{4} {2}//{5}",
+                            triangle.v1.ToString(),
+                            triangle.v3.ToString(),     //NOTE: that 3 and 2 are reversed, just in case right hand rule is used by the app that reads this file
+                            triangle.v2.ToString(),
+                            (def.Vertices.Length + triangle.v1).ToString(),
+                            (def.Vertices.Length + triangle.v3).ToString(),
+                            (def.Vertices.Length + triangle.v2).ToString()));
+                    }
                 }
             }
         }

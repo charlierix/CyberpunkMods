@@ -116,7 +116,14 @@ namespace PointParser
                     return;
                 }
 
+                Cursor = Cursors.Wait;
+
                 var out_names = GetOutputNames(txtInputFile.Text, txtOutputFolder.Text, txtName.Text);
+
+                //NOTE: The textbox only updates at the end, since all the processing is on the main thread.  It's more work than its
+                //worth to do a worker thread, events that get received in the main thread to update the log, since the processing
+                //only takes a few seconds
+                txtOutput.Text = "parsing points file...\r\n";
 
                 // Read from the file
                 ScenePoints points = SceneFileReader.ParsePointsFile(txtInputFile.Text);
@@ -125,6 +132,8 @@ namespace PointParser
                     MessageBox.Show("The file was incomplete", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
+
+                txtOutput.Text += "centering points around origin...\r\n";
 
                 // Center around origin
                 Point3D center = Math3D.GetCenter(points.Points.Select(o => o.Hit).ToArray());
@@ -138,26 +147,57 @@ namespace PointParser
 
                 center = new Point3D(0, 0, 0);
 
-                // Convert into polygons
+                if (chkRotateYUp.IsChecked.Value)
+                {
+                    txtOutput.Text += "rotating points from Z up to Y up...\r\n";
+
+                    var transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), -90));
+                    points = points with
+                    {
+                        Points = points.Points.
+                            Select(o => o with
+                            {
+                                Hit = transform.Transform(o.Hit),       // this was already translated to be centered around the origin, so the rotation will be reasonable
+                                Normal = transform.Transform(o.Normal),
+                            }).
+                            ToArray(),
+                    };
+                }
+
+                txtOutput.Text += "isolating points by material, plane...\r\n";
+
                 SceneFace_Points faces_point = PointsToPlanes.ConvertToFaces(points);
 
-                if (chkSplitIntoIslands.IsChecked.Value)
-                    faces_point = PointIslandSeparator.SeparateAndCleanPoints(faces_point);
+                txtOutput.Text += "separating island clusters of points...\r\n";
+
+                faces_point = PointIslandSeparator.SeparateAndCleanPoints(faces_point);
+
+                txtOutput.Text += "converting points into polygons (convex)...\r\n";
 
                 SceneFace_Polygons faces_polygon = FacePlanesToPolygons_BasicConvex.ConvertToPolygons(faces_point);
 
+                txtOutput.Text += "writing .obj and .mtl files...\r\n";
 
-                //TODO: Let the user define colors for each material
-                ObjWriter.Write(faces_polygon, out_names.folder, out_names.obj, out_names.mtl, chkRandColorPerPoly.IsChecked.Value);
+                var options = new ObjWriter.Options()
+                {
+                    DoubleSidedFaces = chkDoubleSidedFaces.IsChecked.Value,
+                    RandColorPerPoly = chkRandColorPerPoly.IsChecked.Value,
 
+                    CustomName = txtName.Text,
+                    MaterialColors = null,      //TODO: Let the user define colors for each material
+                };
 
+                ObjWriter.Write(faces_polygon, out_names.folder, out_names.obj, out_names.mtl, options);
 
-
-
+                txtOutput.Text += "finished\r\n";
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Arrow;
             }
         }
 
