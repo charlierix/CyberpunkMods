@@ -100,7 +100,7 @@ namespace PointParser
             }
         }
 
-        private void CreateOBJ_Click(object sender, RoutedEventArgs e)
+        private async void CreateOBJ_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -117,16 +117,18 @@ namespace PointParser
                 }
 
                 Cursor = Cursors.Wait;
+                IsEnabled = false;      // don't let them change ui elements while this is running
 
                 var out_names = GetOutputNames(txtInputFile.Text, txtOutputFolder.Text, txtName.Text);
 
-                //NOTE: The textbox only updates at the end, since all the processing is on the main thread.  It's more work than its
-                //worth to do a worker thread, events that get received in the main thread to update the log, since the processing
-                //only takes a few seconds
+                string inputFile = txtInputFile.Text;
+
+                //NOTE: without the awaits and tasks, this textbox would only update at the end, because everything would be
+                //running on the main thread
                 txtOutput.Text = "parsing points file...\r\n";
 
                 // Read from the file
-                ScenePoints points = SceneFileReader.ParsePointsFile(txtInputFile.Text);
+                ScenePoints points = await Task.Run(() => SceneFileReader.ParsePointsFile(inputFile));
                 if (points.Materials.Length == 0 || points.Points.Length == 0)
                 {
                     MessageBox.Show("The file was incomplete", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -136,6 +138,7 @@ namespace PointParser
                 txtOutput.Text += "centering points around origin...\r\n";
 
                 // Center around origin
+                //NOTE: Centering and rotating is so fast, a task would be unnecessary
                 Point3D center = Math3D.GetCenter(points.Points.Select(o => o.Hit).ToArray());
 
                 points = points with
@@ -166,15 +169,15 @@ namespace PointParser
 
                 txtOutput.Text += "isolating points by material, plane...\r\n";
 
-                SceneFace_Points faces_point = PointsToPlanes.ConvertToFaces(points);
+                SceneFace_Points faces_point = await Task.Run(() => PointsToPlanes.ConvertToFaces(points));
 
                 txtOutput.Text += "separating island clusters of points...\r\n";
 
-                faces_point = PointIslandSeparator.SeparateAndCleanPoints(faces_point);
+                faces_point = await Task.Run(() => PointIslandSeparator.SeparateAndCleanPoints(faces_point));
 
                 txtOutput.Text += "converting points into polygons (convex)...\r\n";
 
-                SceneFace_Polygons faces_polygon = FacePlanesToPolygons_BasicConvex.ConvertToPolygons(faces_point);
+                SceneFace_Polygons faces_polygon = await Task.Run(() => FacePlanesToPolygons_BasicConvex.ConvertToPolygons(faces_point));
 
                 txtOutput.Text += "writing .obj and .mtl files...\r\n";
 
@@ -187,7 +190,7 @@ namespace PointParser
                     MaterialColors = null,      //TODO: Let the user define colors for each material
                 };
 
-                ObjWriter.Write(faces_polygon, out_names.folder, out_names.obj, out_names.mtl, options);
+                await Task.Run(() => ObjWriter.Write(faces_polygon, out_names.folder, out_names.obj, out_names.mtl, options));
 
                 txtOutput.Text += "finished\r\n";
             }
@@ -198,6 +201,7 @@ namespace PointParser
             finally
             {
                 Cursor = Cursors.Arrow;
+                IsEnabled = true;
             }
         }
 
