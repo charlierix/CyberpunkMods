@@ -4,7 +4,8 @@
         "text": "Recording",
 
         "font_scale": 3,
-        "shadow_offset": 1.5,
+        "shadow_offset_large": 1.5,
+        "shadow_offset_small": 1,
  
         "shadow_color": "000",
         "text_color": "FFF",

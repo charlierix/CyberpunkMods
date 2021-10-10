@@ -112,20 +112,27 @@ function this.GetCircleColors(elapsed, style)
         ToABGR(border_a, border_r, border_g, border_b)
 end
 
-function this.DrawShadowText(left, top, text, style)
+function this.DrawShadowText(left, top, text, style, isLargeText)
+    local offset
+    if isLargeText then
+        offset = style.shadow_offset_large
+    else
+        offset = style.shadow_offset_small
+    end
+
     -- Text Shadow
     ImGui.PushStyleColor(ImGuiCol.Text, style.shadow_color_abgr)
 
-    ImGui.SetCursorPos(left - style.shadow_offset, top - style.shadow_offset)
+    ImGui.SetCursorPos(left - offset, top - offset)
     ImGui.Text(text)
 
-    ImGui.SetCursorPos(left + style.shadow_offset, top - style.shadow_offset)
+    ImGui.SetCursorPos(left + offset, top - offset)
     ImGui.Text(text)
 
-    ImGui.SetCursorPos(left + style.shadow_offset, top + style.shadow_offset)
+    ImGui.SetCursorPos(left + offset, top + offset)
     ImGui.Text(text)
 
-    ImGui.SetCursorPos(left - style.shadow_offset, top + style.shadow_offset)
+    ImGui.SetCursorPos(left - offset, top + offset)
     ImGui.Text(text)
 
     ImGui.PopStyleColor()
