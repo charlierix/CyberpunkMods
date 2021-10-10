@@ -12,6 +12,17 @@ public func SceneScanner_RayCast(from: Vector4, to: Vector4, vehicles: Bool) -> 
 
     let attemptDistSqr: Float;
 
+    // Dirt
+    if spacialQuery.SyncRaycastByCollisionGroup(from, to, n"Terrain", attempt) {
+        attemptDistSqr = SceneScanner_LenSqr(from, attempt.position);
+
+        if distSqr < 0.00 || attemptDistSqr < distSqr {
+            distSqr = attemptDistSqr;
+            result = attempt;
+            //Log("SceneScanner_RayCast: world static");
+        };
+    };
+
     // Concrete, buildings
     if spacialQuery.SyncRaycastByCollisionGroup(from, to, n"Static", attempt) {
         attemptDistSqr = SceneScanner_LenSqr(from, attempt.position);
@@ -44,17 +55,6 @@ public func SceneScanner_RayCast(from: Vector4, to: Vector4, vehicles: Bool) -> 
             //Log("SceneScanner_RayCast: vehicle");
         };
     };
-
-    // This never worked
-    // if !staticOnly && spacialQuery.SyncRaycastByCollisionGroup(from, to, n"Simple Environment Collision", attempt) {
-    //     attemptDistSqr = SceneScanner_LenSqr(from, attempt.position);
-
-    //     if distSqr < 0.00 || attemptDistSqr < distSqr {
-    //         distSqr = attemptDistSqr;
-    //         result = attempt;
-    //         Log("SceneScanner_RayCast: Simple Environment Collision");
-    //     };
-    // };
 
     // If the position's coords are infinite, then there was no hit
     //NOTE: CET can look at: tostring(result.position.x) == "inf", or result.position.x == tonumber("inf")
