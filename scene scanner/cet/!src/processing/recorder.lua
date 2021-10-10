@@ -7,13 +7,14 @@ local HEADER_HITS = "--- Hits ---"
 
 Recorder = {}
 
-function Recorder:new(o, const)
+function Recorder:new(o, const, includeVehicles)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
     obj.o = o
     obj.const = const
+    obj.includeVehicles = includeVehicles
 
     obj.materials_mat_index = {}        -- key is material, value is index
     obj.materials_index_mat = {}        -- list of materials, key is int
@@ -73,7 +74,7 @@ function Recorder:FireRay_LookDir()
     local fromPos = Vector4.new(self.o.pos.x, self.o.pos.y, self.o.pos.z + 1.7, 1)
     local toPos = Vector4.new(fromPos.x + (self.o.lookdir_forward.x * self.const.rayLen), fromPos.y + (self.o.lookdir_forward.y * self.const.rayLen), fromPos.z + (self.o.lookdir_forward.z * self.const.rayLen), 1)
 
-    local hit, normal, material = self.o:RayCast(fromPos, toPos, self.const.includeVehicles)
+    local hit, normal, material = self.o:RayCast(fromPos, toPos, self.includeVehicles)
 
     self:StoreHit(hit, normal, material)
 end
@@ -85,7 +86,7 @@ function Recorder:FireRay_Random()
     local fromPos = Vector4.new(self.o.pos.x, self.o.pos.y, self.o.pos.z + height, 1)
     local toPos = Vector4.new(fromPos.x + direction.x, fromPos.y + direction.y, fromPos.z + direction.z, 1)
 
-    local hit, normal, material = self.o:RayCast(fromPos, toPos, self.const.includeVehicles)
+    local hit, normal, material = self.o:RayCast(fromPos, toPos, self.includeVehicles)
 
     self:StoreHit(hit, normal, material)
 end

@@ -22,7 +22,9 @@
 
         "circle_border_thickness": 1,
 
-        "gap_bottomwindow": 80,
-        "padding": 12
+        "gap_bottomwindow": 120,
+        "padding": 12,
+
+        "gap_windows": 24
     }
 }

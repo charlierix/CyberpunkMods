@@ -1,7 +1,17 @@
 local this = {}
 local sizes = nil
 
-function DrawRecording(o, vars_ui, recording_start_time)
+function DrawRecording(o, vars_ui, recording_start_time, num_hits)
+    this.DrawMain(o, vars_ui, recording_start_time)
+    this.DrawInfo(o, vars_ui, recording_start_time, num_hits)
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+-- Draws a circle and the word recording (with a large font scale)
+function this.DrawMain(o, vars_ui, recording_start_time)
+    local style = vars_ui.style.recording
+
     local left = 0
     local top = 0
     local width = 100
@@ -12,8 +22,6 @@ function DrawRecording(o, vars_ui, recording_start_time)
         width = sizes.width
         height = sizes.height
     end
-
-    local style = vars_ui.style.recording
 
     ImGui.SetNextWindowPos(left, top, ImGuiCond.Always)
     ImGui.SetNextWindowSize(width, height, ImGuiCond.Always)
@@ -29,35 +37,37 @@ function DrawRecording(o, vars_ui, recording_start_time)
         local back_abgr, border_abgr = this.GetCircleColors(o.timer - recording_start_time, style)
         Draw_Circle(left, top, sizes.circle_center_x, sizes.circle_center_y, sizes.cirle_radius, false, back_abgr, nil, border_abgr, nil, style.circle_border_thickness)
 
-        -- Text Shadow
-        ImGui.PushStyleColor(ImGuiCol.Text, style.shadow_color_abgr)
-
-        ImGui.SetCursorPos(sizes.text_left - style.shadow_offset, sizes.text_top - style.shadow_offset)
-        ImGui.Text(style.text)
-
-        ImGui.SetCursorPos(sizes.text_left + style.shadow_offset, sizes.text_top - style.shadow_offset)
-        ImGui.Text(style.text)
-
-        ImGui.SetCursorPos(sizes.text_left + style.shadow_offset, sizes.text_top + style.shadow_offset)
-        ImGui.Text(style.text)
-
-        ImGui.SetCursorPos(sizes.text_left - style.shadow_offset, sizes.text_top + style.shadow_offset)
-        ImGui.Text(style.text)
-
-        ImGui.PopStyleColor()
-
-        -- Text Foreground
-        ImGui.PushStyleColor(ImGuiCol.Text, style.text_color_abgr)
-
-        ImGui.SetCursorPos(sizes.text_left, sizes.text_top)
-        ImGui.Text(style.text)
+        -- Text
+        this.DrawShadowText(sizes.text_left, sizes.text_top, style.text, style)
 
         ImGui.PopStyleColor()
     end
     ImGui.End()
 end
 
------------------------------------ Private Methods -----------------------------------
+-- Draws elapsed time and num points at standard font scale
+function this.DrawInfo(o, vars_ui, recording_start_time, num_hits)
+    local style = vars_ui.style.recording
+
+    local left = 0
+    local top = 0
+    if sizes then
+        left = sizes.left + sizes.text_left - style.padding
+        top = sizes.top + sizes.height - (style.padding * 2) + style.gap_windows - style.padding
+    end
+
+    ImGui.SetNextWindowPos(left, top, ImGuiCond.Always)
+    ImGui.SetNextWindowSize(480, 120)     -- auto resize isn't working, so just make it big
+
+    if (ImGui.Begin("energy_info", true, ImGuiWindowFlags.AlwaysAutoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoBackground)) then
+        local seconds = Round(o.timer - recording_start_time)
+
+        local text = "seconds: " .. tostring(seconds) .. "\nhits: " .. tostring(num_hits)
+
+        this.DrawShadowText(style.padding, style.padding, text, style)
+    end
+    ImGui.End()
+end
 
 function this.GetSizes(style)
     local screen_width, screen_height = GetDisplayResolution()
@@ -100,4 +110,29 @@ function this.GetCircleColors(elapsed, style)
     return
         ToABGR(back_a, back_r, back_g, back_b),
         ToABGR(border_a, border_r, border_g, border_b)
+end
+
+function this.DrawShadowText(left, top, text, style)
+    -- Text Shadow
+    ImGui.PushStyleColor(ImGuiCol.Text, style.shadow_color_abgr)
+
+    ImGui.SetCursorPos(left - style.shadow_offset, top - style.shadow_offset)
+    ImGui.Text(text)
+
+    ImGui.SetCursorPos(left + style.shadow_offset, top - style.shadow_offset)
+    ImGui.Text(text)
+
+    ImGui.SetCursorPos(left + style.shadow_offset, top + style.shadow_offset)
+    ImGui.Text(text)
+
+    ImGui.SetCursorPos(left - style.shadow_offset, top + style.shadow_offset)
+    ImGui.Text(text)
+
+    ImGui.PopStyleColor()
+
+    -- Text Foreground
+    ImGui.PushStyleColor(ImGuiCol.Text, style.text_color_abgr)
+
+    ImGui.SetCursorPos(left, top)
+    ImGui.Text(text)
 end

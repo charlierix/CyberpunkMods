@@ -47,13 +47,12 @@ local this = {}
 
 local const =
 {
-    raysPerFrame = 8,
+    raysPerFrame = 14,
     rayLen = 60,
     rayHeightMin = 1,
     rayHeightMax = 2.5,
-    includeVehicles = true,
 
-    shouldShowDebugWindow = true,      -- shows a window with extra debug info
+    shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 
 ---------------------------------------------------------------------------------------
@@ -161,14 +160,11 @@ registerForEvent("onUpdate", function(deltaTime)
     end
 end)
 
-registerHotkey("SceneScanner_StartStopRecording", "Start/Stop Recording", function()
-    if recorder then
-        recorder:Stop()
-        recorder = nil
-    else
-        recorder = Recorder:new(o, const)
-        vars.recording_start_time = o.timer
-    end
+registerHotkey("SceneScanner_StartStopRecording_no", "Start/Stop Recording -vehicles", function()
+    this.StartStop(false)
+end)
+registerHotkey("SceneScanner_StartStopRecording_yes", "Start/Stop Recording +vehicles", function()
+    this.StartStop(true)
 end)
 
 registerForEvent("onDraw", function()
@@ -178,7 +174,7 @@ registerForEvent("onDraw", function()
     end
 
     if recorder then
-        DrawRecording(o, vars_ui, vars.recording_start_time)
+        DrawRecording(o, vars_ui, vars.recording_start_time, #recorder.hits)
     end
 
     if const.shouldShowDebugWindow then
@@ -187,6 +183,16 @@ registerForEvent("onDraw", function()
 end)
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.StartStop(includeVehicles)
+    if recorder then
+        recorder:Stop()
+        recorder = nil
+    else
+        recorder = Recorder:new(o, const, includeVehicles)
+        vars.recording_start_time = o.timer
+    end
+end
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()

@@ -68,7 +68,7 @@
                         <TextBlock Text="[Name]"/>
                         <TextBox x:Name="txtName"/>
 
-                        <CheckBox x:Name="chkDoubleSidedFaces" IsChecked="False" Content="Double sided faces" Margin="0,8,0,0">
+                        <CheckBox x:Name="chkDoubleSidedFaces" IsChecked="True" Content="Double sided faces" Margin="0,8,0,0">
                             <CheckBox.ToolTip>
                                 <TextBlock>Unity only renders the side with the normal facing the camera<LineBreak/>So double sided will make both sides visible</TextBlock>
                             </CheckBox.ToolTip>
