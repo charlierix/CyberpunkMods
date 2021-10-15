@@ -29,6 +29,8 @@ function GetDefaultInputBindings(const)
 end
 
 -- This pulls other settings out of the database
-function InitializeSavedFields(vars, const)
-    vars.latch_wallhang = GetSetting_Bool(const.settings.Latch_WallHang, true)
+function InitializeSavedFields(const)
+    const.latch_wallhang = GetSetting_Bool(const.settings.Latch_WallHang, true)
+    const.mouse_sensitivity = GetSetting_Float(const.settings.MouseSensitivity, -0.06)
+    const.rightstick_sensitivity = GetSetting_Float(const.settings.RightStickSensitivity, 50)
 end

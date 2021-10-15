@@ -85,8 +85,10 @@ local const =
 
     modNames = CreateEnum("wall_hang", "grappling_hook", "jetpack", "low_flying_v"),     -- this really doesn't need to know the other mod names, since wall hang will override flight
 
-    rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
-    mouse_sensitivity = -0.08,
+    -- Populated in InitializeSavedFields()
+    --latch_wallhang,       -- false: must keep the hang key held in
+    --mouse_sensitivity = -0.08,
+    --rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
 
     -- These are set in Define_UI_Framework_Constants() called during init
     -- alignment_horizontal = CreateEnum("left", "center", "right"),
@@ -101,7 +103,14 @@ local const =
 
     bindings = CreateEnum("hang", "wall_run"),
 
-    settings = CreateEnum("AutoShowConfig_WithConsole", "WallHangKey_UseCustom", "Latch_WallHang"),
+    settings = CreateEnum(
+        -- Bools
+        "AutoShowConfig_WithConsole",
+        "WallHangKey_UseCustom",
+        "Latch_WallHang",
+        -- Floats
+        "MouseSensitivity",
+        "RightStickSensitivity"),
 
     rayFrom_Z = 1.5,
     rayLen = 1.2,
@@ -136,9 +145,6 @@ local vars =
 
     -- Populated in InitializeKeyBindings()
     --wallhangkey_usecustom,     -- true: use the cet binding, false: use the action binding
-
-    -- Populated in InitializeSavedFields()
-    --latch_wallhang,       -- false: must keep the hang key held in
 
     -- These get populated in Transition_ToHang() and/or Transition_ToJump_Calculate()
     --hangPos,
@@ -210,7 +216,7 @@ registerForEvent("onInit", function()
     EnsureTablesCreated()
     Define_UI_Framework_Constants(const)
     InitializeUI(vars_ui, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
-    InitializeSavedFields(vars, const)
+    InitializeSavedFields(const)
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end

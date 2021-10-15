@@ -264,7 +264,7 @@ function this.Define_StopAngle_Value(const)
 end
 function this.Refresh_StopAngle_Value(def, grapple)
     -- There is no need to store changes in the changes list.  Value is directly changed
-    --NOTE: TransitionWindows_Straight_StopEarly sets this to nil
+    --NOTE: Activate function sets this to nil
     if not def.value then
         if grapple.minDot then
             def.value = Dot_to_Angle(grapple.minDot)

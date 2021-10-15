@@ -9,6 +9,8 @@ function EnsureTablesCreated()
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Settings_Int (Key TEXT NOT NULL UNIQUE, Value INTEGER NOT NULL);") end)
 
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Settings_Float (Key TEXT NOT NULL UNIQUE, Value REAL NOT NULL);") end)
+
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS InputBindings (Binding TEXT NOT NULL, ActionName TEXT NOT NULL);") end)
 end
 
@@ -48,7 +50,6 @@ function GetSetting_Bool(key, default)
         return nil, "GetSetting_Bool: Unknown Error"
     end
 end
-
 -- Inserts/Updates the key/value pair
 -- Returns
 --  error message or nil
@@ -93,6 +94,72 @@ function SetSetting_Bool(key, value)
         return errMsg
     else
         return "SetSetting_Bool: Unknown Error"
+    end
+end
+
+-- Returns
+--  floating point value, error message
+function GetSetting_Float(key, default)
+    local sucess, value, errMsg = pcall(function ()
+        local stmt = db:prepare
+        [[
+            SELECT Value
+            FROM Settings_Float
+            WHERE Key = ?
+            LIMIT 1
+        ]]
+
+        local row, _ = this.Bind_Select_SingleRow(stmt, "GetSetting_Float", key)
+        if row then
+            return row.Value
+        else
+            return default, nil     -- no row found or error, pretend it was found and return the default value
+        end
+    end)
+
+    if sucess then
+        return value, errMsg
+    else
+        return nil, "GetSetting_Float: Unknown Error"
+    end
+end
+-- Inserts/Updates the key/value pair
+-- Returns
+--  error message or nil
+function SetSetting_Float(key, value)
+    local sucess, errMsg = pcall(function ()
+        -- Insert
+        local stmt = db:prepare
+        [[
+            INSERT OR IGNORE INTO Settings_Float
+            VALUES(?, ?)
+        ]]
+
+        local errMsg = this.Bind_NonSelect(stmt, "SetSetting_Float (insert)", key, value)
+        if errMsg then
+            return errMsg
+        end
+
+        -- Update
+        stmt = db:prepare
+        [[
+            UPDATE Settings_Float
+            SET Value = ?
+            WHERE Key = ?
+        ]]
+
+        errMsg = this.Bind_NonSelect(stmt, "SetSetting_Float (update)", value, key)
+        if errMsg then
+            return errMsg
+        end
+
+        return nil
+    end)
+
+    if sucess then
+        return errMsg
+    else
+        return "SetSetting_Float: Unknown Error"
     end
 end
 
@@ -181,6 +248,15 @@ function SetInputBinding(binding, actionNames)
         return "DeleteOldPlayerRows: Unknown Error"
     end
 end
+
+------------------------------------ Player Arcade ------------------------------------
+
+-- This should be a table that is pretty much just a json field
+
+-- There will be a hard coded default structure, and any time this row is returned, it needs to be merged with
+-- that default structure (in case new properties are added between releases)
+
+
 
 ----------------------------------- Private Methods -----------------------------------
 

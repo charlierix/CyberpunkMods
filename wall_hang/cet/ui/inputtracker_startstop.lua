@@ -22,7 +22,7 @@ end
 
 function InputTracker_StartStop:Tick()
     -- Hang
-    if self.vars.latch_wallhang then
+    if self.const.latch_wallhang then
         -- This matches logic in GetButtonState, but only flips the bit on keydown
         if self.keys.custom_hang and not self.keys.prev_custom_hang then
             self.hang_latched = not self.hang_latched
@@ -54,7 +54,7 @@ function InputTracker_StartStop:GetButtonState()
     -- Hang doesn't care how long the button has been held down
     local isHangDown = false
 
-    if self.vars.latch_wallhang then
+    if self.const.latch_wallhang then
         isHangDown = self.hang_latched
     else
         if self.keys.custom_hang then       -- don't want to force the checkbox to be checked.  From the user's perspective, they assigned a custom key, they're pressing that key.  How do they know to look two screens deep to also check some checkbox?
