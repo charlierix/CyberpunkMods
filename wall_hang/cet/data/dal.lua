@@ -12,6 +12,8 @@ function EnsureTablesCreated()
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Settings_Float (Key TEXT NOT NULL UNIQUE, Value REAL NOT NULL);") end)
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS InputBindings (Binding TEXT NOT NULL, ActionName TEXT NOT NULL);") end)
+
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Player_Arcade (JSON TEXT NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, IgnoreKey INTEGER UNIQUE);") end)
 end
 
 -------------------------------------- Settings ---------------------------------------
@@ -251,11 +253,75 @@ end
 
 ------------------------------------ Player Arcade ------------------------------------
 
--- This should be a table that is pretty much just a json field
+-- This returns the json (or nil)
+function GetPlayerArcade()
+    local sucess, player, errMsg = pcall(function ()
+        --NOTE: There should never be more than one row, but it's easy enough to order desc and limit 1
+        local stmt = db:prepare
+        [[
+            SELECT JSON
+            FROM Player_Arcade
+            ORDER BY LastUsed DESC
+            LIMIT 1
+        ]]
 
--- There will be a hard coded default structure, and any time this row is returned, it needs to be merged with
--- that default structure (in case new properties are added between releases)
+        local row, errMsg = this.Bind_Select_SingleRow(stmt, "GetPlayerArcade")
+        if row then
+            return row.JSON, errMsg
+        else
+            return nil, errMsg
+        end
+    end)
 
+    if sucess then
+        return player, errMsg
+    else
+        return nil, "GetPlayerArcade: Unknown Error"
+    end
+end
+function SetPlayerArcade(json)
+    local sucess, errMsg = pcall(function ()
+        local time, time_readable = this.GetCurrentTime_AndReadable()
+
+        -- Insert
+        -- NOTE: the 'or ignore' relies on IgnoreKey being unique.  Hardcoding to 1 so there will never be more than one row
+        local stmt = db:prepare
+        [[
+            INSERT OR IGNORE INTO Player_Arcade
+                (JSON, LastUsed, LastUsed_Readable, IgnoreKey)
+            VALUES
+                (?, ?, ?, ?)
+        ]]
+
+        local errMsg = this.Bind_NonSelect(stmt, "SetPlayerArcade (insert)", json, time, time_readable, 1)
+        if errMsg then
+            return errMsg
+        end
+
+        -- Update
+        stmt = db:prepare
+        [[
+            UPDATE Player_Arcade
+            SET
+                JSON = ?,
+                LastUsed = ?,
+                LastUsed_Readable = ?
+        ]]
+
+        errMsg = this.Bind_NonSelect(stmt, "SetPlayerArcade (update)", json, time, time_readable)
+        if errMsg then
+            return errMsg
+        end
+
+        return nil
+    end)
+
+    if sucess then
+        return errMsg
+    else
+        return "SetPlayerArcade: Unknown Error"
+    end
+end
 
 
 ----------------------------------- Private Methods -----------------------------------

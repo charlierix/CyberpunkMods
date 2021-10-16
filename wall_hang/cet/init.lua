@@ -26,6 +26,7 @@ require "core/strings"
 require "core/util"
 
 require "data/dal"
+require "data/player_arcade"
 require "data/util_data"
 
 require "processing/flightmode_transitions"
@@ -322,6 +323,16 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 -- registerHotkey("WallHangTesterButton", "tester hotkey", function()
+
+--     local player_arcade = PlayerArcade:new(o, vars, const, debug)
+--     print(tostring(player_arcade.jump_strength))
+
+--     player_arcade.jump_strength = player_arcade.jump_strength + 6
+--     player_arcade:Save()
+
+--     player_arcade = PlayerArcade:new(o, vars, const, debug)
+--     print(tostring(player_arcade.jump_strength))
+
 -- end)
 
 registerHotkey("WallHang_Config", "Show Config", function()
