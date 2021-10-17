@@ -215,8 +215,8 @@ function this.Define_LatchWallHang(const)
 
         position =
         {
-            pos_x = 0,
-            pos_y = 0,
+            pos_x = 100,
+            pos_y = -70,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -262,7 +262,7 @@ function this.Define_MouseSensitivity_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 30,
+            pos_x = 24,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -328,7 +328,7 @@ function this.Define_RightStickSensitivity_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 30,
+            pos_x = 24,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -364,7 +364,7 @@ function this.Define_RightStickSensitivity(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 30,
+            pos_y = 24,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -394,7 +394,7 @@ function this.Define_JumpStrength_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 30,
+            pos_x = 24,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -430,7 +430,7 @@ function this.Define_JumpStrength(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 30,
+            pos_y = 24,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,

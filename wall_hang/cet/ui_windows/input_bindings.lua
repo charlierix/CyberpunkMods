@@ -785,13 +785,41 @@ function this.GetFinalObservedActionNames(keys, o)
     end
 
     -- Second pass, build array
-    local actionNames = {}
+    --local actionNames = this.GetFinalObservedActionNames_AllActions(keys.watching, min_time, timespan)
+    local actionNames = this.GetFinalObservedActionNames_FirstAction(keys.watching, min_time, timespan)     -- when multiple actions are acted upon, the quicklatch toggles between activated/deactivated.  So just look for the first action that happens and hope it consistently fires in all cases
 
-    for actionName, downTime in pairs(keys.watching) do
+    return actionNames, true
+end
+
+function this.GetFinalObservedActionNames_AllActions(action_times, min_time, timespan)
+    local retVal = {}
+
+    for actionName, downTime in pairs(action_times) do
         if downTime - min_time <= timespan then
-            actionNames[#actionNames+1] = actionName
+            retVal[#retVal+1] = actionName
         end
     end
 
-    return actionNames, true
+    return retVal
+end
+function this.GetFinalObservedActionNames_FirstAction(action_times, min_time, timespan)
+    local first_action = nil
+    local first_time = nil
+
+    for actionName, downTime in pairs(action_times) do
+        if downTime - min_time <= timespan then
+            if not first_time or downTime < first_time then
+                first_action = actionName
+                first_time = downTime
+            end
+        end
+    end
+
+    local retVal = {}
+
+    if first_action then
+        retVal[#retVal+1] = first_action
+    end
+
+    return retVal
 end
