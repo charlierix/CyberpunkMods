@@ -6,7 +6,7 @@ local BACKWARD_POW = 1.5
 local STRAIGHTUPDOT = 0.75
 local up = nil      -- can't use vector4 before init
 
-function Process_Jump_Calculate(o, vars, const, debug)
+function Process_Jump_Calculate(o, player, vars, const, debug)
     o:GetCamera()
     if not o.lookdir_forward then       -- shouldn't happen
         Transition_ToStandard(vars, const, debug, o)
@@ -17,7 +17,7 @@ function Process_Jump_Calculate(o, vars, const, debug)
     local jump_dir = this.CalculateJumpDirection_Direct(o.lookdir_forward, vars.normal)
 
     -- Rotate up so the jump will be in an arc
-    local impulse = this.GetImpulse(jump_dir, const.jump_strength)
+    local impulse = this.GetImpulse(jump_dir, player.jump_strength)
 
     --NOTE: In the future, there may be reasons to not adjust the look direction (because they are
     --holding a direction key, or config says not to).  In those cases, go straight to jump_impulse

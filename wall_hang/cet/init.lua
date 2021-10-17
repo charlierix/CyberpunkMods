@@ -26,6 +26,7 @@ require "core/strings"
 require "core/util"
 
 require "data/dal"
+require "data/player"
 require "data/player_arcade"
 require "data/util_data"
 
@@ -116,8 +117,6 @@ local const =
     rayFrom_Z = 1.5,
     rayLen = 1.2,
 
-    jump_strength = 11,
-
     teleturn_radians_per_second = math.pi * 3.5,      -- this needs to be very fast, teleturn is a hack and can't last very long.  Just enough motion that the player can sense the direction change (it's very disorienting to instantly face a new direction)
 
     shouldShowDebugWindow = false
@@ -183,6 +182,9 @@ local vars_ui =
 
     --keys          -- gets added so it doesn't have to be included in a ton of function params (only used by the input bindings and transition to/from)
 }
+
+local player_arcade = nil
+local player = nil
 
 --------------------------------------------------------------------
 
@@ -274,6 +276,11 @@ registerForEvent("onUpdate", function(deltaTime)
         do return end
     end
 
+    if not player or not player_arcade then     -- they'll both be nil or non nil together, but checking both just to be safe
+        player_arcade = PlayerArcade:new(o, vars, const, debug)
+        player = Player:new(o, vars, const, debug, player_arcade)
+    end
+
     StopSound(o, vars)
 
     o:GetInWorkspot()
@@ -304,7 +311,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     elseif vars.flightMode == const.flightModes.jump_calculate then
         -- Figure out direction/strength to jump
-        Process_Jump_Calculate(o, vars, const, debug)
+        Process_Jump_Calculate(o, player, vars, const, debug)
 
     elseif vars.flightMode == const.flightModes.jump_teleturn then
         -- Use teleport to adjust the look direction over a few frames
@@ -323,16 +330,6 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 -- registerHotkey("WallHangTesterButton", "tester hotkey", function()
-
---     local player_arcade = PlayerArcade:new(o, vars, const, debug)
---     print(tostring(player_arcade.jump_strength))
-
---     player_arcade.jump_strength = player_arcade.jump_strength + 6
---     player_arcade:Save()
-
---     player_arcade = PlayerArcade:new(o, vars, const, debug)
---     print(tostring(player_arcade.jump_strength))
-
 -- end)
 
 registerHotkey("WallHang_Config", "Show Config", function()
@@ -369,8 +366,8 @@ registerForEvent("onDraw", function()
         do return end
     end
 
-    if shouldShowConfig then
-        shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, o, const)
+    if shouldShowConfig and player and player_arcade then
+        shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, o, const, player, player_arcade)
         isConfigRepress = false
 
         if not shouldShowConfig then

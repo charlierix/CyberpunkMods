@@ -323,7 +323,6 @@ function SetPlayerArcade(json)
     end
 end
 
-
 ----------------------------------- Private Methods -----------------------------------
 
 -- This returns an int and a human readable string of that time (yyyy-mm-dd hh:mm:ss), that can be stored

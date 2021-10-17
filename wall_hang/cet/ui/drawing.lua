@@ -2,7 +2,7 @@
 -- Returns:
 --  true: keep showing config
 --  false: stop showing config
-function DrawConfig(isCloseRequested, vars, vars_ui, o, const)
+function DrawConfig(isCloseRequested, vars, vars_ui, o, const, player, player_arcade)
     local continueShowing = true        -- this should go to false when isCloseRequested true, unless the window is in a dirty state
 
     local window = vars_ui.configWindow
@@ -36,7 +36,7 @@ function DrawConfig(isCloseRequested, vars, vars_ui, o, const)
         Refresh_LineHeights(vars_ui)
 
         if vars_ui.currentWindow == const.windows.main then
-            continueShowing = DrawWindow_Main(isCloseRequested, vars, vars_ui, window, const)
+            continueShowing = DrawWindow_Main(isCloseRequested, vars, vars_ui, window, const, player, player_arcade)
 
         elseif vars_ui.currentWindow == const.windows.input_bindings then
             continueShowing = DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, const)
