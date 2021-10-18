@@ -1,6 +1,10 @@
 local this = {}
 
+local RADIANS_RIGHTLEFT = 70 * math.pi / 180
+
 local up = nil      -- can't use vector4 before init
+local rot_right = nil
+local rot_left = nil
 
 function Process_Standard(o, vars, const, debug, startStopTracker)
     -- Cheapest check is looking at keys
@@ -26,13 +30,10 @@ function Process_Standard(o, vars, const, debug, startStopTracker)
         up = Vector4.new(0, 0, 1, 0)
     end
 
-    local rayDir = this.GetDirectionHorz(o.lookdir_forward)
-
+    -- Fire a few rays, use the closest point
     local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
-    --local toPos = Vector4.new(fromPos.x + (rayDir.x * const.rayLen), fromPos.y + (rayDir.y * const.rayLen), fromPos.z + const.rayFrom_Z + (rayDir.z * const.rayLen), 1)       -- z constant was being added twice
-    local toPos = Vector4.new(fromPos.x + (rayDir.x * const.rayLen), fromPos.y + (rayDir.y * const.rayLen), fromPos.z + (rayDir.z * const.rayLen), 1)
 
-    local hit, normal = o:RayCast(fromPos, toPos, true)
+    local hit, normal = this.FireRays(fromPos, o, const)
     if not hit then
         do return end
     end
@@ -48,6 +49,86 @@ function Process_Standard(o, vars, const, debug, startStopTracker)
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.FireRays_ORIG(fromPos, o, const)
+    local rayDir = this.GetDirectionHorz(o.lookdir_forward)
+
+    --local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
+    --local toPos = Vector4.new(fromPos.x + (rayDir.x * const.rayLen), fromPos.y + (rayDir.y * const.rayLen), fromPos.z + const.rayFrom_Z + (rayDir.z * const.rayLen), 1)       -- z constant was being added twice
+    local toPos = Vector4.new(fromPos.x + (rayDir.x * const.rayLen), fromPos.y + (rayDir.y * const.rayLen), fromPos.z + (rayDir.z * const.rayLen), 1)
+
+    local hit, normal = o:RayCast(fromPos, toPos, true)
+
+    return hit, normal
+end
+function this.FireRays(fromPos, o, const)
+    local hit_final = nil
+    local normal_final = nil
+
+    if not rot_right then
+        rot_right = Quaternion_FromAxisRadians(up, -RADIANS_RIGHTLEFT)
+        rot_left = Quaternion_FromAxisRadians(up, RADIANS_RIGHTLEFT)
+    end
+
+    -- Up
+    local hit, normal = this.FireRay(fromPos, up, o, const)
+    hit_final, normal_final = this.ReturnClosestHit(hit_final, normal_final, hit, normal, o.pos)
+
+    -- Dir facing
+    hit, normal = this.FireRay(fromPos, o.lookdir_forward, o, const)
+    hit_final, normal_final = this.ReturnClosestHit(hit_final, normal_final, hit, normal, o.pos)
+
+    -- Horizontal facing
+    local horz_forward = this.GetDirectionHorz(o.lookdir_forward)
+    hit, normal = this.FireRay(fromPos, horz_forward, o, const)
+    hit_final, normal_final = this.ReturnClosestHit(hit_final, normal_final, hit, normal, o.pos)
+
+    -- Horizontal right
+    local horz_right = RotateVector3D(horz_forward, rot_right)
+    hit, normal = this.FireRay(fromPos, horz_right, o, const)
+    hit_final, normal_final = this.ReturnClosestHit(hit_final, normal_final, hit, normal, o.pos)
+
+    -- Horizontal left
+    local horz_left = RotateVector3D(horz_forward, rot_left)
+    hit, normal = this.FireRay(fromPos, horz_left, o, const)
+    hit_final, normal_final = this.ReturnClosestHit(hit_final, normal_final, hit, normal, o.pos)
+
+    return hit_final, normal_final
+end
+-- This fires a ray, if there's a hit, it finds the closest point on the plane and tries that
+function this.FireRay(fromPos, direction, o, const)
+    local toPos = Vector4.new(fromPos.x + (direction.x * const.rayLen), fromPos.y + (direction.y * const.rayLen), fromPos.z + (direction.z * const.rayLen), 1)
+
+    local hit, normal = o:RayCast(fromPos, toPos, true)
+
+
+    --TODO: Find the closest point on plane, see if that's a hit and use that
+
+
+
+
+    return hit, normal
+end
+function this.ReturnClosestHit(hit1, norm1, hit2, norm2, pos)
+    if not hit1 and not hit2 then
+        return nil, nil
+
+    elseif hit1 and not hit2 then
+        return hit1, norm1
+
+    elseif hit2 and not hit1 then
+        return hit2, norm2
+    end
+
+    local dist1 = GetVectorDiffLengthSqr(pos, hit1)
+    local dist2 = GetVectorDiffLengthSqr(pos, hit2)
+
+    if dist1 < dist2 then
+        return hit1, norm1
+    else
+        return hit2, norm2
+    end
+end
 
 function this.GetDirectionHorz(lookdir)
     local onPlane = GetProjectedVector_AlongPlane(lookdir, up)
