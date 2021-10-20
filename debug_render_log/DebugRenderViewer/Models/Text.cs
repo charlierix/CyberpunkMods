@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace DebugRenderViewer.Models
 {
@@ -10,8 +11,8 @@ namespace DebugRenderViewer.Models
     {
         public string text { get; init; }
 
-        public string color { get; init; }      // optional
-        
+        public Color? color { get; init; }      // optional
+
         public double? fontsize_mult { get; init; }     // optional
     }
 }

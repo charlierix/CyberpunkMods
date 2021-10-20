@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DebugRenderViewer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Debug Renderer" ResizeMode="CanResizeWithGrip" Width="800" Height="600">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- File -->
+        <Grid Grid.Row="0" Margin="6,4,6,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="4"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Column="0" Text="file" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="2" x:Name="txtFile" VerticalAlignment="Center" AllowDrop="True" PreviewDragEnter="txtFile_PreviewDragEnter" PreviewDragOver="txtFile_PreviewDragEnter" Drop="txtFile_Drop"/>
+        </Grid>
+
+        <Button Grid.Row="1" Margin="100" Click="Button_Click"/>
 
     </Grid>
 </Window>

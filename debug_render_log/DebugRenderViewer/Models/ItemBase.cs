@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace DebugRenderViewer.Models
 {
@@ -13,7 +14,7 @@ namespace DebugRenderViewer.Models
         public string category_key { get; init; }       //NOTE: The json will just be populate this property
         public Category category { get; init; }
 
-        public string color { get; init; }
+        public Color? color { get; init; }
 
         public double? size_mult { get; init; }
 

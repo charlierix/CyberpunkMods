@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace DebugRenderViewer.Models
 {
@@ -10,7 +11,7 @@ namespace DebugRenderViewer.Models
     {
         public string name { get; init; }       // optional
 
-        public string back_color { get; init; }     // optional
+        public Color? back_color { get; init; }     // optional
 
         public ItemBase[] items { get; init; }
 
