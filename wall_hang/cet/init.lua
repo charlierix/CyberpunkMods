@@ -16,6 +16,7 @@ require "core/check_other_mods"
 require "core/color"
 require "core/customprops_wrapper"
 require "core/debug_code"
+require "core/debug_render_logger"
 require "core/gameobj_accessor"
 require "core/lists"
 require "core/math_basic"
@@ -329,8 +330,41 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
--- registerHotkey("WallHangTesterButton", "tester hotkey", function()
--- end)
+--registerHotkey("WallHangTesterButton", "tester hotkey", function()
+    -- local log = DebugRenderLogger:new()
+
+    -- log:WriteLine_Global("adding categories")
+
+    -- log:DefineCategory("a", "DB0", 0.8)
+    -- log:DefineCategory("b", "0FF", 3.14159)
+
+    -- log:WriteLine_Global("first frame")
+
+    -- log:Add_Dot(Vector4.new(0, 0, 0, 1))
+    -- log:Add_Dot(Vector4.new(1, 0, 0, 1), nil, "F00")
+    -- log:Add_Dot(Vector4.new(0, 1, 0, 1), nil, "0F0")
+    -- log:Add_Dot(Vector4.new(0, 0, 1, 1), nil, "00F")
+
+    -- log:WriteLine_Frame("hello")
+    -- log:WriteLine_Frame("there", "888")
+    -- log:WriteLine_Frame("everybody", "666", 1.5)
+
+    -- log:WriteLine_Global("second frame", "F00", 24)
+
+    -- log:NewFrame("second", "222")
+
+    -- log:Add_Line(Vector4.new(12, 0, 0, 1), Vector4.new(0, 12, 0, 1), "a")
+    -- log:Add_Line(Vector4.new(24, 0, 0, 1), Vector4.new(0, 24, 0, 1), "b", "000", 8)
+    -- log:Add_Circle(Vector4.new(0, 0, 0, 1), Vector4.new(0, 1, 0, 1), 3, nil, nil, nil, "a circle")
+
+    -- log:NewFrame("third")
+
+    -- log:Add_Square(Vector4.new(72, 72, 72, 1), Vector4.new(0, -1, -1, 1), 3, 8)
+
+    -- log:WriteLine_Global("finished", nil, 0.5)
+
+    -- log:Save()
+--end)
 
 registerHotkey("WallHang_Config", "Show Config", function()
     if shouldShowConfig then

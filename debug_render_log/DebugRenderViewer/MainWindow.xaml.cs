@@ -15,14 +15,17 @@ using System.Windows.Shapes;
 
 namespace DebugRenderViewer
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        #region Constructor
+
         public MainWindow()
         {
             InitializeComponent();
+
+            Background = SystemColors.ControlBrush;
         }
+
+        #endregion
     }
 }
