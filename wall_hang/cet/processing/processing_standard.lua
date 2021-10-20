@@ -103,7 +103,7 @@ function this.FireRay(fromPos, direction, o, const)
 
 
     --TODO: Find the closest point on plane, see if that's a hit and use that
-
+    --GetClosestPoint_Plane_Point()
 
 
 
