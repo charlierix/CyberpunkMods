@@ -5,27 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DebugRenderViewer"
         mc:Ignorable="d"
-        Title="Debug Renderer" ResizeMode="CanResizeWithGrip" Width="800" Height="600">
+        Title="Debug Renderer" ResizeMode="CanResizeWithGrip" Width="800" Height="600" Loaded="Window_Loaded">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
+        <Grid Name="grdViewPort" Background="Transparent">
+            <Viewport3D Name="_viewport" IsHitTestVisible="False">
+                <Viewport3D.Camera>
+                    <PerspectiveCamera x:Name="_camera" Position="0,0,7" LookDirection="0,0,-1" UpDirection="0,1,0" FieldOfView="45"/>
+                </Viewport3D.Camera>
+                <ModelVisual3D>
+                    <ModelVisual3D.Content>
+                        <Model3DGroup>
+                            <AmbientLight Color="{Binding Path=LightColor_Ambient}" />
+                            <DirectionalLight Color="{Binding Path=LightColor_Primary}" Direction="1,-1,-1" />
+                            <DirectionalLight Color="{Binding Path=LightColor_Secondary}" Direction="-1,1,1" />
+                        </Model3DGroup>
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+            </Viewport3D>
 
-        <!-- File -->
-        <Grid Grid.Row="0" Margin="6,4,6,2">
+            <!--<StackPanel VerticalAlignment="Top" Margin="6">
+                <ItemsControl ItemsSource="{Binding Path=Messages_Top}"/>
+            </StackPanel>-->
+
+            <!--<StackPanel VerticalAlignment="Bottom" Margin="6">
+                <ItemsControl ItemsSource="{Binding Path=Messages_Bottom}"/>
+            </StackPanel>-->
+        </Grid>
+
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="6,6,6,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="4"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            
+
             <TextBlock Grid.Column="0" Text="file" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="2" x:Name="txtFile" VerticalAlignment="Center" AllowDrop="True" PreviewDragEnter="txtFile_PreviewDragEnter" PreviewDragOver="txtFile_PreviewDragEnter" Drop="txtFile_Drop"/>
+            <TextBox Grid.Column="2" x:Name="txtFile" VerticalAlignment="Center" AllowDrop="True" Padding="2" PreviewDragEnter="txtFile_PreviewDragEnter" PreviewDragOver="txtFile_PreviewDragEnter" Drop="txtFile_Drop" TextChanged="txtFile_TextChanged"/>
+            <TextBlock Grid.Column="2" x:Name="lblFileHint" Text="drag file onto this box" Foreground="Silver" Margin="6,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Grid>
 
-        <Button Grid.Row="1" Margin="100" Click="Button_Click"/>
-
+        <Button x:Name="btnLeft" Width="24" Height="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0" Click="btnLeft_Click"/>
+        <Button x:Name="btnRight" Width="24" Height="60" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,0" Click="btnRight_Click"/>
+        <Slider x:Name="trkMultiFrame" IsSnapToTickEnabled="True" SmallChange="1" Interval="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="16,0,16,16" ValueChanged="trkMultiFrame_ValueChanged" TickPlacement="Both"/>
     </Grid>
 </Window>
