@@ -26,7 +26,7 @@ namespace DebugRenderViewer
 {
     public partial class MainWindow : Window
     {
-        #region class: DefaultColorBrushes
+        #region record: DefaultColorBrushes
 
         private record DefaultColorBrushes
         {
@@ -43,12 +43,22 @@ namespace DebugRenderViewer
         }
 
         #endregion
+        #region record: TextEntry
+
+        private record TextEntry
+        {
+            public Text Model { get; init; }
+            public TextBlock Control { get; init; }
+        }
+
+        #endregion
 
         #region Declaration Section
 
         private const double SIZE_DOT = 0.06;
         private const double SIZE_LINE = 0.025;
         private const double SIZE_CIRCLE = 0.025;
+        private const double FONTSIZE = 11;
 
         private readonly DropShadowEffect _errorEffect;
         private readonly DefaultColorBrushes _defaultBrushes = GetDefaultBrushes();
@@ -59,6 +69,8 @@ namespace DebugRenderViewer
 
         private List<Visual3D> _visuals = new List<Visual3D>();
         private List<BillboardLine3DSet> _lines_defaultColor = new List<BillboardLine3DSet>();
+        private List<TextEntry> _globalText = new List<TextEntry>();
+        private List<TextEntry> _frameText = new List<TextEntry>();
 
         private bool _hasAutoSetCamera = false;
 
@@ -305,19 +317,32 @@ namespace DebugRenderViewer
             {
                 line.Color = _defaultBrushes.Line_Color;
             }
+
+            foreach (var text in _globalText.Concat(_frameText).Where(o => o.Model.color == null))
+            {
+                text.Control.Foreground = TextBrush;
+            }
         }
 
         private void LoadScene(LogScene scene)
         {
             _viewport.Children.RemoveAll(_visuals);
             _visuals.Clear();
+            panelGlobalText.Children.Clear();
+            _globalText.Clear();
+            panelFrameText.Children.Clear();
+            _frameText.Clear();
 
             _scene = scene;
 
-            if (scene.frames.Length > 0)
-                ShowFrame(scene.frames[0]);
+            if (_scene.frames.Length > 0)
+                ShowFrame(_scene.frames[0]);
+
+            ShowText(panelGlobalText, _globalText, _scene.text);
 
             EnableDisableMultiFrame();
+
+            RefreshColors();
         }
 
         private void ShowFrame(LogFrame frame)
@@ -325,6 +350,7 @@ namespace DebugRenderViewer
             _viewport.Children.RemoveAll(_visuals);
             _visuals.Clear();
             _lines_defaultColor.Clear();
+            panelFrameText.Children.Clear();
 
             //TODO: Don't make a visual per item.  Group by type, only create separate if there are tooltips
             //var test = new Button();
@@ -367,6 +393,8 @@ namespace DebugRenderViewer
                 AutoSetCamera();
                 _hasAutoSetCamera = true;
             }
+
+            ShowText(panelFrameText, _frameText, frame.text);
 
             RefreshColors();
         }
@@ -461,6 +489,38 @@ namespace DebugRenderViewer
             transform.Children.Add(transform2D.From2D_BackTo3D);
 
             return transform;
+        }
+
+        private static void ShowText(StackPanel panel, List<TextEntry> entries, Text[] text)
+        {
+            panel.Children.Clear();
+            entries.Clear();
+
+            if (text == null || text.Length == 0)
+                return;
+
+            foreach (Text entry in text)
+            {
+                TextBlock control = new TextBlock()
+                {
+                    Text = entry.text,
+                    TextWrapping = TextWrapping.Wrap,
+                    FontSize = FONTSIZE * (entry.fontsize_mult ?? 1),
+                    Margin = new Thickness(0, 1, 0, 3),
+                };
+
+                if (entry.color != null)
+                    control.Foreground = new SolidColorBrush(entry.color.Value);
+
+                panel.Children.Add(control);
+
+                entries.Add(new TextEntry()
+                {
+                    Control = control,
+                    Model = entry,
+                });
+            }
+
         }
 
         private void EnableDisableMultiFrame()

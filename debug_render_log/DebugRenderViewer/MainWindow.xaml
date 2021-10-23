@@ -66,9 +66,66 @@
             </Expander>
         </StackPanel>
 
-        <!-- Navigation -->
+        <!-- Left/Right Buttons -->
         <Button x:Name="btnLeft" Width="24" Height="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0" Click="btnLeft_Click"/>
         <Button x:Name="btnRight" Width="24" Height="60" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,0" Click="btnRight_Click"/>
-        <Slider x:Name="trkMultiFrame" IsSnapToTickEnabled="True" SmallChange="1" Interval="1" Opacity="0.66" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="16,0,16,16" ValueChanged="trkMultiFrame_ValueChanged" TickPlacement="Both"/>
+
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="6,0,6,6">
+            <!-- Text Logs -->
+            <Expander Header="frame text" Foreground="{Binding Path=TextBrush}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,12">
+                <Expander.LayoutTransform>
+                    <RotateTransform Angle="90"/>
+                </Expander.LayoutTransform>
+
+                <Grid Margin="6">
+                    <Grid.LayoutTransform>
+                        <RotateTransform Angle="-90"/>
+                    </Grid.LayoutTransform>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="4"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MaxWidth="800" MaxHeight="300" Padding="12">
+                        <StackPanel x:Name="panelFrameText"/>
+                    </ScrollViewer>
+                </Grid>
+            </Expander>
+
+            <Expander Header="global text" Foreground="{Binding Path=TextBrush}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,12">
+                <Expander.LayoutTransform>
+                    <RotateTransform Angle="90"/>
+                </Expander.LayoutTransform>
+
+                <Grid Margin="6">
+                    <Grid.LayoutTransform>
+                        <RotateTransform Angle="-90"/>
+                    </Grid.LayoutTransform>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="4"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MaxWidth="800" MaxHeight="300" Padding="12">
+                        <StackPanel x:Name="panelGlobalText"/>
+                    </ScrollViewer>
+                </Grid>
+            </Expander>
+
+            <!-- Navigation Slider -->
+            <Slider x:Name="trkMultiFrame" IsSnapToTickEnabled="True" SmallChange="1" Interval="1" Opacity="0.66" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,10" ValueChanged="trkMultiFrame_ValueChanged" TickPlacement="Both"/>
+        </StackPanel>
     </Grid>
 </Window>
