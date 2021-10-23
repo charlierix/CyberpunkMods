@@ -160,7 +160,7 @@ namespace DebugRenderViewer
             }
             else if(item.radius != null)
             {
-                retVal = new ItemCircle()
+                retVal = new ItemCircle_Edge()
                 {
                     center = ConvertPoint(item.center),
                     normal = ConvertVector(item.normal),
@@ -169,7 +169,7 @@ namespace DebugRenderViewer
             }
             else if(item.size_x != null)
             {
-                retVal = new ItemSquare()
+                retVal = new ItemSquare_Filled()
                 {
                     center = ConvertPoint(item.center),
                     normal = ConvertVector(item.normal),

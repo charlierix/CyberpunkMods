@@ -7,7 +7,7 @@ using System.Windows.Media.Media3D;
 
 namespace DebugRenderViewer.Models
 {
-    public record ItemCircle : ItemBase
+    public record ItemCircle_Edge : ItemBase
     {
         public Point3D center { get; init; }
 

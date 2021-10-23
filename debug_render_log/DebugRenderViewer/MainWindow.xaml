@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DebugRenderViewer"
         mc:Ignorable="d"
-        Title="Debug Renderer" ResizeMode="CanResizeWithGrip" Width="800" Height="600" Loaded="Window_Loaded">
+        Title="Debug Renderer" ResizeMode="CanResizeWithGrip" Width="1000" Height="1000" Loaded="Window_Loaded">
     <Grid>
+        <!-- Viewport -->
         <Grid Name="grdViewPort" Background="Transparent">
             <Viewport3D Name="_viewport" IsHitTestVisible="False">
                 <Viewport3D.Camera>
@@ -25,6 +26,7 @@
         </Grid>
 
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="6,6,6,0">
+            <!-- Filename -->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
@@ -37,7 +39,8 @@
                 <TextBlock Grid.Column="2" x:Name="lblFileHint" Text="drag file onto this box" Foreground="{Binding Path=HintBrush}" Margin="6,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </Grid>
 
-            <Expander Header="settiings" Foreground="{Binding Path=TextBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,12,0,0">
+            <!-- Settings -->
+            <Expander Header="settings" Foreground="{Binding Path=TextBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,12,0,0">
                 <Expander.LayoutTransform>
                     <RotateTransform Angle="-90"/>
                 </Expander.LayoutTransform>
@@ -58,11 +61,12 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="background"/>
-                    <Slider Grid.Column="2" Grid.Row="0" x:Name="trkBackground" Minimum="0" Maximum="1" Value="0.93" Opacity="0.66" ValueChanged="trkBackground_ValueChanged"/>
+                    <Slider Grid.Column="2" Grid.Row="0" x:Name="trkBackground" Minimum="0" Maximum="1" Value="0.93" LargeChange="0.2" Opacity="0.66" ValueChanged="trkBackground_ValueChanged"/>
                 </Grid>
             </Expander>
         </StackPanel>
 
+        <!-- Navigation -->
         <Button x:Name="btnLeft" Width="24" Height="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0" Click="btnLeft_Click"/>
         <Button x:Name="btnRight" Width="24" Height="60" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,0" Click="btnRight_Click"/>
         <Slider x:Name="trkMultiFrame" IsSnapToTickEnabled="True" SmallChange="1" Interval="1" Opacity="0.66" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="16,0,16,16" ValueChanged="trkMultiFrame_ValueChanged" TickPlacement="Both"/>
