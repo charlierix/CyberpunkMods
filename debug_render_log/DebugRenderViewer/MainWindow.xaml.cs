@@ -24,10 +24,26 @@ using System.Windows.Shapes;
 
 namespace DebugRenderViewer
 {
+    /// <summary>
+    /// This views 3D objects defined in a json file that was built from in game
+    /// </summary>
+    /// <remarks>
+    /// Models\LogScene is the root filetype
+    /// 
+    /// See txtFile_TextChanged
+    /// 
+    /// A lot of this code is just copied from Debug3DWindow and UtilityWPF
+    /// https://github.com/charlierix/PartyPeople/blob/master/Math_WPF/WPF/Controls3D/Debug3DWindow.xaml
+    /// https://github.com/charlierix/PartyPeople/blob/master/Math_WPF/WPF/UtilityWPF.cs
+    /// </remarks>
     public partial class MainWindow : Window
     {
         #region record: DefaultColorBrushes
 
+        /// <summary>
+        /// Items that need the default opposite color will use these materials.  Whenever the background color
+        /// changes, these will get updated
+        /// </summary>
         private record DefaultColorBrushes
         {
             public Material Dot_Material { get; init; }
@@ -40,15 +56,27 @@ namespace DebugRenderViewer
 
             public Material Square_Material { get; init; }
             public SolidColorBrush Square_Brush { get; init; }
+
+            public SolidColorBrush Text_Brush { get; init; }
         }
 
         #endregion
-        #region record: TextEntry
+        #region record: VisualEntry
 
-        private record TextEntry
+        private record VisualEntry
         {
-            public Text Model { get; init; }
-            public TextBlock Control { get; init; }
+            public ItemBase Model { get; init; }
+            public Visual3D Visual { get; init; }
+        }
+
+        #endregion
+        #region record: WindowSettings
+
+        private record WindowSettings
+        {
+            public double BackgroundPercent { get; init; }
+            public double? Width { get; init; }
+            public double? Height { get; init; }
         }
 
         #endregion
@@ -63,14 +91,16 @@ namespace DebugRenderViewer
         private readonly DropShadowEffect _errorEffect;
         private readonly DefaultColorBrushes _defaultBrushes = GetDefaultBrushes();
 
+        private readonly string _settingsFilename;
+        private WindowSettings _settings = null;
+
         private TrackBallRoam _trackball = null;
 
         private LogScene _scene = null;
 
         private List<Visual3D> _visuals = new List<Visual3D>();
         private List<BillboardLine3DSet> _lines_defaultColor = new List<BillboardLine3DSet>();
-        private List<TextEntry> _globalText = new List<TextEntry>();
-        private List<TextEntry> _frameText = new List<TextEntry>();
+        private List<VisualEntry> _tooltips = new List<VisualEntry>();
 
         private bool _hasAutoSetCamera = false;
 
@@ -93,6 +123,8 @@ namespace DebugRenderViewer
                 Opacity = .8,
             };
 
+            _settingsFilename = System.IO.Path.Combine(Environment.CurrentDirectory, "window settings.json");
+
             //TODO: Use a graphic instead
             btnLeft.Content = "<";
             btnRight.Content = ">";
@@ -104,6 +136,7 @@ namespace DebugRenderViewer
 
         #region Public Properties
 
+        // Elements in xaml are bound to these properties
         public Brush TextBrush
         {
             get
@@ -150,7 +183,20 @@ namespace DebugRenderViewer
                 _trackball.Mappings.AddRange(TrackBallMapping.GetPrebuilt(TrackBallMapping.PrebuiltMapping.MouseComplete));
                 //_trackball.GetOrbitRadius += new GetOrbitRadiusHandler(Trackball_GetOrbitRadius);
 
+                LoadSettings();
+
                 RefreshColors();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                SaveSettings();
             }
             catch (Exception ex)
             {
@@ -242,6 +288,33 @@ namespace DebugRenderViewer
             }
         }
 
+        private void grdViewPort_MouseMove(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                borderToolTip.Visibility = Visibility.Collapsed;
+
+                if (_tooltips.Count == 0)
+                    return;
+
+                // Fire a ray at the mouse point
+                Point clickPoint = e.GetPosition(grdViewPort);
+
+                var hits = UtilityWPF.CastRay(out RayHitTestParameters clickRay, clickPoint, grdViewPort, _camera, _viewport, true, onlyVisuals: _tooltips.Select(o => o.Visual));
+                if (hits.Count == 0)
+                    return;
+
+                VisualEntry entry = GetTooltipHit(_tooltips, hits);
+
+                borderToolTip.Margin = new Thickness(clickPoint.X + 16, clickPoint.Y + 16, 0, 0);
+                borderToolTip.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void btnLeft_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -285,8 +358,65 @@ namespace DebugRenderViewer
 
         #region Private Methods
 
+        private void SaveSettings()
+        {
+            var settings = (_settings ?? new WindowSettings()) with
+            {
+                BackgroundPercent = trkBackground.Value,
+            };
+
+            if (WindowState == WindowState.Normal)
+            {
+                settings = settings with
+                {
+                    Width = Width,
+                    Height = Height,
+                };
+            }
+
+            var options = new JsonSerializerOptions()
+            {
+                WriteIndented = true,
+            };
+
+            string serialized = JsonSerializer.Serialize(settings, options);
+
+            File.WriteAllText(_settingsFilename, serialized);
+        }
+        private void LoadSettings()
+        {
+            if (!File.Exists(_settingsFilename))
+                return;
+
+            try
+            {
+                string jsonString = System.IO.File.ReadAllText(_settingsFilename);
+
+                var settings = JsonSerializer.Deserialize<WindowSettings>(jsonString);
+
+                trkBackground.Value = settings.BackgroundPercent;
+
+                if (settings.Width != null && settings.Height != null)
+                {
+                    Width = settings.Width.Value;
+                    Height = settings.Height.Value;
+                }
+
+                _settings = settings;
+            }
+            catch (Exception) { }       // ignore errors, just show the window
+        }
+
+        /// <summary>
+        /// Any item that doesn't have an explicit color defined will but updated by this function.  Colors are chosen
+        /// that will stand out against the current background
+        /// </summary>
+        /// <remarks>
+        /// This modifies 2D controls as well as items in the 3D scene
+        /// </remarks>
         private void RefreshColors()
         {
+            // Figure out the background
             Color background;
             double percentGray;
 
@@ -303,6 +433,7 @@ namespace DebugRenderViewer
 
             Background = new SolidColorBrush(background);
 
+            // Apply the opposite color to other items
             Color opposite = UtilityWPF.OppositeColor_BW(background);
             TextBrush = new SolidColorBrush(opposite);
             HintBrush = new SolidColorBrush(Color.FromArgb(128, opposite.R, opposite.G, opposite.B));
@@ -312,79 +443,92 @@ namespace DebugRenderViewer
             _defaultBrushes.Line_Color = GetGray(GetComplementaryGray(percentGray));
             _defaultBrushes.Circle_Brush.Color = GetGray(GetComplementaryGray(percentGray));
             _defaultBrushes.Square_Brush.Color = GetGray(GetComplementaryGray(percentGray), 0.5);
+            _defaultBrushes.Text_Brush.Color = opposite;
 
             foreach (var line in _lines_defaultColor)
             {
                 line.Color = _defaultBrushes.Line_Color;
             }
+        }
+        private static DefaultColorBrushes GetDefaultBrushes()
+        {
+            var dot_brush = new SolidColorBrush(Colors.Black);
+            var circle_brush = new SolidColorBrush(Colors.Black);
+            var square_brush = new SolidColorBrush(Colors.Black);
+            var text_brush = new SolidColorBrush(Colors.Black);
 
-            foreach (var text in _globalText.Concat(_frameText).Where(o => o.Model.color == null))
+            return new DefaultColorBrushes()
             {
-                text.Control.Foreground = TextBrush;
-            }
+                Dot_Brush = dot_brush,
+                Dot_Material = GetMaterial(dot_brush),
+
+                Line_Color = Colors.Black,
+
+                Circle_Brush = circle_brush,
+                Circle_Material = GetMaterial(circle_brush),
+
+                Square_Brush = square_brush,
+                Square_Material = GetMaterial(square_brush),
+
+                Text_Brush = text_brush,
+            };
         }
 
+        /// <summary>
+        /// This is a complete refresh of all items (3D objects, log text)
+        /// </summary>
         private void LoadScene(LogScene scene)
         {
             _viewport.Children.RemoveAll(_visuals);
             _visuals.Clear();
             panelGlobalText.Children.Clear();
-            _globalText.Clear();
             panelFrameText.Children.Clear();
-            _frameText.Clear();
 
             _scene = scene;
 
             if (_scene.frames.Length > 0)
                 ShowFrame(_scene.frames[0]);
 
-            ShowText(panelGlobalText, _globalText, _scene.text);
+            ShowText(panelGlobalText, _scene.text, _defaultBrushes.Text_Brush);
 
             EnableDisableMultiFrame();
 
             RefreshColors();
         }
 
+        /// <summary>
+        /// Items are broken down into frames.  Each frame holds the actual 3D objects, as well as a frame specific log
+        /// </summary>
+        /// <remarks>
+        /// This makes it easy to create a visual each tick, or create multiple types of drawings all bundled into a
+        /// single file
+        /// </remarks>
         private void ShowFrame(LogFrame frame)
         {
             _viewport.Children.RemoveAll(_visuals);
             _visuals.Clear();
             _lines_defaultColor.Clear();
+            _tooltips.Clear();
             panelFrameText.Children.Clear();
 
             //TODO: Don't make a visual per item.  Group by type, only create separate if there are tooltips
-            //var test = new Button();
-            //test.ToolTip = "hello";     // FrameworkElement
 
             foreach (var item in frame.items)
             {
-                Visual3D visual = null;
+                Visual3D visual = GetVisual(item, _defaultBrushes, _lines_defaultColor);
+                if (visual == null)
+                    continue;
 
-                if (item is ItemDot dot)
-                {
-                    visual = GetVisual_Dot(dot, _defaultBrushes.Dot_Brush);
-                }
-                else if (item is ItemLine line)
-                {
-                    var lineVisual = GetVisual_Line(line, _defaultBrushes.Line_Color);
-                    visual = lineVisual.line;
+                _visuals.Add(visual);
+                _viewport.Children.Add(visual);
 
-                    if (lineVisual.isDefaultColor)
-                        _lines_defaultColor.Add(lineVisual.line);
-                }
-                else if (item is ItemCircle_Edge circle)
+                if (!string.IsNullOrWhiteSpace(item.tooltip))
                 {
-                    visual = GetVisual_Circle(circle, _defaultBrushes.Circle_Brush);
-                }
-                else if (item is ItemSquare_Filled square)
-                {
-                    visual = GetVisual_Square(square, _defaultBrushes.Square_Brush);
-                }
-
-                if (visual != null)
-                {
-                    _visuals.Add(visual);
-                    _viewport.Children.Add(visual);
+                    _tooltips.Add(new VisualEntry()
+                    {
+                        Model = item,
+                        Visual = visual,
+                    });
                 }
             }
 
@@ -394,11 +538,38 @@ namespace DebugRenderViewer
                 _hasAutoSetCamera = true;
             }
 
-            ShowText(panelFrameText, _frameText, frame.text);
+            ShowText(panelFrameText, frame.text, _defaultBrushes.Text_Brush);
 
             RefreshColors();
         }
 
+        /// <summary>
+        /// Creates an individual 3D item
+        /// </summary>
+        private static Visual3D GetVisual(ItemBase item, DefaultColorBrushes defaultBrushes, List<BillboardLine3DSet> lines_defaultColor)
+        {
+            if (item is ItemDot dot)
+                return GetVisual_Dot(dot, defaultBrushes.Dot_Brush);
+
+            if (item is ItemCircle_Edge circle)
+                return GetVisual_Circle(circle, defaultBrushes.Circle_Brush);
+
+            if (item is ItemSquare_Filled square)
+                return GetVisual_Square(square, defaultBrushes.Square_Brush);
+
+            if (item is ItemLine line)
+            {
+                var lineVisual = GetVisual_Line(line, defaultBrushes.Line_Color);
+
+                if (lineVisual.isDefaultColor)
+                    lines_defaultColor.Add(lineVisual.line);
+
+                return lineVisual.line;
+            }
+
+            //return null;
+            throw new ApplicationException($"Unexpected type: {item.GetType()}");
+        }
         private static Visual3D GetVisual_Dot(ItemDot dot, Brush defaultBrush)
         {
             Material material = GetMaterial(GetBrush(dot, defaultBrush));
@@ -491,10 +662,12 @@ namespace DebugRenderViewer
             return transform;
         }
 
-        private static void ShowText(StackPanel panel, List<TextEntry> entries, Text[] text)
+        /// <summary>
+        /// This populates a stackpanel with log text
+        /// </summary>
+        private static void ShowText(StackPanel panel, Text[] text, SolidColorBrush defaultBrush)
         {
             panel.Children.Clear();
-            entries.Clear();
 
             if (text == null || text.Length == 0)
                 return;
@@ -507,22 +680,19 @@ namespace DebugRenderViewer
                     TextWrapping = TextWrapping.Wrap,
                     FontSize = FONTSIZE * (entry.fontsize_mult ?? 1),
                     Margin = new Thickness(0, 1, 0, 3),
+                    Foreground = entry.color != null ?
+                        new SolidColorBrush(entry.color.Value) :
+                        defaultBrush,
+                    HorizontalAlignment = HorizontalAlignment.Left,
                 };
 
-                if (entry.color != null)
-                    control.Foreground = new SolidColorBrush(entry.color.Value);
-
                 panel.Children.Add(control);
-
-                entries.Add(new TextEntry()
-                {
-                    Control = control,
-                    Model = entry,
-                });
             }
-
         }
 
+        /// <summary>
+        /// Only show navigation controls if there is more than one frame
+        /// </summary>
         private void EnableDisableMultiFrame()
         {
             if (_scene?.frames == null || _scene.frames.Length < 2)
@@ -545,8 +715,11 @@ namespace DebugRenderViewer
             trkMultiFrame.Visibility = Visibility.Visible;
         }
 
+        //TODO: Finish this
         private void AutoSetCamera()
         {
+            //NOTE: this was copied from Debug3DWindow
+
             //Point3D[] points = TryGetVisualPoints(this.Visuals3D);
 
             //Tuple<Point3D, Vector3D, Vector3D> cameraPos = GetCameraPosition(points);      // this could return null
@@ -565,27 +738,6 @@ namespace DebugRenderViewer
             //_trackball.PanScale = scale / 10;
             //_trackball.ZoomScale = scale;
             //_trackball.MouseWheelScale = distance * .0007;
-        }
-
-        private static DefaultColorBrushes GetDefaultBrushes()
-        {
-            var dot_brush = new SolidColorBrush(Colors.Black);
-            var circle_brush = new SolidColorBrush(Colors.Black);
-            var square_brush = new SolidColorBrush(Colors.Black);
-
-            return new DefaultColorBrushes()
-            {
-                Dot_Brush = dot_brush,
-                Dot_Material = GetMaterial(dot_brush),
-
-                Line_Color = Colors.Black,
-
-                Circle_Brush = circle_brush,
-                Circle_Material = GetMaterial(circle_brush),
-
-                Square_Brush = square_brush,
-                Square_Material = GetMaterial(square_brush),
-            };
         }
 
         private static Material GetMaterial(Brush brush)
@@ -607,6 +759,7 @@ namespace DebugRenderViewer
             else
                 return (defaultColor, true);
         }
+
         private static Brush GetBrush(ItemBase item, Brush defaultBrush)
         {
             if (item.color != null)
@@ -634,6 +787,22 @@ namespace DebugRenderViewer
                 return Color.FromArgb(Convert.ToByte(255 * opacity), gray, gray, gray);
             else
                 return Color.FromRgb(gray, gray, gray);
+        }
+
+        private static VisualEntry GetTooltipHit(IEnumerable<VisualEntry> entries, IEnumerable<MyHitTestResult> hits)
+        {
+            foreach (var hit in hits)		// hits are sorted by distance, so this method will only return the closest match
+            {
+                Visual3D visualHit = hit.ModelHit.VisualHit;
+                if (visualHit == null)
+                    continue;
+
+                VisualEntry item = entries.FirstOrDefault(o => o.Visual == visualHit);
+                if (item != null)
+                    return item;
+            }
+
+            return null;
         }
 
         #endregion

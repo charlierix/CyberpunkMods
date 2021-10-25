@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DebugRenderViewer"
         mc:Ignorable="d"
-        Title="Debug Renderer" ResizeMode="CanResizeWithGrip" Width="1000" Height="1000" Loaded="Window_Loaded">
+        Title="Debug Renderer" ResizeMode="CanResizeWithGrip" Width="1000" Height="1000" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <!-- Viewport -->
-        <Grid Name="grdViewPort" Background="Transparent">
+        <Grid Name="grdViewPort" Background="Transparent" MouseMove="grdViewPort_MouseMove">
             <Viewport3D Name="_viewport" IsHitTestVisible="False">
                 <Viewport3D.Camera>
                     <PerspectiveCamera x:Name="_camera" Position="0,0,7" LookDirection="0,0,-1" UpDirection="0,1,0" FieldOfView="45"/>
@@ -24,6 +24,10 @@
                 </ModelVisual3D>
             </Viewport3D>
         </Grid>
+
+        <Border x:Name="borderToolTip" Visibility="Collapsed" Padding="7,3" BorderThickness="1" CornerRadius="2" BorderBrush="#709E9C82" Background="#30DEDBB5" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="300,400,0,0">
+            <TextBlock x:Name="lblToolTip" Text="Sample Text" Foreground="{Binding Path=TextBrush}"/>
+        </Border>
 
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="6,6,6,0">
             <!-- Filename -->
@@ -80,7 +84,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- TODO: Tunnel/Bubble mouse events so this doesn't block the viewport -->
-                <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MaxHeight="300">
+                <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MaxHeight="300" VerticalAlignment="Bottom">
                     <StackPanel>
                         <StackPanel x:Name="panelFrameText">
                             <StackPanel.Style>
