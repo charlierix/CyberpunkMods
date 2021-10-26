@@ -16,10 +16,17 @@ local this = {}
 
 DebugRenderLogger = {}
 
-function DebugRenderLogger:new()
+
+--TODO: The viewer should center the points (could be done here, but it's easier for the viewer to do)
+
+-- If ignoreLogging is true, then calling the rest of the functions do nothing.  This allows
+-- logging code to be left in with almost zero performance issues
+function DebugRenderLogger:new(ignoreLogging)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
+
+    obj.ignoreLogging = ignoreLogging
 
     obj.categories = {}
     obj.frames = {}
@@ -49,6 +56,10 @@ end
 -- There is no need to call this after instantiation, a first frame is implied (but there's no harm in
 -- explicitly calling it for the first frame)
 function DebugRenderLogger:NewFrame(name, back_color)
+    if self.ignoreLogging then
+        do return end
+    end
+
     local frame =
     {
         name = name,
@@ -63,6 +74,10 @@ end
 -- Category and after are all optional.  If a category is passed in, then the item will use that
 -- category's size and color, unless overridden in the add method call
 function DebugRenderLogger:Add_Dot(position, category, color, size_mult, tooltip)
+    if self.ignoreLogging then
+        do return end
+    end
+
     local item = this.GetItemBase(category, color, size_mult, tooltip)
 
     item.position = this.ConvertVector(position)
@@ -70,6 +85,10 @@ function DebugRenderLogger:Add_Dot(position, category, color, size_mult, tooltip
     table.insert(self.frames[#self.frames].items, item)
 end
 function DebugRenderLogger:Add_Line(point1, point2, category, color, size_mult, tooltip)
+    if self.ignoreLogging then
+        do return end
+    end
+
     local item = this.GetItemBase(category, color, size_mult, tooltip)
 
     item.point1 = this.ConvertVector(point1)
@@ -78,6 +97,10 @@ function DebugRenderLogger:Add_Line(point1, point2, category, color, size_mult, 
     table.insert(self.frames[#self.frames].items, item)
 end
 function DebugRenderLogger:Add_Circle(center, normal, radius, category, color, size_mult, tooltip)
+    if self.ignoreLogging then
+        do return end
+    end
+
     local item = this.GetItemBase(category, color, size_mult, tooltip)
 
     item.center = this.ConvertVector(center)
@@ -87,6 +110,10 @@ function DebugRenderLogger:Add_Circle(center, normal, radius, category, color, s
     table.insert(self.frames[#self.frames].items, item)
 end
 function DebugRenderLogger:Add_Square(center, normal, size_x, size_y, category, color, size_mult, tooltip)
+    if self.ignoreLogging then
+        do return end
+    end
+
     local item = this.GetItemBase(category, color, size_mult, tooltip)
 
     item.center = this.ConvertVector(center)
@@ -99,19 +126,55 @@ end
 
 -- This is any extra text attached to the frame, useful for including log dumps next to the picture
 function DebugRenderLogger:WriteLine_Frame(text, color, fontsize_mult)
+    if self.ignoreLogging then
+        do return end
+    end
+
     local text_entry = this.GetTextEntry(text, color, fontsize_mult)
 
     table.insert(self.frames[#self.frames].text, text_entry)
 end
 -- This is text that is shown regardless of frames
 function DebugRenderLogger:WriteLine_Global(text, color, fontsize_mult)
+    if self.ignoreLogging then
+        do return end
+    end
+
     local text_entry = this.GetTextEntry(text, color, fontsize_mult)
 
     table.insert(self.global_text, text_entry)
 end
 
+-- This returns true if there is something to save (this ignores categories, since that is considered
+-- prep, and not real logged items)
+function DebugRenderLogger:IsPopulated()
+    if self.ignoreLogging then
+        return false
+    end
+
+    if #self.global_text > 0 then
+        return true
+    end
+
+    for i = 1, #self.frames do
+        if #self.frames[i].items > 0 then
+            return true
+        end
+
+        if #self.frames[i].text > 0 then
+            return true
+        end
+    end
+
+    return false
+end
+
 -- Saves everything into a file, clears all frames, so more can be added.  Keeps categories
 function DebugRenderLogger:Save(name)
+    if self.ignoreLogging then
+        do return end
+    end
+
     this.PossiblyRemoveFirstFrame(self.frames)
 
     local scene =

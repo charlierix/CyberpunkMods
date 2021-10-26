@@ -61,11 +61,20 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="8"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="8"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="background"/>
-                    <Slider Grid.Column="2" Grid.Row="0" x:Name="trkBackground" Minimum="0" Maximum="1" Value="0.93" LargeChange="0.2" Opacity="0.66" ValueChanged="trkBackground_ValueChanged"/>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="background" VerticalAlignment="Center"/>
+                    <Slider Grid.Column="2" Grid.Row="0" x:Name="trkBackground" Minimum="0" Maximum="1" Value="0.93" LargeChange="0.2" Opacity="0.66" VerticalAlignment="Center" ValueChanged="trkBackground_ValueChanged"/>
+
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="center points" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cboCenterPoints" VerticalAlignment="Center" DisplayMemberPath="Key" Opacity="0.75" SelectionChanged="cboCenterPoints_SelectionChanged"/>
+
+                    <CheckBox Grid.Column="2" Grid.Row="4" x:Name="chkEmptyFrames" Content="show empty frames" Foreground="{Binding Path=TextBrush}" VerticalAlignment="Center" Checked="chkEmptyFrames_Checked" Unchecked="chkEmptyFrames_Checked"/>
                 </Grid>
             </Expander>
         </StackPanel>

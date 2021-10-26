@@ -6,10 +6,17 @@ local up = nil      -- can't use vector4 before init
 local rot_right = nil
 local rot_left = nil
 
+local logger = nil
+
 function Process_Standard(o, vars, const, debug, startStopTracker)
     -- Cheapest check is looking at keys
     local isHangDown, isJumpDown = startStopTracker:GetButtonState()
     if not isHangDown and not isJumpDown then
+
+        if logger and logger:IsPopulated() then
+            logger:Save()
+        end
+
         do return end
     end
 
@@ -70,6 +77,17 @@ function this.FireRays(fromPos, o, const)
         rot_left = Quaternion_FromAxisRadians(up, RADIANS_RIGHTLEFT)
     end
 
+    if not logger then
+        logger = DebugRenderLogger:new(const.ignoreLogging3D)
+        logger:DefineCategory("player", "FF8", 2)
+        logger:DefineCategory("miss", "822", 0.75)
+        logger:DefineCategory("hit", "4C4", 1)
+        logger:DefineCategory("wall", "4000", 1)
+    end
+
+    logger:NewFrame()
+    logger:Add_Dot(fromPos, "player")
+
     -- Up
     local hit, normal = this.FireRay(fromPos, up, o, const)
     hit_final, normal_final = this.ReturnClosestHit(hit_final, normal_final, hit, normal, o.pos)
@@ -100,6 +118,14 @@ function this.FireRay(fromPos, direction, o, const)
     local toPos = Vector4.new(fromPos.x + (direction.x * const.rayLen), fromPos.y + (direction.y * const.rayLen), fromPos.z + (direction.z * const.rayLen), 1)
 
     local hit, normal = o:RayCast(fromPos, toPos, true)
+
+    if not hit then
+       logger:Add_Line(fromPos, toPos, "miss")
+       return hit, normal
+    end
+
+    logger:Add_Square(hit, normal, 1, 1, "wall")
+    logger:Add_Line(fromPos, hit, "hit")
 
 
     --TODO: Find the closest point on plane, see if that's a hit and use that

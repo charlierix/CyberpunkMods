@@ -38,32 +38,9 @@ namespace DebugRenderViewer
     /// </remarks>
     public partial class MainWindow : Window
     {
-        #region record: DefaultColorBrushes
-
-        /// <summary>
-        /// Items that need the default opposite color will use these materials.  Whenever the background color
-        /// changes, these will get updated
-        /// </summary>
-        private record DefaultColorBrushes
-        {
-            public Material Dot_Material { get; init; }
-            public SolidColorBrush Dot_Brush { get; init; }
-
-            public Color Line_Color { get; set; }
-
-            public Material Circle_Material { get; init; }
-            public SolidColorBrush Circle_Brush { get; init; }
-
-            public Material Square_Material { get; init; }
-            public SolidColorBrush Square_Brush { get; init; }
-
-            public SolidColorBrush Text_Brush { get; init; }
-        }
-
-        #endregion
         #region record: VisualEntry
 
-        private record VisualEntry
+        public record VisualEntry
         {
             public ItemBase Model { get; init; }
             public Visual3D Visual { get; init; }
@@ -75,6 +52,9 @@ namespace DebugRenderViewer
         private record WindowSettings
         {
             public double BackgroundPercent { get; init; }
+            public PointCentering PointCentering { get; init; }
+            public bool ShowEmptyFrames { get; init; }
+
             public double? Width { get; init; }
             public double? Height { get; init; }
         }
@@ -82,11 +62,6 @@ namespace DebugRenderViewer
         #endregion
 
         #region Declaration Section
-
-        private const double SIZE_DOT = 0.06;
-        private const double SIZE_LINE = 0.025;
-        private const double SIZE_CIRCLE = 0.025;
-        private const double FONTSIZE = 11;
 
         private readonly DropShadowEffect _errorEffect;
         private readonly DefaultColorBrushes _defaultBrushes = GetDefaultBrushes();
@@ -96,7 +71,8 @@ namespace DebugRenderViewer
 
         private TrackBallRoam _trackball = null;
 
-        private LogScene _scene = null;
+        private LogScene _scene_orig = null;
+        private LogScene _scene = null;     // this one is a copy of orig, but with filters applied
 
         private List<Visual3D> _visuals = new List<Visual3D>();
         private List<BillboardLine3DSet> _lines_defaultColor = new List<BillboardLine3DSet>();
@@ -128,6 +104,11 @@ namespace DebugRenderViewer
             //TODO: Use a graphic instead
             btnLeft.Content = "<";
             btnRight.Content = ">";
+
+            cboCenterPoints.Items.Add(new KeyValuePair<string, PointCentering>("Across Frames", PointCentering.AcrossFrames));
+            cboCenterPoints.Items.Add(new KeyValuePair<string, PointCentering>("Per Frame", PointCentering.PerFrame));
+            cboCenterPoints.Items.Add(new KeyValuePair<string, PointCentering>("None", PointCentering.None));
+            cboCenterPoints.SelectedIndex = 0;
 
             EnableDisableMultiFrame();
         }
@@ -288,6 +269,31 @@ namespace DebugRenderViewer
             }
         }
 
+        private void cboCenterPoints_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (_scene_orig != null)
+                    LoadScene(_scene_orig);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void chkEmptyFrames_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_scene_orig != null)
+                    LoadScene(_scene_orig);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void grdViewPort_MouseMove(object sender, MouseEventArgs e)
         {
             try
@@ -304,7 +310,7 @@ namespace DebugRenderViewer
                 if (hits.Count == 0)
                     return;
 
-                VisualEntry entry = GetTooltipHit(_tooltips, hits);
+                VisualEntry entry = Util_Runtime.GetTooltipHit(_tooltips, hits);
 
                 borderToolTip.Margin = new Thickness(clickPoint.X + 16, clickPoint.Y + 16, 0, 0);
                 borderToolTip.Visibility = Visibility.Visible;
@@ -363,6 +369,8 @@ namespace DebugRenderViewer
             var settings = (_settings ?? new WindowSettings()) with
             {
                 BackgroundPercent = trkBackground.Value,
+                PointCentering = ((KeyValuePair<string, PointCentering>)cboCenterPoints.SelectedItem).Value,
+                ShowEmptyFrames = chkEmptyFrames.IsChecked.Value,
             };
 
             if (WindowState == WindowState.Normal)
@@ -395,6 +403,8 @@ namespace DebugRenderViewer
                 var settings = JsonSerializer.Deserialize<WindowSettings>(jsonString);
 
                 trkBackground.Value = settings.BackgroundPercent;
+                chkEmptyFrames.IsChecked = settings.ShowEmptyFrames;
+                cboCenterPoints.SelectedIndex = Util_Runtime.SelectComboBox_ByValue<string, PointCentering>(cboCenterPoints, settings.PointCentering);
 
                 if (settings.Width != null && settings.Height != null)
                 {
@@ -427,7 +437,7 @@ namespace DebugRenderViewer
             }
             else
             {
-                background = GetGray(trkBackground.Value);
+                background = Util_Runtime.GetGray(trkBackground.Value);
                 percentGray = trkBackground.Value;
             }
 
@@ -439,10 +449,10 @@ namespace DebugRenderViewer
             HintBrush = new SolidColorBrush(Color.FromArgb(128, opposite.R, opposite.G, opposite.B));
 
             //TODO: May want these to use different offsets so they stand out more
-            _defaultBrushes.Dot_Brush.Color = GetGray(GetComplementaryGray(percentGray));
-            _defaultBrushes.Line_Color = GetGray(GetComplementaryGray(percentGray));
-            _defaultBrushes.Circle_Brush.Color = GetGray(GetComplementaryGray(percentGray));
-            _defaultBrushes.Square_Brush.Color = GetGray(GetComplementaryGray(percentGray), 0.5);
+            _defaultBrushes.Dot_Brush.Color = Util_Runtime.GetGray(Util_Runtime.GetComplementaryGray(percentGray));
+            _defaultBrushes.Line_Color = Util_Runtime.GetGray(Util_Runtime.GetComplementaryGray(percentGray));
+            _defaultBrushes.Circle_Brush.Color = Util_Runtime.GetGray(Util_Runtime.GetComplementaryGray(percentGray));
+            _defaultBrushes.Square_Brush.Color = Util_Runtime.GetGray(Util_Runtime.GetComplementaryGray(percentGray), 0.5);
             _defaultBrushes.Text_Brush.Color = opposite;
 
             foreach (var line in _lines_defaultColor)
@@ -460,15 +470,15 @@ namespace DebugRenderViewer
             return new DefaultColorBrushes()
             {
                 Dot_Brush = dot_brush,
-                Dot_Material = GetMaterial(dot_brush),
+                Dot_Material = Util_Creation.GetMaterial(dot_brush),
 
                 Line_Color = Colors.Black,
 
                 Circle_Brush = circle_brush,
-                Circle_Material = GetMaterial(circle_brush),
+                Circle_Material = Util_Creation.GetMaterial(circle_brush),
 
                 Square_Brush = square_brush,
-                Square_Material = GetMaterial(square_brush),
+                Square_Material = Util_Creation.GetMaterial(square_brush),
 
                 Text_Brush = text_brush,
             };
@@ -484,12 +494,17 @@ namespace DebugRenderViewer
             panelGlobalText.Children.Clear();
             panelFrameText.Children.Clear();
 
+            _scene_orig = scene;
+
+            scene = Util_Runtime.Apply_EmptyFrameRemoval(scene, chkEmptyFrames.IsChecked.Value);
+            scene = Util_Runtime.Apply_Centering(scene, ((KeyValuePair<string, PointCentering>)cboCenterPoints.SelectedItem).Value);
+
             _scene = scene;
 
             if (_scene.frames.Length > 0)
                 ShowFrame(_scene.frames[0]);
 
-            ShowText(panelGlobalText, _scene.text, _defaultBrushes.Text_Brush);
+            Util_Creation.ShowText(panelGlobalText, _scene.text, _defaultBrushes.Text_Brush);
 
             EnableDisableMultiFrame();
 
@@ -515,7 +530,7 @@ namespace DebugRenderViewer
 
             foreach (var item in frame.items)
             {
-                Visual3D visual = GetVisual(item, _defaultBrushes, _lines_defaultColor);
+                Visual3D visual = Util_Creation.GetVisual(item, _defaultBrushes, _lines_defaultColor);
                 if (visual == null)
                     continue;
 
@@ -538,156 +553,9 @@ namespace DebugRenderViewer
                 _hasAutoSetCamera = true;
             }
 
-            ShowText(panelFrameText, frame.text, _defaultBrushes.Text_Brush);
+            Util_Creation.ShowText(panelFrameText, frame.text, _defaultBrushes.Text_Brush);
 
             RefreshColors();
-        }
-
-        /// <summary>
-        /// Creates an individual 3D item
-        /// </summary>
-        private static Visual3D GetVisual(ItemBase item, DefaultColorBrushes defaultBrushes, List<BillboardLine3DSet> lines_defaultColor)
-        {
-            if (item is ItemDot dot)
-                return GetVisual_Dot(dot, defaultBrushes.Dot_Brush);
-
-            if (item is ItemCircle_Edge circle)
-                return GetVisual_Circle(circle, defaultBrushes.Circle_Brush);
-
-            if (item is ItemSquare_Filled square)
-                return GetVisual_Square(square, defaultBrushes.Square_Brush);
-
-            if (item is ItemLine line)
-            {
-                var lineVisual = GetVisual_Line(line, defaultBrushes.Line_Color);
-
-                if (lineVisual.isDefaultColor)
-                    lines_defaultColor.Add(lineVisual.line);
-
-                return lineVisual.line;
-            }
-
-            //return null;
-            throw new ApplicationException($"Unexpected type: {item.GetType()}");
-        }
-        private static Visual3D GetVisual_Dot(ItemDot dot, Brush defaultBrush)
-        {
-            Material material = GetMaterial(GetBrush(dot, defaultBrush));
-
-            GeometryModel3D geometry = new GeometryModel3D();
-            geometry.Material = material;
-            geometry.BackMaterial = material;
-            geometry.Geometry = UtilityWPF.GetSphere_Ico(SIZE_DOT * (dot.size_mult ?? 1), 1, true);
-            geometry.Transform = new TranslateTransform3D(dot.position.ToVector());
-
-            var retVal = new ModelVisual3D
-            {
-                Content = geometry,
-            };
-
-
-            //TODO: There probably needs to be a global mouse handler.  Store tooltipped items in their own list so that
-            //it's faster
-            //if(dot.tooltip)
-            //    retVal.
-
-
-            return retVal;
-        }
-        private static (BillboardLine3DSet line, bool isDefaultColor) GetVisual_Line(ItemLine line, Color defaultColor)
-        {
-            var color = GetColor(line, defaultColor);
-
-            BillboardLine3DSet visual = new BillboardLine3DSet();
-            visual.Color = color.color;
-            visual.BeginAddingLines();
-
-            visual.AddLine(line.point1, line.point2, SIZE_LINE * (line.size_mult ?? 1));
-
-            visual.EndAddingLines();
-
-            return (visual, color.isDefault);
-        }
-        private static Visual3D GetVisual_Circle(ItemCircle_Edge circle, Brush defaultBrush)
-        {
-            Material material = GetMaterial(GetBrush(circle, defaultBrush));
-
-            GeometryModel3D geometry = new GeometryModel3D();
-            geometry.Material = material;
-            geometry.BackMaterial = material;
-
-            geometry.Geometry = UtilityWPF.GetTorus(30, 7, SIZE_CIRCLE * (circle.size_mult ?? 1), circle.radius);
-
-            geometry.Transform = GetTransform_2D_to_3D(circle.center, circle.normal);
-
-            return new ModelVisual3D
-            {
-                Content = geometry
-            };
-        }
-        private static Visual3D GetVisual_Square(ItemSquare_Filled square, Brush defaultBrush)
-        {
-            Material material = GetMaterial(GetBrush(square, defaultBrush));
-
-            double half_x = square.size_x / 2;
-            double half_y = square.size_y / 2;
-
-            return new ModelVisual3D
-            {
-                Content = new GeometryModel3D
-                {
-                    Material = material,
-                    BackMaterial = material,
-                    Geometry = UtilityWPF.GetSquare2D(new Point(-half_x, -half_y), new Point(half_x, half_y)),
-                    Transform = GetTransform_2D_to_3D(square.center, square.normal),
-                },
-            };
-        }
-
-        private static Transform3D GetTransform_2D_to_3D(Point3D center, Vector3D normal)
-        {
-            Transform3DGroup transform = new Transform3DGroup();
-
-            var transform2D = Math2D.GetTransformTo2D(new Triangle_wpf(normal, center));
-
-            // Transform the center point down to 2D
-            Point3D center2D = transform2D.From3D_To2D.Transform(center);
-
-            // Add a translate along the 2D plane
-            transform.Children.Add(new TranslateTransform3D(center2D.ToVector()));
-
-            // Now that it's positioned correctly in 2D, transform the whole thing into 3D (to line up with the 3D plane that was passed in)
-            transform.Children.Add(transform2D.From2D_BackTo3D);
-
-            return transform;
-        }
-
-        /// <summary>
-        /// This populates a stackpanel with log text
-        /// </summary>
-        private static void ShowText(StackPanel panel, Text[] text, SolidColorBrush defaultBrush)
-        {
-            panel.Children.Clear();
-
-            if (text == null || text.Length == 0)
-                return;
-
-            foreach (Text entry in text)
-            {
-                TextBlock control = new TextBlock()
-                {
-                    Text = entry.text,
-                    TextWrapping = TextWrapping.Wrap,
-                    FontSize = FONTSIZE * (entry.fontsize_mult ?? 1),
-                    Margin = new Thickness(0, 1, 0, 3),
-                    Foreground = entry.color != null ?
-                        new SolidColorBrush(entry.color.Value) :
-                        defaultBrush,
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                };
-
-                panel.Children.Add(control);
-            }
         }
 
         /// <summary>
@@ -738,71 +606,6 @@ namespace DebugRenderViewer
             //_trackball.PanScale = scale / 10;
             //_trackball.ZoomScale = scale;
             //_trackball.MouseWheelScale = distance * .0007;
-        }
-
-        private static Material GetMaterial(Brush brush)
-        {
-            MaterialGroup retVal = new MaterialGroup();
-
-            retVal.Children.Add(new DiffuseMaterial(brush));
-            retVal.Children.Add(new SpecularMaterial(new SolidColorBrush(UtilityWPF.ColorFromHex("40989898")), 2));
-
-            return retVal;
-        }
-
-        private static (Color color, bool isDefault) GetColor(ItemBase item, Color defaultColor)
-        {
-            if (item.color != null)
-                return (item.color.Value, false);
-            else if (item.category?.color != null)
-                return (item.category.color.Value, false);
-            else
-                return (defaultColor, true);
-        }
-
-        private static Brush GetBrush(ItemBase item, Brush defaultBrush)
-        {
-            if (item.color != null)
-                return new SolidColorBrush(item.color.Value);
-            else if (item.category?.color != null)
-                return new SolidColorBrush(item.category.color.Value);
-            else
-                return defaultBrush;
-        }
-
-        private static double GetComplementaryGray(double percent)
-        {
-            const double DISTANCE = 0.4;
-
-            if (percent + DISTANCE <= 1)
-                return percent + DISTANCE;
-            else
-                return percent - DISTANCE;
-        }
-        private static Color GetGray(double percent, double opacity = 1)
-        {
-            byte gray = Convert.ToByte(255 * percent);
-
-            if (opacity < 1)
-                return Color.FromArgb(Convert.ToByte(255 * opacity), gray, gray, gray);
-            else
-                return Color.FromRgb(gray, gray, gray);
-        }
-
-        private static VisualEntry GetTooltipHit(IEnumerable<VisualEntry> entries, IEnumerable<MyHitTestResult> hits)
-        {
-            foreach (var hit in hits)		// hits are sorted by distance, so this method will only return the closest match
-            {
-                Visual3D visualHit = hit.ModelHit.VisualHit;
-                if (visualHit == null)
-                    continue;
-
-                VisualEntry item = entries.FirstOrDefault(o => o.Visual == visualHit);
-                if (item != null)
-                    return item;
-            }
-
-            return null;
         }
 
         #endregion
