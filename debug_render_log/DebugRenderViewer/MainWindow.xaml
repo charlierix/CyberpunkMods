@@ -8,7 +8,7 @@
         Title="Debug Renderer" ResizeMode="CanResizeWithGrip" Width="1000" Height="1000" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <!-- Viewport -->
-        <Grid Name="grdViewPort" Background="Transparent" MouseMove="grdViewPort_MouseMove">
+        <Grid Name="grdViewPort" Background="Transparent" MouseMove="grdViewPort_MouseMove" AllowDrop="True" PreviewDragEnter="txtFile_PreviewDragEnter" PreviewDragOver="txtFile_PreviewDragEnter" Drop="txtFile_Drop">
             <Viewport3D Name="_viewport" IsHitTestVisible="False">
                 <Viewport3D.Camera>
                     <PerspectiveCamera x:Name="_camera" Position="0,0,7" LookDirection="0,0,-1" UpDirection="0,1,0" FieldOfView="45"/>
@@ -39,8 +39,8 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="file" VerticalAlignment="Center" Foreground="{Binding Path=TextBrush}"/>
-                <TextBox Grid.Column="2" x:Name="txtFile" VerticalAlignment="Center" AllowDrop="True" Padding="2" Background="#40FFFFFF" Foreground="{Binding Path=TextBrush}" PreviewDragEnter="txtFile_PreviewDragEnter" PreviewDragOver="txtFile_PreviewDragEnter" Drop="txtFile_Drop" TextChanged="txtFile_TextChanged"/>
-                <TextBlock Grid.Column="2" x:Name="lblFileHint" Text="drag file onto this box" Foreground="{Binding Path=HintBrush}" Margin="6,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="2" x:Name="txtFile" VerticalAlignment="Center" Padding="2" Background="#40FFFFFF" Foreground="{Binding Path=TextBrush}" AllowDrop="True" PreviewDragEnter="txtFile_PreviewDragEnter" PreviewDragOver="txtFile_PreviewDragEnter" Drop="txtFile_Drop" TextChanged="txtFile_TextChanged"/>
+                <TextBlock Grid.Column="2" x:Name="lblFileHint" Text="drag file onto this window" Foreground="{Binding Path=HintBrush}" Margin="6,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </Grid>
 
             <!-- Settings -->

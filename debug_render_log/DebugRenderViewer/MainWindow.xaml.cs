@@ -501,12 +501,12 @@ namespace DebugRenderViewer
 
             _scene = scene;
 
+            EnableDisableMultiFrame();      // this needs to be called before the call to ShowFrame, since it calls RefreshColors, and that uses wherever trkMultiFrame is pointing.  So switching from a scene with more frames than this scene (and viewing one of those excess frames) would have caused an index out of range exception
+
             if (_scene.frames.Length > 0)
                 ShowFrame(_scene.frames[0]);
 
             Util_Creation.ShowText(panelGlobalText, _scene.text, _defaultBrushes.Text_Brush);
-
-            EnableDisableMultiFrame();
 
             RefreshColors();
         }
@@ -528,7 +528,17 @@ namespace DebugRenderViewer
 
             //TODO: Don't make a visual per item.  Group by type, only create separate if there are tooltips
 
-            foreach (var item in frame.items)
+            var sorted_items = frame.items.
+                Select(o => new
+                {
+                    sort_val = o is ItemSquare_Filled ?     // wpf doesn't handle semitransparency well.  Visuals added after a semitransparent mesh will make that mess seem opaque.  So semitransparent meshes need to be loaded last
+                        999 : 0,
+                    item = o,
+                }).
+                OrderBy(o => o.sort_val).
+                Select(o => o.item);
+
+            foreach (var item in sorted_items)
             {
                 Visual3D visual = Util_Creation.GetVisual(item, _defaultBrushes, _lines_defaultColor);
                 if (visual == null)
@@ -563,6 +573,9 @@ namespace DebugRenderViewer
         /// </summary>
         private void EnableDisableMultiFrame()
         {
+            trkMultiFrame.Minimum = 0;
+            trkMultiFrame.Value = 0;
+
             if (_scene?.frames == null || _scene.frames.Length < 2)
             {
                 btnLeft.Visibility = Visibility.Collapsed;
@@ -571,9 +584,7 @@ namespace DebugRenderViewer
                 return;
             }
 
-            trkMultiFrame.Minimum = 0;
             trkMultiFrame.Maximum = _scene.frames.Length - 1;
-            trkMultiFrame.Value = 0;
 
             //btnLeft.Visibility = Visibility.Visible;
             //btnRight.Visibility = Visibility.Visible;

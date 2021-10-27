@@ -11,7 +11,6 @@ namespace DebugRenderViewer.Models
     {
         // All of these properties are optional
 
-        public string category_key { get; init; }       //NOTE: The json will just be populate this property
         public Category category { get; init; }
 
         public Color? color { get; init; }

@@ -53,7 +53,7 @@ namespace DebugRenderViewer
         private record Item_local
         {
             // -------------------- base --------------------
-            public string category_key { get; init; }       //NOTE: The json will just be populate this property
+            public string category { get; init; }
             public string color { get; init; }
             public double? size_mult { get; init; }
             public string tooltip { get; init; }
@@ -185,8 +185,7 @@ namespace DebugRenderViewer
             // Fill in the base properties
             retVal = retVal with
             {
-                category_key = item.category_key,
-                category = FindCategory(categories, item.category_key),
+                category = FindCategory(categories, item.category),
 
                 color = ConvertColor(item.color),
 

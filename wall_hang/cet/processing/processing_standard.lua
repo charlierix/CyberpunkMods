@@ -82,7 +82,9 @@ function this.FireRays(fromPos, o, const)
         logger:DefineCategory("player", "FF8", 2)
         logger:DefineCategory("miss", "822", 0.75)
         logger:DefineCategory("hit", "4C4", 1)
+        logger:DefineCategory("planePoint", "0F0", 1)
         logger:DefineCategory("wall", "4000", 1)
+        logger:DefineCategory("final", "FFF", 1.5)
     end
 
     logger:NewFrame()
@@ -111,6 +113,10 @@ function this.FireRays(fromPos, o, const)
     hit, normal = this.FireRay(fromPos, horz_left, o, const)
     hit_final, normal_final = this.ReturnClosestHit(hit_final, normal_final, hit, normal, o.pos)
 
+    if hit_final then
+        logger:Add_Line(fromPos, hit_final, "final")
+    end
+
     return hit_final, normal_final
 end
 -- This fires a ray, if there's a hit, it finds the closest point on the plane and tries that
@@ -127,11 +133,11 @@ function this.FireRay(fromPos, direction, o, const)
     logger:Add_Square(hit, normal, 1, 1, "wall")
     logger:Add_Line(fromPos, hit, "hit")
 
-
-    --TODO: Find the closest point on plane, see if that's a hit and use that
-    --GetClosestPoint_Plane_Point()
-
-
+    local planePoint = GetClosestPoint_Plane_Point(hit, normal, fromPos)
+    if planePoint then
+        logger:Add_Dot(planePoint, "planePoint")
+        hit, normal = this.ReturnClosestHit(hit, normal, planePoint, normal)
+    end
 
     return hit, normal
 end
