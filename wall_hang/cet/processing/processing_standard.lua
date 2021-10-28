@@ -1,20 +1,14 @@
 local this = {}
 
-local RADIANS_RIGHTLEFT = 70 * math.pi / 180
-
 local up = nil      -- can't use vector4 before init
-local rot_right = nil
-local rot_left = nil
+local log = nil
 
-local logger = nil
-
-function Process_Standard(o, vars, const, debug, startStopTracker)
+function Process_Standard(o, vars, const, debug, startStopTracker, deltaTime)
     -- Cheapest check is looking at keys
     local isHangDown, isJumpDown = startStopTracker:GetButtonState()
     if not isHangDown and not isJumpDown then
-
-        if logger and logger:IsPopulated() then
-            logger:Save("LatchRayTrace")
+        if log and log:IsPopulated() then
+            log:Save("LatchRayTrace")
         end
 
         do return end
@@ -37,29 +31,87 @@ function Process_Standard(o, vars, const, debug, startStopTracker)
         up = Vector4.new(0, 0, 1, 0)
     end
 
-    if not logger then
-        logger = DebugRenderLogger:new(not const.shouldShowLogging3D_latchRayTrace)
+    if not log then
+        log = DebugRenderLogger:new(not const.shouldShowLogging3D_latchRayTrace)
     end
 
-    -- Fire a few rays, use the closest point
+    -- Fire a few rays, see if there are wall around
     local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
 
-    local hits = RayCast_NearbyWalls(fromPos, o, logger, const.rayLen)
+    local hits = RayCast_NearbyWalls(fromPos, o, log, const.rayLen_attract)
     if #hits == 0 then
         do return end
     end
 
-    if isHangDown and this.ValidateSlope_Hang(hits[1].normal) then      --NOTE: slope check for hang is pretty much unnecessary.  The IsAirborne eliminates slopes already
-        local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
-        Transition_ToHang(vars, const, o, hangPos, hits[1].normal)
-
-    elseif isJumpDown and this.ValidateSlope_Jump(hits[1].normal) then
-        local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
-        Transition_ToJump_Calculate(vars, const, o, hangPos, hits[1].normal, startStopTracker)
+    if hits[1].distSqr <= const.rayLen_stick * const.rayLen_stick then
+        -- Close enough to interact directly with the wall
+        this.DirectDistance(isHangDown, isJumpDown, hits, fromPos, o, vars, const, startStopTracker)
+    else
+        this.AttractDistance(isHangDown, hits, fromPos, o, const, debug, deltaTime)
     end
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.DirectDistance(isHangDown, isJumpDown, hits, fromPos, o, vars, const, startStopTracker)
+    if isJumpDown and this.ValidateSlope_Jump(hits[1].normal) then
+        local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
+        Transition_ToJump_Calculate(vars, const, o, hangPos, hits[1].normal, startStopTracker)
+
+        do return end
+    end
+
+    if isHangDown and this.ValidateSlope_Hang(hits[1].normal) then      --NOTE: slope check for hang is pretty much unnecessary.  The IsAirborne eliminates slopes already
+
+        --TODO: Check velocity relative to wall plane, apply drag or stick if slow enough
+
+
+        local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
+        Transition_ToHang(vars, const, o, hangPos, hits[1].normal)
+
+        do return end
+    end
+end
+
+function this.AttractDistance(isHangDown, hits, fromPos, o, const, debug, deltaTime)
+    if not isHangDown then
+        debug.attract_x = nil
+        debug.attract_y = nil
+        debug.attract_z = nil
+        do return end
+    end
+    
+    --TODO: If more points are used, the total acceleration will need to be spread among them.  Also, how to decide
+    --which points to use?  Probably the closest for each plane
+
+    -- For now, just use the closest
+
+    local hit = hits[1]
+
+    local distance = math.sqrt(hit.distSqr)
+
+    local accel = this.GetAttractAccel(distance, const)
+
+    local x = ((hit.hit.x - fromPos.x) / distance) * accel * deltaTime
+    local y = ((hit.hit.y - fromPos.y) / distance) * accel * deltaTime
+    local z = ((hit.hit.z - fromPos.z) / distance) * accel * deltaTime
+
+    debug.attract_x = x
+    debug.attract_y = y
+    debug.attract_z = z
+
+    o.player:WallHang_AddImpulse(x, y, z)
+end
+
+function this.GetAttractAccel(distance, const)
+    local percent = GetScaledValue(0, 1, const.rayLen_stick, const.rayLen_attract, distance)
+    percent = Clamp(0, 1, percent)
+
+    -- This strong ramp up stronger than linear (maybe not realistic, but should work well in practice)
+    local accel = 1 - (percent ^ const.attract_pow)
+
+    return accel * const.attract_accel
+end
 
 -- If the slope is horizontal enough to stand on, this returns false
 function this.ValidateSlope_Hang(normal)

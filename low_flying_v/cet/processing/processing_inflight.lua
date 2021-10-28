@@ -1,7 +1,7 @@
 local this = {}
 
--- This is called each tick when they flying (and not in the menu)
-function Process_InFlight(o, vars, keys, debug, const, deltaTime)    
+-- This is called each tick when they are flying (and not in the menu)
+function Process_InFlight(o, vars, keys, debug, const, deltaTime)
     if keys.forceFlight or not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
         this.PlayEndSound(o, vars)
         Transition_ToStandard(vars, debug, o, const)

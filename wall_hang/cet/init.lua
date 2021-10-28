@@ -118,7 +118,11 @@ local const =
         "RightStickSensitivity"),
 
     rayFrom_Z = 1.5,
-    rayLen = 1.2,
+    rayLen_attract = 3.6,
+    rayLen_stick = 1.2,
+
+    attract_accel = 4,
+    attract_pow = 4,
 
     teleturn_radians_per_second = math.pi * 3.5,      -- this needs to be very fast, teleturn is a hack and can't last very long.  Just enough motion that the player can sense the direction change (it's very disorienting to instantly face a new direction)
 
@@ -303,7 +307,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     if vars.flightMode == const.flightModes.standard then
         -- Standard (walking around)
-        Process_Standard(o, vars, const, debug, startStopTracker)
+        Process_Standard(o, vars, const, debug, startStopTracker, deltaTime)
 
     elseif not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
         -- Was hanging/jumping, but another mod took over
