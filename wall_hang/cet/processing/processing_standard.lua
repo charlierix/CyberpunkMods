@@ -14,7 +14,7 @@ function Process_Standard(o, vars, const, debug, startStopTracker)
     if not isHangDown and not isJumpDown then
 
         if logger and logger:IsPopulated() then
-            logger:Save()
+            logger:Save("LatchRayTrace")
         end
 
         do return end
@@ -37,138 +37,29 @@ function Process_Standard(o, vars, const, debug, startStopTracker)
         up = Vector4.new(0, 0, 1, 0)
     end
 
+    if not logger then
+        logger = DebugRenderLogger:new(not const.shouldShowLogging3D_latchRayTrace)
+    end
+
     -- Fire a few rays, use the closest point
     local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
 
-    local hit, normal = this.FireRays(fromPos, o, const)
-    if not hit then
+    local hits = RayCast_NearbyWalls(fromPos, o, logger, const.rayLen)
+    if #hits == 0 then
         do return end
     end
 
-    if isHangDown and this.ValidateSlope_Hang(normal) then      --NOTE: slope check for hang is pretty much unnecessary.  The IsAirborne eliminates slopes already
+    if isHangDown and this.ValidateSlope_Hang(hits[1].normal) then      --NOTE: slope check for hang is pretty much unnecessary.  The IsAirborne eliminates slopes already
         local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
-        Transition_ToHang(vars, const, o, hangPos, normal)
+        Transition_ToHang(vars, const, o, hangPos, hits[1].normal)
 
-    elseif isJumpDown and this.ValidateSlope_Jump(normal) then
+    elseif isJumpDown and this.ValidateSlope_Jump(hits[1].normal) then
         local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
-        Transition_ToJump_Calculate(vars, const, o, hangPos, normal, startStopTracker)
+        Transition_ToJump_Calculate(vars, const, o, hangPos, hits[1].normal, startStopTracker)
     end
 end
 
 ----------------------------------- Private Methods -----------------------------------
-
-function this.FireRays_ORIG(fromPos, o, const)
-    local rayDir = this.GetDirectionHorz(o.lookdir_forward)
-
-    --local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
-    --local toPos = Vector4.new(fromPos.x + (rayDir.x * const.rayLen), fromPos.y + (rayDir.y * const.rayLen), fromPos.z + const.rayFrom_Z + (rayDir.z * const.rayLen), 1)       -- z constant was being added twice
-    local toPos = Vector4.new(fromPos.x + (rayDir.x * const.rayLen), fromPos.y + (rayDir.y * const.rayLen), fromPos.z + (rayDir.z * const.rayLen), 1)
-
-    local hit, normal = o:RayCast(fromPos, toPos, true)
-
-    return hit, normal
-end
-function this.FireRays(fromPos, o, const)
-    local hit_final = nil
-    local normal_final = nil
-
-    if not rot_right then
-        rot_right = Quaternion_FromAxisRadians(up, -RADIANS_RIGHTLEFT)
-        rot_left = Quaternion_FromAxisRadians(up, RADIANS_RIGHTLEFT)
-    end
-
-    if not logger then
-        logger = DebugRenderLogger:new(const.ignoreLogging3D)
-        logger:DefineCategory("player", "FF8", 2)
-        logger:DefineCategory("miss", "822", 0.75)
-        logger:DefineCategory("hit", "4C4", 1)
-        logger:DefineCategory("planePoint", "0F0", 1)
-        logger:DefineCategory("wall", "4000", 1)
-        logger:DefineCategory("final", "FFF", 1.5)
-    end
-
-    logger:NewFrame()
-    logger:Add_Dot(fromPos, "player")
-
-    -- Up
-    local hit, normal = this.FireRay(fromPos, up, o, const)
-    hit_final, normal_final = this.ReturnClosestHit(hit_final, normal_final, hit, normal, o.pos)
-
-    -- Dir facing
-    hit, normal = this.FireRay(fromPos, o.lookdir_forward, o, const)
-    hit_final, normal_final = this.ReturnClosestHit(hit_final, normal_final, hit, normal, o.pos)
-
-    -- Horizontal facing
-    local horz_forward = this.GetDirectionHorz(o.lookdir_forward)
-    hit, normal = this.FireRay(fromPos, horz_forward, o, const)
-    hit_final, normal_final = this.ReturnClosestHit(hit_final, normal_final, hit, normal, o.pos)
-
-    -- Horizontal right
-    local horz_right = RotateVector3D(horz_forward, rot_right)
-    hit, normal = this.FireRay(fromPos, horz_right, o, const)
-    hit_final, normal_final = this.ReturnClosestHit(hit_final, normal_final, hit, normal, o.pos)
-
-    -- Horizontal left
-    local horz_left = RotateVector3D(horz_forward, rot_left)
-    hit, normal = this.FireRay(fromPos, horz_left, o, const)
-    hit_final, normal_final = this.ReturnClosestHit(hit_final, normal_final, hit, normal, o.pos)
-
-    if hit_final then
-        logger:Add_Line(fromPos, hit_final, "final")
-    end
-
-    return hit_final, normal_final
-end
--- This fires a ray, if there's a hit, it finds the closest point on the plane and tries that
-function this.FireRay(fromPos, direction, o, const)
-    local toPos = Vector4.new(fromPos.x + (direction.x * const.rayLen), fromPos.y + (direction.y * const.rayLen), fromPos.z + (direction.z * const.rayLen), 1)
-
-    local hit, normal = o:RayCast(fromPos, toPos, true)
-
-    if not hit then
-       logger:Add_Line(fromPos, toPos, "miss")
-       return hit, normal
-    end
-
-    logger:Add_Square(hit, normal, 1, 1, "wall")
-    logger:Add_Line(fromPos, hit, "hit")
-
-    local planePoint = GetClosestPoint_Plane_Point(hit, normal, fromPos)
-    if planePoint then
-        logger:Add_Dot(planePoint, "planePoint")
-        hit, normal = this.ReturnClosestHit(hit, normal, planePoint, normal)
-    end
-
-    return hit, normal
-end
-function this.ReturnClosestHit(hit1, norm1, hit2, norm2, pos)
-    if not hit1 and not hit2 then
-        return nil, nil
-
-    elseif hit1 and not hit2 then
-        return hit1, norm1
-
-    elseif hit2 and not hit1 then
-        return hit2, norm2
-    end
-
-    local dist1 = GetVectorDiffLengthSqr(pos, hit1)
-    local dist2 = GetVectorDiffLengthSqr(pos, hit2)
-
-    if dist1 < dist2 then
-        return hit1, norm1
-    else
-        return hit2, norm2
-    end
-end
-
-function this.GetDirectionHorz(lookdir)
-    local onPlane = GetProjectedVector_AlongPlane(lookdir, up)
-
-    local len = GetVectorLength(onPlane)
-
-    return Vector4.new(onPlane.x / len, onPlane.y / len, onPlane.z / len, 1)
-end
 
 -- If the slope is horizontal enough to stand on, this returns false
 function this.ValidateSlope_Hang(normal)

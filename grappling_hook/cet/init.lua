@@ -515,6 +515,9 @@ end
 
 function TODO()
 
+	-- EMP Grenades:
+	--	Test with all rarities
+
 	-- Controller:
 	--	Listen to MoveX, MoveY
 	--	Do a length chcek + dot product and populate:  Forward, Back, Left, Right
