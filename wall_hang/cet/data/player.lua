@@ -34,6 +34,8 @@ function Player:Reset()
     self.wallDistance_attract_max = self.player_arcade.wallDistance_attract_max
     self.attract_accel = self.player_arcade.attract_accel
     self.attract_pow = self.player_arcade.attract_pow
+    self.wallSlide_minSpeed = self.player_arcade.wallSlide_minSpeed
+    self.wallSlide_dragAccel = self.player_arcade.wallSlide_dragAccel
 end
 
 ------------------------------- Private Instance Methods ------------------------------

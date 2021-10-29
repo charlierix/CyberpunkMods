@@ -454,13 +454,6 @@ function TODO()
     --      ToDoubleJump
     --          if stateContext.GetIntParameter(n"currentNumberOfJumps", true) >= 2 {
 
-	-- Wall Friction
-	--	If they are trying to grab on to the wall, but the speed perpendicular to the normal > threshold,
-	--	then they should slow down instead of instant stop
-
-    -- Magnetism
-    --  While they are holding in the wall hang key, search out about 4 and apply a force toward the wall
-
     -- Hang+Direction
     --  While hanging, if they hold a direction, then crawl along the wall in that direction
     --  (think of mario on those wire fences)
