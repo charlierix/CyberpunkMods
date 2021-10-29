@@ -3,7 +3,7 @@ local this = {}
 local up = nil      -- can't use vector4 before init
 local log = nil
 
-function Process_Standard(o, vars, const, debug, startStopTracker, deltaTime)
+function Process_Standard(o, player, vars, const, debug, startStopTracker, deltaTime)
     -- Cheapest check is looking at keys
     local isHangDown, isJumpDown = startStopTracker:GetButtonState()
     if not isHangDown and not isJumpDown then
@@ -38,16 +38,16 @@ function Process_Standard(o, vars, const, debug, startStopTracker, deltaTime)
     -- Fire a few rays, see if there are wall around
     local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
 
-    local hits = RayCast_NearbyWalls(fromPos, o, log, const.rayLen_attract)
+    local hits = RayCast_NearbyWalls(fromPos, o, log, player.wallDistance_attract_max)
     if #hits == 0 then
         do return end
     end
 
-    if hits[1].distSqr <= const.rayLen_stick * const.rayLen_stick then
+    if hits[1].distSqr <= const.wallDistance_stick_max * const.wallDistance_stick_max then
         -- Close enough to interact directly with the wall
         this.DirectDistance(isHangDown, isJumpDown, hits, fromPos, o, vars, const, startStopTracker)
     else
-        this.AttractDistance(isHangDown, hits, fromPos, o, const, debug, deltaTime)
+        this.AttractDistance(isHangDown, hits, fromPos, o, player, const, debug, deltaTime)
     end
 end
 
@@ -73,7 +73,7 @@ function this.DirectDistance(isHangDown, isJumpDown, hits, fromPos, o, vars, con
     end
 end
 
-function this.AttractDistance(isHangDown, hits, fromPos, o, const, debug, deltaTime)
+function this.AttractDistance(isHangDown, hits, fromPos, o, player, const, debug, deltaTime)
     if not isHangDown then
         debug.attract_x = nil
         debug.attract_y = nil
@@ -90,7 +90,7 @@ function this.AttractDistance(isHangDown, hits, fromPos, o, const, debug, deltaT
 
     local distance = math.sqrt(hit.distSqr)
 
-    local accel = this.GetAttractAccel(distance, const)
+    local accel = this.GetAttractAccel(distance, player, const)
 
     local x = ((hit.hit.x - fromPos.x) / distance) * accel * deltaTime
     local y = ((hit.hit.y - fromPos.y) / distance) * accel * deltaTime
@@ -103,14 +103,14 @@ function this.AttractDistance(isHangDown, hits, fromPos, o, const, debug, deltaT
     o.player:WallHang_AddImpulse(x, y, z)
 end
 
-function this.GetAttractAccel(distance, const)
-    local percent = GetScaledValue(0, 1, const.rayLen_stick, const.rayLen_attract, distance)
+function this.GetAttractAccel(distance, player, const)
+    local percent = GetScaledValue(0, 1, const.wallDistance_stick_max, player.wallDistance_attract_max, distance)
     percent = Clamp(0, 1, percent)
 
     -- This strong ramp up stronger than linear (maybe not realistic, but should work well in practice)
-    local accel = 1 - (percent ^ const.attract_pow)
+    local accel = 1 - (percent ^ player.attract_pow)
 
-    return accel * const.attract_accel
+    return accel * player.attract_accel
 end
 
 -- If the slope is horizontal enough to stand on, this returns false

@@ -51,13 +51,23 @@ function PlayerArcade:MapModelToSelf(model)
 
     if model.jump_strength then
         self.jump_strength = model.jump_strength
+        self.wallDistance_attract_max = model.wallDistance_attract_max
+        self.attract_accel = model.attract_accel
+        self.attract_pow = model.attract_pow
+
     else
         self.jump_strength = 11
+        self.wallDistance_attract_max = 3.6
+        self.attract_accel = 4
+        self.attract_pow = 4
     end
 end
 function PlayerArcade:MapSelfToModel()
     return
     {
         jump_strength = self.jump_strength,
+        wallDistance_attract_max = self.wallDistance_attract_max,
+        attract_accel = self.attract_accel,
+        attract_pow = self.attract_pow,
     }
 end
