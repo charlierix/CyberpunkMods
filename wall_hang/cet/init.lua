@@ -152,6 +152,10 @@ local vars =
     -- Populated in InitializeKeyBindings()
     --wallhangkey_usecustom,     -- true: use the cet binding, false: use the action binding
 
+    -- These are used by Process_Standard()
+    --is_sliding,
+    --is_attracting,
+
     -- These get populated in Transition_ToHang() and/or Transition_ToJump_Calculate()
     --hangPos,
     --normal,

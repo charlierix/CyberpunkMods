@@ -60,13 +60,13 @@ function PlayerArcade:MapModelToSelf(model)
     else
         self.jump_strength = 11
 
-        self.wallDistance_attract_max = 3.6
+        self.wallDistance_attract_max = 4.8
 
-        self.attract_accel = 4
+        self.attract_accel = 8
         self.attract_pow = 4
 
         self.wallSlide_minSpeed = 4
-        self.wallSlide_dragAccel = 14
+        self.wallSlide_dragAccel = 16
     end
 end
 function PlayerArcade:MapSelfToModel()

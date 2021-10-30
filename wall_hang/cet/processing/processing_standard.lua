@@ -15,12 +15,14 @@ function Process_Standard(o, player, vars, const, debug, startStopTracker, delta
             log:Save("LatchRayTrace")
         end
 
+        this.ResetVars(o, vars)
         do return end
     end
 
     -- Next cheapest is a single raycast down
     if not IsAirborne(o) then
         startStopTracker:ResetHangLatch()
+        this.ResetVars(o, vars)
         do return end
     end
 
@@ -28,6 +30,7 @@ function Process_Standard(o, player, vars, const, debug, startStopTracker, delta
     o:GetCamera()
     if not o.lookdir_forward then
         startStopTracker:ResetHangLatch()
+        this.ResetVars(o, vars)
         do return end
     end
 
@@ -44,15 +47,19 @@ function Process_Standard(o, player, vars, const, debug, startStopTracker, delta
 
     local hits = RayCast_NearbyWalls(fromPos, o, log, player.wallDistance_attract_max)
     if #hits == 0 then
+        this.ResetVars(o, vars)
         do return end
     end
 
     if hits[1].distSqr <= const.wallDistance_stick_max * const.wallDistance_stick_max then
         -- Close enough to interact directly with the wall
+        this.ResetVars(o, vars, true, false)
         this.DirectDistance(isHangDown, isJumpDown, hits, fromPos, o, player, vars, const, debug, startStopTracker, deltaTime)
+
     else
         -- Somewhat close to the wall, maybe apply an attraction acceleration
-        this.AttractDistance(isHangDown, hits, fromPos, o, player, const, debug, deltaTime)
+        this.ResetVars(o, vars, false, true)
+        this.AttractDistance(isHangDown, hits, fromPos, o, player, vars, const, debug, deltaTime)
     end
 end
 
@@ -61,25 +68,28 @@ end
 function this.DirectDistance(isHangDown, isJumpDown, hits, fromPos, o, player, vars, const, debug, startStopTracker, deltaTime)
     -- Jump
     if isJumpDown and this.ValidateSlope_Jump(hits[1].normal) then
+        this.ResetVars(o, vars)
+
         local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
         Transition_ToJump_Calculate(vars, const, o, hangPos, hits[1].normal, startStopTracker)
 
     -- Grab
     elseif isHangDown and this.ValidateSlope_Hang(hits[1].normal) then      --NOTE: slope check for hang is pretty much unnecessary.  The IsAirborne eliminates slopes already
-        if not this.SlideDrag(hits[1], fromPos, o, player, const, debug, deltaTime) then
+        if not this.SlideDrag(hits[1], fromPos, o, player, vars, const, debug, deltaTime) then
+            local is_sliding = vars.is_sliding
+            this.ResetVars(o, vars)
+
             local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
-            Transition_ToHang(vars, const, o, hangPos, hits[1].normal)
+            Transition_ToHang(vars, const, o, hangPos, hits[1].normal, is_sliding)
         end
     end
 end
 
---TODO: play a drag sound.  If switching from drag to hang, play a softer sound for hang
-
 -- This is called when they are close to the wall and trying to stick
 --  If they are moving too fast along the wall, it will apply drag and return true
 --  If they are moving slow enough, this will return false, telling the caller that it's ok to stick in place
-function this.SlideDrag(hit, fromPos, o, player, const, debug, deltaTime)
-    --TODO: Check velocity relative to wall plane, apply drag or stick if slow enough
+function this.SlideDrag(hit, fromPos, o, player, vars, const, debug, deltaTime)
+    -- Check velocity relative to wall plane, apply drag or stick if slow enough
     local vel_plane = GetProjectedVector_AlongPlane(o.vel, hit.normal)
 
     local vel_plane_speedSqr = GetVectorLengthSqr(vel_plane)
@@ -96,26 +106,22 @@ function this.SlideDrag(hit, fromPos, o, player, const, debug, deltaTime)
     local drag_y = -vel_plane.y / vel_plane_speed * player.wallSlide_dragAccel * deltaTime
     local drag_z = (16 + (-vel_plane.z / vel_plane_speed * player.wallSlide_dragAccel)) * deltaTime      -- gravity is -16 in this game
 
-    -- debug.drag_x = drag_x
-    -- debug.drag_y = drag_y
-    -- debug.drag_z = drag_z
-
     o.player:WallHang_AddImpulse(drag_x, drag_y, drag_z)
 
-    -- Apply a pull accel toward ideal distance from plane
+
+    --TODO: Apply a pull accel toward ideal distance from plane
 
 
+    if not vars.is_sliding then
+        PlaySound_Slide(vars, o)
+        vars.is_sliding = true
+    end
 
     return true
 end
 
---TODO: Play an attraction sound
-
-function this.AttractDistance(isHangDown, hits, fromPos, o, player, const, debug, deltaTime)
+function this.AttractDistance(isHangDown, hits, fromPos, o, player, vars, const, debug, deltaTime)
     if not isHangDown then
-        debug.attract_x = nil
-        debug.attract_y = nil
-        debug.attract_z = nil
         do return end
     end
     
@@ -134,11 +140,12 @@ function this.AttractDistance(isHangDown, hits, fromPos, o, player, const, debug
     local y = ((hit.hit.y - fromPos.y) / distance) * accel * deltaTime
     local z = ((hit.hit.z - fromPos.z) / distance) * accel * deltaTime
 
-    -- debug.attract_x = x
-    -- debug.attract_y = y
-    -- debug.attract_z = z
-
     o.player:WallHang_AddImpulse(x, y, z)
+
+    if not vars.is_attracting then
+        PlaySound_Attract(vars, o)
+        vars.is_attracting = true
+    end
 end
 
 function this.GetAttractAccel(distance, player, const)
@@ -157,4 +164,16 @@ function this.ValidateSlope_Hang(normal)
 end
 function this.ValidateSlope_Jump(normal)
     return math.abs(DotProduct3D(normal, up)) < 0.6      -- don't allow if they are under overhangs
+end
+
+function this.ResetVars(o, vars, skip_slide, skip_attract)
+    if not skip_slide and vars.is_sliding then
+        StopSound(o, vars, true)
+        vars.is_sliding = false
+    end
+
+    if not skip_attract and vars.is_attracting then
+        StopSound(o, vars, true)
+        vars.is_attracting = false
+    end
 end

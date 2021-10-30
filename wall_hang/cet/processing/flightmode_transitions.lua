@@ -10,16 +10,26 @@ function Transition_ToStandard(vars, const, debug, o)
 
     vars.flightMode = const.flightModes.standard
     o:Custom_CurrentlyFlying_Clear()
+
+    if vars.is_sliding or vars.is_attracting then
+        vars.is_sliding = false
+        vars.is_attracting = false
+        StopSound(o, vars, true)      -- there are cases where they will slide, then touch the ground.  But the slide sound keeps playing for a couple seconds
+    end
 end
 
-function Transition_ToHang(vars, const, o, hangPos, normal)
+function Transition_ToHang(vars, const, o, hangPos, normal, from_slide)
     vars.flightMode = const.flightModes.hang
     o:Custom_CurrentlyFlying_StartFlight()
 
     vars.hangPos = hangPos
     vars.normal = normal
 
-    PlaySound_Hang(vars, o)
+    if from_slide then
+        PlaySound_Hang_Soft(vars, o)
+    else
+        PlaySound_Hang_Hard(vars, o)
+    end
 end
 
 function Transition_ToJump_Calculate(vars, const, o, hangPos, normal, startStopTracker)
