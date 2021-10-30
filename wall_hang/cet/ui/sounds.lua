@@ -13,6 +13,10 @@ function PlaySound_Jump(vars, o)
     o:PlaySound("lcm_player_double_jump", vars)
 end
 
+function PlaySound_FailJump(vars, o)
+    o:PlaySound("q114_sc_04_saul_hugs", vars)       -- this is the same sound as grappling hook's low energy click sound
+end
+
 function PlaySound_Slide(vars, o)
     local sound = this.GetRandomSound(this.sounds_slide)
     o:PlaySound(sound, vars)

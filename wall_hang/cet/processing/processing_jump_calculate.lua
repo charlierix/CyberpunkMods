@@ -14,27 +14,43 @@ function Process_Jump_Calculate(o, player, vars, const, debug)
     end
 
     -- Compare the look direction with the wall's normal, figure out the direction to go
-    local jump_dir = this.CalculateJumpDirection_Direct(o.lookdir_forward, vars.normal)
+    local is_up, jump_dir = this.CalculateJumpDirection_Direct(o.lookdir_forward, vars.normal)
 
-    -- Rotate up so the jump will be in an arc
-    local impulse = this.GetImpulse(jump_dir, player.jump_strength)
+    if is_up then
+        -- Going straight up is simpler and can go straight to impulse.  Though the impulse force needs
+        -- to be reduced if going up too fast
+        local has_impulse, impulse = this.GetImpulse_Up(jump_dir, o.vel, player.jump_strength, player.jump_speed_fullStrength, player.jump_speed_zeroStrength)
 
-    --NOTE: In the future, there may be reasons to not adjust the look direction (because they are
-    --holding a direction key, or config says not to).  In those cases, go straight to jump_impulse
+        if has_impulse then
+            Transition_ToJump_Impulse(vars, const, o, impulse, false)
+        else
+            PlaySound_FailJump(vars, o)
+            Transition_ToStandard(vars, const, debug, o)
+        end
 
-    Transition_ToJump_TeleTurn(vars, const, o, impulse, jump_dir)
+    else
+        -- Rotate up so the jump will be in an arc
+        local impulse = this.GetImpulse_Out(jump_dir, player.jump_strength)
+
+        --NOTE: In the future, there may be reasons to not adjust the look direction (because they are
+        --holding a direction key, or config says not to).  In those cases, go straight to jump_impulse
+
+        Transition_ToJump_TeleTurn(vars, const, o, impulse, jump_dir)
+    end
 end
 
 ----------------------------------- Private Methods -----------------------------------
 
 -- NOTE: This isn't the perfect final direction they will go.  It does tell what yaw to use
 -- and how much power to put into the jump
+-- Returns
+--  is_up, direction
 function this.CalculateJumpDirection_Direct(lookdir, normal)
     local dot = DotProduct3D(lookdir, normal)
 
     if dot > MINDOT then
         -- They are looking away from the wall, jump the direction they're looking
-        return lookdir
+        return false, lookdir
     end
 
     if not up then
@@ -45,7 +61,7 @@ function this.CalculateJumpDirection_Direct(lookdir, normal)
 
     if dot < 0 and upDot >= STRAIGHTUPDOT then
         -- They are facing the wall and looking up.  Jump straight up instead of spinning around and jumping away
-        return up
+        return true, up
     end
 
     if dot < 0 then
@@ -61,19 +77,33 @@ function this.CalculateJumpDirection_Direct(lookdir, normal)
 
     local rotate = GetRotation(lookdir, normal, percentNormal)
 
-    return RotateVector3D(lookdir, rotate)
+    return false, RotateVector3D(lookdir, rotate)
+end
+
+-- Returns
+--  hasImpulse, impulse_vector
+function this.GetImpulse_Up(direction, velocity, jump_strength, speed_fullStrength, speed_zeroStrength)
+    -- Get the speed going up
+    --local speed_up = GetVectorLength(GetProjectedVector_AlongVector(velocity, up, true))      -- this is how to do it for a direction other than up
+    local speed_up = velocity.z
+
+    local percent = 1
+    if speed_up >= speed_zeroStrength then
+        return false, nil
+    elseif speed_up >= speed_fullStrength then
+        percent = GetScaledValue(1, 0, speed_fullStrength, speed_zeroStrength, speed_up)
+    end
+
+    return true, MultiplyVector(direction, jump_strength * percent)
 end
 
 -- This returns the final impulse to apply
-function this.GetImpulse(direction, jump_strength)
+function this.GetImpulse_Out(direction, jump_strength)
     if not up then
         up = Vector4.new(0, 0, 1, 0)
     end
 
     local dot = DotProduct3D(direction, up)
-    if IsNearValue(dot, 1) then
-        return MultiplyVector(direction, jump_strength)
-    end
 
     -- pi       straight down
     -- pi/2     horizontal

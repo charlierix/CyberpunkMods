@@ -56,6 +56,8 @@ function PlayerArcade:MapModelToSelf(model)
         self.attract_pow = model.attract_pow
         self.wallSlide_minSpeed = model.wallSlide_minSpeed
         self.wallSlide_dragAccel = model.wallSlide_dragAccel
+        self.jump_speed_fullStrength = model.jump_speed_fullStrength
+        self.jump_speed_zeroStrength = model.jump_speed_zeroStrength
 
     else
         self.jump_strength = 11
@@ -67,6 +69,9 @@ function PlayerArcade:MapModelToSelf(model)
 
         self.wallSlide_minSpeed = 4
         self.wallSlide_dragAccel = 16
+
+        self.jump_speed_fullStrength = 3        -- any vertical speed lower than this will get full jump strength
+        self.jump_speed_zeroStrength = 7        -- this is the vertical speed where no more impulse will be applied.  Gradient to full at jump_speed_fullStrength
     end
 end
 function PlayerArcade:MapSelfToModel()
@@ -78,5 +83,7 @@ function PlayerArcade:MapSelfToModel()
         attract_pow = self.attract_pow,
         wallSlide_minSpeed = self.wallSlide_minSpeed,
         wallSlide_dragAccel = self.wallSlide_dragAccel,
+        jump_speed_fullStrength = self.jump_speed_fullStrength,
+        jump_speed_zeroStrength = self.jump_speed_zeroStrength,
     }
 end

@@ -40,8 +40,6 @@ function Transition_ToJump_Calculate(vars, const, o, hangPos, normal, startStopT
 
     vars.hangPos = hangPos
     vars.normal = normal
-
-    PlaySound_Jump(vars, o)
 end
 
 function Transition_ToJump_TeleTurn(vars, const, o, impulse, final_lookdir)
@@ -50,11 +48,17 @@ function Transition_ToJump_TeleTurn(vars, const, o, impulse, final_lookdir)
 
     vars.impulse = impulse
     vars.final_lookdir = final_lookdir
+
+    PlaySound_Jump(vars, o)
 end
 
-function Transition_ToJump_Impulse(vars, const, o, impulse)
+function Transition_ToJump_Impulse(vars, const, o, impulse, from_teleturn)
     vars.flightMode = const.flightModes.jump_impulse
     o:Custom_CurrentlyFlying_StartFlight()
 
     vars.impulse = impulse
+
+    if not from_teleturn then
+        PlaySound_Jump(vars, o)
+    end
 end

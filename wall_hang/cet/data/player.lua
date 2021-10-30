@@ -36,6 +36,8 @@ function Player:Reset()
     self.attract_pow = self.player_arcade.attract_pow
     self.wallSlide_minSpeed = self.player_arcade.wallSlide_minSpeed
     self.wallSlide_dragAccel = self.player_arcade.wallSlide_dragAccel
+    self.jump_speed_fullStrength = self.player_arcade.jump_speed_fullStrength
+    self.jump_speed_zeroStrength = self.player_arcade.jump_speed_zeroStrength
 end
 
 ------------------------------- Private Instance Methods ------------------------------
