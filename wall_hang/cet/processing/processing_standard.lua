@@ -136,9 +136,11 @@ function this.AttractDistance(isHangDown, hits, fromPos, o, player, vars, const,
 
     local accel = this.GetAttractAccel(distance, player, const)
 
+    local antigrav = 16 * player.attract_antigrav
+
     local x = ((hit.hit.x - fromPos.x) / distance) * accel * deltaTime
     local y = ((hit.hit.y - fromPos.y) / distance) * accel * deltaTime
-    local z = ((hit.hit.z - fromPos.z) / distance) * accel * deltaTime
+    local z = (antigrav + (((hit.hit.z - fromPos.z) / distance) * accel)) * deltaTime
 
     o.player:WallHang_AddImpulse(x, y, z)
 

@@ -54,6 +54,7 @@ function PlayerArcade:MapModelToSelf(model)
         self.wallDistance_attract_max = model.wallDistance_attract_max
         self.attract_accel = model.attract_accel
         self.attract_pow = model.attract_pow
+        self.attract_antigrav = model.attract_antigrav
         self.wallSlide_minSpeed = model.wallSlide_minSpeed
         self.wallSlide_dragAccel = model.wallSlide_dragAccel
         self.jump_speed_fullStrength = model.jump_speed_fullStrength
@@ -66,6 +67,7 @@ function PlayerArcade:MapModelToSelf(model)
 
         self.attract_accel = 8
         self.attract_pow = 4
+        self.attract_antigrav = 0.66
 
         self.wallSlide_minSpeed = 4
         self.wallSlide_dragAccel = 16
@@ -81,6 +83,7 @@ function PlayerArcade:MapSelfToModel()
         wallDistance_attract_max = self.wallDistance_attract_max,
         attract_accel = self.attract_accel,
         attract_pow = self.attract_pow,
+        attract_antigrav = self.attract_antigrav,
         wallSlide_minSpeed = self.wallSlide_minSpeed,
         wallSlide_dragAccel = self.wallSlide_dragAccel,
         jump_speed_fullStrength = self.jump_speed_fullStrength,
