@@ -39,7 +39,7 @@ function Process_Standard(o, player, vars, const, debug, startStopTracker, delta
     end
 
     if not log then
-        log = DebugRenderLogger:new(not const.shouldShowLogging3D_latchRayTrace)
+        log = DebugRenderLogger:new(const.shouldShowLogging3D_latchRayTrace)
     end
 
     -- Fire a few rays, see if there are wall around
