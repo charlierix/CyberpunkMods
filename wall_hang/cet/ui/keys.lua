@@ -13,18 +13,13 @@ function Keys:new(o, const)
     -- hardcoded keys (explicit propertes to make it easy to code against)
     obj.mouse_x = 0
 
-    obj.forward = false
-    obj.backward = false
-    obj.left = false
-    obj.right = false
+    obj.analog_x = 0        -- this is a controller's analog stick
+    obj.analog_y = 0
+
     obj.jump = false
     obj.hang = false
     obj.custom_hang = false      -- this is set from PressedCustom()
 
-    obj.prev_forward = false
-    obj.prev_backward = false
-    obj.prev_left = false
-    obj.prev_right = false
     obj.prev_jump = false
     obj.prev_hang = false
     obj.prev_custom_hang = false
@@ -33,10 +28,6 @@ function Keys:new(o, const)
     -- Key is the actionName, value is self.xxx
     obj.hardcodedMapping =
     {
-        Forward = "forward",
-        Back = "backward",
-        Left = "left",
-        Right = "right",
         Jump = "jump",
     }
 
@@ -63,6 +54,8 @@ function Keys:MapAction(action)
     --print(actionName .. ", pressed: " .. tostring(pressed) .. ", released: " .. tostring(released))
 
     self:MapAction_Fixed(action, actionName, pressed, released)
+
+    self:MapAction_Movement(action, actionName, pressed, released)
 
     self:MapAction_Hang(actionName, pressed, released)
 
@@ -168,6 +161,46 @@ function Keys:MapAction_Fixed(action, actionName, pressed, released)
             end
 
             do return end
+        end
+    end
+end
+
+function Keys:MapAction_Movement(action, actionName, pressed, released)
+    -- This fires from controller's left thumbsick as well as ASDW
+    if actionName == "MoveX" then       -- actionType: "AXIS_CHANGE"
+        self.analog_x = action:GetValue(action)
+
+    elseif actionName == "MoveY" then
+        self.analog_y = action:GetValue(action)
+    end
+
+    --NOTE: This mostly duplicates the MoveX, MoveY above, but it ensures that keyboard movement is reliable
+    if actionName == "Forward" then
+        if pressed then
+            self.analog_y = 1
+        elseif released then
+            self.analog_y = 0
+        end
+
+    elseif actionName == "Back" then
+        if pressed then
+            self.analog_y = -1
+        elseif released then
+            self.analog_y = 0
+        end
+
+    elseif actionName == "Left" then
+        if pressed then
+            self.analog_x = -1
+        elseif released then
+            self.analog_x = 0
+        end
+
+    elseif actionName == "Right" then
+        if pressed then
+            self.analog_x = 1
+        elseif released then
+            self.analog_x = 0
         end
     end
 end

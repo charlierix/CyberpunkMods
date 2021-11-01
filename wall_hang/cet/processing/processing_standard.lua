@@ -42,7 +42,7 @@ function Process_Standard(o, player, vars, const, debug, startStopTracker, delta
         log = DebugRenderLogger:new(const.shouldShowLogging3D_latchRayTrace)
     end
 
-    -- Fire a few rays, see if there are wall around
+    -- Fire a few rays, see if there's are wall around
     local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
 
     local hits = RayCast_NearbyWalls(fromPos, o, log, player.wallDistance_attract_max)
@@ -85,6 +85,38 @@ function this.DirectDistance(isHangDown, isJumpDown, hits, fromPos, o, player, v
     end
 end
 
+function this.AttractDistance(isHangDown, hits, fromPos, o, player, vars, const, debug, deltaTime)
+    if not isHangDown then
+        do return end
+    end
+
+    --TODO: If more points are used, the total acceleration will need to be spread among them.  Also, how to decide
+    --which points to use?  Probably the closest for each plane
+
+    -- For now, just use the closest
+
+    local hit = hits[1]
+
+    local distance = math.sqrt(hit.distSqr)
+
+    local accel = this.GetAttractAccel(distance, player, const)
+
+    local antigrav = 16 * player.attract_antigrav
+
+    local x = ((hit.hit.x - fromPos.x) / distance) * accel * deltaTime
+    local y = ((hit.hit.y - fromPos.y) / distance) * accel * deltaTime
+    local z = (antigrav + (((hit.hit.z - fromPos.z) / distance) * accel)) * deltaTime
+
+    o.player:WallHang_AddImpulse(x, y, z)
+
+    if not vars.is_attracting then
+        PlaySound_Attract(vars, o)
+        vars.is_attracting = true
+    end
+end
+
+---------------------------------------------------------------------------------------
+
 -- This is called when they are close to the wall and trying to stick
 --  If they are moving too fast along the wall, it will apply drag and return true
 --  If they are moving slow enough, this will return false, telling the caller that it's ok to stick in place
@@ -110,6 +142,9 @@ function this.SlideDrag(hit, fromPos, o, player, vars, const, debug, deltaTime)
 
 
     --TODO: Apply a pull accel toward ideal distance from plane
+    --Put that in a file: Util_IdealDist
+    --  It would be called from here, when crawling, when wall running
+    --  Takes in wall's normal, from point, distance moved parallel to plane this frame.  Returns impulse to apply (will always be along normal or nil)
 
 
     if not vars.is_sliding then
@@ -118,36 +153,6 @@ function this.SlideDrag(hit, fromPos, o, player, vars, const, debug, deltaTime)
     end
 
     return true
-end
-
-function this.AttractDistance(isHangDown, hits, fromPos, o, player, vars, const, debug, deltaTime)
-    if not isHangDown then
-        do return end
-    end
-    
-    --TODO: If more points are used, the total acceleration will need to be spread among them.  Also, how to decide
-    --which points to use?  Probably the closest for each plane
-
-    -- For now, just use the closest
-
-    local hit = hits[1]
-
-    local distance = math.sqrt(hit.distSqr)
-
-    local accel = this.GetAttractAccel(distance, player, const)
-
-    local antigrav = 16 * player.attract_antigrav
-
-    local x = ((hit.hit.x - fromPos.x) / distance) * accel * deltaTime
-    local y = ((hit.hit.y - fromPos.y) / distance) * accel * deltaTime
-    local z = (antigrav + (((hit.hit.z - fromPos.z) / distance) * accel)) * deltaTime
-
-    o.player:WallHang_AddImpulse(x, y, z)
-
-    if not vars.is_attracting then
-        PlaySound_Attract(vars, o)
-        vars.is_attracting = true
-    end
 end
 
 function this.GetAttractAccel(distance, player, const)

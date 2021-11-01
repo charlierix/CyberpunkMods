@@ -229,14 +229,22 @@ function GetProjectedVector_AlongVector(vector, alongVectorUnit, eitherDirection
         MultiplyVector(alongVectorUnit, length),
         length > 0
 end
+-- Returns the portion of the vector that is along the plane
 function GetProjectedVector_AlongPlane(vector, alongPlanes_normal)
     -- Get a line that is parallel to the plane, but along the direction of the vector
+    local alongLine = GetProjectedVector_AlongPlane_Unit(vector, alongPlanes_normal)
+
+    -- Use the other overload to get the portion of the vector along this line
+    return GetProjectedVector_AlongVector(vector, alongLine)
+end
+-- Returns the direction of the vector along the plane
+--  Returned value is length 1 (or len 0 if vector is perpendicular to plane)
+function GetProjectedVector_AlongPlane_Unit(vector, alongPlanes_normal)
     local alongLine = CrossProduct3D(alongPlanes_normal, CrossProduct3D(vector, alongPlanes_normal))
 
     Normalize(alongLine)
 
-    -- Use the other overload to get the portion of the vector along this line
-    return GetProjectedVector_AlongVector(vector, alongLine)
+    return alongLine
 end
 
 -- Turns dot product into a user friendly angle in degrees
