@@ -1,6 +1,7 @@
 local this = {}
 
 local log = nil
+local up = nil      -- can't use vector4 before init
 
 -- Just keeps teleporting to the initial catch point
 function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, deltaTime)
@@ -78,13 +79,15 @@ function this.GetNewPosition(position, normal, o, player, keys, const, deltaTime
         return position, normal     -- should never happen
     end
 
-    -- Project look direction onto the wall's plane
-    local direction = GetProjectedVector_AlongPlane_Unit(o.lookdir_forward, normal)
-    if IsNearZero_vec4(direction) then
-        return position, normal     -- looking exactly parallel to plane's normal (should almost never happen)
+    if not up then
+        up = Vector4.new(0, 0, 1, 0)
     end
 
-    local right = CrossProduct3D(direction, normal)
+    -- Figure out the direction to move along the plane
+    local direction, right = this.GetDirectionsAlongPlane(o, normal)
+    if not direction then
+        return position, normal
+    end
 
     this.Log_OuterFunc(position, normal, direction, right, o)
 
@@ -106,6 +109,34 @@ function this.GetNewPosition(position, normal, o, player, keys, const, deltaTime
 
 
 
+end
+
+function this.GetDirectionsAlongPlane(o, normal)
+    --local direction = GetProjectedVector_AlongPlane_Unit(o.lookdir_forward, normal)        -- it didn't feel natural to move along look when pressing forward, and felt really odd when pressing left and right
+    local direction = GetProjectedVector_AlongPlane_Unit(up, normal)
+
+    local right = nil
+
+    if IsNearZero_vec4(direction) then
+        direction = GetProjectedVector_AlongPlane_Unit(o.lookdir_forward, normal)       -- the plane is a horizontal ceiling.  Just use the look direction
+
+        if IsNearZero_vec4(direction) then
+            return nil, nil     -- hanging from a ceiling and looking straight up or down (nearly impossible)
+        end
+
+        right = CrossProduct3D(normal, direction)       -- when hanging from the ceiling, this is the only correct way to cross product
+    else
+        -- Hanging on the side of a wall.  Right depends on whether the player is looking toward or away from the wall
+        local dot = DotProduct3D(o.lookdir_forward, normal)
+
+        if dot <= 0 then
+            right = CrossProduct3D(direction, normal)       -- looking toward the wall
+        else
+            right = CrossProduct3D(normal, direction)       -- looking away from the wall, right becomes left
+        end
+    end
+
+    return direction, right
 end
 
 function this.GetProposedWallCrawlPos(position, direction, right, player, keys, const, deltaTime)

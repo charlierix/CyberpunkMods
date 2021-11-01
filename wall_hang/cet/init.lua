@@ -125,9 +125,9 @@ local const =
     teleturn_radians_per_second = math.pi * 3.5,      -- this needs to be very fast, teleturn is a hack and can't last very long.  Just enough motion that the player can sense the direction change (it's very disorienting to instantly face a new direction)
 
 
-    wallcrawl_speed_horz = 1,
-    wallcrawl_speed_up = 0.5,
-    wallcrawl_speed_down = 1.3,
+    wallcrawl_speed_horz = 1.2,
+    wallcrawl_speed_up = 0.8,
+    wallcrawl_speed_down = 1.6,
 
 
     shouldShowLogging3D_latchRayTrace = false,
