@@ -109,27 +109,25 @@ function this.GetNewPosition(position, normal, o, player, keys, const, deltaTime
 
     this.Log_OuterFunc(position, normal, direction, right, o)
 
+    local position_offset = Vector4.new(position.x, position.y, position.z + const.rayFrom_Z)
+
     -- See what direction to crawl along the wall's plane
-    local new_pos, move_direction = this.GetProposedWallCrawlPos(position, direction, right, player, keys, const, deltaTime)
+    local new_pos_offset, move_direction = this.GetProposedWallCrawlPos(position_offset, direction, right, player, keys, const, deltaTime)
     if IsNearZero_vec4(move_direction) then
         return false, position, normal      -- the check at the top of this function should have caught this case, but doing a second check here to be safe
     end
 
-    local hits = RayCast_NearbyWalls_CrawlBasic(position, new_pos, move_direction, normal, o, log2, const.wallDistance_stick_max)
+    local hits = RayCast_NearbyWalls_CrawlBasic(position_offset, new_pos_offset, move_direction, normal, o, log2, const.wallDistance_stick_max)
     if #hits > 0 then
-        log:WriteLine_Frame(vec_str(position))
-
-        log:Add_Dot(new_pos, "crawl1")
-        log:WriteLine_Frame(vec_str(new_pos))
+        log:Add_Dot(new_pos_offset, "crawl1")
 
         -- Push them a bit toward the ideal distance from the plane
-        local distance_moved = math.sqrt(GetVectorDiffLengthSqr(position, new_pos))
-        new_pos = MoveToIdealDistance(new_pos, hits[1].normal, const.wallDistance_stick_ideal, math.sqrt(hits[1].distSqr), distance_moved)
+        local distance_moved = math.sqrt(GetVectorDiffLengthSqr(position_offset, new_pos_offset))
+        new_pos_offset = MoveToIdealDistance(new_pos_offset, hits[1].normal, const.wallDistance_stick_ideal, math.sqrt(hits[1].distSqr), distance_moved)
 
-        log:Add_Dot(new_pos, "crawl2")
-        log:WriteLine_Frame(vec_str(new_pos))
+        log:Add_Dot(new_pos_offset, "crawl2")
 
-        return false, new_pos, hits[1].normal
+        return false, Vector4.new(new_pos_offset.x, new_pos_offset.y, new_pos_offset.z - const.rayFrom_Z, 1), hits[1].normal
     else
 
         --TODO: Detect a corner, possibly trying to crawl onto a ledge

@@ -341,8 +341,28 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
---registerHotkey("WallHangTesterButton", "tester hotkey", function()
---end)
+registerHotkey("WallHangTesterButton", "tester hotkey", function()
+    local log = DebugRenderLogger:new(true)
+
+    local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z)
+    --local toPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z + 12, 1)
+    local toPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z + const.wallDistance_stick_max, 1)
+
+    log:Add_Line(fromPos, toPos)
+
+    local hit, normal = o:RayCast(fromPos, toPos, true)
+    if hit then
+        local color = "F44"
+        if math.sqrt(GetVectorDiffLengthSqr(hit, fromPos)) <= const.wallDistance_stick_max then
+            color = "4D4"
+        end
+
+        log:Add_Dot(hit, nil, color)
+        log:Add_Square(hit, normal, 1, 1, nil, color)
+    end
+
+    log:Save("hotkey")
+end)
 
 registerHotkey("WallHang_Config", "Show Config", function()
     if shouldShowConfig then

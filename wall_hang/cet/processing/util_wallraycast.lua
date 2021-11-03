@@ -110,6 +110,8 @@ end
 function this.FireRay(other_hits, fromPos, testPos, direction, rayLen, o, log)
     local toPos = Vector4.new(fromPos.x + (direction.x * rayLen), fromPos.y + (direction.y * rayLen), fromPos.z + (direction.z * rayLen), 1)
 
+    log:WriteLine_Frame("rayLen: " .. tostring(rayLen))
+
     local hit, normal = o:RayCast(fromPos, toPos, true)
 
     if not hit then
