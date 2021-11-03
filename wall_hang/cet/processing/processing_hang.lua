@@ -1,6 +1,7 @@
 local this = {}
 
 local log = nil
+local log2 = nil
 local up = nil      -- can't use vector4 before init
 
 -- Just keeps teleporting to the initial catch point
@@ -9,6 +10,7 @@ function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, del
 
     if log and log:IsPopulated() and (not isHangDown or isJumpDown) then
         log:Save("WallCrawl")
+        log2:Save("WallCrawl2")
     end
 
     if not isHangDown then
@@ -22,27 +24,38 @@ function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, del
 
     if not log then
         log = DebugRenderLogger:new(const.shouldShowLogging3D_wallCrawl)
+        log2 = DebugRenderLogger:new(const.shouldShowLogging3D_wallCrawl)
         this.EnsureLogSetup()
     end
 
+    -- Get the new yaw if they are trying to look left or right
     local yaw = this.GetYaw(o, keys, const)
 
-    local pos, normal = this.GetNewPosition(vars.hangPos, vars.normal, o, player, keys, const, deltaTime)
-    vars.hangPos = pos
-    vars.normal = normal
+    -- If they are trying to crawl around, then the position will change
+    local isTryingToStand, pos, normal = this.GetNewPosition(vars.hangPos, vars.normal, o, player, keys, const, deltaTime)
 
-    o:Teleport(pos, yaw)
+    if isTryingToStand then
+        -- Need to give them a small upward kick (and maybe a little toward the wall), then transition back to standard
+
+    else
+        vars.hangPos = pos
+        vars.normal = normal
+
+        o:Teleport(pos, yaw)        --NOTE: Even if they aren't crawling or changing look direction, teleport is needed to counteract gravity
+    end
 end
 
 ----------------------------------- Private Methods -----------------------------------
 
 function this.EnsureLogSetup()
     if #log.categories == 0 then
-        log:DefineCategory("player", "FF5", 2)
+        log:DefineCategory("player", "FF5", 0.05)
         log:DefineCategory("wall", "4000", 1)
         log:DefineCategory("normal")
         log:DefineCategory("look", "FF5", 0.75)
         log:DefineCategory("along", "55F")
+        log:DefineCategory("crawl1", "000", 0.33)
+        log:DefineCategory("crawl2", "FFF", 0.33)
     end
 end
 
@@ -69,14 +82,19 @@ function this.GetYaw(o, keys, const)
     return AddYaw(o.yaw, deltaYaw)
 end
 
+-- If the player is trying to crawl along the wall, then this will calculate the new position
+-- Returns
+--  isTryingToStand     true when they are at the top of a wall and trying to climb up onto the ledge above
+--  position            the new position to teleport
+--  normal              the normal of the wall they are clinging to (normal could change frame to frame as they crawl around)
 function this.GetNewPosition(position, normal, o, player, keys, const, deltaTime)
     if IsNearZero(keys.analog_x) and IsNearZero(keys.analog_y) then
-        return position, normal
+        return false, position, normal
     end
 
     o:GetCamera()
     if not o.lookdir_forward then
-        return position, normal     -- should never happen
+        return false, position, normal     -- should never happen
     end
 
     if not up then
@@ -86,29 +104,42 @@ function this.GetNewPosition(position, normal, o, player, keys, const, deltaTime
     -- Figure out the direction to move along the plane
     local direction, right = this.GetDirectionsAlongPlane(o, normal)
     if not direction then
-        return position, normal
+        return false, position, normal
     end
 
     this.Log_OuterFunc(position, normal, direction, right, o)
 
     -- See what direction to crawl along the wall's plane
-    local new_pos = this.GetProposedWallCrawlPos(position, direction, right, player, keys, const, deltaTime)
+    local new_pos, move_direction = this.GetProposedWallCrawlPos(position, direction, right, player, keys, const, deltaTime)
+    if IsNearZero_vec4(move_direction) then
+        return false, position, normal      -- the check at the top of this function should have caught this case, but doing a second check here to be safe
+    end
 
-    -- Make sure it's ok to go in that direction:
-    --  Fire a ray from the new position straight at the plane
-    --  Fire a ray along the travel direction
-    --  Maybe 5 total, one for each perpendicular direction
+    local hits = RayCast_NearbyWalls_CrawlBasic(position, new_pos, move_direction, normal, o, log2, const.wallDistance_stick_max)
+    if #hits > 0 then
+        log:WriteLine_Frame(vec_str(position))
 
-    -- TODO: handle transitioning to new planes
+        log:Add_Dot(new_pos, "crawl1")
+        log:WriteLine_Frame(vec_str(new_pos))
 
+        -- Push them a bit toward the ideal distance from the plane
+        local distance_moved = math.sqrt(GetVectorDiffLengthSqr(position, new_pos))
+        new_pos = MoveToIdealDistance(new_pos, hits[1].normal, const.wallDistance_stick_ideal, math.sqrt(hits[1].distSqr), distance_moved)
 
+        log:Add_Dot(new_pos, "crawl2")
+        log:WriteLine_Frame(vec_str(new_pos))
 
+        return false, new_pos, hits[1].normal
+    else
 
+        --TODO: Detect a corner, possibly trying to crawl onto a ledge
+        --  If an outside corner is encountered:
+        --      choose a from point beyond new_pos:
+        --          position+(new_pos-position)*C
+        --      fire a couple more rays from that point
 
-    return new_pos, normal
-
-
-
+        return false, position, normal
+    end
 end
 
 function this.GetDirectionsAlongPlane(o, normal)
@@ -146,19 +177,20 @@ function this.GetProposedWallCrawlPos(position, direction, right, player, keys, 
     local y = (direction.y * keys.analog_y) + (right.y * keys.analog_x)
     local z = (direction.z * keys.analog_y) + (right.z * keys.analog_x)
 
-    x = x * const.wallcrawl_speed_horz
-    y = y * const.wallcrawl_speed_horz
+    x = x * player.wallcrawl_speed_horz
+    y = y * player.wallcrawl_speed_horz
     if z >= 0 then
-        z = z * const.wallcrawl_speed_up
+        z = z * player.wallcrawl_speed_up
     else
-        z = z * const.wallcrawl_speed_down
+        z = z * player.wallcrawl_speed_down
     end
 
-    x = x * deltaTime
-    y = y * deltaTime
-    z = z * deltaTime
+    local dir_len = math.sqrt((x * x) + (y * y) + (z * z))
+    if IsNearZero(x) and IsNearZero(y) and IsNearZero(z) then
+        dir_len = 10000     -- avoiding a divide by zero error.  Making the denominator large so that an isnearzero check against the vector is guaranteed to work
+    end
 
-    return Vector4.new(position.x + x, position.y + y, position.z + z, 1)
+    return
+        Vector4.new(position.x + (x * deltaTime), position.y + (y * deltaTime), position.z + (z * deltaTime), 1),
+        Vector4.new(x / dir_len, y / dir_len, z / dir_len, 1)
 end
-
-

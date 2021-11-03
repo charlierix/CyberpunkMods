@@ -45,7 +45,7 @@ function Process_Standard(o, player, vars, const, debug, startStopTracker, delta
     -- Fire a few rays, see if there's are wall around
     local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
 
-    local hits = RayCast_NearbyWalls(fromPos, o, log, player.wallDistance_attract_max)
+    local hits = RayCast_NearbyWalls_Initial(fromPos, o, log, player.wallDistance_attract_max)
     if #hits == 0 then
         this.ResetVars(o, vars)
         do return end

@@ -39,6 +39,7 @@ require "processing/processing_jump_calculate"
 require "processing/processing_jump_impulse"
 require "processing/processing_jump_teleturn"
 require "processing/processing_standard"
+require "processing/util_idealdist"
 require "processing/util_wallraycast"
 
 require "ui/drawing"
@@ -119,16 +120,10 @@ local const =
 
     rayFrom_Z = 1.5,
 
-    wallDistance_stick_ideal = 0.85,        --NOTE: The rest of the raycast settings are in player
+    wallDistance_stick_ideal = 0.6,        --NOTE: The rest of the raycast settings are in player
     wallDistance_stick_max = 1.2,
 
     teleturn_radians_per_second = math.pi * 3.5,      -- this needs to be very fast, teleturn is a hack and can't last very long.  Just enough motion that the player can sense the direction change (it's very disorienting to instantly face a new direction)
-
-
-    wallcrawl_speed_horz = 1.2,
-    wallcrawl_speed_up = 0.8,
-    wallcrawl_speed_down = 1.6,
-
 
     shouldShowLogging3D_latchRayTrace = false,
     shouldShowLogging3D_wallCrawl = true,

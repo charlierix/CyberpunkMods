@@ -2,6 +2,8 @@
 -- Arcade is a single set of constants for all characters
 -- Realism will be the same constants but unique to the playthrough character
 
+local this = {}
+
 PlayerArcade = {}
 
 function PlayerArcade:new(o, vars, const, debug)
@@ -49,44 +51,53 @@ function PlayerArcade:MapModelToSelf(model)
     --NOTE: This function is written very defensively, the assumption is that properties will be added over time,
     --so new code will try to load old db entries.  Missing properties will take the default value
 
-    if model.jump_strength then
-        self.jump_strength = model.jump_strength
-        self.wallDistance_attract_max = model.wallDistance_attract_max
-        self.attract_accel = model.attract_accel
-        self.attract_pow = model.attract_pow
-        self.attract_antigrav = model.attract_antigrav
-        self.wallSlide_minSpeed = model.wallSlide_minSpeed
-        self.wallSlide_dragAccel = model.wallSlide_dragAccel
-        self.jump_speed_fullStrength = model.jump_speed_fullStrength
-        self.jump_speed_zeroStrength = model.jump_speed_zeroStrength
+    this.StoreModelValue(self, model, "jump_strength", 11)
 
-    else
-        self.jump_strength = 11
+    this.StoreModelValue(self, model, "wallDistance_attract_max", 4.8)
 
-        self.wallDistance_attract_max = 4.8
+    this.StoreModelValue(self, model, "attract_accel", 8)
+    this.StoreModelValue(self, model, "attract_pow", 4)
+    this.StoreModelValue(self, model, "attract_antigrav", 0.66)
 
-        self.attract_accel = 8
-        self.attract_pow = 4
-        self.attract_antigrav = 0.66
+    this.StoreModelValue(self, model, "wallSlide_minSpeed", 4)
+    this.StoreModelValue(self, model, "wallSlide_dragAccel", 16)
 
-        self.wallSlide_minSpeed = 4
-        self.wallSlide_dragAccel = 16
+    this.StoreModelValue(self, model, "jump_speed_fullStrength", 3)     -- any vertical speed lower than this will get full jump strength
+    this.StoreModelValue(self, model, "jump_speed_zeroStrength", 7)     -- this is the vertical speed where no more impulse will be applied.  Gradient to full at jump_speed_fullStrength
 
-        self.jump_speed_fullStrength = 3        -- any vertical speed lower than this will get full jump strength
-        self.jump_speed_zeroStrength = 7        -- this is the vertical speed where no more impulse will be applied.  Gradient to full at jump_speed_fullStrength
-    end
+    this.StoreModelValue(self, model, "wallcrawl_speed_horz", 1.2)
+    this.StoreModelValue(self, model, "wallcrawl_speed_up", 0.8)
+    this.StoreModelValue(self, model, "wallcrawl_speed_down", 1.6)
 end
 function PlayerArcade:MapSelfToModel()
     return
     {
         jump_strength = self.jump_strength,
+
         wallDistance_attract_max = self.wallDistance_attract_max,
+
         attract_accel = self.attract_accel,
         attract_pow = self.attract_pow,
         attract_antigrav = self.attract_antigrav,
+
         wallSlide_minSpeed = self.wallSlide_minSpeed,
         wallSlide_dragAccel = self.wallSlide_dragAccel,
+
         jump_speed_fullStrength = self.jump_speed_fullStrength,
         jump_speed_zeroStrength = self.jump_speed_zeroStrength,
+
+        wallcrawl_speed_horz = self.wallcrawl_speed_horz,
+        wallcrawl_speed_up = self.wallcrawl_speed_up,
+        wallcrawl_speed_down = self.wallcrawl_speed_down,
     }
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.StoreModelValue(obj, model, prop_name, default)
+    if model[prop_name] then
+        obj[prop_name] = model[prop_name]
+    else
+        obj[prop_name] = default
+    end
 end

@@ -1,8 +1,8 @@
 local this = {}
 
-local RADIANS_RIGHTLEFT = 70 * math.pi / 180
-
 local up = nil      -- can't use vector4 before init
+
+local RADIANS_RIGHTLEFT = 70 * math.pi / 180
 local rot_right = nil
 local rot_left = nil
 
@@ -10,7 +10,7 @@ local rot_left = nil
 
 -- Returns array of hits, sorted by distance from source
 --  { hit, normal, distSqr }[]
-function RayCast_NearbyWalls(fromPos, o, log, rayLen)
+function RayCast_NearbyWalls_Initial(fromPos, o, log, rayLen)
     local retVal = {}
 
     if not up then
@@ -28,22 +28,22 @@ function RayCast_NearbyWalls(fromPos, o, log, rayLen)
     log:Add_Dot(fromPos, "player")
 
     -- Up
-    this.FireRay(retVal, fromPos, up, rayLen, o, log)
+    this.FireRay(retVal, fromPos, fromPos, up, rayLen, o, log)
 
     -- Dir facing
-    this.FireRay(retVal, fromPos, o.lookdir_forward, rayLen, o, log)
+    this.FireRay(retVal, fromPos, fromPos, o.lookdir_forward, rayLen, o, log)
 
     -- Horizontal facing
     local horz_forward = this.GetDirectionHorz(o.lookdir_forward)
-    this.FireRay(retVal, fromPos, horz_forward, rayLen, o, log)
+    this.FireRay(retVal, fromPos, fromPos, horz_forward, rayLen, o, log)
 
     -- Horizontal right
     local horz_right = RotateVector3D(horz_forward, rot_right)
-    this.FireRay(retVal, fromPos, horz_right, rayLen, o, log)
+    this.FireRay(retVal, fromPos, fromPos, horz_right, rayLen, o, log)
 
     -- Horizontal left
     local horz_left = RotateVector3D(horz_forward, rot_left)
-    this.FireRay(retVal, fromPos, horz_left, rayLen, o, log)
+    this.FireRay(retVal, fromPos, fromPos, horz_left, rayLen, o, log)
 
     if #retVal > 0 then
         log:Add_Line(fromPos, retVal[1].hit, "closest")
@@ -51,6 +51,45 @@ function RayCast_NearbyWalls(fromPos, o, log, rayLen)
 
     return retVal
 end
+
+
+--TODO: Figure out why this isn't transitioning from walls to ceilings
+function RayCast_NearbyWalls_CrawlBasic(fromPos, move_position, move_direction, existing_normal, o, log, rayLen)
+    --local SLIDE_TO = 0.2        -- first rays pointing straight at the plane start at fromPos.  Rays that sweep along direction arc will slide toward the plane
+
+    local DIRANGLE_FROM = 0     -- starting at -normal
+    local DIRANGLE_TO = 110     -- going to normal
+    --local SIDEANGLE_FROMTO = 45 -- starting at right, ending at -right
+
+    local STEPS_DIR = 5
+    --local STEPS_SIDE = 2        -- 1 straight down, then these steps
+
+    local radianDelta_dir = Degrees_to_Radians((DIRANGLE_TO - DIRANGLE_FROM) / (STEPS_DIR - 1))
+
+    this.EnsureLogSetup(log)
+    log:NewFrame()
+    log:Add_Dot(fromPos, "player")
+
+    local right = CrossProduct3D(move_direction, existing_normal)
+    local down = MultiplyVector(existing_normal, -1)
+
+    --TODO: dir sweep shouldn't be uniform
+
+
+    local retVal = {}
+
+    for i = 0, STEPS_DIR - 1, 1 do
+        --TODO: slide the from point toward the plane (need to know initial distance from plane)
+        --TODO: inner loop that sweeps out from the centerline
+
+        local quat = Quaternion_FromAxisRadians(right, radianDelta_dir * i)
+
+        this.FireRay(retVal, fromPos, move_position, RotateVector3D(down, quat), rayLen, o, log)
+    end
+
+    return retVal
+end
+
 
 ----------------------------------- Private Methods -----------------------------------
 
@@ -67,7 +106,8 @@ function this.EnsureLogSetup(log)
 end
 
 -- Fires a ray.  Stores that hit as well as the closest point on the plane to the player
-function this.FireRay(other_hits, fromPos, direction, rayLen, o, log)
+-- testPos is what the distance is calculated from
+function this.FireRay(other_hits, fromPos, testPos, direction, rayLen, o, log)
     local toPos = Vector4.new(fromPos.x + (direction.x * rayLen), fromPos.y + (direction.y * rayLen), fromPos.z + (direction.z * rayLen), 1)
 
     local hit, normal = o:RayCast(fromPos, toPos, true)
@@ -80,7 +120,7 @@ function this.FireRay(other_hits, fromPos, direction, rayLen, o, log)
     log:Add_Square(hit, normal, 1, 1, "wall")
     log:Add_Line(fromPos, hit, "hit")
 
-    this.AddHit(fromPos, hit, normal, other_hits)
+    this.AddHit(testPos, hit, normal, other_hits)
 
     local planePoint = GetClosestPoint_Plane_Point(hit, normal, fromPos)
     if not planePoint then
@@ -95,7 +135,7 @@ function this.FireRay(other_hits, fromPos, direction, rayLen, o, log)
 
     if hit then
         log:Add_Dot(planePoint, "planePoint_hit")
-        this.AddHit(fromPos, planePoint, normal, other_hits)
+        this.AddHit(testPos, planePoint, normal, other_hits)
     else
         log:Add_Dot(planePoint, "planePoint_miss")
     end
@@ -139,3 +179,4 @@ function this.GetDirectionHorz(lookdir)
 
     return Vector4.new(onPlane.x / len, onPlane.y / len, onPlane.z / len, 1)
 end
+
