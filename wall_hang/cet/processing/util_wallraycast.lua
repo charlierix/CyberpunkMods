@@ -58,13 +58,14 @@ function RayCast_NearbyWalls_CrawlBasic(fromPos, move_position, move_direction, 
     --local SLIDE_TO = 0.2        -- first rays pointing straight at the plane start at fromPos.  Rays that sweep along direction arc will slide toward the plane
 
     local DIRANGLE_FROM = 0     -- starting at -normal
-    local DIRANGLE_TO = 110     -- going to normal
-    --local SIDEANGLE_FROMTO = 45 -- starting at right, ending at -right
+    local DIRANGLE_TO = 100     -- going to normal
+    local SIDEANGLE_FROMTO = 35 -- starting at right, ending at -right
 
-    local STEPS_DIR = 5
-    --local STEPS_SIDE = 2        -- 1 straight down, then these steps
+    local STEPS_DIR = 4
+    local STEPS_SIDE = 1        -- 1 straight down, then these steps
 
     local radianDelta_dir = Degrees_to_Radians((DIRANGLE_TO - DIRANGLE_FROM) / (STEPS_DIR - 1))
+    local radianDelta_leftright = Degrees_to_Radians(SIDEANGLE_FROMTO / STEPS_SIDE)
 
     this.EnsureLogSetup(log)
     log:NewFrame()
@@ -73,23 +74,20 @@ function RayCast_NearbyWalls_CrawlBasic(fromPos, move_position, move_direction, 
     local right = CrossProduct3D(move_direction, existing_normal)
     local down = MultiplyVector(existing_normal, -1)
 
-    --TODO: dir sweep shouldn't be uniform
-
-
     local retVal = {}
 
-    for i = 0, STEPS_DIR - 1, 1 do
-        --TODO: slide the from point toward the plane (need to know initial distance from plane)
-        --TODO: inner loop that sweeps out from the centerline
+    this.FireRays_DirectionSweep(retVal, STEPS_DIR, fromPos, move_position, down, right, radianDelta_dir, rayLen, o, log)
 
-        local quat = Quaternion_FromAxisRadians(right, radianDelta_dir * i)
+    for i = 1, STEPS_SIDE, 1 do
+        local quat = Quaternion_FromAxisRadians(move_direction, radianDelta_leftright * i)
+        this.FireRays_DirectionSweep(retVal, STEPS_DIR, fromPos, move_position, RotateVector3D(down, quat), right, radianDelta_dir, rayLen, o, log)
 
-        this.FireRay(retVal, fromPos, move_position, RotateVector3D(down, quat), rayLen, o, log)
+        quat = Quaternion_FromAxisRadians(move_direction, -radianDelta_leftright * i)
+        this.FireRays_DirectionSweep(retVal, STEPS_DIR, fromPos, move_position, RotateVector3D(down, quat), right, radianDelta_dir, rayLen, o, log)
     end
 
     return retVal
 end
-
 
 ----------------------------------- Private Methods -----------------------------------
 
@@ -102,6 +100,15 @@ function this.EnsureLogSetup(log)
         log:DefineCategory("planePoint_miss", "F00", 1)
         log:DefineCategory("wall", "4000", 1)
         log:DefineCategory("closest", "FFF", 1.5)
+    end
+end
+
+function this.FireRays_DirectionSweep(hits, count, fromPos, move_position, down, right, radianDelta_dir, rayLen, o, log)
+    this.FireRay(hits, fromPos, move_position, down, rayLen, o, log)        -- this is the 0 step
+
+    for i = 1, count - 1, 1 do      -- 0 is no rotation, so start at one
+        local quat = Quaternion_FromAxisRadians(right, radianDelta_dir * i)
+        this.FireRay(hits, fromPos, move_position, RotateVector3D(down, quat), rayLen, o, log)
     end
 end
 
@@ -181,4 +188,3 @@ function this.GetDirectionHorz(lookdir)
 
     return Vector4.new(onPlane.x / len, onPlane.y / len, onPlane.z / len, 1)
 end
-
