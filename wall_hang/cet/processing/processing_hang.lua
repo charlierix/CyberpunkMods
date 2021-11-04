@@ -54,8 +54,9 @@ function this.EnsureLogSetup()
         log:DefineCategory("normal")
         log:DefineCategory("look", "FF5", 0.75)
         log:DefineCategory("along", "55F")
-        log:DefineCategory("crawl1", "000", 0.33)
-        log:DefineCategory("crawl2", "FFF", 0.33)
+        log:DefineCategory("crawl1", "000", 0.05)
+        log:DefineCategory("crawl2", "FFF", 0.05)
+        log:DefineCategory("min_skip", "D2D", 0.1)
     end
 end
 
@@ -117,17 +118,20 @@ function this.GetNewPosition(position, normal, o, player, keys, const, deltaTime
         return false, position, normal      -- the check at the top of this function should have caught this case, but doing a second check here to be safe
     end
 
-    local hits = RayCast_NearbyWalls_CrawlBasic(position_offset, new_pos_offset, move_direction, normal, o, log2, const.wallDistance_stick_max)
-    if #hits > 0 then
+    local hits = RayCast_NearbyWalls_CrawlBasic(position_offset, new_pos_offset, move_direction, normal, o, log2, const.wallDistance_stick_max * 2)
+
+    local hit = this.GetBestHit(hits, const.wallDistance_stick_min, const.wallDistance_stick_max)
+
+    if hit then
         log:Add_Dot(new_pos_offset, "crawl1")
 
         -- Push them a bit toward the ideal distance from the plane
         local distance_moved = math.sqrt(GetVectorDiffLengthSqr(position_offset, new_pos_offset))
-        new_pos_offset = MoveToIdealDistance(new_pos_offset, hits[1].normal, const.wallDistance_stick_ideal, math.sqrt(hits[1].distSqr), distance_moved)
+        new_pos_offset = MoveToIdealDistance(new_pos_offset, hit.normal, const.wallDistance_stick_ideal, math.sqrt(hit.distSqr), distance_moved)
 
         log:Add_Dot(new_pos_offset, "crawl2")
 
-        return false, Vector4.new(new_pos_offset.x, new_pos_offset.y, new_pos_offset.z - const.rayFrom_Z, 1), hits[1].normal
+        return false, Vector4.new(new_pos_offset.x, new_pos_offset.y, new_pos_offset.z - const.rayFrom_Z, 1), hit.normal
     else
 
         --TODO: Detect a corner, possibly trying to crawl onto a ledge
@@ -136,8 +140,32 @@ function this.GetNewPosition(position, normal, o, player, keys, const, deltaTime
         --          position+(new_pos-position)*C
         --      fire a couple more rays from that point
 
+        -- When rounding a 90 degree corner, the hitpoint will be stationary, but the player will need
+        -- to travel in an arc to get to the next wall.  That whole thing will need to be stored as extra
+        -- variables (vars.hangPos, vars.normal are inadequate)
+
+
         return false, position, normal
     end
+end
+
+-- Don't want hits that are too close.  Otherwise, the player will auger into inside corners.  Try to clip into walls
+function this.GetBestHit(hits, min_dist, max_dist)
+    if #hits == 0 then
+        return nil
+    end
+
+    for i = 1, #hits, 1 do      -- it's sorted by distance
+        if hits[i].distSqr > max_dist * max_dist then
+            return nil
+        elseif hits[i].distSqr >= min_dist * min_dist then
+            return hits[i]
+        end
+
+        log:Add_Dot(hits[i].hit, "min_skip")
+    end
+
+    return nil
 end
 
 function this.GetDirectionsAlongPlane(o, normal)

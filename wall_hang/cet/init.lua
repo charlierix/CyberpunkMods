@@ -120,13 +120,14 @@ local const =
 
     rayFrom_Z = 1.5,
 
-    wallDistance_stick_ideal = 0.6,        --NOTE: The rest of the raycast settings are in player
+    wallDistance_stick_min = 0.45,
+    wallDistance_stick_ideal = 0.7,        --NOTE: The rest of the raycast settings are in player
     wallDistance_stick_max = 1.2,
 
     teleturn_radians_per_second = math.pi * 3.5,      -- this needs to be very fast, teleturn is a hack and can't last very long.  Just enough motion that the player can sense the direction change (it's very disorienting to instantly face a new direction)
 
     shouldShowLogging3D_latchRayTrace = false,
-    shouldShowLogging3D_wallCrawl = true,
+    shouldShowLogging3D_wallCrawl = false,
     shouldShowDebugWindow = false,
 }
 
