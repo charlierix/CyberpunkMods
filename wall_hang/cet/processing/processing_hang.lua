@@ -2,6 +2,7 @@ local this = {}
 
 local log = nil
 local log2 = nil
+local log3 = nil
 local up = nil      -- can't use vector4 before init
 
 -- Just keeps teleporting to the initial catch point
@@ -11,6 +12,7 @@ function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, del
     if log and log:IsPopulated() and (not isHangDown or isJumpDown) then
         log:Save("WallCrawl")
         log2:Save("WallCrawl2")
+        log3:Save("WallCrawl3")
     end
 
     if not isHangDown then
@@ -25,6 +27,7 @@ function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, del
     if not log then
         log = DebugRenderLogger:new(const.shouldShowLogging3D_wallCrawl)
         log2 = DebugRenderLogger:new(const.shouldShowLogging3D_wallCrawl)
+        log3 = DebugRenderLogger:new(const.shouldShowLogging3D_wallCrawl)
         this.EnsureLogSetup()
     end
 
@@ -46,42 +49,6 @@ function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, del
 end
 
 ----------------------------------- Private Methods -----------------------------------
-
-function this.EnsureLogSetup()
-    if #log.categories == 0 then
-        log:DefineCategory("player", "FF5", 0.05)
-        log:DefineCategory("wall", "4000", 1)
-        log:DefineCategory("normal")
-        log:DefineCategory("look", "FF5", 0.75)
-        log:DefineCategory("along", "55F")
-        log:DefineCategory("crawl1", "000", 0.05)
-        log:DefineCategory("crawl2", "FFF", 0.05)
-        log:DefineCategory("min_skip", "D2D", 0.1)
-    end
-end
-
-function this.Log_OuterFunc(position, normal, direction, right, o)
-    if not log.enable_logging then
-        do return end
-    end
-
-    log:NewFrame()
-
-    log:Add_Dot(position, "player")
-    log:Add_Line(position, AddVectors(position, o.lookdir_forward), "look")
-
-    log:Add_Square(position, normal, 1, 1, "wall")
-    log:Add_Line(position, AddVectors(position, normal), "normal")
-
-    log:Add_Line(position, AddVectors(position, direction), "along")
-    log:Add_Line(position, AddVectors(position, right), "along")
-end
-
-function this.GetYaw(o, keys, const)
-    local deltaYaw = keys.mouse_x * const.mouse_sensitivity
-
-    return AddYaw(o.yaw, deltaYaw)
-end
 
 -- If the player is trying to crawl along the wall, then this will calculate the new position
 -- Returns
@@ -219,4 +186,40 @@ function this.GetProposedWallCrawlPos(position, direction, right, player, keys, 
     return
         Vector4.new(position.x + (x * deltaTime), position.y + (y * deltaTime), position.z + (z * deltaTime), 1),
         Vector4.new(x / dir_len, y / dir_len, z / dir_len, 1)
+end
+
+function this.EnsureLogSetup()
+    if #log.categories == 0 then
+        log:DefineCategory("player", "FF5", 0.05)
+        log:DefineCategory("wall", "4000", 1)
+        log:DefineCategory("normal")
+        log:DefineCategory("look", "FF5", 0.75)
+        log:DefineCategory("along", "55F")
+        log:DefineCategory("crawl1", "000", 0.05)
+        log:DefineCategory("crawl2", "FFF", 0.05)
+        log:DefineCategory("min_skip", "D2D", 0.1)
+    end
+end
+
+function this.Log_OuterFunc(position, normal, direction, right, o)
+    if not log.enable_logging then
+        do return end
+    end
+
+    log:NewFrame()
+
+    log:Add_Dot(position, "player")
+    log:Add_Line(position, AddVectors(position, o.lookdir_forward), "look")
+
+    log:Add_Square(position, normal, 1, 1, "wall")
+    log:Add_Line(position, AddVectors(position, normal), "normal")
+
+    log:Add_Line(position, AddVectors(position, direction), "along")
+    log:Add_Line(position, AddVectors(position, right), "along")
+end
+
+function this.GetYaw(o, keys, const)
+    local deltaYaw = keys.mouse_x * const.mouse_sensitivity
+
+    return AddYaw(o.yaw, deltaYaw)
 end
