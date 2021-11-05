@@ -85,8 +85,9 @@ function this.GetNewPosition(position, normal, o, player, keys, const, deltaTime
         return false, position, normal      -- the check at the top of this function should have caught this case, but doing a second check here to be safe
     end
 
+    -- Do some raycasts along the move direction
+    -- NOTE: This won't see anything when they are at the edge of an outside corner
     local hits = RayCast_NearbyWalls_CrawlBasic(position_offset, new_pos_offset, move_direction, normal, o, log2, const.wallDistance_stick_max * 2)
-
     local hit = this.GetBestHit(hits, const.wallDistance_stick_min, const.wallDistance_stick_max)
 
     if hit then
@@ -100,19 +101,32 @@ function this.GetNewPosition(position, normal, o, player, keys, const, deltaTime
 
         return false, Vector4.new(new_pos_offset.x, new_pos_offset.y, new_pos_offset.z - const.rayFrom_Z, 1), hit.normal
     else
+        log3:NewFrame()
 
-        --TODO: Detect a corner, possibly trying to crawl onto a ledge
-        --  If an outside corner is encountered:
-        --      choose a from point beyond new_pos:
-        --          position+(new_pos-position)*C
-        --      fire a couple more rays from that point
+        log3:Add_Dot(o.pos, nil, "FFF")
+        log3:Add_Dot(position_offset, nil, "FFF")
+        log3:Add_Line(o.pos, position_offset, nil, "FFF")
 
-        -- When rounding a 90 degree corner, the hitpoint will be stationary, but the player will need
-        -- to travel in an arc to get to the next wall.  That whole thing will need to be stored as extra
-        -- variables (vars.hangPos, vars.normal are inadequate)
+        log3:Add_Line(o.pos, AddVectors(o.pos, o.lookdir_forward))
+        log3:Add_Line(o.pos, AddVectors(o.pos, o.lookdir_right))
 
+        local normal_neg = MultiplyVector(normal, -1)
+        log3:Add_Line(o.pos, AddVectors(o.pos, normal_neg), nil, "44D")
+        log3:Add_Line(o.pos, AddVectors(o.pos, move_direction), nil, "4D4")
+        log3:Add_Line(o.pos, AddVectors(o.pos, CrossProduct3D(normal_neg, move_direction)), nil, "D44")
 
-        return false, position, normal
+        hits = RayCast_NearbyWalls_CrawlBasic_OutsideCorner(position_offset, new_pos_offset, move_direction, normal, const.wallDistance_stick_max, const.wallDistance_stick_max * 2, o, log3)
+        hit = this.GetBestHit(hits, const.wallDistance_stick_min, const.wallDistance_stick_max)
+
+        if hit then
+            --TODO: If move direction is nearly straight up, return true
+            local false_normal = SubtractVectors(hit.rayStart, hit.hit)
+            Normalize(false_normal)
+
+            return false, Vector4.new(hit.rayStart.x, hit.rayStart.y, hit.rayStart.z - const.rayFrom_Z, 1), false_normal
+        else
+            return false, position, normal
+        end
     end
 end
 
@@ -135,6 +149,8 @@ function this.GetBestHit(hits, min_dist, max_dist)
     return nil
 end
 
+-- This figures out what will be up/forward and right based on the player's look direction
+-- relative to the plane (and special condition for perfectly horizontal planes)
 function this.GetDirectionsAlongPlane(o, normal)
     --local direction = GetProjectedVector_AlongPlane_Unit(o.lookdir_forward, normal)        -- it didn't feel natural to move along look when pressing forward, and felt really odd when pressing left and right
     local direction = GetProjectedVector_AlongPlane_Unit(up, normal)
@@ -163,6 +179,13 @@ function this.GetDirectionsAlongPlane(o, normal)
     return direction, right
 end
 
+-- This multiplies the move direction by the direction they are trying to move
+-- W or controller's forward is along direction
+-- S or controller's back is opposite direction
+-- similar with left/right
+-- Returns
+--  Position to move to
+--  Direction (unit vector)
 function this.GetProposedWallCrawlPos(position, direction, right, player, keys, const, deltaTime)
     --NOTE: analog_x and y form a unit 2D vector, so no extra scaling is needed
 

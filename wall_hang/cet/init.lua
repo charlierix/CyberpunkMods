@@ -127,7 +127,7 @@ local const =
     teleturn_radians_per_second = math.pi * 3.5,      -- this needs to be very fast, teleturn is a hack and can't last very long.  Just enough motion that the player can sense the direction change (it's very disorienting to instantly face a new direction)
 
     shouldShowLogging3D_latchRayTrace = false,
-    shouldShowLogging3D_wallCrawl = false,
+    shouldShowLogging3D_wallCrawl = true,
     shouldShowDebugWindow = false,
 }
 
@@ -345,21 +345,41 @@ end)
 registerHotkey("WallHangTesterButton", "tester hotkey", function()
     local log = DebugRenderLogger:new(true)
 
-    local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z)
-    --local toPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z + 12, 1)
-    local toPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z + const.wallDistance_stick_max, 1)
+    o:GetPlayerInfo()
+    o:GetCamera()
+    if not (o.player and o.camera) then
+        print("not ready")
+        do return end
+    end
 
-    log:Add_Line(fromPos, toPos)
+    log:Add_Dot(o.pos, nil, "FF5")
+    log:Add_Line(o.pos, AddVectors(o.pos, o.lookdir_forward), nil, "4D4")
+    log:Add_Line(o.pos, AddVectors(o.pos, o.lookdir_right), nil, "D44")
 
-    local hit, normal = o:RayCast(fromPos, toPos, true)
-    if hit then
-        local color = "F44"
-        if math.sqrt(GetVectorDiffLengthSqr(hit, fromPos)) <= const.wallDistance_stick_max then
-            color = "4D4"
-        end
 
-        log:Add_Dot(hit, nil, color)
-        log:Add_Square(hit, normal, 1, 1, nil, color)
+    local FINAL_ANGLE = 120
+    local STEPS_ARC = 12
+
+    local radianDelta = Degrees_to_Radians(FINAL_ANGLE / STEPS_ARC)
+
+    local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
+    local radius_arm = MultiplyVector(o.lookdir_forward, -const.wallDistance_stick_max)
+    local right = MultiplyVector(o.lookdir_right, -1)
+    local center = AddVectors(fromPos, MultiplyVector(radius_arm, -1))
+    local rayLen = const.wallDistance_stick_max * 2
+    local ray_dir = o.lookdir_forward
+
+    log:Add_Dot(fromPos, nil, "FFF", 1.1)
+    log:Add_Line(o.pos, fromPos, nil, "FFF")
+
+    for i = 0, STEPS_ARC do     -- the count assumes it starts at 1, but want to also get the initial position
+        local quat = Quaternion_FromAxisRadians(right, radianDelta * i)
+        local rayStart = AddVectors(center, RotateVector3D(radius_arm, quat))
+        local rayDirection = RotateVector3D(ray_dir, quat)
+
+        log:Add_Dot(rayStart)
+        --log:Add_Line(rayStart, center, nil, "400", 0.5)
+        log:Add_Line(rayStart, AddVectors(rayStart, MultiplyVector(rayDirection, rayLen)))
     end
 
     log:Save("hotkey")
