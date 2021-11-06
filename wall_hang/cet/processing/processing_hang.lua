@@ -39,7 +39,9 @@ function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, del
 
     if isTryingToStand then
         -- Need to give them a small upward kick (and maybe a little toward the wall), then transition back to standard
-
+        startStopTracker:ResetHangLatch()
+        this.HopUpOntoLedge(o, vars.hangPos, pos, const)
+        Transition_ToStandard(vars, const, debug, o)
     else
         vars.hangPos = pos
         vars.normal = normal
@@ -119,11 +121,14 @@ function this.GetNewPosition(position, normal, o, player, keys, const, deltaTime
         hit = this.GetBestHit(hits, const.wallDistance_stick_min, const.wallDistance_stick_max)
 
         if hit then
-            --TODO: If move direction is nearly straight up, return true
-            local false_normal = SubtractVectors(hit.rayStart, hit.hit)
-            Normalize(false_normal)
-
-            return false, Vector4.new(hit.rayStart.x, hit.rayStart.y, hit.rayStart.z - const.rayFrom_Z, 1), false_normal
+            if DotProduct3D(hit.normal, up) >= 0.9 then
+                -- Outside corner climbing onto a horizontal ledge.  Tell the calling function to boost the
+                -- player onto the ledge
+                return true, Vector4.new(hit.rayStart.x, hit.rayStart.y, hit.rayStart.z - const.rayFrom_Z, 1), hit.normal
+            else
+                -- TODO: Can't jump to hit.rayStart.  Need to interpolate from current position to the new position
+                return false, Vector4.new(hit.rayStart.x, hit.rayStart.y, hit.rayStart.z - const.rayFrom_Z, 1), hit.normal
+            end
         else
             return false, position, normal
         end
@@ -245,4 +250,20 @@ function this.GetYaw(o, keys, const)
     local deltaYaw = keys.mouse_x * const.mouse_sensitivity
 
     return AddYaw(o.yaw, deltaYaw)
+end
+
+-- This hits the player with an impulse that will knock them up onto a ledge
+function this.HopUpOntoLedge(o, currentPos, newPos, const)
+    local direction_x = newPos.x - currentPos.x
+    local direction_y = newPos.y - currentPos.y
+
+    local horz_len = GetVectorLength2D(direction_x, direction_y)
+    local vert_len = horz_len * math.tan(Degrees_to_Radians(const.ledgeHop_angle))
+
+    local diagonal_len = math.sqrt(horz_len + vert_len)
+
+    o.player:WallHang_AddImpulse(
+        direction_x / diagonal_len * const.ledgeHop_impulse,
+        direction_y / diagonal_len * const.ledgeHop_impulse,
+        vert_len / diagonal_len * const.ledgeHop_impulse)
 end

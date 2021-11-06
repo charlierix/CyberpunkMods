@@ -126,6 +126,9 @@ local const =
 
     teleturn_radians_per_second = math.pi * 3.5,      -- this needs to be very fast, teleturn is a hack and can't last very long.  Just enough motion that the player can sense the direction change (it's very disorienting to instantly face a new direction)
 
+    ledgeHop_impulse = 4,
+    ledgeHop_angle = 86,        -- 90 would be straight up, 0 would be horizontal
+
     shouldShowLogging3D_latchRayTrace = false,
     shouldShowLogging3D_wallCrawl = true,
     shouldShowDebugWindow = false,
