@@ -40,6 +40,7 @@ require "processing/processing_jump_impulse"
 require "processing/processing_jump_teleturn"
 require "processing/processing_standard"
 require "processing/util_idealdist"
+require "processing/util_wallcrawl"
 require "processing/util_wallraycast"
 
 require "ui/drawing"
