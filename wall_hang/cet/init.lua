@@ -75,8 +75,11 @@ require "ui_framework/util_layout"
 require "ui_framework/util_misc"
 require "ui_framework/util_setup"
 
+require "ui_windows/crawl_slide"
 require "ui_windows/input_bindings"
+require "ui_windows/jumping"
 require "ui_windows/main"
+require "ui_windows/wall_attraction"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
@@ -104,8 +107,10 @@ local const =
     windows = CreateEnum
     (
         "main",
-            "input_bindings"    --,
-            --"realism"
+            "input_bindings",
+            "jumping",
+            "wall_attraction",
+            "crawl_slide"
     ),
 
     bindings = CreateEnum("hang", "wall_run"),

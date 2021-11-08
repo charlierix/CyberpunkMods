@@ -34,8 +34,25 @@ function DefineWindow_Main(vars_ui, const)
     main.rightstick_sensitivity = this.Define_RightStickSensitivity(main.mouse_sensitivity, const)
     main.rightstick_sensitivity_label = this.Define_RightStickSensitivity_Label(main.rightstick_sensitivity, const)
 
+
+
+
+
     main.jump_strength = this.Define_JumpStrength(main.rightstick_sensitivity, const)
     main.jump_strength_label = this.Define_JumpStrength_Label(main.jump_strength, const)
+
+
+
+
+    main.jumping = this.Define_Jumping(const)
+
+    main.wall_attraction = this.Define_WallAttraction(const)
+
+    main.crawl_slide = this.Define_CrawlSlide(const)
+
+
+
+
 
     main.okcancel = Define_OkCancelButtons(true, vars_ui, const)
 
@@ -104,8 +121,29 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, window, const, player,
     Draw_Label(main.rightstick_sensitivity_label, vars_ui.style.colors)
     Draw_Slider(main.rightstick_sensitivity, vars_ui.style.slider)
 
-    Draw_Label(main.jump_strength_label, vars_ui.style.colors)
-    Draw_Slider(main.jump_strength, vars_ui.style.slider)
+
+
+    --Draw_Label(main.jump_strength_label, vars_ui.style.colors)
+    --Draw_Slider(main.jump_strength, vars_ui.style.slider)
+
+
+
+
+    if Draw_SummaryButton(main.jumping, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
+        TransitionWindows_Jumping(vars_ui, const)
+    end
+
+    if Draw_SummaryButton(main.wall_attraction, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
+        TransitionWindows_WallAttraction(vars_ui, const)
+    end
+
+    if Draw_SummaryButton(main.crawl_slide, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
+        TransitionWindows_CrawlSlide(vars_ui, const)
+    end
+
+
+
+
 
     local isOKClicked, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
@@ -215,8 +253,8 @@ function this.Define_LatchWallHang(const)
 
         position =
         {
-            pos_x = 100,
-            pos_y = -70,
+            pos_x = 110,
+            pos_y = -125,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -384,6 +422,71 @@ function this.Refresh_RightStickSensitivity(def, const)
     end
 end
 
+
+
+function this.Define_Jumping(const)
+    -- SummaryButton
+    return
+    {
+        header_prompt = "Jumping",
+
+        position =
+        {
+            pos_x = -170,
+            pos_y = 130,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        invisible_name = "Main_Jumping",
+
+        CalcSize = CalcSize_SummaryButton,
+    }
+end
+
+function this.Define_WallAttraction(const)
+    -- SummaryButton
+    return
+    {
+        header_prompt = "Wall Attraction",
+
+        position =
+        {
+            pos_x = 0,
+            pos_y = 130,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        invisible_name = "Main_WallAttraction",
+
+        CalcSize = CalcSize_SummaryButton,
+    }
+end
+
+function this.Define_CrawlSlide(const)
+    -- SummaryButton
+    return
+    {
+        header_prompt = "Crawl/Slide",
+
+        position =
+        {
+            pos_x = 170,
+            pos_y = 130,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        invisible_name = "Main_CrawlSlide",
+
+        CalcSize = CalcSize_SummaryButton,
+    }
+end
+
+
+
+
 function this.Define_JumpStrength_Label(relative_to, const)
     -- Label
     return
@@ -449,6 +552,11 @@ function this.Refresh_JumpStrength(def, player_arcade)
         def.value = GetScaledValue(def.min, def.max, JUMPSTRENGTH_MIN, JUMPSTRENGTH_MAX, player_arcade.jump_strength)
     end
 end
+
+
+
+
+
 
 function this.Refresh_IsDirty(def, const, player_arcade, latch_wallhang, mouse_sensitivity, rightstick_sensitivity, jump_strength)
     local isDirty = false
