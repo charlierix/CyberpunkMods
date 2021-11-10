@@ -352,16 +352,6 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 -- registerHotkey("WallHangTesterButton", "tester hotkey", function()
---     --local tests = { -38, -36, -3, 0, 3, 36, 38 }
---     local tests = { -143.9999, -38.123, -36.765, -3.449, -0.59, -0.333, 0.333, 0.59, 3.449, 36.765, 38.123, 143.9999 }
-
---     for i = 1, #tests do
---         local num = tests[i]
---         local doz = Format_DecimalToDozenal(num, 3)
-
---         print("num: " .. tostring(num) .. " | doz: " .. doz)
---         print(" ")
---     end
 -- end)
 
 registerHotkey("WallHang_Config", "Show Config", function()
@@ -428,6 +418,10 @@ end
 
 function TODO()
 
+    -- Crawl Cellophane
+    --  Don't directly crawl on hit surfaces.  Scan an area, create some kind of bezier mesh that allows
+    --  continous movement
+
 	-- Jump turning
 	--	When they jump off a wall and dot(look,normal) < -0.8, pay attention to their mouse_x velocity
 	--		zero: don't spin around, jump back and more up
@@ -446,11 +440,6 @@ function TODO()
     --          stateContext.SetPermanentIntParameter(n"currentNumberOfJumps", 0, true);
     --      ToDoubleJump
     --          if stateContext.GetIntParameter(n"currentNumberOfJumps", true) >= 2 {
-
-    -- Hang+Direction
-    --  While hanging, if they hold a direction, then crawl along the wall in that direction
-    --  (think of mario on those wire fences)
-    --      It would be funny if a button press causes the player to flip to the other side of the wall :)
 
     -- Double tap jump
     --  If they quickly double tap jump, then enter bullet time for a few seconds

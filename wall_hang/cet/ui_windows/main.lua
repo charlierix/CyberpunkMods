@@ -28,9 +28,11 @@ function DefineWindow_Main(vars_ui, const)
 
     main.mouse_sensitivity = this.Define_MouseSensitivity(main.latch_wallhang, const)
     main.mouse_sensitivity_label = this.Define_MouseSensitivity_Label(main.mouse_sensitivity, const)
+    main.mouse_sensitivity_help = this.Define_MouseSensitivity_Help(main.mouse_sensitivity_label, const)
 
     main.rightstick_sensitivity = this.Define_RightStickSensitivity(main.mouse_sensitivity, const)
     main.rightstick_sensitivity_label = this.Define_RightStickSensitivity_Label(main.rightstick_sensitivity, const)
+    main.rightstick_sensitivity_help = this.Define_RightStickSensitivity_Help(main.rightstick_sensitivity_label, const)
 
     main.jumping = this.Define_Jumping(const)
 
@@ -97,9 +99,11 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, window, const)
     Draw_HelpButton(main.latch_wallhang_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     Draw_Label(main.mouse_sensitivity_label, vars_ui.style.colors)
+    Draw_HelpButton(main.mouse_sensitivity_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
     Draw_Slider(main.mouse_sensitivity, vars_ui.style.slider)
 
     Draw_Label(main.rightstick_sensitivity_label, vars_ui.style.colors)
+    Draw_HelpButton(main.rightstick_sensitivity_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
     Draw_Slider(main.rightstick_sensitivity, vars_ui.style.slider)
 
     if Draw_SummaryButton(main.jumping, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
@@ -237,7 +241,6 @@ function this.Refresh_LatchWallHang(def, const)
         def.isChecked = const.latch_wallhang
     end
 end
-
 function this.Define_LatchWallHang_Help(relative_to, const)
     -- HelpButton
     local retVal =
@@ -283,6 +286,36 @@ function this.Define_MouseSensitivity_Label(relative_to, const)
 
         CalcSize = CalcSize_Label,
     }
+end
+function this.Define_MouseSensitivity_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Main_MouseSensitivity_Help",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 11,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[When hanging from a wall, this uses rapid teleporting to stay in place, which means that left/right mouselook must be manually handled
+
+(up/down is handled automatically by the game)]]
+
+    return retVal
 end
 function this.Define_MouseSensitivity(relative_to, const)
     -- Slider
@@ -350,6 +383,38 @@ function this.Define_RightStickSensitivity_Label(relative_to, const)
 
         CalcSize = CalcSize_Label,
     }
+end
+function this.Define_RightStickSensitivity_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Main_RightStickSensitivity_Help",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 11,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[This is only used when you have a controller
+
+The final sensitivity speed is Mouse x RightStick
+
+So this slider is relative to mouse sensitivity]]
+
+    return retVal
 end
 function this.Define_RightStickSensitivity(relative_to, const)
     -- Slider
