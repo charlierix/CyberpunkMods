@@ -39,7 +39,7 @@ function Draw_Slider(def, style_slider)
     ImGui.PushItemWidth(width)
 
     local changed
-    def.value, changed = ImGui.SliderFloat("##" .. def.invisible_name, def.value, def.min, def.max, this.GetFormat(def), Get_ImGuiSliderFlags_AlwaysClamp_NoRoundToFormat())
+    def.value, changed = ImGui.SliderFloat("##" .. def.invisible_name, def.value, def.min, def.max, this.GetFormat(def), Get_ImGuiSliderFlags_AlwaysClamp_NoRoundToFormat(def.is_dozenal))      -- since dozenal text would be displayed, it doesn't know how to convert back to decimal (it only allows 0-9)
 
     ImGui.PopItemWidth()
 
@@ -58,11 +58,6 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function this.GetFormat(def)
-    local decimal = ""
-    if def.decimal_places > 0 then
-        decimal = tostring(def.decimal_places)
-    end
-
     local prefix = def.prefix
     if not prefix then
         prefix = ""
@@ -71,6 +66,17 @@ function this.GetFormat(def)
     local suffix = def.suffix
     if not suffix then
         suffix = ""
+    end
+
+    if def.is_dozenal then
+        -- Even though this is going to the slider's format string, the slider will see this as plain
+        -- text and display it verbatim
+        return prefix .. Format_DecimalToDozenal(def.value, def.decimal_places) .. suffix
+    end
+
+    local decimal = ""
+    if def.decimal_places > 0 then
+        decimal = tostring(def.decimal_places)
     end
 
     return prefix .. "%." .. decimal .. "f" .. suffix

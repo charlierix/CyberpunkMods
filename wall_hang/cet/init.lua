@@ -136,7 +136,7 @@ local const =
     ledgeHop_angle = 86,        -- 90 would be straight up, 0 would be horizontal
 
     shouldShowLogging3D_latchRayTrace = false,
-    shouldShowLogging3D_wallCrawl = true,
+    shouldShowLogging3D_wallCrawl = false,
     shouldShowDebugWindow = false,
 }
 
@@ -351,48 +351,18 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("WallHangTesterButton", "tester hotkey", function()
-    local log = DebugRenderLogger:new(true)
+-- registerHotkey("WallHangTesterButton", "tester hotkey", function()
+--     --local tests = { -38, -36, -3, 0, 3, 36, 38 }
+--     local tests = { -143.9999, -38.123, -36.765, -3.449, -0.59, -0.333, 0.333, 0.59, 3.449, 36.765, 38.123, 143.9999 }
 
-    o:GetPlayerInfo()
-    o:GetCamera()
-    if not (o.player and o.camera) then
-        print("not ready")
-        do return end
-    end
+--     for i = 1, #tests do
+--         local num = tests[i]
+--         local doz = Format_DecimalToDozenal(num, 3)
 
-    log:Add_Dot(o.pos, nil, "FF5")
-    log:Add_Line(o.pos, AddVectors(o.pos, o.lookdir_forward), nil, "4D4")
-    log:Add_Line(o.pos, AddVectors(o.pos, o.lookdir_right), nil, "D44")
-
-
-    local FINAL_ANGLE = 120
-    local STEPS_ARC = 12
-
-    local radianDelta = Degrees_to_Radians(FINAL_ANGLE / STEPS_ARC)
-
-    local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
-    local radius_arm = MultiplyVector(o.lookdir_forward, -const.wallDistance_stick_max)
-    local right = MultiplyVector(o.lookdir_right, -1)
-    local center = AddVectors(fromPos, MultiplyVector(radius_arm, -1))
-    local rayLen = const.wallDistance_stick_max * 2
-    local ray_dir = o.lookdir_forward
-
-    log:Add_Dot(fromPos, nil, "FFF", 1.1)
-    log:Add_Line(o.pos, fromPos, nil, "FFF")
-
-    for i = 0, STEPS_ARC do     -- the count assumes it starts at 1, but want to also get the initial position
-        local quat = Quaternion_FromAxisRadians(right, radianDelta * i)
-        local rayStart = AddVectors(center, RotateVector3D(radius_arm, quat))
-        local rayDirection = RotateVector3D(ray_dir, quat)
-
-        log:Add_Dot(rayStart)
-        --log:Add_Line(rayStart, center, nil, "400", 0.5)
-        log:Add_Line(rayStart, AddVectors(rayStart, MultiplyVector(rayDirection, rayLen)))
-    end
-
-    log:Save("hotkey")
-end)
+--         print("num: " .. tostring(num) .. " | doz: " .. doz)
+--         print(" ")
+--     end
+-- end)
 
 registerHotkey("WallHang_Config", "Show Config", function()
     if shouldShowConfig then

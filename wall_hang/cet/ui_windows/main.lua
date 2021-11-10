@@ -293,6 +293,7 @@ function this.Define_MouseSensitivity(relative_to, const)
         min = 0,
         max = 144,
 
+        is_dozenal = true,
         decimal_places = 0,
 
         width = 200,
@@ -359,6 +360,7 @@ function this.Define_RightStickSensitivity(relative_to, const)
         min = 0,
         max = 144,
 
+        is_dozenal = true,
         decimal_places = 0,
 
         width = 200,

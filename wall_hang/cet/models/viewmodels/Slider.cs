@@ -20,6 +20,11 @@ namespace grapple_ui.models.viewmodels
         public double max { get; init; }
 
         /// <summary>
+        /// Whether the display is in dozenal or decimal
+        /// </summary>
+        public bool is_dozenal { get; init; }
+
+        /// <summary>
         /// This only affects the displayed decimal places.  The actual value isn't rounded
         /// </summary>
         public int decimal_places { get; init; }
