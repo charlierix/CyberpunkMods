@@ -36,19 +36,19 @@ function DrawConfig(isCloseRequested, vars, vars_ui, o, const, player, player_ar
         Refresh_LineHeights(vars_ui)
 
         if vars_ui.currentWindow == const.windows.main then
-            continueShowing = DrawWindow_Main(isCloseRequested, vars, vars_ui, window, const)
+            continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade)
 
         elseif vars_ui.currentWindow == const.windows.input_bindings then
             continueShowing = DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, const)
 
         elseif vars_ui.currentWindow == const.windows.jumping then
-            continueShowing = DrawWindow_Jumping(isCloseRequested, vars, vars_ui, window, const, player, player_arcade)
+            continueShowing = DrawWindow_Jumping(isCloseRequested, vars_ui, window, const, player, player_arcade)
 
         elseif vars_ui.currentWindow == const.windows.wall_attraction then
-            continueShowing = DrawWindow_WallAttraction(isCloseRequested, vars, vars_ui, window, const, player, player_arcade)
+            continueShowing = DrawWindow_WallAttraction(isCloseRequested, vars_ui, window, const, player, player_arcade)
 
         elseif vars_ui.currentWindow == const.windows.crawl_slide then
-            continueShowing = DrawWindow_CrawlSlide(isCloseRequested, vars, vars_ui, window, const, player, player_arcade)
+            continueShowing = DrawWindow_CrawlSlide(isCloseRequested, vars_ui, window, const, player, player_arcade)
         end
     end
     ImGui.End()

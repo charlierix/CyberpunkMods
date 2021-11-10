@@ -24,7 +24,7 @@ function ActivateWindow_CrawlSlide(vars_ui, const)
     vars_ui.crawl_slide.changes:Clear()
 end
 
-function DrawWindow_CrawlSlide(isCloseRequested, vars, vars_ui, window, const, player, player_arcade)
+function DrawWindow_CrawlSlide(isCloseRequested, vars_ui, window, const, player, player_arcade)
     local crawl_slide = vars_ui.crawl_slide
 
     ------------------------- Finalize models for this frame -------------------------

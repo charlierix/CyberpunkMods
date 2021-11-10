@@ -23,7 +23,7 @@ function ActivateWindow_WallAttraction(vars_ui, const)
     vars_ui.wall_attraction.changes:Clear()
 end
 
-function DrawWindow_WallAttraction(isCloseRequested, vars, vars_ui, window, const, player, player_arcade)
+function DrawWindow_WallAttraction(isCloseRequested, vars_ui, window, const, player, player_arcade)
     local wall_attraction = vars_ui.wall_attraction
 
     ------------------------- Finalize models for this frame -------------------------

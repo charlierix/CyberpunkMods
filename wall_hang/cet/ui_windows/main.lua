@@ -61,7 +61,7 @@ function ActivateWindow_Main(vars_ui, const)
 end
 
 -- This gets called each frame from DrawConfig()
-function DrawWindow_Main(isCloseRequested, vars, vars_ui, window, const)
+function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade)
     local main = vars_ui.main
 
     ------------------------- Finalize models for this frame -------------------------
@@ -73,6 +73,8 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, window, const)
     this.Refresh_MouseSensitivity(main.mouse_sensitivity, const)
 
     this.Refresh_RightStickSensitivity(main.rightstick_sensitivity, const)
+
+    this.Refresh_Jumping(main.jumping, player_arcade)
 
     this.Refresh_IsDirty(main.okcancel, const, main.latch_wallhang, main.mouse_sensitivity, main.rightstick_sensitivity)
 
@@ -464,9 +466,17 @@ function this.Define_Jumping(const)
     {
         header_prompt = "Jumping",
 
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_strength = { prompt = "strength" },
+            b_vert_speed_full = { prompt = "vert full" },
+            c_vert_speed_zero = { prompt = "vert zero" },
+        },
+
         position =
         {
-            pos_x = -170,
+            pos_x = -180,
             pos_y = 130,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
@@ -476,6 +486,11 @@ function this.Define_Jumping(const)
 
         CalcSize = CalcSize_SummaryButton,
     }
+end
+function this.Refresh_Jumping(def, player_arcade)
+    def.content.a_strength.value = Format_DecimalToDozenal(player_arcade.jump_strength, 1)
+    def.content.b_vert_speed_full.value = Format_DecimalToDozenal(player_arcade.jump_speed_fullStrength, 1)
+    def.content.c_vert_speed_zero.value = Format_DecimalToDozenal(player_arcade.jump_speed_zeroStrength, 1)
 end
 
 function this.Define_WallAttraction(const)
@@ -506,7 +521,7 @@ function this.Define_CrawlSlide(const)
 
         position =
         {
-            pos_x = 170,
+            pos_x = 180,
             pos_y = 130,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
