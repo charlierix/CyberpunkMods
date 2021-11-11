@@ -418,6 +418,9 @@ end
 
 function TODO()
 
+    -- Disable Jump Away
+    --  Add a checkbox to not jump away from a wall when facing the wall
+
     -- Crawl Cellophane
     --  Don't directly crawl on hit surfaces.  Scan an area, create some kind of bezier mesh that allows
     --  continous movement
@@ -452,19 +455,6 @@ function TODO()
 	--	Apply a force toward the wall (opposite of wall's normal)
 	--	This should help the player stick to the surface of the wall
 	--	The same should be done when jumping straight up the wall
-
-    -- Hang Drift
-    --  Don't perfectly hold position
-    --
-    --  When first entering hang, move in the direction of
-    --  their prev velocity and ease into a stop (over a very short distance, but still more than
-    --  an instant stop)
-    --
-    --  Also, the final resting position should be slightly lower than the initial hang position.
-    --  This will give a sense of weight to the player
-    --
-    --  Then very slowly drift around randomly.  Mostly in the plane of the wall, but a little off
-    --  the wall (like a really flat ellipsoid)
 
     -- Jump Calculation
     --  Instead of a simple hardcoded angle adjustment and constant power...
