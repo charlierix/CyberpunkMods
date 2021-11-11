@@ -76,6 +76,8 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
 
     this.Refresh_Jumping(main.jumping, player_arcade)
 
+    this.Refresh_WallAttraction(main.wall_attraction, player_arcade)
+
     this.Refresh_IsDirty(main.okcancel, const, main.latch_wallhang, main.mouse_sensitivity, main.rightstick_sensitivity)
 
     ------------------------------ Calculate Positions -------------------------------
@@ -499,6 +501,14 @@ function this.Define_WallAttraction(const)
     {
         header_prompt = "Wall Attraction",
 
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_max_dist = { prompt = "max distance" },
+            b_accel = { prompt = "acceleration" },
+            c_antigrav = { prompt = "anti gravity" },
+        },
+
         position =
         {
             pos_x = 0,
@@ -511,6 +521,11 @@ function this.Define_WallAttraction(const)
 
         CalcSize = CalcSize_SummaryButton,
     }
+end
+function this.Refresh_WallAttraction(def, player_arcade)
+    def.content.a_max_dist.value = Format_DecimalToDozenal(player_arcade.wallDistance_attract_max, 1)
+    def.content.b_accel.value = Format_DecimalToDozenal(player_arcade.attract_accel, 1)
+    def.content.c_antigrav.value = Format_DecimalToDozenal(player_arcade.attract_antigrav, 2)
 end
 
 function this.Define_CrawlSlide(const)

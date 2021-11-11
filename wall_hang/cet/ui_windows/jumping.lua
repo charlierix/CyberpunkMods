@@ -156,7 +156,7 @@ function this.Define_Strength(const)
     -- Slider
     return
     {
-        invisible_name = "Main_Strength_Value",
+        invisible_name = "Jumping_Strength_Value",
 
         min = 4,
         max = 28,
