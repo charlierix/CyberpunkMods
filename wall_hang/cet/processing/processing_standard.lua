@@ -67,7 +67,7 @@ end
 
 function this.DirectDistance(isHangDown, isJumpDown, hits, fromPos, o, player, vars, const, debug, startStopTracker, deltaTime)
     -- Jump
-    if isJumpDown and this.ValidateSlope_Jump(hits[1].normal) then
+    if isJumpDown and this.ValidateSlope_Jump(hits[1].normal) and ShouldJump(o, const, hits[1].normal) then
         this.ResetVars(o, vars)
 
         local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)

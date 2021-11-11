@@ -99,6 +99,7 @@ local const =
     --latch_wallhang,       -- false: must keep the hang key held in
     --mouse_sensitivity = -0.08,
     --rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
+    --should_jump_backward
 
     -- These are set in Define_UI_Framework_Constants() called during init
     -- alignment_horizontal = CreateEnum("left", "center", "right"),
@@ -120,6 +121,7 @@ local const =
         "AutoShowConfig_WithConsole",
         "WallHangKey_UseCustom",
         "Latch_WallHang",
+        "ShouldJumpBackward",
         -- Floats
         "MouseSensitivity",
         "RightStickSensitivity"),
@@ -131,6 +133,9 @@ local const =
     wallDistance_stick_max = 1.2,
 
     teleturn_radians_per_second = math.pi * 3.5,      -- this needs to be very fast, teleturn is a hack and can't last very long.  Just enough motion that the player can sense the direction change (it's very disorienting to instantly face a new direction)
+
+    jumpcalc_mindot = 0.05,
+    jumpcalc_straightupdot = 0.75,
 
     ledgeHop_impulse = 4,
     ledgeHop_angle = 86,        -- 90 would be straight up, 0 would be horizontal

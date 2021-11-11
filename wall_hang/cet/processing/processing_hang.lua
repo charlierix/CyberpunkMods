@@ -16,7 +16,7 @@ function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, del
         Transition_ToStandard(vars, const, debug, o)
         do return end
 
-    elseif isJumpDown then
+    elseif isJumpDown and ShouldJump(o, const, vars.normal) then
         Transition_ToJump_Calculate(vars, const, o, vars.hangPos, vars.normal, startStopTracker)
         do return end
     end

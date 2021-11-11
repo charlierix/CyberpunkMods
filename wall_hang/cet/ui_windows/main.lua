@@ -26,7 +26,10 @@ function DefineWindow_Main(vars_ui, const)
     main.latch_wallhang = this.Define_LatchWallHang(const)
     main.latch_wallhang_help = this.Define_LatchWallHang_Help(main.latch_wallhang, const)
 
-    main.mouse_sensitivity = this.Define_MouseSensitivity(main.latch_wallhang, const)
+    main.jump_backward = this.Define_JumpBackward(main.latch_wallhang, const)
+    main.jump_backward_help = this.Define_JumpBackward_Help(main.jump_backward, const)
+
+    main.mouse_sensitivity = this.Define_MouseSensitivity(main.jump_backward, const)
     main.mouse_sensitivity_label = this.Define_MouseSensitivity_Label(main.mouse_sensitivity, const)
     main.mouse_sensitivity_help = this.Define_MouseSensitivity_Help(main.mouse_sensitivity_label, const)
 
@@ -70,6 +73,8 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
 
     this.Refresh_LatchWallHang(main.latch_wallhang, const)
 
+    this.Refresh_JumpBackward(main.jump_backward, const)
+
     this.Refresh_MouseSensitivity(main.mouse_sensitivity, const)
 
     this.Refresh_RightStickSensitivity(main.rightstick_sensitivity, const)
@@ -80,7 +85,7 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
 
     this.Refresh_WallAttraction(main.wall_attraction, player_arcade)
 
-    this.Refresh_IsDirty(main.okcancel, const, main.latch_wallhang, main.mouse_sensitivity, main.rightstick_sensitivity)
+    this.Refresh_IsDirty(main.okcancel, const, main.latch_wallhang, main.jump_backward, main.mouse_sensitivity, main.rightstick_sensitivity)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -104,6 +109,9 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
     Draw_CheckBox(main.latch_wallhang, vars_ui.style.checkbox, vars_ui.style.colors)
     Draw_HelpButton(main.latch_wallhang_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
+    Draw_CheckBox(main.jump_backward, vars_ui.style.checkbox, vars_ui.style.colors)
+    Draw_HelpButton(main.jump_backward_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+
     Draw_Label(main.mouse_sensitivity_label, vars_ui.style.colors)
     Draw_HelpButton(main.mouse_sensitivity_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
     Draw_Slider(main.mouse_sensitivity, vars_ui.style.slider)
@@ -126,7 +134,7 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
 
     local isOKClicked, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons)
     if isOKClicked then
-        this.Save(main.latch_wallhang, main.mouse_sensitivity, main.rightstick_sensitivity, const)
+        this.Save(main.latch_wallhang, main.jump_backward, main.mouse_sensitivity, main.rightstick_sensitivity, const)
     end
 
     local shouldClose = isOKClicked or isCloseClicked or (isCloseRequested and not main.okcancel.isDirty)       -- they can't close with keyboard if dirty.  Once dirty, they must click Ok or Cancel
@@ -233,7 +241,7 @@ function this.Define_LatchWallHang(const)
         position =
         {
             pos_x = 110,
-            pos_y = -135,
+            pos_y = -165,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -264,6 +272,58 @@ function this.Define_LatchWallHang_Help(relative_to, const)
 uncheckd: The wall hang key must be held in
 
 If latch is set, then pressing the key again will disengage (also jumping from the wall)]]
+
+    return retVal
+end
+
+function this.Define_JumpBackward(relative_to, const)
+    -- CheckBox
+    return
+    {
+        invisible_name = "Main_JumpBackward",
+
+        text = "Jump Backward",
+
+        isEnabled = true,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 24,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        CalcSize = CalcSize_CheckBox,
+    }
+end
+function this.Refresh_JumpBackward(def, const)
+    --NOTE: ActivateWindow_Main sets this to nil
+    if def.isChecked == nil then
+        def.isChecked = const.should_jump_backward
+    end
+end
+function this.Define_JumpBackward_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Main_JumpBackward_Help",
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[Whether to jump off of walls when facing the wall (and not looking straight up)
+
+This feature sounded good in my head, but has a tendency to cause unintended death]]
 
     return retVal
 end
@@ -567,12 +627,15 @@ function this.Refresh_WallAttraction(def, player_arcade)
     def.content.c_antigrav.value = Format_DecimalToDozenal(player_arcade.attract_antigrav, 2)
 end
 
-function this.Refresh_IsDirty(def, const, latch_wallhang, mouse_sensitivity, rightstick_sensitivity)
+function this.Refresh_IsDirty(def, const, latch_wallhang, jump_backward, mouse_sensitivity, rightstick_sensitivity)
     local isDirty = false
 
     if const.latch_wallhang ~= latch_wallhang.isChecked then
         isDirty = true
 
+    elseif const.should_jump_backward ~= jump_backward.isChecked then
+        isDirty = true
+    
     elseif not IsNearValue(GetScaledValue(mouse_sensitivity.min, mouse_sensitivity.max, MOUSE_MIN, MOUSE_MAX, const.mouse_sensitivity), mouse_sensitivity.value) then
         isDirty = true
 
@@ -583,8 +646,9 @@ function this.Refresh_IsDirty(def, const, latch_wallhang, mouse_sensitivity, rig
     def.isDirty = isDirty
 end
 
-function this.Save(latch_wallhang, mouse_sensitivity, rightstick_sensitivity, const)
+function this.Save(latch_wallhang, jump_backward, mouse_sensitivity, rightstick_sensitivity, const)
     const.latch_wallhang = latch_wallhang.isChecked
+    const.should_jump_backward = jump_backward.isChecked
     const.mouse_sensitivity = GetScaledValue(MOUSE_MIN, MOUSE_MAX, mouse_sensitivity.min, mouse_sensitivity.max, mouse_sensitivity.value)
     const.rightstick_sensitivity = GetScaledValue(STICK_MIN, STICK_MAX, rightstick_sensitivity.min, rightstick_sensitivity.max, rightstick_sensitivity.value)
 

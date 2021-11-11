@@ -1,9 +1,7 @@
 local this = {}
 
-local MINDOT = 0.1
 local BACKWARD_POW = 1.5
 
-local STRAIGHTUPDOT = 0.75
 local up = nil      -- can't use vector4 before init
 
 function Process_Jump_Calculate(o, player, vars, const, debug)
@@ -14,7 +12,7 @@ function Process_Jump_Calculate(o, player, vars, const, debug)
     end
 
     -- Compare the look direction with the wall's normal, figure out the direction to go
-    local is_up, jump_dir = this.CalculateJumpDirection_Direct(o.lookdir_forward, vars.normal)
+    local is_up, jump_dir = this.CalculateJumpDirection_Direct(o.lookdir_forward, vars.normal, const)
 
     if is_up then
         -- Going straight up is simpler and can go straight to impulse.  Though the impulse force needs
@@ -45,10 +43,10 @@ end
 -- and how much power to put into the jump
 -- Returns
 --  is_up, direction
-function this.CalculateJumpDirection_Direct(lookdir, normal)
+function this.CalculateJumpDirection_Direct(lookdir, normal, const)
     local dot = DotProduct3D(lookdir, normal)
 
-    if dot > MINDOT then
+    if dot > const.jumpcalc_mindot then
         -- They are looking away from the wall, jump the direction they're looking
         return false, lookdir
     end
@@ -59,7 +57,7 @@ function this.CalculateJumpDirection_Direct(lookdir, normal)
 
     local upDot = DotProduct3D(lookdir, up)
 
-    if dot < 0 and upDot >= STRAIGHTUPDOT then
+    if dot < 0 and upDot >= const.jumpcalc_straightupdot then
         -- They are facing the wall and looking up.  Jump straight up instead of spinning around and jumping away
         return true, up
     end
@@ -72,7 +70,7 @@ function this.CalculateJumpDirection_Direct(lookdir, normal)
     end
 
     -- Need to jump backward off the wall.  Figure out how to blend normal and look direction
-    local percentNormal = GetScaledValue(0, 1, MINDOT, -1, dot)
+    local percentNormal = GetScaledValue(0, 1, const.jumpcalc_mindot, -1, dot)
     percentNormal = percentNormal ^ BACKWARD_POW
 
     local rotate = GetRotation(lookdir, normal, percentNormal)
