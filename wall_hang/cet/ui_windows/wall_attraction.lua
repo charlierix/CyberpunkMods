@@ -71,6 +71,7 @@ function DrawWindow_WallAttraction(isCloseRequested, vars_ui, window, const, pla
     -------------------------------- Show ui elements --------------------------------
 
     Draw_Label(wall_attraction.title, vars_ui.style.colors)
+    Draw_HelpButton(wall_attraction.title_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
 
     Draw_Label(wall_attraction.max_dist_label, vars_ui.style.colors)
     Draw_HelpButton(wall_attraction.max_dist_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)

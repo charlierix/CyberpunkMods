@@ -36,9 +36,9 @@ function DefineWindow_Main(vars_ui, const)
 
     main.jumping = this.Define_Jumping(const)
 
-    main.wall_attraction = this.Define_WallAttraction(const)
-
     main.crawl_slide = this.Define_CrawlSlide(const)
+
+    main.wall_attraction = this.Define_WallAttraction(const)
 
     main.okcancel = Define_OkCancelButtons(true, vars_ui, const)
 
@@ -75,6 +75,8 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
     this.Refresh_RightStickSensitivity(main.rightstick_sensitivity, const)
 
     this.Refresh_Jumping(main.jumping, player_arcade)
+
+    this.Refresh_CrawlSlide(main.crawl_slide, player_arcade)
 
     this.Refresh_WallAttraction(main.wall_attraction, player_arcade)
 
@@ -114,12 +116,12 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
         TransitionWindows_Jumping(vars_ui, const)
     end
 
-    if Draw_SummaryButton(main.wall_attraction, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
-        TransitionWindows_WallAttraction(vars_ui, const)
-    end
-
     if Draw_SummaryButton(main.crawl_slide, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
         TransitionWindows_CrawlSlide(vars_ui, const)
+    end
+
+    if Draw_SummaryButton(main.wall_attraction, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
+        TransitionWindows_WallAttraction(vars_ui, const)
     end
 
     local isOKClicked, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons)
@@ -231,7 +233,7 @@ function this.Define_LatchWallHang(const)
         position =
         {
             pos_x = 110,
-            pos_y = -125,
+            pos_y = -135,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -478,7 +480,7 @@ function this.Define_Jumping(const)
 
         position =
         {
-            pos_x = -180,
+            pos_x = -220,
             pos_y = 130,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
@@ -493,6 +495,43 @@ function this.Refresh_Jumping(def, player_arcade)
     def.content.a_strength.value = Format_DecimalToDozenal(player_arcade.jump_strength, 1)
     def.content.b_vert_speed_full.value = Format_DecimalToDozenal(player_arcade.jump_speed_fullStrength, 1)
     def.content.c_vert_speed_zero.value = Format_DecimalToDozenal(player_arcade.jump_speed_zeroStrength, 1)
+end
+
+function this.Define_CrawlSlide(const)
+    -- SummaryButton
+    return
+    {
+        header_prompt = "Crawl/Slide",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_slide_speed = { prompt = "slide speed" },
+            b_slide_drag = { prompt = "slide drag" },
+            c_crawl_horz = { prompt = "crawl horizontal" },
+            d_crawl_up = { prompt = "crawl up" },
+            e_crawl_down = { prompt = "crawl down" },
+        },
+
+        position =
+        {
+            pos_x = 0,
+            pos_y = 130,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        invisible_name = "Main_CrawlSlide",
+
+        CalcSize = CalcSize_SummaryButton,
+    }
+end
+function this.Refresh_CrawlSlide(def, player_arcade)
+    def.content.a_slide_speed.value = Format_DecimalToDozenal(player_arcade.wallSlide_minSpeed, 1)
+    def.content.b_slide_drag.value = Format_DecimalToDozenal(player_arcade.wallSlide_dragAccel, 1)
+    def.content.c_crawl_horz.value = Format_DecimalToDozenal(player_arcade.wallcrawl_speed_horz, 1)
+    def.content.d_crawl_up.value = Format_DecimalToDozenal(player_arcade.wallcrawl_speed_up, 1)
+    def.content.e_crawl_down.value = Format_DecimalToDozenal(player_arcade.wallcrawl_speed_down, 1)
 end
 
 function this.Define_WallAttraction(const)
@@ -511,7 +550,7 @@ function this.Define_WallAttraction(const)
 
         position =
         {
-            pos_x = 0,
+            pos_x = 220,
             pos_y = 130,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
@@ -526,26 +565,6 @@ function this.Refresh_WallAttraction(def, player_arcade)
     def.content.a_max_dist.value = Format_DecimalToDozenal(player_arcade.wallDistance_attract_max, 1)
     def.content.b_accel.value = Format_DecimalToDozenal(player_arcade.attract_accel, 1)
     def.content.c_antigrav.value = Format_DecimalToDozenal(player_arcade.attract_antigrav, 2)
-end
-
-function this.Define_CrawlSlide(const)
-    -- SummaryButton
-    return
-    {
-        header_prompt = "Crawl/Slide",
-
-        position =
-        {
-            pos_x = 180,
-            pos_y = 130,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
-
-        invisible_name = "Main_CrawlSlide",
-
-        CalcSize = CalcSize_SummaryButton,
-    }
 end
 
 function this.Refresh_IsDirty(def, const, latch_wallhang, mouse_sensitivity, rightstick_sensitivity)
