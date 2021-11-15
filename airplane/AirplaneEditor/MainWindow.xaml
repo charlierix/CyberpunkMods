@@ -1,0 +1,61 @@
+﻿<Window x:Class="AirplaneEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AirplaneEditor"
+        mc:Ignorable="d"
+        Title="Airplane Editor" ResizeMode="CanResizeWithGrip" Width="800" Height="700">
+    <Window.Resources>
+        <ContextMenu x:Key="treeview_contextmenu_fuselage">
+            <MenuItem Header="Add Fuselage" Click="Fuselage_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+            <MenuItem Header="Add Wing" Click="Wing_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+            <Separator/>
+            <MenuItem Header="Attach Engine" Click="Engine_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+            <MenuItem Header="Attach Gun" Click="Gun_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+            <MenuItem Header="Attach Bomb Bay" Click="BombBay_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+            <Separator/>
+            <MenuItem Header="Delete" Click="Delete_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+        </ContextMenu>
+
+        <ContextMenu x:Key="treeview_contextmenu_wing">
+            <MenuItem Header="New Fuselage" Click="Fuselage_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+            <MenuItem Header="New Wing" Click="Wing_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+            <Separator/>
+            <MenuItem Header="Delete" Click="Delete_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+        </ContextMenu>
+
+        <ContextMenu x:Key="treeview_contextmenu_component">
+            <MenuItem Header="Delete" Click="Delete_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+        </ContextMenu>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="8">
+            <Button Content="new" Click="New_Click"/>
+            <Button Content="save" Margin="8,0,0,0" Click="Save_Click"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="8,0,0,8" HorizontalAlignment="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" MinHeight="100"/>
+                <RowDefinition Height="4"/>
+                <RowDefinition Height="1*" MinHeight="100"/>
+            </Grid.RowDefinitions>
+
+            <TreeView Grid.Row="0" x:Name="treeview" MinWidth="200" MinHeight="300">
+
+            </TreeView>
+
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch"/>
+
+
+        </Grid>
+        
+    </Grid>
+</Window>
