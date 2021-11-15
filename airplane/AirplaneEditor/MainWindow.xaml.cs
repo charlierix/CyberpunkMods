@@ -1,4 +1,4 @@
-﻿using AirplaneEditor.Models;
+﻿using AirplaneEditor.Models_viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +25,8 @@ namespace AirplaneEditor
         private const string CONTEXT_COMPONENT = "treeview_contextmenu_component";
 
         private PlanePart _root = null;
+
+        private Viewer _viewer = null;
 
         #endregion
 
@@ -60,6 +62,9 @@ namespace AirplaneEditor
                     Tag = _root,
                     ContextMenu = FindResource(CONTEXT_FUSELAGE) as ContextMenu,
                 });
+
+                if (_viewer != null)
+                    _viewer.NewPlane(_root);
             }
             catch (Exception ex)
             {
@@ -67,9 +72,41 @@ namespace AirplaneEditor
             }
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void Viewer_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (_viewer == null)        // the user can close the viewer any time they want
+                {
+                    _viewer = new Viewer();
+                    _viewer.Closed += Viewer_Closed;
 
+                    if (_root != null)
+                        _viewer.NewPlane(_root);
+
+                    _viewer.Show();
+                }
+                else
+                {
+                    _viewer.Activate();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void Viewer_Closed(object sender, EventArgs e)
+        {
+            try
+            {
+                _viewer.Closed -= Viewer_Closed;
+                _viewer = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Fuselage_Click(object sender, RoutedEventArgs e)
@@ -184,7 +221,7 @@ namespace AirplaneEditor
                 MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void BombBay_Click(object sender, RoutedEventArgs e)
+        private void Bomb_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -192,7 +229,7 @@ namespace AirplaneEditor
 
                 var child_part = new PlanePart()
                 {
-                    PartType = PlanePartType.BombBay,
+                    PartType = PlanePartType.Bomb,
                     IsCenterline = false,
                     Parent = clicked_item.part,
                 };
@@ -202,7 +239,7 @@ namespace AirplaneEditor
                 clicked_item.tree_item.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = "bomb bay",
+                    Header = "bomb",
                     Tag = child_part,
                     ContextMenu = FindResource(CONTEXT_COMPONENT) as ContextMenu,
                 });
@@ -217,13 +254,13 @@ namespace AirplaneEditor
             try
             {
                 var clicked_item = FindClickedItem(sender);
-                if(clicked_item.part.Parent == null)
+                if (clicked_item.part.Parent == null)
                 {
                     MessageBox.Show("Can't delete the root fuselage", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                if(clicked_item.tree_item.Parent is TreeViewItem parent_item)
+                if (clicked_item.tree_item.Parent is TreeViewItem parent_item)
                 {
                     parent_item.Items.Remove(clicked_item.tree_item);
                     clicked_item.part.Parent.Children.Remove(clicked_item.part);

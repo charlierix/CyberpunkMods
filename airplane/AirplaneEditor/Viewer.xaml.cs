@@ -1,0 +1,259 @@
+﻿using AirplaneEditor.Models_viewmodels;
+using Game.Math_WPF.WPF;
+using Game.Math_WPF.WPF.Controls3D;
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
+using System.Windows.Shapes;
+
+namespace AirplaneEditor
+{
+    /// <summary>
+    /// This shows the plane, as well as extra info about the plane
+    /// </summary>
+    /// <remarks>
+    /// It might be annoying to have multiple windows, but splitting it up means this dedicated viewer
+    /// can be a little bit busy with the visuals.  It's purpose is to make sure the user has a good
+    /// idea of the plane
+    /// 
+    /// There can be as many editor windows as desired, each set to their own camera orientation/position
+    /// </remarks>
+    public partial class Viewer : Window
+    {
+        #region class: PartVisual
+
+        private record PartVisual
+        {
+            public PlanePart Part { get; init; }
+
+            public Visual3D Visual { get; init; }
+
+            public Transform3D Transform { get; init; }
+            public TranslateTransform3D Translate { get; init; }
+            public QuaternionRotation3D Rotate { get; init; }
+            public ScaleTransform3D Scale { get; init; }
+        }
+
+        #endregion
+
+        #region Declaration Section
+
+        private TrackBallRoam _trackball = null;
+
+        private List<PartVisual> _parts = new List<PartVisual>();
+
+        #endregion
+
+        #region Constructor
+
+        public Viewer()
+        {
+            InitializeComponent();
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public void NewPlane(PlanePart root)
+        {
+            Clear();
+
+            AddPart(root);
+        }
+
+        #endregion
+
+        #region Event Listeners
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                _trackball = new TrackBallRoam(_camera)
+                {
+                    EventSource = grdViewPort,      //NOTE:  If this control doesn't have a background color set, the trackball won't see events (I think transparent is ok, just not null)
+                    AllowZoomOnMouseWheel = true,
+                    ShouldHitTestOnOrbit = false,
+                    //KeyPanScale = ???,
+                    //InertiaPercentRetainPerSecond_Linear = ???,
+                    //InertiaPercentRetainPerSecond_Angular = ???,
+                };
+                _trackball.Mappings.AddRange(TrackBallMapping.GetPrebuilt(TrackBallMapping.PrebuiltMapping.MouseComplete));
+                //_trackball.GetOrbitRadius += new GetOrbitRadiusHandler(Trackball_GetOrbitRadius);
+
+                CreateStaticVisuals();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            try
+            {
+                var type = sender.GetType();
+
+                switch (e.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+                        foreach (PlanePart part in e.NewItems)
+                        {
+                            AddPart(part);
+                        }
+
+                        break;
+
+                    case NotifyCollectionChangedAction.Remove:
+                        foreach (PlanePart part in e.OldItems)
+                        {
+                            RemovePart(part);
+                        }
+                        break;
+
+                    default:
+                        throw new ApplicationException($"Unexpected NotifyCollectionChangedAction: {e.Action}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void Clear()
+        {
+            foreach (PartVisual part in _parts)
+            {
+                UnhookEvents(part);
+                _viewport.Children.Remove(part.Visual);
+            }
+
+            _parts.Clear();
+        }
+
+        private void AddPart(PlanePart part)
+        {
+            if (FindParentVisual(part) != null)
+                throw new ApplicationException($"Part already added: {part.PartType}");
+
+            Transform3D parent_transform = FindParentVisual(part.Parent)?.Transform;
+
+            Util_Visuals.CreatedVisual visual;
+            switch (part.PartType)
+            {
+                case PlanePartType.Fuselage:
+                    visual = Util_Visuals.Get_Fuselage(parent_transform);
+                    break;
+
+                case PlanePartType.Wing:
+                    visual = Util_Visuals.Get_Wing(parent_transform);
+                    break;
+
+                case PlanePartType.Engine:
+                    visual = Util_Visuals.Get_Engine(parent_transform);
+                    break;
+
+                case PlanePartType.Bomb:
+                    visual = Util_Visuals.Get_Bomb(parent_transform);
+                    break;
+
+                case PlanePartType.Gun:
+                    visual = Util_Visuals.Get_Gun(parent_transform);
+                    break;
+
+                default:
+                    throw new ApplicationException($"Unknown PlanePartType: {part.PartType}");
+            }
+
+            var part_visual = new PartVisual()
+            {
+                Part = part,
+                Visual = visual.Visual,
+                Transform = visual.Transform,
+                Translate = visual.Translate,
+                Rotate = visual.Rotate,
+                Scale = visual.Scale,
+            };
+
+            _parts.Add(part_visual);
+
+            _viewport.Children.Add(part_visual.Visual);
+
+            HookEvents(part_visual);
+
+
+            foreach(var child in part.Children)
+            {
+                AddPart(child);
+            }
+        }
+        private void RemovePart(PlanePart part)
+        {
+            foreach (PlanePart child in part.Children)
+            {
+                RemovePart(child);
+            }
+
+            PartVisual part_visual = FindParentVisual(part);
+            if (part_visual == null)
+                throw new ApplicationException($"Didn't find part: {part.PartType}");
+
+            UnhookEvents(part_visual);
+
+            _viewport.Children.Remove(part_visual.Visual);
+        }
+
+        private void HookEvents(PartVisual part)
+        {
+            part.Part.Children.CollectionChanged += Children_CollectionChanged;
+        }
+        private void UnhookEvents(PartVisual part)
+        {
+            part.Part.Children.CollectionChanged -= Children_CollectionChanged;
+        }
+
+        private void CreateStaticVisuals()
+        {
+            const double AXIS_LENGTH = 6;
+            const double AXIS_THICKNEESS = 0.025;
+
+            _viewport.Children.Add(Debug3DWindow.GetLine(new Point3D(0, 0, 0), new Point3D(AXIS_LENGTH, 0, 0), AXIS_THICKNEESS, UtilityWPF.ColorFromHex("FF6060")));
+            _viewport.Children.Add(Debug3DWindow.GetLine(new Point3D(0, 0, 0), new Point3D(0, AXIS_LENGTH, 0), AXIS_THICKNEESS, UtilityWPF.ColorFromHex("30E830")));
+            _viewport.Children.Add(Debug3DWindow.GetLine(new Point3D(0, 0, 0), new Point3D(0, 0, AXIS_LENGTH), AXIS_THICKNEESS, UtilityWPF.ColorFromHex("6060FF")));
+        }
+
+        private PartVisual FindParentVisual(PlanePart part)
+        {
+            if (part == null)
+                return null;
+
+            foreach (PartVisual existing in _parts)
+            {
+                if (existing.Part == part)
+                    return existing;
+            }
+
+            return null;
+        }
+
+        #endregion
+    }
+}

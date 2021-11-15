@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirplaneEditor.Models
+namespace AirplaneEditor.Models_viewmodels
 {
     public enum PlanePartType
     {
@@ -37,8 +37,24 @@ namespace AirplaneEditor.Models
         /// </summary>
         Gun,
         /// <summary>
-        /// heavy (propane, but bigger expolsion), cluster (multiple grenades at once)
+        /// heavy (propane tank, but bigger expolsion), cluster (multiple grenades at once)
         /// </summary>
-        BombBay,
+        Bomb,
+
+        /// <summary>
+        /// Fires an explosive rocket
+        /// </summary>
+        //Missile,
+
+        /// <summary>
+        /// Drop npc instead of bomb
+        /// </summary>
+        /// <remarks>
+        /// Make them a friendly npc, so if they survive the drop, they will fight for you
+        /// 
+        /// This would allow an interesting tactic of stalling near the ground, drop ally(s), turn off airplane mode.  If
+        /// timed correctly, it would make a great way to enter a fight
+        /// </remarks>
+        //NPC,
     }
 }
