@@ -51,9 +51,7 @@
                 <RowDefinition Height="1*" MinHeight="100"/>
             </Grid.RowDefinitions>
 
-            <TreeView Grid.Row="0" x:Name="treeview">
-
-            </TreeView>
+            <TreeView Grid.Row="0" x:Name="treeview" PreviewMouseRightButtonDown="treeview_PreviewMouseRightButtonDown"/>
 
             <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch"/>
 

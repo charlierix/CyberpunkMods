@@ -50,6 +50,8 @@ namespace AirplaneEditor.Models_viewmodels
         /// Drop npc instead of bomb
         /// </summary>
         /// <remarks>
+        /// I don't think the below would work, since ragdoll will likely make them stay down, even if it's a small fall
+        /// 
         /// Make them a friendly npc, so if they survive the drop, they will fight for you
         /// 
         /// This would allow an interesting tactic of stalling near the ground, drop ally(s), turn off airplane mode.  If

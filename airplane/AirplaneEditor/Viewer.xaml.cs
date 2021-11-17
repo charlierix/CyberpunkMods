@@ -199,7 +199,6 @@ namespace AirplaneEditor
 
             HookEvents(part_visual);
 
-
             foreach(var child in part.Children)
             {
                 AddPart(child);

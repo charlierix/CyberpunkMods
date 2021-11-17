@@ -58,7 +58,7 @@ namespace AirplaneEditor
                 treeview.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = "root",
+                    Header = GetTreenodeHeader("root"),
                     Tag = _root,
                     ContextMenu = FindResource(CONTEXT_FUSELAGE) as ContextMenu,
                 });
@@ -109,6 +109,24 @@ namespace AirplaneEditor
             }
         }
 
+        private void treeview_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                TreeViewItem treeViewItem = VisualUpwardSearch(e.OriginalSource as DependencyObject);
+
+                if (treeViewItem != null)
+                {
+                    treeViewItem.Focus();
+                    e.Handled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void Fuselage_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -127,7 +145,7 @@ namespace AirplaneEditor
                 clicked_item.tree_item.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = "fuselage",
+                    Header = GetTreenodeHeader("fuselage"),
                     Tag = child_part,
                     ContextMenu = FindResource(CONTEXT_FUSELAGE) as ContextMenu,
                 });
@@ -155,7 +173,7 @@ namespace AirplaneEditor
                 clicked_item.tree_item.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = "wing",
+                    Header = GetTreenodeHeader("wing"),
                     Tag = child_part,
                     ContextMenu = FindResource(CONTEXT_WING) as ContextMenu,
                 });
@@ -183,7 +201,7 @@ namespace AirplaneEditor
                 clicked_item.tree_item.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = "engine",
+                    Header = GetTreenodeHeader("engine"),
                     Tag = child_part,
                     ContextMenu = FindResource(CONTEXT_COMPONENT) as ContextMenu,
                 });
@@ -211,7 +229,7 @@ namespace AirplaneEditor
                 clicked_item.tree_item.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = "gun",
+                    Header = GetTreenodeHeader("gun"),
                     Tag = child_part,
                     ContextMenu = FindResource(CONTEXT_COMPONENT) as ContextMenu,
                 });
@@ -239,7 +257,7 @@ namespace AirplaneEditor
                 clicked_item.tree_item.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = "bomb",
+                    Header = GetTreenodeHeader("bomb"),
                     Tag = child_part,
                     ContextMenu = FindResource(CONTEXT_COMPONENT) as ContextMenu,
                 });
@@ -297,6 +315,24 @@ namespace AirplaneEditor
             }
 
             throw new ApplicationException($"Couldn't identify sender: {sender?.ToString() ?? ""}");
+        }
+
+        private static TreeViewItem VisualUpwardSearch(DependencyObject source)
+        {
+            while (source != null && !(source is TreeViewItem))
+                source = VisualTreeHelper.GetParent(source);
+
+            return source as TreeViewItem;
+        }
+
+        private static FrameworkElement GetTreenodeHeader(string text)
+        {
+            return new TextBlock()
+            {
+                Text = text,
+                FontSize = 14,
+                Padding = new Thickness(4, 2, 4, 2),
+            };
         }
 
         #endregion
