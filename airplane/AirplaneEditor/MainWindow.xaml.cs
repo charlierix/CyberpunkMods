@@ -59,6 +59,7 @@ namespace AirplaneEditor
                 _root = new PlanePart()
                 {
                     PartType = PlanePartType.Fuselage,
+                    Name = "root",
                     IsCenterline = true,
                 };
 

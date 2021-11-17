@@ -5,27 +5,94 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:AirplaneEditor"
         mc:Ignorable="d" 
-        d:DesignWidth="400" d:DesignHeight="300">
-    <Grid>
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="4"/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <GridSplitter Grid.Column="1" VerticalAlignment="Stretch"/>-->
+        d:DesignWidth="400" d:DesignHeight="300" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <Style x:Key="header_label" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,4"/>
+        </Style>
 
-        <!-- lblPartType -->
-        <!-- txtName -->
-        
-        <!-- chkIsCenterline -->
-        
-        <!-- Position -->
-        <!-- X box Y box Z box -->
-        
-        <!-- Rotation -->
-        <!-- X box Y box Z box -->
-        <!-- angle box-->
+        <Style x:Key="inline_label" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="8,2,4,2"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
 
+        <Style TargetType="TextBox">
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+    </UserControl.Resources>
+    
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="6">
+            <StackPanel x:Name="panel_base">
+                <TextBlock x:Name="lblPartType" HorizontalAlignment="Center"/>
 
-    </Grid>
+                <FrameworkElement Margin="0,8,0,0"/>
+
+                <TextBlock Text="Name" Style="{StaticResource header_label}"/>
+                <TextBox x:Name="txtName"/>
+
+                <FrameworkElement Margin="0,16,0,0"/>
+
+                <CheckBox x:Name="chkIsCenterline" Content="Is Center" ToolTipService.ShowDuration="24000">
+                    <CheckBox.ToolTip>
+                        <TextBlock>true: part is down the center<LineBreak/>(only allowed if connected to a fuselage that is also centerline)<LineBreak/><LineBreak/>false: part is mirrored left and right</TextBlock>
+                    </CheckBox.ToolTip>
+                </CheckBox>
+
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="8"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="4"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="0" Text="Position" Style="{StaticResource header_label}"/>
+
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="X" Style="{StaticResource inline_label}"/>
+                    <TextBox Grid.Column="1" Grid.Row="1" x:Name="txtPosX"/>
+
+                    <TextBlock Grid.Column="2" Grid.Row="1" Text="Y" Style="{StaticResource inline_label}"/>
+                    <TextBox Grid.Column="3" Grid.Row="1" x:Name="txtPosY"/>
+
+                    <TextBlock Grid.Column="4" Grid.Row="1" Text="Z" Style="{StaticResource inline_label}"/>
+                    <TextBox Grid.Column="5" Grid.Row="1" x:Name="txtPosZ"/>
+                    
+                    <TextBlock Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="3" Text="Rotation" Style="{StaticResource header_label}"/>
+
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="X" Style="{StaticResource inline_label}"/>
+                    <TextBox Grid.Column="1" Grid.Row="4" x:Name="txtRotX"/>
+
+                    <TextBlock Grid.Column="2" Grid.Row="4" Text="Y" Style="{StaticResource inline_label}"/>
+                    <TextBox Grid.Column="3" Grid.Row="4" x:Name="txtRotY"/>
+
+                    <TextBlock Grid.Column="4" Grid.Row="4" Text="Z" Style="{StaticResource inline_label}"/>
+                    <TextBox Grid.Column="5" Grid.Row="4" x:Name="txtRotZ"/>
+
+                    <TextBlock Grid.Column="0" Grid.Row="6" Text="Angle" Style="{StaticResource inline_label}"/>
+                    <TextBox Grid.Column="1" Grid.Row="6" x:Name="txtAngle"/>
+                </Grid>
+            </StackPanel>
+            
+            
+            <!-- Type specific panels -->
+            
+            
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

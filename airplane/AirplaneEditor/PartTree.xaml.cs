@@ -61,7 +61,7 @@ namespace AirplaneEditor
                 treeview.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = GetTreenodeHeader("root"),
+                    Header = GetTreenodeHeader(Blackboard.PlaneRoot.Name),
                     Tag = Blackboard.PlaneRoot,
                     ContextMenu = FindResource(CONTEXT_FUSELAGE) as ContextMenu,
                 });
@@ -128,6 +128,7 @@ namespace AirplaneEditor
                 var child_part = new PlanePart()
                 {
                     PartType = PlanePartType.Fuselage,
+                    Name = "fuselage",
                     IsCenterline = false,
                     Parent = clicked_item.part,
                 };
@@ -137,7 +138,7 @@ namespace AirplaneEditor
                 clicked_item.tree_item.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = GetTreenodeHeader("fuselage"),
+                    Header = GetTreenodeHeader(child_part.Name),
                     Tag = child_part,
                     ContextMenu = FindResource(CONTEXT_FUSELAGE) as ContextMenu,
                 });
@@ -156,6 +157,7 @@ namespace AirplaneEditor
                 var child_part = new PlanePart()
                 {
                     PartType = PlanePartType.Wing,
+                    Name = "wing",
                     IsCenterline = false,
                     Parent = clicked_item.part,
                 };
@@ -165,7 +167,7 @@ namespace AirplaneEditor
                 clicked_item.tree_item.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = GetTreenodeHeader("wing"),
+                    Header = GetTreenodeHeader(child_part.Name),
                     Tag = child_part,
                     ContextMenu = FindResource(CONTEXT_WING) as ContextMenu,
                 });
@@ -184,6 +186,7 @@ namespace AirplaneEditor
                 var child_part = new PlanePart()
                 {
                     PartType = PlanePartType.Engine,
+                    Name = "engine",
                     IsCenterline = false,
                     Parent = clicked_item.part,
                 };
@@ -193,7 +196,7 @@ namespace AirplaneEditor
                 clicked_item.tree_item.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = GetTreenodeHeader("engine"),
+                    Header = GetTreenodeHeader(child_part.Name),
                     Tag = child_part,
                     ContextMenu = FindResource(CONTEXT_COMPONENT) as ContextMenu,
                 });
@@ -212,6 +215,7 @@ namespace AirplaneEditor
                 var child_part = new PlanePart()
                 {
                     PartType = PlanePartType.Gun,
+                    Name = "gun",
                     IsCenterline = false,
                     Parent = clicked_item.part,
                 };
@@ -221,7 +225,7 @@ namespace AirplaneEditor
                 clicked_item.tree_item.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = GetTreenodeHeader("gun"),
+                    Header = GetTreenodeHeader(child_part.Name),
                     Tag = child_part,
                     ContextMenu = FindResource(CONTEXT_COMPONENT) as ContextMenu,
                 });
@@ -240,6 +244,7 @@ namespace AirplaneEditor
                 var child_part = new PlanePart()
                 {
                     PartType = PlanePartType.Bomb,
+                    Name = "bomb",
                     IsCenterline = false,
                     Parent = clicked_item.part,
                 };
@@ -249,7 +254,7 @@ namespace AirplaneEditor
                 clicked_item.tree_item.Items.Add(new TreeViewItem()
                 {
                     IsExpanded = true,
-                    Header = GetTreenodeHeader("bomb"),
+                    Header = GetTreenodeHeader(child_part.Name),
                     Tag = child_part,
                     ContextMenu = FindResource(CONTEXT_COMPONENT) as ContextMenu,
                 });
