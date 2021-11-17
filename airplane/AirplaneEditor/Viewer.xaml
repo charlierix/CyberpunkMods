@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AirplaneEditor"
         mc:Ignorable="d"
-        Title="Full View" ResizeMode="CanResizeWithGrip" Background="#A5A9B8" Width="500" Height="500" Loaded="Window_Loaded">
+        Title="Full View" ResizeMode="CanResizeWithGrip" Background="#A5A9B8" Width="600" Height="600" Loaded="Window_Loaded">
     <Grid>
 
         <Border Name="grdViewPort" Focusable="True" AllowDrop="True" Background="Transparent">

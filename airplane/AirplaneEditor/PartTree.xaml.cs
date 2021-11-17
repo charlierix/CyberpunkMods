@@ -58,14 +58,7 @@ namespace AirplaneEditor
             {
                 treeview.Items.Clear();
 
-                treeview.Items.Add(new TreeViewItem()
-                {
-                    IsExpanded = true,
-                    Header = GetTreenodeHeader(Blackboard.PlaneRoot.Name),
-                    Tag = Blackboard.PlaneRoot,
-                    ContextMenu = FindResource(CONTEXT_FUSELAGE) as ContextMenu,
-                });
-
+                AddTreeItem(treeview.Items, Blackboard.PlaneRoot, CONTEXT_FUSELAGE);
             }
             catch (Exception ex)
             {
@@ -135,13 +128,7 @@ namespace AirplaneEditor
 
                 clicked_item.part.Children.Add(child_part);
 
-                clicked_item.tree_item.Items.Add(new TreeViewItem()
-                {
-                    IsExpanded = true,
-                    Header = GetTreenodeHeader(child_part.Name),
-                    Tag = child_part,
-                    ContextMenu = FindResource(CONTEXT_FUSELAGE) as ContextMenu,
-                });
+                AddTreeItem(clicked_item.tree_item.Items, child_part, CONTEXT_FUSELAGE);
             }
             catch (Exception ex)
             {
@@ -164,13 +151,7 @@ namespace AirplaneEditor
 
                 clicked_item.part.Children.Add(child_part);
 
-                clicked_item.tree_item.Items.Add(new TreeViewItem()
-                {
-                    IsExpanded = true,
-                    Header = GetTreenodeHeader(child_part.Name),
-                    Tag = child_part,
-                    ContextMenu = FindResource(CONTEXT_WING) as ContextMenu,
-                });
+                AddTreeItem(clicked_item.tree_item.Items, child_part, CONTEXT_WING);
             }
             catch (Exception ex)
             {
@@ -193,13 +174,7 @@ namespace AirplaneEditor
 
                 clicked_item.part.Children.Add(child_part);
 
-                clicked_item.tree_item.Items.Add(new TreeViewItem()
-                {
-                    IsExpanded = true,
-                    Header = GetTreenodeHeader(child_part.Name),
-                    Tag = child_part,
-                    ContextMenu = FindResource(CONTEXT_COMPONENT) as ContextMenu,
-                });
+                AddTreeItem(clicked_item.tree_item.Items, child_part, CONTEXT_COMPONENT);
             }
             catch (Exception ex)
             {
@@ -222,13 +197,7 @@ namespace AirplaneEditor
 
                 clicked_item.part.Children.Add(child_part);
 
-                clicked_item.tree_item.Items.Add(new TreeViewItem()
-                {
-                    IsExpanded = true,
-                    Header = GetTreenodeHeader(child_part.Name),
-                    Tag = child_part,
-                    ContextMenu = FindResource(CONTEXT_COMPONENT) as ContextMenu,
-                });
+                AddTreeItem(clicked_item.tree_item.Items, child_part, CONTEXT_COMPONENT);
             }
             catch (Exception ex)
             {
@@ -251,13 +220,7 @@ namespace AirplaneEditor
 
                 clicked_item.part.Children.Add(child_part);
 
-                clicked_item.tree_item.Items.Add(new TreeViewItem()
-                {
-                    IsExpanded = true,
-                    Header = GetTreenodeHeader(child_part.Name),
-                    Tag = child_part,
-                    ContextMenu = FindResource(CONTEXT_COMPONENT) as ContextMenu,
-                });
+                AddTreeItem(clicked_item.tree_item.Items, child_part, CONTEXT_COMPONENT);
             }
             catch (Exception ex)
             {
@@ -277,6 +240,7 @@ namespace AirplaneEditor
 
                 if (clicked_item.tree_item.Parent is TreeViewItem parent_item)
                 {
+                    UnhookEvents(clicked_item.part);
                     parent_item.Items.Remove(clicked_item.tree_item);
                     clicked_item.part.Parent.Children.Remove(clicked_item.part);
                 }
@@ -291,9 +255,82 @@ namespace AirplaneEditor
             }
         }
 
+        private void Part_NameChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if(sender is PlanePart part)
+                {
+                    TreeViewItem item = FindPart(part);
+                    if (item == null)       // should never happen
+                        return;
+
+                    if (item.Header is TextBlock textblock)
+                        textblock.Text = part.Name;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         #endregion
 
         #region Private Methods
+
+        private void AddTreeItem(ItemCollection items, PlanePart part, string contextMenuName)
+        {
+            items.Add(new TreeViewItem()
+            {
+                IsExpanded = true,
+                Header = GetTreenodeHeader(part.Name),
+                Tag = part,
+                ContextMenu = FindResource(contextMenuName) as ContextMenu,
+            });
+
+            HookEvents(part);
+        }
+
+        private void HookEvents(PlanePart part)
+        {
+            part.NameChanged += Part_NameChanged;
+        }
+        private void UnhookEvents(PlanePart part)
+        {
+            part.NameChanged -= Part_NameChanged;
+
+            foreach (PlanePart child in part.Children)
+            {
+                UnhookEvents(child);
+            }
+        }
+
+        private TreeViewItem FindPart(PlanePart part)
+        {
+            foreach(TreeViewItem item in treeview.Items)
+            {
+                var retVal = FindPart(item, part);
+                if (retVal != null)
+                    return retVal;
+            }
+
+            return null;
+        }
+        private static TreeViewItem FindPart(TreeViewItem item, PlanePart part)
+        {
+            if (item.Tag is PlanePart item_part && item_part == part)
+                return item;
+
+            foreach (TreeViewItem child in item.Items)
+            {
+                var retVal = FindPart(child, part);
+                if (retVal != null)
+                    return retVal;
+            }
+
+            return null;
+        }
 
         private static (TreeViewItem tree_item, PlanePart part) FindClickedItem(object sender)
         {

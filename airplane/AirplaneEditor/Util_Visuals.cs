@@ -45,6 +45,7 @@ namespace AirplaneEditor
                 {
                     Content = model,
                 },
+                Transform = transform.transform,
                 Translate = transform.translate,
                 Rotate = transform.rotate,
                 Scale = transform.scale,

@@ -113,8 +113,6 @@ namespace AirplaneEditor
         {
             try
             {
-                var type = sender.GetType();
-
                 switch (e.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
@@ -134,6 +132,55 @@ namespace AirplaneEditor
 
                     default:
                         throw new ApplicationException($"Unexpected NotifyCollectionChangedAction: {e.Action}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Part_IsCenterlineChanged(object sender, EventArgs e)
+        {
+            try
+            {
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void Part_PositionChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (sender is PlanePart part)
+                {
+                    PartVisual visual = FindParentVisual(part);
+                    if (visual == null)
+                        return;
+
+                    visual.Translate.OffsetX = part.Position.X;
+                    visual.Translate.OffsetY = part.Position.Y;
+                    visual.Translate.OffsetZ = part.Position.Z;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void Part_RotationChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (sender is PlanePart part)
+                {
+                    PartVisual visual = FindParentVisual(part);
+                    if (visual == null)
+                        return;
+
+                    visual.Rotate.Quaternion = part.Orientation;
                 }
             }
             catch (Exception ex)
@@ -231,10 +278,16 @@ namespace AirplaneEditor
         private void HookEvents(PartVisual part)
         {
             part.Part.Children.CollectionChanged += Children_CollectionChanged;
+            part.Part.IsCenterlineChanged += Part_IsCenterlineChanged;
+            part.Part.PositionChanged += Part_PositionChanged;
+            part.Part.RotationChanged += Part_RotationChanged;
         }
         private void UnhookEvents(PartVisual part)
         {
             part.Part.Children.CollectionChanged -= Children_CollectionChanged;
+            part.Part.IsCenterlineChanged -= Part_IsCenterlineChanged;
+            part.Part.PositionChanged -= Part_PositionChanged;
+            part.Part.RotationChanged -= Part_RotationChanged;
         }
 
         private void CreateStaticVisuals()

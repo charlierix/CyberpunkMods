@@ -33,11 +33,11 @@
                 <FrameworkElement Margin="0,8,0,0"/>
 
                 <TextBlock Text="Name" Style="{StaticResource header_label}"/>
-                <TextBox x:Name="txtName"/>
+                <TextBox x:Name="txtName" TextChanged="txtName_TextChanged"/>
 
                 <FrameworkElement Margin="0,16,0,0"/>
 
-                <CheckBox x:Name="chkIsCenterline" Content="Is Center" ToolTipService.ShowDuration="24000">
+                <CheckBox x:Name="chkIsCenterline" Content="Is Center" ToolTipService.ShowDuration="24000" Checked="chkIsCenterline_Checked" Unchecked="chkIsCenterline_Checked">
                     <CheckBox.ToolTip>
                         <TextBlock>true: part is down the center<LineBreak/>(only allowed if connected to a fuselage that is also centerline)<LineBreak/><LineBreak/>false: part is mirrored left and right</TextBlock>
                     </CheckBox.ToolTip>
@@ -65,27 +65,27 @@
                     <TextBlock Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="0" Text="Position" Style="{StaticResource header_label}"/>
 
                     <TextBlock Grid.Column="0" Grid.Row="1" Text="X" Style="{StaticResource inline_label}"/>
-                    <TextBox Grid.Column="1" Grid.Row="1" x:Name="txtPosX"/>
+                    <TextBox Grid.Column="1" Grid.Row="1" x:Name="txtPosX" TextChanged="Position_TextChanged"/>
 
                     <TextBlock Grid.Column="2" Grid.Row="1" Text="Y" Style="{StaticResource inline_label}"/>
-                    <TextBox Grid.Column="3" Grid.Row="1" x:Name="txtPosY"/>
+                    <TextBox Grid.Column="3" Grid.Row="1" x:Name="txtPosY" TextChanged="Position_TextChanged"/>
 
                     <TextBlock Grid.Column="4" Grid.Row="1" Text="Z" Style="{StaticResource inline_label}"/>
-                    <TextBox Grid.Column="5" Grid.Row="1" x:Name="txtPosZ"/>
+                    <TextBox Grid.Column="5" Grid.Row="1" x:Name="txtPosZ" TextChanged="Position_TextChanged"/>
                     
                     <TextBlock Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="3" Text="Rotation" Style="{StaticResource header_label}"/>
 
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="X" Style="{StaticResource inline_label}"/>
-                    <TextBox Grid.Column="1" Grid.Row="4" x:Name="txtRotX"/>
+                    <TextBox Grid.Column="1" Grid.Row="4" x:Name="txtRotX" TextChanged="Rotation_TextChanged"/>
 
                     <TextBlock Grid.Column="2" Grid.Row="4" Text="Y" Style="{StaticResource inline_label}"/>
-                    <TextBox Grid.Column="3" Grid.Row="4" x:Name="txtRotY"/>
+                    <TextBox Grid.Column="3" Grid.Row="4" x:Name="txtRotY" TextChanged="Rotation_TextChanged"/>
 
                     <TextBlock Grid.Column="4" Grid.Row="4" Text="Z" Style="{StaticResource inline_label}"/>
-                    <TextBox Grid.Column="5" Grid.Row="4" x:Name="txtRotZ"/>
+                    <TextBox Grid.Column="5" Grid.Row="4" x:Name="txtRotZ" TextChanged="Rotation_TextChanged"/>
 
                     <TextBlock Grid.Column="0" Grid.Row="6" Text="Angle" Style="{StaticResource inline_label}"/>
-                    <TextBox Grid.Column="1" Grid.Row="6" x:Name="txtAngle"/>
+                    <TextBox Grid.Column="1" Grid.Row="6" x:Name="txtAngle" TextChanged="Rotation_TextChanged"/>
                 </Grid>
             </StackPanel>
             

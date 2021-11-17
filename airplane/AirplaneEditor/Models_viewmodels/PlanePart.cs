@@ -11,9 +11,10 @@ namespace AirplaneEditor.Models_viewmodels
     //NOTE: the term viewmodel is used loosely.  The wpf controls are still very programmatically manipulated
     public record PlanePart
     {
-        // Fires when a property related to position changes
-        public event EventHandler PosRotChanged = null;
-        public event EventHandler OtherValueChanged = null;
+        public event EventHandler NameChanged = null;
+        public event EventHandler IsCenterlineChanged = null;
+        public event EventHandler PositionChanged = null;
+        public event EventHandler RotationChanged = null;
 
         public PlanePartType PartType { get; init; }
 
@@ -24,7 +25,7 @@ namespace AirplaneEditor.Models_viewmodels
             set
             {
                 _name = value;
-                OtherValueChanged?.Invoke(this, new EventArgs());
+                NameChanged?.Invoke(this, new EventArgs());
             }
         }
 
@@ -35,7 +36,7 @@ namespace AirplaneEditor.Models_viewmodels
             set
             {
                 _isCenterline = value;
-                PosRotChanged?.Invoke(this, new EventArgs());
+                IsCenterlineChanged?.Invoke(this, new EventArgs());
             }
         }
 
@@ -47,7 +48,7 @@ namespace AirplaneEditor.Models_viewmodels
             set
             {
                 _position = value;
-                PosRotChanged?.Invoke(this, new EventArgs());
+                PositionChanged?.Invoke(this, new EventArgs());
             }
         }
 
@@ -58,7 +59,7 @@ namespace AirplaneEditor.Models_viewmodels
             set
             {
                 _orientation = value;
-                PosRotChanged?.Invoke(this, new EventArgs());
+                RotationChanged?.Invoke(this, new EventArgs());
             }
         }
 
