@@ -18,6 +18,16 @@ namespace AirplaneEditor
     /// </remarks>
     public class Blackboard
     {
+        public event EventHandler NewPlane = null;
+        public static void NewPlaneCreated(PlanePart root)
+        {
+            _instance.Value._planeRoot = root;
+            _instance.Value.NewPlane?.Invoke(_instance.Value, new EventArgs());
+        }
+
+        private PlanePart _planeRoot = null;
+        public static PlanePart PlaneRoot => _instance.Value._planeRoot;
+
         // Any editor that can select parts can set this and all editors should reflect that change
         public event EventHandler<PlanePart> SelectedPartChanged = null;
         public static void PartSelected(PlanePart part)

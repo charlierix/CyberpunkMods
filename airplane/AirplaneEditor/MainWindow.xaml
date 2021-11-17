@@ -5,30 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AirplaneEditor"
         mc:Ignorable="d"
-        Title="Airplane Editor" ResizeMode="CanResizeWithGrip" Width="350" Height="500" Loaded="Window_Loaded">
-    <Window.Resources>
-        <ContextMenu x:Key="treeview_contextmenu_fuselage">
-            <MenuItem Header="Add Fuselage" Click="Fuselage_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-            <MenuItem Header="Add Wing" Click="Wing_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-            <Separator/>
-            <MenuItem Header="Attach Engine" Click="Engine_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-            <MenuItem Header="Attach Gun" Click="Gun_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-            <MenuItem Header="Attach Bomb" Click="Bomb_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-            <Separator/>
-            <MenuItem Header="Delete" Click="Delete_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-        </ContextMenu>
-
-        <ContextMenu x:Key="treeview_contextmenu_wing">
-            <MenuItem Header="New Fuselage" Click="Fuselage_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-            <MenuItem Header="New Wing" Click="Wing_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-            <Separator/>
-            <MenuItem Header="Delete" Click="Delete_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-        </ContextMenu>
-
-        <ContextMenu x:Key="treeview_contextmenu_component">
-            <MenuItem Header="Delete" Click="Delete_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-        </ContextMenu>
-    </Window.Resources>
+        Title="Airplane Editor" ResizeMode="CanResizeWithGrip" Width="350" Height="500" Closed="Window_Closed">
 
     <Grid Margin="8">
         <Grid.RowDefinitions>
@@ -51,7 +28,7 @@
                 <RowDefinition Height="1*" MinHeight="100"/>
             </Grid.RowDefinitions>
 
-            <TreeView Grid.Row="0" x:Name="treeview" SelectedItemChanged="treeview_SelectedItemChanged" PreviewMouseRightButtonDown="treeview_PreviewMouseRightButtonDown"/>
+            <local:PartTree/>
 
             <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch"/>
 

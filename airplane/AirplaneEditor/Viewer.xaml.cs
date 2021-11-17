@@ -64,17 +64,6 @@ namespace AirplaneEditor
 
         #endregion
 
-        #region Public Methods
-
-        public void NewPlane(PlanePart root)
-        {
-            Clear();
-
-            AddPart(root);
-        }
-
-        #endregion
-
         #region Event Listeners
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -94,6 +83,25 @@ namespace AirplaneEditor
                 //_trackball.GetOrbitRadius += new GetOrbitRadiusHandler(Trackball_GetOrbitRadius);
 
                 CreateStaticVisuals();
+
+                Blackboard.Instance.NewPlane += Blackboard_NewPlane;
+
+                if (Blackboard.PlaneRoot != null)
+                    AddPart(Blackboard.PlaneRoot);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Blackboard_NewPlane(object sender, EventArgs e)
+        {
+            try
+            {
+                Clear();
+
+                AddPart(Blackboard.PlaneRoot);
             }
             catch (Exception ex)
             {
@@ -199,7 +207,7 @@ namespace AirplaneEditor
 
             HookEvents(part_visual);
 
-            foreach(var child in part.Children)
+            foreach (var child in part.Children)
             {
                 AddPart(child);
             }
