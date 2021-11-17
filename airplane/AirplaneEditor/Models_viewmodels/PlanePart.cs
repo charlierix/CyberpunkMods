@@ -11,15 +11,56 @@ namespace AirplaneEditor.Models_viewmodels
     //NOTE: the term viewmodel is used loosely.  The wpf controls are still very programmatically manipulated
     public record PlanePart
     {
+        // Fires when a property related to position changes
+        public event EventHandler PosRotChanged = null;
+        public event EventHandler OtherValueChanged = null;
+
         public PlanePartType PartType { get; init; }
 
-        /// <summary>
-        /// Only valid if this is a fuselage and the root part
-        /// </summary>
-        public bool IsCenterline { get; set; }
+        private string _name = "";
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OtherValueChanged?.Invoke(this, new EventArgs());
+            }
+        }
 
-        public Point3D Position { get; set; }
-        public Quaternion Orientation { get; set; }
+        private bool _isCenterline = false;
+        public bool IsCenterline
+        {
+            get => _isCenterline;
+            set
+            {
+                _isCenterline = value;
+                PosRotChanged?.Invoke(this, new EventArgs());
+            }
+        }
+
+        //NOTE: Be sure to store new values when changing, or event won't fire
+        private Point3D _position;
+        public Point3D Position
+        {
+            get => _position;
+            set
+            {
+                _position = value;
+                PosRotChanged?.Invoke(this, new EventArgs());
+            }
+        }
+
+        private Quaternion _orientation;
+        public Quaternion Orientation
+        {
+            get => _orientation;
+            set
+            {
+                _orientation = value;
+                PosRotChanged?.Invoke(this, new EventArgs());
+            }
+        }
 
         public PlanePart Parent { get; init; }
         public ObservableCollection<PlanePart> Children { get; } = new ObservableCollection<PlanePart>();

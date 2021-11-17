@@ -16,6 +16,9 @@ using System.Windows.Shapes;
 
 namespace AirplaneEditor
 {
+
+    //TODO: The treeview logic is taking over this window.  Put it in its own control
+
     public partial class MainWindow : Window
     {
         #region Declaration Section
@@ -42,6 +45,11 @@ namespace AirplaneEditor
         #endregion
 
         #region Event Listeners
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Blackboard.Instance.SelectedPartChanged += Blackboard_SelectedPartChanged;
+        }
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
@@ -109,6 +117,23 @@ namespace AirplaneEditor
             }
         }
 
+        private void Blackboard_SelectedPartChanged(object sender, PlanePart e)
+        {
+            try
+            {
+                foreach (TreeViewItem node in treeview.Items)
+                {
+                    if (FindAndSelectNode(node, e))
+                        return;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void treeview_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -120,6 +145,18 @@ namespace AirplaneEditor
                     treeViewItem.Focus();
                     e.Handled = true;
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void treeview_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            try
+            {
+                if (e.NewValue is TreeViewItem item && item.Tag is PlanePart part)
+                    Blackboard.PartSelected(part);
             }
             catch (Exception ex)
             {
@@ -333,6 +370,23 @@ namespace AirplaneEditor
                 FontSize = 14,
                 Padding = new Thickness(4, 2, 4, 2),
             };
+        }
+
+        private static bool FindAndSelectNode(TreeViewItem current, PlanePart part)
+        {
+            if (current.Tag is PlanePart current_part && part == current_part)
+            {
+                current.IsSelected = true;
+                return true;
+            }
+
+            foreach (TreeViewItem child in current.Items)
+            {
+                if (FindAndSelectNode(child, part))
+                    return true;
+            }
+
+            return false;
         }
 
         #endregion

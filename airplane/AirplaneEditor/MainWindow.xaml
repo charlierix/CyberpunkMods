@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AirplaneEditor"
         mc:Ignorable="d"
-        Title="Airplane Editor" ResizeMode="CanResizeWithGrip" Width="350" Height="500">
+        Title="Airplane Editor" ResizeMode="CanResizeWithGrip" Width="350" Height="500" Loaded="Window_Loaded">
     <Window.Resources>
         <ContextMenu x:Key="treeview_contextmenu_fuselage">
             <MenuItem Header="Add Fuselage" Click="Fuselage_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
@@ -51,7 +51,7 @@
                 <RowDefinition Height="1*" MinHeight="100"/>
             </Grid.RowDefinitions>
 
-            <TreeView Grid.Row="0" x:Name="treeview" PreviewMouseRightButtonDown="treeview_PreviewMouseRightButtonDown"/>
+            <TreeView Grid.Row="0" x:Name="treeview" SelectedItemChanged="treeview_SelectedItemChanged" PreviewMouseRightButtonDown="treeview_PreviewMouseRightButtonDown"/>
 
             <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch"/>
 
