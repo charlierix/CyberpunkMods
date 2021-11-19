@@ -14,11 +14,19 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button Content="new" Click="New_Click"/>
-            <Button Content="save" Margin="8,0,0,0"/>
-            <Button Content="viewer" Margin="8,0,0,0" Click="Viewer_Click"/>
-            <Button Content="add editor view" Margin="8,0,0,0"/>
+        <StackPanel Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="new" Click="New_Click"/>
+                <Button IsEnabled="False" Content="save" Margin="8,0,0,0"/>
+                <Button Content="viewer" Margin="8,0,0,0" Click="Viewer_Click"/>
+                <Button IsEnabled="False" Content="add editor view" Margin="8,0,0,0"/>
+                <Button Content="test" Margin="8,0,0,0" Click="Test_Click"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Button Content="inertia 1" Click="Inertia1_Click"/>
+                <Button Content="inertia 2" Click="Inertia2_Click"/>
+            </StackPanel>
         </StackPanel>
 
         <Grid Grid.Row="2">
