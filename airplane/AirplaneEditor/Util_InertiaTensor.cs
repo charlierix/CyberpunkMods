@@ -39,7 +39,14 @@ using System.Windows.Media.Media3D;
 namespace AirplaneEditor
 {
     // https://answers.unity.com/questions/1484654/how-to-calculate-inertia-tensor-and-tensor-rotatio.html
-    public static class Physics_Attempt1
+
+    /// <summary>
+    /// Functions copied out of PhysX that calculates an inertia tensor for a set of parts
+    /// </summary>
+    /// <remarks>
+    /// Keeping everything in one file so that it's self contained and portable
+    /// </remarks>
+    public static class Util_InertiaTensor
     {
         #region enum: ShapeType
 
@@ -60,6 +67,8 @@ namespace AirplaneEditor
             public abstract ShapeType ShapeType { get; }
 
             public double density { get; init; }
+
+            public PxTransform LocalPose { get; init; }     // this can be null
         }
 
         public record ShapeSphere : ShapeBase
@@ -67,8 +76,6 @@ namespace AirplaneEditor
             public override ShapeType ShapeType => ShapeType.Sphere;
 
             public double Radius { get; init; }
-
-            public PxTransform LocalPose { get; init; }     // this can be null
         }
 
         public record ShapeBox : ShapeBase
@@ -116,6 +123,34 @@ namespace AirplaneEditor
         {
             public Quaternion Q { get; init; }
             public Vector3D P { get; init; }
+        }
+
+        #endregion
+        #region record: Result
+
+        public record Result
+        {
+            public Point3D CenterMass { get; init; }
+            public double TotalMass { get; init; }
+
+            /// <summary>
+            /// This can be thought of as the inertia about the X,Y,Z axiis
+            /// </summary>
+            /// <remarks>
+            /// A sphere will have the same values
+            /// 
+            /// A thin cylinder along X will have low inertia about X, but the same larger values about Y and Z
+            /// </remarks>
+            public Vector3D InertiaTensor { get; init; }
+            /// <remarks>
+            /// The moment of inertia was in a 3x3 matrix
+            /// 
+            /// That matrix was rotated to get InertiaTensor to be the diagonal (all values in diagonal,
+            /// zeros everywhere else)
+            /// 
+            /// This is the rotation that was used
+            /// </remarks>
+            public Quaternion InertiaTensor_Rotation { get; init; }
         }
 
         #endregion
@@ -405,6 +440,46 @@ namespace AirplaneEditor
 
             #endregion
 
+            public double this[int col, int row]
+            {
+                get
+                {
+                    Vector3D vec;
+                    switch (col)
+                    {
+                        case 0:
+                            vec = column0;
+                            break;
+
+                        case 1:
+                            vec = column1;
+                            break;
+
+                        case 2:
+                            vec = column2;
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException($"Invalid column: {col}");
+                    }
+
+                    switch (row)
+                    {
+                        case 0:
+                            return vec.X;
+
+                        case 1:
+                            return vec.Y;
+
+                        case 2:
+                            return vec.Z;
+
+                        default:
+                            throw new ArgumentOutOfRangeException($"Invalid row: {row}");
+                    }
+                }
+            }
+
             #region Public Methods
 
             // Get transposed matrix
@@ -433,20 +508,21 @@ namespace AirplaneEditor
 
         #endregion
 
-        public static (Point3D center_mass, Vector3D inertia_tensor, double total_mass) GetInertiaTensor(ShapeBase[] shapes)
+        public static Result GetInertiaTensor(ShapeBase[] shapes)
         {
             BodyInertia inertia = computeMassAndInertia(shapes);
 
+            var as_diag = PxDiagonalize(inertia.I);
 
             //NOTE: There's no need to take I * Mass.  Mass is already part of I
 
-            //TODO: Verify that this is still a diagonal.  If so, that diagonal can be simplified into a vector
-            //inertia.I;
-            //
-            // It's not perfect diagonal.  Need to search for the conversion function
-
-
-            return (inertia.CenterOfMass.ToPoint(), new Vector3D(), inertia.Mass);
+            return new Result()
+            {
+                CenterMass = inertia.CenterOfMass.ToPoint(),
+                TotalMass = inertia.Mass,
+                InertiaTensor = as_diag.inertia_tensor,
+                InertiaTensor_Rotation = as_diag.inertiaTensorRotation,
+            };
         }
 
         #region Private Methods - main function
@@ -464,7 +540,19 @@ namespace AirplaneEditor
                 if (shape is ShapeSphere sphere)
                     it = getSphere(sphere.Radius, sphere.LocalPose);
 
-                //TODO: Implement the rest of the shapes
+                else if (shape is ShapeBox box)
+                    it = getBox(box.HalfWidths, box.LocalPose);
+
+                else if (shape is ShapeCylinder cylinder)
+                    it = getCylinder(cylinder.Direction, cylinder.Radius, cylinder.Length, cylinder.LocalPose);
+
+                else if (shape is ShapeCapsule capsule)
+                    it = getCapsule(capsule.Direction, capsule.Radius, capsule.Length, capsule.LocalPose);
+
+                else if (shape is ShapeEllipsoid ellipsoid)
+                    it = getEllipsoid(ellipsoid.RadiusX, ellipsoid.RadiusY, ellipsoid.RadiusZ, ellipsoid.LocalPose);
+
+                //NOTE: The c++ code had logic for a mesh.  It wasn't copied here, since this project doesn't need it
 
                 else
                     throw new ApplicationException($"Unknown shape: {shape.ShapeType}");
@@ -478,11 +566,95 @@ namespace AirplaneEditor
         }
 
         #endregion
+        #region Private Methods - inertia tensor
+
+        // https://github.com/NVIDIAGameWorks/PhysX-3.4/blob/master/PxShared/src/foundation/src/PsMathUtils.cpp
+
+        /// <summary>
+        /// This turns the matrix into values that can be used in the rigid body
+        /// </summary>
+        /// <remarks>
+        /// The moment of inertia calculated and stored in a 3x3 matrix
+        /// 
+        /// This function looks like it iteratively narrows down on a rotation that has all the
+        /// values in the diagonal (zeros everywhere else)
+        /// 
+        /// That diagonal is then returned as a vector
+        /// </remarks>
+        private static (Vector3D inertia_tensor, Quaternion inertiaTensorRotation) PxDiagonalize(PxMat33 m)
+        {
+            // jacobi rotation using quaternions (from an idea of Stan Melax, with fix for precision issues)
+
+            const int MAX_ITERS = 24;
+
+            Quaternion q = Quaternion.Identity;
+
+            PxMat33 d = null;
+            for (int i = 0; i < MAX_ITERS; i++)
+            {
+                PxMat33 axes = PxMat33.from_rot(q);
+                d = axes.getTranspose() * m * axes;
+
+                double d0 = Math.Abs(d[1, 2]);
+                double d1 = Math.Abs(d[0, 2]);
+                double d2 = Math.Abs(d[0, 1]);
+
+                int a = d0 > d1 && d0 > d2 ?        // rotation axis index, from largest off-diagonal element
+                    0 :
+                    d1 > d2 ?
+                        1 :
+                        2;
+
+                int a1 = getNextIndex3(a);
+                int a2 = getNextIndex3(a1);
+
+                if (d[a1, a2] == 0d || Math.Abs(d[a1, a1] - d[a2, a2]) > 2e6f * Math.Abs(2d * d[a1, a2]))
+                    break;
+
+                double w = (d[a1, a1] - d[a2, a2]) / (2d * d[a1, a2]);      // cot(2 * phi), where phi is the rotation angle
+                double absw = Math.Abs(w);
+
+                Quaternion r;
+                if (absw > 1000)
+                {
+                    r = indexedRotation(a, 1 / (4 * w), 1);     // h will be very close to 1, so use small angle approx instead
+                }
+                else
+                {
+                    double t = 1 / (absw + Math.Sqrt(w * w + 1)); // absolute value of tan phi
+                    double h = 1 / Math.Sqrt(t * t + 1);          // absolute value of cos phi
+
+                    //PX_ASSERT(h != 1); // |w|<1000 guarantees this with typical IEEE754 machine eps (approx 6e-8)
+
+                    r = indexedRotation(a, Math.Sqrt((1 - h) / 2) * Math.Sin(w), Math.Sqrt((1 + h) / 2));
+                }
+
+                q = (q * r).ToUnit();
+            }
+
+            return (new Vector3D(d.column0.X, d.column1.Y, d.column2.Z), q);
+        }
+
+        // indexed rotation around axis, with sine and cosine of half-angle
+        private static Quaternion indexedRotation(int axis, double s, double c)
+        {
+            double[] v = { 0d, 0d, 0d };
+            v[axis] = s;
+            return new Quaternion(v[0], v[1], v[2], c);
+        }
+
+        private static int getNextIndex3(int i)
+        {
+            //return (i + 1 + (i >> 1)) & 3;        // without the bitshift, it's cycling 0,1,2,3,0,...
+            return (i + 1) % 3;     // this is the c# equivalent
+        }
+
+        #endregion
         #region Private Methods - shape inertias
 
-        // These were copied from here:
         // https://github.com/NVIDIAGameWorks/PhysX-3.4/blob/master/PhysX_3.4/Source/PhysXExtensions/src/ExtInertiaTensor.h
 
+        // Sphere
         private static BodyInertia getSphere(double radius, PxTransform pose = null)
         {
             BodyInertia retVal = getSphere_modelcoords(radius);
@@ -500,6 +672,145 @@ namespace AirplaneEditor
             return BodyInertia.GetDiagonal(m, new Vector3D(s, s, s));
         }
 
+        private static double computeSphereRatio(double radius) { return (4d / 3d) * Math.PI * radius * radius * radius; }
+
+        // Box
+        private static BodyInertia getBox(Vector3D halfWidths, PxTransform pose = null)
+        {
+            BodyInertia retVal = getBox_modelcoords(halfWidths);
+
+            if (pose != null)
+                retVal = BodyInertia.Transform(retVal, pose);
+
+            return retVal;
+        }
+        private static BodyInertia getBox_modelcoords(Vector3D halfWidths)
+        {
+            // Setup inertia tensor for a cube with unit density
+            double mass = 8d * computeBoxRatio(halfWidths);
+            double s = (1d / 3d) * mass;
+
+            double x = halfWidths.X * halfWidths.X;
+            double y = halfWidths.Y * halfWidths.Y;
+            double z = halfWidths.Z * halfWidths.Z;
+
+            return BodyInertia.GetDiagonal(mass, new Vector3D(y + z, z + x, x + y) * s);
+        }
+
+        private static double computeBoxRatio(Vector3D extents) { return volume(extents); }
+
+        // Cylinder
+        private static BodyInertia getCylinder(Axis direction, double radius, double length, PxTransform pose = null)
+        {
+            BodyInertia retVal = getCylinder_modelcoords(direction, radius, length);
+
+            if (pose != null)
+                retVal = BodyInertia.Transform(retVal, pose);
+
+            return retVal;
+        }
+        private static BodyInertia getCylinder_modelcoords(Axis direction, double radius, double length)
+        {
+            // Compute mass of cylinder
+            double m = computeCylinderRatio(radius, length);
+
+            double i1 = radius * radius * m / 2d;       // cap
+            double i2 = (3d * radius * radius + 4d * length * length) * m / 12d;        // side
+
+            Vector3D diag;
+            switch (direction)
+            {
+                case Axis.X:
+                    diag = new Vector3D(i1, i2, i2);
+                    break;
+
+                case Axis.Y:
+                    diag = new Vector3D(i2, i1, i2);
+                    break;
+
+                case Axis.Z:
+                    diag = new Vector3D(i2, i2, i1);
+                    break;
+
+                default:
+                    throw new ApplicationException($"Unknown Axis: {direction}");
+            }
+
+            return BodyInertia.GetDiagonal(m, diag);
+        }
+
+        private static double computeCylinderRatio(double r, double l) { return Math.PI * r * r * (2d * l); }
+
+        // Capsule
+        private static BodyInertia getCapsule(Axis direction, double radius, double length, PxTransform pose = null)
+        {
+            BodyInertia retVal = getCapsule_modelcoords(direction, radius, length);
+
+            if (pose != null)
+                retVal = BodyInertia.Transform(retVal, pose);
+
+            return retVal;
+        }
+        private static BodyInertia getCapsule_modelcoords(Axis direction, double rad, double len)
+        {
+            // Compute mass of capsule
+            double m = computeCapsuleRatio(rad, len);
+
+            double t = Math.PI * rad * rad;
+            double i1 = t * ((rad * rad * rad * 8d / 15d) + (len * rad * rad));
+            double i2 = t * ((rad * rad * rad * 8d / 15d) + (len * rad * rad * 3d / 2d) + (len * len * rad * 4d / 3d) + (len * len * len * 2d / 3d));
+
+            Vector3D diag;
+            switch (direction)
+            {
+                case Axis.X:
+                    diag = new Vector3D(i1, i2, i2);
+                    break;
+
+                case Axis.Y:
+                    diag = new Vector3D(i2, i1, i2);
+                    break;
+
+                case Axis.Z:
+                    diag = new Vector3D(i2, i2, i1);
+                    break;
+
+                default:
+                    throw new ApplicationException($"Unknown Axis: {direction}");
+            }
+
+            return BodyInertia.GetDiagonal(m, diag);
+        }
+
+        private static double computeCapsuleRatio(double r, double l) { return computeSphereRatio(r) + computeCylinderRatio(r, l); }
+
+        // Ellipsoid
+        private static BodyInertia getEllipsoid(double rad_x, double rad_y, double rad_z, PxTransform pose = null)
+        {
+            BodyInertia retVal = getEllipsoid_modelcoords(rad_x, rad_y, rad_z);
+
+            if (pose != null)
+                retVal = BodyInertia.Transform(retVal, pose);
+
+            return retVal;
+        }
+        private static BodyInertia getEllipsoid_modelcoords(double rad_x, double rad_y, double rad_z)
+        {
+            // Compute mass of ellipsoid
+            double m = computeEllipsoidRatio(new Vector3D(rad_x, rad_y, rad_z));
+
+            // Compute moment of inertia
+            double s = m * (2d / 5d);
+
+            // Setup inertia tensor for an ellipsoid centered at the origin
+            return BodyInertia.GetDiagonal(m, new Vector3D(rad_y * rad_z, rad_z * rad_x, rad_x * rad_y) * s);
+        }
+
+        private static double computeEllipsoidRatio(Vector3D extents) { return (4d / 3d) * Math.PI * volume(extents); }
+
+        #endregion
+        #region Private Methods
+
         private static BodyInertia scaleDensity(BodyInertia inertia, double densityScale)
         {
             return inertia with
@@ -510,31 +821,6 @@ namespace AirplaneEditor
             //PX_ASSERT(mI.column0.isFinite() && mI.column1.isFinite() && mI.column2.isFinite());
             //PX_ASSERT(PxIsFinite(mMass));
         }
-
-        // Sphere
-        private static double computeSphereRatio(double radius) { return (4d / 3d) * Math.PI * radius * radius * radius; }
-        private static double computeSphereMass(double radius, double density) { return density * computeSphereRatio(radius); }
-        private static double computeSphereDensity(double radius, double mass) { return mass / computeSphereRatio(radius); }
-
-        // Box
-        private static double computeBoxRatio(Vector3D extents) { return volume(extents); }
-        private static double computeBoxMass(Vector3D extents, double density) { return density * computeBoxRatio(extents); }
-        private static double computeBoxDensity(Vector3D extents, double mass) { return mass / computeBoxRatio(extents); }
-
-        // Ellipsoid
-        private static double computeEllipsoidRatio(Vector3D extents) { return (4d / 3d) * Math.PI * volume(extents); }
-        private static double computeEllipsoidMass(Vector3D extents, double density) { return density * computeEllipsoidRatio(extents); }
-        private static double computeEllipsoidDensity(Vector3D extents, double mass) { return mass / computeEllipsoidRatio(extents); }
-
-        // Cylinder
-        private static double computeCylinderRatio(double r, double l) { return Math.PI * r * r * (2d * l); }
-        private static double computeCylinderMass(double r, double l, double density) { return density * computeCylinderRatio(r, l); }
-        private static double computeCylinderDensity(double r, double l, double mass) { return mass / computeCylinderRatio(r, l); }
-
-        // Capsule
-        private static double computeCapsuleRatio(double r, double l) { return computeSphereRatio(r) + computeCylinderRatio(r, l); }
-        private static double computeCapsuleMass(double r, double l, double density) { return density * computeCapsuleRatio(r, l); }
-        private static double computeCapsuleDensity(double r, double l, double mass) { return mass / computeCapsuleRatio(r, l); }
 
         private static double volume(Vector3D extents)
         {

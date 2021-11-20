@@ -23,6 +23,7 @@ namespace AirplaneEditor.Models_viewmodels
         /// </remarks>
         Fuselage,
 
+        //TODO: have a lifting wing and a neutal wing
         Wing,
 
         /// <summary>

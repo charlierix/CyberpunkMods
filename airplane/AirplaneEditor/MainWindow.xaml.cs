@@ -135,16 +135,16 @@ namespace AirplaneEditor
         {
             try
             {
-                Physics_Attempt1.ShapeBase[] shapes = new[]
+                Util_InertiaTensor.ShapeBase[] shapes = new[]
                 {
-                    new Physics_Attempt1.ShapeSphere()
+                    new Util_InertiaTensor.ShapeSphere()
                     {
                         density = 1,
                         Radius = 1,
                     },
                 };
 
-                var result = Physics_Attempt1.GetInertiaTensor(shapes);
+                var result = Util_InertiaTensor.GetInertiaTensor(shapes);
             }
             catch (Exception ex)
             {
@@ -155,35 +155,35 @@ namespace AirplaneEditor
         {
             try
             {
-                Physics_Attempt1.ShapeBase[] shapes = new[]
+                Util_InertiaTensor.ShapeBase[] shapes = new[]
                 {
-                    new Physics_Attempt1.ShapeSphere()
+                    new Util_InertiaTensor.ShapeSphere()
                     {
                         density = 1,
                         Radius = 1,
-                        LocalPose = new Physics_Attempt1.PxTransform()
+                        LocalPose = new Util_InertiaTensor.PxTransform()
                         {
                             P = new Vector3D(0, 0, 0),
                             Q = Quaternion.Identity,
                         },
                     },
 
-                    new Physics_Attempt1.ShapeSphere()
+                    new Util_InertiaTensor.ShapeSphere()
                     {
                         density = 1,
                         Radius = 0.25,
-                        LocalPose = new Physics_Attempt1.PxTransform()
+                        LocalPose = new Util_InertiaTensor.PxTransform()
                         {
                             P = new Vector3D(-0.7, 1, 0),
                             Q = Quaternion.Identity,
                         },
                     },
 
-                    new Physics_Attempt1.ShapeSphere()
+                    new Util_InertiaTensor.ShapeSphere()
                     {
                         density = 1,
                         Radius = 0.25,
-                        LocalPose = new Physics_Attempt1.PxTransform()
+                        LocalPose = new Util_InertiaTensor.PxTransform()
                         {
                             P = new Vector3D(1.5, 1, 0),
                             Q = Quaternion.Identity,
@@ -191,7 +191,7 @@ namespace AirplaneEditor
                     },
                 };
 
-                var result = Physics_Attempt1.GetInertiaTensor(shapes);
+                var result = Util_InertiaTensor.GetInertiaTensor(shapes);
             }
             catch (Exception ex)
             {
