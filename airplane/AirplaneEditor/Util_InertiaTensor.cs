@@ -1,9 +1,12 @@
 ﻿using Game.Math_WPF.Mathematics;
+using Game.Math_WPF.WPF;
+using Game.Math_WPF.WPF.Controls3D;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 // Copied from the top of PhysX source files:
@@ -525,6 +528,65 @@ namespace AirplaneEditor
             };
         }
 
+        public static void VisualizeInertiaTensor(ShapeBase[] shapes, Result inertia, string title = null)
+        {
+            var window = new Debug3DWindow()
+            {
+                Title = string.IsNullOrWhiteSpace(title) ?
+                    "Inertia Tensor" :
+                    title,
+            };
+
+            var sizes = Debug3DWindow.GetDrawSizes(shapes.Select(o => o.LocalPose?.P ?? new Vector3D()));
+
+            // center of mass
+            window.AddDot(inertia.CenterMass, sizes.dot * 2, Colors.White);
+
+            foreach (var shape in shapes)
+            {
+                AddShapeVisual(window, sizes.dot, sizes.line * 0.5, shape);
+            }
+
+            if (inertia.InertiaTensor_Rotation != Quaternion.Identity)
+            {
+                Vector3D axis = inertia.InertiaTensor_Rotation.Axis;
+
+                // inertia.InertiaTensor_Rotation axis and angle
+                window.AddLine(inertia.CenterMass, inertia.CenterMass + axis, sizes.line * 0.25, Colors.LightGray);
+
+                // inertia axiis
+                window.AddText3D(Math.Round(inertia.InertiaTensor_Rotation.Angle).ToString(), inertia.CenterMass + axis, axis, 0.05, Colors.LightGray, false);
+            }
+
+            var transform = new RotateTransform3D(new QuaternionRotation3D(inertia.InertiaTensor_Rotation));
+
+            // inertia ellipsoid
+
+            //(unrotated)
+            //window.AddLine(inertia.CenterMass, inertia.CenterMass + new Vector3D(inertia.InertiaTensor.X, 0, 0), sizes.line, Colors.Red);
+            //window.AddLine(inertia.CenterMass, inertia.CenterMass + new Vector3D(0, inertia.InertiaTensor.Y, 0), sizes.line, Colors.Green);
+            //window.AddLine(inertia.CenterMass, inertia.CenterMass + new Vector3D(0, 0, inertia.InertiaTensor.Z), sizes.line, Colors.Blue);
+
+            //window.AddEllipse(inertia.CenterMass, inertia.InertiaTensor, UtilityWPF.ColorFromHex("1BBB"), true, true);
+
+            window.AddLine(inertia.CenterMass, inertia.CenterMass + transform.Transform(new Vector3D(inertia.InertiaTensor.X, 0, 0)), sizes.line, Colors.Red);
+            window.AddLine(inertia.CenterMass, inertia.CenterMass + transform.Transform(new Vector3D(0, inertia.InertiaTensor.Y, 0)), sizes.line, Colors.Green);
+            window.AddLine(inertia.CenterMass, inertia.CenterMass + transform.Transform(new Vector3D(0, 0, inertia.InertiaTensor.Z)), sizes.line, Colors.Blue);
+
+            window.AddEllipse(inertia.CenterMass, inertia.InertiaTensor, UtilityWPF.ColorFromHex("1BBB"), true, true, inertia.InertiaTensor_Rotation);
+
+
+
+            //TODO: Text to compare with unity
+            //window.AddText();
+
+
+
+
+
+            window.Show();
+        }
+
         #region Private Methods - main function
 
         // https://github.com/NVIDIAGameWorks/PhysX-3.4/blob/master/PhysX_3.4/Source/PhysXExtensions/src/ExtRigidBodyExt.cpp
@@ -608,7 +670,7 @@ namespace AirplaneEditor
                 int a1 = getNextIndex3(a);
                 int a2 = getNextIndex3(a1);
 
-                if (d[a1, a2] == 0d || Math.Abs(d[a1, a1] - d[a2, a2]) > 2e6f * Math.Abs(2d * d[a1, a2]))
+                if (d[a1, a2].IsNearZero() || Math.Abs(d[a1, a1] - d[a2, a2]) > 2e6f * Math.Abs(2d * d[a1, a2]))
                     break;
 
                 double w = (d[a1, a1] - d[a2, a2]) / (2d * d[a1, a2]);      // cot(2 * phi), where phi is the rotation angle
@@ -809,6 +871,100 @@ namespace AirplaneEditor
         private static double computeEllipsoidRatio(Vector3D extents) { return (4d / 3d) * Math.PI * volume(extents); }
 
         #endregion
+        #region Private Methods = visualize
+
+        private static void AddShapeVisual(Debug3DWindow window, double size_dot, double size_line, ShapeBase shape)
+        {
+            Color color = Colors.Gray;
+
+            window.AddDot(shape.LocalPose?.P ?? new Vector3D(), size_dot, color);
+
+            if (shape is ShapeSphere sphere)
+                AddShapeVisual_Sphere(window, size_dot, size_line, color, sphere);
+
+            else if (shape is ShapeBox box)
+                AddShapeVisual_Box(window, size_dot, size_line, color, box);
+
+            else if (shape is ShapeCylinder cylinder)
+                AddShapeVisual_Cylinder(window, size_dot, size_line, color, cylinder);
+
+            else if (shape is ShapeCapsule capsule)
+                AddShapeVisual_Capsule(window, size_dot, size_line, color, capsule);
+
+            else if (shape is ShapeEllipsoid ellipsoid)
+                AddShapeVisual_Ellipsoid(window, size_dot, size_line, color, ellipsoid);
+
+            else
+                throw new ApplicationException($"Unknown shape type: {shape.ShapeType}");
+        }
+
+        private static void AddShapeVisual_Sphere(Debug3DWindow window, double size_dot, double size_line, Color color, ShapeSphere sphere)
+        {
+            Point3D center = sphere.LocalPose?.P.ToPoint() ?? new Point3D();
+
+            window.AddCircle(center, sphere.Radius, size_line, color, new Triangle_wpf(new Vector3D(1, 0, 0), center));
+            window.AddCircle(center, sphere.Radius, size_line, color, new Triangle_wpf(new Vector3D(0, 1, 0), center));
+            window.AddCircle(center, sphere.Radius, size_line, color, new Triangle_wpf(new Vector3D(0, 0, 1), center));
+        }
+
+        private static void AddShapeVisual_Box(Debug3DWindow window, double size_dot, double size_line, Color color, ShapeBox box)
+        {
+            var transform = new Transform3DGroup();
+
+            if(box.LocalPose != null)
+            {
+                transform.Children.Add(new RotateTransform3D(new QuaternionRotation3D(box.LocalPose.Q)));
+                transform.Children.Add(new TranslateTransform3D(box.LocalPose.P));
+            }
+
+            Vector3D h = box.HalfWidths;
+
+            Point3D p0 = transform.Transform(new Point3D(-h.X, -h.Y, h.Z));		// 0
+            Point3D p1 = transform.Transform(new Point3D(h.X, -h.Y, h.Z));		// 1
+            Point3D p2 = transform.Transform(new Point3D(h.X, h.Y, h.Z));		// 2
+            Point3D p3 = transform.Transform(new Point3D(-h.X, h.Y, h.Z));		// 3
+
+            Point3D p4 = transform.Transform(new Point3D(-h.X, -h.Y, -h.Z));    // 4
+            Point3D p5 = transform.Transform(new Point3D(h.X, -h.Y, -h.Z));		// 5
+            Point3D p6 = transform.Transform(new Point3D(h.X, h.Y, -h.Z));		// 6
+            Point3D p7 = transform.Transform(new Point3D(-h.X, h.Y, -h.Z));		// 7
+
+            var lines = new List<(Point3D, Point3D)>();
+
+            // Front face
+            lines.Add((p0, p1));
+            lines.Add((p1, p2));
+            lines.Add((p2, p3));
+            lines.Add((p3, p0));
+
+            // Back face
+            lines.Add((p6, p5));
+            lines.Add((p5, p4));
+            lines.Add((p4, p7));
+            lines.Add((p7, p6));
+
+            // Sides
+            lines.Add((p0, p4));
+            lines.Add((p1, p5));
+            lines.Add((p2, p6));
+            lines.Add((p3, p7));
+
+            window.AddLines(lines, size_line, color);
+        }
+
+        private static void AddShapeVisual_Cylinder(Debug3DWindow window, double size_dot, double size_line, Color color, ShapeCylinder cylinder)
+        {
+        }
+
+        private static void AddShapeVisual_Capsule(Debug3DWindow window, double size_dot, double size_line, Color color, ShapeCapsule capsule)
+        {
+        }
+
+        private static void AddShapeVisual_Ellipsoid(Debug3DWindow window, double size_dot, double size_line, Color color, ShapeEllipsoid ellipsoid)
+        {
+        }
+
+        #endregion
         #region Private Methods
 
         private static BodyInertia scaleDensity(BodyInertia inertia, double densityScale)
@@ -825,9 +981,11 @@ namespace AirplaneEditor
         private static double volume(Vector3D extents)
         {
             double v = 1d;
-            if (extents.X != 0d) v *= extents.X;
-            if (extents.Y != 0d) v *= extents.Y;
-            if (extents.Z != 0d) v *= extents.Z;
+
+            if (!extents.X.IsNearZero()) v *= extents.X;
+            if (!extents.Y.IsNearZero()) v *= extents.Y;
+            if (!extents.Z.IsNearZero()) v *= extents.Z;
+
             return v;
         }
 

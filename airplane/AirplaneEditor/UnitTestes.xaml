@@ -1,0 +1,31 @@
+﻿<Window x:Class="AirplaneEditor.UnitTestes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AirplaneEditor"
+        mc:Ignorable="d"
+        Title="Unit Testes" ResizeMode="CanResizeWithGrip" Width="500" Height="350">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="#6060C0"/>
+        </Style>
+    </Window.Resources>
+
+    <WrapPanel Orientation="Vertical" Margin="8">
+        <StackPanel>
+            <Label Content="Inertia Tensor"/>
+
+            <Button Content="sphere" Click="Inertia_Sphere_Click"/>
+            <Button Content="box" Click="Inertia_Box_Click"/>
+            <Button Content="capsule" Click="Inertia_Capsule_Click"/>
+
+            <Button Content="3 spheres" Margin="0,8,0,0" Click="Inertia_3Spheres_Click"/>
+            <Button Content="2 boxes" Click="Inertia_2Boxes_Click"/>
+            <Button Content="2 boxes (mirrored)" Click="Inertia_2BoxesMirrored_Click"/>
+            <Button Content="3 boxes" Click="Inertia_3Boxes_Click"/>
+            <Button Content="box, capsule" Click="Inertia_BoxCapsule_Click"/>
+        </StackPanel>
+    </WrapPanel>
+</Window>

@@ -21,11 +21,12 @@
                 <Button Content="viewer" Margin="8,0,0,0" Click="Viewer_Click"/>
                 <Button IsEnabled="False" Content="add editor view" Margin="8,0,0,0"/>
                 <Button Content="test" Margin="8,0,0,0" Click="Test_Click"/>
-            </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                <Button Content="inertia 1" Click="Inertia1_Click"/>
-                <Button Content="inertia 2" Click="Inertia2_Click"/>
+                <TextBlock Margin="8,0,0,0" VerticalAlignment="Center">
+                    <Hyperlink Click="UnitTests_Click">
+                        <Run Text="Unit Tests"/>
+                    </Hyperlink>
+                </TextBlock>
             </StackPanel>
         </StackPanel>
 

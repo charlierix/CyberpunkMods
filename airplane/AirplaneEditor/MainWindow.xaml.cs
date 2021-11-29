@@ -127,71 +127,11 @@ namespace AirplaneEditor
             }
         }
 
-        #endregion
-
-        #region THROW AWAY
-
-        private void Inertia1_Click(object sender, RoutedEventArgs e)
+        private void UnitTests_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Util_InertiaTensor.ShapeBase[] shapes = new[]
-                {
-                    new Util_InertiaTensor.ShapeSphere()
-                    {
-                        density = 1,
-                        Radius = 1,
-                    },
-                };
-
-                var result = Util_InertiaTensor.GetInertiaTensor(shapes);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-        private void Inertia2_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Util_InertiaTensor.ShapeBase[] shapes = new[]
-                {
-                    new Util_InertiaTensor.ShapeSphere()
-                    {
-                        density = 1,
-                        Radius = 1,
-                        LocalPose = new Util_InertiaTensor.PxTransform()
-                        {
-                            P = new Vector3D(0, 0, 0),
-                            Q = Quaternion.Identity,
-                        },
-                    },
-
-                    new Util_InertiaTensor.ShapeSphere()
-                    {
-                        density = 1,
-                        Radius = 0.25,
-                        LocalPose = new Util_InertiaTensor.PxTransform()
-                        {
-                            P = new Vector3D(-0.7, 1, 0),
-                            Q = Quaternion.Identity,
-                        },
-                    },
-
-                    new Util_InertiaTensor.ShapeSphere()
-                    {
-                        density = 1,
-                        Radius = 0.25,
-                        LocalPose = new Util_InertiaTensor.PxTransform()
-                        {
-                            P = new Vector3D(1.5, 1, 0),
-                            Q = Quaternion.Identity,
-                        },
-                    },
-                };
-
-                var result = Util_InertiaTensor.GetInertiaTensor(shapes);
+                new UnitTestes().Show();
             }
             catch (Exception ex)
             {
