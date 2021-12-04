@@ -511,6 +511,14 @@ namespace AirplaneEditor
 
         #endregion
 
+
+        //TODO: Figure out why this differs from unity
+        //  individual bodies are exact
+        //  the divergence is consistent between sphere/box
+        //  local rotation has nothing to do with it.  It's the way the bodies are added together
+        //  it may be a difference in how wpf and unity treat Y,Z axiis during rotation?
+        //  there may also be a difference in how mass gets distributed.  Unity has total mass for the body, then
+
         public static Result GetInertiaTensor(ShapeBase[] shapes)
         {
             BodyInertia inertia = computeMassAndInertia(shapes);
@@ -537,6 +545,8 @@ namespace AirplaneEditor
                     title,
             };
 
+            var aabb = Math3D.GetAABB(shapes.Select(o => o.LocalPose?.P ?? new Vector3D()));
+
             var sizes = Debug3DWindow.GetDrawSizes(shapes.Select(o => o.LocalPose?.P ?? new Vector3D()));
 
             // center of mass
@@ -562,27 +572,26 @@ namespace AirplaneEditor
 
             // inertia ellipsoid
 
-            //(unrotated)
-            //window.AddLine(inertia.CenterMass, inertia.CenterMass + new Vector3D(inertia.InertiaTensor.X, 0, 0), sizes.line, Colors.Red);
-            //window.AddLine(inertia.CenterMass, inertia.CenterMass + new Vector3D(0, inertia.InertiaTensor.Y, 0), sizes.line, Colors.Green);
-            //window.AddLine(inertia.CenterMass, inertia.CenterMass + new Vector3D(0, 0, inertia.InertiaTensor.Z), sizes.line, Colors.Blue);
+            double inertia_size = Math1D.Max(inertia.InertiaTensor.X, inertia.InertiaTensor.Y, inertia.InertiaTensor.Z);
+            double shape_size = Math1D.Max(aabb.max.X - aabb.min.X, aabb.max.Y - aabb.min.Y, aabb.max.Z - aabb.min.Z);
+            if (shape_size.IsNearZero())
+                shape_size = 1;
+            Vector3D inertia_normalized = inertia.InertiaTensor * (shape_size * 1.5 / inertia_size);
 
-            //window.AddEllipse(inertia.CenterMass, inertia.InertiaTensor, UtilityWPF.ColorFromHex("1BBB"), true, true);
+            window.AddLine(inertia.CenterMass, inertia.CenterMass + transform.Transform(new Vector3D(inertia_normalized.X, 0, 0)), sizes.line, Colors.Red);
+            window.AddLine(inertia.CenterMass, inertia.CenterMass + transform.Transform(new Vector3D(0, inertia_normalized.Y, 0)), sizes.line, Colors.Green);
+            window.AddLine(inertia.CenterMass, inertia.CenterMass + transform.Transform(new Vector3D(0, 0, inertia_normalized.Z)), sizes.line, Colors.Blue);
 
-            window.AddLine(inertia.CenterMass, inertia.CenterMass + transform.Transform(new Vector3D(inertia.InertiaTensor.X, 0, 0)), sizes.line, Colors.Red);
-            window.AddLine(inertia.CenterMass, inertia.CenterMass + transform.Transform(new Vector3D(0, inertia.InertiaTensor.Y, 0)), sizes.line, Colors.Green);
-            window.AddLine(inertia.CenterMass, inertia.CenterMass + transform.Transform(new Vector3D(0, 0, inertia.InertiaTensor.Z)), sizes.line, Colors.Blue);
+            window.AddEllipse(inertia.CenterMass, inertia_normalized, UtilityWPF.ColorFromHex("1BBB"), true, true, inertia.InertiaTensor_Rotation);
 
-            window.AddEllipse(inertia.CenterMass, inertia.InertiaTensor, UtilityWPF.ColorFromHex("1BBB"), true, true, inertia.InertiaTensor_Rotation);
+            //This is to compare with unity
 
+            Vector3D euler = ToEueler_Unity(inertia.InertiaTensor_Rotation);
 
-
-            //TODO: Text to compare with unity
-            //window.AddText();
-
-
-
-
+            window.AddText($"mass:\t{inertia.TotalMass.ToStringSignificantDigits(5)}");
+            window.AddText($"tensor:\t{inertia.InertiaTensor.X.ToStringSignificantDigits(5)}\t{inertia.InertiaTensor.Y.ToStringSignificantDigits(5)}\t{inertia.InertiaTensor.Z.ToStringSignificantDigits(5)}");
+            window.AddText($"rotation:\t{euler.X.ToStringSignificantDigits(5)}\t{euler.Y.ToStringSignificantDigits(5)}\t{euler.Z.ToStringSignificantDigits(5)}");
+            window.AddText($"center mass:\t{inertia.CenterMass.X.ToStringSignificantDigits(5)}\t{inertia.CenterMass.Y.ToStringSignificantDigits(5)}\t{inertia.CenterMass.Z.ToStringSignificantDigits(5)}");
 
             window.Show();
         }
@@ -620,6 +629,10 @@ namespace AirplaneEditor
                     throw new ApplicationException($"Unknown shape: {shape.ShapeType}");
 
                 it = scaleDensity(it, shape.density);
+
+
+                // Individual shapes are fine.  The error seems to be how the inertias are added together (even when no rotation is there)
+
 
                 retVal = BodyInertia.Add(retVal, it);
             }
@@ -911,7 +924,7 @@ namespace AirplaneEditor
         {
             var transform = new Transform3DGroup();
 
-            if(box.LocalPose != null)
+            if (box.LocalPose != null)
             {
                 transform.Children.Add(new RotateTransform3D(new QuaternionRotation3D(box.LocalPose.Q)));
                 transform.Children.Add(new TranslateTransform3D(box.LocalPose.P));
@@ -963,6 +976,93 @@ namespace AirplaneEditor
         private static void AddShapeVisual_Ellipsoid(Debug3DWindow window, double size_dot, double size_line, Color color, ShapeEllipsoid ellipsoid)
         {
         }
+
+        /// <summary>
+        /// Returns as a vector the way that unity works
+        /// </summary>
+        /// <remarks>
+        /// Working with euler angles is a bad idea, use axis/angle instead.  This function is just to compare
+        /// returned inertia tensor with unity
+        /// 
+        /// https://docs.unity3d.com/ScriptReference/Quaternion-eulerAngles.html
+        /// https://github.com/Unity-Technologies/UnityCsReference/blob/master/Runtime/Export/Math/Quaternion.cs
+        /// 
+        /// In Unity these rotations are performed around the Z axis, the X axis, and the Y axis, in that order
+        /// </remarks>
+        private static Vector3D ToEueler_Unity(Quaternion quat)
+        {
+            //public Vector3 eulerAngles => return Internal_MakePositive(Internal_ToEulerRad(this) * Mathf.Rad2Deg);
+            //[FreeFunction("QuaternionScripting::ToEuler", IsThreadSafe = true)] extern private static Vector3 Internal_ToEulerRad(Quaternion rotation);
+
+            if (quat.IsIdentity)
+                return new Vector3D(0, 0, 0);
+
+            Vector3D retVal = Internal_ToEulerRad(quat);
+
+
+            //TODO: find the source for Internal_MakePositive
+
+            return retVal;
+        }
+
+        // ******************************************************************************
+        // https://gist.github.com/HelloKitty/91b7af87aac6796c3da9
+        private static Vector3D Internal_ToEulerRad(Quaternion rotation)
+        {
+            const double Mathf_Rad2Deg = 360d / (Math.PI * 2d);
+
+            double sqw = rotation.W * rotation.W;
+            double sqx = rotation.X * rotation.X;
+            double sqy = rotation.Y * rotation.Y;
+            double sqz = rotation.Z * rotation.Z;
+
+            double unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+
+            double test = rotation.X * rotation.W - rotation.Y * rotation.Z;
+
+            Vector3D v;
+
+            if (test > 0.4995d * unit)
+            { // singularity at north pole
+                v.Y = 2f * Math.Atan2(rotation.Y, rotation.X);
+                v.X = Math.PI / 2;
+                v.Z = 0;
+                return NormalizeAngles(v * Mathf_Rad2Deg);
+            }
+
+            if (test < -0.4995d * unit)
+            { // singularity at south pole
+                v.Y = -2f * Math.Atan2(rotation.Y, rotation.X);
+                v.X = -Math.PI / 2;
+                v.Z = 0;
+                return NormalizeAngles(v * Mathf_Rad2Deg);
+            }
+
+            Quaternion q = new Quaternion(rotation.W, rotation.Z, rotation.X, rotation.Y);
+
+            v.Y = (float)Math.Atan2(2f * q.X * q.W + 2f * q.Y * q.Z, 1 - 2f * (q.Z * q.Z + q.W * q.W));     // Yaw
+            v.X = (float)Math.Asin(2f * (q.X * q.Z - q.W * q.Y));                                           // Pitch
+            v.Z = (float)Math.Atan2(2f * q.X * q.Y + 2f * q.Z * q.W, 1 - 2f * (q.Y * q.Y + q.Z * q.Z));     // Roll
+
+            return NormalizeAngles(v * Mathf_Rad2Deg);
+        }
+        private static Vector3D NormalizeAngles(Vector3D angles)
+        {
+            angles.X = NormalizeAngle(angles.X);
+            angles.Y = NormalizeAngle(angles.Y);
+            angles.Z = NormalizeAngle(angles.Z);
+            return angles;
+        }
+        private static double NormalizeAngle(double angle)
+        {
+            double modAngle = angle % 360d;
+
+            if (modAngle < 0d)
+                return modAngle + 360d;
+            else
+                return modAngle;
+        }
+        // ******************************************************************************
 
         #endregion
         #region Private Methods

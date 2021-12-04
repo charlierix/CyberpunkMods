@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AirplaneEditor"
         mc:Ignorable="d"
-        Title="Unit Testes" ResizeMode="CanResizeWithGrip" Width="500" Height="350">
+        Title="Unit Testes" ResizeMode="CanResizeWithGrip" Width="500" Height="400">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="16"/>
@@ -23,9 +23,16 @@
 
             <Button Content="3 spheres" Margin="0,8,0,0" Click="Inertia_3Spheres_Click"/>
             <Button Content="2 boxes" Click="Inertia_2Boxes_Click"/>
-            <Button Content="2 boxes (mirrored)" Click="Inertia_2BoxesMirrored_Click"/>
+            <Button Content="2 boxes (mirrored, x)" Click="Inertia_2BoxesMirroredX_Click"/>
+            <Button Content="2 boxes (mirrored, y)" Click="Inertia_2BoxesMirroredY_Click"/>
+            <Button Content="2 boxes (mirrored, z)" Click="Inertia_2BoxesMirroredZ_Click"/>
+            <Button Content="2 boxes (mirrored, rot)" Click="Inertia_2BoxesMirroredRot_Click"/>
             <Button Content="3 boxes" Click="Inertia_3Boxes_Click"/>
             <Button Content="box, capsule" Click="Inertia_BoxCapsule_Click"/>
+
+            <Button Content="spheres cloud" Margin="0,8,0,0" Click="Inertia_SphereCloud_Click"/>
+            <Button Content="box cloud" Click="Inertia_BoxCloud_Click"/>
+            <Button Content="sphere tree" Click="SphereTree_Click"/>
         </StackPanel>
     </WrapPanel>
 </Window>
