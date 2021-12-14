@@ -21,6 +21,7 @@
             <Button Content="box" Click="Inertia_Box_Click"/>
             <Button Content="capsule" Click="Inertia_Capsule_Click"/>
             <Button Content="cylinder" Click="Inertia_Cylinder_Click"/>
+            <Button Content="ellipsoid" Click="Inertia_Ellipsoid_Click"/>
 
             <Button Content="3 spheres" Margin="0,8,0,0" Click="Inertia_3Spheres_Click"/>
             <Button Content="2 boxes" Click="Inertia_2Boxes_Click"/>

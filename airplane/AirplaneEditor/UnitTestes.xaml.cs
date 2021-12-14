@@ -134,6 +134,30 @@ namespace AirplaneEditor
                 MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void Inertia_Ellipsoid_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var shapes = new Util_InertiaTensor.ShapeBase[]
+                {
+                    new Util_InertiaTensor.ShapeEllipsoid()
+                    {
+                        density = 1,
+                        RadiusX = 0.5,
+                        RadiusY = 1,
+                        RadiusZ = 1,
+                    },
+                };
+
+                var result = Util_InertiaTensor.GetInertiaTensor(shapes);
+
+                Util_InertiaTensor.VisualizeInertiaTensor(shapes, result);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void Inertia_3Spheres_Click(object sender, RoutedEventArgs e)
         {

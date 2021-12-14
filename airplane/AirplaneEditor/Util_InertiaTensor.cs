@@ -582,7 +582,7 @@ namespace AirplaneEditor
             window.AddLine(inertia.CenterMass, inertia.CenterMass + transform.Transform(new Vector3D(0, inertia_normalized.Y, 0)), sizes.line, Colors.Green);
             window.AddLine(inertia.CenterMass, inertia.CenterMass + transform.Transform(new Vector3D(0, 0, inertia_normalized.Z)), sizes.line, Colors.Blue);
 
-            window.AddEllipse(inertia.CenterMass, inertia_normalized, UtilityWPF.ColorFromHex("1BBB"), true, true, inertia.InertiaTensor_Rotation);
+            window.AddEllipsoid(inertia.CenterMass, inertia_normalized, UtilityWPF.ColorFromHex("1BBB"), true, true, inertia.InertiaTensor_Rotation);
 
             //This is to compare with unity
 
@@ -1078,7 +1078,7 @@ namespace AirplaneEditor
             double cylinder_height = capsule.Height - capsule.Radius - capsule.Radius;
 
             // Detect if sphere
-            if(cylinder_height <= 0)
+            if (cylinder_height <= 0)
             {
                 ShapeSphere sphere = new ShapeSphere()
                 {
@@ -1125,6 +1125,17 @@ namespace AirplaneEditor
             window.AddArc(center, transform.Transform(model.front), up, capsule.Radius, 0, 180, size_line, color);
         }
 
+        private static void AddShapeVisual_Ellipsoid(Debug3DWindow window, double size_dot, double size_line, Color color, ShapeEllipsoid ellipsoid)
+        {
+            Point3D center = ellipsoid.LocalPose?.P.ToPoint() ?? new Point3D();
+
+            RotateTransform3D rot = new RotateTransform3D(new QuaternionRotation3D(ellipsoid.LocalPose?.Q ?? Quaternion.Identity));
+
+            window.AddEllipse(center, rot.Transform(new Vector3D(1, 0, 0)), rot.Transform(new Vector3D(0, 1, 0)), ellipsoid.RadiusX, ellipsoid.RadiusY, size_line, color);
+            window.AddEllipse(center, rot.Transform(new Vector3D(1, 0, 0)), rot.Transform(new Vector3D(0, 0, 1)), ellipsoid.RadiusX, ellipsoid.RadiusZ, size_line, color);
+            window.AddEllipse(center, rot.Transform(new Vector3D(0, 1, 0)), rot.Transform(new Vector3D(0, 0, 1)), ellipsoid.RadiusY, ellipsoid.RadiusZ, size_line, color);
+        }
+
         /// <summary>
         /// Cylinder and capsule share these same base properties
         /// </summary>
@@ -1160,10 +1171,6 @@ namespace AirplaneEditor
             }
 
             return (cap_center, cap_normal, right, front);
-        }
-
-        private static void AddShapeVisual_Ellipsoid(Debug3DWindow window, double size_dot, double size_line, Color color, ShapeEllipsoid ellipsoid)
-        {
         }
 
         /// <summary>
