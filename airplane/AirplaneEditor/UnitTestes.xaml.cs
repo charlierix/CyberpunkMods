@@ -77,7 +77,62 @@ namespace AirplaneEditor
         }
         private void Inertia_Capsule_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                var shapes = new Util_InertiaTensor.ShapeBase[]
+                {
+                    new Util_InertiaTensor.ShapeCapsule()
+                    {
+                        density = 1,
+                        Direction = Axis.Y,
+                        Radius = 0.5,
+                        Height = 2,
+                        LocalPose = new Util_InertiaTensor.PxTransform()
+                        {
+                            P = new Vector3D(0, 0, 0),
+                            Q = new Quaternion(new Vector3D(0, 0, 1), 45),
+                            //Q = Quaternion.Identity,
+                        },
+                    },
+                };
 
+                var result = Util_InertiaTensor.GetInertiaTensor(shapes);
+
+                Util_InertiaTensor.VisualizeInertiaTensor(shapes, result);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void Inertia_Cylinder_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var shapes = new Util_InertiaTensor.ShapeBase[]
+                {
+                    new Util_InertiaTensor.ShapeCylinder()
+                    {
+                        density = 1,
+                        Direction = Axis.Y,
+                        Radius = 0.5,
+                        Height = 2,
+                        LocalPose = new Util_InertiaTensor.PxTransform()
+                        {
+                            P = new Vector3D(0, 0, 0),
+                            Q = Quaternion.Identity,
+                        },
+                    },
+                };
+
+                var result = Util_InertiaTensor.GetInertiaTensor(shapes);
+
+                Util_InertiaTensor.VisualizeInertiaTensor(shapes, result);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Inertia_3Spheres_Click(object sender, RoutedEventArgs e)
@@ -403,7 +458,7 @@ namespace AirplaneEditor
                         density = 1,
 
                         Radius = 0.24,
-                        Length = 2,
+                        Height = 2,
                         Direction = Game.Math_WPF.Mathematics.Axis.Y,
 
                         LocalPose = new Util_InertiaTensor.PxTransform()

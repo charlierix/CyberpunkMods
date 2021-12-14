@@ -95,7 +95,7 @@ namespace AirplaneEditor
             public Axis Direction { get; init; }
 
             public double Radius { get; init; }
-            public double Length { get; init; }
+            public double Height { get; init; }
         }
 
         public record ShapeCapsule : ShapeBase
@@ -105,7 +105,7 @@ namespace AirplaneEditor
             public Axis Direction { get; init; }
 
             public double Radius { get; init; }
-            public double Length { get; init; }
+            public double Height { get; init; }
         }
 
         public record ShapeEllipsoid : ShapeBase
@@ -599,6 +599,7 @@ namespace AirplaneEditor
         #region Private Methods - main function
 
         // https://github.com/NVIDIAGameWorks/PhysX-3.4/blob/master/PhysX_3.4/Source/PhysXExtensions/src/ExtRigidBodyExt.cpp
+        // https://en.wikipedia.org/wiki/List_of_moments_of_inertia
 
         private static BodyInertia computeMassAndInertia(ShapeBase[] shapes)
         {
@@ -615,10 +616,10 @@ namespace AirplaneEditor
                     it = getBox(box.HalfWidths, box.LocalPose);
 
                 else if (shape is ShapeCylinder cylinder)
-                    it = getCylinder(cylinder.Direction, cylinder.Radius, cylinder.Length, cylinder.LocalPose);
+                    it = getCylinder(cylinder.Direction, cylinder.Radius, cylinder.Height, cylinder.LocalPose);
 
                 else if (shape is ShapeCapsule capsule)
-                    it = getCapsule(capsule.Direction, capsule.Radius, capsule.Length, capsule.LocalPose);
+                    it = getCapsule(capsule.Direction, capsule.Radius, capsule.Height, capsule.LocalPose);
 
                 else if (shape is ShapeEllipsoid ellipsoid)
                     it = getEllipsoid(ellipsoid.RadiusX, ellipsoid.RadiusY, ellipsoid.RadiusZ, ellipsoid.LocalPose);
@@ -775,22 +776,33 @@ namespace AirplaneEditor
         private static double computeBoxRatio(Vector3D extents) { return volume(extents); }
 
         // Cylinder
-        private static BodyInertia getCylinder(Axis direction, double radius, double length, PxTransform pose = null)
+        private static BodyInertia getCylinder(Axis direction, double radius, double height, PxTransform pose = null)
         {
-            BodyInertia retVal = getCylinder_modelcoords(direction, radius, length);
+            BodyInertia retVal = getCylinder_modelcoords(direction, radius, height);
 
             if (pose != null)
                 retVal = BodyInertia.Transform(retVal, pose);
 
             return retVal;
         }
-        private static BodyInertia getCylinder_modelcoords(Axis direction, double radius, double length)
+        private static BodyInertia getCylinder_modelcoords(Axis direction, double radius, double height)
         {
-            // Compute mass of cylinder
-            double m = computeCylinderRatio(radius, length);
+            double half_height = height / 2d;
 
-            double i1 = radius * radius * m / 2d;       // cap
-            double i2 = (3d * radius * radius + 4d * length * length) * m / 12d;        // side
+            // Compute mass of cylinder
+            double m = computeCylinderRatio(radius, height);
+
+            // Iz = 1/2 * mr^2
+            // Ix, Iy = 1/12 * m * (3r^2 + h^2)
+
+            double i1 = radius * radius * m / 2d;       // along axis
+            double i2 = (3d * radius * radius + height * height) * m / 12d;        // other two directions
+
+
+            var test_inertia = CylinderTest(height, radius, 1);     // This matches (direction is hardcoded to Y)
+            if (!test_inertia.mass.IsNearValue(m) || !test_inertia.inertia[0, 0].IsNearValue(i2) || !test_inertia.inertia[1, 1].IsNearValue(i1) || !test_inertia.inertia[2, 2].IsNearValue(i2))
+                throw new ApplicationException("different");
+
 
             Vector3D diag;
             switch (direction)
@@ -814,26 +826,42 @@ namespace AirplaneEditor
             return BodyInertia.GetDiagonal(m, diag);
         }
 
-        private static double computeCylinderRatio(double r, double l) { return Math.PI * r * r * (2d * l); }
+        private static double computeCylinderRatio(double r, double h) { return Math.PI * r * r * h; }
 
         // Capsule
-        private static BodyInertia getCapsule(Axis direction, double radius, double length, PxTransform pose = null)
+        private static BodyInertia getCapsule(Axis direction, double radius, double height, PxTransform pose = null)
         {
-            BodyInertia retVal = getCapsule_modelcoords(direction, radius, length);
+            BodyInertia retVal = getCapsule_modelcoords(direction, radius, height);
 
             if (pose != null)
                 retVal = BodyInertia.Transform(retVal, pose);
 
             return retVal;
         }
-        private static BodyInertia getCapsule_modelcoords(Axis direction, double rad, double len)
+        private static BodyInertia getCapsule_modelcoords(Axis direction, double rad, double height)
         {
+            // Height can't include the top/bottom domes
+            double remaining_height = Math.Max(0, height - rad - rad);
+            double half_height = remaining_height / 2d;
+
             // Compute mass of capsule
-            double m = computeCapsuleRatio(rad, len);
+            double m = computeCapsuleRatio(rad, remaining_height);
 
             double t = Math.PI * rad * rad;
-            double i1 = t * ((rad * rad * rad * 8d / 15d) + (len * rad * rad));
-            double i2 = t * ((rad * rad * rad * 8d / 15d) + (len * rad * rad * 3d / 2d) + (len * len * rad * 4d / 3d) + (len * len * len * 2d / 3d));
+            double i1 = t * ((rad * rad * rad * 8d / 15d) + (half_height * rad * rad));
+
+
+            //TODO: i2 doesn't match unity.  Maybe it should be height instead of half height?
+            //Need to look up the exact equations of cylinder and sphere inertias
+            double i2 = t * ((rad * rad * rad * 8d / 15d) + (half_height * rad * rad * 3d / 2d) + (half_height * half_height * rad * 4d / 3d) + (half_height * half_height * half_height * 2d / 3d));
+
+
+
+            var test_inertia = CapsuleTest(remaining_height, rad, 1);       // direction is hardcoded to Y
+            if (!test_inertia.mass.IsNearValue(m) || !test_inertia.inertia[0, 0].IsNearValue(i2) || !test_inertia.inertia[1, 1].IsNearValue(i1) || !test_inertia.inertia[2, 2].IsNearValue(i2))
+                throw new ApplicationException("different");
+
+
 
             Vector3D diag;
             switch (direction)
@@ -857,7 +885,7 @@ namespace AirplaneEditor
             return BodyInertia.GetDiagonal(m, diag);
         }
 
-        private static double computeCapsuleRatio(double r, double l) { return computeSphereRatio(r) + computeCylinderRatio(r, l); }
+        private static double computeCapsuleRatio(double r, double h) { return computeSphereRatio(r) + computeCylinderRatio(r, h); }
 
         // Ellipsoid
         private static BodyInertia getEllipsoid(double rad_x, double rad_y, double rad_z, PxTransform pose = null)
@@ -882,6 +910,53 @@ namespace AirplaneEditor
         }
 
         private static double computeEllipsoidRatio(Vector3D extents) { return (4d / 3d) * Math.PI * volume(extents); }
+
+        // From another source
+        // https://www.gamedev.net/tutorials/programming/math-and-physics/capsule-inertia-tensor-r3856/
+        private static (PxMat33 inertia, double mass) CapsuleTest(double height, double radius, double density)
+        {
+            double rSq = radius * radius;
+
+            double cM = Math.PI * height * rSq * density;       // cylinder mass
+            double hsM = Math.PI * 2d * rSq * radius * density / 3d;        // hemisphere mass
+
+            double i00 = 0;
+            double i11 = 0;
+            double i22 = 0;
+
+            // from cylinder
+            i11 = rSq * cM * 0.5;
+            i00 = i22 = i11 * 0.5 + cM * height * height / 12d;
+
+            // from hemispheres
+            double temp0 = hsM * 2d * rSq / 5d;
+            i11 += temp0 * 2d;
+
+            double temp1 = height * 0.5;
+            double temp2 = temp0 + hsM * (temp1 * temp1 + 3d * height * radius / 8);
+
+            i00 += temp2 * 2d;
+            i22 += temp2 * 2d;
+
+            double mass = cM + hsM * 2d;
+
+            return (PxMat33.createDiagonal(new Vector3D(i00, i11, i22)), mass);
+        }
+        private static (PxMat33 inertia, double mass) CylinderTest(double height, double radius, double density)
+        {
+            double rSq = radius * radius;
+
+            double cM = Math.PI * height * rSq * density;       // cylinder mass
+
+            double i00 = 0;
+            double i11 = 0;
+            double i22 = 0;
+
+            i11 = rSq * cM * 0.5;
+            i00 = i22 = i11 * 0.5 + cM * height * height / 12d;
+
+            return (PxMat33.createDiagonal(new Vector3D(i00, i11, i22)), cM);
+        }
 
         #endregion
         #region Private Methods = visualize
@@ -967,10 +1042,124 @@ namespace AirplaneEditor
 
         private static void AddShapeVisual_Cylinder(Debug3DWindow window, double size_dot, double size_line, Color color, ShapeCylinder cylinder)
         {
+            var transform = new Transform3DGroup();
+
+            if (cylinder.LocalPose != null)
+            {
+                transform.Children.Add(new RotateTransform3D(new QuaternionRotation3D(cylinder.LocalPose.Q)));
+                transform.Children.Add(new TranslateTransform3D(cylinder.LocalPose.P));
+            }
+
+            var model = GetCylinderShapePrimitives(cylinder.Direction, cylinder.Height, cylinder.Radius);
+
+            // Top Cap
+            Point3D center = transform.Transform(model.cap_center).ToPoint();
+            window.AddCircle(center, cylinder.Radius, size_line, color, new Triangle_wpf(transform.Transform(model.cap_normal), center));
+
+            // Bottom Cap
+            center = transform.Transform(-model.cap_center).ToPoint();
+            window.AddCircle(center, cylinder.Radius, size_line, color, new Triangle_wpf(transform.Transform(-model.cap_normal), center));
+
+            // Right Line
+            window.AddLine(transform.Transform((model.cap_center + model.right).ToPoint()), transform.Transform((-model.cap_center + model.right).ToPoint()), size_line, color);
+
+            // Left Line
+            window.AddLine(transform.Transform((model.cap_center - model.right).ToPoint()), transform.Transform((-model.cap_center - model.right).ToPoint()), size_line, color);
+
+            // Front Line
+            window.AddLine(transform.Transform((model.cap_center + model.front).ToPoint()), transform.Transform((-model.cap_center + model.front).ToPoint()), size_line, color);
+
+            // Back Line
+            window.AddLine(transform.Transform((model.cap_center - model.front).ToPoint()), transform.Transform((-model.cap_center - model.front).ToPoint()), size_line, color);
         }
 
         private static void AddShapeVisual_Capsule(Debug3DWindow window, double size_dot, double size_line, Color color, ShapeCapsule capsule)
         {
+            double cylinder_height = capsule.Height - capsule.Radius - capsule.Radius;
+
+            // Detect if sphere
+            if(cylinder_height <= 0)
+            {
+                ShapeSphere sphere = new ShapeSphere()
+                {
+                    density = capsule.density,
+                    LocalPose = capsule.LocalPose,
+                    Radius = capsule.Radius,
+                };
+
+                AddShapeVisual_Sphere(window, size_dot, size_line, color, sphere);
+                return;
+            }
+
+            // Draw cylinder portion
+            ShapeCylinder cylinder = new ShapeCylinder()
+            {
+                density = capsule.density,
+                Direction = capsule.Direction,
+                Height = cylinder_height,
+                LocalPose = capsule.LocalPose,
+                Radius = capsule.Radius,
+            };
+
+            AddShapeVisual_Cylinder(window, size_dot, size_line, color, cylinder);
+
+            // Draw arcs
+            var transform = new Transform3DGroup();
+
+            if (cylinder.LocalPose != null)
+            {
+                transform.Children.Add(new RotateTransform3D(new QuaternionRotation3D(cylinder.LocalPose.Q)));
+                transform.Children.Add(new TranslateTransform3D(cylinder.LocalPose.P));
+            }
+
+            var model = GetCylinderShapePrimitives(cylinder.Direction, cylinder.Height, cylinder.Radius);
+
+            Point3D center = transform.Transform(model.cap_center).ToPoint();
+            Vector3D up = transform.Transform(model.cap_normal);
+            window.AddArc(center, transform.Transform(model.right), up, capsule.Radius, 0, 180, size_line, color);
+            window.AddArc(center, transform.Transform(model.front), up, capsule.Radius, 0, 180, size_line, color);
+
+            center = transform.Transform(-model.cap_center).ToPoint();
+            up = transform.Transform(-model.cap_normal);
+            window.AddArc(center, transform.Transform(model.right), up, capsule.Radius, 0, 180, size_line, color);
+            window.AddArc(center, transform.Transform(model.front), up, capsule.Radius, 0, 180, size_line, color);
+        }
+
+        /// <summary>
+        /// Cylinder and capsule share these same base properties
+        /// </summary>
+        private static (Vector3D cap_center, Vector3D cap_normal, Vector3D right, Vector3D front) GetCylinderShapePrimitives(Axis direction, double height, double radius)
+        {
+            Vector3D cap_center, cap_normal, right, front;
+
+            switch (direction)
+            {
+                case Axis.X:
+                    cap_center = new Vector3D(height / 2, 0, 0);
+                    cap_normal = new Vector3D(1, 0, 0);
+                    right = new Vector3D(0, -radius, 0);
+                    front = new Vector3D(0, 0, -radius);
+                    break;
+
+                case Axis.Y:
+                    cap_center = new Vector3D(0, height / 2, 0);
+                    cap_normal = new Vector3D(0, 1, 0);
+                    right = new Vector3D(radius, 0, 0);
+                    front = new Vector3D(0, 0, -radius);
+                    break;
+
+                case Axis.Z:
+                    cap_center = new Vector3D(0, 0, height / 2);
+                    cap_normal = new Vector3D(0, 0, 1);
+                    right = new Vector3D(radius, 0, 0);
+                    front = new Vector3D(0, radius, 0);
+                    break;
+
+                default:
+                    throw new ApplicationException($"Unknown Axis: {direction}");
+            }
+
+            return (cap_center, cap_normal, right, front);
         }
 
         private static void AddShapeVisual_Ellipsoid(Debug3DWindow window, double size_dot, double size_line, Color color, ShapeEllipsoid ellipsoid)
