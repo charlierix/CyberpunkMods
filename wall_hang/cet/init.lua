@@ -423,8 +423,9 @@ end
 
 function TODO()
 
-    -- Disable Jump Away
-    --  Add a checkbox to not jump away from a wall when facing the wall
+    -- Partial Disable Jump Away
+    --  There is currently a checkbox to not jump away from a wall when facing the wall
+    --  Have it so that if you shift+jump, it will jump
 
     -- Crawl Cellophane
     --  Don't directly crawl on hit surfaces.  Scan an area, create some kind of bezier mesh that allows
