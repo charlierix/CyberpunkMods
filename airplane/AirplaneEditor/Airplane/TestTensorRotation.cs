@@ -12,6 +12,19 @@ namespace AirplaneEditor.Airplane
         //NOTE: The code this is copied from has local inertia tensor stored as a matrix3x3
         //  This should eliminate the need to find a vector and quaternion
 
+        public static PxMat33 TEST_GetTransform(Vector3D inverse_inertia_tensor)
+        {
+            return PxMat33.createDiagonal(inverse_inertia_tensor);
+        }
+        public static PxMat33 TEST_GetTransform1(Vector3D inverse_inertia_tensor, Quaternion inertia_tensor_rotation)
+        {
+            return PxMat33.from_rot(inertia_tensor_rotation) * PxMat33.createDiagonal(inverse_inertia_tensor);
+        }
+        public static PxMat33 TEST_GetTransform2(Vector3D inverse_inertia_tensor, Quaternion inertia_tensor_rotation)
+        {
+            return PxMat33.createDiagonal(inverse_inertia_tensor) * PxMat33.from_rot(inertia_tensor_rotation);
+        }
+
         //http://allenchou.net/2013/12/game-physics-motion-dynamics-implementations/
         public static PxMat33 GetWorldInverseInertiaTensor(Vector3D inverse_inertia_tensor, Quaternion inertia_tensor_rotation, Quaternion rotation_world)
         {

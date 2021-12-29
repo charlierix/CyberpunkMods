@@ -36,5 +36,17 @@
             <Button Content="box cloud" Click="Inertia_BoxCloud_Click"/>
             <Button Content="sphere tree" Click="SphereTree_Click"/>
         </StackPanel>
+
+        <StackPanel>
+            <Label Content="Torque -> Accel"/>
+
+            <Button Content="really basic" Click="TorqueAccel_ReallyBasic_Click"/>
+            
+            <!-- This fails.  Make another test that multiplies by the original inertia matrix instead of the rebuilt one -->
+            <Button Visibility="Collapsed" Content="basic + local quat" Click="TorqueAccel_BasicLocalQuat_Click"/>
+
+            <Button Content="basic + local quat" Click="TorqueAccel_BasicLocalQuat2_Click"/>
+            <Button Content="torque world coords" Click="TorqueAccel_TorqueWorldCoords_Click"/>
+        </StackPanel>
     </WrapPanel>
 </Window>

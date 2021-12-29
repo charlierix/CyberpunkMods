@@ -158,6 +158,11 @@ namespace AirplaneEditor
             /// This is the rotation that was used
             /// </remarks>
             public Quaternion InertiaTensor_Rotation { get; init; }
+
+            /// <summary>
+            /// This is the original inertia tensor, before it was rotated into a vector
+            /// </summary>
+            public PxMat33 InertiaTensor_Matrix { get; init; }
         }
 
         #endregion
@@ -305,6 +310,7 @@ namespace AirplaneEditor
                 TotalMass = inertia.Mass,
                 InertiaTensor = as_diag.inertia_tensor,
                 InertiaTensor_Rotation = as_diag.inertiaTensorRotation,
+                InertiaTensor_Matrix = inertia.I,
             };
         }
 

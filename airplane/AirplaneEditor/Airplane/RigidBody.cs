@@ -13,10 +13,22 @@ namespace AirplaneEditor.Airplane
         #region Declaration Section
 
         private readonly double _inverse_mass;
-        private readonly Vector3D _inverse_inertia_tensor;
 
-        private readonly TranslateTransform3D _transform_translate;
-        private readonly QuaternionRotation3D _transform_rotate;
+        // The inverse inertia tensor is stored as a simple diagonal, and there are rotate transforms to rotate the
+        // torque/ang_accel from/to local coords and inertia coords.  Attempts to store rotations combined with the
+        // inertia just made the matrix into a mess.  Someone with better knowledge of matrix math could probably
+        // figure it out, but this is what makes sense to me
+        private readonly PxMat33 _inverse_inertia_tensor;
+        private readonly RotateTransform3D _transform_toinertia_rotate;
+        private readonly RotateTransform3D _transform_frominertia_rotate;
+
+        // These help with tranforming from/to local and world
+        private readonly TranslateTransform3D _transform_toworld_translate;
+        private readonly QuaternionRotation3D _transform_toworld_rotate_quat;
+        private readonly QuaternionRotation3D _transform_tolocal_rotate_quat;
+
+        private readonly RotateTransform3D _transform_toworld_rotate;
+        private readonly RotateTransform3D _transform_tolocal_rotate;
 
         // These build up between ticks.  They are in world coords
         private readonly List<Vector3D> _forces = new List<Vector3D>();
@@ -35,17 +47,25 @@ namespace AirplaneEditor.Airplane
             InertiaTensorRotation = inertia_tensor_rotation;
 
             _inverse_mass = mass.IsNearZero() ? 0d : 1d / mass;
-            _inverse_inertia_tensor = new Vector3D(
-                    inertia_tensor.X.IsNearZero() ? 0d : 1d / inertia_tensor.X,
-                    inertia_tensor.Y.IsNearZero() ? 0d : 1d / inertia_tensor.Y,
-                    inertia_tensor.Z.IsNearZero() ? 0d : 1d / inertia_tensor.Z);
+            _inverse_inertia_tensor = PxMat33.createDiagonal(new Vector3D(
+                inertia_tensor.X.IsNearZero() ? 0d : 1d / inertia_tensor.X,
+                inertia_tensor.Y.IsNearZero() ? 0d : 1d / inertia_tensor.Y,
+                inertia_tensor.Z.IsNearZero() ? 0d : 1d / inertia_tensor.Z));
 
-            _transform_translate = new TranslateTransform3D();
-            _transform_rotate = new QuaternionRotation3D();
+            _transform_toworld_translate = new TranslateTransform3D();
+            _transform_toworld_rotate_quat = new QuaternionRotation3D();        // this one is used in two different transforms
+            _transform_tolocal_rotate_quat = new QuaternionRotation3D();
+
+            // these rotate transforms are for rotating torque and ang_accel from world to inertia, back to world
+            _transform_toinertia_rotate = new RotateTransform3D(new QuaternionRotation3D(inertia_tensor_rotation.ToReverse()));
+            _transform_frominertia_rotate = new RotateTransform3D(new QuaternionRotation3D(inertia_tensor_rotation));
+
+            _transform_toworld_rotate = new RotateTransform3D(_transform_toworld_rotate_quat);
+            _transform_tolocal_rotate = new RotateTransform3D(_transform_tolocal_rotate_quat);
 
             Transform3DGroup transform = new Transform3DGroup();
-            transform.Children.Add(new RotateTransform3D(_transform_rotate));
-            transform.Children.Add(_transform_translate);
+            transform.Children.Add(new RotateTransform3D(_transform_toworld_rotate_quat));
+            transform.Children.Add(_transform_toworld_translate);
 
             Transform_ToWorld = transform;
         }
@@ -75,9 +95,9 @@ namespace AirplaneEditor.Airplane
             {
                 _position = value;
 
-                _transform_translate.OffsetX = value.X;
-                _transform_translate.OffsetY = value.Y;
-                _transform_translate.OffsetZ = value.Z;
+                _transform_toworld_translate.OffsetX = value.X;
+                _transform_toworld_translate.OffsetY = value.Y;
+                _transform_toworld_translate.OffsetZ = value.Z;
             }
         }
 
@@ -88,7 +108,8 @@ namespace AirplaneEditor.Airplane
             set
             {
                 _rotation = value;
-                _transform_rotate.Quaternion = _rotation;
+                _transform_toworld_rotate_quat.Quaternion = _rotation;
+                _transform_tolocal_rotate_quat.Quaternion = _rotation.ToReverse();       // this extention function pulls out the axis,angle and creates a new with -angle (unless it's identity)
             }
         }
 
@@ -199,19 +220,20 @@ namespace AirplaneEditor.Airplane
             // Angular
             Vector3D ang_accel = new Vector3D();
 
-            if (_torques.Count > 0)
+            foreach (Vector3D torque in _torques)
             {
-                PxMat33 tensor_transform = TestTensorRotation.GetWorldInverseInertiaTensor(_inverse_inertia_tensor, InertiaTensorRotation, Roation);
+                Vector3D torque_working = _transform_tolocal_rotate.Transform(torque);              // torque rotated into local coords
+                torque_working = _transform_toinertia_rotate.Transform(torque_working);             // torque rotated into inertia coords
 
-                foreach (Vector3D torque in _torques)
-                {
-                    //angVelDelta = (mBody.getGlobalInertiaTensorInverse() * (*torque));
+                Vector3D ang_accel_working = _inverse_inertia_tensor * torque_working;              // dividing by inertia creates angular acceleration in inertia coords (F=MA)
 
-                    ang_accel += tensor_transform * torque;
-                }
+                ang_accel_working = _transform_frominertia_rotate.Transform(ang_accel_working);     // ang_accel into local coords
+                ang_accel_working = _transform_toworld_rotate.Transform(ang_accel_working);         // ang_accel into world coords
 
-                _torques.Clear();
+                ang_accel += ang_accel_working;
             }
+
+            _torques.Clear();
 
             return (accel, ang_accel);
         }
