@@ -10,6 +10,89 @@ namespace AirplaneEditor.Airplane
 {
     public static class TestTensorRotation_RabbitHole
     {
+        private static void NOTES()
+        {
+            // Looks like PxRigidDynamic is the main class
+            // PxRigidBody is a base class?
+
+            // what's the difference between Np and Px?
+
+
+
+
+            //https://github.com/NVIDIAGameWorks/PhysX-3.4/blob/5e42a5f112351a223c19c17bb331e6c55037b8eb/PhysX_3.4/Include/PxRigidBody.h
+
+            /*
+            A body's linear and angular velocities can be read using the following methods::
+
+                PxVec3 PxRigidBody::getLinearVelocity();
+                PxVec3 PxRigidBody::getAngularVelocity();
+
+            A body's linear and angular velocities can be set using the following methods::
+
+                void PxRigidBody::setLinearVelocity(const PxVec3& linVel, bool autowake);
+                void PxRigidBody::setAngularVelocity(const PxVec3& angVel, bool autowake);
+             */
+
+
+
+
+
+
+            //https://github.com/NVIDIAGameWorks/PhysX-3.4/blob/5e42a5f112351a223c19c17bb331e6c55037b8eb/PhysX_3.4/Source/PhysX/src/NpRigidDynamic.h
+            //https://github.com/NVIDIAGameWorks/PhysX-3.4/blob/5e42a5f112351a223c19c17bb331e6c55037b8eb/PhysX_3.4/Source/PhysX/src/NpRigidDynamic.cpp
+            //https://github.com/NVIDIAGameWorks/PhysX-3.4/blob/5e42a5f112351a223c19c17bb331e6c55037b8eb/PhysX_3.4/Include/extensions/PxRigidBodyExt.h
+            //https://github.com/NVIDIAGameWorks/PhysX-3.4/blob/5e42a5f112351a223c19c17bb331e6c55037b8eb/PhysX_3.4/Source/PhysXExtensions/src/ExtRigidBodyExt.cpp
+
+            /*
+            The relevant methods of PxRigidBody and PxRigidBodyExt are listed below
+            (The PxForceMode member defaults to PxForceMode::eFORCE to apply simple forces)
+
+                void PxRigidBody::addForce(const PxVec3& force, PxForceMode::Enum mode, bool autowake);
+                void PxRigidBody::addTorque(const PxVec3& torque, PxForceMode::Enum mode, bool autowake);
+
+                void PxRigidBodyExt::addForceAtPos(PxRigidBody& body, const PxVec3& force,
+                    const PxVec3& pos, PxForceMode::Enum mode, bool wakeup);
+                void PxRigidBodyExt::addForceAtLocalPos(PxRigidBody& body, const PxVec3& force,
+                    const PxVec3& pos, PxForceMode::Enum mode, bool wakeup);
+                void PxRigidBodyExt::addLocalForceAtPos(PxRigidBody& body, const PxVec3& force,
+                    const PxVec3& pos, PxForceMode::Enum mode, bool wakeup);
+                void PxRigidBodyExt::addLocalForceAtLocalPos(PxRigidBody& body, const PxVec3& force,
+                    const PxVec3& pos, PxForceMode::Enum mode, bool wakeup);
+            */
+
+
+
+
+
+
+
+
+
+            // This is an enum to figure out exact calculation: eFORCE, eIMPULSE, eVELOCITY_CHANGE, eACCELERATION
+            //https://github.com/NVIDIAGameWorks/PhysX-3.4/blob/5e42a5f112351a223c19c17bb331e6c55037b8eb/PhysX_3.4/Include/PxForceMode.h
+
+
+        }
+        private static void NOTES_OTHERSOURCES_INERTIATENSOR()
+        {
+            // The bottom of the article talks about how to update the matrices
+            //http://allenchou.net/2013/12/game-physics-motion-dynamics-implementations/
+
+
+            // more about how to come up with the world inverse inertia tensor
+            //https://stackoverflow.com/questions/18290798/calculating-rigid-body-inertia-tensor-world-coordinates
+
+
+
+            // this stays pretty high level
+            //https://gafferongames.com/post/rotation_and_inertia_tensors/
+            //https://gafferongames.com/post/collision_response_and_coulomb_friction/
+
+        }
+
+
+
         //mBody.getGlobalInertiaTensorInverse()
         public static PxMat33 GetWorldInverseInertiaTensor(Vector3D inverse_inertia_tensor, Quaternion rotation_world)
         {
@@ -225,4 +308,160 @@ namespace AirplaneEditor.Airplane
             };
         }
     }
+
+    #region record: PxMat34
+
+    // Copy of PxMat33, made to test a function that returns vector4s
+
+    // https://github.com/NVIDIAGameWorks/PhysX-3.4/blob/5e42a5f112351a223c19c17bb331e6c55037b8eb/PxShared/include/foundation/PxMat33.h
+
+    /// <summary>
+    /// This is a 3x3 matrix
+    /// </summary>
+    /// <remarks>
+    /// Some clarifications, as there have been much confusion about matrix formats etc in the past.
+    /// 
+    /// Short:
+    /// - Matrix have base vectors in columns (vectors are column matrices, 3x1 matrices).
+    /// - Matrix is physically stored in column major format
+    /// - Matrices are concaternated from left
+    /// 
+    /// Long:
+    /// Given three base vectors a, b and c the matrix is stored as
+    /// 
+    /// |a.x b.x c.x|
+    /// |a.y b.y c.y|
+    /// |a.z b.z c.z|
+    /// 
+    /// Vectors are treated as columns, so the vector v is
+    /// 
+    /// |x|
+    /// |y|
+    /// |z|
+    /// 
+    /// And matrices are applied _before_ the vector (pre-multiplication)
+    /// v' = M*v
+    /// 
+    /// |x'|   |a.x b.x c.x|   |x|   |a.x*x + b.x*y + c.x*z|
+    /// |y'| = |a.y b.y c.y| * |y| = |a.y*x + b.y*y + c.y*z|
+    /// |z'|   |a.z b.z c.z|   |z|   |a.z*x + b.z*y + c.z*z|
+    /// 
+    /// 
+    /// Physical storage and indexing:
+    /// To be compatible with popular 3d rendering APIs (read D3d and OpenGL)
+    /// the physical indexing is
+    /// 
+    /// |0 3 6|
+    /// |1 4 7|
+    /// |2 5 8|
+    /// 
+    /// index = column*3 + row
+    /// 
+    /// which in C++ translates to M[column][row]
+    /// 
+    /// The mathematical indexing is M_row,column and this is what is used for _-notation
+    /// so _12 is 1st row, second column and operator(row, column)!
+    /// </remarks>
+    public record PxMat34
+    {
+        // the three base vectors
+        public VectorND column0 { get; init; }
+        public VectorND column1 { get; init; }
+        public VectorND column2 { get; init; }
+
+        #region Operator Overloads
+
+        // Add
+        public static PxMat34 operator +(PxMat34 mat, PxMat34 other)
+        {
+            return new PxMat34()
+            {
+                column0 = mat.column0 + other.column0,
+                column1 = mat.column1 + other.column1,
+                column2 = mat.column2 + other.column2
+            };
+        }
+
+        // Subtract
+        public static PxMat34 operator -(PxMat34 mat, PxMat34 other)
+        {
+            return new PxMat34()
+            {
+                column0 = mat.column0 - other.column0,
+                column1 = mat.column1 - other.column1,
+                column2 = mat.column2 - other.column2
+            };
+        }
+
+        // Scalar multiplication
+        public static PxMat34 operator *(PxMat34 mat, double scalar)
+        {
+            return new PxMat34()
+            {
+                column0 = mat.column0 * scalar,
+                column1 = mat.column1 * scalar,
+                column2 = mat.column2 * scalar,
+            };
+        }
+
+        // Matrix vector multiplication (returns 'this->transform(vec)')
+        public static VectorND operator *(PxMat34 mat, VectorND vec)
+        {
+            return transform(mat, vec);
+        }
+
+        // Matrix multiplication
+        public static PxMat34 operator *(PxMat34 mat, PxMat34 other)
+        {
+            // Rows from this <dot> columns from other
+            // column0 = transform(other.column0) etc
+            return new PxMat34()
+            {
+                column0 = transform(mat, other.column0),
+                column1 = transform(mat, other.column1),
+                column2 = transform(mat, other.column2),
+            };
+        }
+
+        #endregion
+
+        public double this[int col, int row]
+        {
+            get
+            {
+                VectorND vec;
+                switch (col)
+                {
+                    case 0:
+                        vec = column0;
+                        break;
+
+                    case 1:
+                        vec = column1;
+                        break;
+
+                    case 2:
+                        vec = column2;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException($"Invalid column: {col}");
+                }
+
+                return vec[row];
+            }
+        }
+
+        #region Private Methods
+
+        // Transform vector by matrix, equal to v' = M*v
+        private static VectorND transform(PxMat34 mat, VectorND other)
+        {
+            return (mat.column0 * other[0]) + (mat.column1 * other[1]) + (mat.column2 * other[2]);
+        }
+
+        #endregion
+    }
+
+    #endregion
 }
