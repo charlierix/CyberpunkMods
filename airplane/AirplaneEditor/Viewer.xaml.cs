@@ -1,4 +1,5 @@
-﻿using AirplaneEditor.Models_viewmodels;
+﻿using AirplaneEditor.Models;
+using AirplaneEditor.Models_viewmodels;
 using Game.Math_WPF.WPF;
 using Game.Math_WPF.WPF.Controls3D;
 using System;
@@ -35,7 +36,7 @@ namespace AirplaneEditor
 
         private record PartVisual
         {
-            public PlanePart Part { get; init; }
+            public PlanePart_VM Part { get; init; }
 
             public Visual3D Visual { get; init; }
 
@@ -116,7 +117,7 @@ namespace AirplaneEditor
                 switch (e.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
-                        foreach (PlanePart part in e.NewItems)
+                        foreach (PlanePart_VM part in e.NewItems)
                         {
                             AddPart(part);
                         }
@@ -124,7 +125,7 @@ namespace AirplaneEditor
                         break;
 
                     case NotifyCollectionChangedAction.Remove:
-                        foreach (PlanePart part in e.OldItems)
+                        foreach (PlanePart_VM part in e.OldItems)
                         {
                             RemovePart(part);
                         }
@@ -154,7 +155,7 @@ namespace AirplaneEditor
         {
             try
             {
-                if (sender is PlanePart part)
+                if (sender is PlanePart_VM part)
                 {
                     PartVisual visual = FindParentVisual(part);
                     if (visual == null)
@@ -174,7 +175,7 @@ namespace AirplaneEditor
         {
             try
             {
-                if (sender is PlanePart part)
+                if (sender is PlanePart_VM part)
                 {
                     PartVisual visual = FindParentVisual(part);
                     if (visual == null)
@@ -204,7 +205,7 @@ namespace AirplaneEditor
             _parts.Clear();
         }
 
-        private void AddPart(PlanePart part)
+        private void AddPart(PlanePart_VM part)
         {
             if (FindParentVisual(part) != null)
                 throw new ApplicationException($"Part already added: {part.PartType}");
@@ -259,9 +260,9 @@ namespace AirplaneEditor
                 AddPart(child);
             }
         }
-        private void RemovePart(PlanePart part)
+        private void RemovePart(PlanePart_VM part)
         {
-            foreach (PlanePart child in part.Children)
+            foreach (PlanePart_VM child in part.Children)
             {
                 RemovePart(child);
             }
@@ -300,7 +301,7 @@ namespace AirplaneEditor
             _viewport.Children.Add(Debug3DWindow.GetLine(new Point3D(0, 0, 0), new Point3D(0, 0, AXIS_LENGTH), AXIS_THICKNEESS, UtilityWPF.ColorFromHex("6060FF")));
         }
 
-        private PartVisual FindParentVisual(PlanePart part)
+        private PartVisual FindParentVisual(PlanePart_VM part)
         {
             if (part == null)
                 return null;

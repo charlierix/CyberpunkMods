@@ -1,4 +1,5 @@
-﻿using AirplaneEditor.Models_viewmodels;
+﻿using AirplaneEditor.Models;
+using AirplaneEditor.Models_viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,7 +67,7 @@ namespace AirplaneEditor
             }
         }
 
-        private void Blackboard_SelectedPartChanged(object sender, Models_viewmodels.PlanePart e)
+        private void Blackboard_SelectedPartChanged(object sender, Models_viewmodels.PlanePart_VM e)
         {
             try
             {
@@ -103,7 +104,7 @@ namespace AirplaneEditor
         {
             try
             {
-                if (e.NewValue is TreeViewItem item && item.Tag is PlanePart part)
+                if (e.NewValue is TreeViewItem item && item.Tag is PlanePart_VM part)
                     Blackboard.PartSelected(part);
             }
             catch (Exception ex)
@@ -118,7 +119,7 @@ namespace AirplaneEditor
             {
                 var clicked_item = FindClickedItem(sender);
 
-                var child_part = new PlanePart()
+                var child_part = new PlanePart_VM()
                 {
                     PartType = PlanePartType.Fuselage,
                     Name = "fuselage",
@@ -141,7 +142,7 @@ namespace AirplaneEditor
             {
                 var clicked_item = FindClickedItem(sender);
 
-                var child_part = new PlanePart()
+                var child_part = new PlanePart_VM()
                 {
                     PartType = PlanePartType.Wing,
                     Name = "wing",
@@ -164,7 +165,7 @@ namespace AirplaneEditor
             {
                 var clicked_item = FindClickedItem(sender);
 
-                var child_part = new PlanePart()
+                var child_part = new PlanePart_VM()
                 {
                     PartType = PlanePartType.Engine,
                     Name = "engine",
@@ -187,7 +188,7 @@ namespace AirplaneEditor
             {
                 var clicked_item = FindClickedItem(sender);
 
-                var child_part = new PlanePart()
+                var child_part = new PlanePart_VM()
                 {
                     PartType = PlanePartType.Gun,
                     Name = "gun",
@@ -210,7 +211,7 @@ namespace AirplaneEditor
             {
                 var clicked_item = FindClickedItem(sender);
 
-                var child_part = new PlanePart()
+                var child_part = new PlanePart_VM()
                 {
                     PartType = PlanePartType.Bomb,
                     Name = "bomb",
@@ -259,7 +260,7 @@ namespace AirplaneEditor
         {
             try
             {
-                if(sender is PlanePart part)
+                if(sender is PlanePart_VM part)
                 {
                     TreeViewItem item = FindPart(part);
                     if (item == null)       // should never happen
@@ -279,7 +280,7 @@ namespace AirplaneEditor
 
         #region Private Methods
 
-        private void AddTreeItem(ItemCollection items, PlanePart part, string contextMenuName)
+        private void AddTreeItem(ItemCollection items, PlanePart_VM part, string contextMenuName)
         {
             items.Add(new TreeViewItem()
             {
@@ -292,21 +293,21 @@ namespace AirplaneEditor
             HookEvents(part);
         }
 
-        private void HookEvents(PlanePart part)
+        private void HookEvents(PlanePart_VM part)
         {
             part.NameChanged += Part_NameChanged;
         }
-        private void UnhookEvents(PlanePart part)
+        private void UnhookEvents(PlanePart_VM part)
         {
             part.NameChanged -= Part_NameChanged;
 
-            foreach (PlanePart child in part.Children)
+            foreach (PlanePart_VM child in part.Children)
             {
                 UnhookEvents(child);
             }
         }
 
-        private TreeViewItem FindPart(PlanePart part)
+        private TreeViewItem FindPart(PlanePart_VM part)
         {
             foreach(TreeViewItem item in treeview.Items)
             {
@@ -317,9 +318,9 @@ namespace AirplaneEditor
 
             return null;
         }
-        private static TreeViewItem FindPart(TreeViewItem item, PlanePart part)
+        private static TreeViewItem FindPart(TreeViewItem item, PlanePart_VM part)
         {
-            if (item.Tag is PlanePart item_part && item_part == part)
+            if (item.Tag is PlanePart_VM item_part && item_part == part)
                 return item;
 
             foreach (TreeViewItem child in item.Items)
@@ -332,7 +333,7 @@ namespace AirplaneEditor
             return null;
         }
 
-        private static (TreeViewItem tree_item, PlanePart part) FindClickedItem(object sender)
+        private static (TreeViewItem tree_item, PlanePart_VM part) FindClickedItem(object sender)
         {
             if (sender is MenuItem menu_item)
             {
@@ -340,7 +341,7 @@ namespace AirplaneEditor
                 {
                     if (context_menu.PlacementTarget is TreeViewItem tree_item)
                     {
-                        if (tree_item.Tag is PlanePart part)
+                        if (tree_item.Tag is PlanePart_VM part)
                         {
                             return (tree_item, part);
                         }
@@ -369,9 +370,9 @@ namespace AirplaneEditor
             };
         }
 
-        private static bool FindAndSelectNode(TreeViewItem current, PlanePart part)
+        private static bool FindAndSelectNode(TreeViewItem current, PlanePart_VM part)
         {
-            if (current.Tag is PlanePart current_part && part == current_part)
+            if (current.Tag is PlanePart_VM current_part && part == current_part)
             {
                 current.IsSelected = true;
                 return true;

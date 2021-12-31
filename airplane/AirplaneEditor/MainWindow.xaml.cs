@@ -1,8 +1,10 @@
-﻿using AirplaneEditor.Models_viewmodels;
+﻿using AirplaneEditor.Models;
+using AirplaneEditor.Models_viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,7 +23,7 @@ namespace AirplaneEditor
     {
         #region Declaration Section
 
-        private PlanePart _root = null;
+        private PlanePart_VM _root = null;
 
         private Viewer _viewer = null;
 
@@ -57,7 +59,7 @@ namespace AirplaneEditor
         {
             try
             {
-                _root = new PlanePart()
+                _root = new PlanePart_VM()
                 {
                     PartType = PlanePartType.Fuselage,
                     Name = "root",
@@ -110,14 +112,32 @@ namespace AirplaneEditor
         {
             try
             {
-                if (_root == null)
+                var airplane = new Models.Airplane()
                 {
-                    MessageBox.Show("Need to create a plane first", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
+                    Name = "sphere",
+                    Mass = 1,
+                    CenterOfMass = new Point3D(),
+                    InertiaTensor = new Vector3D(1,1,1),
+                    InertiaTensorRotation = Quaternion.Identity,
+                    Parts = new PlanePart[0],
+                };
+
+                string json = JsonSerializer.Serialize(airplane);
+
+                var sim = new Flight.FlightSim();
+                sim.LoadAirplane(json);
+                sim.Show();
+
+
+
+
+                //if (_root == null)
+                //{
+                //    MessageBox.Show("Need to create a plane first", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                //    return;
+                //}
 
                 // convert to json
-
 
 
             }

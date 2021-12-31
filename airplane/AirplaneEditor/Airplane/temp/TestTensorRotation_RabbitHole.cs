@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
-namespace AirplaneEditor.Airplane
+namespace AirplaneEditor.Airplane.temp
 {
     public static class TestTensorRotation_RabbitHole
     {

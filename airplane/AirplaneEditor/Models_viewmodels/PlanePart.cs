@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirplaneEditor.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Windows.Media.Media3D;
 namespace AirplaneEditor.Models_viewmodels
 {
     //NOTE: the term viewmodel is used loosely.  The wpf controls are still very programmatically manipulated
-    public record PlanePart
+    public record PlanePart_VM
     {
         public event EventHandler NameChanged = null;
         public event EventHandler IsCenterlineChanged = null;
@@ -63,7 +64,7 @@ namespace AirplaneEditor.Models_viewmodels
             }
         }
 
-        public PlanePart Parent { get; init; }
-        public ObservableCollection<PlanePart> Children { get; } = new ObservableCollection<PlanePart>();
+        public PlanePart_VM Parent { get; init; }
+        public ObservableCollection<PlanePart_VM> Children { get; } = new ObservableCollection<PlanePart_VM>();
     }
 }

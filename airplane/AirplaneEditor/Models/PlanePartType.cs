@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirplaneEditor.Models_viewmodels
+namespace AirplaneEditor.Models
 {
     public enum PlanePartType
     {
@@ -23,7 +23,7 @@ namespace AirplaneEditor.Models_viewmodels
         /// </remarks>
         Fuselage,
 
-        //TODO: have a lifting wing and a neutal wing
+        //TODO: have 3 wing types: high_lift, normal_lift, zero_lift
         Wing,
 
         /// <summary>

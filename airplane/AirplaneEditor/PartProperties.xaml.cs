@@ -28,7 +28,7 @@ namespace AirplaneEditor
 
         private readonly DropShadowEffect _errorEffect;
 
-        private PlanePart _part = null;
+        private PlanePart_VM _part = null;
 
         private bool _isSettingValues = false;
 
@@ -68,7 +68,7 @@ namespace AirplaneEditor
             }
         }
 
-        private void Blackboard_SelectedPartChanged(object sender, PlanePart e)
+        private void Blackboard_SelectedPartChanged(object sender, PlanePart_VM e)
         {
             try
             {

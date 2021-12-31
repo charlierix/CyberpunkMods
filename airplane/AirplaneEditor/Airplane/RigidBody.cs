@@ -38,6 +38,7 @@ namespace AirplaneEditor.Airplane
         private readonly RotateTransform3D _transform_tolocal_rotate;
 
         // These build up between ticks.  They are in world coords
+        private readonly List<Vector3D> _accels = new List<Vector3D>();
         private readonly List<Vector3D> _forces = new List<Vector3D>();
         private readonly List<Vector3D> _torques = new List<Vector3D>();
 
@@ -158,6 +159,11 @@ namespace AirplaneEditor.Airplane
             }
         }
 
+        public void AddAccel(Vector3D accel_world)
+        {
+            _accels.Add(accel_world);
+        }
+
         public void AddForce(Vector3D force_world)
         {
             //Scb::Body & b = getScbBodyFast();
@@ -222,15 +228,15 @@ namespace AirplaneEditor.Airplane
             // Straight
             Vector3D accel = new Vector3D();
 
+            foreach (Vector3D acc in _accels)
+                accel += acc;
+
+            _accels.Clear();
+
             foreach (Vector3D force in _forces)
                 accel += force * _inverse_mass;
 
             _forces.Clear();
-
-            if (_torques.Count == 0)
-            {
-                return (accel, new Vector3D());
-            }
 
             // Angular
             Vector3D ang_accel = new Vector3D();
