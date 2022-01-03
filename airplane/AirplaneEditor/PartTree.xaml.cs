@@ -119,7 +119,7 @@ namespace AirplaneEditor
             {
                 var clicked_item = FindClickedItem(sender);
 
-                var child_part = new PlanePart_VM()
+                var child_part = new PlanePart_Fuselage_VM()
                 {
                     PartType = PlanePartType.Fuselage,
                     Name = "fuselage",
@@ -142,7 +142,7 @@ namespace AirplaneEditor
             {
                 var clicked_item = FindClickedItem(sender);
 
-                var child_part = new PlanePart_VM()
+                var child_part = new PlanePart_Wing_VM()
                 {
                     PartType = PlanePartType.Wing,
                     Name = "wing",
@@ -165,7 +165,7 @@ namespace AirplaneEditor
             {
                 var clicked_item = FindClickedItem(sender);
 
-                var child_part = new PlanePart_VM()
+                var child_part = new PlanePart_Engine_VM()
                 {
                     PartType = PlanePartType.Engine,
                     Name = "engine",
@@ -188,7 +188,7 @@ namespace AirplaneEditor
             {
                 var clicked_item = FindClickedItem(sender);
 
-                var child_part = new PlanePart_VM()
+                var child_part = new PlanePart_Gun_VM()
                 {
                     PartType = PlanePartType.Gun,
                     Name = "gun",
@@ -211,7 +211,7 @@ namespace AirplaneEditor
             {
                 var clicked_item = FindClickedItem(sender);
 
-                var child_part = new PlanePart_VM()
+                var child_part = new PlanePart_Bomb_VM()
                 {
                     PartType = PlanePartType.Bomb,
                     Name = "bomb",
@@ -260,7 +260,7 @@ namespace AirplaneEditor
         {
             try
             {
-                if(sender is PlanePart_VM part)
+                if (sender is PlanePart_VM part)
                 {
                     TreeViewItem item = FindPart(part);
                     if (item == null)       // should never happen
@@ -309,7 +309,7 @@ namespace AirplaneEditor
 
         private TreeViewItem FindPart(PlanePart_VM part)
         {
-            foreach(TreeViewItem item in treeview.Items)
+            foreach (TreeViewItem item in treeview.Items)
             {
                 var retVal = FindPart(item, part);
                 if (retVal != null)

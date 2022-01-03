@@ -53,7 +53,8 @@ namespace AirplaneEditor
         }
         public static CreatedVisual Get_Wing(Transform3D parent_transform = null)
         {
-            const double HALF_HEIGHT = 0.05;
+            //const double HALF_HEIGHT = 0.05;
+            double HALF_HEIGHT = AppSettings.Wing_Thickness / 2;
 
             MaterialGroup material = new MaterialGroup();
             material.Children.Add(new DiffuseMaterial(UtilityWPF.BrushFromHex("D8D8D8")));

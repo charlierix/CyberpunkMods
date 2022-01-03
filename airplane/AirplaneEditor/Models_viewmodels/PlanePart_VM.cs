@@ -10,12 +10,13 @@ using System.Windows.Media.Media3D;
 namespace AirplaneEditor.Models_viewmodels
 {
     //NOTE: the term viewmodel is used loosely.  The wpf controls are still very programmatically manipulated
-    public record PlanePart_VM
+    public abstract record PlanePart_VM
     {
         public event EventHandler NameChanged = null;
         public event EventHandler IsCenterlineChanged = null;
         public event EventHandler PositionChanged = null;
         public event EventHandler RotationChanged = null;
+        public event EventHandler SizeChanged = null;       // this is raised by derived classes
 
         public PlanePartType PartType { get; init; }
 
@@ -66,5 +67,10 @@ namespace AirplaneEditor.Models_viewmodels
 
         public PlanePart_VM Parent { get; init; }
         public ObservableCollection<PlanePart_VM> Children { get; } = new ObservableCollection<PlanePart_VM>();
+
+        protected void OnSizeChanged()
+        {
+            SizeChanged?.Invoke(this, new EventArgs());
+        }
     }
 }

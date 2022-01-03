@@ -525,6 +525,9 @@ function TODO()
     -- Aim:
     --  Add an option to slow down time while aiming
 
+	-- Grapple Straight Pan:
+	--	While grappling, let the asdw apply a panning acceleration relative to the direction toward anchor
+
     -- Grapple Straight:
     --  Add a repulsion to walls when > some distance from desired distance
     --  This would be helpful with going straight up walls

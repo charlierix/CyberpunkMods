@@ -1,5 +1,6 @@
 ﻿using AirplaneEditor.Models;
 using AirplaneEditor.Models_viewmodels;
+using Game.Math_WPF.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,7 @@ namespace AirplaneEditor
         {
             try
             {
-                _root = new PlanePart_VM()
+                _root = new PlanePart_Fuselage_VM()
                 {
                     PartType = PlanePartType.Fuselage,
                     Name = "root",
@@ -112,34 +113,19 @@ namespace AirplaneEditor
         {
             try
             {
-                var airplane = new Models.Airplane()
+                if (_root == null)
                 {
-                    Name = "sphere",
-                    Mass = 1,
-                    CenterOfMass = new Point3D(),
-                    InertiaTensor = new Vector3D(1,1,1),
-                    InertiaTensorRotation = Quaternion.Identity,
-                    Parts = new PlanePart[0],
-                };
+                    MessageBox.Show("Need to create a plane first", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
-                string json = JsonSerializer.Serialize(airplane);
+                var model = Util_ToModel.BuildModel(_root);
+
+                string json = JsonSerializer.Serialize(model);
 
                 var sim = new Flight.FlightSim();
                 sim.LoadAirplane(json);
                 sim.Show();
-
-
-
-
-                //if (_root == null)
-                //{
-                //    MessageBox.Show("Need to create a plane first", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                //    return;
-                //}
-
-                // convert to json
-
-
             }
             catch (Exception ex)
             {

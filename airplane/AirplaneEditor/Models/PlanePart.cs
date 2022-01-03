@@ -9,6 +9,11 @@ namespace AirplaneEditor.Models
 {
     public record PlanePart
     {
+        public int ID { get; init; }
+        public int? ParentID { get; init; }
+
+        public Location Location { get; init; }
+
         public PlanePartType PartType { get; init; }
 
         public string Name { get; init; }
