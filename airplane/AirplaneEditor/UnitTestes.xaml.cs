@@ -1162,6 +1162,103 @@ namespace AirplaneEditor
             }
         }
 
+        private void TransformQuatVec_Empty_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Transform3DGroup transform = new Transform3DGroup();
+
+                Matrix3D matrix = transform.Value;
+
+                VisualizeMatrix44(matrix, "empty");
+
+                var result = Util_ToModel.GetRotate_Translate(matrix);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void TransformQuatVec_Translate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Transform3DGroup transform = new Transform3DGroup();
+                transform.Children.Add(new TranslateTransform3D(1, 0, 0));
+
+                Matrix3D matrix = transform.Value;
+
+                VisualizeMatrix44(matrix, "empty");
+
+                var result = Util_ToModel.GetRotate_Translate(matrix);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void TransformQuatVec_Rotate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Quaternion quat = new Quaternion(new Vector3D(0, 0, 1), 30);
+
+                Transform3DGroup transform = new Transform3DGroup();
+                transform.Children.Add(new RotateTransform3D(new QuaternionRotation3D(quat)));
+
+                Matrix3D matrix = transform.Value;
+
+                VisualizeMatrix44(matrix, "empty");
+
+
+                //This is flipping the axis from 0,0,1 to 0,0,-1
+                var result = Util_ToModel.GetRotate_Translate(matrix);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void TransformQuatVec_MultiRandom_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Transform3DGroup transform1 = new Transform3DGroup();
+
+                for (int cntr = 0; cntr < 18; cntr++)
+                {
+                    if(StaticRandom.NextBool())
+                    {
+                        transform1.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(Math3D.GetRandomVector_Spherical_Shell(1), StaticRandom.NextDouble(360))));
+                    }
+                    else
+                    {
+                        transform1.Children.Add(new TranslateTransform3D(Math3D.GetRandomVector_Spherical(12)));
+                    }
+                }
+
+                Matrix3D matrix = transform1.Value;
+
+                VisualizeMatrix44(matrix, "first");
+
+                //This is flipping the axis from 0,0,1 to 0,0,-1
+                var result = Util_ToModel.GetRotate_Translate(matrix);
+
+
+
+                Transform3DGroup transform2 = new Transform3DGroup();
+                transform2.Children.Add(new RotateTransform3D(new QuaternionRotation3D(result.rotate)));
+                transform2.Children.Add(new TranslateTransform3D(result.translate));
+
+                VisualizeMatrix44(transform2.Value, "second");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         #region Private Methods
 
         private static Vector3D GetInverseInertiaTensor(Vector3D inertia_tensor)
@@ -1187,6 +1284,7 @@ namespace AirplaneEditor
                 ToJoin("\r\n");
         }
 
+        //NOTE: This is refrerenced by col,row
         private static void VisualizeMatrix33(PxMat33 matrix, string title)
         {
             var window = new Debug3DWindow()
@@ -1225,6 +1323,58 @@ namespace AirplaneEditor
             }
 
             window.AddSquare(cells[5].rect.BottomLeft, cells[15].rect.TopRight, UtilityWPF.ColorFromHex("1AAA"), z: 0.05);
+
+            window.Show();
+        }
+        //NOTE: This is referenced by row,col
+        private static void VisualizeMatrix44(Matrix3D matrix, string title)
+        {
+            var window = new Debug3DWindow()
+            {
+                Title = title,
+            };
+
+            string[] values = new string[]
+            {
+                " ",
+                "col 0",
+                "col 1",
+                "col 2",
+                "col 3",
+
+                "row 0",
+                Math.Round(matrix.M11, 4).ToString(),
+                Math.Round(matrix.M12, 4).ToString(),
+                Math.Round(matrix.M13, 4).ToString(),
+                Math.Round(matrix.M14, 4).ToString(),
+
+                "row 1",
+                Math.Round(matrix.M21, 4).ToString(),
+                Math.Round(matrix.M22, 4).ToString(),
+                Math.Round(matrix.M23, 4).ToString(),
+                Math.Round(matrix.M24, 4).ToString(),
+
+                "row 2",
+                Math.Round(matrix.M31, 4).ToString(),
+                Math.Round(matrix.M32, 4).ToString(),
+                Math.Round(matrix.M33, 4).ToString(),
+                Math.Round(matrix.M34, 4).ToString(),
+
+                "row 3",
+                Math.Round(matrix.OffsetX, 4).ToString(),
+                Math.Round(matrix.OffsetY, 4).ToString(),
+                Math.Round(matrix.OffsetZ, 4).ToString(),
+                Math.Round(matrix.M44, 4).ToString(),
+            };
+
+            var cells = Math2D.GetCells_InvertY(1, 5, 5);
+
+            for (int i = 0; i < cells.Length; i++)
+            {
+                window.AddText3D(values[i], cells[i].center.ToPoint3D(), new Vector3D(0, 0, 1), 0.2, Colors.Black, true, new Vector3D(1, 0, 0));
+            }
+
+            window.AddSquare(cells[6].rect.BottomLeft, cells[24].rect.TopRight, UtilityWPF.ColorFromHex("1AAA"), z: 0.05);
 
             window.Show();
         }

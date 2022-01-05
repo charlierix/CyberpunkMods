@@ -48,5 +48,14 @@
             <Button Content="basic + local quat" Click="TorqueAccel_BasicLocalQuat2_Click"/>
             <Button Content="torque world coords" Click="TorqueAccel_TorqueWorldCoords_Click"/>
         </StackPanel>
+
+        <StackPanel>
+            <Label Content="Transform -> Quat/Vec"/>
+
+            <Button Content="empty" Click="TransformQuatVec_Empty_Click"/>
+            <Button Content="translate" Click="TransformQuatVec_Translate_Click"/>
+            <Button Content="rotate" Click="TransformQuatVec_Rotate_Click"/>
+            <Button Content="multi random" Click="TransformQuatVec_MultiRandom_Click"/>
+        </StackPanel>
     </WrapPanel>
 </Window>
