@@ -39,6 +39,8 @@ namespace AirplaneEditor
         public static double Gun_Length => Get_Float("gun_length");
         public static double Gun_Radius => Get_Float("gun_radius");
 
+        public static double Gravity => Get_Float("gravity");
+
         public static double Get_Float(string key)
         {
             AppSettings instance = _instance.Value;

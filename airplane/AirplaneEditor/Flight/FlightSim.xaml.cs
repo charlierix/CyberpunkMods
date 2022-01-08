@@ -24,7 +24,7 @@ namespace AirplaneEditor.Flight
     {
         #region Declaration Section
 
-        private const double GRAVITY = 16;
+        private readonly Vector3D _gravity;
 
         private RigidBody _body = null;
 
@@ -39,6 +39,8 @@ namespace AirplaneEditor.Flight
         public FlightSim()
         {
             InitializeComponent();
+
+            _gravity = new Vector3D(0, 0, -AppSettings.Gravity);
 
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromMilliseconds(10);
@@ -71,7 +73,7 @@ namespace AirplaneEditor.Flight
                 return;
             }
 
-            _body.AddAccel(new Vector3D(0, 0, -GRAVITY));
+            _body.AddAccel(_gravity);
 
             _body.Tick(_timer.Interval.TotalSeconds);
 
