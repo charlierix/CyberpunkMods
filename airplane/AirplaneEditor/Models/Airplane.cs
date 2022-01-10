@@ -18,6 +18,9 @@ namespace AirplaneEditor.Models
         public Vector3D InertiaTensor { get; init; }
         public Quaternion InertiaTensorRotation { get; init; }
 
-        public PlanePart[] Parts { get; init; }
+        public PlanePart_Serialization[] Parts_Serialize { get; init; }
+
+        public PlanePart_Wing[] Wings { get; init; }
+        public PlanePart_Thrust[] Thrusters { get; init; }
     }
 }

@@ -121,7 +121,6 @@ namespace AirplaneEditor
 
                 var child_part = new PlanePart_Fuselage_VM()
                 {
-                    PartType = PlanePartType.Fuselage,
                     Name = "fuselage",
                     IsCenterline = false,
                     Parent = clicked_item.part,
@@ -129,7 +128,7 @@ namespace AirplaneEditor
 
                 clicked_item.part.Children.Add(child_part);
 
-                AddTreeItem(clicked_item.tree_item.Items, child_part, CONTEXT_FUSELAGE);
+                AddTreeItem(clicked_item.tree_item.Items, child_part, GetContextMenuKey(child_part.PartType));
             }
             catch (Exception ex)
             {
@@ -144,7 +143,6 @@ namespace AirplaneEditor
 
                 var child_part = new PlanePart_Wing_VM()
                 {
-                    PartType = PlanePartType.Wing,
                     Name = "wing",
                     IsCenterline = false,
                     Parent = clicked_item.part,
@@ -152,7 +150,7 @@ namespace AirplaneEditor
 
                 clicked_item.part.Children.Add(child_part);
 
-                AddTreeItem(clicked_item.tree_item.Items, child_part, CONTEXT_WING);
+                AddTreeItem(clicked_item.tree_item.Items, child_part, GetContextMenuKey(child_part.PartType));
             }
             catch (Exception ex)
             {
@@ -167,7 +165,6 @@ namespace AirplaneEditor
 
                 var child_part = new PlanePart_Engine_VM()
                 {
-                    PartType = PlanePartType.Engine,
                     Name = "engine",
                     IsCenterline = false,
                     Parent = clicked_item.part,
@@ -175,7 +172,7 @@ namespace AirplaneEditor
 
                 clicked_item.part.Children.Add(child_part);
 
-                AddTreeItem(clicked_item.tree_item.Items, child_part, CONTEXT_COMPONENT);
+                AddTreeItem(clicked_item.tree_item.Items, child_part, GetContextMenuKey(child_part.PartType));
             }
             catch (Exception ex)
             {
@@ -190,7 +187,6 @@ namespace AirplaneEditor
 
                 var child_part = new PlanePart_Gun_VM()
                 {
-                    PartType = PlanePartType.Gun,
                     Name = "gun",
                     IsCenterline = false,
                     Parent = clicked_item.part,
@@ -198,7 +194,7 @@ namespace AirplaneEditor
 
                 clicked_item.part.Children.Add(child_part);
 
-                AddTreeItem(clicked_item.tree_item.Items, child_part, CONTEXT_COMPONENT);
+                AddTreeItem(clicked_item.tree_item.Items, child_part, GetContextMenuKey(child_part.PartType));
             }
             catch (Exception ex)
             {
@@ -213,7 +209,6 @@ namespace AirplaneEditor
 
                 var child_part = new PlanePart_Bomb_VM()
                 {
-                    PartType = PlanePartType.Bomb,
                     Name = "bomb",
                     IsCenterline = false,
                     Parent = clicked_item.part,
@@ -221,7 +216,7 @@ namespace AirplaneEditor
 
                 clicked_item.part.Children.Add(child_part);
 
-                AddTreeItem(clicked_item.tree_item.Items, child_part, CONTEXT_COMPONENT);
+                AddTreeItem(clicked_item.tree_item.Items, child_part, GetContextMenuKey(child_part.PartType));
             }
             catch (Exception ex)
             {
@@ -282,15 +277,22 @@ namespace AirplaneEditor
 
         private void AddTreeItem(ItemCollection items, PlanePart_VM part, string contextMenuName)
         {
-            items.Add(new TreeViewItem()
+            var tree_item = new TreeViewItem()
             {
                 IsExpanded = true,
                 Header = GetTreenodeHeader(part.Name),
                 Tag = part,
                 ContextMenu = FindResource(contextMenuName) as ContextMenu,
-            });
+            };
+
+            items.Add(tree_item);
 
             HookEvents(part);
+
+            foreach(var child in part.Children)
+            {
+                AddTreeItem(tree_item.Items, child, GetContextMenuKey(child.PartType));
+            }
         }
 
         private void HookEvents(PlanePart_VM part)
@@ -385,6 +387,21 @@ namespace AirplaneEditor
             }
 
             return false;
+        }
+
+        private static string GetContextMenuKey(PlanePartType partType)
+        {
+            switch(partType)
+            {
+                case PlanePartType.Fuselage:
+                    return CONTEXT_FUSELAGE;
+
+                case PlanePartType.Wing:
+                    return CONTEXT_WING;
+
+                default:
+                    return CONTEXT_COMPONENT;
+            }
         }
 
         #endregion

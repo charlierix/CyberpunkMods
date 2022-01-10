@@ -1,5 +1,6 @@
 ﻿using AirplaneEditor.Models;
 using AirplaneEditor.Models_viewmodels;
+using Game.Core;
 using Game.Math_WPF.Mathematics;
 using System;
 using System.Collections.Generic;
@@ -12,26 +13,24 @@ namespace AirplaneEditor
 {
     public static class Util_ToModel
     {
-        public static Models.Airplane BuildModel(PlanePart_VM root)
+        public static Models.Airplane ToModel(PlanePart_VM root, string name)
         {
             var shapes = new List<Util_InertiaTensor.ShapeBase>();
-            var parts = new List<PlanePart>();
+            var parts_serialize = new List<PlanePart_Serialization>();
+            var wings = new List<PlanePart_Wing>();
+            var thrusters = new List<PlanePart_Thrust>();
 
             int next_id = 0;
 
-            BuildModel_AddPart(root, new Transform3DGroup(), shapes, parts, ref next_id);
+            BuildModel_AddPart(root, new Transform3DGroup(), null, shapes, parts_serialize, wings, thrusters, ref next_id);
 
             var inertia = Util_InertiaTensor.GetInertiaTensor(shapes.ToArray());
 
-
-
-            Util_InertiaTensor.VisualizeInertiaTensor(shapes.ToArray(), inertia);
-
-
+            //Util_InertiaTensor.VisualizeInertiaTensor(shapes.ToArray(), inertia);
 
             return new Models.Airplane()
             {
-                //Name = 
+                Name = name,
 
                 Mass = inertia.TotalMass,
                 CenterOfMass = inertia.CenterMass,
@@ -39,14 +38,47 @@ namespace AirplaneEditor
                 InertiaTensor = inertia.InertiaTensor,
                 InertiaTensorRotation = inertia.InertiaTensor_Rotation,
 
-                Parts = parts.ToArray(),
+                Parts_Serialize = parts_serialize.ToArray(),
+
+                Wings = wings.ToArray(),
+                Thrusters = thrusters.ToArray(),
             };
+        }
+
+        public static (PlanePart_VM root, string name) FromModel(Models.Airplane model)
+        {
+            if (model?.Parts_Serialize == null || model.Parts_Serialize.Length == 0)
+                return (null, model?.Name ?? "");
+
+            PlanePart_Serialization[] roots = model.Parts_Serialize.
+                Where(o => o.ParentID == null).
+                ToArray();
+
+            if (roots.Length == 0)
+                throw new ApplicationException("Didn't find any root parts");
+            else if (roots.Length > 1)
+                throw new ApplicationException($"Found more than one root part: {roots.Length}");
+
+            var remaining_parts = model.Parts_Serialize.
+                Where(o => o.ParentID != null).
+                ToArray();
+
+            PlanePart_VM root = CreateVM(null, roots[0]);
+
+            AddVMChildren(root, roots[0].ID, ref remaining_parts);
+
+            return (root, model.Name ?? "");
         }
 
         #region Private Methods
 
-        private static void BuildModel_AddPart(PlanePart_VM part, Transform3D parent_transform, List<Util_InertiaTensor.ShapeBase> shapes, List<PlanePart> parts, ref int next_id)
+        private static void BuildModel_AddPart(PlanePart_VM part, Transform3D parent_transform, int? parent_id, List<Util_InertiaTensor.ShapeBase> shapes, List<PlanePart_Serialization> parts_serialize, List<PlanePart_Wing> wings, List<PlanePart_Thrust> thrusters, ref int next_id)
         {
+            // Serialize Part
+            PlanePart_Serialization serialize = CreateSerializePart(part, parent_id, ref next_id);
+            parts_serialize.Add(serialize);
+
+            // Transform so it directly off of the rigid body
             Transform3DGroup transform = new Transform3DGroup();
             transform.Children.Add(parent_transform);
 
@@ -55,21 +87,45 @@ namespace AirplaneEditor
 
             var rot_translate = GetRotate_Translate(transform.Value);
 
+            // Shape
             shapes.Add(CreateShape(part, rot_translate.rotate, rot_translate.translate, true));
             if (!part.IsCenterline)
                 shapes.Add(CreateShape(part, rot_translate.rotate, rot_translate.translate, false));
 
-
-            //parts.Add();
-
+            // Direct Flying Pars
+            //wings.Add();
+            //thrusters.Add();
 
             if (part.Children == null)
                 return;
 
             foreach (PlanePart_VM child in part.Children)
             {
-                BuildModel_AddPart(child, transform, shapes, parts, ref next_id);
+                BuildModel_AddPart(child, transform, serialize.ID, shapes, parts_serialize, wings, thrusters, ref next_id);
             }
+        }
+
+        private static PlanePart_Serialization CreateSerializePart(PlanePart_VM part, int? parent_id, ref int next_id)
+        {
+            int id = next_id;
+            next_id++;
+
+            return new PlanePart_Serialization()
+            {
+                ID = id,
+                ParentID = parent_id,
+
+                PartType = part.PartType,
+
+                IsCenterline = part.IsCenterline,
+
+                Name = part.Name,
+
+                Position = part.Position,
+                Orientation = part.Orientation,
+
+                Sizes = part.ToSizesArr(),
+            };
         }
 
         //https://answers.unity.com/questions/11363/converting-matrix4x4-to-quaternion-vector3.html
@@ -191,6 +247,65 @@ namespace AirplaneEditor
                 P = rev_pos,
                 Q = new Quaternion(new Vector3D(-axis.X, axis.Y, axis.Z), -rotate.Angle),
             };
+        }
+
+        private static PlanePart_VM CreateVM(PlanePart_VM parent, PlanePart_Serialization part)
+        {
+            PlanePart_VM retVal;
+
+            switch (part.PartType)
+            {
+                case PlanePartType.Bomb:
+                    retVal = new PlanePart_Bomb_VM() { Parent = parent };
+                    break;
+
+                case PlanePartType.Engine:
+                    retVal = new PlanePart_Engine_VM() { Parent = parent };
+                    break;
+
+                case PlanePartType.Fuselage:
+                    retVal = new PlanePart_Fuselage_VM() { Parent = parent };
+                    break;
+
+                case PlanePartType.Gun:
+                    retVal = new PlanePart_Gun_VM() { Parent = parent };
+                    break;
+
+                case PlanePartType.Wing:
+                    retVal = new PlanePart_Wing_VM() { Parent = parent };
+                    break;
+
+                default:
+                    throw new ApplicationException($"Unknown PlanePartType: {part.PartType}");
+            }
+
+            retVal.Name = part.Name ?? "";
+            retVal.IsCenterline = part.IsCenterline;
+            retVal.Position = part.Position;
+            retVal.Orientation = part.Orientation;
+            retVal.FromSizesArr(part.Sizes);
+
+            return retVal;
+        }
+
+        private static void AddVMChildren(PlanePart_VM part, int part_id, ref PlanePart_Serialization[] remaining_parts)
+        {
+            var children = remaining_parts.
+                Where(o => o.ParentID == part_id).
+                ToArray();
+
+            remaining_parts = remaining_parts.
+                Where(o => o.ParentID != part_id).
+                ToArray();
+
+            foreach(PlanePart_Serialization child_serialize in children)
+            {
+                var child_vm = CreateVM(part, child_serialize);
+
+                part.Children.Add(child_vm);
+
+                AddVMChildren(child_vm, child_serialize.ID, ref remaining_parts);
+            }
         }
 
         #endregion

@@ -249,6 +249,12 @@ namespace AirplaneEditor
                 Scale = visual.Scale,
             };
 
+            part_visual.Translate.OffsetX = part.Position.X;
+            part_visual.Translate.OffsetY = part.Position.Y;
+            part_visual.Translate.OffsetZ = part.Position.Z;
+
+            part_visual.Rotate.Quaternion = part.Orientation;
+
             _parts.Add(part_visual);
 
             _viewport.Children.Add(part_visual.Visual);

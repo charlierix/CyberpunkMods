@@ -18,7 +18,7 @@ namespace AirplaneEditor.Models_viewmodels
         public event EventHandler RotationChanged = null;
         public event EventHandler SizeChanged = null;       // this is raised by derived classes
 
-        public PlanePartType PartType { get; init; }
+        public abstract PlanePartType PartType { get; }
 
         private string _name = "";
         public string Name
@@ -72,5 +72,8 @@ namespace AirplaneEditor.Models_viewmodels
         {
             SizeChanged?.Invoke(this, new EventArgs());
         }
+
+        public abstract double[] ToSizesArr();
+        public abstract void FromSizesArr(double[] sizes);
     }
 }
