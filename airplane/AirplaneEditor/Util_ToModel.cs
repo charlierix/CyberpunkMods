@@ -78,7 +78,7 @@ namespace AirplaneEditor
             PlanePart_Serialization serialize = CreateSerializePart(part, parent_id, ref next_id);
             parts_serialize.Add(serialize);
 
-            // Transform so it directly off of the rigid body
+            // Transform so it's directly off of the rigid body
             Transform3DGroup transform = new Transform3DGroup();
             transform.Children.Add(parent_transform);
 
@@ -93,8 +93,9 @@ namespace AirplaneEditor
                 shapes.Add(CreateShape(part, rot_translate.rotate, rot_translate.translate, false));
 
             // Direct Flying Pars
-            //wings.Add();
-            //thrusters.Add();
+            CreateFlyable(part, rot_translate.rotate, rot_translate.translate, wings, thrusters, true);
+            if (!part.IsCenterline)
+                CreateFlyable(part, rot_translate.rotate, rot_translate.translate, wings, thrusters, false);
 
             if (part.Children == null)
                 return;
@@ -103,29 +104,6 @@ namespace AirplaneEditor
             {
                 BuildModel_AddPart(child, transform, serialize.ID, shapes, parts_serialize, wings, thrusters, ref next_id);
             }
-        }
-
-        private static PlanePart_Serialization CreateSerializePart(PlanePart_VM part, int? parent_id, ref int next_id)
-        {
-            int id = next_id;
-            next_id++;
-
-            return new PlanePart_Serialization()
-            {
-                ID = id,
-                ParentID = parent_id,
-
-                PartType = part.PartType,
-
-                IsCenterline = part.IsCenterline,
-
-                Name = part.Name,
-
-                Position = part.Position,
-                Orientation = part.Orientation,
-
-                Sizes = part.ToSizesArr(),
-            };
         }
 
         //https://answers.unity.com/questions/11363/converting-matrix4x4-to-quaternion-vector3.html
@@ -158,6 +136,66 @@ namespace AirplaneEditor
 
             return (q, new Vector3D(m.OffsetX, m.OffsetY, m.OffsetZ));
         }
+
+        private static Util_InertiaTensor.PxTransform GetLocalPartPosition(Quaternion rotate, Vector3D translate, bool is_starboard)
+        {
+            if (is_starboard)
+            {
+                return new Util_InertiaTensor.PxTransform()
+                {
+                    P = translate,
+                    Q = rotate,
+                };
+            }
+
+            Vector3D rev_pos = new Vector3D(-translate.X, translate.Y, translate.Z);
+
+            if (rotate.IsIdentity)
+            {
+                return new Util_InertiaTensor.PxTransform()
+                {
+                    P = rev_pos,
+                    Q = Quaternion.Identity,
+                };
+            }
+
+            Vector3D axis = rotate.Axis;
+
+            return new Util_InertiaTensor.PxTransform()
+            {
+                P = rev_pos,
+                Q = new Quaternion(new Vector3D(-axis.X, axis.Y, axis.Z), -rotate.Angle),
+            };
+        }
+
+        #endregion
+        #region Private Methods - serialize
+
+        private static PlanePart_Serialization CreateSerializePart(PlanePart_VM part, int? parent_id, ref int next_id)
+        {
+            int id = next_id;
+            next_id++;
+
+            return new PlanePart_Serialization()
+            {
+                ID = id,
+                ParentID = parent_id,
+
+                PartType = part.PartType,
+
+                IsCenterline = part.IsCenterline,
+
+                Name = part.Name,
+
+                Position = part.Position,
+                Orientation = part.Orientation,
+
+                Sizes = part.ToSizesArr(),
+            };
+        }
+
+        #endregion
+        #region Private Methods - shape
 
         private static Util_InertiaTensor.ShapeBase CreateShape(PlanePart_VM part, Quaternion rotate, Vector3D translate, bool is_starboard)
         {
@@ -213,41 +251,64 @@ namespace AirplaneEditor
                 throw new ApplicationException($"Unknown PlanePartType: {part.PartType}");
         }
 
-        private static void CreateModel(PlanePart_VM part, Transform3DGroup parent_transform, bool is_starboard)
+        #endregion
+        #region Private Methods - flyable
+
+        private static void CreateFlyable(PlanePart_VM part, Quaternion rotate, Vector3D translate, List<PlanePart_Wing> wings, List<PlanePart_Thrust> thrusters, bool is_starboard)
         {
+            var local_pose = GetLocalPartPosition(rotate, translate, is_starboard);     //NOTE: part.Position and part.Orientation are already included in the rotate and translate passed in
+
+            if (part is PlanePart_Fuselage_VM fuselage)
+            {
+                wings.AddRange(CreateFlyable_Fuselage(fuselage, local_pose.P, local_pose.Q));
+            }
+            else if (part is PlanePart_Wing_VM wing)
+            {
+                wings.Add(CreateFlyable_Wing(wing, local_pose.P, local_pose.Q));
+            }
+            else if (part is PlanePart_Engine_VM engine)
+            {
+                thrusters.Add(CreateFlyable_Engine(engine, local_pose.P, local_pose.Q));
+            }
+
+
+            // bomb
+
+            // gun
 
         }
 
-        private static Util_InertiaTensor.PxTransform GetLocalPartPosition(Quaternion rotate, Vector3D translate, bool is_starboard)
+        private static PlanePart_Wing[] CreateFlyable_Fuselage(PlanePart_Fuselage_VM fuselage, Vector3D position, Quaternion rotation)
         {
-            if (is_starboard)
+            //TODO: Make three wings
+            return new PlanePart_Wing[0];
+        }
+
+        private static PlanePart_Wing CreateFlyable_Wing(PlanePart_Wing_VM wing, Vector3D position, Quaternion rotation)
+        {
+            //TODO: different wing types should adjust the lift/drag settings
+
+            return new PlanePart_Wing()
             {
-                return new Util_InertiaTensor.PxTransform()
-                {
-                    P = translate,
-                    Q = rotate,
-                };
-            }
+                Position = position.ToPoint(),
+                Orientation = rotation,
 
-            Vector3D rev_pos = new Vector3D(-translate.X, translate.Y, translate.Z);
-
-            if (rotate.IsIdentity)
-            {
-                return new Util_InertiaTensor.PxTransform()
-                {
-                    P = rev_pos,
-                    Q = Quaternion.Identity,
-                };
-            }
-
-            Vector3D axis = rotate.Axis;
-
-            return new Util_InertiaTensor.PxTransform()
-            {
-                P = rev_pos,
-                Q = new Quaternion(new Vector3D(-axis.X, axis.Y, axis.Z), -rotate.Angle),
+                chord = wing.Chord,
+                span = wing.Span,
             };
         }
+
+        private static PlanePart_Thrust CreateFlyable_Engine(PlanePart_Engine_VM engine, Vector3D position, Quaternion rotation)
+        {
+            return new PlanePart_Thrust()
+            {
+                Position = position.ToPoint(),
+                Direction = rotation.GetRotatedVector(new Vector3D(0, 1, 0)),
+            };
+        }
+
+        #endregion
+        #region Private Methods - view model
 
         private static PlanePart_VM CreateVM(PlanePart_VM parent, PlanePart_Serialization part)
         {
@@ -298,7 +359,7 @@ namespace AirplaneEditor
                 Where(o => o.ParentID != part_id).
                 ToArray();
 
-            foreach(PlanePart_Serialization child_serialize in children)
+            foreach (PlanePart_Serialization child_serialize in children)
             {
                 var child_vm = CreateVM(part, child_serialize);
 

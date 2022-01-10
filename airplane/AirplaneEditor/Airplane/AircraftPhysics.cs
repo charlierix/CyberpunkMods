@@ -19,18 +19,15 @@ namespace AirplaneEditor.Airplane
         private readonly RigidBody _rb;
         private readonly AeroSurface[] _aerodynamicSurfaces;
 
-        private readonly Transform3D _transform_toworld;
-        private readonly Transform3D _transform_tolocal;
+        //private readonly Transform3D _transform_toworld;      // just use rigid body's
+        //private readonly Transform3D _transform_tolocal;
 
         #endregion
 
-        public AircraftPhysics(RigidBody rb, AeroSurface[] aerodynamicSurfaces, Transform3D transform_toworld, Transform3D transform_tolocal)
+        public AircraftPhysics(RigidBody rb, AeroSurface[] aerodynamicSurfaces)
         {
             _rb = rb;
             _aerodynamicSurfaces = aerodynamicSurfaces;
-
-            _transform_toworld = transform_toworld;
-            _transform_tolocal = transform_tolocal;
         }
 
         public Vector3D Wind { get; set; }
@@ -38,7 +35,7 @@ namespace AirplaneEditor.Airplane
 
         public void Tick()
         {
-            Vector3D forward_world = _transform_toworld.Transform(_forward);      //TODO: Make sure transform only does rotation
+            Vector3D forward_world = _rb.Transform_ToWorld.Transform(_forward);      //TODO: Make sure transform only does rotation
 
             BiVector3 forceAndTorqueThisFrame = CalculateAerodynamicForces(_rb.Velocity, _rb.AngularVelocity, Wind, AirDensity, _rb.CenterOfMass_world, _aerodynamicSurfaces);
 
@@ -54,7 +51,7 @@ namespace AirplaneEditor.Airplane
 
 
             //BiVector3 currentForceAndTorque = (forceAndTorqueThisFrame + forceAndTorquePrediction) * 0.5;
-            BiVector3 currentForceAndTorque = currentForceAndTorque;
+            BiVector3 currentForceAndTorque = forceAndTorqueThisFrame;
 
 
             _rb.AddForce(currentForceAndTorque.p);

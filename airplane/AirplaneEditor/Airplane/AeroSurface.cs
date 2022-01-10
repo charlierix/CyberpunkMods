@@ -17,6 +17,7 @@ namespace AirplaneEditor.Airplane
 
         private readonly Point3D _position_local;
 
+        //TODO: These should be call rotate tranform.  C# only does rotations when passing vector, but lua doesn't know the difference between vector and point
         private readonly Transform3D _transform_toworld;
         private readonly Transform3D _transform_tolocal;
 
@@ -31,6 +32,7 @@ namespace AirplaneEditor.Airplane
         public AeroSurface(AeroSurfaceConfig config, Point3D position_local, Transform3D transform_toworld, Transform3D transform_tolocal)
         {
             _config = AeroSurfaceConfig.Validate(config);
+            _position_local = position_local;
             _transform_toworld = transform_toworld;
             _transform_tolocal = transform_tolocal;
         }
@@ -73,9 +75,9 @@ namespace AirplaneEditor.Airplane
 
             // Calculating air velocity relative to the surface's coordinate system.
             // Z component of the velocity is discarded. 
-            Vector3D airVelocity = _transform_tolocal.Transform(worldAirVelocity);       //TODO: Make sure this only does rotation
+            Vector3D airVelocity = _transform_tolocal.Transform(worldAirVelocity);       //NOTE: transforming vectors only does rotation
             airVelocity = new Vector3D(airVelocity.X, airVelocity.Y, 0);
-            Vector3D dragDirection = _transform_toworld.Transform(airVelocity.ToUnit());        //TODO: Make sure this only does rotation
+            Vector3D dragDirection = _transform_toworld.Transform(airVelocity.ToUnit());
             Vector3D liftDirection = Vector3D.CrossProduct(dragDirection, forward_world);
 
             double area = _config.chord * _config.span;
