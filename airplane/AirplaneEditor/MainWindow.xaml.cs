@@ -32,6 +32,7 @@ namespace AirplaneEditor
         private PlanePart_VM _root = null;
 
         private Viewer _viewer = null;
+        private ForcesViewer _forcesViewer = null;
 
         private string _folder = null;
 
@@ -71,6 +72,9 @@ namespace AirplaneEditor
 
                 if (_viewer != null)
                     _viewer.Close();
+
+                if (_forcesViewer != null)
+                    _forcesViewer.Close();
             }
             catch (Exception ex)
             {
@@ -211,6 +215,40 @@ namespace AirplaneEditor
             {
                 _viewer.Closed -= Viewer_Closed;
                 _viewer = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ForcesViewer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_forcesViewer == null)        // the user can close the viewer any time they want
+                {
+                    _forcesViewer = new ForcesViewer();
+                    _forcesViewer.Closed += ForcesViewer_Closed;
+
+                    _forcesViewer.Show();
+                }
+                else
+                {
+                    _forcesViewer.Activate();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void ForcesViewer_Closed(object sender, EventArgs e)
+        {
+            try
+            {
+                _forcesViewer.Closed -= ForcesViewer_Closed;
+                _forcesViewer = null;
             }
             catch (Exception ex)
             {

@@ -1,11 +1,11 @@
-﻿<Window x:Class="AirplaneEditor.Views.Viewer"
+﻿<Window x:Class="AirplaneEditor.Views.ForcesViewer"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AirplaneEditor.Views"
         mc:Ignorable="d"
-        Title="Full View" ResizeMode="CanResizeWithGrip" Background="#A5A9B8" Width="600" Height="600" Loaded="Window_Loaded">
+        Title="Forces" ResizeMode="CanResizeWithGrip" Background="#969C91" Width="900" Height="900" Loaded="Window_Loaded">
     <Grid>
 
         <Border Name="grdViewPort" Focusable="True" AllowDrop="True" Background="Transparent">

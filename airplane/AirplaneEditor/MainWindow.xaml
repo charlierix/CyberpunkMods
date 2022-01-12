@@ -45,6 +45,7 @@
             <!-- Wireframe parts, shows center of mass and inertia tensor -->
             <!-- Opaque parts, shows forces.  Need a windspeed slider and trackball.  Also toggles to show force of engines -->
             <Button Content="viewer" Click="Viewer_Click"/>
+            <Button Content="forces" Click="ForcesViewer_Click"/>
             <Button IsEnabled="False" Content="add editor view"/>
             <Button Content="test" Click="Test_Click"/>
         </StackPanel>
