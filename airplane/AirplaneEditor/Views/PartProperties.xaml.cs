@@ -18,7 +18,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AirplaneEditor
+namespace AirplaneEditor.Views
 {
     public partial class PartProperties : UserControl
     {

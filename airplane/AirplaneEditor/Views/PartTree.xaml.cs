@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AirplaneEditor
+namespace AirplaneEditor.Views
 {
     public partial class PartTree : UserControl
     {

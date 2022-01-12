@@ -18,7 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 
-namespace AirplaneEditor
+namespace AirplaneEditor.Views
 {
     /// <summary>
     /// This shows the plane, as well as extra info about the plane
