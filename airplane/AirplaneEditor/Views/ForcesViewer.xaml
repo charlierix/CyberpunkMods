@@ -5,14 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AirplaneEditor.Views"
         mc:Ignorable="d"
-        Title="Forces" ResizeMode="CanResizeWithGrip" Background="#969C91" Width="900" Height="900" Loaded="Window_Loaded">
+        Title="Forces" ResizeMode="CanResizeWithGrip" Width="900" Height="900" Loaded="Window_Loaded">
+    <Window.Background>
+        <!-- Background="#969C91" -->
+        <LinearGradientBrush StartPoint="0,0" EndPoint=".3,1" >
+            <LinearGradientBrush.GradientStops>
+                <GradientStop Offset="0" Color="#959C91"/>
+                <GradientStop Offset=".1" Color="#8E9687"/>
+                <GradientStop Offset=".6" Color="#868A83"/>
+                <GradientStop Offset=".85" Color="#949689"/>
+                <GradientStop Offset="1" Color="#9C9C91"/>
+            </LinearGradientBrush.GradientStops>
+        </LinearGradientBrush>
+    </Window.Background>
+
     <Grid>
 
         <Border Name="grdViewPort" Focusable="True" AllowDrop="True" Background="Transparent">
             <Viewport3D Name="_viewport" IsHitTestVisible="False">
                 <!-- Camera -->
                 <Viewport3D.Camera>
-                    <PerspectiveCamera x:Name="_camera" Position="0,0,12" LookDirection="0,0,-1" UpDirection="0,1,0" FieldOfView="45"/>
+                    <PerspectiveCamera x:Name="_camera" Position="0,-12,0" LookDirection="0,1,0" UpDirection="0,0,1" FieldOfView="45"/>
+                    <!--<PerspectiveCamera x:Name="_camera" Position="0,0,12" LookDirection="-0.3,1,0" UpDirection="0.2,0,1" FieldOfView="45"/>-->
                 </Viewport3D.Camera>
                 <!-- Lights -->
                 <ModelVisual3D>
@@ -25,6 +39,33 @@
                     </ModelVisual3D.Content>
                 </ModelVisual3D>
             </Viewport3D>
+        </Border>
+
+
+        <!-- Flow Orientation -->
+        <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Transparent" Margin="16">
+
+            <!-- LABEL: Wind Direction -->
+            
+            <Grid Name="grdFlowRotateViewport" Background="Transparent" MinWidth="180" MinHeight="180">
+                <Viewport3D Name="_viewportFlowRotate" IsHitTestVisible="False">
+                    <Viewport3D.Camera>
+                        <PerspectiveCamera x:Name="_cameraFlowRotate" Position="0,0,3" LookDirection="0,0,-1" UpDirection="0,1,0" FieldOfView="45"/>
+                    </Viewport3D.Camera>
+                    <ModelVisual3D>
+                        <ModelVisual3D.Content>
+                            <Model3DGroup>
+                                <AmbientLight Color="DimGray" />
+                                <DirectionalLight x:Name="_lightFlow1" Color="White" Direction="1,-1,-1" />
+                                <!--<DirectionalLight x:Name="_lightFlow2" Color="#303030" Direction="-1,1,1" />-->
+                            </Model3DGroup>
+                        </ModelVisual3D.Content>
+                    </ModelVisual3D>
+                </Viewport3D>
+            </Grid>
+
+            <!-- Buttons: X,Y,Z,-X,-Y,-Z -->
+            
         </Border>
 
     </Grid>
