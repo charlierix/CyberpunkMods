@@ -70,6 +70,34 @@ namespace AirplaneEditor
             return (root, model.Name ?? "");
         }
 
+        /// <summary>
+        /// This is needed in a couple places, so putting it in this util
+        /// </summary>
+        /// <param name="position">Position of the part relative to the parent</param>
+        /// <param name="orientation">Orientation of the part relative to the parent</param>
+        /// <param name="parent">This would be the rigid body's transform (or whatever transform the part is tied to)</param>
+        public static (Transform3D to_world, Transform3D to_local) GetTransforms(Point3D position, Quaternion orientation, Transform3D parent = null)
+        {
+            var to_world = new Transform3DGroup();
+
+            if(parent != null)
+                to_world.Children.Add(parent);
+
+            if (!orientation.IsIdentity)
+                to_world.Children.Add(new RotateTransform3D(new QuaternionRotation3D(orientation)));
+
+            if (!position.IsNearZero())
+                to_world.Children.Add(new TranslateTransform3D(position.ToVector()));
+
+            Matrix3D matrix = to_world.Value;
+            matrix.Invert();
+
+            var to_local = new Transform3DGroup();
+            to_local.Children.Add(new MatrixTransform3D(matrix));
+
+            return (to_world, to_local);
+        }
+
         #region Private Methods
 
         private static void BuildModel_AddPart(PlanePart_VM part, Transform3D parent_transform, int? parent_id, List<Util_InertiaTensor.ShapeBase> shapes, List<PlanePart_Serialization> parts_serialize, List<PlanePart_Wing> wings, List<PlanePart_Thrust> thrusters, ref int next_id)

@@ -1,4 +1,5 @@
-﻿using AirplaneEditor.Models;
+﻿using AirplaneEditor.Airplane;
+using AirplaneEditor.Models;
 using AirplaneEditor.Models_viewmodels;
 using Game.Core;
 using Game.Math_WPF.Mathematics;
@@ -22,6 +23,8 @@ using System.Windows.Threading;
 
 namespace AirplaneEditor.Views
 {
+    //TODO: Have an option for the plane to be tied to a couple ropes.  This will need a RigidBody and AircraftPhysics
+
     public partial class ForcesViewer : Window
     {
         #region record: WorkResult
@@ -38,6 +41,8 @@ namespace AirplaneEditor.Views
         {
             public PlanePart_Wing Model { get; init; }
             public Visual3D Visual { get; init; }
+
+            public AeroSurface Aero { get; init; }
         }
 
         #endregion
@@ -216,7 +221,6 @@ namespace AirplaneEditor.Views
 
         private readonly List<FluidVisual> _fluidVisuals = new List<FluidVisual>();
 
-        private List<ModelVisual3D> _flowOrientationVisuals = new List<ModelVisual3D>();
         private TrackballGrabber _flowOrientationTrackball = null;
 
         private double _airSpeed = 6;
@@ -365,6 +369,8 @@ namespace AirplaneEditor.Views
             try
             {
                 UpdateFlowLines(_update_timer.Interval.TotalSeconds);
+
+                UpdateAeroForces();
             }
             catch (Exception ex)
             {
@@ -381,6 +387,35 @@ namespace AirplaneEditor.Views
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), this.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ResetWind_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //_flowOrientationTrackball.Transform = GetDefaultFlowTrackballTransform();
+                //_flowOrientationTrackball.Transform = new RotateTransform3D(new QuaternionRotation3D(Quaternion.Identity));
+                //_flowOrientationTrackball.Direction = _default_direction;
+                _flowOrientationTrackball.ResetToDefault();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void ResetView_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // These values are the same has how it's set up in the xaml
+                _camera.Position = new Point3D(0, -12, 0);
+                _camera.LookDirection = new Vector3D(0, 1, 0);
+                _camera.UpDirection = new Vector3D(0, 0, 1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -428,11 +463,9 @@ namespace AirplaneEditor.Views
 
         private WingVisual CreateWingVisual(PlanePart_Wing wing)
         {
-            var transform = new Transform3DGroup();
-            transform.Children.Add(new RotateTransform3D(new QuaternionRotation3D(wing.Orientation)));
-            transform.Children.Add(new TranslateTransform3D(wing.Position.ToVector()));
+            var transforms = Util_ToModel.GetTransforms(wing.Position, wing.Orientation);
 
-            var visual = Util_Visuals.Get_Wing(transform).Visual;
+            var visual = Util_Visuals.Get_Wing(transforms.to_world).Visual;
 
             _viewport.Children.Add(visual);
 
@@ -440,10 +473,13 @@ namespace AirplaneEditor.Views
             //TODO: visual for force at point
 
 
+            AeroSurface aero = new AeroSurface(wing.ToAeroConfig(), wing.Position, transforms.to_world, transforms.to_local);
+
             return new WingVisual()
             {
                 Model = wing,
                 Visual = visual,
+                Aero = aero,
             };
         }
 
@@ -466,25 +502,26 @@ namespace AirplaneEditor.Views
 
         private void SetupFlowTrackball()
         {
-            // Major arrow along x
-            ModelVisual3D visual = new ModelVisual3D();
-            visual.Content = TrackballGrabber.GetMajorArrow(Axis.X, false, _colors.TrackballAxisMajor, _colors.TrackballAxisSpecular);
+            // NOTE: The trackball just stores a quaternion under the hood (defaults to identity).  It's up to the client to make sure that
+            // _cameraFlowRotate's position/direction are pointed correctly.  Also that the visuals are created along the correct axis, as
+            // well as default_direction
 
-            _viewportFlowRotate.Children.Add(visual);
-            _flowOrientationVisuals.Add(visual);
+            var default_direction = new DoubleVector_wpf(new Vector3D(0, -1, 0), new Vector3D(0, 0, 1));
 
-            // Create the trackball
-            _flowOrientationTrackball = new TrackballGrabber(grdFlowRotateViewport, _viewportFlowRotate, 1d, _colors.TrackballGrabberHoverLight);
-            _flowOrientationTrackball.SyncedLights.Add(_lightFlow1);
-
-            _flowOrientationTrackball.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0,0,1), 90));      // by default, it's -x.  Change it to -y
-
-            _flowOrientationTrackball.RotationChanged += new EventHandler(FlowOrientationTrackball_RotationChanged);
+            // Big purple arrow
+            var permanentVisuals = new List<Visual3D>();
+            permanentVisuals.Add(new ModelVisual3D() { Content = TrackballGrabber.GetMajorArrow(Axis.Y, false, _colors.TrackballAxisMajor, _colors.TrackballAxisSpecular) });
 
             // Faint lines
-            _flowOrientationTrackball.HoverVisuals.Add(TrackballGrabber.GetGuideLine(Axis.X, true, _colors.TrackballAxisLine));
-            _flowOrientationTrackball.HoverVisuals.Add(TrackballGrabber.GetGuideLineDouble(Axis.Y, _colors.TrackballAxisLine));
-            _flowOrientationTrackball.HoverVisuals.Add(TrackballGrabber.GetGuideLineDouble(Axis.Z, _colors.TrackballAxisLine));
+            var hoverVisuals = new List<Visual3D>();
+            hoverVisuals.Add(TrackballGrabber.GetGuideLine(Axis.Y, true, _colors.TrackballAxisLine));
+            hoverVisuals.Add(TrackballGrabber.GetGuideLineDouble(Axis.X, _colors.TrackballAxisLine));
+            hoverVisuals.Add(TrackballGrabber.GetGuideLineDouble(Axis.Z, _colors.TrackballAxisLine));
+
+            // Create the trackball
+            _flowOrientationTrackball = new TrackballGrabber(grdFlowRotateViewport, _viewportFlowRotate, permanentVisuals.ToArray(), hoverVisuals.ToArray(), 1d, _colors.TrackballGrabberHoverLight, default_direction);
+
+            _flowOrientationTrackball.RotationChanged += new EventHandler(FlowOrientationTrackball_RotationChanged);
         }
 
         private void UpdateFlowLines(double elapsedTime)
@@ -520,7 +557,7 @@ namespace AirplaneEditor.Views
                 Point3D modelFrom = new Point3D(-length, 0, 0);
                 Point3D modelTo = new Point3D(length, 0, 0);
 
-                Color color = _colors.FluidLine;		// the property get returns a random color each time
+                Color color = _colors.FluidLine;        // the property get returns a random color each time
 
                 Point3D position = Math3D.GetRandomVector_Spherical(FLUIDVISUALMAXPOS).ToPoint();
 
@@ -570,7 +607,34 @@ namespace AirplaneEditor.Views
 
         private Vector3D GetWorldFlow()
         {
-            return _flowOrientationTrackball.Transform.Transform(new Vector3D(-_airSpeed, 0, 0));       // the trackball is set up for -x.  When instantiated, transform was applied to make it -y
+            //Vector3D retVal = new Vector3D(-_airSpeed, 0, 0);       // the trackball is set up for -x
+
+            //retVal = _flowOrientationTrackball.Transform.Transform(retVal);     // apply whatever rotation the trackball has
+
+            //retVal = _trackballToWorldTransform.Transform(retVal);      // when instantiated, transform was applied to make trackball start as +z.  Change that +z into -y
+
+            //return retVal;
+
+            return _flowOrientationTrackball.Direction.Standard;
+        }
+
+        #endregion
+        #region Private Methods - aero forces
+
+        private void UpdateAeroForces()
+        {
+            //Vector3D worldFlow = GetWorldFlow();
+
+            //foreach (WingVisual wing in _wingVisuals)
+            //{
+            //    wing.Aero.CalculateForces(worldFlow, _airDensity, wing.);
+
+
+
+
+
+
+            //}
         }
 
         #endregion

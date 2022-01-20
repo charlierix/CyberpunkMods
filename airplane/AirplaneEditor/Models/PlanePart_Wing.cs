@@ -27,5 +27,22 @@ namespace AirplaneEditor.Models
         public double stallAngleLow { get; init; } = -15;
 
         public double flapFraction { get; init; } = 0;
+
+        //TODO: AeroSurfaceConfig and PlanePart_Wing are nearly identical.  c# will keep them separate so it's closer to the
+        //original code, but the lua version should probably just have one class
+        public AirplaneEditor.Airplane.AeroSurfaceConfig ToAeroConfig()
+        {
+            return new AirplaneEditor.Airplane.AeroSurfaceConfig()
+            {
+                liftSlope = liftSlope,
+                skinFriction = skinFriction,
+                zeroLiftAoA = zeroLiftAoA,
+                stallAngleHigh = stallAngleHigh,
+                stallAngleLow = stallAngleLow,
+                chord = chord,
+                flapFraction = flapFraction,
+                span = span,
+            };
+        }
     }
 }
