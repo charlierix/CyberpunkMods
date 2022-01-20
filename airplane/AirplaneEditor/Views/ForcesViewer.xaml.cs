@@ -223,8 +223,8 @@ namespace AirplaneEditor.Views
 
         private TrackballGrabber _flowOrientationTrackball = null;
 
-        private double _airSpeed = 6;
-        private double _airDensity = 1.2;
+        private double _airSpeed = 8;
+        private double _airDensity = 5;
 
         #endregion
 
@@ -394,10 +394,8 @@ namespace AirplaneEditor.Views
         {
             try
             {
-                //_flowOrientationTrackball.Transform = GetDefaultFlowTrackballTransform();
-                //_flowOrientationTrackball.Transform = new RotateTransform3D(new QuaternionRotation3D(Quaternion.Identity));
-                //_flowOrientationTrackball.Direction = _default_direction;
                 _flowOrientationTrackball.ResetToDefault();
+                VelocityDensityChanged();
             }
             catch (Exception ex)
             {
@@ -542,11 +540,22 @@ namespace AirplaneEditor.Views
                 }
             }
 
-            int maxFluidVisuals = Convert.ToInt32(NUMFLUIDVISUALS * _airSpeed);
+            int maxFluidVisuals = Convert.ToInt32(NUMFLUIDVISUALS * _airDensity);
             if (_fluidVisuals.Count < maxFluidVisuals)
             {
                 AddFluidVisuals(maxFluidVisuals - _fluidVisuals.Count);
             }
+
+
+
+            //// Update the flow line speed
+            //Vector3D worldFlow = GetWorldFlow();
+            //foreach (FluidVisual fluidLine in _fluidVisuals)
+            //{
+            //    fluidLine.WorldFlow = worldFlow;
+            //}
+
+
         }
 
         private void AddFluidVisuals(int count)
@@ -607,15 +616,7 @@ namespace AirplaneEditor.Views
 
         private Vector3D GetWorldFlow()
         {
-            //Vector3D retVal = new Vector3D(-_airSpeed, 0, 0);       // the trackball is set up for -x
-
-            //retVal = _flowOrientationTrackball.Transform.Transform(retVal);     // apply whatever rotation the trackball has
-
-            //retVal = _trackballToWorldTransform.Transform(retVal);      // when instantiated, transform was applied to make trackball start as +z.  Change that +z into -y
-
-            //return retVal;
-
-            return _flowOrientationTrackball.Direction.Standard;
+            return _flowOrientationTrackball.Direction.Standard * _airSpeed;
         }
 
         #endregion
