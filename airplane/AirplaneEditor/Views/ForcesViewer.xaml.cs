@@ -192,9 +192,15 @@ namespace AirplaneEditor.Views
             public DiffuseMaterial TrackballAxisMajor = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(255, 147, 98, 229)));
             public DiffuseMaterial TrackballAxisMinor = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(255, 127, 112, 153)));
             public Color TrackballAxisLine = Color.FromArgb(96, 117, 108, 97);
-            public SpecularMaterial TrackballAxisSpecular = new SpecularMaterial(Brushes.White, 100d);
+            public SpecularMaterial TrackballAxisSpecular = new SpecularMaterial(UtilityWPF.BrushFromHex("3DDD"), 6d);
 
             public Color TrackballGrabberHoverLight = Color.FromArgb(255, 74, 37, 138);
+
+            public Color Force = UtilityWPF.ColorFromHex("F09C35");
+            public Color Drag = UtilityWPF.ColorFromHex("DE432F");
+            public Color Lift = UtilityWPF.ColorFromHex("F2E963");
+
+            private Color cyan = UtilityWPF.ColorFromHex("66F4FA");     // maybe use for torque?
 
             //public Color BlockedCell = UtilityWPF.ColorFromHex("60BAE5B1");
             //public Color FieldBoundry = UtilityWPF.ColorFromHex("40B5C9B1");
@@ -251,6 +257,10 @@ namespace AirplaneEditor.Views
 
         #endregion
 
+        private BillboardLine3DSet _forceLines = null;
+        private BillboardLine3DSet _dragLines = null;
+        private BillboardLine3DSet _liftLines = null;
+
         #region Event Listeners
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -268,6 +278,27 @@ namespace AirplaneEditor.Views
                 };
                 _trackball.Mappings.AddRange(TrackBallMapping.GetPrebuilt(TrackBallMapping.PrebuiltMapping.MouseComplete));
                 //_trackball.GetOrbitRadius += new GetOrbitRadiusHandler(Trackball_GetOrbitRadius);
+
+                _forceLines = new BillboardLine3DSet()
+                {
+                    Color = _colors.Force,
+                    IsReflectiveColor = false,
+                };
+                _viewport.Children.Add(_forceLines);
+
+                _dragLines = new BillboardLine3DSet()
+                {
+                    Color = _colors.Drag,
+                    IsReflectiveColor = false,
+                };
+                _viewport.Children.Add(_dragLines);
+
+                _liftLines = new BillboardLine3DSet()
+                {
+                    Color = _colors.Lift,
+                    IsReflectiveColor = false,
+                };
+                _viewport.Children.Add(_liftLines);
 
                 SetupFlowTrackball();
 
@@ -471,7 +502,7 @@ namespace AirplaneEditor.Views
             //TODO: visual for force at point
 
 
-            AeroSurface aero = new AeroSurface(wing.ToAeroConfig(), wing.Position, transforms.to_world, transforms.to_local);
+            AeroSurface aero = new AeroSurface(wing.ToAeroConfig(), transforms.to_world, transforms.to_local);
 
             return new WingVisual()
             {
@@ -624,18 +655,35 @@ namespace AirplaneEditor.Views
 
         private void UpdateAeroForces()
         {
-            //Vector3D worldFlow = GetWorldFlow();
+            Vector3D worldFlow = GetWorldFlow();
 
-            //foreach (WingVisual wing in _wingVisuals)
-            //{
-            //    wing.Aero.CalculateForces(worldFlow, _airDensity, wing.);
+            _forceLines.BeginAddingLines();     // billboard set is designed for this rapid addition/removal.  It reuses models under the hood
+            _dragLines.BeginAddingLines();
+            _liftLines.BeginAddingLines();
 
+            Point3D rigidbody_centermass = new Point3D();
 
+            foreach (WingVisual wing in _wingVisuals)
+            {
+                Point3D center = wing.Aero.Position_world;        // the point is twice as far as model's.  Probably: the transform includes parent+child, then child point is run through the transform, instead of passing zero to the transform
 
+                //BiVector3 forces = chkDrag.IsChecked.Value ?
+                //    wing.Aero.CalculateForces_DRAG(worldFlow, _airDensity, wing.Aero.Position_world.ToVector()) :
+                //    wing.Aero.CalculateForces_LIFT(worldFlow, _airDensity, wing.Aero.Position_world.ToVector());
 
+                //_forceLines.AddLine(center, center + forces.p, 0.07);
 
+                var forces = wing.Aero.CalculateForces_Attempt2(worldFlow, _airDensity, wing.Aero.Position_world - rigidbody_centermass);
 
-            //}
+                _forceLines.AddLine(center, center + forces.force, 0.07);
+
+                _dragLines.AddLine(center, center + forces.drag, 0.045);
+                _liftLines.AddLine(center, center + forces.lift, 0.045);
+            }
+
+            _forceLines.EndAddingLines();
+            _dragLines.EndAddingLines();
+            _liftLines.EndAddingLines();
         }
 
         #endregion

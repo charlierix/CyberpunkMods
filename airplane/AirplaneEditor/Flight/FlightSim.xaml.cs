@@ -115,7 +115,7 @@ namespace AirplaneEditor.Flight
             {
                 var transforms = Util_ToModel.GetTransforms(wing.Position, wing.Orientation, body_toWorld);
 
-                retVal.Add(new AeroSurface(wing.ToAeroConfig(), wing.Position, transforms.to_world, transforms.to_local));
+                retVal.Add(new AeroSurface(wing.ToAeroConfig(), transforms.to_world, transforms.to_local));
             }
 
             return retVal.ToArray();
