@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Math_WPF.Mathematics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,14 @@ namespace AirplaneEditor.Airplane
 {
     public record AeroSurfaceConfig
     {
+        /// <summary>
+        /// This is the wing's lift when thickness is maxxed out
+        /// </summary>
+        /// <remarks>
+        /// Thickness is stored from 0 to 1, lift is just this constant times that percent
+        /// </remarks>
+        public const double MAX_LIFT = -6;
+
         /// <summary>
         /// Depth (not thickness)
         /// </summary>
@@ -70,6 +79,15 @@ namespace AirplaneEditor.Airplane
                 //    config.span / config.chord :
                 //    config.aspectRatio,
             };
+        }
+
+        public static double Convert_ThicknessToLift(double thickness)
+        {
+            return UtilityMath.GetScaledValue_Capped(0, MAX_LIFT, 0, 1, thickness);
+        }
+        public static double Convert_LiftToThickness(double lift)
+        {
+            return UtilityMath.GetScaledValue_Capped(0, 1, 0, MAX_LIFT, lift);
         }
     }
 }

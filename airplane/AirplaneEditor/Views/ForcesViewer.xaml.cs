@@ -225,6 +225,10 @@ namespace AirplaneEditor.Views
 
         private readonly List<WingVisual> _wingVisuals = new List<WingVisual>();
 
+        private BillboardLine3DSet _forceLines = null;
+        private BillboardLine3DSet _dragLines = null;
+        private BillboardLine3DSet _liftLines = null;
+
         private readonly List<FluidVisual> _fluidVisuals = new List<FluidVisual>();
 
         private TrackballGrabber _flowOrientationTrackball = null;
@@ -256,10 +260,6 @@ namespace AirplaneEditor.Views
         }
 
         #endregion
-
-        private BillboardLine3DSet _forceLines = null;
-        private BillboardLine3DSet _dragLines = null;
-        private BillboardLine3DSet _liftLines = null;
 
         #region Event Listeners
 
@@ -494,9 +494,11 @@ namespace AirplaneEditor.Views
         {
             var transforms = Util_ToModel.GetTransforms(wing.Position, wing.Orientation);
 
-            var visual = Util_Visuals.Get_Wing(transforms.to_world).Visual;
+            var visual = Util_Visuals.Get_Wing(transforms.to_world);
+            visual.Scale.ScaleX = wing.span;
+            visual.Scale.ScaleY = wing.chord;
 
-            _viewport.Children.Add(visual);
+            _viewport.Children.Add(visual.Visual);
 
 
             //TODO: visual for force at point
@@ -507,7 +509,7 @@ namespace AirplaneEditor.Views
             return new WingVisual()
             {
                 Model = wing,
-                Visual = visual,
+                Visual = visual.Visual,
                 Aero = aero,
             };
         }
@@ -666,12 +668,6 @@ namespace AirplaneEditor.Views
             foreach (WingVisual wing in _wingVisuals)
             {
                 Point3D center = wing.Aero.Position_world;        // the point is twice as far as model's.  Probably: the transform includes parent+child, then child point is run through the transform, instead of passing zero to the transform
-
-                //BiVector3 forces = chkDrag.IsChecked.Value ?
-                //    wing.Aero.CalculateForces_DRAG(worldFlow, _airDensity, wing.Aero.Position_world.ToVector()) :
-                //    wing.Aero.CalculateForces_LIFT(worldFlow, _airDensity, wing.Aero.Position_world.ToVector());
-
-                //_forceLines.AddLine(center, center + forces.p, 0.07);
 
                 var forces = wing.Aero.CalculateForces_Attempt2(worldFlow, _airDensity, wing.Aero.Position_world - rigidbody_centermass);
 

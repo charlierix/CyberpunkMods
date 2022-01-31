@@ -189,6 +189,24 @@ namespace AirplaneEditor.Views
                 MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void Part_SizeChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (sender is PlanePart_VM part)
+                {
+                    PartVisual visual = FindParentVisual(part);
+                    if (visual == null)
+                        return;
+
+                    AdjustScale(visual, part);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         #endregion
 
@@ -255,6 +273,8 @@ namespace AirplaneEditor.Views
 
             part_visual.Rotate.Quaternion = part.Orientation;
 
+            AdjustScale(part_visual, part);
+
             _parts.Add(part_visual);
 
             _viewport.Children.Add(part_visual.Visual);
@@ -288,13 +308,16 @@ namespace AirplaneEditor.Views
             part.Part.IsCenterlineChanged += Part_IsCenterlineChanged;
             part.Part.PositionChanged += Part_PositionChanged;
             part.Part.RotationChanged += Part_RotationChanged;
+            part.Part.SizeChanged += Part_SizeChanged;
         }
+
         private void UnhookEvents(PartVisual part)
         {
             part.Part.Children.CollectionChanged -= Children_CollectionChanged;
             part.Part.IsCenterlineChanged -= Part_IsCenterlineChanged;
             part.Part.PositionChanged -= Part_PositionChanged;
             part.Part.RotationChanged -= Part_RotationChanged;
+            part.Part.SizeChanged -= Part_SizeChanged;
         }
 
         private void CreateStaticVisuals()
@@ -319,6 +342,15 @@ namespace AirplaneEditor.Views
             }
 
             return null;
+        }
+
+        private static void AdjustScale(PartVisual visual, PlanePart_VM part)
+        {
+            if(part is PlanePart_Wing_VM wing)
+            {
+                visual.Scale.ScaleX = wing.Span;
+                visual.Scale.ScaleY = wing.Chord;
+            }
         }
 
         #endregion

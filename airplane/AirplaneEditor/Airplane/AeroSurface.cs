@@ -244,10 +244,18 @@ namespace AirplaneEditor.Airplane
 
 
 
+
+
+
+
             // Calculating air velocity relative to the surface's coordinate system.
             // Z component of the velocity is discarded. 
             Vector3D airVelocity_local = _transform_tolocal.Transform(airVelocity_world);       //NOTE: transforming vectors only does rotation
             airVelocity_local = new Vector3D(airVelocity_local.X, airVelocity_local.Y, 0);
+
+
+
+
 
             Vector3D dragDirection = _transform_toworld.Transform(airVelocity_local.ToUnit());
 
@@ -287,14 +295,10 @@ namespace AirplaneEditor.Airplane
 
 
 
+            // I don't know why unity threw out Z.  Why is unity not considering Z for angle of attack?
+            // This should be taking max(x, y) compared with z --- or something like that, but definitely can't figure out angle of attack when only looking at the components in the wing's plane
 
-
-            // X and Y are reversed from what unity has.  It might be because the wings here have the span rotated into
-            // the wind (so the wing is rotated 90 degrees from what it should be)
-            //
-            // The best way to test is to finish the property panel so that span, coord, etc can be modified by textboxes
-            double angleOfAttack = Math.Atan2(airVelocity_local.Y, -airVelocity_local.X);
-
+            double angleOfAttack = Math.Atan2(airVelocity_local.X, -airVelocity_local.Y);
 
 
 

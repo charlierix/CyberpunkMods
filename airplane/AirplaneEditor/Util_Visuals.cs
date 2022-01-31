@@ -54,7 +54,7 @@ namespace AirplaneEditor
         public static CreatedVisual Get_Wing(Transform3D parent_transform = null)
         {
             //const double HALF_HEIGHT = 0.05;
-            double HALF_HEIGHT = AppSettings.Wing_Thickness / 2;
+            double HALF_HEIGHT = AppSettings.Wing_Thickness_Visual / 2;
 
             MaterialGroup material = new MaterialGroup();
             material.Children.Add(new DiffuseMaterial(UtilityWPF.BrushFromHex("D8D8D8")));
@@ -171,6 +171,9 @@ namespace AirplaneEditor
 
         #region Private Methods
 
+
+        //TODO: This needs some work.  The child's rotation probably needs to be aplied be for the parent's translation (but after parent's rotation)
+
         private static (Transform3DGroup transform, TranslateTransform3D translate, QuaternionRotation3D rotate, ScaleTransform3D scale) GetTransform(Transform3D parent_transform = null)
         {
             var translate = new TranslateTransform3D(0, 0, 0);
@@ -179,14 +182,44 @@ namespace AirplaneEditor
 
             var transform = new Transform3DGroup();
 
-            if (parent_transform != null)
-                transform.Children.Add(parent_transform);
-
             transform.Children.Add(scale);
+
+            if (parent_transform != null)
+                transform.Children.Add(GetModifiedTransform_NoScale(parent_transform));     // can't include scale from the parent
+
             transform.Children.Add(new RotateTransform3D(rotate));
             transform.Children.Add(translate);
 
             return (transform, translate, rotate, scale);
+        }
+
+        /// <summary>
+        /// Need to omit scale from the parent, or it will affect the child's size
+        /// </summary>
+        private static Transform3D GetModifiedTransform_NoScale(Transform3D transform)
+        {
+            if(transform is Transform3DGroup group)
+            {
+                var retVal = new Transform3DGroup();
+
+                foreach(Transform3D child in group.Children)
+                {
+                    var to_add = GetModifiedTransform_NoScale(child);
+
+                    if (to_add != null)
+                        retVal.Children.Add(to_add);
+                }
+
+                return retVal;
+            }
+            else if(transform is ScaleTransform3D)
+            {
+                return null;
+            }
+            else
+            {
+                return transform;
+            }
         }
 
         #endregion

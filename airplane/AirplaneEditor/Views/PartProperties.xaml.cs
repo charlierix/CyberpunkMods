@@ -26,7 +26,7 @@ namespace AirplaneEditor.Views
 
         private const string TITLE = "Part Properties";
 
-        private readonly DropShadowEffect _errorEffect;
+        private readonly DropShadowEffect _errorEffect = GetErrorEffect();
 
         private PlanePart_VM _part = null;
 
@@ -39,15 +39,6 @@ namespace AirplaneEditor.Views
         public PartProperties()
         {
             InitializeComponent();
-
-            _errorEffect = new DropShadowEffect()
-            {
-                Color = UtilityWPF.ColorFromHex("C02020"),
-                Direction = 0,
-                ShadowDepth = 0,
-                BlurRadius = 8,
-                Opacity = .8,
-            };
         }
 
         #endregion
@@ -58,6 +49,7 @@ namespace AirplaneEditor.Views
         {
             try
             {
+                Blackboard.Instance.NewPlane += Blackboard_NewPlane;
                 Blackboard.Instance.SelectedPartChanged += Blackboard_SelectedPartChanged;
 
                 Blackboard_SelectedPartChanged(this, null);
@@ -68,6 +60,18 @@ namespace AirplaneEditor.Views
             }
         }
 
+        private void Blackboard_NewPlane(object sender, EventArgs e)
+        {
+            try
+            {
+                _part = null;
+                panel_base.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private void Blackboard_SelectedPartChanged(object sender, PlanePart_VM e)
         {
             try
@@ -82,38 +86,11 @@ namespace AirplaneEditor.Views
 
                 panel_base.Visibility = Visibility.Visible;
 
-                _isSettingValues = true;
+                // Sync this control's properties to the part
+                PartChanged_CommonProps();
 
-                lblPartType.Text = _part.PartType.ToString();
-                txtName.Text = _part.Name;
-
-                chkIsCenterline.IsChecked = _part.IsCenterline;
-
-                txtPosX.Text = FormatNumber(_part.Position.X);
-                txtPosX.Effect = null;
-                txtPosY.Text = FormatNumber(_part.Position.Y);
-                txtPosY.Effect = null;
-                txtPosZ.Text = FormatNumber(_part.Position.Z);
-                txtPosZ.Effect = null;
-
-                if (_part.Orientation.IsIdentity)
-                {
-                    txtRotX.Text = "0";
-                    txtRotY.Text = "0";
-                    txtRotZ.Text = "0";
-                    txtAngle.Text = "0";
-                }
-                else
-                {
-                    Vector3D axis = _part.Orientation.Axis;
-                    txtRotX.Text = FormatNumber(axis.X);
-                    txtRotY.Text = FormatNumber(axis.Y);
-                    txtRotZ.Text = FormatNumber(axis.Z);
-
-                    txtAngle.Text = FormatNumber(_part.Orientation.Angle);
-                }
-
-                _isSettingValues = false;
+                // Show the type specific control, and tie it to the part
+                PartChange_TypeSpecific();
             }
             catch (Exception ex)
             {
@@ -121,6 +98,7 @@ namespace AirplaneEditor.Views
             }
         }
 
+        //TODO: Need proper binding.  The vm could change elsewhere, these controls need to reflect that
         private void txtName_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -199,14 +177,9 @@ namespace AirplaneEditor.Views
 
         #endregion
 
-        #region Private Methods
+        #region Public Methods
 
-        private static string FormatNumber(double value)
-        {
-            return Math.Round(value, 2).ToString();
-        }
-
-        private static double? ParseTextboxNumber(TextBox textbox, Effect error_effect)
+        public static double? ParseTextboxNumber(TextBox textbox, Effect error_effect)
         {
             if (double.TryParse(textbox.Text, out double value))
             {
@@ -218,6 +191,69 @@ namespace AirplaneEditor.Views
                 textbox.Effect = error_effect;
                 return null;
             }
+        }
+
+        public static DropShadowEffect GetErrorEffect()
+        {
+            return new DropShadowEffect()
+            {
+                Color = UtilityWPF.ColorFromHex("C02020"),
+                Direction = 0,
+                ShadowDepth = 0,
+                BlurRadius = 8,
+                Opacity = .8,
+            };
+        }
+
+        public static string FormatNumber(double value)
+        {
+            return Math.Round(value, 2).ToString();
+        }
+
+        #endregion
+        #region Private Methods
+
+        private void PartChanged_CommonProps()
+        {
+            _isSettingValues = true;
+
+            lblPartType.Text = _part.PartType.ToString();
+            txtName.Text = _part.Name;
+
+            chkIsCenterline.IsChecked = _part.IsCenterline;
+
+            txtPosX.Text = FormatNumber(_part.Position.X);
+            txtPosX.Effect = null;
+            txtPosY.Text = FormatNumber(_part.Position.Y);
+            txtPosY.Effect = null;
+            txtPosZ.Text = FormatNumber(_part.Position.Z);
+            txtPosZ.Effect = null;
+
+            if (_part.Orientation.IsIdentity)
+            {
+                txtRotX.Text = "0";
+                txtRotY.Text = "0";
+                txtRotZ.Text = "0";
+                txtAngle.Text = "0";
+            }
+            else
+            {
+                Vector3D axis = _part.Orientation.Axis;
+                txtRotX.Text = FormatNumber(axis.X);
+                txtRotY.Text = FormatNumber(axis.Y);
+                txtRotZ.Text = FormatNumber(axis.Z);
+
+                txtAngle.Text = FormatNumber(_part.Orientation.Angle);
+            }
+
+            _isSettingValues = false;
+        }
+        private void PartChange_TypeSpecific()
+        {
+            typed_panel.Content = null;
+
+            if (_part is PlanePart_Wing_VM wing)
+                typed_panel.Content = new PartProperties_Wing(wing);
         }
 
         #endregion

@@ -19,9 +19,13 @@ namespace AirplaneEditor.Models
         public double chord { get; init; } = 1;
         public double span { get; init; } = 1;
 
+        /// <summary>
+        /// If this is zero, there will be no lift when the wing is straight into the wind.  -3 for a normal wing
+        /// </summary>
+        public double zeroLiftAoA { get; init; } = 0;
+
         public double liftSlope { get; init; } = 6.28;
         public double skinFriction { get; init; } = 0.02;
-        public double zeroLiftAoA { get; init; } = 0;
 
         public double stallAngleHigh { get; init; } = 15;
         public double stallAngleLow { get; init; } = -15;

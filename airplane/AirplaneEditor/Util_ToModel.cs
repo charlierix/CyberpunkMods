@@ -244,7 +244,7 @@ namespace AirplaneEditor
                 {
                     LocalPose = local_pose,
                     density = AppSettings.Density_Wing,
-                    HalfWidths = new Vector3D(wing.Span / 2, wing.Chord / 2, AppSettings.Wing_Thickness / 2),
+                    HalfWidths = new Vector3D(wing.Span / 2, wing.Chord / 2, AppSettings.Wing_Thickness_Visual / 2),
                 };
 
             else if (part is PlanePart_Engine_VM engine)

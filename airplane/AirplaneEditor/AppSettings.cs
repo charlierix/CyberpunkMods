@@ -29,7 +29,7 @@ namespace AirplaneEditor
         public static double Density_Bomb => Get_Float("density_bomb");
         public static double Density_Gun => Get_Float("density_gun");
 
-        public static double Wing_Thickness => Get_Float("wing_thickness");
+        public static double Wing_Thickness_Visual => Get_Float("wing_thickness_visual");
 
         public static double Engine_Radius => Get_Float("engine_radius");
 

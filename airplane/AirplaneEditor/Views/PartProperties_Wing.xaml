@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="AirplaneEditor.Views.PartProperties_Wing"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AirplaneEditor.Views"
+             mc:Ignorable="d" 
+             d:DesignWidth="400" d:DesignHeight="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" TextBox.TextChanged="TextBox_TextChanged">
+            <TextBlock Text="Span"/>
+            <TextBox x:Name="txtSpan" MouseEnter="txtSpan_MouseEnter" MouseLeave="txtSpan_MouseLeave"/>
+
+            <TextBlock Text="Chord"/>
+            <TextBox x:Name="txtChord" MouseEnter="txtChord_MouseEnter" MouseLeave="txtChord_MouseLeave"/>
+
+            <TextBlock Text="Thickness (lift, drag)"/>
+            <Slider x:Name="trkThickness" Minimum="0" Maximum="1" Value="0.5" ValueChanged="trkThickness_ValueChanged"/>
+        </StackPanel>
+
+        <Grid Grid.Column="1" Margin="12">
+            <!-- fuselage -->
+            <Ellipse Fill="White" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="15" Height="110"/>
+            
+            <!-- propeller -->
+            <Rectangle Fill="DimGray" Stroke="DimGray" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="30" Height="2" Margin="0,8,0,0"/>
+
+            <!-- wing -->
+            <Rectangle Fill="White" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="18" Margin="0,32,0,0"/>
+            
+            <!-- horz stabalizer -->
+            <Rectangle Fill="White" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="50" Height="16" Margin="0,94,0,0"/>
+
+            <!-- vert stabalizer -->
+            <Rectangle Fill="DimGray" Stroke="DimGray" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="2" Height="32" Margin="0,80,0,0"/>
+
+            <!-- overlays -->
+            <Rectangle Visibility="Collapsed" x:Name="line_span" Fill="YellowGreen" Stroke="YellowGreen" Width="54" Height="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="60,40,0,0"/>
+            <Rectangle Visibility="Collapsed" x:Name="line_chord" Fill="YellowGreen" Stroke="YellowGreen" Width="2" Height="14" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="60,34,0,0"/>
+        </Grid>
+        </Grid>
+</UserControl>

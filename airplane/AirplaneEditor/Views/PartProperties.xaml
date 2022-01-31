@@ -87,12 +87,12 @@
                     <TextBlock Grid.Column="0" Grid.Row="6" Text="Angle" Style="{StaticResource inline_label}"/>
                     <TextBox Grid.Column="1" Grid.Row="6" x:Name="txtAngle" TextChanged="Rotation_TextChanged"/>
                 </Grid>
+
+                <FrameworkElement Margin="0,16,0,0"/>
+
+                <!-- Type specific panel -->
+                <ContentPresenter x:Name="typed_panel"/>
             </StackPanel>
-            
-            
-            <!-- Type specific panels -->
-            
-            
         </StackPanel>
     </ScrollViewer>
 </UserControl>
