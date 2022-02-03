@@ -669,7 +669,7 @@ namespace AirplaneEditor.Views
             {
                 Point3D center = wing.Aero.Position_world;        // the point is twice as far as model's.  Probably: the transform includes parent+child, then child point is run through the transform, instead of passing zero to the transform
 
-                var forces = wing.Aero.CalculateForces_Attempt2(worldFlow, _airDensity, wing.Aero.Position_world - rigidbody_centermass);
+                var forces = wing.Aero.CalculateForces(worldFlow, _airDensity, wing.Aero.Position_world - rigidbody_centermass);
 
                 _forceLines.AddLine(center, center + forces.force, 0.07);
 

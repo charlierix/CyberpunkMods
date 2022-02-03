@@ -67,7 +67,10 @@ namespace AirplaneEditor.Airplane
             foreach (var surface in aerodynamicSurfaces)
             {
                 Vector3D relativePosition_world = surface.Position_world - centerOfMass_world;
-                forceAndTorque += surface.CalculateForces_ORIG(-velocity + wind - Vector3D.CrossProduct(angularVelocity, relativePosition_world), airDensity, relativePosition_world);
+
+                var forces = surface.CalculateForces(-velocity + wind - Vector3D.CrossProduct(angularVelocity, relativePosition_world), airDensity, relativePosition_world);
+                forceAndTorque.p += forces.force;
+                forceAndTorque.q += forces.torque;
             }
 
             //TODO: Implement thrusters (prop based thrusters would be affected by air density, but rocket thrusters wouldn't care)
