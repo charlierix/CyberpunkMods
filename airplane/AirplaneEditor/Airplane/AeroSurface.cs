@@ -23,6 +23,8 @@ namespace AirplaneEditor.Airplane
             // These are exposed for debug/drawing reasons
             public Vector3D lift { get; init; }
             public Vector3D drag { get; init; }
+
+            public Vector3D airVelocity_local_unmodified { get; init; }
         }
 
         #endregion
@@ -60,6 +62,7 @@ namespace AirplaneEditor.Airplane
         private readonly Transform3D _transform_tolocal;
 
         private readonly Vector3D _forward = new Vector3D(0, 1, 0);
+        private readonly Vector3D _right = new Vector3D(1, 0, 0);
         private readonly Vector3D _up = new Vector3D(0, 0, 1);
 
         /// <summary>
@@ -208,7 +211,8 @@ namespace AirplaneEditor.Airplane
         /// <param name="relativePosition_world">Position of aero surface in world coords - center of mass in world coords</param>
         public AeroResut CalculateForces_Attempt2(Vector3D airVelocity_world, double airDensity, Vector3D relativePosition_world)
         {
-            Vector3D forward_world = _transform_toworld.Transform(_forward);      //TODO: Make sure transform only does rotation
+            Vector3D forward_world = _transform_toworld.Transform(_forward);
+            Vector3D right_world = _transform_toworld.Transform(_right);
 
             //NOTE: FlapAngle is exposed publicly as an angle, but is used here internally as a radian
             double flapAngle = _flapAngle * DEG_2_RAD;
@@ -245,13 +249,17 @@ namespace AirplaneEditor.Airplane
 
 
 
-
+            //TODO: Trying to guess isn't working.  Make some kind of live visual
 
 
             // Calculating air velocity relative to the surface's coordinate system.
             // Z component of the velocity is discarded. 
             Vector3D airVelocity_local = _transform_tolocal.Transform(airVelocity_world);       //NOTE: transforming vectors only does rotation
+
+            Vector3D airVelocity_local_unmodified = airVelocity_local;
+
             airVelocity_local = new Vector3D(airVelocity_local.X, airVelocity_local.Y, 0);
+            //airVelocity_local = new Vector3D(0, airVelocity_local.Y, airVelocity_local.Z);
 
 
 
@@ -259,7 +267,12 @@ namespace AirplaneEditor.Airplane
 
             Vector3D dragDirection = _transform_toworld.Transform(airVelocity_local.ToUnit());
 
-            Vector3D liftDirection = Vector3D.CrossProduct(dragDirection, forward_world);
+
+
+            //Vector3D liftDirection = Vector3D.CrossProduct(dragDirection, forward_world);     // when flying forward, drag would be reverse of forward, so cross is 0
+            Vector3D liftDirection = Vector3D.CrossProduct(dragDirection, right_world);     // this almost works, but completely flips when airflow is slightly overv vs under wing
+
+
             if (liftDirection.IsNearZero())
                 liftDirection = _transform_toworld.Transform(_up);
 
@@ -270,35 +283,15 @@ namespace AirplaneEditor.Airplane
 
 
 
-            /*
-            ----------- wpf -----------
-            airVelocity_world	0, -8, 0
-            _transform_tolocal
-
-            transform quat is identity
-
-
-            ----------- unity -----------
-            worldAirVelocity	-.1, 0, -30
-            airVelocity		-30, .6, 0
-
-
-            // this is just rotating about Y so that the flaps are lined up
-            var quat = transform.rotation;
-            quat.ToAngleAxis(out float quat_angle, out Vector3 quat_axis);
-
-            quat_angle	90
-            quat_axis	0, -1, 0
-            */
-
-
-
-
-
             // I don't know why unity threw out Z.  Why is unity not considering Z for angle of attack?
             // This should be taking max(x, y) compared with z --- or something like that, but definitely can't figure out angle of attack when only looking at the components in the wing's plane
 
-            double angleOfAttack = Math.Atan2(airVelocity_local.X, -airVelocity_local.Y);
+            //double angleOfAttack = Math.Atan2(airVelocity_local.X, -airVelocity_local.Y);
+            //double angleOfAttack = Math.Atan2(airVelocity_local.Z, -airVelocity_local.Y);
+
+            double angleOfAttack = Math.Atan2(airVelocity_local_unmodified.Z, -airVelocity_local_unmodified.Y);
+
+
 
 
 
@@ -318,6 +311,8 @@ namespace AirplaneEditor.Airplane
 
                 lift = lift,
                 drag = drag,
+
+                airVelocity_local_unmodified = airVelocity_local_unmodified,
             };
         }
 
