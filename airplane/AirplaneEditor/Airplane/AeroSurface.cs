@@ -24,7 +24,7 @@ namespace AirplaneEditor.Airplane
             public Vector3D lift { get; init; }
             public Vector3D drag { get; init; }
 
-            public Vector3D airVelocity_local_unmodified { get; init; }
+            public string report { get; init; }
         }
 
         #endregion
@@ -92,7 +92,7 @@ namespace AirplaneEditor.Airplane
 
         //NOTE: force is applied at the center of the aero surface.  torque is applied to the center of mass of the rigid body
         /// <param name="relativePosition_world">Position of aero surface in world coords - center of mass in world coords</param>
-        public AeroResut CalculateForces(Vector3D airVelocity_world, double airDensity, Vector3D relativePosition_world)
+        public AeroResut CalculateForces_FLAWS(Vector3D airVelocity_world, double airDensity, Vector3D relativePosition_world)
         {
             Vector3D forward_world = _transform_toworld.Transform(_forward);
             Vector3D right_world = _transform_toworld.Transform(_right);
@@ -153,7 +153,7 @@ namespace AirplaneEditor.Airplane
 
 
             //Vector3D liftDirection = Vector3D.CrossProduct(dragDirection, forward_world);     // when flying forward, drag would be reverse of forward, so cross is 0
-            Vector3D liftDirection = Vector3D.CrossProduct(dragDirection, right_world);     // this almost works, but completely flips when airflow is slightly overv vs under wing
+            Vector3D liftDirection = Vector3D.CrossProduct(dragDirection, right_world);     // this almost works, but completely flips when airflow is slightly over vs under wing
 
 
             if (liftDirection.IsNearZero())
@@ -194,9 +194,73 @@ namespace AirplaneEditor.Airplane
 
                 lift = lift,
                 drag = drag,
-
-                airVelocity_local_unmodified = airVelocity_local_unmodified,
             };
+        }
+
+        public AeroResut CalculateForces_MYWAY(Vector3D airVelocity_world, double airDensity, Vector3D relativePosition_world)
+        {
+            //NOTE: FlapAngle is exposed publicly as an angle, but is used here internally as a radian
+            double flapAngle = _flapAngle * DEG_2_RAD;
+
+            // Accounting for aspect ratio effect on lift coefficient
+            // Assuming liftSlope = 6.28...
+            // aspect=1:    1.45
+            // aspect=2:    2.51
+            // aspect=3:    3.25
+            // aspect=5:    4.15
+            // aspect=8:    4.83
+            // aspect=12:   5.28
+            double correctedLiftSlope = _config.liftSlope * _config.aspectRatio / (_config.aspectRatio + 2 * (_config.aspectRatio + 4) / (_config.aspectRatio + 2));
+
+            // If flaps are in use, lift could change a little (if flaps are zero, then delta will be zero)
+            double deltaLift = GetDeltaLift(flapAngle, _config.flapFraction, correctedLiftSlope);
+
+
+            double zeroLiftAoaBase = _config.zeroLiftAoA * DEG_2_RAD;
+            double zeroLiftAoA = zeroLiftAoaBase - deltaLift / correctedLiftSlope;
+
+            double stallAngleHighBase = _config.stallAngleHigh * DEG_2_RAD;
+            double stallAngleLowBase = _config.stallAngleLow * DEG_2_RAD;
+
+            double clMaxHigh = correctedLiftSlope * (stallAngleHighBase - zeroLiftAoaBase) + deltaLift * LiftCoefficientMaxFraction(_config.flapFraction);
+            double clMaxLow = correctedLiftSlope * (stallAngleLowBase - zeroLiftAoaBase) + deltaLift * LiftCoefficientMaxFraction(_config.flapFraction);
+
+            double stallAngleHigh = zeroLiftAoA + clMaxHigh / correctedLiftSlope;
+            double stallAngleLow = zeroLiftAoA + clMaxLow / correctedLiftSlope;
+
+
+            var drag_direction = GetDragDirection(airVelocity_world);
+            Vector3D lift_direction = GetLiftDirection(airVelocity_world);
+
+
+            double area = _config.chord * _config.span;
+            double dynamicPressure = 0.5 * airDensity * drag_direction.full.LengthSquared;
+
+
+
+            double angleOfAttack = GetAngleOfAttack(airVelocity_world);
+
+            //TODO: Reduce lift's effectiveness when the wing is slicing sideways into the wind (or backward)
+
+
+            Coefficients aerodynamicCoefficients = CalculateCoefficients(flapAngle, angleOfAttack, correctedLiftSlope, zeroLiftAoA, stallAngleHigh, stallAngleLow, _config.aspectRatio, _config.skinFriction);
+
+
+            Vector3D lift = lift_direction * aerodynamicCoefficients.lift * dynamicPressure * area;
+            Vector3D drag = drag_direction.unit * aerodynamicCoefficients.drag * dynamicPressure * area;
+            //Vector3D torque = -forward_world * aerodynamicCoefficients.torque * dynamicPressure * area * _config.chord;
+
+            return new AeroResut()
+            {
+                force = lift + drag,
+                //torque = torque + Vector3D.CrossProduct(relativePosition_world, lift + drag),
+
+                lift = lift,
+                drag = drag,
+
+                report = GetReport(angleOfAttack, correctedLiftSlope, zeroLiftAoA),
+            };
+
         }
 
         #region Private Methods
@@ -225,6 +289,49 @@ namespace AirplaneEditor.Airplane
             double flapEffectivnessCorrection = UtilityMath.LERP(0.8, 0.4, (Math.Abs(flapAngle) * RAD_2_DEG - 10) / 50);
 
             return correctedLiftSlope * flapEffectivness * flapEffectivnessCorrection * flapAngle;
+        }
+
+        private (Vector3D full, Vector3D unit) GetDragDirection(Vector3D airVelocity_world)
+        {
+            Vector3D normal_world = _transform_toworld.Transform(_up);
+
+            Vector3D full = GetProjectedVector(airVelocity_world, normal_world);
+
+            if (full.IsNearZero())
+                full = airVelocity_world;
+
+            return (full, full.ToUnit());
+        }
+        private Vector3D GetLiftDirection(Vector3D airVelocity_world)
+        {
+            Vector3D normal_world = _transform_toworld.Transform(_up);
+
+            Vector3D full = airVelocity_world.GetProjectedVector(normal_world);
+            full = -full;
+
+            if (full.IsNearZero())
+                return normal_world;
+
+            if (Vector3D.DotProduct(full, normal_world) < 0)        // angle of attack can be negative, and that is multiplied by this vector, so lift direction needs to stay positive only
+                full = -full;
+
+            return full.ToUnit();
+        }
+
+        private double GetAngleOfAttack(Vector3D airVelocity_world)
+        {
+            Vector3D forward_world = _transform_toworld.Transform(_forward);
+            Vector3D right_world = _transform_toworld.Transform(_right);
+            Vector3D up_world = _transform_toworld.Transform(_up);
+
+            Vector3D in_vert_plane = GetProjectedVector(airVelocity_world, right_world);
+
+            double angle = Vector3D.AngleBetween(forward_world, -in_vert_plane);
+
+            if (Vector3D.DotProduct(in_vert_plane, up_world) < 0)
+                angle = -angle;
+
+            return angle * DEG_2_RAD;
         }
 
         private static Coefficients CalculateCoefficients(double flapAngle, double angleOfAttack, double correctedLiftSlope, double zeroLiftAoA, double stallAngleHigh, double stallAngleLow, double aspectRatio, double skinFriction)
@@ -344,6 +451,39 @@ namespace AirplaneEditor.Airplane
             return Math.Clamp(1 - 0.5 * (flapFraction - 0.1) / 0.3, 0, 1);
         }
 
+        /// <summary>
+        /// This returns the vector projected onto the plane
+        /// </summary>
+        /// <remarks>
+        /// This was copied from Game.Math_WPF.Mathematics.Extenders.GetProjectedVector(this Vector3D vector, ITriangle_wpf alongPlane)
+        /// </remarks>
+        /// <param name="vector">The vector projected onto the plane</param>
+        /// <param name="planes_normal">The plane's normal</param>
+        /// <returns>The portion of the vector that is on the plane</returns>
+        private static Vector3D GetProjectedVector(Vector3D vector, Vector3D planes_normal)
+        {
+            // Get a line that is parallel to the plane, but along the direction of the vector
+            Vector3D alongLine = Vector3D.CrossProduct(planes_normal, Vector3D.CrossProduct(vector, planes_normal));
+
+            // Use the other overload to get the portion of the vector along this line
+            return vector.GetProjectedVector(alongLine);
+        }
+
         #endregion
+
+        private static string GetReport(double angleOfAttack, double correctedLiftSlope, double zeroLiftAoA)
+        {
+            StringBuilder retVal = new StringBuilder();
+
+            //retVal.AppendLine($"aoa (rad)\t\t{Math.Round(angleOfAttack, 3)}");
+            retVal.AppendLine($"aoa (deg)\t{Math.Round(angleOfAttack * RAD_2_DEG)}");
+
+            //retVal.AppendLine($"cor lift\t{Math.Round(correctedLiftSlope, 3)}");
+
+            retVal.AppendLine($"0 aoa (deg)\t{Math.Round(zeroLiftAoA * RAD_2_DEG)}");
+
+
+            return retVal.ToString();
+        }
     }
 }

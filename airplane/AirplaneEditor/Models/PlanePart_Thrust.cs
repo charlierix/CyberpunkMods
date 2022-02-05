@@ -9,6 +9,8 @@ namespace AirplaneEditor.Models
 {
     public record PlanePart_Thrust
     {
+        public string Name { get; init; }
+
         //NOTE: These are in rigid body's coords.  (the view model stores a link to parent and pos/rot are relative to the parent)
         public Point3D Position { get; init; }
         public Vector3D Direction { get; init; }

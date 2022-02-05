@@ -314,15 +314,16 @@ namespace AirplaneEditor
 
         private static PlanePart_Wing CreateFlyable_Wing(PlanePart_Wing_VM wing, Vector3D position, Quaternion rotation)
         {
-            //TODO: different wing types should adjust the lift/drag settings
-
             return new PlanePart_Wing()
             {
+                Name = wing.Name,
+
                 Position = position.ToPoint(),
                 Orientation = rotation,
 
                 chord = wing.Chord,
                 span = wing.Span,
+                zeroLiftAoA = wing.Lift,        // this is derived from the wing's thickness
             };
         }
 
@@ -330,6 +331,8 @@ namespace AirplaneEditor
         {
             return new PlanePart_Thrust()
             {
+                Name = engine.Name,
+
                 Position = position.ToPoint(),
                 Direction = rotation.GetRotatedVector(new Vector3D(0, 1, 0)),
             };

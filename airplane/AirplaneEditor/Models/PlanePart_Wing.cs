@@ -12,6 +12,8 @@ namespace AirplaneEditor.Models
     /// </summary>
     public record PlanePart_Wing
     {
+        public string Name { get; init; }
+
         //NOTE: These are in rigid body's coords.  (the view model stores a link to parent and pos/rot are relative to the parent)
         public Point3D Position { get; init; }
         public Quaternion Orientation { get; init; }

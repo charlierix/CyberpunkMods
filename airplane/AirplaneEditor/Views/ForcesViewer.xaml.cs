@@ -234,7 +234,7 @@ namespace AirplaneEditor.Views
         private TrackballGrabber _flowOrientationTrackball = null;
 
         private double _airSpeed = 8;
-        private double _airDensity = 5;
+        private double _airDensity = 1.2;
 
         #endregion
 
@@ -657,6 +657,8 @@ namespace AirplaneEditor.Views
 
         private void UpdateAeroForces()
         {
+            StringBuilder report = new StringBuilder();
+
             Vector3D worldFlow = GetWorldFlow();
 
             _forceLines.BeginAddingLines();     // billboard set is designed for this rapid addition/removal.  It reuses models under the hood
@@ -669,17 +671,25 @@ namespace AirplaneEditor.Views
             {
                 Point3D center = wing.Aero.Position_world;        // the point is twice as far as model's.  Probably: the transform includes parent+child, then child point is run through the transform, instead of passing zero to the transform
 
-                var forces = wing.Aero.CalculateForces(worldFlow, _airDensity, wing.Aero.Position_world - rigidbody_centermass);
+                var forces = wing.Aero.CalculateForces_MYWAY(worldFlow, _airDensity, wing.Aero.Position_world - rigidbody_centermass);
 
                 _forceLines.AddLine(center, center + forces.force, 0.07);
 
                 _dragLines.AddLine(center, center + forces.drag, 0.045);
                 _liftLines.AddLine(center, center + forces.lift, 0.045);
+
+                if (!string.IsNullOrWhiteSpace(forces.report))
+                {
+                    report.AppendLine($"-------- {wing.Model.Name} --------");
+                    report.AppendLine(forces.report);
+                }
             }
 
             _forceLines.EndAddingLines();
             _dragLines.EndAddingLines();
             _liftLines.EndAddingLines();
+
+            lblReport.Text = report.ToString();
         }
 
         #endregion

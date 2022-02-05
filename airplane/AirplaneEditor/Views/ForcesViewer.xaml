@@ -81,6 +81,8 @@
                 <Button Content="reset view" Margin="0,3,0,0" Click="ResetView_Click"/>
             </StackPanel>
         </Grid>
-        
+
+        <TextBlock x:Name="lblReport" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8"/>
+
     </Grid>
 </Window>

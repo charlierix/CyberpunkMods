@@ -68,7 +68,7 @@ namespace AirplaneEditor.Airplane
             {
                 Vector3D relativePosition_world = surface.Position_world - centerOfMass_world;
 
-                var forces = surface.CalculateForces(-velocity + wind - Vector3D.CrossProduct(angularVelocity, relativePosition_world), airDensity, relativePosition_world);
+                var forces = surface.CalculateForces_MYWAY(-velocity + wind - Vector3D.CrossProduct(angularVelocity, relativePosition_world), airDensity, relativePosition_world);
                 forceAndTorque.p += forces.force;
                 forceAndTorque.q += forces.torque;
             }
