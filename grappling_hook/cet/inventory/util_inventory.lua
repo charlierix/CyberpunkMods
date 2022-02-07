@@ -1,5 +1,11 @@
 local this = {}
 
+-- How to add various items
+--Game.AddToInventory("Items.money", 100000)
+--Game.AddToInventory("Items.GrenadeEMPRegular", 1)
+--Game.AddToInventory("Items.GrenadeEMPSticky", 1)
+--Game.AddToInventory("Items.GrenadeEMPHoming", 1)
+
 local types_shotgun = { "Wea_ShotgunDual", "Wea_Shotgun" }
 local types_knife = { "Wea_Knife" }
 local types_silencer = { "Prt_Muzzle" }
@@ -66,9 +72,9 @@ function TryUnlockGrapple(o, player, const)
     -- Remove items
     for i = 1, #report do
         if In(report[i].unlockType, const.unlockType.grenade, const.unlockType.money) then
-            this.RemoveItems_Single(o, report[i].items, report[i].requiredCount)
+            this.RemoveItems_Buckets(o, report[i].items, report[i].requiredCount)
         else
-            this.RemoveItems_Multiple(o, report[i].items, report[i].requiredCount)
+            this.RemoveItems_Uniques(o, report[i].items, report[i].requiredCount)
         end
     end
 
@@ -164,7 +170,7 @@ function ReportInventory_UnlockCandidates(o)
     end
 end
 
------------------------------------ Private Methods -----------------------------------
+------------------------------- Private Methods (report) ------------------------------
 
 function this.AddToUnlockReport(report, description, requiredCount, availableCount, requiredCount_display, availableCount_display, unlockType, items)
     local required_display = requiredCount_display
@@ -190,11 +196,13 @@ function this.AddToUnlockReport(report, description, requiredCount, availableCou
 end
 
 function this.GetQuantityValue(items)
-    if #items ~= 1 then
-        return 0
+    local retVal = 0
+
+    for i = 1, #items do
+        retVal = retVal + items[i]:GetQuantity()
     end
 
-    return items[1]:GetQuantity()
+    return retVal
 end
 
 function this.FindItems(items, types, name, canBeEquipped, o)
@@ -271,30 +279,29 @@ function this.Debug_ReportItems(items, o)
     end
 end
 
-function this.FinalValidation(report)
-    for i = 1, #report do
-        if report[i].availableCount < report[i].requiredCount then
-            return
-                false,
-                "Not enough " .. report[i].description .. "(" .. report[i].availableCount_display .. ", " .. report[i].requiredCount_display .. ")"
-        end
+------------------------------- Private Methods (remove) ------------------------------
+
+-- This removes from items (buckets) that contain quantities of that item (used for money, grenades)
+function this.RemoveItems_Buckets(o, items, count)
+    if #items == 1 then
+        o.transaction:RemoveItem(o.player, items[1]:GetID(), count)
+        do return end
     end
 
-    return true, nil
-end
+    local removes = this.GetCountsToRemove(items, count)
 
--- This removes from a single item (used for money, grenades)
-function this.RemoveItems_Single(o, items, count)
-    --Game.AddToInventory("Items.money", 100000)        -- How to add money
-
-    o.transaction:RemoveItem(o.player, items[1]:GetID(), count)
+    for i = 1, #items do
+        if removes[i] > 0 then
+            o.transaction:RemoveItem(o.player, items[i]:GetID(), removes[i])
+        end
+    end
 end
 -- This removes specific items from the available list (chooses them randomly)
 -- NOTE: This modifies the items array
-function this.RemoveItems_Multiple(o, items, count)
+function this.RemoveItems_Uniques(o, items, count)
     local max = #items
     if max < count then
-        print("ERROR: TryUnlockGrapple -> RemoveItems_Multiple: Not enough items passed in, removing all the items that were passed in anyway")
+        print("ERROR: TryUnlockGrapple -> RemoveItems_Uniques: Not enough items passed in, removing all the items that were passed in anyway")
         count = max
     end
 
@@ -308,6 +315,96 @@ function this.RemoveItems_Multiple(o, items, count)
         items[index] = items[max]
         max = max - 1
     end
+end
+
+function this.FinalValidation(report)
+    for i = 1, #report do
+        if report[i].availableCount < report[i].requiredCount then
+            return
+                false,
+                "Not enough " .. report[i].description .. "(" .. report[i].availableCount_display .. ", " .. report[i].requiredCount_display .. ")"
+        end
+    end
+
+    return true, nil
+end
+
+-- This tells which items to remove from (and how much from each item).  The counts are determined randomly,
+-- but proportional to the counts in items
+--
+-- Params:
+--  items   A list of buckets that contain quantity.  Green emp grenades would be one entry in items, blue
+--          another, purple yet another.  Each of those item buckets would hold the number of grenades for
+--          that color (12 greens, 8 blues, 6 purples)
+--  count   The total number of items to remove
+--
+-- Returns:
+--  an array of ints (same size as items).  The index into the array is the same index into items.  The value
+--  of each entry is the count to remove from items (some entries could be zero)
+function this.GetCountsToRemove(items, count)
+    local remaining, removes, total = this.GetCountsToRemove_CountThem(items)
+
+    for _ = 1, count do
+        if total <= 0 then
+            break
+        end
+
+        local index = this.PickRandomFromBuckets(remaining, total)
+        if index < 0 then       -- this should never happen, but it's safer to remove too few than have some kind of infinite loop or to never unlock the grapple
+            break
+        end
+
+        remaining[index] = remaining[index] - 1
+        removes[index] = removes[index] + 1
+        total = total - 1
+    end
+
+    return removes
+end
+
+-- Tells how many each entry in items has
+--
+-- Returns:
+--  remaining   same size as items, gives the count of each
+--  removes     same size as items, initialized to zeros (easy to initialize here)
+--  total       the sum of everything in items
+function this.GetCountsToRemove_CountThem(items)
+    local remaining = {}
+    local removes = {}
+    local total = 0
+
+    for i = 1, #items do
+        remaining[i] = items[i]:GetQuantity()
+        removes[i] = 0
+        total = total + remaining[i]
+    end
+
+    return remaining, removes, total
+end
+
+function this.PickRandomFromBuckets(remaining, total)
+    -- Pick a random number from 0 to 1
+    local percent = math.random()
+
+    -- Get corresponding index into the list
+    local used = 0
+
+    for i = 1, #remaining do
+        if remaining[i] > 0 then
+            -- See how much of the total count is in this item
+            local item_percent = remaining[i] / total
+
+            -- See if the random percent falls inside this bucket
+            if percent >= used and percent <= used + item_percent then
+                return i
+            end
+
+            used = used + item_percent
+        end
+    end
+
+    print("Grappling Hook: Error finding random bucket")
+    return -1
 end
 
 ---------------------------------------------------------------------------------------
