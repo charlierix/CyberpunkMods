@@ -168,10 +168,10 @@ function GameObjectAccessor:PlaySound(soundName, vars)
 
     if self.player then
         if vars then
-            StopSound(self, vars)
+            PossiblyStopSound(self, vars)
         end
 
-        self.wrappers.QueueSound(self.player, soundName)
+        this.PlaySound(self.player, soundName)
 
         if vars then
             vars.sound_current = soundName
@@ -183,7 +183,7 @@ function GameObjectAccessor:StopSound(soundName)
     self:EnsurePlayerLoaded()
 
     if self.player then
-        self.wrappers.StopQueuedSound(self.player, soundName)
+        this.StopSound(self.player, soundName)
     end
 end
 
@@ -195,4 +195,15 @@ function GameObjectAccessor:EnsurePlayerLoaded()
 
         self.player = self.wrappers.GetPlayer()
     end
+end
+
+function this.PlaySound(player, soundName)
+    local audioEvent = SoundPlayEvent.new()
+    audioEvent.soundName = soundName
+    player:QueueEvent(audioEvent)
+end
+function this.StopSound(player, soundName)
+    local audioEvent = SoundStopEvent.new()
+    audioEvent.soundName = soundName
+    player:QueueEvent(audioEvent)
 end
