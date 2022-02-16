@@ -7,7 +7,6 @@ require "lib/ghosting"
 require "lib/input_processing"
 require "lib/mathutils"
 require "lib/peeking"
-require "lib/sound"
 require "lib/util"
 
 local this = {}

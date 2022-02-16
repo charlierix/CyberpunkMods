@@ -28,7 +28,7 @@ function ContinuePeeking(o, vars, const)
 
         o:SetLocalCamPosition(Vector4.new(0, 0, 0, 1))
 
-        this.StopSound()
+        this.StopSound(o)
     end
 end
 
@@ -133,7 +133,7 @@ this.other =
 
 function this.StartSound(o, vars)
     if this.currentSound then
-        StopSound(this.currentSound)
+        o:StopSound(this.currentSound)
     end
 
     this.currentSound = this.GetRandomSound(this.peek_final)
@@ -146,13 +146,13 @@ end
 --     end
 
 --     if percent > 0.5 and this.currentSound == this.breath_in then
---         StopSound(this.currentSound)
+--         o:StopSound(this.currentSound)
 --         o:PlaySound(this.breath_out, vars)
 --     end
 -- end
-function this.StopSound()
+function this.StopSound(o)
     if this.currentSound then
-        StopSound(this.currentSound)
+        o:StopSound(this.currentSound)
         this.currentSound = nil
     end
 end

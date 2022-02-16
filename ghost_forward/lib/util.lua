@@ -38,7 +38,7 @@ function PossiblyStopSound(o, vars, maxTime)
     end
 
     if vars.sound_current and (o.timer - vars.sound_started) > maxTime then
-        StopSound(vars.sound_current)
+        o:StopSound(vars.sound_current)
         vars.sound_current = nil
     end
 end
