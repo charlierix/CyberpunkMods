@@ -515,8 +515,12 @@ end
 
 function TODO()
 
-	-- EMP Grenades:
-	--	Test with all rarities
+	-- Angry Bird:
+	--	Figure out why it loses speed
+
+	-- Redscript:
+	--	Rework redscript functions to be CET
+	--	See if blackboard can be used for mods to talk to each other
 
 	-- Controller:
 	--	Listen to MoveX, MoveY
@@ -580,30 +584,12 @@ function TODO()
     --  Add invisible buttons to several controls, highlight graphics based on hover
 
     -- UI:
-    --  Only allow config changes within a small radius of vendors: ripper doc, clothing, melee, ranged
-    --  Still allow them to look at values, just not change
-    --  Add a note when out of range
-
-    -- UI:
-    --  Controls are placed at absolute positions.  Create some container panel controls, like horizontal list,
-    --  vertical list (that may also support scrollbars)
-    --
-    --  Control's draw methods do both size calculations and drawing.  Split that up.  That way the panel can
-    --  get all the child control's sizes, do some final calculations based on sizes and margins, then pass
-    --  in the location to each control's draw function (could also pass in a final width/height for controls
-    --  that should stretch)
-    --
-    --  A simpler alternative could be placing controls relative to other controls
-
-    -- UI:
     --  The props in viewmodels that override style are currently suffixed with _override
     --  Need to make most style properties overridable by the viewmodel, and it should just be the same name
 
     -- UI:
     --  All numbers should be presented as dozenal :)
-    --  tostring_doz()
-    --  Round_doz()     -- this is needed, because rounding fractions to a certain number of digits would have to be converted, then truncated
-    --  also, if there's ever a textbox, that would need to be parsed as well
+	--	(see wall hang)
 
     -- ViewModels:
     --  The properties that change should have set instead of init
@@ -624,5 +610,40 @@ function TODO()
 
     -- Test and add a link to no sepia mod
     --  https://www.nexusmods.com/cyberpunk2077/mods/3161/
+	
+	-- Raycast Alternate:
+	--	keanuWheeze — Yesterday at 3:24 PM
+	--	Is there any way of raycasting for every type of collision in one go, without having to do seperate ones for all the collision groups (Static, Terrain)? (https://nativedb.red4ext.com/gameSpatialQueriesSystem)
+	--	SyncRaycastByCollisionPreset would sound promising, but i have no clue what the preset names are (Except for the few ones found in the dump)	
+	--	
+	--	psiberx — Today at 3:50 AM
+	--	there is a more powerful function RayCastWithCollisionFilter but in the StateGameScriptInterface 
+	--	https://nativedb.red4ext.com/gamestateMachineGameScriptInterface
+	--	idk if you can grab and store script interface from state machine for a later use, but if you gonna try then better use weak reference
+	--	and you can find all collision groups and presets in engine\physics\*.json
+	--
+	--	
+	--	keanuWheeze — Yesterday at 4:17 PM
+	--	It works:luvit:
+	--	Observe("LocomotionEventsTransition", "OnUpdate", function(_, _, _, interface)
+	--	        result = interface:RayCastWithCollisionFilter(GetPlayer():GetWorldPosition(), multVector(GetPlayer():GetWorldForward(), 20), QueryFilter.ALL())
+	--	        print(result.position)
+	--	end)
+	--	 
+	--	This checks for raycast collision with everything in one go:sogood:
+	--	Havent tried storing the scriptInterface reference yet, but this observed function runs every frame anyways:risitas: Edit: Storing it works:PeepoMeLikey: 
+	--
+	--	keanuWheeze — Yesterday at 4:33 PM
+	--	Havent managed to get a custom filter to work tho, as doing f = QueryFilter.new() and then a f:AddGroup("Static") tells me Function 'AddGroup' requires 1 parameter(s). Doing it the other way like this: QueryFilter:AddGroup(f, CName.new("Terrain")) executes fine, but does not collide with anything:BigThonk2:	
+	--		
+	--	psiberx — Yesterday at 4:57 PM
+	--	can't use this function with cet currently because they have marked first param as out (they don't do this with other structs)	
+	
+	-- grappleFrom_Z Alternate:
+	--	anygoodname — 02/10/2022
+	--	How can I get the Player head or even better eyeballs world position?
+	--		
+	--	psiberx — Yesterday at 3:52 AM
+	--	maybe local from, forward = Game.GetTargetingSystem():GetCrosshairData(player)? or some other function related to camera	
 
 end
