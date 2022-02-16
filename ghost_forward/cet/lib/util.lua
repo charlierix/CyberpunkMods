@@ -32,13 +32,13 @@ function InitializeRandom()
     end
 end
 
-function StopSound(o, vars, maxTime)
+function PossiblyStopSound(o, vars, maxTime)
     if not maxTime then
         maxTime = 6     -- all the sounds this mod plays are fairly quick
     end
 
     if vars.sound_current and (o.timer - vars.sound_started) > maxTime then
-        o:StopSound(vars.sound_current)
+        StopSound(vars.sound_current)
         vars.sound_current = nil
     end
 end

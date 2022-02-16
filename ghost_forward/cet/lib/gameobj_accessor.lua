@@ -122,26 +122,15 @@ end
 -- only have one sound playing at a time.  If nil, then the caller is responsible for stopping
 -- the sound
 function GameObjectAccessor:PlaySound(soundName, vars)
-    self:EnsurePlayerLoaded()
-
-    if self.player then
-        if vars then
-            StopSound(self, vars, 0)
-        end
-
-        self.wrappers.QueueSound(self.player, soundName)
-
-        if vars then
-            vars.sound_current = soundName
-            vars.sound_started = self.timer
-        end
+    if vars then
+        PossiblyStopSound(self, vars, 0)
     end
-end
-function GameObjectAccessor:StopSound(soundName)
-    self:EnsurePlayerLoaded()
 
-    if self.player then
-        self.wrappers.StopQueuedSound(self.player, soundName)
+    PlaySound(soundName)
+
+    if vars then
+        vars.sound_current = soundName
+        vars.sound_started = self.timer
     end
 end
 

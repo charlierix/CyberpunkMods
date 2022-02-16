@@ -7,6 +7,7 @@ require "lib/ghosting"
 require "lib/input_processing"
 require "lib/mathutils"
 require "lib/peeking"
+require "lib/sound"
 require "lib/util"
 
 local this = {}
@@ -77,8 +78,6 @@ registerForEvent("onInit", function()
     function wrappers.Teleport(teleport, player, pos, yaw) return teleport:Teleport(player, pos, EulerAngles.new(0, 0, yaw)) end
     function wrappers.GetFPPCamera(player) return player:GetFPPCameraComponent() end
     function wrappers.SetLocalCamPosition(playerCam, pos) playerCam:SetLocalPosition(pos) end
-    function wrappers.QueueSound(player, sound) pcall(function () player:GhostForward_QueueSound(sound) end) end        -- using a pcall, so it doesn't bomb if they don't have redscript
-    function wrappers.StopQueuedSound(player, sound) pcall(function () player:GhostForward_StopQueuedSound(sound) end) end
 
     o = GameObjectAccessor:new(wrappers)
 end)
@@ -105,7 +104,7 @@ registerForEvent("onUpdate", function(deltaTime)
         do return end
     end
 
-    StopSound(o, vars, const.peekTime * 2)
+    PossiblyStopSound(o, vars, const.peekTime * 2)
 
     o:GetInWorkspot()
     if o.isInWorkspot then
