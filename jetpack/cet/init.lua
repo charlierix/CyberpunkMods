@@ -317,8 +317,6 @@ registerForEvent("onInit", function()
     function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
     function wrappers.Ragdoll_Up(player, radius, force, randHorz, randVert) player:RagdollNPCs_StraightUp(radius, force, randHorz, randVert) end
     function wrappers.Ragdoll_Out(player, radius, force, upForce) player:RagdollNPCs_ExplodeOut(radius, force, upForce) end
-    function wrappers.QueueSound(player, sound) player:Jetpack_QueueSound(sound) end
-    function wrappers.StopQueuedSound(player, sound) player:Jetpack_StopQueuedSound(sound) end
     function wrappers.GetTimeSystem() return Game.GetTimeSystem() end
     function wrappers.Time_IsTimeDilationActive(timeSys) return timeSys:IsTimeDilationActive() end
 
@@ -354,7 +352,7 @@ registerForEvent("onUpdate", function(deltaTime)
         do return end
     end
 
-    StopSound(o, vars)
+    PossiblyStopSound(o, vars)
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
