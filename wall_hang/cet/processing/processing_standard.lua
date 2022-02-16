@@ -175,12 +175,12 @@ end
 
 function this.ResetVars(o, vars, skip_slide, skip_attract)
     if not skip_slide and vars.is_sliding then
-        StopSound(o, vars, true)
+        PossiblyStopSound(o, vars, true)
         vars.is_sliding = false
     end
 
     if not skip_attract and vars.is_attracting then
-        StopSound(o, vars, true)
+        PossiblyStopSound(o, vars, true)
         vars.is_attracting = false
     end
 end

@@ -12,7 +12,7 @@ function Transition_ToStandard(vars, const, debug, o)
     if vars.is_sliding or vars.is_attracting then
         vars.is_sliding = false
         vars.is_attracting = false
-        StopSound(o, vars, true)      -- there are cases where they will slide, then touch the ground.  But the slide sound keeps playing for a couple seconds
+        PossiblyStopSound(o, vars, true)      -- there are cases where they will slide, then touch the ground.  But the slide sound keeps playing for a couple seconds
     end
 end
 

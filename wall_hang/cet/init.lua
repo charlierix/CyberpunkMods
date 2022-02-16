@@ -267,8 +267,6 @@ registerForEvent("onInit", function()
     function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
     function wrappers.Custom_CurrentlyFlying_StartFlight(player) Custom_CurrentlyFlying_StartFlight(player, const.modNames) end
     function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
-    function wrappers.QueueSound(player, sound) player:WallHang_QueueSound(sound) end
-    function wrappers.StopQueuedSound(player, sound) player:WallHang_StopQueuedSound(sound) end
 
     o = GameObjectAccessor:new(wrappers)
 
@@ -308,7 +306,7 @@ registerForEvent("onUpdate", function(deltaTime)
         player = Player:new(o, vars, const, debug, player_arcade)
     end
 
-    StopSound(o, vars)
+    PossiblyStopSound(o, vars)
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
