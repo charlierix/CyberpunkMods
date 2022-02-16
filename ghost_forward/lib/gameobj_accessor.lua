@@ -160,8 +160,8 @@ function this.PlaySound(player, soundName)
     audioEvent.soundName = soundName
     player:QueueEvent(audioEvent)
 end
-function this.StopSound(player, name)
+function this.StopSound(player, soundName)
     local audioEvent = SoundStopEvent.new()
-    audioEvent.soundName = name
+    audioEvent.soundName = soundName
     player:QueueEvent(audioEvent)
 end

@@ -287,8 +287,6 @@ registerForEvent("onInit", function()
     function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
     function wrappers.Custom_CurrentlyFlying_StartFlight(player) Custom_CurrentlyFlying_StartFlight(player, const.modNames) end
     function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
-    function wrappers.QueueSound(player, sound) player:GrapplingHook_QueueSound(sound) end
-    function wrappers.StopQueuedSound(player, sound) player:GrapplingHook_StopQueuedSound(sound) end
     function wrappers.GetMapPinSystem() return Game.GetMappinSystem() end
     function wrappers.RegisterMapPin(mapPin, data, pos) return mapPin:RegisterMappin(data, pos) end
     function wrappers.SetMapPinPosition(mapPin, id, pos) mapPin:SetMappinPosition(id, pos) end
@@ -343,7 +341,7 @@ registerForEvent("onUpdate", function(deltaTime)
         xp_gain:PlayerCreated(player)
     end
 
-    StopSound(o, vars)
+    PossiblyStopSound(o, vars)
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
