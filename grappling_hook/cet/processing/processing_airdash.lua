@@ -80,7 +80,7 @@ function Process_AirDash(o, player, vars, const, debug, deltaTime)
     -- debug.accel_y = Round(accel_y / deltaTime, 1)
     -- debug.accel_z = Round(accel_z / deltaTime, 1)
 
-    o.player:GrapplingHook_AddImpulse(accel_x, accel_y, accel_z)
+    o:AddImpulse(accel_x, accel_y, accel_z)
 end
 
 
@@ -201,5 +201,5 @@ end
 --     -- debug.accel_y = Round(accel_y / deltaTime, 1)
 --     -- debug.accel_z = Round(accel_z / deltaTime, 1)
 
---     o.player:GrapplingHook_AddImpulse(accel_x, accel_y, accel_z)
+--     o:AddImpulse(accel_x, accel_y, accel_z)
 -- end

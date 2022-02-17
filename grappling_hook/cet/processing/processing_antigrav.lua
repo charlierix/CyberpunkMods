@@ -28,5 +28,5 @@ function Process_AntiGrav(o, player, vars, const, debug, deltaTime)
     accel_z = accel_z * GetScaledValue(1, 0, 0, antigrav.fade_duration, elapsed)
 
     -- Apply the acceleration
-    o.player:GrapplingHook_AddImpulse(0, 0, accel_z * deltaTime)
+    o:AddImpulse(0, 0, accel_z * deltaTime)
 end
