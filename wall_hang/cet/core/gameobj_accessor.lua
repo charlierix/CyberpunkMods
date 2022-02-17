@@ -211,6 +211,18 @@ function GameObjectAccessor:StopSound(soundName)
     end
 end
 
+-- This hits the player with an acceleration
+function GameObjectAccessor:AddImpulse(x, y, z)
+    self:EnsureLoaded_Player()
+
+    if self.player then
+        local impulseEvent = PSMImpulse.new()
+        impulseEvent.id = "impulse"
+        impulseEvent.impulse = Vector4.new(x, y, z, 1)
+        self.player:QueueEvent(impulseEvent)
+    end
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function GameObjectAccessor:EnsurePlayerLoaded()

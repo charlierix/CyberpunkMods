@@ -57,7 +57,7 @@ end
 function this.HopUpOntoLedge(o, currentPos, newPos, const)
     local x, y, z = this.GetHopImpulse(currentPos, newPos, const)
 
-    o.player:WallHang_AddImpulse(x, y, z)
+    o:AddImpulse(x, y, z)
 end
 function this.GetHopImpulse(currentPos, newPos, const)
     if const.ledgeHop_angle <= 1 or const.ledgeHop_angle >= 89 then

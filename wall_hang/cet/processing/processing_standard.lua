@@ -107,7 +107,7 @@ function this.AttractDistance(isHangDown, hits, fromPos, o, player, vars, const,
     local y = ((hit.hit.y - fromPos.y) / distance) * accel * deltaTime
     local z = (antigrav + (((hit.hit.z - fromPos.z) / distance) * accel)) * deltaTime
 
-    o.player:WallHang_AddImpulse(x, y, z)
+    o:AddImpulse(x, y, z)
 
     if not vars.is_attracting then
         PlaySound_Attract(vars, o)
@@ -138,7 +138,7 @@ function this.SlideDrag(hit, fromPos, o, player, vars, const, debug, deltaTime)
     local drag_y = -vel_plane.y / vel_plane_speed * player.wallSlide_dragAccel * deltaTime
     local drag_z = (16 + (-vel_plane.z / vel_plane_speed * player.wallSlide_dragAccel)) * deltaTime      -- gravity is -16 in this game
 
-    o.player:WallHang_AddImpulse(drag_x, drag_y, drag_z)
+    o:AddImpulse(drag_x, drag_y, drag_z)
 
 
     --TODO: Apply a pull accel toward ideal distance from plane
