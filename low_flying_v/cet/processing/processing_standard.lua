@@ -40,5 +40,5 @@ function this.ApplyImpulse(o, const)
         end
     end
 
-    o.player:LowFlyingV_AddImpulse(x, y, const.launch_vert)
+    o:AddImpulse(x, y, const.launch_vert)
 end
