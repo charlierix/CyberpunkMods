@@ -638,10 +638,12 @@ function TODO()
 	--	can't use this function with cet currently because they have marked first param as out (they don't do this with other structs)	
 	
 	-- grappleFrom_Z Alternate:
-	--	anygoodname — 02/10/2022
-	--	How can I get the Player head or even better eyeballs world position?
-	--		
-	--	psiberx — Yesterday at 3:52 AM
-	--	maybe local from, forward = Game.GetTargetingSystem():GetCrosshairData(player)? or some other function related to camera	
+	--	local player = Game.GetPlayer()
+	--	local targetting = Game.GetTargetingSystem()
+	--	local crosshairPosition, crosshairForward = targetting:GetDefaultCrosshairData(player)
+	--	local pos = player:GetWorldPosition()
+	--	print("diff: " .. vec_str(SubtractVectors(crosshairPosition, pos)))
+	--		the z changes based on looking up or not (1.59 looking down, 1.8 looking up)
+	--		x and y also have a small offset
 
 end

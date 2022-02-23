@@ -189,7 +189,7 @@ end
 
 -- This hits the player with an acceleration
 function GameObjectAccessor:AddImpulse(x, y, z)
-    self:EnsureLoaded_Player()
+    self:EnsurePlayerLoaded()
 
     if self.player then
         local impulseEvent = PSMImpulse.new()
