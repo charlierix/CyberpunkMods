@@ -50,8 +50,8 @@ end
 -- This goes from aim into flight (or airdash to flight)
 -- There's no need to check for energy, that was done when trying to aim
 -- NOTE: airanchor should only be passed in when flight is using it (a solid wall hit doesn't use air anchor)
-function Transition_ToFlight(vars, const, o, rayFrom, rayHit, airanchor)
-    vars.flightMode = const.flightModes.flight
+function Transition_ToFlight_Straight(vars, const, o, rayFrom, rayHit, airanchor)
+    vars.flightMode = const.flightModes.flight_straight
     o:Custom_CurrentlyFlying_StartFlight()
 
     -- vars.grapple is already populated by aim
@@ -66,6 +66,36 @@ function Transition_ToFlight(vars, const, o, rayFrom, rayHit, airanchor)
     vars.distToHit = math.sqrt(GetVectorDiffLengthSqr(rayHit, rayFrom))
 
     vars.airanchor = airanchor
+
+    vars.hasBeenAirborne = false
+    vars.initialAirborneTime = nil
+end
+
+-- This goes from aim into flight (or airdash to flight)
+-- There's no need to check for energy, that was done when trying to aim
+-- NOTE: airanchor should only be passed in when flight is using it (a solid wall hit doesn't use air anchor)
+function Transition_ToFlight_Swing(vars, const, o, rayFrom, rayHit, airanchor)
+    vars.flightMode = const.flightModes.flight_swing
+    o:Custom_CurrentlyFlying_StartFlight()
+
+    -- vars.grapple is already populated by aim
+
+    --TODO: When webswing and zipline get implemented, need a way to tell them apart from straightline
+    this.PlaySound_Grapple(vars, o)
+
+    vars.startTime = o.timer
+
+
+
+    --TODO: There could be more than one rope
+    vars.rayFrom = rayFrom
+    vars.rayHit = rayHit
+    vars.distToHit = math.sqrt(GetVectorDiffLengthSqr(rayHit, rayFrom))
+
+    vars.airanchor = airanchor
+
+
+
 
     vars.hasBeenAirborne = false
     vars.initialAirborneTime = nil

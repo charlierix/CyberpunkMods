@@ -40,7 +40,8 @@ require "processing/flightutil"
 require "processing/processing_aim"
 require "processing/processing_airdash"
 require "processing/processing_antigrav"
-require "processing/processing_flight"
+require "processing/processing_flight_straight"
+require "processing/processing_flight_swing"
 require "processing/processing_standard"
 require "processing/safetyfire"
 require "processing/xp_gain"
@@ -113,7 +114,7 @@ local this = {}
 
 local const =
 {
-    flightModes = CreateEnum("standard", "aim", "airdash", "flight", "antigrav"),
+    flightModes = CreateEnum("standard", "aim", "airdash", "flight_straight", "flight_swing", "antigrav"),
 
     grappleFrom_Z = 1.85,
     grappleMinResolution = 0.5,
@@ -177,7 +178,7 @@ local vars =
     flightMode = const.flightModes.standard,
     --grapple = nil,    -- an instance of models.Grapple    -- gets populated in Transition_ToAim (back to nil in Transition_ToStandard)
     --airdash = nil,    -- an instance of models.AirDash    -- gets populated in Transition_ToAirDash (just a copy of grapple.aim_straight.air_dash)
-    --airanchor = nil,  -- an instance of models.AirAnchor  -- gets populated in Transition_ToFlight (back to nil in Transition_ToStandard)
+    --airanchor = nil,  -- an instance of models.AirAnchor  -- gets populated in Transition_ToFlight_Straight (back to nil in Transition_ToStandard)
 
     energy = 1000,      -- start with too much so the progress doesn't show during initial load
 
@@ -375,9 +376,15 @@ registerForEvent("onUpdate", function(deltaTime)
         -- Didn't see a grapple point, so dashing forward
         Process_AirDash(o, player, vars, const, debug, deltaTime)
 
-    elseif vars.flightMode == const.flightModes.flight then
+    elseif vars.flightMode == const.flightModes.flight_straight then
+        -- TODO: This should be called flight_straight
         -- Actually grappling
-        Process_Flight(o, player, vars, const, debug, deltaTime)
+        Process_Flight_Straight(o, player, vars, const, debug, deltaTime)
+
+    elseif vars.flightMode == const.flightModes.flight_swing then
+        -- TODO: This should be called flight_straight
+        -- Actually grappling
+        Process_Flight_Swing(o, player, vars, const, debug, deltaTime)
 
     elseif vars.flightMode == const.flightModes.antigrav then
         -- Powered flight has ended, transitioning from lower gravity to standard gravity

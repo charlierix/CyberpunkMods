@@ -46,7 +46,7 @@ function HasSwitchedFlightMode(o, player, vars, const, watchForStop)
 
     elseif watchForStop and action == const.bindings.stop then
         -- Told to stop swinging, back to standard
-        if (vars.flightMode == const.flightModes.airdash or vars.flightMode == const.flightModes.flight) and vars.grapple and vars.grapple.anti_gravity then
+        if (vars.flightMode == const.flightModes.airdash or vars.flightMode == const.flightModes.flight_straight or vars.flightMode == const.flightModes.flight_swing) and vars.grapple and vars.grapple.anti_gravity then
             Transition_ToAntiGrav(vars, const, o)
         else
             Transition_ToStandard(vars, const, debug, o)

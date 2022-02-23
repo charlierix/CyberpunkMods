@@ -61,7 +61,7 @@ function this.Aim_Straight(aim, o, player, vars, const, debug, deltaTime)
         -- Ensure pin is drawn and placed properly (flight pin, not aim pin)
         EnsureMapPinVisible(hitPoint, vars.grapple.mappin_name, vars, o)
 
-        Transition_ToFlight(vars, const, o, from, hitPoint, nil)
+        Transition_ToFlight_Straight(vars, const, o, from, hitPoint, nil)
         do return end
     end
 
@@ -91,7 +91,7 @@ function this.Aim_Straight(aim, o, player, vars, const, debug, deltaTime)
 
                 hitPoint = Vector4.new(from.x + (o.lookdir_forward.x * aim.max_distance), from.y + (o.lookdir_forward.y * aim.max_distance), from.z + (o.lookdir_forward.z * aim.max_distance), 1)
                 EnsureMapPinVisible(hitPoint, vars.grapple.mappin_name, vars, o)
-                Transition_ToFlight(vars, const, o, from, hitPoint, aim.air_anchor)
+                Transition_ToFlight_Straight(vars, const, o, from, hitPoint, aim.air_anchor)
 
                 switched = true
             end

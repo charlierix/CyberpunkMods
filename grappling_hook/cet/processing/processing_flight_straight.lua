@@ -14,7 +14,7 @@ local this = {}
 -- There are a lot of different ways that a grapple could be set up.  Any actual
 -- grapple config probably won't use all the acceleration types, but it's easier
 -- to have a single worker method that can handle lots of possible config scenarios
-function Process_Flight(o, player, vars, const, debug, deltaTime)
+function Process_Flight_Straight(o, player, vars, const, debug, deltaTime)
     -- Gain/Reduce energy.  Exit if there wasn't enough energy left
     if not this.AdjustEnergy(o, player, vars, const, deltaTime) then
         do return end

@@ -3,6 +3,7 @@ local pool_refill_rate = pool_max / (9 * 60)   -- refill in 9 minutes
 local minPoolRequestPercent = 1 / 12            -- even when the pool is empty, they can still get a tiny amount of xp from performing actions
 
 local gain_straight_start = 12
+local gain_swing_start = 12
 local gain_airdash_continuous = 1 / 24          -- gain per second
 
 local gain_achievement_straight_180 = 48        -- when the dot product between the start of the grapple and current is nearly -1 (they use grapple to reverse their direction)
@@ -101,11 +102,8 @@ end
 function XPGain:GetBaseGain(deltaTime)
     local retVal = 0
 
-    if self.vars.flightMode == self.const.flightModes.flight then
-
-        --TODO: when grapple swing is implemented, this needs to determine swing vs straight (look at current index in vars)
-
-        if self.prev_flighMode ~= self.const.flightModes.flight then
+    if self.vars.flightMode == self.const.flightModes.flight_straight then
+        if self.prev_flighMode ~= self.const.flightModes.flight_straight then
             -- Start straight grapple
             retVal = retVal + gain_straight_start
 
@@ -113,6 +111,12 @@ function XPGain:GetBaseGain(deltaTime)
         -- else
         --     -- Continue straight grapple
         --     retVal = retVal + (gain_straight_continuous * deltaTime)
+        end
+
+    elseif self.vars.flightMode == self.const.flightModes.flight_swing then
+        if self.prev_flighMode ~= self.const.flightModes.flight_swing then
+            -- Start swing grapple
+            retVal = retVal + gain_swing_start
         end
 
     elseif self.vars.flightMode == self.const.flightModes.airdash then
