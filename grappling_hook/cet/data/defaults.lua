@@ -71,7 +71,12 @@ function GetDefault_Grapple_Choices()
         retVal,
         this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_AngryBird()),
         comparer)
-    
+
+    InsertSorted(
+        retVal,
+        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Swing()),
+        comparer)
+
     return retVal
 end
 
@@ -87,6 +92,9 @@ function GetDefault_Grapple_ByName(name)
 
     elseif name == "pole vault" then
         return GetDefault_Grapple_PoleVault()
+
+    elseif name == "swing" then
+        return GetDefault_Grapple_Swing()
 
     else
         print("GetDefault_Grapple_ByName: Unknown name: " .. tostring(name))
@@ -276,6 +284,41 @@ function GetDefault_Grapple_HeliumFrog()
 
 end
 
+--TODO: Swing won't rely on such fixed defaults.  The aim will need to do a few ray casts to see if it's a big open
+--space, too tight, speed, look, etc.  If in a long narrow gap and slow and looking along the gap, fire two lines
+function GetDefault_Grapple_Swing()
+    local retVal =
+    {
+        name = "swing",
+        description = "Open air swinging",
+
+        mappin_name = "OffVariant",
+        minDot = nil,
+        stop_on_wallHit = true,
+
+        anti_gravity = nil,
+
+        desired_length = nil,
+
+        --accel_alongGrappleLine = nil,       --TODO: Some of the acceleration needs to be this.  Otherwise it gets jerky when only drag is applied
+        accel_alongGrappleLine = GetDefault_ConstantAccel(12, 6, 0.75),      -- still jerky
+        accel_alongLook = nil,
+
+        springAccel_k = nil,        --TODO: Play with this
+
+        velocity_away = GetDefault_VelocityAway(nil, 70, nil),      -- using a big tension so it feels like rope
+
+        aim_swing = GetDefault_AimSwing(),
+
+        fallDamageReduction_percent = 0,
+    }
+
+    retVal.experience = 12
+    retVal.energy_cost = 1
+
+    return retVal
+end
+
 ----------------------------------------------- Components -----------------------------------------------
 
 function GetDefault_EnergyTank()
@@ -383,6 +426,14 @@ function GetDefault_AimStraight(max_override)
         mappin_name = "CustomPositionVariant",
         air_dash = nil,
         air_anchor = nil,
+    }
+end
+
+function GetDefault_AimSwing()
+    return
+    {
+        SwingLength = 24,
+        MinAngle = -45,
     }
 end
 

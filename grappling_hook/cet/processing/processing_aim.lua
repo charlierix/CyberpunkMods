@@ -21,11 +21,10 @@ function Process_Aim(o, player, vars, const, debug, deltaTime)
     vars.energy = RecoverEnergy(vars.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * player.energy_tank.flying_percent, deltaTime)
 
     if vars.grapple.aim_straight then
-        this.Aim_Straight(vars.grapple.aim_straight, o, player, vars, const, debug, deltaTime)
+        this.Aim_Straight(vars.grapple.aim_straight, o, player, vars, const, debug)
 
     elseif vars.grapple.aim_swing then
-        print("Grappling ERROR, finish aim_swing")
-        Transition_ToStandard(vars, const, debug, o)
+        this.Aim_Swing(vars.grapple.aim_swing, o, player, vars, const, debug)
 
     else
         print("Grappling ERROR, unknown aim")
@@ -35,18 +34,9 @@ end
 
 --------------------------------------- Private Methods ---------------------------------------
 
-function this.Aim_Straight(aim, o, player, vars, const, debug, deltaTime)
-    if vars.startStopTracker:GetRequestedAction() then
-        -- Something different was requested, recover the energy that was used for this current grapple
-        local existingEnergy = vars.energy
-        vars.energy = math.min(vars.energy + vars.grapple.energy_cost, player.energy_tank.max_energy)
-
-        if HasSwitchedFlightMode(o, player, vars, const, true) then        -- this function looks at the same bindings as above
-            do return end
-        else
-            -- There was some reason why the switch didn't work.  Take the energy back
-            vars.energy = existingEnergy
-        end
+function this.Aim_Straight(aim, o, player, vars, const, debug)
+    if this.RecoverEnergy_Switch(o, player, vars, const) then
+        do return end
     end
 
     -- Fire a ray
@@ -111,4 +101,46 @@ function this.Aim_Straight(aim, o, player, vars, const, debug, deltaTime)
         local aimPoint = Vector4.new(from.x + (o.lookdir_forward.x * aim.max_distance), from.y + (o.lookdir_forward.y * aim.max_distance), from.z + (o.lookdir_forward.z * aim.max_distance), 1)
         EnsureMapPinVisible(aimPoint, aim.mappin_name, vars, o)
     end
+end
+
+function this.Aim_Swing(aim, o, player, vars, const, debug)
+    if this.RecoverEnergy_Switch(o, player, vars, const) then
+        do return end
+    end
+
+    print("aiming swing")
+
+
+    o:GetCamera()
+
+
+    -- For now, just do 45 degrees forward and up
+    local lookdir_up = CrossProduct3D(o.lookdir_right, o.lookdir_forward)
+
+    local look_direction = AddVectors(o.lookdir_forward, lookdir_up)
+    Normalize(look_direction)
+
+    local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
+    local to = AddVectors(from, MultiplyVector(look_direction, 24))
+
+    EnsureMapPinVisible(to, vars.grapple.mappin_name, vars, o)
+
+    Transition_ToFlight_Swing(vars, const, o, from, to, nil)
+end
+
+function this.RecoverEnergy_Switch(o, player, vars, const)
+    if vars.startStopTracker:GetRequestedAction() then
+        -- Something different was requested, recover the energy that was used for this current grapple
+        local existingEnergy = vars.energy
+        vars.energy = math.min(vars.energy + vars.grapple.energy_cost, player.energy_tank.max_energy)
+
+        if HasSwitchedFlightMode(o, player, vars, const, true) then        -- this function looks at the same bindings as above
+            return true
+        else
+            -- There was some reason why the switch didn't work.  Take the energy back
+            vars.energy = existingEnergy
+        end
+    end
+
+    return false
 end

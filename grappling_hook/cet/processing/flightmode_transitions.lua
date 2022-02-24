@@ -71,9 +71,8 @@ function Transition_ToFlight_Straight(vars, const, o, rayFrom, rayHit, airanchor
     vars.initialAirborneTime = nil
 end
 
--- This goes from aim into flight (or airdash to flight)
+-- This goes from aim into flight
 -- There's no need to check for energy, that was done when trying to aim
--- NOTE: airanchor should only be passed in when flight is using it (a solid wall hit doesn't use air anchor)
 function Transition_ToFlight_Swing(vars, const, o, rayFrom, rayHit, airanchor)
     vars.flightMode = const.flightModes.flight_swing
     o:Custom_CurrentlyFlying_StartFlight()
