@@ -13,6 +13,8 @@ local pullInterval_quest = this.GetRandom_Variance(12, 1)
 local pullInterval_transaction = this.GetRandom_Variance(12, 1)
 local pullInterval_equipment = this.GetRandom_Variance(12, 1)
 local pullInterval_rpgManager = this.GetRandom_Variance(12, 1)
+local pullInterval_spacialQueries = this.GetRandom_Variance(12, 1)
+local pullInterval_targeting = this.GetRandom_Variance(12, 1)
 
 GameObjectAccessor = {}
 
@@ -34,6 +36,8 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_transaction = -(pullInterval_transaction * 2)
     obj.lastPulled_equipment = -(pullInterval_equipment * 2)
     obj.lastPulled_rpgManager = -(pullInterval_rpgManager * 2)
+    obj.lastPulled_spacialQueries = -(pullInterval_spacialQueries * 2)
+    obj.lastPulled_targeting = -(pullInterval_targeting * 2)
 
     obj.lastGot_lookDir = -1
 
@@ -127,6 +131,24 @@ function GameObjectAccessor:GetCamera()
     end
 end
 
+-- Returns position, direction
+function GameObjectAccessor:GetCrosshairInfo()
+    self:EnsureLoaded_Player()
+    self:EnsureLoaded_Targeting()
+
+    if self.player and self.targeting then
+        return self.targeting:GetDefaultCrosshairData(self.player)
+    end
+
+    --	local player = Game.GetPlayer()
+    --	local targetting = Game.GetTargetingSystem()
+    --	local crosshairPosition, crosshairForward = targetting:GetDefaultCrosshairData(player)
+    --	local pos = player:GetWorldPosition()
+    --	print("diff: " .. vec_str(SubtractVectors(crosshairPosition, pos)))
+    --		the z changes based on looking up or not (1.59 looking down, 1.8 looking up)
+    --		x and y also have a small offset (about 0.25)
+end
+
 -- Teleports to a point, look dir
 function GameObjectAccessor:Teleport(pos, yaw)
     self:EnsureLoaded_Player()
@@ -142,7 +164,7 @@ function GameObjectAccessor:Teleport(pos, yaw)
     end
 end
 
--- This serves as a ray cast
+-- This serves as a quick/crude ray cast
 function GameObjectAccessor:IsPointVisible(fromPos, toPos)
     if not self.sensor or (self.timer - self.lastPulled_sensor) >= pullInterval_sensor then
         self.lastPulled_sensor = self.timer
@@ -157,26 +179,18 @@ function GameObjectAccessor:IsPointVisible(fromPos, toPos)
     end
 end
 
--- This ray cast also returns normal (but doesn't see quite as much as IsPointVisible)
--- Returns
---  HitPoint, Normal (or nils)
-function GameObjectAccessor:RayCast(fromPos, toPos, staticOnly)
-    self:EnsureLoaded_Player()
+-- Returns a position, normal, material (or nils)
+function GameObjectAccessor:RayCast(fromPos, toPos)
+    self:EnsureLoaded_SpacialQueries()
 
-    if self.player then
-        -- Result is empty string for a miss, or "px|py|pz|nx|ny|nz|mat"
-        local result = self.wrappers.RayCast(self.player, fromPos, toPos, staticOnly)
-
-        if result.position.x == tonumber("inf") then
-            return nil, nil
+    if self.spacialQueries then
+        local hit = RayCast_Closest(self.spacialQueries, fromPos, toPos)
+        --local hit = RayCast_Closest_All(self.spacialQueries, fromPos, toPos)
+        if hit then
+            return ToVector4(hit.position), ToVector4(hit.normal), hit.material
+        else
+            return nil, nil, nil
         end
-
-        --NOTE: There is also a material, but tostring returns too much.  Would need to extract the relavent part (only bother doing that once needed)
-        --print(tostring(result.material))
-
-        return
-            Vector4.new(result.position.x, result.position.y, result.position.z, 1),        -- position, normal come back as Vector3.  Return a vec4 to be consistent with everything else
-            Vector4.new(result.normal.x, result.normal.y, result.normal.z, 1)
     end
 end
 
@@ -405,6 +419,22 @@ function GameObjectAccessor:EnsureLoaded_RPGManager()
         self.lastPulled_rpgManager = self.timer
 
         self.rpgManager = GetSingleton("gameRPGManager")        -- I'm guessing this is the same class as RPGManager that adam smasher dump references
+    end
+end
+
+function GameObjectAccessor:EnsureLoaded_SpacialQueries()
+    if not self.spacialQueries or (self.timer - self.lastPulled_spacialQueries) >= pullInterval_spacialQueries then
+        self.lastPulled_spacialQueries = self.timer
+
+        self.spacialQueries = self.wrappers.GetSpatialQueriesSystem()
+    end
+end
+
+function GameObjectAccessor:EnsureLoaded_Targeting()
+    if not self.targeting or (self.timer - self.lastPulled_targeting) >= pullInterval_targeting then
+        self.lastPulled_targeting = self.timer
+
+        self.targeting = self.wrappers.GetTargetingSystem()
     end
 end
 

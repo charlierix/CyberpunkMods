@@ -117,7 +117,6 @@ local const =
     flightModes = CreateEnum("standard", "aim", "airdash", "flight_straight", "flight_swing", "antigrav"),
 
     grappleFrom_Z = 1.85,
-    grappleMinResolution = 0.5,
 
     modNames = CreateEnum("grappling_hook", "jetpack", "low_flying_v", "wall_hang"),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
 
@@ -282,7 +281,6 @@ registerForEvent("onInit", function()
     function wrappers.Teleport(teleport, player, pos, yaw) return teleport:Teleport(player, pos, EulerAngles.new(0, 0, yaw)) end
     function wrappers.GetSenseManager() return Game.GetSenseManager() end
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
-    function wrappers.RayCast(player, from, to, staticOnly) return player:GrapplingHook_RayCast(from, to, staticOnly) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
     function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
@@ -300,6 +298,8 @@ registerForEvent("onInit", function()
     function wrappers.GetGetItemList(transaction, player) return transaction:GetItemList(player) end
     function wrappers.GetEquipmentSystem() return Game.GetScriptableSystemsContainer():Get("EquipmentSystem") end
     function wrappers.IsItemEquipped(equipment, player, item) return equipment:IsEquipped(player, item:GetID()) end
+    function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
+    function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end
 
     o = GameObjectAccessor:new(wrappers)
 
@@ -615,8 +615,8 @@ function TODO()
 
     -- Test and add a link to no sepia mod
     --  https://www.nexusmods.com/cyberpunk2077/mods/3161/
-	
-	-- Raycast Alternate:
+
+	-- Raycast Alternate (looks like this worked in 1.3.1, but not 1.5):
 	--	keanuWheeze — Yesterday at 3:24 PM
 	--	Is there any way of raycasting for every type of collision in one go, without having to do seperate ones for all the collision groups (Static, Terrain)? (https://nativedb.red4ext.com/gameSpatialQueriesSystem)
 	--	SyncRaycastByCollisionPreset would sound promising, but i have no clue what the preset names are (Except for the few ones found in the dump)	
@@ -644,13 +644,4 @@ function TODO()
 	--	psiberx — Yesterday at 4:57 PM
 	--	can't use this function with cet currently because they have marked first param as out (they don't do this with other structs)	
 	
-	-- grappleFrom_Z Alternate:
-	--	local player = Game.GetPlayer()
-	--	local targetting = Game.GetTargetingSystem()
-	--	local crosshairPosition, crosshairForward = targetting:GetDefaultCrosshairData(player)
-	--	local pos = player:GetWorldPosition()
-	--	print("diff: " .. vec_str(SubtractVectors(crosshairPosition, pos)))
-	--		the z changes based on looking up or not (1.59 looking down, 1.8 looking up)
-	--		x and y also have a small offset
-
 end

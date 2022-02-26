@@ -42,8 +42,9 @@ function Process_AirDash(o, player, vars, const, debug, deltaTime)
 
     -- Fire a ray, according to initial conditions
     local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
+    local to = GetPoint(from, o.lookdir_forward, vars.rayLength)
 
-    local hitPoint, _ = RayCast_HitPoint(from, o.lookdir_forward, vars.rayLength, const.grappleMinResolution, o)
+    local hitPoint = o:RayCast(from, to)
 
     -- See if the ray hit something
     if hitPoint then

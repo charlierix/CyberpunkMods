@@ -32,7 +32,7 @@ function Process_Aim(o, player, vars, const, debug, deltaTime)
     end
 end
 
---------------------------------------- Private Methods ---------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.Aim_Straight(aim, o, player, vars, const, debug)
     if this.RecoverEnergy_Switch(o, player, vars, const) then
@@ -43,8 +43,9 @@ function this.Aim_Straight(aim, o, player, vars, const, debug)
     o:GetCamera()
 
     local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
+    local to = GetPoint(o.pos, o.lookdir_forward, aim.max_distance)
 
-    local hitPoint, _ = RayCast_HitPoint(from, o.lookdir_forward, aim.max_distance, const.grappleMinResolution, o)
+    local hitPoint = o:RayCast(from, to)
 
     -- See if the ray hit something
     if hitPoint then
@@ -108,24 +109,18 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
         do return end
     end
 
-    print("aiming swing")
+    -- Fire some rays in a forward code
+
+    -- Detect if enclosed space:
+    --  Launch the player into the middle of that space in the rough direction that the player is facing
+
+    -- Detect if shoud launch the player in the air
+    --  Launch the player up at an angle to get off the ground and moving quickly
 
 
-    o:GetCamera()
 
-
-    -- For now, just do 45 degrees forward and up
-    local lookdir_up = CrossProduct3D(o.lookdir_right, o.lookdir_forward)
-
-    local look_direction = AddVectors(o.lookdir_forward, lookdir_up)
-    Normalize(look_direction)
-
-    local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
-    local to = AddVectors(from, MultiplyVector(look_direction, 24))
-
-    EnsureMapPinVisible(to, vars.grapple.mappin_name, vars, o)
-
-    Transition_ToFlight_Swing(vars, const, o, from, to, nil)
+    -- else (much more work to do here, but get the above working first)
+    this.Aim_Swing_45Only(o, vars, const)
 end
 
 function this.RecoverEnergy_Switch(o, player, vars, const)
@@ -143,4 +138,24 @@ function this.RecoverEnergy_Switch(o, player, vars, const)
     end
 
     return false
+end
+
+------------------------------------ Swing 45 Only ------------------------------------
+
+-- This blindly sets the anchor point at 24 meters, 45 degrees above look direction
+function this.Aim_Swing_45Only(o, vars, const)
+    o:GetCamera()
+
+    -- For now, just do 45 degrees forward and up
+    local lookdir_up = CrossProduct3D(o.lookdir_right, o.lookdir_forward)
+
+    local look_direction = AddVectors(o.lookdir_forward, lookdir_up)
+    Normalize(look_direction)
+
+    local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
+    local to = AddVectors(from, MultiplyVector(look_direction, 24))
+
+    EnsureMapPinVisible(to, vars.grapple.mappin_name, vars, o)
+
+    Transition_ToFlight_Swing(vars, const, o, from, to, nil)
 end
