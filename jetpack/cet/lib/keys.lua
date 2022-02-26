@@ -82,7 +82,7 @@ function Keys:MapAction(action)
         end
 
     --elseif (actionName == "CameraAim") or (actionName == "RangedADS") or (actionName == "MeleeBlock") then
-    elseif actionName == "CameraAim" then
+    elseif actionName == "cancel" or actionName == "CameraAim" then     -- looks like CameraAim no longer fires in 1.5
         if pressed then
             self.rmb = true
         elseif released then

@@ -21,7 +21,6 @@ require "lib/keydash_tracker_analog"
 require "lib/keys"
 require "lib/lists"
 require "lib/math_basic"
-require "lib/math_raycast"
 require "lib/math_vector"
 require "lib/math_yaw"
 require "lib/processing_inflight_cet"
@@ -319,6 +318,8 @@ registerForEvent("onInit", function()
     function wrappers.Ragdoll_Out(player, radius, force, upForce) player:RagdollNPCs_ExplodeOut(radius, force, upForce) end
     function wrappers.GetTimeSystem() return Game.GetTimeSystem() end
     function wrappers.Time_IsTimeDilationActive(timeSys) return timeSys:IsTimeDilationActive() end
+    function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
+    function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end
 
     o = GameObjectAccessor:new(wrappers)
 

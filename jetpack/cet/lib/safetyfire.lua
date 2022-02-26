@@ -6,7 +6,7 @@ function GetSafetyFireHitPoint(o, pos, velZ, mode, deltaTime)
     local searchDist = math.abs(velZ * deltaTime * 4)
 
     -- Direct Center
-    local hitPoint = RayCast_HitPoint(pos, Vector4.new(0, 0, -1, 1), searchDist, 0.1, o)
+    local hitPoint = o:RayCast(pos, GetPoint(pos, Vector4.new(0, 0, -1, 1), searchDist))
     if hitPoint then
         return hitPoint
     end
@@ -21,22 +21,26 @@ function GetSafetyFireHitPoint(o, pos, velZ, mode, deltaTime)
     -- x,y = 0.09901475467
     -- z   = 0.99014754298
 
-    hitPoint = RayCast_HitPoint(Vector4.new(pos.x - 0.02, pos.y - 0.02, pos.z, 1), Vector4.new(-0.09901475467, -0.09901475467, -0.99014754298, 1), searchDist, 0.1, o)
+    local from = Vector4.new(pos.x - 0.02, pos.y - 0.02, pos.z, 1)
+    hitPoint = o:RayCast(from, GetPoint(from, Vector4.new(-0.09901475467, -0.09901475467, -0.99014754298, 1), searchDist))
     if hitPoint then
         return hitPoint
     end
 
-    hitPoint = RayCast_HitPoint(Vector4.new(pos.x + 0.02, pos.y - 0.02, pos.z, 1), Vector4.new(0.09901475467, -0.09901475467, -0.99014754298, 1), searchDist, 0.1, o)
+    from = Vector4.new(pos.x + 0.02, pos.y - 0.02, pos.z, 1)
+    hitPoint = o:RayCast(from, GetPoint(from, Vector4.new(0.09901475467, -0.09901475467, -0.99014754298, 1), searchDist))
     if hitPoint then
         return hitPoint
     end
 
-    hitPoint = RayCast_HitPoint(Vector4.new(pos.x + 0.02, pos.y + 0.02, pos.z, 1), Vector4.new(0.09901475467, 0.09901475467, -0.99014754298, 1), searchDist, 0.1, o)
+    from = Vector4.new(pos.x + 0.02, pos.y + 0.02, pos.z, 1)
+    hitPoint = o:RayCast(from, GetPoint(from, Vector4.new(0.09901475467, 0.09901475467, -0.99014754298, 1), searchDist))
     if hitPoint then
         return hitPoint
     end
 
-    hitPoint = RayCast_HitPoint(Vector4.new(pos.x - 0.02, pos.y + 0.02, pos.z, 1), Vector4.new(-0.09901475467, 0.09901475467, -0.99014754298, 1), searchDist, 0.1, o)
+    from = Vector4.new(pos.x - 0.02, pos.y + 0.02, pos.z, 1);
+    hitPoint = o:RayCast(from, GetPoint(from, Vector4.new(-0.09901475467, 0.09901475467, -0.99014754298, 1), searchDist))
     if hitPoint then
         return hitPoint
     end
