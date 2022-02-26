@@ -184,8 +184,7 @@ function GameObjectAccessor:RayCast(fromPos, toPos)
     self:EnsureLoaded_SpacialQueries()
 
     if self.spacialQueries then
-        local hit = RayCast_Closest(self.spacialQueries, fromPos, toPos)
-        --local hit = RayCast_Closest_All(self.spacialQueries, fromPos, toPos)
+        local hit = this.RayCast_Closest(self.spacialQueries, fromPos, toPos)
         if hit then
             return ToVector4(hit.position), ToVector4(hit.normal), hit.material
         else
@@ -447,4 +446,36 @@ function this.StopSound(player, soundName)
     local audioEvent = SoundStopEvent.new()
     audioEvent.soundName = soundName
     player:QueueEvent(audioEvent)
+end
+
+local raycast_filters =
+{
+    --"Dynamic",      -- Movable Objects
+    "Vehicle",
+    "Static",       -- Buildings, Concrete Roads, Crates, etc
+    --"Water",
+    "Terrain",
+    "PlayerBlocker",        -- Trees, Billboards, Barriers
+}
+function this.RayCast_Closest(spatial, from_pos, to_pos)
+    local closest = nil
+    local closest_distsqr = nil
+
+    for i = 1, #raycast_filters do
+        -- it would be cool if QueryFilter.ALL() worked here, but it doesn't
+        local success, result = spatial:SyncRaycastByCollisionGroup(from_pos, to_pos, raycast_filters[i], false, false)
+
+        if success then
+            --print("hit: " .. raycast_filters[i] .. " | " .. tostring(result.material))
+
+            local dist_sqr = GetVectorDiffLengthSqr(from_pos, result.position)
+
+            if closest == nil or dist_sqr < closest_distsqr then
+                closest = result
+                closest_distsqr = dist_sqr
+            end
+        end
+    end
+
+    return closest
 end

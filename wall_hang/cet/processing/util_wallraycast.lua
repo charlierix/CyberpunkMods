@@ -167,7 +167,7 @@ function this.FireRay(other_hits, fromPos, testPos, direction, rayLen, o, log)
     this.FireRay_ToPoint(other_hits, fromPos, testPos, toPos, o, log)
 end
 function this.FireRay_ToPoint(other_hits, fromPos, testPos, toPos, o, log)
-    local hit, normal = o:RayCast(fromPos, toPos, true)
+    local hit, normal = o:RayCast(fromPos, toPos)
 
     if not hit then
         log:Add_Line(fromPos, toPos, "miss")
@@ -188,7 +188,7 @@ function this.FireRay_ToPoint(other_hits, fromPos, testPos, toPos, o, log)
     toPos.y = fromPos.y + ((planePoint.y - fromPos.y) * 1.1)
     toPos.z = fromPos.z + ((planePoint.z - fromPos.z) * 1.1)
 
-    hit, normal = o:RayCast(fromPos, toPos, true)
+    hit, normal = o:RayCast(fromPos, toPos)
 
     if hit then
         log:Add_Dot(planePoint, "planePoint_hit")

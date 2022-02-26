@@ -20,7 +20,6 @@ require "core/debug_render_logger"
 require "core/gameobj_accessor"
 require "core/lists"
 require "core/math_basic"
-require "core/math_raycast"
 require "core/math_shapes"
 require "core/math_vector"
 require "core/math_yaw"
@@ -261,12 +260,13 @@ registerForEvent("onInit", function()
     function wrappers.Teleport(teleport, player, pos, yaw) return teleport:Teleport(player, pos, EulerAngles.new(0, 0, yaw)) end
     function wrappers.GetSenseManager() return Game.GetSenseManager() end
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
-    function wrappers.RayCast(player, from, to, staticOnly) return player:WallHang_RayCast(from, to, staticOnly) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
     function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
     function wrappers.Custom_CurrentlyFlying_StartFlight(player) Custom_CurrentlyFlying_StartFlight(player, const.modNames) end
     function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
+    function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
+    function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end
 
     o = GameObjectAccessor:new(wrappers)
 
