@@ -16,12 +16,11 @@ LaserFinderWorker = {}
 -- storage              an instance of RaycastHitStorage
 -- fireDirection        only one of the 3 axiis can be non zero, and it must be -1 or 1
 -- rayLength            how far to fire the laser (the farther the distance, the more attempts it will take to get to a particular accuracy)
--- accuracyThreshold    since RayCast_HitPoint must do a binary search to guess the actual point, this tells when to stop narrowing down
 -- stepDistance         fire requests are floating point, but actual fire locations are integer.  This is how dense the firing pattern is (1 is the smallest)
 -- numSteps             how wide of a net to cast.  0 will only be a single point.  1 will be three points (neg,zero,pos).  2 will be five, etc
 --
--- string name, RaycastHitStorage storage, Vector3Int fireDirection, float rayLength, float accuracyThreshold, int stepDistance, int numSteps, float garbageCollectInterval_seconds, int garbageCountThreshold
-function LaserFinderWorker:new(name, o, storage, fireDirection, rayLength, accuracyThreshold, stepDistance, numSteps, garbageCollectInterval_seconds, garbageCountThreshold)
+-- string name, RaycastHitStorage storage, Vector3Int fireDirection, float rayLength, int stepDistance, int numSteps, float garbageCollectInterval_seconds, int garbageCountThreshold
+function LaserFinderWorker:new(name, o, storage, fireDirection, rayLength, stepDistance, numSteps, garbageCollectInterval_seconds, garbageCountThreshold)
     local obj = { }
     setmetatable(obj, self)
     self.__index = self
@@ -41,7 +40,6 @@ function LaserFinderWorker:new(name, o, storage, fireDirection, rayLength, accur
 
     obj.directionUnit = fireDirection
     obj.rayLength = rayLength
-    obj.accuracyThreshold = accuracyThreshold
 
     obj.stepDirections = Vector4.new(
         LaserFinderWorker_GetStepDirection(fireDirection.x, stepDistance, numSteps),
@@ -140,16 +138,18 @@ function LaserFinderWorker:FireRay(x, y, z)
 
     -- Fire ray
     local fromPos = Vector4.new(x, y, z, 1);
-    local hit, _ = RayCast_HitPoint(fromPos, self.directionUnit, self.rayLength, self.accuracyThreshold, self.o);
+    --local hit, _ = RayCast_HitPoint(fromPos, self.directionUnit, self.rayLength, self.accuracyThreshold, self.o);
+    local hit = self.o:RayCast(fromPos, GetPoint(fromPos, self.directionUnit, self.rayLength))
 
-    -- Detect water (water isn't seen by ray casts and is at z=0)
-    if (not hit) and self.isDownFiring then
-        if z < 0 then
-            hit = Vector4.new(x, y, z, 1)
-        elseif z - self.rayLength < 0 then
-            hit = Vector4.new(x, y, 0, 1)
-        end
-    end
+    -- the new raycast now sees water
+    -- -- Detect water (water isn't seen by ray casts and is at z=0)
+    -- if (not hit) and self.isDownFiring then
+    --     if z < 0 then
+    --         hit = Vector4.new(x, y, z, 1)
+    --     elseif z - self.rayLength < 0 then
+    --         hit = Vector4.new(x, y, 0, 1)
+    --     end
+    -- end
 
     -- Store the hit or miss
     if hit then

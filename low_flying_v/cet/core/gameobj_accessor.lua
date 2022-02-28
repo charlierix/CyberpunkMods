@@ -8,6 +8,8 @@ local pullInterval_workspot = this.GetRandom_Variance(12, 1)
 local pullInterval_camera = this.GetRandom_Variance(12, 1)
 local pullInterval_teleport = this.GetRandom_Variance(12, 1)
 local pullInterval_sensor = this.GetRandom_Variance(12, 1)
+local pullInterval_spacialQueries = this.GetRandom_Variance(12, 1)
+local pullInterval_targeting = this.GetRandom_Variance(12, 1)
 
 GameObjectAccessor = {}
 
@@ -24,6 +26,8 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_camera = -(pullInterval_camera * 2)
     obj.lastPulled_teleport = -(pullInterval_teleport * 2)
     obj.lastPulled_sensor = -(pullInterval_sensor * 2)
+    obj.lastPulled_spacialQueries = -(pullInterval_spacialQueries * 2)
+    obj.lastPulled_targeting = -(pullInterval_targeting * 2)
 
     return obj
 end
@@ -109,6 +113,24 @@ function GameObjectAccessor:GetCamera()
     end
 end
 
+-- Returns position, direction
+function GameObjectAccessor:GetCrosshairInfo()
+    self:EnsureLoaded_Player()
+    self:EnsureLoaded_Targeting()
+
+    if self.player and self.targeting then
+        return self.targeting:GetDefaultCrosshairData(self.player)
+    end
+
+    --	local player = Game.GetPlayer()
+    --	local targetting = Game.GetTargetingSystem()
+    --	local crosshairPosition, crosshairForward = targetting:GetDefaultCrosshairData(player)
+    --	local pos = player:GetWorldPosition()
+    --	print("diff: " .. vec_str(SubtractVectors(crosshairPosition, pos)))
+    --		the z changes based on looking up or not (1.59 looking down, 1.8 looking up)
+    --		x and y also have a small offset (about 0.25)
+end
+
 -- Teleports to a point, look dir
 function GameObjectAccessor:Teleport(pos, yaw)
     self:EnsurePlayerLoaded()
@@ -124,7 +146,7 @@ function GameObjectAccessor:Teleport(pos, yaw)
     end
 end
 
--- This serves as a ray cast
+-- This serves as a quick/crude ray cast
 function GameObjectAccessor:IsPointVisible(fromPos, toPos)
     if not self.sensor or (self.timer - self.lastPulled_sensor) >= pullInterval_sensor then
         self.lastPulled_sensor = self.timer
@@ -139,20 +161,24 @@ function GameObjectAccessor:IsPointVisible(fromPos, toPos)
     end
 end
 
+-- Returns a position, normal, material (or nils)
+function GameObjectAccessor:RayCast(fromPos, toPos)
+    self:EnsureLoaded_SpacialQueries()
+
+    if self.spacialQueries then
+        local hit = this.RayCast_Closest(self.spacialQueries, fromPos, toPos)
+        if hit then
+            return ToVector4(hit.position), ToVector4(hit.normal), hit.material
+        else
+            return nil, nil, nil
+        end
+    end
+end
+
 function GameObjectAccessor:HasHeadUnderwater()
     self:EnsurePlayerLoaded()
 
     if self.player then
-        -- CET 1.15 likely fixed this issue
-        -- This has a chance of causing crashes, so only call it when there's a posibility of being underwater
-        -- NOTE: Judy's lake is at an altitude of 180, so this shortcut won't work there
-        -- if self.pos.z > 6 then
-
-        -- Jetpack can afford to ignore judy's lake, but low flying v needs the check
-        -- if self.pos.z > 186 then
-        --     return false
-        -- end
-
         return self.wrappers.HasHeadUnderwater(self.player)
     end
 end
@@ -209,6 +235,22 @@ function GameObjectAccessor:EnsurePlayerLoaded()
     end
 end
 
+function GameObjectAccessor:EnsureLoaded_SpacialQueries()
+    if not self.spacialQueries or (self.timer - self.lastPulled_spacialQueries) >= pullInterval_spacialQueries then
+        self.lastPulled_spacialQueries = self.timer
+
+        self.spacialQueries = self.wrappers.GetSpatialQueriesSystem()
+    end
+end
+
+function GameObjectAccessor:EnsureLoaded_Targeting()
+    if not self.targeting or (self.timer - self.lastPulled_targeting) >= pullInterval_targeting then
+        self.lastPulled_targeting = self.timer
+
+        self.targeting = self.wrappers.GetTargetingSystem()
+    end
+end
+
 function this.PlaySound(player, soundName)
     local audioEvent = SoundPlayEvent.new()
     audioEvent.soundName = soundName
@@ -218,4 +260,36 @@ function this.StopSound(player, soundName)
     local audioEvent = SoundStopEvent.new()
     audioEvent.soundName = soundName
     player:QueueEvent(audioEvent)
+end
+
+local raycast_filters =
+{
+    "Dynamic",      -- Movable Objects
+    "Vehicle",
+    "Static",       -- Buildings, Concrete Roads, Crates, etc
+    "Water",
+    "Terrain",
+    "PlayerBlocker",        -- Trees, Billboards, Barriers
+}
+function this.RayCast_Closest(spatial, from_pos, to_pos)
+    local closest = nil
+    local closest_distsqr = nil
+
+    for i = 1, #raycast_filters do
+        -- it would be cool if QueryFilter.ALL() worked here, but it doesn't
+        local success, result = spatial:SyncRaycastByCollisionGroup(from_pos, to_pos, raycast_filters[i], false, false)
+
+        if success then
+            --print("hit: " .. raycast_filters[i] .. " | " .. tostring(result.material))
+
+            local dist_sqr = GetVectorDiffLengthSqr(from_pos, result.position)
+
+            if closest == nil or dist_sqr < closest_distsqr then
+                closest = result
+                closest_distsqr = dist_sqr
+            end
+        end
+    end
+
+    return closest
 end

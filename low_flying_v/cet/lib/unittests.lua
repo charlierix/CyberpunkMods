@@ -84,24 +84,6 @@ function UnitTest_KDashDetector(keys, o, vars, debug)
     debug.wasKDash = wasKDash
 end
 
-function UnitTest_RayCast_HitPoint(o, debug)
-    o:GetCamera()
-
-    local fromHeadPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + 1.8, 1)
-
-    local hitPoint, numCasts = RayCast_HitPoint(fromHeadPos, o.lookdir_forward, 144, 3, o)
-
-    debug.hit_attempts = numCasts
-
-    if hitPoint then
-        debug.hit_point = vec_str(hitPoint)
-        debug.hit_dist = Round(math.sqrt(GetVectorDiffLengthSqr(fromHeadPos, hitPoint)), 1)
-    else
-        debug.hit_point = "none"
-        debug.hit_dist = "infinity"
-    end
-end
-
 function UnitTest_StickyList()
     local a = StickyList:new()
 
@@ -236,7 +218,7 @@ end
 function UnitTest_LaserWorker_1(o)
 
     local fireDir = Vector4.new(0, 0, 1, 1)
-    local a = LaserFinderWorker:new("test", o, nil, fireDir, 3, nil, 1, nil, nil, nil)
+    local a = LaserFinderWorker:new("test", o, nil, fireDir, 3, 1, nil, nil, nil)
 
     a:FireRays(Vector4.new(-1.5, -1.5, -1.5, 1))
     a:FireRays(Vector4.new(-0.5, -0.5, -0.5, 1))
@@ -247,14 +229,14 @@ end
 
 function UnitTest_LaserWorker_2(o)
     local fireDir = Vector4.new(0, 0, 1, 1)
-    local a = LaserFinderWorker:new("test", o, nil, fireDir, 13, nil, 3, 2, nil, nil)
+    local a = LaserFinderWorker:new("test", o, nil, fireDir, 13, 3, 2, nil, nil)
 
     a:FireRays(Vector4.new(-2.1, 5.8, -12.3, 1))
 end
 
 function UnitTest_LaserWorker_3(o)
     local fireDir = Vector4.new(0, 0, 1, 1)
-    local a = LaserFinderWorker:new("test", o, nil, fireDir, 13, nil, 3, 2, nil, nil)
+    local a = LaserFinderWorker:new("test", o, nil, fireDir, 13, 3, 2, nil, nil)
 
     print("garbageCollectInterval_seconds: " .. tostring(a.garbageCollectInterval_seconds))
     print("garbageCountThreshold: " .. tostring(a.garbageCountThreshold))
@@ -315,7 +297,7 @@ function UnitTest_LaserWorker_4()
     local storage = RaycastHitStorage:new(o)
 
     local fireDir = Vector4.new(0, 0, 1, 1)
-    local laser = LaserFinderWorker:new("test", o, storage, fireDir, 13, nil, 3, 2, nil, nil)
+    local laser = LaserFinderWorker:new("test", o, storage, fireDir, 13, 3, 2, nil, nil)
 
     print("")
     print("storage tick 1 | " .. tostring(laser.hits:GetCount()))

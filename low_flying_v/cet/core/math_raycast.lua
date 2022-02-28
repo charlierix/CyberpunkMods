@@ -1,8 +1,3 @@
--- This does a single ray cast to see if it is obscured
-function IsRayCastHit(fromPos, dirX, dirY, dirZ, o)
-    return not o:IsPointVisible(fromPos, Vector4.new(fromPos.x + dirX, fromPos.y + dirY, fromPos.z + dirZ, fromPos.w))
-end
-
 -- This does a ray cast and returns the hit point or nil
 --
 -- The most reliable raycast function is IsVisible (it sees pretty much everything except people).

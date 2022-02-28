@@ -16,19 +16,16 @@ local laser_settings =
 {
     -- Down
     down_rayLength = 6,
-    down_accuracyThreshold = 0.5,
     down_stepDistance = 2,
     down_numSteps = 3,
 
     -- Up
     up_rayLength = 6,
-    up_accuracyThreshold = 0.5,
     up_stepDistance = 1,
     up_numSteps = 1,
 
     -- Side
     side_rayLength = 6,
-    side_accuracyThreshold = 0.5,
     side_stepDistance = 2,
     side_numSteps = 1,
 }
@@ -50,19 +47,19 @@ function LaserFinderManager:new(o, storage)
     obj.storage = storage
 
     -- passing nil for garbage collection uses default values
-    obj.woker_elevated = LaserFinderWorker:new("down elevated", o, storage, Vector4.new(0,0,-1), laser_settings.down_rayLength, laser_settings.down_accuracyThreshold, 1, 1, nil, nil)      -- This is an extra worker that fires from a point above the other to reduce the chance of missing the ground (it can make a smaller patch)
+    obj.woker_elevated = LaserFinderWorker:new("down elevated", o, storage, Vector4.new(0,0,-1), laser_settings.down_rayLength, 1, 1, nil, nil)      -- This is an extra worker that fires from a point above the other to reduce the chance of missing the ground (it can make a smaller patch)
 
-    obj.worker_down = LaserFinderWorker:new("down", o, storage, Vector4.new(0,0,-1), laser_settings.down_rayLength, laser_settings.down_accuracyThreshold, laser_settings.down_stepDistance, laser_settings.down_numSteps, nil, nil)
+    obj.worker_down = LaserFinderWorker:new("down", o, storage, Vector4.new(0,0,-1), laser_settings.down_rayLength, laser_settings.down_stepDistance, laser_settings.down_numSteps, nil, nil)
 
     obj.workers_horz =
     {
-        LaserFinderWorker:new("-x", o, storage, Vector4.new(-1,0,0), laser_settings.side_rayLength, laser_settings.side_accuracyThreshold, laser_settings.side_stepDistance, laser_settings.side_numSteps, nil, nil),
-        LaserFinderWorker:new("x", o, storage, Vector4.new(1,0,0), laser_settings.side_rayLength, laser_settings.side_accuracyThreshold, laser_settings.side_stepDistance, laser_settings.side_numSteps, nil, nil),
-        LaserFinderWorker:new("-y", o, storage, Vector4.new(0,-1,0), laser_settings.side_rayLength, laser_settings.side_accuracyThreshold, laser_settings.side_stepDistance, laser_settings.side_numSteps, nil, nil),
-        LaserFinderWorker:new("y", o, storage, Vector4.new(0,1,0), laser_settings.side_rayLength, laser_settings.side_accuracyThreshold, laser_settings.side_stepDistance, laser_settings.side_numSteps, nil, nil),
+        LaserFinderWorker:new("-x", o, storage, Vector4.new(-1,0,0), laser_settings.side_rayLength, laser_settings.side_stepDistance, laser_settings.side_numSteps, nil, nil),
+        LaserFinderWorker:new("x", o, storage, Vector4.new(1,0,0), laser_settings.side_rayLength, laser_settings.side_stepDistance, laser_settings.side_numSteps, nil, nil),
+        LaserFinderWorker:new("-y", o, storage, Vector4.new(0,-1,0), laser_settings.side_rayLength, laser_settings.side_stepDistance, laser_settings.side_numSteps, nil, nil),
+        LaserFinderWorker:new("y", o, storage, Vector4.new(0,1,0), laser_settings.side_rayLength, laser_settings.side_stepDistance, laser_settings.side_numSteps, nil, nil),
     }
 
-    obj.worker_up = LaserFinderWorker:new("up", o, storage, Vector4.new(0,0,1), laser_settings.up_rayLength, laser_settings.up_accuracyThreshold, laser_settings.up_stepDistance, laser_settings.up_numSteps, nil, nil)
+    obj.worker_up = LaserFinderWorker:new("up", o, storage, Vector4.new(0,0,1), laser_settings.up_rayLength, laser_settings.up_stepDistance, laser_settings.up_numSteps, nil, nil)
 
     obj.allWorkers =
     {

@@ -231,6 +231,8 @@ registerForEvent("onInit", function()
     function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
     function wrappers.Custom_CurrentlyFlying_StartFlight(player) Custom_CurrentlyFlying_StartFlight(player, const.modNames) end
     function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
+    function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
+    function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end
 
     o = GameObjectAccessor:new(wrappers)
 
