@@ -1,6 +1,8 @@
 --https://www.lua.org/pil/contents.html
 --https://wiki.cybermods.net/cyber-engine-tweaks/console/functions
 --https://github.com/yamashi/CyberEngineTweaks/blob/eb0f7daf2971ed480abf04355458cbe326a0e922/src/sol_imgui/README.md
+--https://redscript.redmodding.org/
+--https://codeberg.org/adamsmasher/cyberpunk/src/branch/master
 
 require "lib/gameobj_accessor"
 require "lib/ghosting"
