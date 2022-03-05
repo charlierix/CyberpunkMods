@@ -518,9 +518,9 @@ function GetDefault_AirDash()
 end
 
 function GetDefault_ConstantAccel(accel_override, speed_override, deadSpot_distance_override)
-    local accel_update, accel = this.GetUpdateAndValue(2, 20, 20 + (2 * 16), 2, accel_override, false)
+    local accel_update, accel = this.GetUpdateAndValue(2, 20, 20 + (2 * 24), 2, accel_override, false)
 
-    local speed_update, speed = this.GetUpdateAndValue(1, 6, 6 + (1 * 16), 1, speed_override, false)
+    local speed_update, speed = this.GetUpdateAndValue(1, 6, 6 + (1 * 64), 1, speed_override, false)
 
     local deadspot_dist = deadSpot_distance_override
     if not deadspot_dist then
