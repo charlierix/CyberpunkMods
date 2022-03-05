@@ -290,9 +290,13 @@ registerForEvent("onInit", function()
     function wrappers.SetMapPinPosition(mapPin, id, pos) mapPin:SetMappinPosition(id, pos) end
     function wrappers.ChangeMappinVariant(mapPin, id, variant) mapPin:ChangeMappinVariant(id, variant) end
     function wrappers.UnregisterMapPin(mapPin, id) mapPin:UnregisterMappin(id) end
+
+
     function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
     function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
     function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
+
+
     function wrappers.GetTransactionSystem() return Game.GetTransactionSystem() end
     function wrappers.GetGetItemList(transaction, player) return transaction:GetItemList(player) end
     function wrappers.GetEquipmentSystem() return Game.GetScriptableSystemsContainer():Get("EquipmentSystem") end
@@ -400,8 +404,22 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
--- registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
--- end)
+registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
+    local is_flying, vel = o:Custom_CurrentlyFlying2_TryStartFlight(false, Vector4.new(1.1, 2.2, 3.3, 1))
+    print("is_flying: " .. tostring(is_flying) .. ", vel: " .. vec_str(vel))
+
+
+    local is_still_owner = o:Custom_CurrentlyFlying2_Update(Vector4.new(8.8, 7.7, 6.6, 1))
+    print("is_still_owner: " .. tostring(is_still_owner))
+
+
+    local is_flying_2, vel2 = o:Custom_CurrentlyFlying2_TryStartFlight(true, Vector4.new(4.3, 5.4, 6.5, 1))
+    print("is_flying_2: " .. tostring(is_flying_2) .. ", vel2: " .. vec_str(vel2))
+
+
+    o:Custom_CurrentlyFlying2_Clear()
+    print("cleard flight")
+end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()
     if shouldShowConfig then

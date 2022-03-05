@@ -24,6 +24,8 @@ function GameObjectAccessor:new(wrappers)
     setmetatable(obj, self)
     self.__index = self
 
+    obj.multimod_flight = require("core/multimod_flight")
+
     obj.timer = 0
     obj.wrappers = wrappers
     obj.lastPulled_player = -(pullInterval_player * 2)      -- timer starts at zero.  So zero - -max = max   (multiplying by two to be sure there is no math drift error)
@@ -73,6 +75,10 @@ function GameObjectAccessor:GetPlayerInfo()
     end
 end
 
+
+
+
+
 -- Get/Set player.Custom_CurrentlyFlying (added in redscript.  Allows mods to talk to each other, so only one at a time will fly)
 function GameObjectAccessor:Custom_CurrentlyFlying_get()
     self:EnsureLoaded_Player()
@@ -97,6 +103,37 @@ function GameObjectAccessor:Custom_CurrentlyFlying_Clear()
         self.wrappers.Custom_CurrentlyFlying_Clear(self.player)
     end
 end
+
+
+
+
+function GameObjectAccessor:Custom_CurrentlyFlying2_TryStartFlight(allow_interruption, velocity)
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        return self.multimod_flight.TryStartFlight(self.quest, self.wrappers, allow_interruption, velocity)
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying2_Update(velocity)
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        return self.multimod_flight.Update(self.quest, self.wrappers, velocity)
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying2_Clear()
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        self.multimod_flight.Clear(self.quest, self.wrappers)
+    end
+end
+
+
+
+
+
+
 
 -- Populates isInWorkspot
 --WARNING: If this is called while load is first kicked off, it will crash the game.  So probably want to wait until the player is moving or something

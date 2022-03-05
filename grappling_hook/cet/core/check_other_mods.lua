@@ -1,6 +1,9 @@
 -- These are functions that look at an added property (PlayerPuppet.Custom_CurrentlyFlying), to see if
 -- another mod is flying
 
+
+
+--TODO: if another mod is flying, but interruption is allowed, then this function should also return the velocity
 -- Should grapple start flight?
 function CheckOtherModsFor_FlightStart(o, modNames)
     local currentlyFlying = o:Custom_CurrentlyFlying_get()
@@ -19,6 +22,10 @@ function CheckOtherModsFor_FlightStart(o, modNames)
         return false
     end
 end
+
+
+
+
 
 -- Should grapple do a safety fire?
 function CheckOtherModsFor_SafetyFire(o, modNames)
