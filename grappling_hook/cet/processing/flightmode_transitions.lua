@@ -33,8 +33,11 @@ function Transition_ToAim(grapple, vars, const, o, shouldConsumeEnergy)
         end
     end
 
+    if not o:Custom_CurrentlyFlying_TryStartFlight(true, nil) then
+        return false
+    end
+
     vars.flightMode = const.flightModes.aim
-    o:Custom_CurrentlyFlying_StartFlight()
 
     vars.grapple = grapple
 
@@ -52,7 +55,6 @@ end
 -- NOTE: airanchor should only be passed in when flight is using it (a solid wall hit doesn't use air anchor)
 function Transition_ToFlight_Straight(vars, const, o, rayFrom, rayHit, airanchor)
     vars.flightMode = const.flightModes.flight_straight
-    o:Custom_CurrentlyFlying_StartFlight()
 
     -- vars.grapple is already populated by aim
 
@@ -75,7 +77,6 @@ end
 -- There's no need to check for energy, that was done when trying to aim
 function Transition_ToFlight_Swing(vars, const, o, rayFrom, rayHit, airanchor)
     vars.flightMode = const.flightModes.flight_swing
-    o:Custom_CurrentlyFlying_StartFlight()
 
     -- vars.grapple is already populated by aim
 
@@ -103,7 +104,6 @@ end
 -- This gets called when they exit flight by looking too far away while still airborne
 function Transition_ToAntiGrav(vars, const, o)
     vars.flightMode = const.flightModes.antigrav
-    o:Custom_CurrentlyFlying_StartFlight()      -- it's already the correct value, just being complete
 
     vars.startTime = o.timer
 end
@@ -111,7 +111,6 @@ end
 -- This happens when they aimed too long without a hit, moving into airdash flight
 function Transition_ToAirDash(airdash, vars, const, o, rayFrom, lookDist)
     vars.flightMode = const.flightModes.airdash
-    o:Custom_CurrentlyFlying_StartFlight()
 
     vars.airdash = airdash
 

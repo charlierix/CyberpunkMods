@@ -75,65 +75,42 @@ function GameObjectAccessor:GetPlayerInfo()
     end
 end
 
+-- Allows mods to talk to each other, so only one at a time will fly
+function GameObjectAccessor:Custom_CurrentlyFlying_IsOwnerOrNone()
+    self:EnsureLoaded_Quest()
 
-
-
-
--- Get/Set player.Custom_CurrentlyFlying (added in redscript.  Allows mods to talk to each other, so only one at a time will fly)
-function GameObjectAccessor:Custom_CurrentlyFlying_get()
-    self:EnsureLoaded_Player()
-
-    if self.player then
-        return self.wrappers.Custom_CurrentlyFlying_get(self.player)
-    else
-        return false
+    if self.quest then
+        return self.multimod_flight.IsOwnerOrNone(self.quest, self.wrappers)
     end
 end
-function GameObjectAccessor:Custom_CurrentlyFlying_StartFlight()
-    self:EnsureLoaded_Player()
+function GameObjectAccessor:Custom_CurrentlyFlying_CanStartFlight()
+    self:EnsureLoaded_Quest()
 
-    if self.player then
-        self.wrappers.Custom_CurrentlyFlying_StartFlight(self.player)
+    if self.quest then
+        return self.multimod_flight.CanStartFlight(self.quest, self.wrappers)
     end
 end
-function GameObjectAccessor:Custom_CurrentlyFlying_Clear()
-    self:EnsureLoaded_Player()
-
-    if self.player then
-        self.wrappers.Custom_CurrentlyFlying_Clear(self.player)
-    end
-end
-
-
-
-
-function GameObjectAccessor:Custom_CurrentlyFlying2_TryStartFlight(allow_interruption, velocity)
+function GameObjectAccessor:Custom_CurrentlyFlying_TryStartFlight(allow_interruption, velocity)
     self:EnsureLoaded_Quest()
 
     if self.quest then
         return self.multimod_flight.TryStartFlight(self.quest, self.wrappers, allow_interruption, velocity)
     end
 end
-function GameObjectAccessor:Custom_CurrentlyFlying2_Update(velocity)
+function GameObjectAccessor:Custom_CurrentlyFlying_Update(velocity)
     self:EnsureLoaded_Quest()
 
     if self.quest then
         return self.multimod_flight.Update(self.quest, self.wrappers, velocity)
     end
 end
-function GameObjectAccessor:Custom_CurrentlyFlying2_Clear()
+function GameObjectAccessor:Custom_CurrentlyFlying_Clear()
     self:EnsureLoaded_Quest()
 
     if self.quest then
         self.multimod_flight.Clear(self.quest, self.wrappers)
     end
 end
-
-
-
-
-
-
 
 -- Populates isInWorkspot
 --WARNING: If this is called while load is first kicked off, it will crash the game.  So probably want to wait until the player is moving or something

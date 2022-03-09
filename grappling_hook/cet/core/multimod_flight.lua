@@ -10,6 +10,31 @@ local this = {}
 local custom_flight_offset = 1234567
 local m_flight_key = nil
 
+
+-- This returns true if this mod is owner of flight, or the setting is blank (returns false if another mod is flying)
+-- It is readonly (doesn't set anything)
+function multimod_flight.IsOwnerOrNone(quest, wrappers)
+    local current = wrappers.GetQuestFactStr(quest, "custom_currentlyFlying_current")
+
+    if current == nil or type(current) ~= "number" then     -- only ints can be stored in quest facts, but just making sure
+        return true
+
+    elseif current == 0 then
+        return true
+
+    elseif m_flight_key and current == m_flight_key then
+        return true
+
+    else
+        return false
+    end
+end
+
+-- This just returns whether it's possible to start flight.  It is readonly (doesn't set anything)
+function multimod_flight.CanStartFlight(quest, wrappers)
+    return this.CanStartFlight(quest, wrappers, m_flight_key)
+end
+
 -- This tries to take ownership of flight.  If there is another mod flying that doesn't allow interruption, then this
 -- will return false
 -- Returns:

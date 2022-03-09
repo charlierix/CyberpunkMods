@@ -1,3 +1,5 @@
+local this = {}
+
 function PossiblySafetyFire(o, vars, const, debug, deltaTime)
     -- Only want to consider safety firing after grappling
     if not vars.isSafetyFireCandidate then
@@ -5,7 +7,7 @@ function PossiblySafetyFire(o, vars, const, debug, deltaTime)
     end
 
     -- If another mod is flying, then don't interfere
-    if not CheckOtherModsFor_SafetyFire(o, const.modNames) then
+    if not o:Custom_CurrentlyFlying_IsOwnerOrNone() then
         do return end
     end
 
@@ -128,7 +130,6 @@ function SafetyFire(o, groundPoint)
     -- these params was kind of fun and morbid :)
     o:Teleport(Vector4.new(o.pos.x, o.pos.y, groundPoint.z + 0.3, 1), o.yaw)
 end
-
 
 --NOTE: The way the game does it is precalculate what the speed would be at impact.  This avoids
 --raycasts, but doesn't allow for anything but simple parabolic flight

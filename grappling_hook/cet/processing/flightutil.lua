@@ -181,18 +181,12 @@ function this.TryStartFlight(o, vars, const, grapple)
         return false
     end
 
-    if CheckOtherModsFor_FlightStart(o, const.modNames) then
-        -- No other mod is standing in the way
-        if Transition_ToAim(grapple, vars, const, o, true) then
-            return true
-        else
-            -- There wasn't enough energy
-            vars.startStopTracker:ResetKeyDowns()
-            return false
-        end
-    else
-        -- Another mod is flying, don't interfere.  Also eat the keys
-        vars.startStopTracker:ResetKeyDowns()
+    if Transition_ToAim(grapple, vars, const, o, true) then
         return true
+    else
+        -- There wasn't enough energy or another mod was flying (unlikely that another mod was flying, because
+        -- this function should only be called while in flight)
+        vars.startStopTracker:ResetKeyDowns()
+        return false
     end
 end

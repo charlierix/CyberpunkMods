@@ -12,8 +12,6 @@
 
 --https://github.com/jac3km4/redscript
 
-require "core/check_other_mods"
-require "core/customprops_wrapper"
 require "core/color"
 require "core/debug_code"
 require "core/gameobj_accessor"
@@ -116,8 +114,6 @@ local const =
     flightModes = CreateEnum("standard", "aim", "airdash", "flight_straight", "flight_swing", "antigrav"),
 
     grappleFrom_Z = 1.85,
-
-    modNames = CreateEnum("grappling_hook", "jetpack", "low_flying_v", "wall_hang"),     -- this really doesn't need to know the other mod names, since grappling hook will override flight
 
     -- These are set in Define_UI_Framework_Constants() called during init
     -- alignment_horizontal = CreateEnum("left", "center", "right"),
@@ -282,9 +278,6 @@ registerForEvent("onInit", function()
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
-    function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
-    function wrappers.Custom_CurrentlyFlying_StartFlight(player) Custom_CurrentlyFlying_StartFlight(player, const.modNames) end
-    function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
     function wrappers.GetMapPinSystem() return Game.GetMappinSystem() end
     function wrappers.RegisterMapPin(mapPin, data, pos) return mapPin:RegisterMappin(data, pos) end
     function wrappers.SetMapPinPosition(mapPin, id, pos) mapPin:SetMappinPosition(id, pos) end
@@ -367,7 +360,7 @@ registerForEvent("onUpdate", function(deltaTime)
         -- Standard (walking around)
         Process_Standard(o, player, vars, const, debug, deltaTime)
 
-    elseif not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
+    elseif not o:Custom_CurrentlyFlying_Update(o.vel) then     -- there is not teleport in grappling hook, so standard velocity is correct
         -- Was flying, but another mod took over
         Transition_ToStandard(vars, const, debug, o)
 
@@ -404,22 +397,8 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
-registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
-    local is_flying, vel = o:Custom_CurrentlyFlying2_TryStartFlight(false, Vector4.new(1.1, 2.2, 3.3, 1))
-    print("is_flying: " .. tostring(is_flying) .. ", vel: " .. vec_str(vel))
-
-
-    local is_still_owner = o:Custom_CurrentlyFlying2_Update(Vector4.new(8.8, 7.7, 6.6, 1))
-    print("is_still_owner: " .. tostring(is_still_owner))
-
-
-    local is_flying_2, vel2 = o:Custom_CurrentlyFlying2_TryStartFlight(true, Vector4.new(4.3, 5.4, 6.5, 1))
-    print("is_flying_2: " .. tostring(is_flying_2) .. ", vel2: " .. vec_str(vel2))
-
-
-    o:Custom_CurrentlyFlying2_Clear()
-    print("cleard flight")
-end)
+-- registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
+-- end)
 
 registerHotkey("GrapplingHookConfig", "Show Config", function()
     if shouldShowConfig then

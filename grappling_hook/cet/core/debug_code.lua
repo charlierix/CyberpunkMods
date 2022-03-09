@@ -2,7 +2,9 @@ local this = {}
 
 function PopulateDebug(debug, o, keys, vars)
     debug.flightMode = vars.flightMode
-    debug.currentlyFlying = o:Custom_CurrentlyFlying_get()
+
+    debug.mutlmod_IsOwnerOrNone = o:Custom_CurrentlyFlying_IsOwnerOrNone()
+    debug.mutlmod_CanStartFlight = o:Custom_CurrentlyFlying_CanStartFlight()
 
     debug.isSafetyFireCandidate = vars.isSafetyFireCandidate
 
