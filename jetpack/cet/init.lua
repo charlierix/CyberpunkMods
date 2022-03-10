@@ -7,8 +7,6 @@
 --https://codeberg.org/adamsmasher/cyberpunk/src/branch/master
 --https://redscript.redmodding.org/
 
-require "lib/check_other_mods"
-require "lib/customprops_wrapper"
 require "lib/dal"
 require "lib/debug_code"
 require "lib/drawing"
@@ -47,7 +45,7 @@ function GetConfigValues(index, sounds_thrusting)
     ----------------- Default Values - Can be overridden by each mode below
     local name = ""
 
-    local useRedscript = false          -- once flight using redscript is fully developed, the cet teleporting will go away (assuming the falling death animation can be suppressed)
+    local useRedscript = false          -- TODO: Rename this to Acceleration vs Teleport based flight (redscript function is now done in cet, but it's still acceleration)
 
     local accel_gravity = -16           -- this is what the game uses for player's gravity (thrown items are -9.8)
 
@@ -216,8 +214,6 @@ local const =
 {
     maxSpeed = 432,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
 
-    modNames = CreateEnum({ "grappling_hook", "jetpack", "low_flying_v", "wall_hang" }),
-
     rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
 
     quiet_thrust = false,               -- set to true for softer thrusting sounds
@@ -311,15 +307,15 @@ registerForEvent("onInit", function()
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
-    function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
-    function wrappers.Custom_CurrentlyFlying_StartFlight(player) Custom_CurrentlyFlying_StartFlight(player, const.modNames) end
-    function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
     function wrappers.Ragdoll_Up(player, radius, force, randHorz, randVert) player:RagdollNPCs_StraightUp(radius, force, randHorz, randVert) end
     function wrappers.Ragdoll_Out(player, radius, force, upForce) player:RagdollNPCs_ExplodeOut(radius, force, upForce) end
     function wrappers.GetTimeSystem() return Game.GetTimeSystem() end
     function wrappers.Time_IsTimeDilationActive(timeSys) return timeSys:IsTimeDilationActive() end
     function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
     function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end
+    function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
+    function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
+    function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
 
     o = GameObjectAccessor:new(wrappers)
 
@@ -382,10 +378,12 @@ registerForEvent("onUpdate", function(deltaTime)
 
     if vars.isInFlight then
         -- In Flight
-        if not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
+        if not o:Custom_CurrentlyFlying_Update(this.GetVelocity(mode.useRedscript, vars.vel, o.vel)) then
             ExitFlight(vars, debug, o)
+
         elseif mode.useRedscript then
             Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
+
         else
             Process_InFlight_CET(o, vars, const, mode, keys, debug, deltaTime)
         end
@@ -424,6 +422,14 @@ registerForEvent("onDraw", function()
 end)
 
 ------------------------------------ Private Methods -----------------------------------
+
+function this.GetVelocity(is_redscript, vars_vel, o_vel)
+    if is_redscript then
+        return o_vel
+    else
+        return vars_vel
+    end
+end
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()

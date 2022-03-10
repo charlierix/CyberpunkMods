@@ -4,16 +4,20 @@
 function Process_Standard(o, vars, mode, const, debug, deltaTime)
     vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, mode.maxBurnTime, mode.energyRecoveryRate, deltaTime)
 
-    -- See if other mods are currently in flight
-    local currentlyFlying = o:Custom_CurrentlyFlying_get()
+    --TODO: May want to uncomment this
+    -- if o:IsTimeDilationActive() then        -- Mods like freefly, gta fast travel will slow down time while in flight
+    --     do return end
+    -- end
 
     if vars.thrust.isDown and (vars.thrust.downDuration > mode.holdJumpDelay) then
-        -- Only activate flight if it makes sense based on with other mod may be flying
-        if CheckOtherModsFor_FlightStart(o, currentlyFlying, const.modNames) then
-            ActivateFlight(o, vars, mode)
+        -- Only activate flight if it makes sense based on whether other mod may be flying
+        local can_start, velocity = o:Custom_CurrentlyFlying_TryStartFlight(true, o.vel)
+
+        if can_start then
+            ActivateFlight(o, vars, mode, velocity)
         end
 
-    elseif CheckOtherModsFor_SafetyFire(currentlyFlying, const.modNames) then
+    elseif o:Custom_CurrentlyFlying_IsOwnerOrNone() then
         local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, mode, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
         if safetyFireHit then
             SafetyFire(o, safetyFireHit)
@@ -21,16 +25,15 @@ function Process_Standard(o, vars, mode, const, debug, deltaTime)
     end
 end
 
-function ActivateFlight(o, vars, mode)
+function ActivateFlight(o, vars, mode, velocity)
     -- Time to activate flight mode (flying will occur next tick)
     vars.isInFlight = true
-    o:Custom_CurrentlyFlying_StartFlight()
     vars.startThrustTime = o.timer
     vars.lastThrustTime = o.timer
 
     if not mode.useRedscript then
         -- Once teleporting occurs, o.vel will be zero, so vars.vel holds a copy that gets updated by accelerations
-        vars.vel = o.vel
+        vars.vel = velocity
 
         -- Running into a case where the thruster kicks in slightly after the player starts
         -- falling after the top of their jump.  The first thing that happens in the next update

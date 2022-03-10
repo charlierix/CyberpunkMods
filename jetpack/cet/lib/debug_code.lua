@@ -1,6 +1,13 @@
+local this = {}
+
 function PopulateDebug(debug, o, keys, vars)
     debug.inFlight = vars.isInFlight
-    debug.currentlyFlying = o:Custom_CurrentlyFlying_get()
+
+    local quest = Game.GetQuestsSystem()
+    debug.mutlmod_Current = quest:GetFactStr("custom_currentlyFlying_current")
+    debug.mutlmod_Vel = this.GetMultiModVelocity(quest)
+    debug.mutlmod_IsOwnerOrNone = o:Custom_CurrentlyFlying_IsOwnerOrNone()
+    debug.mutlmod_CanStartFlight = o:Custom_CurrentlyFlying_CanStartFlight()
 
     debug.pos = vec_str(o.pos)
     debug.vel = vec_str(o.vel)
@@ -28,49 +35,21 @@ function PopulateDebug(debug, o, keys, vars)
     debug.timer = Round(o.timer, 1)
 end
 
------------ some other potential sounds:
--- -- jetpack
--- --"gre_impact_solid",					-- a bit too recongnisable
--- --"gre_impact_solid_ozob",
--- "grenade_charge_start",
--- "grenade_laser_stop",					-- a good acknowledgement sound
--- "grenade_stick",						    -- probably not
--- --"lcm_player_double_jump",				-- too recognisable
+-- copy of multimod_flight.GetStartingVelocity
+function this.GetMultiModVelocity(quest)
+    local x = quest:GetFactStr("custom_currentlyFlying_velX")
+    local y = quest:GetFactStr("custom_currentlyFlying_velY")
+    local z = quest:GetFactStr("custom_currentlyFlying_velZ")
 
--- "lcm_wallrun_in",
+    if (not x or x == 0) and (not y or y == 0) and (not z or z == 0) then       -- the quest fact comes back as zero when there is no entry
+        return "empty"
+    end
 
--- "q115_thruster_start",
--- "q115_thruster_stop",					-- good for jetpack, but kind of obnoxious
+    -- since default is zero, a known offset is added to the result to make zero velocity store as non zero
+    -- since it's an integer, the velocity is multiplied by 100
+    x = (x - 1234567) / 100
+    y = (y - 1234567) / 100
+    z = (z - 1234567) / 100
 
-
--- -- soft, subtle
--- "dev_doors_v_room_secret_close",		    -- nice and quiet, mechanical
--- "lcm_wallrun_out",						-- this is really nice and subtle
--- "ui_generic_set_14_positive",
--- "ui_menu_hover",
--- "ui_menu_tutorial_close",
-
-
--- -- stronger
--- --"dev_doors_v_room_secret_open",		-- pretty long
--- "dev_vending_machine_can_falls",		    -- another short mechanical sound
--- "enm_mech_minotaur_loco_fs_heavy",		-- good heavy landing
-
-
--- -- ui
--- "g_sc_bd_rewind_pause",					-- almost sounds like an error
--- "g_sc_bd_rewind_pause_forced",
--- "g_sc_bd_rewind_play",					-- also sounds like an error
--- --"g_sc_bd_rewind_restart",				-- this is a good grapple extend sound
--- --"test_ad_emitter_2_1",					-- good confirm tone
-
--- "ui_focus_mode_scanning_qh",
--- "ui_focus_mode_zooming_in_enter",
--- "ui_focus_mode_zooming_in_exit",
--- "ui_focus_mode_zooming_in_step_change",
-
--- -- "ui_main_menu_cc_confirmation_screen_close",
--- -- "ui_main_menu_cc_confirmation_screen_open",
--- -- "ui_main_menu_cc_loading",
--- -- "ui_main_menu_loop_start",
--- -- "ui_main_menu_loop_stop",
+    return tostring(x) .. ", " .. tostring(y) .. ", " .. tostring(z)
+end
