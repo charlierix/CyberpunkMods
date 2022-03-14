@@ -7,9 +7,7 @@
 --https://codeberg.org/adamsmasher/cyberpunk/src/branch/master
 --https://redscript.redmodding.org/
 
-require "core/check_other_mods"
 require "core/color"
-require "core/customprops_wrapper"
 require "core/debug_code"
 require "core/gameobj_accessor"
 require "core/math_basic"
@@ -228,9 +226,9 @@ registerForEvent("onInit", function()
     function wrappers.GetSenseManager() return Game.GetSenseManager() end
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
-    function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
-    function wrappers.Custom_CurrentlyFlying_StartFlight(player) Custom_CurrentlyFlying_StartFlight(player, const.modNames) end
-    function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
+    function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
+    function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
+    function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
     function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
     function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end
 

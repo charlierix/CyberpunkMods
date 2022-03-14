@@ -1,6 +1,13 @@
+local this = {}
+
 function PopulateDebug(debug, o, keys, vars)
     debug.flightMode = vars.flightMode
-    debug.currentlyFlying = o:Custom_CurrentlyFlying_get()
+
+    local quest = Game.GetQuestsSystem()
+    debug.mutlmod_Current = quest:GetFactStr("custom_currentlyFlying_current")
+    debug.mutlmod_Vel = this.GetMultiModVelocity(quest)
+    debug.mutlmod_IsOwnerOrNone = o:Custom_CurrentlyFlying_IsOwnerOrNone()
+    debug.mutlmod_CanStartFlight = o:Custom_CurrentlyFlying_CanStartFlight()
 
     debug.pos = vec_str(o.pos)
     debug.vel = vec_str(o.vel)
@@ -21,4 +28,23 @@ function PopulateDebug(debug, o, keys, vars)
     debug.timer = Round(o.timer, 1)
 
     --debug.inMenu = IsPlayerInAnyMenu()
+end
+
+-- copy of multimod_flight.GetStartingVelocity
+function this.GetMultiModVelocity(quest)
+    local x = quest:GetFactStr("custom_currentlyFlying_velX")
+    local y = quest:GetFactStr("custom_currentlyFlying_velY")
+    local z = quest:GetFactStr("custom_currentlyFlying_velZ")
+
+    if (not x or x == 0) and (not y or y == 0) and (not z or z == 0) then       -- the quest fact comes back as zero when there is no entry
+        return "empty"
+    end
+
+    -- since default is zero, a known offset is added to the result to make zero velocity store as non zero
+    -- since it's an integer, the velocity is multiplied by 100
+    x = (x - 1234567) / 100
+    y = (y - 1234567) / 100
+    z = (z - 1234567) / 100
+
+    return tostring(x) .. ", " .. tostring(y) .. ", " .. tostring(z)
 end

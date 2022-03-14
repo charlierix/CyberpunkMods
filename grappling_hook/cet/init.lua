@@ -283,13 +283,9 @@ registerForEvent("onInit", function()
     function wrappers.SetMapPinPosition(mapPin, id, pos) mapPin:SetMappinPosition(id, pos) end
     function wrappers.ChangeMappinVariant(mapPin, id, variant) mapPin:ChangeMappinVariant(id, variant) end
     function wrappers.UnregisterMapPin(mapPin, id) mapPin:UnregisterMappin(id) end
-
-
     function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
     function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
     function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
-
-
     function wrappers.GetTransactionSystem() return Game.GetTransactionSystem() end
     function wrappers.GetGetItemList(transaction, player) return transaction:GetItemList(player) end
     function wrappers.GetEquipmentSystem() return Game.GetScriptableSystemsContainer():Get("EquipmentSystem") end

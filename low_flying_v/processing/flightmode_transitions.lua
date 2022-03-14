@@ -16,18 +16,26 @@ function Transition_ToStandard(vars, debug, o, const)
     this.StopHoverSound(o, vars)
 end
 
-function Transition_ToImpulseLaunch(o, vars, const)
+function Transition_ToImpulseLaunch(o, vars, debug, const)
     vars.flightMode = const.flightModes.impulse_launch
-    o:Custom_CurrentlyFlying_StartFlight()
+    if not o:Custom_CurrentlyFlying_TryStartFlight(false, o.vel) then        -- not worried about the returned velocity, since impulse is just waiting for an impulse to take effect
+        Transition_ToStandard(vars, debug, o, const)
+        do return end
+    end
 
     vars.startFlightTime = o.timer
 end
 
-function Transition_ToFlight(o, vars, const)
+function Transition_ToFlight(o, vars, debug, const)
     vars.flightMode = const.flightModes.flying
-    o:Custom_CurrentlyFlying_StartFlight()
 
-    vars.vel = o.vel
+    local is_owner, vel = o:Custom_CurrentlyFlying_TryStartFlight(false, o.vel)
+    if not is_owner then
+        Transition_ToStandard(vars, debug, o, const)
+        do return end
+    end
+
+    vars.vel = vel
     vars.startFlightTime = o.timer
     vars.lowSpeedTime = nil
     vars.minSpeedOverride_start = -1000
