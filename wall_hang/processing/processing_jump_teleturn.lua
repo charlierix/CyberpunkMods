@@ -48,7 +48,7 @@ function Process_Jump_TeleTurn(o, vars, const, debug, deltaTime)
     o:Teleport(vars.hangPos, yaw)
 
     if isFinished then
-        Transition_ToJump_Impulse(vars, const, o, vars.impulse, true)
+        Transition_ToJump_Impulse(vars, const, debug, o, vars.impulse, true)
     end
 end
 

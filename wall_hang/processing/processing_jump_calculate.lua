@@ -20,7 +20,7 @@ function Process_Jump_Calculate(o, player, vars, const, debug)
         local has_impulse, impulse = this.GetImpulse_Up(jump_dir, o.vel, player.jump_strength, player.jump_speed_fullStrength, player.jump_speed_zeroStrength)
 
         if has_impulse then
-            Transition_ToJump_Impulse(vars, const, o, impulse, false)
+            Transition_ToJump_Impulse(vars, const, debug, o, impulse, false)
         else
             PlaySound_FailJump(vars, o)
             Transition_ToStandard(vars, const, debug, o)
@@ -33,7 +33,7 @@ function Process_Jump_Calculate(o, player, vars, const, debug)
         --NOTE: In the future, there may be reasons to not adjust the look direction (because they are
         --holding a direction key, or config says not to).  In those cases, go straight to jump_impulse
 
-        Transition_ToJump_TeleTurn(vars, const, o, impulse, jump_dir)
+        Transition_ToJump_TeleTurn(vars, const, debug, o, impulse, jump_dir)
     end
 end
 

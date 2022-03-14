@@ -12,9 +12,7 @@
 
 --https://github.com/jac3km4/redscript
 
-require "core/check_other_mods"
 require "core/color"
-require "core/customprops_wrapper"
 require "core/debug_code"
 require "core/debug_render_logger"
 require "core/gameobj_accessor"
@@ -91,8 +89,6 @@ local this = {}
 local const =
 {
     flightModes = CreateEnum("standard", "hang", "jump_calculate", "jump_teleturn", "jump_impulse"),
-
-    modNames = CreateEnum("wall_hang", "grappling_hook", "jetpack", "low_flying_v"),     -- this really doesn't need to know the other mod names, since wall hang will override flight
 
     -- Populated in InitializeSavedFields()
     --latch_wallhang,       -- false: must keep the hang key held in
@@ -262,9 +258,9 @@ registerForEvent("onInit", function()
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
-    function wrappers.Custom_CurrentlyFlying_get(player) return Custom_CurrentlyFlying_get(player) end
-    function wrappers.Custom_CurrentlyFlying_StartFlight(player) Custom_CurrentlyFlying_StartFlight(player, const.modNames) end
-    function wrappers.Custom_CurrentlyFlying_Clear(player) Custom_CurrentlyFlying_Clear(player, const.modNames) end
+    function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
+    function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
+    function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
     function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
     function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end
 
@@ -326,7 +322,7 @@ registerForEvent("onUpdate", function(deltaTime)
         -- Standard (walking around)
         Process_Standard(o, player, vars, const, debug, startStopTracker, deltaTime)
 
-    elseif not CheckOtherModsFor_ContinueFlight(o, const.modNames) then
+    elseif not o:Custom_CurrentlyFlying_Update() then       -- velocity is considered to be zero
         -- Was hanging/jumping, but another mod took over
         Transition_ToStandard(vars, const, debug, o)
 

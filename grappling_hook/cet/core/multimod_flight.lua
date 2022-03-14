@@ -126,9 +126,21 @@ function this.GetStartingVelocity(quest, wrappers, velocity)
 end
 
 function this.StoreVelocity(quest, wrappers, velocity)
-    local x = Round((velocity.x * 100) + custom_flight_offset, 0)       -- rounding, because it must be an integer
-    local y = Round((velocity.y * 100) + custom_flight_offset, 0)
-    local z = Round((velocity.z * 100) + custom_flight_offset, 0)
+    local x, y, z
+
+    if velocity then
+        x = velocity.x
+        y = velocity.y
+        z = velocity.z
+    else
+        x = 0
+        y = 0
+        z = 0
+    end
+
+    x = Round((x * 100) + custom_flight_offset, 0)       -- rounding, because it must be an integer
+    y = Round((y * 100) + custom_flight_offset, 0)
+    z = Round((z * 100) + custom_flight_offset, 0)
 
     wrappers.SetQuestFactStr(quest, "custom_currentlyFlying_velX", x)
     wrappers.SetQuestFactStr(quest, "custom_currentlyFlying_velY", y)

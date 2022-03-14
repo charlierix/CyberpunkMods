@@ -71,7 +71,7 @@ function this.DirectDistance(isHangDown, isJumpDown, hits, fromPos, o, player, v
         this.ResetVars(o, vars)
 
         local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
-        Transition_ToJump_Calculate(vars, const, o, hangPos, hits[1].normal, startStopTracker)
+        Transition_ToJump_Calculate(vars, const, debug, o, hangPos, hits[1].normal, startStopTracker)
 
     -- Grab
     elseif isHangDown and this.ValidateSlope_Hang(hits[1].normal) then      --NOTE: slope check for hang is pretty much unnecessary.  The IsAirborne eliminates slopes already
@@ -80,7 +80,7 @@ function this.DirectDistance(isHangDown, isJumpDown, hits, fromPos, o, player, v
             this.ResetVars(o, vars)
 
             local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
-            Transition_ToHang(vars, const, o, hangPos, hits[1].normal, is_sliding)
+            Transition_ToHang(vars, const, debug, o, hangPos, hits[1].normal, is_sliding)
         end
     end
 end

@@ -8,6 +8,7 @@ local pullInterval_workspot = this.GetRandom_Variance(12, 1)
 local pullInterval_camera = this.GetRandom_Variance(12, 1)
 local pullInterval_teleport = this.GetRandom_Variance(12, 1)
 local pullInterval_sensor = this.GetRandom_Variance(12, 1)
+local pullInterval_quest = this.GetRandom_Variance(12, 1)
 local pullInterval_spacialQueries = this.GetRandom_Variance(12, 1)
 local pullInterval_targeting = this.GetRandom_Variance(12, 1)
 
@@ -19,6 +20,8 @@ function GameObjectAccessor:new(wrappers)
     setmetatable(obj, self)
     self.__index = self
 
+    obj.multimod_flight = require("core/multimod_flight")
+
     obj.timer = 0
     obj.wrappers = wrappers
     obj.lastPulled_player = -(pullInterval_player * 2)      -- timer starts at zero.  So zero - -max = max   (multiplying by two to be sure there is no math drift error)
@@ -26,6 +29,7 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_camera = -(pullInterval_camera * 2)
     obj.lastPulled_teleport = -(pullInterval_teleport * 2)
     obj.lastPulled_sensor = -(pullInterval_sensor * 2)
+    obj.lastPulled_quest = -(pullInterval_quest * 2)
     obj.lastPulled_spacialQueries = -(pullInterval_spacialQueries * 2)
     obj.lastPulled_targeting = -(pullInterval_targeting * 2)
 
@@ -59,28 +63,40 @@ function GameObjectAccessor:GetPlayerInfo()
     end
 end
 
--- Get/Set player.Custom_CurrentlyFlying (added in redscript.  Allows mods to talk to each other, so only one at a time will fly)
-function GameObjectAccessor:Custom_CurrentlyFlying_get()
-    self:EnsurePlayerLoaded()
+-- Allows mods to talk to each other, so only one at a time will fly
+function GameObjectAccessor:Custom_CurrentlyFlying_IsOwnerOrNone()
+    self:EnsureLoaded_Quest()
 
-    if self.player then
-        return self.wrappers.Custom_CurrentlyFlying_get(self.player)
-    else
-        return false
+    if self.quest then
+        return self.multimod_flight.IsOwnerOrNone(self.quest, self.wrappers)
     end
 end
-function GameObjectAccessor:Custom_CurrentlyFlying_StartFlight()
-    self:EnsurePlayerLoaded()
+function GameObjectAccessor:Custom_CurrentlyFlying_CanStartFlight()
+    self:EnsureLoaded_Quest()
 
-    if self.player then
-        self.wrappers.Custom_CurrentlyFlying_StartFlight(self.player)
+    if self.quest then
+        return self.multimod_flight.CanStartFlight(self.quest, self.wrappers)
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying_TryStartFlight(allow_interruption, velocity)
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        return self.multimod_flight.TryStartFlight(self.quest, self.wrappers, allow_interruption, velocity)
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying_Update(velocity)
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        return self.multimod_flight.Update(self.quest, self.wrappers, velocity)
     end
 end
 function GameObjectAccessor:Custom_CurrentlyFlying_Clear()
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Quest()
 
-    if self.player then
-        self.wrappers.Custom_CurrentlyFlying_Clear(self.player)
+    if self.quest then
+        self.multimod_flight.Clear(self.quest, self.wrappers)
     end
 end
 
@@ -244,6 +260,14 @@ function GameObjectAccessor:EnsurePlayerLoaded()
         self.lastPulled_player = self.timer
 
         self.player = self.wrappers.GetPlayer()
+    end
+end
+
+function GameObjectAccessor:EnsureLoaded_Quest()
+    if not self.quest or (self.timer - self.lastPulled_quest) >= pullInterval_quest then
+        self.lastPulled_quest = self.timer
+
+        self.quest = self.wrappers.GetQuestsSystem()
     end
 end
 

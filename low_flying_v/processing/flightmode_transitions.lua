@@ -17,23 +17,24 @@ function Transition_ToStandard(vars, debug, o, const)
 end
 
 function Transition_ToImpulseLaunch(o, vars, debug, const)
-    vars.flightMode = const.flightModes.impulse_launch
     if not o:Custom_CurrentlyFlying_TryStartFlight(false, o.vel) then        -- not worried about the returned velocity, since impulse is just waiting for an impulse to take effect
         Transition_ToStandard(vars, debug, o, const)
         do return end
     end
 
+    vars.flightMode = const.flightModes.impulse_launch
+
     vars.startFlightTime = o.timer
 end
 
 function Transition_ToFlight(o, vars, debug, const)
-    vars.flightMode = const.flightModes.flying
-
     local is_owner, vel = o:Custom_CurrentlyFlying_TryStartFlight(false, o.vel)
     if not is_owner then
         Transition_ToStandard(vars, debug, o, const)
         do return end
     end
+
+    vars.flightMode = const.flightModes.flying
 
     vars.vel = vel
     vars.startFlightTime = o.timer

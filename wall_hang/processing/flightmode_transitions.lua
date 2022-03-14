@@ -16,9 +16,13 @@ function Transition_ToStandard(vars, const, debug, o)
     end
 end
 
-function Transition_ToHang(vars, const, o, hangPos, normal, from_slide)
+function Transition_ToHang(vars, const, debug, o, hangPos, normal, from_slide)
+    if not o:Custom_CurrentlyFlying_TryStartFlight(true, nil) then
+        Transition_ToStandard(vars, const, debug, o)
+        do return end
+    end
+
     vars.flightMode = const.flightModes.hang
-    o:Custom_CurrentlyFlying_StartFlight()
 
     vars.hangPos = hangPos
     vars.normal = normal
@@ -30,9 +34,13 @@ function Transition_ToHang(vars, const, o, hangPos, normal, from_slide)
     end
 end
 
-function Transition_ToJump_Calculate(vars, const, o, hangPos, normal, startStopTracker)
+function Transition_ToJump_Calculate(vars, const, debug, o, hangPos, normal, startStopTracker)
+    if not o:Custom_CurrentlyFlying_TryStartFlight(true, nil) then
+        Transition_ToStandard(vars, const, debug, o)
+        do return end
+    end
+
     vars.flightMode = const.flightModes.jump_calculate
-    o:Custom_CurrentlyFlying_StartFlight()
 
     startStopTracker:ResetHangLatch()
 
@@ -40,9 +48,13 @@ function Transition_ToJump_Calculate(vars, const, o, hangPos, normal, startStopT
     vars.normal = normal
 end
 
-function Transition_ToJump_TeleTurn(vars, const, o, impulse, final_lookdir)
+function Transition_ToJump_TeleTurn(vars, const, debug, o, impulse, final_lookdir)
+    if not o:Custom_CurrentlyFlying_TryStartFlight(true, nil) then
+        Transition_ToStandard(vars, const, debug, o)
+        do return end
+    end
+
     vars.flightMode = const.flightModes.jump_teleturn
-    o:Custom_CurrentlyFlying_StartFlight()
 
     vars.impulse = impulse
     vars.final_lookdir = final_lookdir
@@ -50,9 +62,13 @@ function Transition_ToJump_TeleTurn(vars, const, o, impulse, final_lookdir)
     PlaySound_Jump(vars, o)
 end
 
-function Transition_ToJump_Impulse(vars, const, o, impulse, from_teleturn)
+function Transition_ToJump_Impulse(vars, const, debug, o, impulse, from_teleturn)
+    if not o:Custom_CurrentlyFlying_TryStartFlight(true, nil) then
+        Transition_ToStandard(vars, const, debug, o)
+        do return end
+    end
+
     vars.flightMode = const.flightModes.jump_impulse
-    o:Custom_CurrentlyFlying_StartFlight()
 
     vars.impulse = impulse
 
