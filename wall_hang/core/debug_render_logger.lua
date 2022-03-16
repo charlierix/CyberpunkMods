@@ -16,9 +16,6 @@ local this = {}
 
 DebugRenderLogger = {}
 
-
---TODO: The viewer should center the points (could be done here, but it's easier for the viewer to do)
-
 -- If enable_logging is false, then calling the rest of the functions do nothing.  This allows
 -- logging code to be left in with almost zero performance issues
 function DebugRenderLogger:new(enable_logging)

@@ -35,11 +35,6 @@ function multimod_flight.CanStartFlight(quest, wrappers)
     return this.CanStartFlight(quest, wrappers, m_flight_key)
 end
 
-
-
-
---TODO: This function should apply an impulse if there's a velocity difference
-
 -- This tries to take ownership of flight.  If there is another mod flying that doesn't allow interruption, then this
 -- will return false
 -- Returns:
@@ -58,9 +53,6 @@ function multimod_flight.TryStartFlight(quest, wrappers, allow_interruption, vel
         return false, nil
     end
 end
-
-
-
 
 -- This makes sure that another mod hasn't taken over flight.  This also stores the current velocity
 -- Returns:

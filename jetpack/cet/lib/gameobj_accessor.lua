@@ -84,7 +84,14 @@ function GameObjectAccessor:Custom_CurrentlyFlying_TryStartFlight(allow_interrup
     self:EnsureLoaded_Quest()
 
     if self.quest then
-        return self.multimod_flight.TryStartFlight(self.quest, self.wrappers, allow_interruption, velocity)
+        local started, final_vel = self.multimod_flight.TryStartFlight(self.quest, self.wrappers, allow_interruption, velocity)
+
+        if started and final_vel and velocity and not IsNearValue_vec4(velocity, final_vel) then
+            -- Likely coming from teleport based flight (zero).  Add a kick to match the reported velocity
+            self:AddImpulse(final_vel.x - velocity.x, final_vel.y - velocity.y, final_vel.z - velocity.z)
+        end
+
+        return started, final_vel
     end
 end
 function GameObjectAccessor:Custom_CurrentlyFlying_Update(velocity)
