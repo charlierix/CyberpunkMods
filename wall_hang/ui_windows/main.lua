@@ -653,6 +653,7 @@ function this.Save(latch_wallhang, jump_backward, mouse_sensitivity, rightstick_
     const.rightstick_sensitivity = GetScaledValue(STICK_MIN, STICK_MAX, rightstick_sensitivity.min, rightstick_sensitivity.max, rightstick_sensitivity.value)
 
     SetSetting_Bool(const.settings.Latch_WallHang, const.latch_wallhang)
+    SetSetting_Bool(const.settings.ShouldJumpBackward, const.should_jump_backward)
     SetSetting_Float(const.settings.MouseSensitivity, const.mouse_sensitivity)
     SetSetting_Float(const.settings.RightStickSensitivity, const.rightstick_sensitivity)
 end

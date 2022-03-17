@@ -172,8 +172,7 @@ function this.Define_MaxDist_Help(relative_to, const)
         CalcSize = CalcSize_HelpButton,
     }
 
-    retVal.tooltip =
-[[How far from a wall the attraction acceleration reaches]]
+    retVal.tooltip = "How far from a wall the attraction acceleration reaches"
 
     return retVal
 end
