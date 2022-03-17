@@ -350,8 +350,8 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
--- registerHotkey("WallHangTesterButton", "tester hotkey", function()
--- end)
+--registerHotkey("WallHangTesterButton", "tester hotkey", function()
+--end)
 
 registerHotkey("WallHang_Config", "Show Config", function()
     if shouldShowConfig then

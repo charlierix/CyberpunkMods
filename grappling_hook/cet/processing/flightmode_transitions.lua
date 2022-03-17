@@ -33,7 +33,7 @@ function Transition_ToAim(grapple, vars, const, o, shouldConsumeEnergy)
         end
     end
 
-    if not o:Custom_CurrentlyFlying_TryStartFlight(true, nil) then
+    if not o:Custom_CurrentlyFlying_TryStartFlight(true, o.vel) then
         return false
     end
 
