@@ -1,4 +1,5 @@
 local this  = {}
+local pos_offset = nil      -- this is an offset vector, but can't be populated before init
 
 -- This will launch NPCs straight up (only the npc's that the player can see)
 function RagdollNPCs_StraightUp(radius, force, randHorz, randVert, o)
@@ -8,7 +9,7 @@ function RagdollNPCs_StraightUp(radius, force, randHorz, randVert, o)
 
     if found and targetParts then
         for i = 1, #targetParts do
-            this.LaunchUp(targetParts[i], o.pos, radius, force, randHorz, randVert, o)
+            this.LaunchUp(targetParts[i], force, randHorz, randVert, o)
         end
     end
 end
@@ -39,13 +40,13 @@ function this.GetSearchQuery(radius)
     return searchQuery
 end
 
-function this.LaunchUp(targetPart, player_pos, radius, force, randHorz, randVert, o)
+function this.LaunchUp(targetPart, force, randHorz, randVert, o)
     local npc = this.GetRagdollableNPC(targetPart)
     if not npc then
         do return end
     end
 
-    local npc_pos = npc:GetWorldPosition()
+    local npc_pos = this.GetNPCPosition(npc)
 
     local mult = this.GetForceMultiplier(npc)
 
@@ -65,7 +66,7 @@ function this.ExplodeOut(targetPart, player_pos, radius, force, upForce, o)
         do return end
     end
 
-    local npc_pos = npc:GetWorldPosition()
+    local npc_pos = this.GetNPCPosition(npc)
     local distance = Vector4.Distance(player_pos, npc_pos);
 
     if distance < 0.01 or distance > radius then      -- avoiding divide by zero, also making sure the query doesn't come back with objects too far away (shouldn't, but it's easy to check)
@@ -99,17 +100,38 @@ end
 function this.GetRagdollableNPC(targetPart)
     local npc = targetPart:GetComponent():GetEntity()
     if not npc then
-        return nil
+        return nil      -- never saw this
     end
 
-    -- It might already be ragdollable, but go ahead and make sure
-    npc:SetDisableRagdoll(false)        -- double negative :(
-
+    -- This is coming back false for kids, possibly others
     if not ScriptedPuppet.CanRagdoll(npc) then
         return nil
     end
 
+    if not npc:CanEnableRagdollComponent() then
+        return nil      -- never saw this
+    end
+
+    -- This doesn't seem to have an effect.  That function is probably just meant to disable an existing ragdoll event
+    -- if not npc:IsRagdollEnabled() then
+    --     npc:SetDisableRagdoll(false)        -- double negative :(
+
+    --     if not npc:IsRagdollEnabled() then
+    --         print("GetRagdollableNPC: STILL not npc:IsRagdollEnabled()")
+    --     end
+    -- end
+
     return npc
+end
+
+function this.GetNPCPosition(npc)
+    local pos_feet = npc:GetWorldPosition()
+
+    if not pos_offset then
+        pos_offset = Vector4.new(0, 0, 1, 1)        -- one meter up from their feet
+    end
+
+    return AddVectors(pos_feet, pos_offset)
 end
 
 -- Some npcs are affected differently
