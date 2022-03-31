@@ -34,7 +34,7 @@ function RMB_PushUp:Tick(o, vel, keys, vars)
     -- Initial press down
     if keys.rmb and not keys.prev_rmb then
 
-        o:RagdollNPCs_StraightUp(48, self.force, self.randHorz, self.randVert)
+        RagdollNPCs_StraightUp(48, self.force, self.randHorz, self.randVert, o)
 
         o:PlaySound("grenade_charge_1s", vars)
 

@@ -74,7 +74,7 @@ function ExplosivelyLand(o, velZ, vars)
 
     local radius = GetScaledValue(5, 12, 0, maxForce, force)
 
-    o:RagdollNPCs_ExplodeOut(radius, force, force * 0.75)
+    RagdollNPCs_ExplodeOut(radius, force, force * 0.75, o)
 
     if force < 4 then
         o:PlaySound("v_col_player_impact", vars)

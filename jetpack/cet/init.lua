@@ -24,6 +24,7 @@ require "lib/math_yaw"
 require "lib/processing_inflight_cet"
 require "lib/processing_inflight_red"
 require "lib/processing_standard"
+require "lib/ragdoll"
 require "lib/reporting"
 require "lib/rmb_dash"
 require "lib/rmb_hover"
@@ -307,15 +308,16 @@ registerForEvent("onInit", function()
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
-    function wrappers.Ragdoll_Up(player, radius, force, randHorz, randVert) player:RagdollNPCs_StraightUp(radius, force, randHorz, randVert) end
-    function wrappers.Ragdoll_Out(player, radius, force, upForce) player:RagdollNPCs_ExplodeOut(radius, force, upForce) end
     function wrappers.GetTimeSystem() return Game.GetTimeSystem() end
     function wrappers.Time_IsTimeDilationActive(timeSys) return timeSys:IsTimeDilationActive() end
     function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
     function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end
+    function wrappers.GetTargetParts(targetting, player, searchQuery) return targetting:GetTargetParts(player, searchQuery) end
     function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
     function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
     function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
+    function wrappers.GetDelaySystem() return Game.GetDelaySystem() end
+    function wrappers.DelayEventNextFrame(delay, entity, event) delay:DelayEventNextFrame(entity, event) end
 
     o = GameObjectAccessor:new(wrappers)
 
