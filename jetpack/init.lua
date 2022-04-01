@@ -209,10 +209,12 @@ function GetConfigValues(index, sounds_thrusting)
 
     return { name=name, index=index, accel_gravity=accel_gravity, accel_horz_stand=accel_horz_stand, accel_horz_dash=accel_horz_dash, accel_vert_stand=accel_vert_stand, accel_vert_dash=accel_vert_dash, maxBurnTime=maxBurnTime, burnRate_dash=burnRate_dash, burnRate_horz=burnRate_horz, energyRecoveryRate=energyRecoveryRate, timeSpeed=timeSpeed, shouldSafetyFire=shouldSafetyFire, holdJumpDelay=holdJumpDelay, useRedscript=useRedscript, rmb_extra=rmb_extra, explosiveLanding=explosiveLanding, rotateVelToLookDir=rotateVelToLookDir, rotateVel_percent_horz=rotateVel_percent_horz, rotateVel_percent_vert=rotateVel_percent_vert, rotateVel_dotPow=rotateVel_dotPow, rotateVel_minSpeed=rotateVel_minSpeed, rotateVel_maxSpeed=rotateVel_maxSpeed }
 end
-local mode = nil -- = GetConfigValues(GetModeIndex())      -- moved to init
+local mode = nil -- moved to init
 
 local const =
 {
+    isEnabled = true,                   -- toggled with a hotkey, stored in the database.  Since jetpack is activated by jump held down, it could interfere with other mods.  So this is a way for the user to manually toggle it
+
     maxSpeed = 432,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
 
     rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
@@ -220,6 +222,12 @@ local const =
     quiet_thrust = false,               -- set to true for softer thrusting sounds
 
     hide_energy_above_percent = 0.985,  -- For the infinite energy modes (well rounded, airplane), the progress bar is just annoying
+
+    settings = CreateEnum(
+        -- Bools
+        "IsEnabled",
+        -- Ints
+        "Mode"),
 
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
@@ -288,6 +296,7 @@ registerForEvent("onInit", function()
     isShutdown = false
 
     InitializeRandom()
+    EnsureTablesCreated()
 
     keys = Keys:new(debug, const)
 
@@ -326,7 +335,8 @@ registerForEvent("onInit", function()
 
     vars.sounds_thrusting = SoundsThrusting:new(o, keys, vars.horz_analog, const.quiet_thrust)
 
-    mode = GetConfigValues(GetModeIndex(), vars.sounds_thrusting)
+    const.isEnabled = GetSetting_Bool(const.settings.IsEnabled, true)
+    mode = GetConfigValues(GetSetting_Int(const.settings.Mode, 0), vars.sounds_thrusting)
     vars.remainBurnTime = mode.maxBurnTime
 end)
 
@@ -370,7 +380,7 @@ registerForEvent("onUpdate", function(deltaTime)
         keys.cycleModes = false
 
         local newIndex = mode.index + 1
-        UpdateModeIndex(newIndex)
+        SetSetting_Int(const.settings.Mode, newIndex)
         mode = GetConfigValues(newIndex, vars.sounds_thrusting)
         vars.showConfigNameUntil = o.timer + 3
         ExitFlight()
@@ -401,6 +411,17 @@ end)
 
 registerHotkey("jetpackCycleModes", "Cycle Modes", function()
     keys.cycleModes = true
+end)
+
+registerHotkey("jetpackEnableDisable", "Enable/Disable", function()
+    const.isEnabled = not const.isEnabled
+    SetSetting_Bool(const.settings.IsEnabled, const.isEnabled)
+
+    --TODO: play a sound
+
+    if not const.isEnabled then
+        ExitFlight(vars, debug, o)
+    end
 end)
 
 registerForEvent("onDraw", function()

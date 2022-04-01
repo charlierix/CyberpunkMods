@@ -4,10 +4,9 @@
 function Process_Standard(o, vars, mode, const, debug, deltaTime)
     vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, mode.maxBurnTime, mode.energyRecoveryRate, deltaTime)
 
-    --TODO: May want to uncomment this
-    -- if o:IsTimeDilationActive() then        -- Mods like freefly, gta fast travel will slow down time while in flight
-    --     do return end
-    -- end
+    if not const.isEnabled then
+        do return end       -- the user has explicitly disabled jetpack
+    end
 
     if vars.thrust.isDown and (vars.thrust.downDuration > mode.holdJumpDelay) then
         -- Only activate flight if it makes sense based on whether other mod may be flying
