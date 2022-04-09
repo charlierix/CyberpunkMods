@@ -23,7 +23,7 @@ function ui.loadNames()
 end
 
 function ui.draw()
-    ImGui.Begin("Clip Tester", ImGuiWindowFlags.AlwaysAutoResize)
+    ImGui.Begin("Sound Clip Tester (keanuWheeze)", ImGuiWindowFlags.AlwaysAutoResize)
 
     if ImGui.BeginTabBar("Tabbar", ImGuiTabItemFlags.NoTooltip) then
         if ImGui.BeginTabItem("Play") then
