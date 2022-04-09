@@ -65,13 +65,15 @@ end
 
 this.hover_sounds =
 {
+    "amb_bl_ext_ghost_town_power_cables",
+    --"amb_bl_int_farm_electrical_box",     -- good, but too quiet
+    --"v_av_rayfield_excalibur_traffic_engine_01",        -- this is good, but gets interrupted a lot while going through the city
+
     --"q003_sc_03_deal_tension_LP",
 
     --"v_car_archer_hella_traffic_engine_loop",        --NOTE: These 3 are the same sounds as jetpack's hover
-    -- "amb_bl_ext_ghost_town_power_cables",
     -- "amb_bl_int_ghost_town_power_station_room_powered",
 
-    "v_av_rayfield_excalibur_traffic_engine_01",
     --"q115_sc_05_av_03_flight_loop",
     --"q115_sc_05_av_01_engine_idle_out_and_in_loop",
     --"v_av_news_station_01_engine",
