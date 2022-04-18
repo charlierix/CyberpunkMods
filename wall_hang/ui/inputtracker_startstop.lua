@@ -49,7 +49,7 @@ function InputTracker_StartStop:ResetHangLatch()
 end
 
 -- Returns
---  isHangDown, isJumpDown
+--  isHangDown, isJumpDown, isShiftDown
 function InputTracker_StartStop:GetButtonState()
     -- Hang doesn't care how long the button has been held down
     local isHangDown = false
@@ -71,5 +71,10 @@ function InputTracker_StartStop:GetButtonState()
         isJumpDown = true
     end
 
-    return isHangDown, isJumpDown
+    local isShiftDown = false
+    if self.keys.shift then
+        isShiftDown = true
+    end
+
+    return isHangDown, isJumpDown, isShiftDown
 end

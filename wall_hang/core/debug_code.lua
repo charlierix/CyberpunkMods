@@ -27,9 +27,10 @@ function PopulateDebug(debug, o, keys, vars, startStopTracker)
     debug.hang_latched = startStopTracker.hang_latched
     -- debug.mouse_x = keys.mouse_x
 
-    -- local isHangDown, isJumpDown = startStopTracker:GetButtonState()
+    -- local isHangDown, isJumpDown, isShiftDown = startStopTracker:GetButtonState()
     -- debug.tracked_isHangDown = isHangDown
     -- debug.tracked_isJumpDown = isJumpDown
+    -- debug.tracked_isShiftDown = isShiftDown
 
     --debug.isAirborne = IsAirborne(o)
 

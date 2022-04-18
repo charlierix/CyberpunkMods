@@ -5,7 +5,7 @@ local log3 = nil
 
 -- Just keeps teleporting to the initial catch point
 function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, deltaTime)
-    local isHangDown, isJumpDown = startStopTracker:GetButtonState()
+    local isHangDown, isJumpDown, isShiftDown = startStopTracker:GetButtonState()
 
     if log2 and log2:IsPopulated() and (not isHangDown or isJumpDown) then
         log2:Save("WallCrawl2")
@@ -16,7 +16,7 @@ function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, del
         Transition_ToStandard(vars, const, debug, o)
         do return end
 
-    elseif isJumpDown and ShouldJump(o, const, vars.normal) then
+    elseif isJumpDown and ShouldJump(o, const, vars.normal, isShiftDown) then
         Transition_ToJump_Calculate(vars, const, debug, o, vars.hangPos, vars.normal, startStopTracker)
         do return end
     end

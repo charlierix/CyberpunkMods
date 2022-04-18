@@ -323,7 +323,9 @@ function this.Define_JumpBackward_Help(relative_to, const)
     retVal.tooltip =
 [[Whether to jump off of walls when facing the wall (and not looking straight up)
 
-This feature sounded good in my head, but has a tendency to cause unintended death]]
+This feature sounded good in my head, but has a tendency to cause unintended death
+
+NOTE: Holding in shift will ignore this checkbox setting]]
 
     return retVal
 end

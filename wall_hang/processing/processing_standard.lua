@@ -9,7 +9,7 @@ local log = nil
 --  slow down if hang desired, but going too fast
 function Process_Standard(o, player, vars, const, debug, startStopTracker, deltaTime)
     -- Cheapest check is looking at keys
-    local isHangDown, isJumpDown = startStopTracker:GetButtonState()
+    local isHangDown, isJumpDown, isShiftDown = startStopTracker:GetButtonState()
     if not isHangDown and not isJumpDown then
         if log and log:IsPopulated() then
             log:Save("LatchRayTrace")
@@ -54,7 +54,7 @@ function Process_Standard(o, player, vars, const, debug, startStopTracker, delta
     if hits[1].distSqr <= const.wallDistance_stick_max * const.wallDistance_stick_max then
         -- Close enough to interact directly with the wall
         this.ResetVars(o, vars, true, false)
-        this.DirectDistance(isHangDown, isJumpDown, hits, fromPos, o, player, vars, const, debug, startStopTracker, deltaTime)
+        this.DirectDistance(isHangDown, isJumpDown, isShiftDown, hits, fromPos, o, player, vars, const, debug, startStopTracker, deltaTime)
 
     else
         -- Somewhat close to the wall, maybe apply an attraction acceleration
@@ -65,9 +65,9 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.DirectDistance(isHangDown, isJumpDown, hits, fromPos, o, player, vars, const, debug, startStopTracker, deltaTime)
+function this.DirectDistance(isHangDown, isJumpDown, isShiftDown, hits, fromPos, o, player, vars, const, debug, startStopTracker, deltaTime)
     -- Jump
-    if isJumpDown and this.ValidateSlope_Jump(hits[1].normal) and ShouldJump(o, const, hits[1].normal) then
+    if isJumpDown and this.ValidateSlope_Jump(hits[1].normal) and ShouldJump(o, const, hits[1].normal, isShiftDown) then
         this.ResetVars(o, vars)
 
         local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)

@@ -29,6 +29,7 @@ function Keys:new(o, const)
     obj.hardcodedMapping =
     {
         Jump = "jump",
+        ToggleSprint = "shift",
     }
 
     -- This holds the action name as the key, bool for value (true is pressed)

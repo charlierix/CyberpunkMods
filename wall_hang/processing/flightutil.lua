@@ -5,8 +5,8 @@ function IsAirborne(o)
     return o:IsPointVisible(o.pos, Vector4.new(o.pos.x, o.pos.y, o.pos.z - 0.3, 1))
 end
 
-function ShouldJump(o, const, wall_normal)
-    if const.should_jump_backward then
+function ShouldJump(o, const, wall_normal, isShiftDown)
+    if const.should_jump_backward or isShiftDown then       -- shift overrides the constant
         -- Jumping backward is allowed, so there's no reason for more checks
         return true
     end
