@@ -515,19 +515,12 @@ function TODO()
 	-- Angry Bird:
 	--	Figure out why it loses speed
 
-	-- Redscript:
-	--	Rework redscript functions to be CET
-	--	See if blackboard can be used for mods to talk to each other
-
 	-- Controller:
 	--	Listen to MoveX, MoveY
 	--	Do a length chcek + dot product and populate:  Forward, Back, Left, Right
 
     -- Aim:
     --  Add an option to slow down time while aiming
-
-	-- Grapple Straight Pan:
-	--	While grappling, let the asdw apply a panning acceleration relative to the direction toward anchor
 
     -- Grapple Straight:
     --  Add a repulsion to walls when > some distance from desired distance
@@ -542,10 +535,6 @@ function TODO()
 
     -- All:
     --  Fall damage should be a percent, not a bool
-
-    -- Pull:
-    --  If grapple point is a person (determined in aim), ragdoll them toward you
-    --  GET OVER HERE!!!
 
     -- Web Swing:
     --  Have options for increased gravity, to make the player move faster

@@ -37,12 +37,6 @@ require "ui/kdashinputtracker"
 require "ui/keys"
 require "ui/reporting"
 
-function TODO()
-    -- GetGravity is using 9.8 instead of 16
-
-    -- Increase repulse strength a bit at high speed
-end
-
 local this = {}
 
 --------------------------------------------------------------------
