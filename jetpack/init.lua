@@ -40,7 +40,7 @@ local this = {}
 --------------------------------------------------------------------
 
 -- Every time keys.cycleConfig is pressed, this function will get called with the next mode
-function GetConfigValues(index, sounds_thrusting)
+function GetConfigValues(index, sounds_thrusting, const)
     local i = 0
 
     ----------------- Default Values - Can be overridden by each mode below
@@ -76,6 +76,8 @@ function GetConfigValues(index, sounds_thrusting)
     local rotateVel_dotPow = 3          -- unsigned integer, percent will be multiplied by the dot product so when they are looking perpendicular to velocity (or more), percent will be zero.  That dot will be taken to this power.  0 won't do the dot product, 1 is standard, 2 is squared, etc.  Paste this into desmos for a visualization: "\cos\left(\frac{\pi}{2}\cdot\left(1-x\right)\right)^{n}"
     local rotateVel_minSpeed = 30       -- the speed to start rotating velocity to look dir
     local rotateVel_maxSpeed = 55       -- the speed is above this, percent will be at its max
+
+    local sound_type = const.thrust_sound_type.steam
 
     ----------------- Modes (cycle with \)
     ----------------- Add/Remove/Modify modes any way you want.  Try to come up with settings that compliment specific play styles
@@ -133,6 +135,8 @@ function GetConfigValues(index, sounds_thrusting)
         accel_vert_dash = 3
 
         rmb_extra = RMB_Hover:new(2, 2, 0.4, 0.3, 12, useRedscript, accel_gravity, sounds_thrusting)
+
+        sound_type = const.thrust_sound_type.steam_quiet
     end
 
     i = i + 1 ; if index == i then ; i = 1000
@@ -155,6 +159,8 @@ function GetConfigValues(index, sounds_thrusting)
         rmb_extra = RMB_Hover:new(12, 6, 2, 1, 9999, useRedscript, accel_gravity, sounds_thrusting)
 
         rotateVelToLookDir = true
+
+        sound_type = const.thrust_sound_type.steam_quiet
     end
 
     i = i + 1 ; if index == i then ; i = 1000
@@ -171,6 +177,8 @@ function GetConfigValues(index, sounds_thrusting)
         holdJumpDelay = 0.24
 
         rmb_extra = RMB_PushUp:new(22, 6, 8, 60)      -- the burn rate is only applied for one frame, so need something large
+
+        sound_type = const.thrust_sound_type.levitate
     end
 
     i = i + 1 ; if index == i then ; i = 1000
@@ -192,12 +200,14 @@ function GetConfigValues(index, sounds_thrusting)
         useRedscript = true
 
         explosiveLanding = true
+
+        sound_type = const.thrust_sound_type.jump
     end
 
     -----------------
 
     if i < 1000 then
-        return GetConfigValues(1, sounds_thrusting)
+        return GetConfigValues(1, sounds_thrusting, const)
     end
 
     -- The vertical accelerations need to defeat gravity
@@ -207,7 +217,7 @@ function GetConfigValues(index, sounds_thrusting)
         accel_vert_dash = accel_vert_dash + 16 - extra
     end
 
-    return { name=name, index=index, accel_gravity=accel_gravity, accel_horz_stand=accel_horz_stand, accel_horz_dash=accel_horz_dash, accel_vert_stand=accel_vert_stand, accel_vert_dash=accel_vert_dash, maxBurnTime=maxBurnTime, burnRate_dash=burnRate_dash, burnRate_horz=burnRate_horz, energyRecoveryRate=energyRecoveryRate, timeSpeed=timeSpeed, shouldSafetyFire=shouldSafetyFire, holdJumpDelay=holdJumpDelay, useRedscript=useRedscript, rmb_extra=rmb_extra, explosiveLanding=explosiveLanding, rotateVelToLookDir=rotateVelToLookDir, rotateVel_percent_horz=rotateVel_percent_horz, rotateVel_percent_vert=rotateVel_percent_vert, rotateVel_dotPow=rotateVel_dotPow, rotateVel_minSpeed=rotateVel_minSpeed, rotateVel_maxSpeed=rotateVel_maxSpeed }
+    return { name=name, index=index, accel_gravity=accel_gravity, accel_horz_stand=accel_horz_stand, accel_horz_dash=accel_horz_dash, accel_vert_stand=accel_vert_stand, accel_vert_dash=accel_vert_dash, maxBurnTime=maxBurnTime, burnRate_dash=burnRate_dash, burnRate_horz=burnRate_horz, energyRecoveryRate=energyRecoveryRate, timeSpeed=timeSpeed, shouldSafetyFire=shouldSafetyFire, holdJumpDelay=holdJumpDelay, useRedscript=useRedscript, rmb_extra=rmb_extra, explosiveLanding=explosiveLanding, rotateVelToLookDir=rotateVelToLookDir, rotateVel_percent_horz=rotateVel_percent_horz, rotateVel_percent_vert=rotateVel_percent_vert, rotateVel_dotPow=rotateVel_dotPow, rotateVel_minSpeed=rotateVel_minSpeed, rotateVel_maxSpeed=rotateVel_maxSpeed, sound_type=sound_type }
 end
 local mode = nil -- moved to init
 
@@ -219,9 +229,9 @@ local const =
 
     rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
 
-    quiet_thrust = false,               -- set to true for softer thrusting sounds
-
     hide_energy_above_percent = 0.985,  -- For the infinite energy modes (well rounded, airplane), the progress bar is just annoying
+
+    thrust_sound_type = CreateEnum("steam", "steam_quiet", "levitate", "jump"),
 
     settings = CreateEnum(
         -- Bools
@@ -265,6 +275,8 @@ local vars =
     sound_started = 0,
 
     --sounds_thrusting = SoundsThrusting:new(),      -- moved to init
+
+    --toggled_enabled,           -- this is a flag to tell the draw function to say enabled/disabled for a couple seconds
 }
 
 --------------------------------------------------------------------
@@ -333,10 +345,13 @@ registerForEvent("onInit", function()
     vars.thrust = KeyDashTracker:new(o, keys, "jump", "prev_jump")
     vars.horz_analog = KeyDashTracker_Analog:new(o, keys, debug)
 
-    vars.sounds_thrusting = SoundsThrusting:new(o, keys, vars.horz_analog, const.quiet_thrust)
+    vars.sounds_thrusting = SoundsThrusting:new(o, keys, vars.horz_analog, const)
 
     const.isEnabled = GetSetting_Bool(const.settings.IsEnabled, true)
-    mode = GetConfigValues(GetSetting_Int(const.settings.Mode, 0), vars.sounds_thrusting)
+
+    mode = GetConfigValues(GetSetting_Int(const.settings.Mode, 0), vars.sounds_thrusting, const)
+    vars.sounds_thrusting:ModeChanged(mode.sound_type)
+
     vars.remainBurnTime = mode.maxBurnTime
 end)
 
@@ -381,8 +396,11 @@ registerForEvent("onUpdate", function(deltaTime)
 
         local newIndex = mode.index + 1
         SetSetting_Int(const.settings.Mode, newIndex)
-        mode = GetConfigValues(newIndex, vars.sounds_thrusting)
+        mode = GetConfigValues(newIndex, vars.sounds_thrusting, const)
         vars.showConfigNameUntil = o.timer + 3
+
+        vars.sounds_thrusting:ModeChanged(mode.sound_type)
+
         ExitFlight()
     end
 
@@ -417,7 +435,7 @@ registerHotkey("jetpackEnableDisable", "Enable/Disable", function()
     const.isEnabled = not const.isEnabled
     SetSetting_Bool(const.settings.IsEnabled, const.isEnabled)
 
-    --TODO: play a sound
+    vars.toggled_enabled = o.timer
 
     if not const.isEnabled then
         ExitFlight(vars, debug, o)
@@ -437,6 +455,10 @@ registerForEvent("onDraw", function()
     -- Config Name
     if vars.showConfigNameUntil > o.timer then
         DrawConfigName(mode)
+    end
+
+    if vars.toggled_enabled and o.timer - vars.toggled_enabled < 2 then
+        DrawEnabledDisabled(const.isEnabled)
     end
 
     if const.shouldShowDebugWindow then

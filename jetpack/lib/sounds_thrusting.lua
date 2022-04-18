@@ -4,7 +4,7 @@ local this = {}
 
 -- Plays sounds while they are using thrust (jump, directions, hover)
 -- It's difficult to have something named like this and not make jokes :)
-function SoundsThrusting:new(o, keys, horz_analog, isQuiet)
+function SoundsThrusting:new(o, keys, horz_analog, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -12,18 +12,11 @@ function SoundsThrusting:new(o, keys, horz_analog, isQuiet)
     obj.o = o
     obj.keys = keys
     obj.horz_analog = horz_analog
-
-    if isQuiet then
-        obj.cname_thrust1 = "amb_g_fx_steam_small_01_loop"
-        obj.cname_thrust2 = nil
-        obj.cname_maneuver = "amb_g_fx_steam_small_02_loop"
-    else
-        obj.cname_thrust1 = "amb_g_fx_steam_small_03_loop"
-        obj.cname_thrust2 = "grenade_incendiary_fire"
-        obj.cname_maneuver = "amb_g_fx_steam_small_01_loop"
-    end
+    obj.const = const
 
     obj.isHovering = false
+
+    obj.sound_type = nil        -- this is one of these enum values: const.thrust_sound_type
 
     obj.thrust1 = nil
     obj.thrust2 = nil
@@ -35,7 +28,8 @@ function SoundsThrusting:new(o, keys, horz_analog, isQuiet)
     return obj
 end
 
-function SoundsThrusting:Tick(isInFlight)
+
+function SoundsThrusting:Tick_ORIG(isInFlight)
     if not isInFlight then
         self:StopAll()
         do return end
@@ -67,6 +61,42 @@ function SoundsThrusting:Tick(isInFlight)
     end
 end
 
+function SoundsThrusting:Tick(isInFlight)
+    if not isInFlight then
+        self:StopAll()
+        do return end
+    end
+
+    -- Jump
+    if self.keys.jump then
+        self:Ensure_Playing("thrust1", this.GetSound_Thrust1)
+        self:Ensure_Playing("thrust2", this.GetSound_Thrust2)
+    else
+        self:Ensure_Stopped("thrust1")
+        self:Ensure_Stopped("thrust2")
+    end
+
+    -- Maneuver
+    if self.horz_analog.analog_len > 0.5 then
+        self:Ensure_Playing("maneuver", this.GetSound_Maneuver)
+    else
+        self:Ensure_Stopped("maneuver")
+    end
+
+    -- Hover
+    if self.isHovering then
+        self:Ensure_Playing("hover", this.GetSound_Hover)
+    else
+        self:Ensure_Stopped("hover")
+    end
+end
+
+
+-- Each thrust mode could have a different set of sounds
+function SoundsThrusting:ModeChanged(sound_type)
+    self.sound_type = sound_type
+end
+
 -- Makes sure all sounds are stopped
 function SoundsThrusting:StopAll()
     self:Ensure_Stopped("thrust1")
@@ -84,10 +114,14 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function SoundsThrusting:Ensure_Playing(name, sound)
+--NOTE: get_sound is a delegate to one of the this.GetSound_xxx functions
+function SoundsThrusting:Ensure_Playing(name, get_sound)
     if not self[name] then
-        self[name] = sound
-        self.o:PlaySound(self[name])
+        self[name] = get_sound(self.sound_type, self.const)
+
+        if self[name] then
+            self.o:PlaySound(self[name])
+        end
     end
 end
 function SoundsThrusting:Ensure_Stopped(name)
@@ -99,6 +133,75 @@ end
 
 function this.GetRandomSound(list)
     return list[math.random(#list)]
+end
+
+function this.GetSound_Thrust1(sound_type, const)
+    if sound_type == const.thrust_sound_type.steam then
+        return "amb_g_fx_steam_small_03_loop"
+
+    elseif sound_type == const.thrust_sound_type.steam_quiet then
+        return "amb_g_fx_steam_small_01_loop"
+
+    elseif sound_type == const.thrust_sound_type.levitate then
+        return "dev_fan_factory_18_jet_low_quiet"
+
+    elseif sound_type == const.thrust_sound_type.jump then
+        return "lcm_wallrun_out"
+
+    else
+        return nil
+    end
+end
+function this.GetSound_Thrust2(sound_type, const)
+    if sound_type == const.thrust_sound_type.steam then
+        return "grenade_incendiary_fire"
+
+    elseif sound_type == const.thrust_sound_type.steam_quiet then
+        return nil
+
+    elseif sound_type == const.thrust_sound_type.levitate then
+        return nil
+
+    elseif sound_type == const.thrust_sound_type.jump then
+        return nil
+
+    else
+        return nil
+    end
+end
+function this.GetSound_Maneuver(sound_type, const)
+    if sound_type == const.thrust_sound_type.steam then
+        return "amb_g_fx_steam_small_01_loop"
+
+    elseif sound_type == const.thrust_sound_type.steam_quiet then
+        return "amb_g_fx_steam_small_02_loop"
+
+    elseif sound_type == const.thrust_sound_type.levitate then
+        return nil
+
+    elseif sound_type == const.thrust_sound_type.jump then
+        return nil
+
+    else
+        return nil
+    end
+end
+function this.GetSound_Hover(sound_type, const)
+    if sound_type == const.thrust_sound_type.steam then
+        return this.GetRandomSound(this.hover_sounds)
+
+    elseif sound_type == const.thrust_sound_type.steam_quiet then
+        return nil
+
+    elseif sound_type == const.thrust_sound_type.levitate then
+        return nil
+
+    elseif sound_type == const.thrust_sound_type.jump then
+        return nil
+
+    else
+        return nil
+    end
 end
 
 this.hover_sounds =

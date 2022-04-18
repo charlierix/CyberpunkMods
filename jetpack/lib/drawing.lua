@@ -87,6 +87,42 @@ function DrawConfigName(mode)
     ImGui.PopStyleColor(2)
 end
 
+function DrawEnabledDisabled(isEnabled)
+    ImGui.PushStyleColor(ImGuiCol.WindowBg, 0x5454542E)		--542E5454
+    ImGui.PushStyleColor(ImGuiCol.Border, 0x806E6E3D)		--803D6E6E
+
+    ImGui.SetNextWindowPos(20, 250, ImGuiCond.Always)
+    ImGui.SetNextWindowSize(240, 50, ImGuiCond.Appearing)
+
+    if (ImGui.Begin("Enable Disable", true, ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoScrollbar)) then
+        ImGui.SetWindowFontScale(1.8)
+
+        ImGui.Spacing()
+		ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)		--FFFF4C
+
+        if isEnabled then
+            ImGui.Text("Jetpack Enabled")
+        else
+            ImGui.Text("Jetpack Disabled")
+        end
+
+		ImGui.PopStyleColor(1)
+
+        -- ImGui.Spacing()
+        -- ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)		--75FFFF
+
+        -- if not isEnabled then
+        --     ImGui.Spacing()
+        --     ImGui.Text("allows for other mods....")     -- not sure what to say
+        -- end
+
+        ImGui.PopStyleColor(1)
+    end
+    ImGui.End()
+
+    ImGui.PopStyleColor(2)
+end
+
 --https://stackoverflow.com/questions/26160327/sorting-a-lua-table-by-key
 function DrawDebugWindow(debugInfo)
     ImGui.SetNextWindowPos(20, 300, ImGuiCond.FirstUseEver)
