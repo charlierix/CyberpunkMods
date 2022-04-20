@@ -14,6 +14,7 @@
 
 require "core/color"
 require "core/debug_code"
+require "core/debug_render_logger"
 require "core/gameobj_accessor"
 require "core/lists"
 require "core/math_basic"
@@ -369,13 +370,11 @@ registerForEvent("onUpdate", function(deltaTime)
         Process_AirDash(o, player, vars, const, debug, deltaTime)
 
     elseif vars.flightMode == const.flightModes.flight_straight then
-        -- TODO: This should be called flight_straight
-        -- Actually grappling
+        -- Grappling in a straight line
         Process_Flight_Straight(o, player, vars, const, debug, deltaTime)
 
     elseif vars.flightMode == const.flightModes.flight_swing then
-        -- TODO: This should be called flight_straight
-        -- Actually grappling
+        -- Web Swinging
         Process_Flight_Swing(o, player, vars, const, debug, deltaTime)
 
     elseif vars.flightMode == const.flightModes.antigrav then

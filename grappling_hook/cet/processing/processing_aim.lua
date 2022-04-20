@@ -1,3 +1,5 @@
+local swing_raycasts = require("processing/aimswing_raycasts")
+
 local this = {}
 
 -- This is called when they've initiated a new grapple.  It looks at the environment and kicks
@@ -109,12 +111,13 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
         do return end
     end
 
-    -- Fire some rays in a forward code
+    -- Fire some rays in a forward cone
+    local cone_hits = swing_raycasts.InitialCone(o, const)
 
     -- Detect if enclosed space:
     --  Launch the player into the middle of that space in the rough direction that the player is facing
 
-    -- Detect if shoud launch the player in the air
+    -- Detect if should launch the player in the air
     --  Launch the player up at an angle to get off the ground and moving quickly
 
 
