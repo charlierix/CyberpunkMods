@@ -311,6 +311,10 @@ namespace DebugRenderViewer
                     return;
 
                 VisualEntry entry = Util_Runtime.GetTooltipHit(_tooltips, hits);
+                if (string.IsNullOrWhiteSpace(entry?.Model?.tooltip))
+                    return;
+
+                lblToolTip.Text = entry.Model.tooltip;
 
                 borderToolTip.Margin = new Thickness(clickPoint.X + 16, clickPoint.Y + 16, 0, 0);
                 borderToolTip.Visibility = Visibility.Visible;

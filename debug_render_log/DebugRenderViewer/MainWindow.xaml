@@ -25,7 +25,7 @@
             </Viewport3D>
         </Grid>
 
-        <Border x:Name="borderToolTip" Visibility="Collapsed" Padding="7,3" BorderThickness="1" CornerRadius="2" BorderBrush="#709E9C82" Background="#30DEDBB5" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="300,400,0,0">
+        <Border x:Name="borderToolTip" Visibility="Collapsed" Padding="7,3" BorderThickness="1" CornerRadius="2" BorderBrush="#909E9C82" Background="#60E8E6C8" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="300,400,0,0">
             <TextBlock x:Name="lblToolTip" Text="Sample Text" Foreground="{Binding Path=TextBrush}"/>
         </Border>
 
