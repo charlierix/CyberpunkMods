@@ -292,7 +292,7 @@ function GetDefault_Grapple_Swing()
         name = "swing",
         description = "Open air swinging",
 
-        mappin_name = "OffVariant",
+        mappin_name = "AimVariant",
         minDot = nil,
         stop_on_wallHit = true,
 

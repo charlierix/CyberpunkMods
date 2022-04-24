@@ -1,3 +1,4 @@
+local swing_grapples = require("processing/aimswing_grapples")
 local swing_raycasts = require("processing/aimswing_raycasts")
 
 local this = {}
@@ -111,8 +112,14 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
         do return end
     end
 
+
+    -- Maybe as a first step it would be best to look at current velocity, current direction facing
+    -- Use those to figure out an ideal path and where to focus some ray casts
+
+
+
     -- Fire some rays in a forward cone
-    local cone_hits = swing_raycasts.InitialCone(o, const)
+    --local cone_hits = swing_raycasts.InitialCone(o, const)
 
     -- Detect if enclosed space:
     --  Launch the player into the middle of that space in the rough direction that the player is facing
@@ -123,7 +130,8 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
 
 
     -- else (much more work to do here, but get the above working first)
-    this.Aim_Swing_45Only(o, vars, const)
+    --this.Aim_Swing_45Only(o, vars, const)
+    this.Aim_Swing_Slingshot(o, vars, const)
 end
 
 function this.RecoverEnergy_Switch(o, player, vars, const)
@@ -143,7 +151,7 @@ function this.RecoverEnergy_Switch(o, player, vars, const)
     return false
 end
 
------------------------------------- Swing 45 Only ------------------------------------
+------------------------------------ Temp Hardcoded -----------------------------------
 
 -- This blindly sets the anchor point at 24 meters, 45 degrees above look direction
 function this.Aim_Swing_45Only(o, vars, const)
@@ -160,5 +168,38 @@ function this.Aim_Swing_45Only(o, vars, const)
 
     EnsureMapPinVisible(to, vars.grapple.mappin_name, vars, o)
 
-    Transition_ToFlight_Swing(vars, const, o, from, to, nil)
+    Transition_ToFlight_Swing(vars.grapple, vars, const, o, from, to, nil)
+end
+
+-- This first attempt just shoots the player like a slingshot, possibly applying an extra impulse to get them
+-- off the ground
+function this.Aim_Swing_Slingshot(o, vars, const)
+    o:GetCamera()
+
+    local position, look_dir = o:GetCrosshairInfo()
+
+    --TODO: If looking down, and there is ground in the way, choose a point above the ground
+    --TODO: Distance should be based on current speed (also how cluttered the area is)
+    local anchor_pos = AddVectors(position, MultiplyVector(look_dir, 60))
+
+    -- Ensure pin is drawn and placed properly (flight pin, not aim pin)
+    EnsureMapPinVisible(anchor_pos, vars.grapple.mappin_name, vars, o)
+
+    local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos)
+
+    this.MaybePopUp(o, new_grapple.anti_gravity)
+
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil)
+end
+
+-- If on the ground and angle is too low, apply an up impulse
+function this.MaybePopUp(o, anti_gravity)
+    if IsAirborne(o) then
+        do return end
+    end
+
+    --TODO: May want to add some kick in the horizontal portion of direction facing
+    --TODO: Adjust upward strength based on antigrav
+
+    o:AddImpulse(0, 0, 4)
 end

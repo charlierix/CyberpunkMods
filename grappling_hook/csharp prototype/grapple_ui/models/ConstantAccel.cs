@@ -18,6 +18,9 @@
         /// <summary>
         /// If speed difference is less than this, accel linearly drops to zero
         /// </summary>
+        /// <remarks>
+        /// (comparing current speed with max speed defined in this class)
+        /// </remarks>
         public double deadSpot_speed { get; init; }
 
         public double experience { get; init; }

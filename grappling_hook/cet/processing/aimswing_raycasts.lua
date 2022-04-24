@@ -27,13 +27,18 @@ function aimswing_raycasts.InitialCone(o, const)
 
     local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + 1, 1)
 
-    log:Add_Dot(o.pos)
+    log:DefineCategory("player", "2F95CC")
+    log:Add_Dot(o.pos, "player")
+    log:Add_Line(o.pos, AddVectors(o.pos, o.vel), "player")
+
     log:Add_Dot(from)
 
     this.RaysLook(o, log, from)
 
-    --TODO: If they are looking nearly straight up, the horizontal scan is mostly useless.  So try for horizontal, but cap at a max angle from look
-    --(same but opposite when looking down)
+    -- TODO: If they are looking nearly straight up, the horizontal scan is mostly useless.  So try for horizontal, but cap at a max angle from look
+    -- (same but opposite when looking down)
+    --
+    -- An alternative could be current velocity that helps choose the tunnel cast
     this.RaysHorizontal(o, log, from)
 
     log:Save()

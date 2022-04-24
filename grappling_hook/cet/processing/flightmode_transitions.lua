@@ -75,10 +75,10 @@ end
 
 -- This goes from aim into flight
 -- There's no need to check for energy, that was done when trying to aim
-function Transition_ToFlight_Swing(vars, const, o, rayFrom, rayHit, airanchor)
+function Transition_ToFlight_Swing(grapple, vars, const, o, rayFrom, rayHit, airanchor)
     vars.flightMode = const.flightModes.flight_swing
 
-    -- vars.grapple is already populated by aim
+    vars.grapple = grapple      -- this was populated in Transition_ToAim, but aim swing redefines it based on the situation
 
     --TODO: When webswing and zipline get implemented, need a way to tell them apart from straightline
     this.PlaySound_Grapple(vars, o)
