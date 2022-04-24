@@ -119,7 +119,8 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
 
 
     -- Fire some rays in a forward cone
-    --local cone_hits = swing_raycasts.InitialCone(o, const)
+    --local cone_hits = swing_raycasts.InitialCone1(o, const)
+    swing_raycasts.Scan_LookAndVelocity1(o, const)
 
     -- Detect if enclosed space:
     --  Launch the player into the middle of that space in the rough direction that the player is facing

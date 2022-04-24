@@ -15,8 +15,6 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos)
 
     local antigrav_percent = this.GetStaightAntigravPercent(direction_unit)
 
-    print("antigrav %: " .. tostring(antigrav_percent))
-
     --TODO: adjust accel, max speed, deadpot based on distance to travel
 
     return
@@ -25,7 +23,13 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos)
         description = grapple.description,
 
         mappin_name = grapple.mappin_name,
-        minDot = 0.4,
+
+
+        --TODO: Add a stop condition:
+        --  when inside anchor deadspot:
+        --      if dot(dir_to_anchor, vel) > N then stop
+
+        minDot = 0.3,
         stop_on_wallHit = true,
 
         anti_gravity =
@@ -56,6 +60,11 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos)
 end
 
 function aimswing_grapples.GetPureRope(grapple)
+
+
+
+
+    
 end
 
 function aimswing_grapples.GetElasticRope(grapple)
