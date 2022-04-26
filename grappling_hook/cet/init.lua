@@ -511,6 +511,9 @@ end
 
 function TODO()
 
+    -- Aim Allows Death:
+    --  I hit the ground hard while aiming, and grappling hook had stolen flight, which prevented jetpack from doing a safe landing
+
 	-- Angry Bird:
 	--	Figure out why it loses speed
 

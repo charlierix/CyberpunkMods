@@ -416,6 +416,7 @@ end
 --------------------------------------------------------------------
 
 function TODO()
+    -- Wall attraction stays after switching to grappling hook
 
     -- Partial Disable Jump Away
     --  There is currently a checkbox to not jump away from a wall when facing the wall
