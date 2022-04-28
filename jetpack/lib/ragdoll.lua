@@ -15,14 +15,14 @@ function RagdollNPCs_StraightUp(radius, force, randHorz, randVert, o)
 end
 
 -- This launches NPCs up and out, with a power drop off based on distance from the player
-function RagdollNPCs_ExplodeOut(radius, force, upForce, o)
+function RagdollNPCs_ExplodeOut(radius, force, upForce, o, is_implode)
     local searchQuery = this.GetSearchQuery(radius)
 
     local found, targetParts = o:GetTargetParts(searchQuery)
 
     if found and targetParts then
         for i = 1, #targetParts do
-            this.ExplodeOut(targetParts[i], o.pos, radius, force, upForce, o)
+            this.ExplodeOut(targetParts[i], o.pos, radius, force, upForce, o, is_implode)
         end
     end
 end
@@ -60,7 +60,7 @@ function this.LaunchUp(targetPart, force, randHorz, randVert, o)
     o:DelayEventNextFrame(npc, CreateRagdollApplyImpulseEvent(npc_pos, direction, 5))       -- the impulse must wait a frame for the previous ragdoll to take affect
 end
 
-function this.ExplodeOut(targetPart, player_pos, radius, force, upForce, o)
+function this.ExplodeOut(targetPart, player_pos, radius, force, upForce, o, is_implode)
     local npc = this.GetRagdollableNPC(targetPart)
     if not npc then
         do return end
@@ -81,9 +81,16 @@ function this.ExplodeOut(targetPart, player_pos, radius, force, upForce, o)
 
     local finalForce = adjustedForce + this.Random_MinMax(-adjustedForce / 12.00, adjustedForce / 12.00)
 
-    local dir_x = (npc_pos.x - player_pos.x) / distScaled       -- unit vector
-    local dir_y = (npc_pos.y - player_pos.y) / distScaled
-    local dir_z = (npc_pos.z - player_pos.z) / distScaled
+    local dir_x, dir_y, dir_z
+    if is_implode then
+        dir_x = (player_pos.x - npc_pos.x) / distScaled       -- unit vector
+        dir_y = (player_pos.y - npc_pos.y) / distScaled
+        dir_z = (player_pos.z - npc_pos.z) / distScaled
+    else
+        dir_x = (npc_pos.x - player_pos.x) / distScaled       -- unit vector
+        dir_y = (npc_pos.y - player_pos.y) / distScaled
+        dir_z = (npc_pos.z - player_pos.z) / distScaled
+    end
 
     local mult = this.GetForceMultiplier(npc)
 

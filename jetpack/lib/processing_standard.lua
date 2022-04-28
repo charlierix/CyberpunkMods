@@ -1,3 +1,5 @@
+local this = {}
+
 -- This is called each tick when they aren't in flight (just walking around)
 -- Timer has already been updated and it's verified that they aren't in a vehicle
 -- or in the menu
@@ -13,7 +15,7 @@ function Process_Standard(o, vars, mode, const, debug, deltaTime)
         local can_start, velocity = o:Custom_CurrentlyFlying_TryStartFlight(true, o.vel)
 
         if can_start then
-            ActivateFlight(o, vars, mode, velocity)
+            this.ActivateFlight(o, vars, mode, velocity)
         end
 
     elseif o:Custom_CurrentlyFlying_IsOwnerOrNone() then
@@ -24,7 +26,9 @@ function Process_Standard(o, vars, mode, const, debug, deltaTime)
     end
 end
 
-function ActivateFlight(o, vars, mode, velocity)
+------------------------------------ Private Methods ----------------------------------
+
+function this.ActivateFlight(o, vars, mode, velocity)
     -- Time to activate flight mode (flying will occur next tick)
     vars.isInFlight = true
     vars.startThrustTime = o.timer
@@ -48,7 +52,20 @@ function ActivateFlight(o, vars, mode, velocity)
         end
     end
 
-    if (mode.timeSpeed > 0) and (not IsNearValue(mode.timeSpeed, 1)) then
+    if mode.timeSpeed > 0 and not IsNearValue(mode.timeSpeed, 1) then
         o:SetTimeDilation(mode.timeSpeed)
+    end
+
+    -- A couple extras to do when jumping from the ground
+    if mode.accel_vert_initial or mode.explosiveJumping then
+        if not IsAirborne(o) then
+            if mode.accel_vert_initial then
+                o:AddImpulse(0, 0, mode.accel_vert_initial)
+            end
+
+            if mode.explosiveJumping then
+                ExplosivelyJump(o)
+            end
+        end
     end
 end

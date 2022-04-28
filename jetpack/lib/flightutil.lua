@@ -61,6 +61,11 @@ function RecoverBurnTime(current, max, recoverRate, deltaTime)
     return current
 end
 
+-- This will knock people over that are near the player
+function ExplosivelyJump(o)
+    RagdollNPCs_ExplodeOut(4, 1.5, 3, o, true)      -- imploding slightly
+end
+
 -- This will blow people back if the impact speed is large enough
 function ExplosivelyLand(o, velZ, vars)
     local maxForce = 9

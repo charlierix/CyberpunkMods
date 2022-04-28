@@ -55,6 +55,8 @@ function GetConfigValues(index, sounds_thrusting, const)
     local accel_vert_stand = 2.5
     local accel_vert_dash = 6
 
+    local accel_vert_initial = nil      -- a one time burst up when jetpack is first activated (only works when starting from the ground)
+
     local maxBurnTime = 4               -- seconds
     local burnRate_dash = 2             -- uses up "energy" at this higher rate when dashing (energy being time left to burn the thrusters)
     local burnRate_horz = 0.3           -- how much "energy" horizontal thruster firing uses
@@ -68,6 +70,7 @@ function GetConfigValues(index, sounds_thrusting, const)
 
     local rmb_extra = nil               -- this is an optional class that does custom actions when right mouse button is held in
 
+    local explosiveJumping = false      -- this will ragdoll nearby NPCs when jumping from ground (a small force compared to landing)
     local explosiveLanding = false      -- this will ragdoll nearby NPCs when landing
 
     local rotateVelToLookDir = false    -- This only be done in CET based flight (non redscript).  This will pull the velocity to line up with the direction facing
@@ -184,21 +187,24 @@ function GetConfigValues(index, sounds_thrusting, const)
     i = i + 1 ; if index == i then ; i = 1000
         name = "hulk stomp"
 
-        maxBurnTime = 0.8
+        maxBurnTime = 0.6
         burnRate_dash = 1
         burnRate_horz = 0.01
         energyRecoveryRate = 0.4
 
         accel_horz_stand = 0.5
         accel_horz_dash = 0.5
-        accel_vert_stand = 18
-        accel_vert_dash = 18
+        accel_vert_stand = 14
+        accel_vert_dash = 14
+
+        accel_vert_initial = 12
 
         accel_gravity = -28
 
         holdJumpDelay = 0.2
         useRedscript = true
 
+        explosiveJumping = true
         explosiveLanding = true
 
         sound_type = const.thrust_sound_type.jump
@@ -217,7 +223,7 @@ function GetConfigValues(index, sounds_thrusting, const)
         accel_vert_dash = accel_vert_dash + 16 - extra
     end
 
-    return { name=name, index=index, accel_gravity=accel_gravity, accel_horz_stand=accel_horz_stand, accel_horz_dash=accel_horz_dash, accel_vert_stand=accel_vert_stand, accel_vert_dash=accel_vert_dash, maxBurnTime=maxBurnTime, burnRate_dash=burnRate_dash, burnRate_horz=burnRate_horz, energyRecoveryRate=energyRecoveryRate, timeSpeed=timeSpeed, shouldSafetyFire=shouldSafetyFire, holdJumpDelay=holdJumpDelay, useRedscript=useRedscript, rmb_extra=rmb_extra, explosiveLanding=explosiveLanding, rotateVelToLookDir=rotateVelToLookDir, rotateVel_percent_horz=rotateVel_percent_horz, rotateVel_percent_vert=rotateVel_percent_vert, rotateVel_dotPow=rotateVel_dotPow, rotateVel_minSpeed=rotateVel_minSpeed, rotateVel_maxSpeed=rotateVel_maxSpeed, sound_type=sound_type }
+    return { name=name, index=index, accel_gravity=accel_gravity, accel_horz_stand=accel_horz_stand, accel_horz_dash=accel_horz_dash, accel_vert_stand=accel_vert_stand, accel_vert_dash=accel_vert_dash, accel_vert_initial=accel_vert_initial, maxBurnTime=maxBurnTime, burnRate_dash=burnRate_dash, burnRate_horz=burnRate_horz, energyRecoveryRate=energyRecoveryRate, timeSpeed=timeSpeed, shouldSafetyFire=shouldSafetyFire, holdJumpDelay=holdJumpDelay, useRedscript=useRedscript, rmb_extra=rmb_extra, explosiveJumping=explosiveJumping, explosiveLanding=explosiveLanding, rotateVelToLookDir=rotateVelToLookDir, rotateVel_percent_horz=rotateVel_percent_horz, rotateVel_percent_vert=rotateVel_percent_vert, rotateVel_dotPow=rotateVel_dotPow, rotateVel_minSpeed=rotateVel_minSpeed, rotateVel_maxSpeed=rotateVel_maxSpeed, sound_type=sound_type }
 end
 local mode = nil -- moved to init
 
@@ -466,7 +472,7 @@ registerForEvent("onDraw", function()
     end
 end)
 
------------------------------------- Private Methods -----------------------------------
+------------------------------------ Private Methods ----------------------------------
 
 function this.GetVelocity(is_redscript, vars_vel, o_vel)
     if is_redscript then
