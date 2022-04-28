@@ -22,6 +22,7 @@ require "lib/math_basic"
 require "lib/math_vector"
 require "lib/math_yaw"
 require "lib/processing_inflight_cet"
+require "lib/processing_inflight_dreamjump"
 require "lib/processing_inflight_red"
 require "lib/processing_standard"
 require "lib/ragdoll"
@@ -210,6 +211,34 @@ function GetConfigValues(index, sounds_thrusting, const)
         sound_type = const.thrust_sound_type.jump
     end
 
+    i = i + 1 ; if index == i then ; i = 1000
+        name = "dream jump"
+
+        -- Give infinite fuel
+        maxBurnTime = 0.8
+        burnRate_dash = 1
+        burnRate_horz = 0.2
+        energyRecoveryRate = 0.1
+
+        -- Slow things down, like it's a dream
+        accel_gravity = -2
+        timeSpeed = 0.1
+
+        -- Low accelerations, there is no dash
+        accel_horz_stand = 4
+        accel_horz_dash = 4
+
+        accel_vert_stand = 1.2
+        accel_vert_dash = 1.2
+
+        -- Most of the height should come from the initial kick
+        accel_vert_initial = 3
+
+        holdJumpDelay = 0.2
+
+        sound_type = const.thrust_sound_type.jump
+    end
+
     -----------------
 
     if i < 1000 then
@@ -275,6 +304,8 @@ local vars =
 
     --remainBurnTime = mode.maxBurnTime,        -- moved to init
 
+    --started_on_ground             -- only needed by cet flight for initial acceleration
+
     showConfigNameUntil = 0,
 
     --sound_current = nil,      -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
@@ -334,6 +365,7 @@ registerForEvent("onInit", function()
     function wrappers.GetSenseManager() return Game.GetSenseManager() end
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
     function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
+    function wrappers.SetTimeDilationPlayer(timeSpeed) Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
     function wrappers.GetTimeSystem() return Game.GetTimeSystem() end
     function wrappers.Time_IsTimeDilationActive(timeSys) return timeSys:IsTimeDilationActive() end
@@ -419,6 +451,9 @@ registerForEvent("onUpdate", function(deltaTime)
 
         elseif mode.useRedscript then
             Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
+
+        elseif mode.name == "dream jump" then
+            Process_InFlight_CET_DreamJump(o, vars, const, mode, keys, debug, deltaTime)
 
         else
             Process_InFlight_CET(o, vars, const, mode, keys, debug, deltaTime)

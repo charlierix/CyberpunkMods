@@ -33,6 +33,7 @@ function this.ActivateFlight(o, vars, mode, velocity)
     vars.isInFlight = true
     vars.startThrustTime = o.timer
     vars.lastThrustTime = o.timer
+    vars.started_on_ground = false
 
     if not mode.useRedscript then
         -- Once teleporting occurs, o.vel will be zero, so vars.vel holds a copy that gets updated by accelerations
@@ -53,12 +54,32 @@ function this.ActivateFlight(o, vars, mode, velocity)
     end
 
     if mode.timeSpeed > 0 and not IsNearValue(mode.timeSpeed, 1) then
+
+        -- this slows the player down too
         o:SetTimeDilation(mode.timeSpeed)
+
+
+        ----- This may fix the player, but the gun still fires slow:
+        -- keanuWheeze — 11/18/2021
+        -- You can do Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(true) (What psiberx posted earlier), to make the time speed change not affect the player. If you want the player to be slowed down as well, then idk tbh:PES_SadShrug:        
+
+        Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(true)
+
+
+        ----- This was an attempt to fix the fire rate
+        -- MrBounty — 11/19/2021
+        -- It's work ! Thx, you sick genius ! Just missed one Game. it's Game.GetStatsSystem():AddModifier(Game.GetTransactionSystem():GetItemInSlot(Game.GetPlayer(), 'AttachmentSlots.WeaponRight'):GetEntityID(), RPGManager.CreateStatModifier(gamedataStatType.CycleTime, gameStatModifierType.Multiplier, slowMoFact))
+
+
+        --Game.GetStatsSystem():AddModifier(Game.GetTransactionSystem():GetItemInSlot(Game.GetPlayer(), 'AttachmentSlots.WeaponRight'):GetEntityID(), RPGManager.CreateStatModifier(gamedataStatType.CycleTime, gameStatModifierType.Multiplier, slowMoFact))
+
     end
 
     -- A couple extras to do when jumping from the ground
     if mode.accel_vert_initial or mode.explosiveJumping then
         if not IsAirborne(o) then
+            vars.started_on_ground = true
+
             if mode.accel_vert_initial then
                 o:AddImpulse(0, 0, mode.accel_vert_initial)
             end

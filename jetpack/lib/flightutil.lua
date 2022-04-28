@@ -1,4 +1,4 @@
-function ShouldExitFlight(o, vars, isRedscript)
+function ShouldExitFlight(o, vars, isRedscript, idletime_override)
     -- Even if they are close to the ground, if they are actively under thrust, then they shouldn't
     -- exit flight
     --
@@ -22,7 +22,11 @@ function ShouldExitFlight(o, vars, isRedscript)
 
     -- If they have been airborne, but haven't used thrust for quite a while, then exit airborne state
     -- This would be extra benefitial in case the airborne state is in error (while driving, swimming, etc)
-    if (o.timer - vars.lastThrustTime) > 8 then
+    if not idletime_override then
+        idletime_override = 8
+    end
+
+    if (o.timer - vars.lastThrustTime) > idletime_override then
         return true
     end
 
