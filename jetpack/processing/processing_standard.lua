@@ -26,7 +26,7 @@ function Process_Standard(o, vars, mode, const, debug, deltaTime)
     end
 end
 
------------------------------------- Private Methods ----------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.ActivateFlight(o, vars, mode, velocity)
     -- Time to activate flight mode (flying will occur next tick)
@@ -59,11 +59,16 @@ function this.ActivateFlight(o, vars, mode, velocity)
         o:SetTimeDilation(mode.timeSpeed)
 
 
+        --[error] Function 'SetTimeDilationOnLocalPlayerZero' requires from 2 to 6 parameter(s)
+        --Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(true)
+
+
+
         ----- This may fix the player, but the gun still fires slow:
         -- keanuWheeze — 11/18/2021
         -- You can do Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(true) (What psiberx posted earlier), to make the time speed change not affect the player. If you want the player to be slowed down as well, then idk tbh:PES_SadShrug:        
 
-        Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(true)
+
 
 
         ----- This was an attempt to fix the fire rate
