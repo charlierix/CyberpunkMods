@@ -2,7 +2,7 @@ function Process_InFlight_CET_DreamJump(o, vars, const, mode, keys, debug, delta
     debug.time_flying_idle = o.timer - vars.lastThrustTime
 
     if ShouldExitFlight(o, vars, false, 16) then
-        if mode.explosiveLanding and not IsAirborne(o) then
+        if mode.jump_land.explosiveLanding and not IsAirborne(o) then
             ExplosivelyLand(o, vars.vel, vars)
         end
 
@@ -35,14 +35,14 @@ function Process_InFlight_CET_DreamJump(o, vars, const, mode, keys, debug, delta
     else
         accelX = 0
         accelY = 0
-        accelZ = mode.accel_gravity
+        accelZ = mode.accel.gravity
 
-        vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, mode.maxBurnTime, mode.energyRecoveryRate, deltaTime)
+        vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, mode.energy.maxBurnTime, mode.energy.recoveryRate, deltaTime)
     end
 
     -- Initial boost
-    if mode.accel_vert_initial and vars.started_on_ground and o.timer - vars.startThrustTime < 0.3 then
-        accelZ = accelZ + mode.accel_vert_initial - mode.accel_gravity
+    if mode.accel.vert_initial and vars.started_on_ground and o.timer - vars.startThrustTime < 0.3 then
+        accelZ = accelZ + mode.accel.vert_initial - mode.accel.gravity
     end
 
     -- Drag near max velocity

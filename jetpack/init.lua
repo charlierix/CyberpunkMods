@@ -92,7 +92,7 @@ local vars =
     startThrustTime = 0,
     lastThrustTime = 0,
 
-    --remainBurnTime = mode.maxBurnTime,        -- moved to init
+    --remainBurnTime = mode.energy.maxBurnTime,        -- moved to init
 
     --started_on_ground             -- only needed by cet flight for initial acceleration
 
@@ -180,7 +180,7 @@ registerForEvent("onInit", function()
     mode = GetConfigValues(GetSetting_Int(const.settings.Mode, 0), vars.sounds_thrusting, const)
     vars.sounds_thrusting:ModeChanged(mode.sound_type)
 
-    vars.remainBurnTime = mode.maxBurnTime
+    vars.remainBurnTime = mode.energy.maxBurnTime
 end)
 
 registerForEvent("onShutdown", function()
@@ -279,8 +279,8 @@ registerForEvent("onDraw", function()
     end
 
     -- Energy tank (only show when it's not full)
-    if vars.remainBurnTime / mode.maxBurnTime < const.hide_energy_above_percent then
-        DrawJetpackProgress(mode.name, vars.remainBurnTime, mode.maxBurnTime)
+    if vars.remainBurnTime / mode.energy.maxBurnTime < const.hide_energy_above_percent then
+        DrawJetpackProgress(mode.name, vars.remainBurnTime, mode.energy.maxBurnTime)
     end
 
     -- Config Name

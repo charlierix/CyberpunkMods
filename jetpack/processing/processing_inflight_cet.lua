@@ -2,7 +2,7 @@ function Process_InFlight_CET(o, vars, const, mode, keys, debug, deltaTime)
     debug.time_flying_idle = o.timer - vars.lastThrustTime
 
     if ShouldExitFlight(o, vars, false) then
-        if mode.explosiveLanding and not IsAirborne(o) then
+        if mode.jump_land.explosiveLanding and not IsAirborne(o) then
             ExplosivelyLand(o, vars.vel, vars)
         end
 
@@ -33,9 +33,9 @@ function Process_InFlight_CET(o, vars, const, mode, keys, debug, deltaTime)
     else
         accelX = 0
         accelY = 0
-        accelZ = mode.accel_gravity
+        accelZ = mode.accel.gravity
 
-        vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, mode.maxBurnTime, mode.energyRecoveryRate, deltaTime)
+        vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, mode.energy.maxBurnTime, mode.energy.recoveryRate, deltaTime)
     end
 
     -- Drag near max velocity

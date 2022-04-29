@@ -5,9 +5,9 @@ function GetAccel_Keys(vars, mode, o, debug, deltaTime)
     --vars.thrust:Tick()       -- this was already done in init.lua
     vars.horz_analog:Tick(deltaTime)
 
-    local accel_up, energyUp = this.CalculateAccel(vars.thrust.isDown, vars.thrust.isDashing, mode.accel_vert_stand, mode.accel_vert_dash, 1, mode.burnRate_dash)
+    local accel_up, energyUp = this.CalculateAccel(vars.thrust.isDown, vars.thrust.isDashing, mode.accel.vert_stand, mode.accel.vert_dash, 1, mode.energy.burnRate_dash)
 
-    local accel_x, accel_y, energyHorz = this.CalculateAccel_Analog(vars.horz_analog.analog_x, vars.horz_analog.analog_y, vars.horz_analog.analog_len, vars.horz_analog.isDashing, mode.accel_horz_stand, mode.accel_horz_dash, mode.burnRate_horz, mode.burnRate_horz * mode.burnRate_dash)
+    local accel_x, accel_y, energyHorz = this.CalculateAccel_Analog(vars.horz_analog.analog_x, vars.horz_analog.analog_y, vars.horz_analog.analog_len, vars.horz_analog.isDashing, mode.accel.horz_stand, mode.accel.horz_dash, mode.energy.burnRate_horz, mode.energy.burnRate_horz * mode.energy.burnRate_dash)
 
     -- Map into world coords
     local accelX, accelY = this.ConvertAccelToWorld(accel_y, accel_x, o)

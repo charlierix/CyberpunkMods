@@ -9,7 +9,7 @@ function Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
 
         SafetyFire(o, safetyFireHit)
 
-        if mode.explosiveLanding then
+        if mode.jump_land.explosiveLanding then
             ExplosivelyLand(o, velZ, vars)
         end
         do return end
@@ -43,12 +43,12 @@ function Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
         accelY = 0
         accelZ = 0
 
-        vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, mode.maxBurnTime, mode.energyRecoveryRate, deltaTime)
+        vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, mode.energy.maxBurnTime, mode.energy.recoveryRate, deltaTime)
     end
 
     -- Handle gravity when different from standard
     -- NOTE: When charge legs get reused mid flight, they mess with gravity
-    accelZ = accelZ + 16 + mode.accel_gravity
+    accelZ = accelZ + 16 + mode.accel.gravity
 
     -- Drag near max velocity
     local dragX, dragY, dragZ = ClampVelocity_Drag(o.vel, const.maxSpeed)

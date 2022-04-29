@@ -60,12 +60,12 @@ function DrawConfigName(mode)
 
         --Only reporting settings out of ordinary (low gravity, high gravity, etc)
 
-        if not mode.shouldSafetyFire then
+        if not mode.jump_land.shouldSafetyFire then
             ImGui.Spacing()
             ImGui.Text("unsafe landing")
         end
 
-        if mode.explosiveLanding then
+        if mode.jump_land.explosiveLanding then
             ImGui.Spacing()
             ImGui.Text("explosive landing")
         end

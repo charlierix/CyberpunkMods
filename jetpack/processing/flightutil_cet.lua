@@ -56,13 +56,13 @@ end
 
 -- This will pull the velocity toward the direction facing
 function RotateVelocityToLookDir(o, mode, vars, deltaTime, debug)
-    if not mode.rotateVelToLookDir then
+    if not mode.rotateVel.is_used then
         do return end
     end
 
     o:GetCamera()
 
-    local percentHorz, percentVert = RotateVelocity_Percent(o.lookdir_forward, vars.vel, mode, debug)
+    local percentHorz, percentVert = RotateVelocity_Percent(o.lookdir_forward, vars.vel, mode.rotateVel, debug)
     if not percentHorz then     -- they are either both nil or both non nil
         do return end
     end
@@ -82,7 +82,7 @@ function RotateVelocityToLookDir(o, mode, vars, deltaTime, debug)
     vars.vel.z = velZ
 end
 
-function RotateVelocity_Percent(dirFacing, vel, mode, debug)
+function RotateVelocity_Percent(dirFacing, vel, rotateVel, debug)
 
     -- debug.zzz_dot = "n/a"
     -- debug.zzz_scale = "n/a"
@@ -90,7 +90,7 @@ function RotateVelocity_Percent(dirFacing, vel, mode, debug)
     -- debug.zzz_perc_vert = "n/a"
 
     local speedSqr = GetVectorLengthSqr(vel)
-    if speedSqr < (mode.rotateVel_minSpeed * mode.rotateVel_minSpeed) then
+    if speedSqr < (rotateVel.minSpeed * rotateVel.minSpeed) then
         -- Going too slow
         return nil, nil
     end
@@ -98,11 +98,11 @@ function RotateVelocity_Percent(dirFacing, vel, mode, debug)
     local speed = math.sqrt(speedSqr)
     local velUnit = DivideVector(vel, speed)
 
-    local percentHorz = mode.rotateVel_percent_horz
-    local percentVert = mode.rotateVel_percent_vert
+    local percentHorz = rotateVel.percent_horz
+    local percentVert = rotateVel.percent_vert
 
     -- Limit percent if looking too far away
-    if mode.rotateVel_dotPow > 0 then
+    if rotateVel.dotPow > 0 then
         local dot = DotProduct3D(dirFacing, velUnit)        -- direction facing is already a unit vector
 
         -- debug.zzz_dot = dot
@@ -112,13 +112,13 @@ function RotateVelocity_Percent(dirFacing, vel, mode, debug)
             return nil, nil
         end
 
-        percentHorz = RotateVelocity_Percent_Pow(percentHorz, dot, mode.rotateVel_dotPow)
-        percentVert = RotateVelocity_Percent_Pow(percentVert, dot, mode.rotateVel_dotPow)
+        percentHorz = RotateVelocity_Percent_Pow(percentHorz, dot, rotateVel.dotPow)
+        percentVert = RotateVelocity_Percent_Pow(percentVert, dot, rotateVel.dotPow)
     end
 
     -- Limit percent if going too slow
-    if speed < mode.rotateVel_maxSpeed then
-        local scale = GetScaledValue(0, 1, mode.rotateVel_minSpeed, mode.rotateVel_maxSpeed, speed)
+    if speed < rotateVel.maxSpeed then
+        local scale = GetScaledValue(0, 1, rotateVel.minSpeed, rotateVel.maxSpeed, speed)
 
         -- debug.zzz_scale = scale
 

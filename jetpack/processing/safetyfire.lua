@@ -1,5 +1,5 @@
 function GetSafetyFireHitPoint(o, pos, velZ, mode, deltaTime)
-    if (not mode.shouldSafetyFire) or (velZ > -16) then
+    if (not mode.jump_land.shouldSafetyFire) or (velZ > -16) then
         return nil
     end
 

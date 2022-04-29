@@ -4,13 +4,13 @@ local this = {}
 -- Timer has already been updated and it's verified that they aren't in a vehicle
 -- or in the menu
 function Process_Standard(o, vars, mode, const, debug, deltaTime)
-    vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, mode.maxBurnTime, mode.energyRecoveryRate, deltaTime)
+    vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, mode.energy.maxBurnTime, mode.energy.recoveryRate, deltaTime)
 
     if not const.isEnabled then
         do return end       -- the user has explicitly disabled jetpack
     end
 
-    if vars.thrust.isDown and (vars.thrust.downDuration > mode.holdJumpDelay) then
+    if vars.thrust.isDown and (vars.thrust.downDuration > mode.jump_land.holdJumpDelay) then
         -- Only activate flight if it makes sense based on whether other mod may be flying
         local can_start, velocity = o:Custom_CurrentlyFlying_TryStartFlight(true, o.vel)
 
@@ -81,15 +81,15 @@ function this.ActivateFlight(o, vars, mode, velocity)
     end
 
     -- A couple extras to do when jumping from the ground
-    if mode.accel_vert_initial or mode.explosiveJumping then
+    if mode.accel.vert_initial or mode.jump_land.explosiveJumping then
         if not IsAirborne(o) then
             vars.started_on_ground = true
 
-            if mode.accel_vert_initial then
-                o:AddImpulse(0, 0, mode.accel_vert_initial)
+            if mode.accel.vert_initial then
+                o:AddImpulse(0, 0, mode.accel.vert_initial)
             end
 
-            if mode.explosiveJumping then
+            if mode.jump_land.explosiveJumping then
                 ExplosivelyJump(o)
             end
         end
