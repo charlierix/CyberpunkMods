@@ -22,7 +22,7 @@ function GameObjectAccessor:new(wrappers)
     setmetatable(obj, self)
     self.__index = self
 
-    obj.multimod_flight = require("lib/multimod_flight")
+    obj.multimod_flight = require("core/multimod_flight")
 
     obj.timer = 0
     obj.wrappers = wrappers
