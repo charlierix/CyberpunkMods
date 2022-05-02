@@ -37,6 +37,7 @@ require "ui/keydash_tracker_analog"
 require "ui/keys"
 require "ui/reporting"
 require "ui/sounds_thrusting"
+require "ui/sounds_wallhit"
 
 local this = {}
 

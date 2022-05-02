@@ -14,8 +14,6 @@ function GetConfigValues(index, sounds_thrusting, const)
         this.DreamJump,
     }
 
-    print("preset count: " .. tostring(#presets))
-
     -- Default Values - overridden by presets
     local mode = this.Default(const)
 

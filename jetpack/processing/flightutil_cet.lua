@@ -5,21 +5,23 @@
 -- This does a couple ray casts to make sure the path is clear to jump to
 -- Returns:
 --      bool isSafe
---      bool isHorzHit
---      bool isVertHit
+--      vect4 hit's normal
 function IsTeleportPointSafe(fromPos, toPos, velocity, deltaTime, o)
     -- test a bit above the teleport point
     --NOTE: pos is at the character's feet
-    if not o:IsPointVisible(fromPos, Vector4.new(toPos.x, toPos.y, toPos.z + 2.3, toPos.w)) then
-        return false, false, true
+    local hit_pos, hit_norm = o:RayCast(fromPos, Vector4.new(toPos.x, toPos.y, toPos.z + 2.3, toPos.w))
+
+    if hit_pos then
+        return false, hit_norm
     end
 
     -- project forward a bit
-    if not o:IsPointVisible(fromPos, Vector4.new(toPos.x + (velocity.x * deltaTime * 6), toPos.y + (velocity.y * deltaTime * 6), toPos.z, toPos.w)) then
-        return false, true, false
+    hit_pos, hit_norm = o:RayCast(fromPos, Vector4.new(toPos.x + (velocity.x * deltaTime * 6), toPos.y + (velocity.y * deltaTime * 6), toPos.z, toPos.w))
+    if hit_pos then
+        return false, hit_norm
     end
 
-    return true, false, false
+    return true, nil
 end
 
 -- This will move the player to the next point
@@ -29,16 +31,33 @@ function Process_InFlight_NewPos(o, newPos, deltaYaw)
 end
 
 -- This responds to wall/floor hits
-function Process_InFlight_HitWall(vel, isHorzHit, isVertHit)
-    -- Lose some momentum
-    if isHorzHit then
-        vel.x = vel.x * 0.5     --TODO: Bounce off the wall, don't just loose momentum (also need to adust yaw).  Need more information, can't just negate x and y velocity
-        vel.y = vel.y * 0.5
+function Process_InFlight_HitWall(vel, hit_normal, o, vars)
+    PlaySound_WallHit(o, vars, vel)
+
+    -- Don't perfectly bounce off at full speed
+    local loss = 0.4
+    vel.x = vel.x * loss
+    vel.y = vel.y * loss
+    vel.z = vel.z * loss
+
+    --https://stackoverflow.com/questions/61272597/calculate-the-bouncing-angle-for-a-ball-point
+    local dot = DotProduct3D(vel, hit_normal)
+    if dot > 0 then
+        vel.x = vel.x * -0.1
+        vel.y = vel.y * -0.1
+        vel.z = vel.z * -0.1
+
+        do return end
+
+        -- This doesn't work, just ends up getting them stuck/twitching.  It generally happens with small items, like
+        -- support bars/pipes
+        -- hit_normal = MultiplyVector(hit_normal, -1)
+        -- dot = DotProduct3D(vel, hit_normal)
     end
 
-    if isVertHit then
-        vel.z = vel.z * -0.5        -- this one is easy enough to reflect
-    end
+    vel.x = vel.x + hit_normal.x * dot * -2
+    vel.y = vel.y + hit_normal.y * dot * -2
+    vel.z = vel.z + hit_normal.z * dot * -2
 end
 
 function ClampVelocity(vel, maxSpeed)

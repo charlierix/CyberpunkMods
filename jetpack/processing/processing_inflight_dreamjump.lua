@@ -71,11 +71,11 @@ function Process_InFlight_CET_DreamJump(o, vars, const, mode, keys, debug, delta
     -- Try to move in the desired velocity (raycast first)
     local newPos = Vector4.new(o.pos.x + (vars.vel.x * deltaTime), o.pos.y + (vars.vel.y * deltaTime), o.pos.z + (vars.vel.z * deltaTime), 1)
 
-    local isSafe, isHorzHit, isVertHit = IsTeleportPointSafe(o.pos, newPos, vars.vel, deltaTime, o)
+    local isSafe, hit_normal = IsTeleportPointSafe(o.pos, newPos, vars.vel, deltaTime, o)
 
     if isSafe then
         Process_InFlight_NewPos(o, newPos, deltaYaw)
     else
-        Process_InFlight_HitWall(vars.vel, isHorzHit, isVertHit)
+        Process_InFlight_HitWall(vars.vel, hit_normal, o, vars)
     end
 end
