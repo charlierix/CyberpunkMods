@@ -85,19 +85,19 @@ function Process_InFlight(o, vars, keys, debug, const, deltaTime)
     -- Commit the point
     local newPos = Vector4.new(o.pos.x + (vars.vel.x * deltaTime), o.pos.y + (vars.vel.y * deltaTime), o.pos.z + (vars.vel.z * deltaTime), 1)
 
-    local isSafe, isHorzHit, isVertHit = IsTeleportPointSafe(o.pos, newPos, vars.vel, deltaTime, o)
+    local isSafe, hit_normal = IsTeleportPointSafe(o.pos, newPos, vars.vel, deltaTime, o)
 
     if isSafe then
         Process_InFlight_NewPos(o, newPos, lookYaw, vars, const)
     else
-        Process_InFlight_HitWall(vars.vel, isHorzHit, isVertHit, vars, o.timer)
+        Process_InFlight_HitWall(vars.vel, hit_normal, o, vars)
     end
 
     -- See if cruise control speed should be adjusted
     AdjustMinSpeed(o, vars, const, keys)
 end
 
----------------------------------------- Private Methods ----------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.PopulateFlightDebug(vars, debug, accelX, accelY, accelZ)
     --TODO: Report high level stats

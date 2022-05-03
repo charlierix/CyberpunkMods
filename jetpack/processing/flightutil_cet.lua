@@ -2,6 +2,9 @@
 -- These are methods that are only used when flying using cet teleports (non redscript)
 ------------------------------------
 
+local this = {}
+local up = nil
+
 -- This does a couple ray casts to make sure the path is clear to jump to
 -- Returns:
 --      bool isSafe
@@ -11,7 +14,7 @@ function IsTeleportPointSafe(fromPos, toPos, velocity, deltaTime, o)
     --NOTE: pos is at the character's feet
     local hit_pos, hit_norm = o:RayCast(fromPos, Vector4.new(toPos.x, toPos.y, toPos.z + 2.3, toPos.w))
 
-    if hit_pos then
+    if hit_pos and not this.IsHitUpFromTheGrave(velocity, hit_norm) then
         return false, hit_norm
     end
 
@@ -171,4 +174,28 @@ function RotateVelocity_NewXY(lookX, lookY, velX, velY, percent, deltaTime)
 
     -- Pull velocity toward camera
     return RotateVector2D(velX, velY, -rad * percent * deltaTime)
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+-- If they clipped below ground and are trying to fly back up, then the up looking ray hit needs to be ignored
+-- This function tries to detect that
+--NOTE: pos.z < 0 check isn't good, since there are areas lower than zero, lots of areas higher than zero
+function this.IsHitUpFromTheGrave(velocity, hit_norm)
+    if not up then
+        up = Vector4.new(0, 0, 1, 1)
+    end
+
+    -- Ignore if they are going down
+    if DotProduct3D(velocity, up) < 0 then      --NOTE: velocity isn't a unit vector, so can't get more accurate than positive/negative without normalizing
+        return false
+    end
+
+    -- Only consider tiles that are pointing up
+    if DotProduct3D(hit_norm, up) < 0.7 then
+        return false
+    end
+
+    -- They are moving up onto the backside of an up facing tile
+    return true
 end

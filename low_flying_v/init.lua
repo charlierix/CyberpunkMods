@@ -36,6 +36,7 @@ require "ui/input_processing"
 require "ui/kdashinputtracker"
 require "ui/keys"
 require "ui/reporting"
+require "ui/sounds_wallhit"
 
 local this = {}
 
