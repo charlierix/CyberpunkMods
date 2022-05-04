@@ -42,7 +42,7 @@ function this.Default(const)
 
         sound_type = const.thrust_sound_type.steam,
 
-        timeSpeed = 1,                  -- 0.0001 is frozen time, 1 is standard
+        timeSpeed = nil,                -- 0.0001 is frozen time, 1 is standard
 
         rmb_extra = nil,                -- this is an optional class that does custom actions when right mouse button is held in
 
@@ -225,7 +225,15 @@ function this.DreamJump(mode, sounds_thrusting, const)
 
     -- Slow things down, like it's a dream
     mode.accel.gravity = -2
-    mode.timeSpeed = 0.1
+
+    mode.timeSpeed_gradient =               -- this defines bullet time based on abs(vel.z)
+    {
+        timeSpeed_lowZSpeed = 0.05,          -- the bullet time to use when z speed is lower than this
+        lowZSpeed = 2,
+
+        timeSpeed_highZSpeed = 0.9,
+        highZSpeed = 4.5,
+    }
 
     -- Low accelerations, there is no dash
     mode.accel.horz_stand = 4

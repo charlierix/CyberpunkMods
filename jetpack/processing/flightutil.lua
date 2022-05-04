@@ -1,3 +1,5 @@
+local this = {}
+
 function ShouldExitFlight(o, vars, isRedscript, idletime_override)
     -- Even if they are close to the ground, if they are actively under thrust, then they shouldn't
     -- exit flight
@@ -115,6 +117,43 @@ function ClampVelocity_Drag(vel, maxSpeed)
     return vel.x / speed * -accel, vel.y / speed * -accel, vel.z / speed * -accel
 end
 
+function AdjustTimeSpeed(o, vars, mode, velocity)
+
+    --TODO: Setting time dialation also slows the player's movements down (and gun).  Figure out how to set them independently
+
+    --[error] Function 'SetTimeDilationOnLocalPlayerZero' requires from 2 to 6 parameter(s)
+    --Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(true)
+
+    ----- This may fix the player, but the gun still fires slow:
+    -- keanuWheeze — 11/18/2021
+    -- You can do Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(true) (What psiberx posted earlier), to make the time speed change not affect the player. If you want the player to be slowed down as well, then idk tbh:PES_SadShrug:        
+
+    ----- This was an attempt to fix the fire rate
+    -- MrBounty — 11/19/2021
+    -- It's work ! Thx, you sick genius ! Just missed one Game. it's Game.GetStatsSystem():AddModifier(Game.GetTransactionSystem():GetItemInSlot(Game.GetPlayer(), 'AttachmentSlots.WeaponRight'):GetEntityID(), RPGManager.CreateStatModifier(gamedataStatType.CycleTime, gameStatModifierType.Multiplier, slowMoFact))
+
+
+    --Game.GetStatsSystem():AddModifier(Game.GetTransactionSystem():GetItemInSlot(Game.GetPlayer(), 'AttachmentSlots.WeaponRight'):GetEntityID(), RPGManager.CreateStatModifier(gamedataStatType.CycleTime, gameStatModifierType.Multiplier, slowMoFact))
+
+
+
+
+    if mode.timeSpeed then
+        if mode.timeSpeed > 0 and not IsNearValue(mode.timeSpeed, 1) and (not vars.cur_timeSpeed or mode.timeSpeed ~= vars.cur_timeSpeed) then
+            vars.cur_timeSpeed = mode.timeSpeed
+            o:SetTimeDilation(mode.timeSpeed)
+        end
+
+    elseif mode.timeSpeed_gradient then
+        local timeSpeed = this.GetGradientTimeSpeed(math.abs(velocity.z), mode.timeSpeed_gradient)
+
+        if not vars.cur_timeSpeed or not IsNearValue(timeSpeed, vars.cur_timeSpeed) then
+            vars.cur_timeSpeed = timeSpeed
+            o:SetTimeDilation(timeSpeed)
+        end
+    end
+end
+
 function ExitFlight(vars, debug, o)
     -- This gets called every frame when they are in the menu, driving, etc.  So it needs to be
     -- safe and cheap
@@ -127,6 +166,7 @@ function ExitFlight(vars, debug, o)
     vars.lastThrustTime = 0
     vars.startThrustTime = 0
     o:SetTimeDilation(0)        -- 0 is invalid, which fully sets time to normal
+    vars.cur_timeSpeed = nil
     vars.sounds_thrusting:StopAll()
 
     RemoveFlightDebug(debug)
@@ -147,4 +187,18 @@ function RemoveFlightDebug(debug)
     debug.vel2 = nil
     debug.speed2 = nil
     debug.time_flying_idle = nil
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.GetGradientTimeSpeed(abs_z, timeSpeed_gradient)
+    if abs_z <= timeSpeed_gradient.lowZSpeed then
+        return timeSpeed_gradient.timeSpeed_lowZSpeed
+
+    elseif abs_z >= timeSpeed_gradient.highZSpeed then
+        return timeSpeed_gradient.timeSpeed_highZSpeed
+
+    else
+        return GetScaledValue(timeSpeed_gradient.timeSpeed_lowZSpeed, timeSpeed_gradient.timeSpeed_highZSpeed, timeSpeed_gradient.lowZSpeed, timeSpeed_gradient.highZSpeed, abs_z)
+    end
 end

@@ -78,4 +78,6 @@ function Process_InFlight_CET_DreamJump(o, vars, const, mode, keys, debug, delta
     else
         Process_InFlight_HitWall(vars.vel, hit_normal, o, vars)
     end
+
+    AdjustTimeSpeed(o, vars, mode, vars.vel)
 end

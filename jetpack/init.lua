@@ -104,6 +104,8 @@ local vars =
 
     --sounds_thrusting = SoundsThrusting:new(),      -- moved to init
 
+    --cur_timeSpeed             -- used when setting the timeSpeed (especially when it's a gradient)
+
     --toggled_enabled,           -- this is a flag to tell the draw function to say enabled/disabled for a couple seconds
 }
 

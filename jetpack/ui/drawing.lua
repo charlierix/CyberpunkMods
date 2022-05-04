@@ -70,9 +70,13 @@ function DrawConfigName(mode)
             ImGui.Text("explosive landing")
         end
 
-        if mode.timeSpeed < 1 then
+        if mode.timeSpeed and mode.timeSpeed < 1 then
             ImGui.Spacing()
             ImGui.Text(string.format("%.0f", Round(mode.timeSpeed * 100, 0)) .. "% speed")
+
+        elseif mode.timeSpeed_gradient then
+            ImGui.Spacing()
+            ImGui.Text(string.format("%.0f", Round(mode.timeSpeed_gradient.timeSpeed_highZSpeed * 100, 0)) .. "% to " .. string.format("%.0f", Round(mode.timeSpeed_gradient.timeSpeed_lowZSpeed * 100, 0)) .. "% speed")
         end
 
         if mode.rmb_extra then

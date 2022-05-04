@@ -53,32 +53,7 @@ function this.ActivateFlight(o, vars, mode, velocity)
         end
     end
 
-    if mode.timeSpeed > 0 and not IsNearValue(mode.timeSpeed, 1) then
-
-        -- this slows the player down too
-        o:SetTimeDilation(mode.timeSpeed)
-
-
-        --[error] Function 'SetTimeDilationOnLocalPlayerZero' requires from 2 to 6 parameter(s)
-        --Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(true)
-
-
-
-        ----- This may fix the player, but the gun still fires slow:
-        -- keanuWheeze — 11/18/2021
-        -- You can do Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(true) (What psiberx posted earlier), to make the time speed change not affect the player. If you want the player to be slowed down as well, then idk tbh:PES_SadShrug:        
-
-
-
-
-        ----- This was an attempt to fix the fire rate
-        -- MrBounty — 11/19/2021
-        -- It's work ! Thx, you sick genius ! Just missed one Game. it's Game.GetStatsSystem():AddModifier(Game.GetTransactionSystem():GetItemInSlot(Game.GetPlayer(), 'AttachmentSlots.WeaponRight'):GetEntityID(), RPGManager.CreateStatModifier(gamedataStatType.CycleTime, gameStatModifierType.Multiplier, slowMoFact))
-
-
-        --Game.GetStatsSystem():AddModifier(Game.GetTransactionSystem():GetItemInSlot(Game.GetPlayer(), 'AttachmentSlots.WeaponRight'):GetEntityID(), RPGManager.CreateStatModifier(gamedataStatType.CycleTime, gameStatModifierType.Multiplier, slowMoFact))
-
-    end
+    AdjustTimeSpeed(o, vars, mode, velocity)
 
     -- A couple extras to do when jumping from the ground
     if mode.accel.vert_initial or mode.jump_land.explosiveJumping then
