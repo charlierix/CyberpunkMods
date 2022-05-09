@@ -118,30 +118,10 @@ function ClampVelocity_Drag(vel, maxSpeed)
 end
 
 function AdjustTimeSpeed(o, vars, mode, velocity)
-
-    --TODO: Setting time dialation also slows the player's movements down (and gun).  Figure out how to set them independently
-
-    --[error] Function 'SetTimeDilationOnLocalPlayerZero' requires from 2 to 6 parameter(s)
-    --Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(true)
-
-    ----- This may fix the player, but the gun still fires slow:
-    -- keanuWheeze — 11/18/2021
-    -- You can do Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(true) (What psiberx posted earlier), to make the time speed change not affect the player. If you want the player to be slowed down as well, then idk tbh:PES_SadShrug:        
-
-    ----- This was an attempt to fix the fire rate
-    -- MrBounty — 11/19/2021
-    -- It's work ! Thx, you sick genius ! Just missed one Game. it's Game.GetStatsSystem():AddModifier(Game.GetTransactionSystem():GetItemInSlot(Game.GetPlayer(), 'AttachmentSlots.WeaponRight'):GetEntityID(), RPGManager.CreateStatModifier(gamedataStatType.CycleTime, gameStatModifierType.Multiplier, slowMoFact))
-
-
-    --Game.GetStatsSystem():AddModifier(Game.GetTransactionSystem():GetItemInSlot(Game.GetPlayer(), 'AttachmentSlots.WeaponRight'):GetEntityID(), RPGManager.CreateStatModifier(gamedataStatType.CycleTime, gameStatModifierType.Multiplier, slowMoFact))
-
-
-
-
     if mode.timeSpeed then
         if mode.timeSpeed > 0 and not IsNearValue(mode.timeSpeed, 1) and (not vars.cur_timeSpeed or mode.timeSpeed ~= vars.cur_timeSpeed) then
             vars.cur_timeSpeed = mode.timeSpeed
-            o:SetTimeDilation(mode.timeSpeed)
+            o:SetTimeSpeed(mode.timeSpeed, 1)
         end
 
     elseif mode.timeSpeed_gradient then
@@ -149,7 +129,7 @@ function AdjustTimeSpeed(o, vars, mode, velocity)
 
         if not vars.cur_timeSpeed or not IsNearValue(timeSpeed, vars.cur_timeSpeed) then
             vars.cur_timeSpeed = timeSpeed
-            o:SetTimeDilation(timeSpeed)
+            o:SetTimeSpeed(timeSpeed, 1)
         end
     end
 end
@@ -165,7 +145,7 @@ function ExitFlight(vars, debug, o)
     o:Custom_CurrentlyFlying_Clear()
     vars.lastThrustTime = 0
     vars.startThrustTime = 0
-    o:SetTimeDilation(0)        -- 0 is invalid, which fully sets time to normal
+    o:UnsetTimeSpeed()
     vars.cur_timeSpeed = nil
     vars.sounds_thrusting:StopAll()
 

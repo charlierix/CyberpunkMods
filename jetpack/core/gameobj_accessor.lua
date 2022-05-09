@@ -13,6 +13,11 @@ local pullInterval_quest = this.GetRandom_Variance(12, 1)
 local pullInterval_spacialQueries = this.GetRandom_Variance(12, 1)
 local pullInterval_targeting = this.GetRandom_Variance(12, 1)
 local pullInterval_delay = this.GetRandom_Variance(12, 1)
+local pullInterval_timesystem = this.GetRandom_Variance(12, 1)
+local pullInterval_transaction = this.GetRandom_Variance(12, 1)
+local pullInterval_stats = this.GetRandom_Variance(12, 1)
+
+local time_reason = "JetpackTimeSpeed"
 
 GameObjectAccessor = {}
 
@@ -36,6 +41,9 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_spacialQueries = -(pullInterval_spacialQueries * 2)
     obj.lastPulled_targeting = -(pullInterval_targeting * 2)
     obj.lastPulled_delay = -(pullInterval_delay * 2)
+    obj.lastPulled_timesystem = -(pullInterval_timesystem * 2)
+    obj.lastPulled_transaction = -(pullInterval_transaction * 2)
+    obj.lastPulled_stats = -(pullInterval_stats * 2)
 
     obj.lastGot_lookDir = -1
 
@@ -223,21 +231,54 @@ end
 -- This is used to slow time
 --  0.00001 for near stop
 --  up to 1
---  0 Is an invalid input which causes the function UnsetTimeDilation() to run (https://codeberg.org/adamsmasher/cyberpunk/src/branch/master/core/systems/timeSystem.ws)
-function GameObjectAccessor:SetTimeDilation(timeSpeed)
-    self.wrappers.SetTimeDilation(timeSpeed)
-end
-function GameObjectAccessor:IsTimeDilationActive()
-    if not self.timeSys or (self.timer - self.lastPulled_timeSys) >= pullInterval_timeSys then
-        self.lastPulled_timeSys = self.timer
-
-        self.timeSys = self.wrappers.GetTimeSystem()
+function GameObjectAccessor:SetTimeSpeed(speed, player_percent)
+    if speed <= 0 or speed >= 1 or player_percent <= 0 or player_percent > 1 then
+        print("SetTimeSpeed args error: " .. tostring(speed) .. ", " .. tostring(player_percent))
+        do return end
     end
 
-    if self.timeSys then
-        return self.wrappers.Time_IsTimeDilationActive(self.timeSys)
-    else
-        return false
+    self:EnsureLoaded_Time()
+
+    if self.timesystem then
+        local player_mult = player_percent / speed      -- if speed is 0.1, then 1/speed of 10 makes the player move nomrally
+
+        self.wrappers.SetTimeDilation(self.timesystem, time_reason, speed)
+        self.wrappers.SetTimeDilationOnLocalPlayerZero(self.timesystem, time_reason, player_mult)
+
+        self:SetWeaponSpeed(speed, player_percent)
+    end
+end
+function GameObjectAccessor:UnsetTimeSpeed()
+    self:EnsureLoaded_Time()
+
+    if self.timesystem then
+        self.wrappers.UnsetTimeDilation(self.timesystem, time_reason)
+        self.wrappers.UnsetTimeDilationOnLocalPlayerZero(self.timesystem)
+
+        --TODO: To do this right, listen to events to know when weapon is switched, quickhacks applied, other game events
+        self:SetWeaponSpeed(1, 1)
+    end
+end
+
+function GameObjectAccessor:SetWeaponSpeed(speed, player_percent)
+    self:EnsureLoaded_Player()
+    self:EnsureLoaded_Transaction()
+
+    if self.player and self.transaction then
+        -- See what they are holding (look for active weapon)
+        local inRightHand = self.wrappers.GetItemInSlot(self.transaction, self.player, "AttachmentSlots.WeaponRight")
+
+        if inRightHand then
+            self:EnsureLoaded_StatsSystem()
+            if self.stats then
+                local entityID = inRightHand:GetEntityID()
+
+                self.wrappers.AddModifier(self.stats, entityID, RPGManager.CreateStatModifier(gamedataStatType.CycleTime, gameStatModifierType.Multiplier, speed * player_percent))
+
+                --TODO: Figure out bullet speed.  Possible types to look at (actually, I think the bullets are going normal speed, it's just the tracer animation that's slow):
+                -- WeaponObject, gameprojectileWeaponParams, BaseProjectile, gameprojectileWeaponParams
+            end
+        end
     end
 end
 
@@ -346,6 +387,30 @@ function GameObjectAccessor:EnsureLoaded_Delay()
         self.lastPulled_delay = self.timer
 
         self.delay = self.wrappers.GetDelaySystem()
+    end
+end
+
+function GameObjectAccessor:EnsureLoaded_Time()
+    if not self.timesystem or (self.timer - self.lastPulled_timesystem) >= pullInterval_timesystem then
+        self.lastPulled_timesystem = self.timer
+
+        self.timesystem = self.wrappers.GetTimeSystem()
+    end
+end
+
+function GameObjectAccessor:EnsureLoaded_Transaction()
+    if not self.transaction or (self.timer - self.lastPulled_transaction) >= pullInterval_transaction then
+        self.lastPulled_transaction = self.timer
+
+        self.transaction = self.wrappers.GetTransactionSystem()
+    end
+end
+
+function GameObjectAccessor:EnsureLoaded_Stats()
+    if not self.stats or (self.timer - self.lastPulled_stats) >= pullInterval_stats then
+        self.lastPulled_stats = self.timer
+
+        self.stats = self.wrappers.GetStatsSystem()
     end
 end
 

@@ -9,11 +9,11 @@
 
 require "core/debug_code"
 require "core/gameobj_accessor"
+require "core/lists"
 require "core/math_basic"
 require "core/math_vector"
 require "core/math_yaw"
 require "core/util"
-require "core/lists"
 
 require "data/dal"
 require "data/modes"
@@ -157,11 +157,16 @@ registerForEvent("onInit", function()
     function wrappers.Teleport(teleport, player, pos, yaw) return teleport:Teleport(player, pos, EulerAngles.new(0, 0, yaw)) end
     function wrappers.GetSenseManager() return Game.GetSenseManager() end
     function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
-    function wrappers.SetTimeDilation(timeSpeed) Game.SetTimeDilation(tostring(timeSpeed)) end      -- for some reason, it takes in string
-    function wrappers.SetTimeDilationPlayer(timeSpeed) Game.GetTimeSystem():SetTimeDilationOnLocalPlayerZero(tostring(timeSpeed)) end      -- for some reason, it takes in string
     function wrappers.HasHeadUnderwater(player) return player:HasHeadUnderwater() end
     function wrappers.GetTimeSystem() return Game.GetTimeSystem() end
-    function wrappers.Time_IsTimeDilationActive(timeSys) return timeSys:IsTimeDilationActive() end
+    function wrappers.SetTimeDilation(timesystem, reason, speed) timesystem:SetTimeDilation(reason, speed) end
+    function wrappers.SetTimeDilationOnLocalPlayerZero(timesystem, reason, player_mult) timesystem:SetTimeDilationOnLocalPlayerZero(reason, player_mult) end
+    function wrappers.UnsetTimeDilation(timesystem, reason) timesystem:UnsetTimeDilation(reason) end
+    function wrappers.UnsetTimeDilationOnLocalPlayerZero(timesystem) timesystem:UnsetTimeDilationOnLocalPlayerZero() end
+    function wrappers.GetTransactionSystem() return Game.GetTransactionSystem() end
+    function wrappers.GetItemInSlot(transaction, player, slotID) transaction:GetItemInSlot(player, slotID) end
+    function wrappers.GetStatsSystem() return Game.GetStatsSystem() end
+    function wrappers.AddModifier(stats, entityID, modifierData) stats:AddModifier(entityID, modifierData) end
     function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
     function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end
     function wrappers.GetTargetParts(targetting, player, searchQuery) return targetting:GetTargetParts(player, searchQuery) end
