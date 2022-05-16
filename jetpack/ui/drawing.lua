@@ -79,6 +79,11 @@ function DrawConfigName(mode)
             ImGui.Text(string.format("%.0f", Round(mode.timeSpeed_gradient.timeSpeed_highZSpeed * 100, 0)) .. "% to " .. string.format("%.0f", Round(mode.timeSpeed_gradient.timeSpeed_lowZSpeed * 100, 0)) .. "% speed")
         end
 
+        if mode.rebound then
+            ImGui.Spacing()
+            ImGui.Text("rebound jumping")
+        end
+
         if mode.rmb_extra then
             ImGui.Spacing()
             ImGui.Text("right mouse: " .. mode.rmb_extra:Description())

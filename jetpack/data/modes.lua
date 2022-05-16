@@ -38,22 +38,31 @@ function this.Default(const)
     {
         name = "",
 
-        useRedscript = false,           -- TODO: Rename this to Acceleration vs Teleport based flight (redscript function is now done in cet, but it's still acceleration)
+        useRedscript = false,               -- TODO: Rename this to Acceleration vs Teleport based flight (redscript function is now done in cet, but it's still acceleration)
 
         sound_type = const.thrust_sound_type.steam,
 
-        timeSpeed = nil,                -- 0.0001 is frozen time, 1 is standard
+        -- can't use both timespeed settings, only one or none
+        timeSpeed = nil,                    -- 0.0001 is frozen time, 1 is standard
+        timeSpeed_gradient = nil,           -- this defines bullet time based on abs(vel.z)
+        -- {
+        --     timeSpeed_lowZSpeed = 0.05,  -- the bullet time to use when z speed is lower than this
+        --     lowZSpeed = 2,
 
-        rmb_extra = nil,                -- this is an optional class that does custom actions when right mouse button is held in
+        --     timeSpeed_highZSpeed = 0.9,
+        --     highZSpeed = 4.5,
+        -- },
+
+        rmb_extra = nil,                    -- this is an optional class that does custom actions when right mouse button is held in
 
         jump_land =
         {
-            holdJumpDelay = 0.37,       -- how long to hold down the jump key to start flight
+            holdJumpDelay = 0.37,           -- how long to hold down the jump key to start flight
 
-            explosiveJumping = false,   -- this will ragdoll nearby NPCs when jumping from ground (a small force compared to landing)
-            explosiveLanding = false,   -- this will ragdoll nearby NPCs when landing
+            explosiveJumping = false,       -- this will ragdoll nearby NPCs when jumping from ground (a small force compared to landing)
+            explosiveLanding = false,       -- this will ragdoll nearby NPCs when landing
 
-            shouldSafetyFire = true,    -- this detects when they are falling fast and close to the ground.  It will blip teleport to eliminate velocity and avoid death
+            shouldSafetyFire = true,        -- this detects when they are falling fast and close to the ground.  It will blip teleport to eliminate velocity and avoid death
         },
 
         accel =
@@ -85,6 +94,14 @@ function this.Default(const)
             minSpeed = 30,              -- the speed to start rotating velocity to look dir
             maxSpeed = 55,              -- the speed is above this, percent will be at its max
         },
+
+        rebound = nil,                      -- allows the player to bounce off the ground if they hit jump as they hit the ground
+        -- rebound =
+        -- {
+        --     percent_at_zero = 1.5,       -- the percent of Z part of velocity to bebound with when speed along Z is zero
+        --     percent_at_max = 0.8,        -- the percent to use at a high impact speed
+        --     speed_of_max = 40,           -- the speed where percent_at_max should be applied.  Any speed higher than this will also use percent_at_max
+        -- },
     }
 end
 
@@ -122,6 +139,13 @@ function this.WellRounded(mode, sounds_thrusting, const)
 
     mode.jump_land.holdJumpDelay = 0.24
 
+    -- mode.rebound =       -- need to figure out why redscript mode has such unstable impulses
+    -- {
+    --     percent_at_zero = 1.1,
+    --     percent_at_max = 1,
+    --     speed_of_max = 40,
+    -- }
+
     mode.accel.gravity = -7
 
     mode.rmb_extra = RMB_Hover:new(10, 6, 2, 1, 9999, mode.useRedscript, mode.accel.gravity, sounds_thrusting)
@@ -136,10 +160,12 @@ function this.JetTrooper(mode, sounds_thrusting, const)
 
     -- Slow things down for air superiority
     mode.accel.gravity = -3
-    mode.timeSpeed = 0.5
+    mode.timeSpeed = 0.33
 
     mode.accel.vert_stand = 1.5
     mode.accel.vert_dash = 3
+
+    mode.accel.vert_initial = 2
 
     mode.rmb_extra = RMB_Hover:new(2, 2, 0.4, 0.3, 12, mode.useRedscript, mode.accel.gravity, sounds_thrusting)
 
@@ -211,6 +237,13 @@ function this.HulkStomp(mode, sounds_thrusting, const)
     mode.jump_land.explosiveJumping = true
     mode.jump_land.explosiveLanding = true
 
+    -- mode.rebound =       -- need to figure out why redscript mode has such unstable impulses
+    -- {
+    --     percent_at_zero = 1.2,
+    --     percent_at_max = 1,
+    --     speed_of_max = 40,
+    -- }
+
     mode.sound_type = const.thrust_sound_type.jump
 end
 
@@ -243,7 +276,14 @@ function this.DreamJump(mode, sounds_thrusting, const)
     mode.accel.vert_dash = 1.2
 
     -- Most of the height should come from the initial kick
-    mode.accel.vert_initial = 3
+    mode.accel.vert_initial = 1.3
+
+    mode.rebound =
+    {
+        percent_at_zero = 1.15,       -- the percent of Z part of velocity to bebound with when speed along Z is zero
+        percent_at_max = 0.8,        -- the percent to use at a high impact speed
+        speed_of_max = 30,           -- the speed where percent_at_max should be applied.  Any speed higher than this will also use percent_at_max
+    }
 
     mode.jump_land.holdJumpDelay = 0.22
 

@@ -1,5 +1,8 @@
 local this = {}
 
+local isAirborne_standard = nil
+local isAirborne_extended = nil
+
 -- This is called each tick when they aren't in flight (just walking around)
 -- Timer has already been updated and it's verified that they aren't in a vehicle
 -- or in the menu
@@ -10,13 +13,15 @@ function Process_Standard(o, vars, mode, const, debug, deltaTime)
         do return end       -- the user has explicitly disabled jetpack
     end
 
-    if vars.thrust.isDown and (vars.thrust.downDuration > mode.jump_land.holdJumpDelay) then
-        -- Only activate flight if it makes sense based on whether other mod may be flying
-        local can_start, velocity = o:Custom_CurrentlyFlying_TryStartFlight(true, o.vel)
+    isAirborne_standard = nil
+    isAirborne_extended = nil
 
-        if can_start then
-            this.ActivateFlight(o, vars, mode, velocity)
-        end
+    if this.ShouldReboundJump(o, vars, mode) then
+        local rebound_impulse = GetReboundImpulse(mode, vars.stop_flight_velocity)
+        this.TryActivateFlight(o, vars, mode, rebound_impulse)
+
+    elseif vars.thrust.isDown and (vars.thrust.downDuration > mode.jump_land.holdJumpDelay) then
+        this.TryActivateFlight(o, vars, mode, nil)
 
     elseif o:Custom_CurrentlyFlying_IsOwnerOrNone() then
         local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, mode, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
@@ -28,12 +33,27 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.ActivateFlight(o, vars, mode, velocity)
+function this.TryActivateFlight(o, vars, mode, rebound_impulse)
+    -- Only activate flight if it makes sense based on whether other mod may be flying
+    local can_start, velocity = o:Custom_CurrentlyFlying_TryStartFlight(true, o.vel)
+
+    if can_start then
+        this.ActivateFlight(o, vars, mode, velocity, rebound_impulse)
+    end
+end
+
+function this.ActivateFlight(o, vars, mode, velocity, rebound_impulse)
     -- Time to activate flight mode (flying will occur next tick)
     vars.isInFlight = true
     vars.startThrustTime = o.timer
     vars.lastThrustTime = o.timer
-    vars.started_on_ground = false
+
+    if rebound_impulse then
+        vars.is_rebound = true
+        o:PlaySound("lcm_player_double_jump", vars)
+    else
+        vars.is_rebound = false
+    end
 
     if not mode.useRedscript then
         -- Once teleporting occurs, o.vel will be zero, so vars.vel holds a copy that gets updated by accelerations
@@ -56,16 +76,132 @@ function this.ActivateFlight(o, vars, mode, velocity)
     AdjustTimeSpeed(o, vars, mode, velocity)
 
     -- A couple extras to do when jumping from the ground
-    if mode.accel.vert_initial or mode.jump_land.explosiveJumping then
-        if not IsAirborne(o) then
-            vars.started_on_ground = true
+    this.ActivateFlight_Extras(o, vars, mode, rebound_impulse)
+end
 
-            if mode.accel.vert_initial then
-                o:AddImpulse(0, 0, mode.accel.vert_initial)
+function this.ActivateFlight_Extras(o, vars, mode, rebound_impulse)
+    if mode.jump_land.explosiveJumping then
+        this.EnsureIsAirBorneCalled(o, false)
+        if not isAirborne_standard then
+            ExplosivelyJump(o)
+        end
+    end
+
+    local impulse_x = 0
+    local impulse_y = 0
+    local impulse_z = nil
+
+    if rebound_impulse then
+        impulse_x, impulse_y = this.ReboundHorizontalImpulse(o, vars, mode)
+        impulse_z = rebound_impulse       -- isAirBorne was already checked when deciding to set the rebound
+
+    elseif mode.accel.vert_initial then
+        this.EnsureIsAirBorneCalled(o, false)
+        if not isAirborne_standard then
+            impulse_z = mode.accel.vert_initial
+        end
+    end
+
+    if impulse_z then
+        if mode.useRedscript then
+            -- This doesn't seem to be needed
+            -- this extra calculation is copied from modes.lua - AdjustAccelForGravity
+            -- local extra = 16 + mode.accel.gravity      -- if gravity is 16, then this is zero.  If gravity is higher, then this is some negative amount
+            -- impulse_z = impulse_z + 16 - extra
+
+            impulse_z = impulse_z - o.vel.z     -- jump is 5.66
+            o:AddImpulse(impulse_x, impulse_y, impulse_z)
+        else
+            vars.vel.x = vars.vel.x + impulse_x
+            vars.vel.y = vars.vel.y + impulse_y
+            vars.vel.z = vars.vel.z + impulse_z     -- cet based flight looks at existing velocity, so no need to apply acceleration, just directly increase the velocity
+        end
+    end
+end
+
+function this.ShouldReboundJump(o, vars, mode)
+    if not mode.rebound then
+        return false        -- this mode doesn't have a rebound
+    end
+
+    if mode.useRedscript then
+        return false        -- it will work fine, then suddenly boost waaaay up into the sky.  Could probably put limits on the impulse, but it would be best to figure out the root reason
+    end
+
+    if o.timer - vars.thrust.downTime > 0.07 then
+        return false        -- they haven't pressed jump in a while
+    end
+
+    if not vars.stop_flight_time then
+        return false        -- they haven't used jetpack yet
+    end
+
+    if o.timer - vars.stop_flight_time > 0.2 then
+        return false        -- been out of flight too long
+    end
+
+    if not vars.stop_flight_velocity or vars.stop_flight_velocity.z > 0 then
+        return false
+    end
+
+    this.EnsureIsAirBorneCalled(o, true)
+    if isAirborne_extended then
+        return false        -- not standing on the ground (or very near the ground)
+    end
+
+    return true
+end
+
+-- Rebounding from momentarily standing on the ground has a chance to zero out the velocity.  Compares current
+-- velocity x,y with stop flight's
+function this.ReboundHorizontalImpulse(o, vars, mode)
+    if not vars.stop_flight_velocity then
+        return 0, 0
+    end
+
+    local velocity
+    if mode.useRedscript then
+        velocity = o.vel
+    else
+        velocity = vars.vel
+    end
+
+    -- This is a bit crude.  The idea is if they came in with some horizontal velocity and the safety fire set
+    -- that to zero, the rebound will need to get that velocity back.  But if they also momentarily pushed ASDW
+    -- while rebound jumping, that will override what the horizontal velocity is
+    local x = 0
+    if math.abs(velocity.x) > math.abs(vars.stop_flight_velocity.x) then
+        x = velocity.x
+    else
+        x = vars.stop_flight_velocity.x
+    end
+
+    local y = 0
+    if math.abs(velocity.y) > math.abs(vars.stop_flight_velocity.y) then
+        y = velocity.y
+    else
+        y = vars.stop_flight_velocity.y
+    end
+
+    return x, y
+end
+
+-- This check is potentially needed in several places, but the raycast should only be done once in a frame
+function this.EnsureIsAirBorneCalled(o, is_extended_look)
+    if is_extended_look then
+        if isAirborne_extended == nil then
+            isAirborne_extended = IsAirborne(o, true)
+
+            if isAirborne_extended then
+                isAirborne_standard = true      -- might as well set this, might save a few raycasts
             end
+        end
+    else
+        if isAirborne_standard == nil then
+            isAirborne_standard = IsAirborne(o, false)
 
-            if mode.jump_land.explosiveJumping then
-                ExplosivelyJump(o)
+            if not isAirborne_standard then
+                isAirborne_extended = false
             end
         end
     end

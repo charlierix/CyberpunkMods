@@ -21,7 +21,6 @@ require "data/modes"
 require "processing/flightutil"
 require "processing/flightutil_cet"
 require "processing/processing_inflight_cet"
-require "processing/processing_inflight_dreamjump"
 require "processing/processing_inflight_red"
 require "processing/processing_standard"
 require "processing/ragdoll"
@@ -95,7 +94,10 @@ local vars =
 
     --remainBurnTime = mode.energy.maxBurnTime,        -- moved to init
 
-    --started_on_ground             -- only needed by cet flight for initial acceleration
+    --stop_flight_time              -- gets populated in ExitFlight
+    --stop_flight_velocity
+
+    --is_rebound
 
     showConfigNameUntil = 0,
 
@@ -200,7 +202,7 @@ end)
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = false
     if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
-        ExitFlight(vars, debug, o)
+        ExitFlight(vars, debug, o, mode)
         do return end
     end
 
@@ -208,7 +210,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
     if not o.player then
-        ExitFlight(vars, debug, o)
+        ExitFlight(vars, debug, o, mode)
         do return end
     end
 
@@ -216,7 +218,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
-        ExitFlight(vars, debug, o)
+        ExitFlight(vars, debug, o, mode)
         do return end
     end
 
@@ -237,21 +239,18 @@ registerForEvent("onUpdate", function(deltaTime)
 
         vars.sounds_thrusting:ModeChanged(mode.sound_type)
 
-        ExitFlight()
+        ExitFlight(vars, debug, o, mode)
     end
 
     vars.thrust:Tick()     -- this is needed for flight and non flight
 
     if vars.isInFlight then
         -- In Flight
-        if not o:Custom_CurrentlyFlying_Update(this.GetVelocity(mode.useRedscript, vars.vel, o.vel)) then
-            ExitFlight(vars, debug, o)
+        if not o:Custom_CurrentlyFlying_Update(GetVelocity(mode, vars, o)) then
+            ExitFlight(vars, debug, o, mode)
 
         elseif mode.useRedscript then
             Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
-
-        elseif mode.name == "dream jump" then
-            Process_InFlight_CET_DreamJump(o, vars, const, mode, keys, debug, deltaTime)
 
         else
             Process_InFlight_CET(o, vars, const, mode, keys, debug, deltaTime)
@@ -277,7 +276,7 @@ registerHotkey("jetpackEnableDisable", "Enable/Disable", function()
     vars.toggled_enabled = o.timer
 
     if not const.isEnabled then
-        ExitFlight(vars, debug, o)
+        ExitFlight(vars, debug, o, mode)
     end
 end)
 
@@ -307,17 +306,9 @@ end)
 
 ------------------------------------ Private Methods ----------------------------------
 
-function this.GetVelocity(is_redscript, vars_vel, o_vel)
-    if is_redscript then
-        return o_vel
-    else
-        return vars_vel
-    end
-end
-
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
-    ExitFlight(vars, debug, o)
+    ExitFlight(vars, debug, o, mode)
 
     if o then
         o:Clear()

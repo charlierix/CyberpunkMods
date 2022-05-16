@@ -1,12 +1,26 @@
+local this = {}
+
 function Process_InFlight_CET(o, vars, const, mode, keys, debug, deltaTime)
     debug.time_flying_idle = o.timer - vars.lastThrustTime
 
-    if ShouldExitFlight(o, vars, false) then
+
+
+    --TODO: Make sure this only fires once per jump
+    if this.ShouldReboundJump(o, vars, mode) then
+        vars.is_rebound = true
+        vars.vel.z = GetReboundImpulse(mode, vars.vel)
+
+        o:PlaySound("lcm_player_double_jump", vars)
+    end
+
+
+
+    if ShouldExitFlight(o, vars, mode, deltaTime) then
         if mode.jump_land.explosiveLanding and not IsAirborne(o) then
             ExplosivelyLand(o, vars.vel, vars)
         end
 
-        ExitFlight(vars, debug, o)
+        ExitFlight(vars, debug, o, mode)
         do return end
     end
 
@@ -71,4 +85,28 @@ function Process_InFlight_CET(o, vars, const, mode, keys, debug, deltaTime)
     else
         Process_InFlight_HitWall(vars.vel, hit_normal, o, vars)
     end
+
+    AdjustTimeSpeed(o, vars, mode, vars.vel)
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.ShouldReboundJump(o, vars, mode)
+    if not mode.rebound then
+        return false        -- this mode doesn't have a rebound
+    end
+
+    if o.timer - vars.thrust.downTime > 0.07 then
+        return false        -- they haven't pressed jump in a while
+    end
+
+    if vars.vel.z > -1 then
+        return false        -- they are going down fast enough to rebound.  A standard jump would probably be higher
+    end
+
+    if IsAirborne(o, true) then
+        return false
+    end
+
+    return true
 end

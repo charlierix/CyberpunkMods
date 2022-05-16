@@ -24,6 +24,15 @@ function IsTeleportPointSafe(fromPos, toPos, velocity, deltaTime, o)
         return false, hit_norm
     end
 
+    -- do an extra ground check
+    -- copied from low flying v, but jetpack does this check up front
+    -- if velocity.z < 6 then
+    --     hit_pos, hit_norm = o:RayCast(fromPos, Vector4.new(toPos.x, toPos.y, toPos.z - 0.15, toPos.w))
+    --     if hit_pos then
+    --         return false, hit_norm
+    --     end
+    -- end
+
     return true, nil
 end
 

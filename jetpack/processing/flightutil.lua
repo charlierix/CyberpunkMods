@@ -1,12 +1,12 @@
 local this = {}
 
-function ShouldExitFlight(o, vars, isRedscript, idletime_override)
+function ShouldExitFlight(o, vars, mode, deltaTime)
     -- Even if they are close to the ground, if they are actively under thrust, then they shouldn't
     -- exit flight
     --
     -- If it's flown exclusively in CET, then also need to make sure that velocity is up, or they
     -- might clip through the ground
-    if vars.thrust.isDown and (vars.remainBurnTime > 0.1) and (isRedscript or vars.vel.z >= 0) then
+    if (vars.thrust.isDown or vars.is_rebound) and (vars.remainBurnTime > 0.1) and ((mode.useRedscript and o.vel.z >= 0) or (not mode.useRedscript and vars.vel.z >= 0)) then
         return false
     end
 
@@ -16,19 +16,13 @@ function ShouldExitFlight(o, vars, isRedscript, idletime_override)
     end
 
     -- See if they are too close to the ground
-    --TODO: This is too simplistic.  It's only dangerous when z is large negative
-    --LowFlyingV has a better check
-    if not IsAirborne(o) then
+    if this.IsNearGround(o, vars, mode, deltaTime) then
         return true
     end
 
     -- If they have been airborne, but haven't used thrust for quite a while, then exit airborne state
     -- This would be extra benefitial in case the airborne state is in error (while driving, swimming, etc)
-    if not idletime_override then
-        idletime_override = 8
-    end
-
-    if (o.timer - vars.lastThrustTime) > idletime_override then
+    if (o.timer - vars.lastThrustTime) > 16 then
         return true
     end
 
@@ -36,14 +30,21 @@ function ShouldExitFlight(o, vars, isRedscript, idletime_override)
 end
 
 -- This will return true as long as there is some air below the player
-function IsAirborne(o)
+function IsAirborne(o, is_extended_look)
     -- can't look too far down, or it won't be possible to jump into flight mode, but if it doesn't look down
     -- far enough, the player will clip into the floor
 
     -- only if down velocity is high
 
+    local dist = 1
+    if is_extended_look then
+        dist = 2
+    end
 
-    return o:IsPointVisible(o.pos, Vector4.new(o.pos.x, o.pos.y, o.pos.z - 1, 1))
+    local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + 0.1, 1)
+    local to = Vector4.new(from.x, from.y, from.z - dist - 0.1, 1)
+
+    return o:IsPointVisible(from, to)
 end
 
 function UseBurnTime(remainBurnTime, requestedEnergy, startThrustTime, timer)
@@ -94,6 +95,17 @@ function ExplosivelyLand(o, velZ, vars)
     end
 end
 
+function GetReboundImpulse(mode, velocity)
+    local speed = math.abs(velocity.z)
+
+    local percent = mode.rebound.speed_of_max
+    if speed < mode.rebound.speed_of_max then
+        percent = GetScaledValue(mode.rebound.percent_at_zero, mode.rebound.percent_at_max, 0, mode.rebound.speed_of_max, speed)
+    end
+
+    return speed * percent
+end
+
 function ClampVelocity_Drag(vel, maxSpeed)
     local speedSqr = GetVectorLengthSqr(vel)
 
@@ -134,7 +146,7 @@ function AdjustTimeSpeed(o, vars, mode, velocity)
     end
 end
 
-function ExitFlight(vars, debug, o)
+function ExitFlight(vars, debug, o, mode)
     -- This gets called every frame when they are in the menu, driving, etc.  So it needs to be
     -- safe and cheap
     if (not vars) or (not vars.isInFlight) then
@@ -148,8 +160,23 @@ function ExitFlight(vars, debug, o)
     o:UnsetTimeSpeed()
     vars.cur_timeSpeed = nil
     vars.sounds_thrusting:StopAll()
+    vars.stop_flight_time = o.timer
+    vars.stop_flight_velocity = GetVelocity(mode, vars, o)
+    vars.is_rebound = false
 
     RemoveFlightDebug(debug)
+end
+
+function GetVelocity(mode, vars, o)
+    if not mode then
+        return o.vel
+
+    elseif mode.useRedscript then
+        return o.vel
+
+    else
+        return vars.vel
+    end
 end
 
 function PopulateFlightDebug(vars, debug, accelX, accelY, accelZ)
@@ -181,4 +208,15 @@ function this.GetGradientTimeSpeed(abs_z, timeSpeed_gradient)
     else
         return GetScaledValue(timeSpeed_gradient.timeSpeed_lowZSpeed, timeSpeed_gradient.timeSpeed_highZSpeed, timeSpeed_gradient.lowZSpeed, timeSpeed_gradient.highZSpeed, abs_z)
     end
+end
+
+function this.IsNearGround(o, vars, mode, deltaTime)
+    local vel = GetVelocity(mode, vars, o)
+
+    --TODO: May need to account for time dilation
+    local distance = vel.z * 2.5 * deltaTime
+
+    distance = Clamp(-999, -0.05, distance)
+
+    return not o:IsPointVisible(o.pos, Vector4.new(o.pos.x, o.pos.y, o.pos.z + distance, 1))
 end
