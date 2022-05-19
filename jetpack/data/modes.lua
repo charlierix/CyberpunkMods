@@ -57,7 +57,7 @@ function this.Default(const)
 
         jump_land =
         {
-            holdJumpDelay = 0.37,           -- how long to hold down the jump key to start flight
+            holdJumpDelay = 0.22,           -- how long to hold down the jump key to start flight
 
             explosiveJumping = false,       -- this will ragdoll nearby NPCs when jumping from ground (a small force compared to landing)
             explosiveLanding = false,       -- this will ragdoll nearby NPCs when landing
@@ -117,7 +117,7 @@ function this.Realism(mode, sounds_thrusting, const)
     mode.accel.vert_stand = 1.5
     mode.accel.vert_dash = 6
 
-    mode.jump_land.holdJumpDelay = 0.28
+    mode.accel.vert_initial = 4
 
     mode.accel.gravity = -12
 
@@ -137,7 +137,7 @@ function this.WellRounded(mode, sounds_thrusting, const)
     mode.accel.vert_stand = 2.4
     mode.accel.vert_dash = 8
 
-    mode.jump_land.holdJumpDelay = 0.24
+    mode.accel.vert_initial = 5
 
     mode.rebound =       -- need to figure out why redscript mode has such unstable impulses
     {
@@ -149,6 +149,8 @@ function this.WellRounded(mode, sounds_thrusting, const)
     mode.accel.gravity = -7
 
     mode.rmb_extra = RMB_Hover:new(10, 6, 2, 1, 9999, mode.useRedscript, mode.accel.gravity, sounds_thrusting)
+
+    mode.sound_type = const.thrust_sound_type.steam_quiet
 end
 
 function this.JetTrooper(mode, sounds_thrusting, const)
@@ -187,6 +189,8 @@ function this.Airplane(mode, sounds_thrusting, const)
     mode.accel.vert_stand = 8
     mode.accel.vert_dash = 16
 
+    mode.accel.vert_initial = 7
+
     mode.accel.gravity = -16
 
     mode.rmb_extra = RMB_Hover:new(12, 6, 2, 1, 9999, mode.useRedscript, mode.accel.gravity, sounds_thrusting)
@@ -206,8 +210,6 @@ function this.NPCLauncher(mode, sounds_thrusting, const)
 
     mode.accel.gravity = -1
     mode.accel.vert_stand = 3.5
-
-    mode.jump_land.holdJumpDelay = 0.24
 
     mode.rmb_extra = RMB_PushUp:new(22, 6, 8, 60)      -- the burn rate is only applied for one frame, so need something large
 
@@ -284,8 +286,6 @@ function this.DreamJump(mode, sounds_thrusting, const)
         percent_at_max = 0.8,        -- the percent to use at a high impact speed
         speed_of_max = 30,           -- the speed where percent_at_max should be applied.  Any speed higher than this will also use percent_at_max
     }
-
-    mode.jump_land.holdJumpDelay = 0.22
 
     mode.sound_type = const.thrust_sound_type.jump
 end
