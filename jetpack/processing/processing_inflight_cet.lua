@@ -1,22 +1,38 @@
+local this = {}
+
 function Process_InFlight_CET(o, vars, const, mode, keys, debug, deltaTime)
     debug.time_flying_idle = o.timer - vars.lastThrustTime
 
     if ShouldReboundJump_InFlight(o, vars, mode) then
-        vars.last_rebound_time = o.timer
-        vars.vel.z = GetReboundImpulse(mode, vars.vel)
-
-        o:PlaySound("lcm_player_double_jump", vars)
+        this.Rebound(o, vars, mode)
     end
 
     if ShouldExitFlight(o, vars, mode, deltaTime) then
-        if mode.jump_land.explosiveLanding and not IsAirborne(o) then
-            ExplosivelyLand(o, vars.vel, vars)
-        end
-
-        ExitFlight(vars, debug, o, mode)
+        this.ExitFlight(o, vars, mode)
         do return end
     end
 
+    this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.Rebound(o, vars, mode)
+    vars.last_rebound_time = o.timer
+    vars.vel.z = GetReboundImpulse(mode, vars.vel)
+
+    o:PlaySound("lcm_player_double_jump", vars)
+end
+
+function this.ExitFlight(o, vars, mode)
+    if mode.jump_land.explosiveLanding and not IsAirborne(o) then
+        ExplosivelyLand(o, vars.vel, vars)
+    end
+
+    ExitFlight(vars, debug, o, mode)
+end
+
+function this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
     -- Convert key presses into acceleration, energy burn
     local accelX, accelY, accelZ, requestedEnergy = GetAccel_Keys(vars, mode, o, debug, deltaTime)
 

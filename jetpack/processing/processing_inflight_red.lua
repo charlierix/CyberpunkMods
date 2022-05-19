@@ -1,32 +1,17 @@
+local this = {}
+
 function Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
     debug.time_flying_idle = o.timer - vars.lastThrustTime
 
     if ShouldReboundJump_InFlight(o, vars, mode) then
         -- There's something about landing that eats impulses.  Just let the landing finish and standard processing can do the rebound
-        vars.should_rebound_redscript = true
-
-        if mode.jump_land.explosiveLanding then
-            ExplosivelyLand(o, o.vel.z, vars)
-        end
-
-        ExitFlight(vars, debug, o, mode)
-
-        o:Teleport(o.pos, o.yaw)        -- don't let the player slam into the ground (teleporting zeros out velocity).  This needs to be called after exit flight so it can remember the current velocity
+        this.PrepForRebound(o, vars, mode)
         do return end
     end
 
     local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, mode, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
     if safetyFireHit then
-        local velZ = o.vel.z        -- saving this, because safety fire will set the velocity to zero
-
-        ExitFlight(vars, debug, o, mode)
-
-        SafetyFire(o, safetyFireHit)
-
-        if mode.jump_land.explosiveLanding then
-            ExplosivelyLand(o, velZ, vars)
-        end
-
+        this.SafetyFire(o, vars, mode, safetyFireHit)
         do return end
     end
 
@@ -35,6 +20,36 @@ function Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
         do return end
     end
 
+    this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.PrepForRebound(o, vars, mode)
+    vars.should_rebound_redscript = true
+
+    if mode.jump_land.explosiveLanding then
+        ExplosivelyLand(o, o.vel.z, vars)
+    end
+
+    ExitFlight(vars, debug, o, mode)
+
+    o:Teleport(o.pos, o.yaw)        -- don't let the player slam into the ground (teleporting zeros out velocity).  This needs to be called after exit flight so it can remember the current velocity
+end
+
+function this.SafetyFire(o, vars, mode, safetyFireHit)
+    local velZ = o.vel.z        -- saving this, because safety fire will set the velocity to zero
+
+    ExitFlight(vars, debug, o, mode)
+
+    SafetyFire(o, safetyFireHit)
+
+    if mode.jump_land.explosiveLanding then
+        ExplosivelyLand(o, velZ, vars)
+    end
+end
+
+function this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
     -- Convert key presses into acceleration, energy burn
     local accelX, accelY, accelZ, requestedEnergy = GetAccel_Keys(vars, mode, o, debug, deltaTime)
 
