@@ -1,26 +1,19 @@
-local this = {}
-
 function Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
     debug.time_flying_idle = o.timer - vars.lastThrustTime
 
+    if ShouldReboundJump_InFlight(o, vars, mode) then
+        -- There's something about landing that eats impulses.  Just let the landing finish and standard processing can do the rebound
+        vars.should_rebound_redscript = true
 
+        if mode.jump_land.explosiveLanding then
+            ExplosivelyLand(o, o.vel.z, vars)
+        end
 
---TODO: Maybe this is unstable because it fires multiple times per rebound?
-    --NOTE: too unstable, not sure how to fix it
-    -- if this.ShouldReboundJump(o, vars, mode) then
-    --     vars.is_rebound = true
-    --     local rebound_impulse = GetReboundImpulse(mode, o.vel)
-    --     if o.vel.z < 0 then
-    --         rebound_impulse = rebound_impulse - o.vel.z     -- need to cancel out the downward velocity
-    --     end
+        ExitFlight(vars, debug, o, mode)
 
-    --     o:PlaySound("lcm_player_double_jump", vars)
-
-    --     o:AddImpulse(0, 0, rebound_impulse)
-    -- end
-
-
-
+        o:Teleport(o.pos, o.yaw)        -- don't let the player slam into the ground (teleporting zeros out velocity).  This needs to be called after exit flight so it can remember the current velocity
+        do return end
+    end
 
     local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, mode, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
     if safetyFireHit then
@@ -33,6 +26,7 @@ function Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
         if mode.jump_land.explosiveLanding then
             ExplosivelyLand(o, velZ, vars)
         end
+
         do return end
     end
 
@@ -87,26 +81,4 @@ function Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
 
     local actual = o:AddImpulse(accelX, accelY, accelZ)
     debug.red_actual = vec_str(actual)
-end
-
------------------------------------ Private Methods -----------------------------------
-
-function this.ShouldReboundJump(o, vars, mode)
-    if not mode.rebound then
-        return false        -- this mode doesn't have a rebound
-    end
-
-    if o.timer - vars.thrust.downTime > 0.07 then
-        return false        -- they haven't pressed jump in a while
-    end
-
-    if o.vel.z > -1 then
-        return false        -- they are going down fast enough to rebound.  A standard jump would probably be higher
-    end
-
-    if IsAirborne(o, true) then
-        return false
-    end
-
-    return true
 end

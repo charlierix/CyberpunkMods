@@ -49,10 +49,10 @@ function this.ActivateFlight(o, vars, mode, velocity, rebound_impulse)
     vars.lastThrustTime = o.timer
 
     if rebound_impulse then
-        vars.is_rebound = true
+        vars.last_rebound_time = o.timer
         o:PlaySound("lcm_player_double_jump", vars)
     else
-        vars.is_rebound = false
+        vars.last_rebound_time = nil
     end
 
     if not mode.useRedscript then
@@ -104,11 +104,6 @@ function this.ActivateFlight_Extras(o, vars, mode, rebound_impulse)
 
     if impulse_z then
         if mode.useRedscript then
-            -- This doesn't seem to be needed
-            -- this extra calculation is copied from modes.lua - AdjustAccelForGravity
-            -- local extra = 16 + mode.accel.gravity      -- if gravity is 16, then this is zero.  If gravity is higher, then this is some negative amount
-            -- impulse_z = impulse_z + 16 - extra
-
             impulse_z = impulse_z - o.vel.z     -- jump is 5.66
             o:AddImpulse(impulse_x, impulse_y, impulse_z)
         else
@@ -124,8 +119,9 @@ function this.ShouldReboundJump(o, vars, mode)
         return false        -- this mode doesn't have a rebound
     end
 
-    if mode.useRedscript then
-        return false        -- it will work fine, then suddenly boost waaaay up into the sky.  Could probably put limits on the impulse, but it would be best to figure out the root reason
+    if vars.should_rebound_redscript then
+        vars.should_rebound_redscript = false
+        return true
     end
 
     if o.timer - vars.thrust.downTime > 0.07 then

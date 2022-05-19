@@ -28,39 +28,6 @@ function SoundsThrusting:new(o, keys, horz_analog, const)
     return obj
 end
 
-
-function SoundsThrusting:Tick_ORIG(isInFlight)
-    if not isInFlight then
-        self:StopAll()
-        do return end
-    end
-
-    -- Jump
-    if self.keys.jump then
-        self:Ensure_Playing("thrust1", self.cname_thrust1)
-        if self.cname_thrust2 then
-            self:Ensure_Playing("thrust2", self.cname_thrust2)
-        end
-    else
-        self:Ensure_Stopped("thrust1")
-        self:Ensure_Stopped("thrust2")
-    end
-
-    -- Maneuver
-    if self.horz_analog.analog_len > 0.5 then
-        self:Ensure_Playing("maneuver", self.cname_maneuver)
-    else
-        self:Ensure_Stopped("maneuver")
-    end
-
-    -- Hover
-    if self.isHovering then
-        self:Ensure_Playing("hover", this.GetRandomSound(this.hover_sounds))
-    else
-        self:Ensure_Stopped("hover")
-    end
-end
-
 function SoundsThrusting:Tick(isInFlight)
     if not isInFlight then
         self:StopAll()

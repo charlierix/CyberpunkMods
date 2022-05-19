@@ -97,7 +97,8 @@ local vars =
     --stop_flight_time              -- gets populated in ExitFlight
     --stop_flight_velocity
 
-    --is_rebound
+    --last_rebound_time
+    should_rebound_redscript = false,
 
     showConfigNameUntil = 0,
 
@@ -238,6 +239,7 @@ registerForEvent("onUpdate", function(deltaTime)
         vars.showConfigNameUntil = o.timer + 3
 
         vars.sounds_thrusting:ModeChanged(mode.sound_type)
+        vars.should_rebound_redscript = false
 
         ExitFlight(vars, debug, o, mode)
     end

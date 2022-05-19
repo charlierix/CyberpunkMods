@@ -1,12 +1,26 @@
 local this = {}
 
 function ShouldExitFlight(o, vars, mode, deltaTime)
+    -- If they just initiated a rebound, then let them fly
+    if vars.last_rebound_time and o.timer - vars.last_rebound_time < 0.2 then
+        return false
+    end
+
     -- Even if they are close to the ground, if they are actively under thrust, then they shouldn't
     -- exit flight
     --
     -- If it's flown exclusively in CET, then also need to make sure that velocity is up, or they
     -- might clip through the ground
-    if (vars.thrust.isDown or vars.is_rebound) and (vars.remainBurnTime > 0.1) and ((mode.useRedscript and o.vel.z >= 0) or (not mode.useRedscript and vars.vel.z >= 0)) then
+    -- NOTE: It was originally only doing that z>=0 check for cet, but there shouldn't be any harm
+    -- in also doing that for redscript
+    local vel_z
+    if mode.useRedscript then
+        vel_z = o.vel.z
+    else
+        vel_z = vars.vel.z
+    end
+
+    if vars.thrust.isDown and vars.remainBurnTime > 0.1 and vel_z >= 0 then
         return false
     end
 
@@ -95,10 +109,34 @@ function ExplosivelyLand(o, velZ, vars)
     end
 end
 
+function ShouldReboundJump_InFlight(o, vars, mode)
+    if not mode.rebound then
+        return false        -- this mode doesn't have a rebound
+    end
+
+    if vars.last_rebound_time and o.timer - vars.last_rebound_time < 0.4 then
+        return false        -- they just got done rebounding (conditions could look favorable for rebounding for a few frames.  Only want to rebound once)
+    end
+
+    if o.timer - vars.thrust.downTime > 0.07 then
+        return false        -- they haven't pressed jump in a while
+    end
+
+    local velocity = GetVelocity(mode, vars, o)
+    if velocity.z > -1 then
+        return false        -- they aren't going down fast enough to rebound.  A standard jump would probably be higher
+    end
+
+    if IsAirborne(o, true) then
+        return false
+    end
+
+    return true
+end
 function GetReboundImpulse(mode, velocity)
     local speed = math.abs(velocity.z)
 
-    local percent = mode.rebound.speed_of_max
+    local percent = mode.rebound.percent_at_max
     if speed < mode.rebound.speed_of_max then
         percent = GetScaledValue(mode.rebound.percent_at_zero, mode.rebound.percent_at_max, 0, mode.rebound.speed_of_max, speed)
     end
@@ -162,7 +200,7 @@ function ExitFlight(vars, debug, o, mode)
     vars.sounds_thrusting:StopAll()
     vars.stop_flight_time = o.timer
     vars.stop_flight_velocity = GetVelocity(mode, vars, o)
-    vars.is_rebound = false
+    vars.last_rebound_time = nil
 
     RemoveFlightDebug(debug)
 end

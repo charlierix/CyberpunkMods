@@ -139,12 +139,12 @@ function this.WellRounded(mode, sounds_thrusting, const)
 
     mode.jump_land.holdJumpDelay = 0.24
 
-    -- mode.rebound =       -- need to figure out why redscript mode has such unstable impulses
-    -- {
-    --     percent_at_zero = 1.1,
-    --     percent_at_max = 1,
-    --     speed_of_max = 40,
-    -- }
+    mode.rebound =       -- need to figure out why redscript mode has such unstable impulses
+    {
+        percent_at_zero = 0.8,        -- there seems to be a problem where value > 1 over amplifies the rebound velocity.  Maybe impulse accel isn't 1:1 with speed?
+        percent_at_max = 0.6,
+        speed_of_max = 40,
+    }
 
     mode.accel.gravity = -7
 
@@ -237,12 +237,12 @@ function this.HulkStomp(mode, sounds_thrusting, const)
     mode.jump_land.explosiveJumping = true
     mode.jump_land.explosiveLanding = true
 
-    -- mode.rebound =       -- need to figure out why redscript mode has such unstable impulses
-    -- {
-    --     percent_at_zero = 1.2,
-    --     percent_at_max = 1,
-    --     speed_of_max = 40,
-    -- }
+    mode.rebound =
+    {
+        percent_at_zero = 1,
+        percent_at_max = 0.6,
+        speed_of_max = 40,
+    }
 
     mode.sound_type = const.thrust_sound_type.jump
 end
@@ -276,11 +276,11 @@ function this.DreamJump(mode, sounds_thrusting, const)
     mode.accel.vert_dash = 1.2
 
     -- Most of the height should come from the initial kick
-    mode.accel.vert_initial = 1.3
+    mode.accel.vert_initial = 1.1
 
     mode.rebound =
     {
-        percent_at_zero = 1.15,       -- the percent of Z part of velocity to bebound with when speed along Z is zero
+        percent_at_zero = 1.065,       -- the percent of Z part of velocity to bebound with when speed along Z is zero
         percent_at_max = 0.8,        -- the percent to use at a high impact speed
         speed_of_max = 30,           -- the speed where percent_at_max should be applied.  Any speed higher than this will also use percent_at_max
     }
@@ -295,8 +295,17 @@ end
 function this.AdjustAccelForGravity(mode)
     -- The vertical accelerations need to defeat gravity
     if mode.useRedscript then
+        mode.accel.vert_stand = this.GetAccelAdjustedForGravity_Redscript(mode.accel.vert_stand, mode)
+        mode.accel.vert_dash = this.GetAccelAdjustedForGravity_Redscript(mode.accel.vert_dash, mode)
+    end
+end
+
+-- Increases/Decreases accel to cancel out gravity
+function this.GetAccelAdjustedForGravity_Redscript(accel, mode)
+    if mode.useRedscript then
         local extra = 16 + mode.accel.gravity      -- if gravity is 16, then this is zero.  If gravity is higher, then this is some negative amount
-        mode.accel.vert_stand = mode.accel.vert_stand + 16 - extra
-        mode.accel.vert_dash = mode.accel.vert_dash + 16 - extra
+        return accel + 16 - extra
+    else
+        return accel
     end
 end
