@@ -5,13 +5,13 @@ function Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
 
     if ShouldReboundJump_InFlight(o, vars, mode) then
         -- There's something about landing that eats impulses.  Just let the landing finish and standard processing can do the rebound
-        this.PrepForRebound(o, vars, mode)
+        this.PrepForRebound(o, vars, mode, debug)
         do return end
     end
 
     local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, mode, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
     if safetyFireHit then
-        this.SafetyFire(o, vars, mode, safetyFireHit)
+        this.SafetyFire(o, vars, mode, debug, safetyFireHit)
         do return end
     end
 
@@ -25,7 +25,7 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.PrepForRebound(o, vars, mode)
+function this.PrepForRebound(o, vars, mode, debug)
     vars.should_rebound_redscript = true
 
     if mode.jump_land.explosiveLanding then
@@ -37,7 +37,7 @@ function this.PrepForRebound(o, vars, mode)
     o:Teleport(o.pos, o.yaw)        -- don't let the player slam into the ground (teleporting zeros out velocity).  This needs to be called after exit flight so it can remember the current velocity
 end
 
-function this.SafetyFire(o, vars, mode, safetyFireHit)
+function this.SafetyFire(o, vars, mode, debug, safetyFireHit)
     local velZ = o.vel.z        -- saving this, because safety fire will set the velocity to zero
 
     ExitFlight(vars, debug, o, mode)

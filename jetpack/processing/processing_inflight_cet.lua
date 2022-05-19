@@ -8,7 +8,7 @@ function Process_InFlight_CET(o, vars, const, mode, keys, debug, deltaTime)
     end
 
     if ShouldExitFlight(o, vars, mode, deltaTime) then
-        this.ExitFlight(o, vars, mode)
+        this.ExitFlight(o, vars, mode, debug)
         do return end
     end
 
@@ -24,7 +24,7 @@ function this.Rebound(o, vars, mode)
     o:PlaySound("lcm_player_double_jump", vars)
 end
 
-function this.ExitFlight(o, vars, mode)
+function this.ExitFlight(o, vars, mode, debug)
     if mode.jump_land.explosiveLanding and not IsAirborne(o) then
         ExplosivelyLand(o, vars.vel, vars)
     end
