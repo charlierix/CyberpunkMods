@@ -176,6 +176,7 @@ function AdjustTimeSpeed(o, vars, mode, velocity)
 
     elseif mode.timeSpeed_gradient then
         local timeSpeed = this.GetGradientTimeSpeed(math.abs(velocity.z), mode.timeSpeed_gradient)
+        timeSpeed = Round(timeSpeed, 2)     -- don't want to set every frame
 
         if not vars.cur_timeSpeed or not IsNearValue(timeSpeed, vars.cur_timeSpeed) then
             vars.cur_timeSpeed = timeSpeed
