@@ -125,7 +125,7 @@ function DrawEnabledDisabled(isEnabled)
         --     ImGui.Text("allows for other mods....")     -- not sure what to say
         -- end
 
-        ImGui.PopStyleColor(1)
+        -- ImGui.PopStyleColor(1)
     end
     ImGui.End()
 

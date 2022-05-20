@@ -149,6 +149,7 @@ local isLoaded = false
 local shouldDraw = false
 local shouldShowConfig = false
 local isConfigRepress = false
+local isCETOpen = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
@@ -362,6 +363,8 @@ registerHotkey("WallHang_Config", "Show Config", function()
     shouldShowConfig = true
 end)
 registerForEvent("onOverlayOpen", function()
+    isCETOpen = true
+
     if not vars_ui.autoshow_withconsole then
         do return end
     end
@@ -369,6 +372,8 @@ registerForEvent("onOverlayOpen", function()
     shouldShowConfig = true
 end)
 registerForEvent("onOverlayClose", function()
+    isCETOpen = false
+
     if not vars_ui.autoshow_withconsole then
         do return end
     end
@@ -387,6 +392,7 @@ registerForEvent("onDraw", function()
         do return end
     end
 
+    --if isCETOpen and shouldShowConfig and player and player_arcade then
     if shouldShowConfig and player and player_arcade then
         shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, o, const, player, player_arcade)
         isConfigRepress = false

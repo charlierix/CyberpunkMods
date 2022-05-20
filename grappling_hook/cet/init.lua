@@ -161,6 +161,7 @@ local isLoaded = false
 local shouldDraw = false
 local shouldShowConfig = false
 local isConfigRepress = false
+local isCETOpen = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
@@ -404,6 +405,8 @@ registerHotkey("GrapplingHookConfig", "Show Config", function()
     shouldShowConfig = true
 end)
 registerForEvent("onOverlayOpen", function()
+    isCETOpen = true
+
     if not vars_ui.autoshow_withconsole then
         do return end
     end
@@ -411,6 +414,8 @@ registerForEvent("onOverlayOpen", function()
     shouldShowConfig = true
 end)
 registerForEvent("onOverlayClose", function()
+    isCETOpen = false
+
     if not vars_ui.autoshow_withconsole then
         do return end
     end
@@ -474,6 +479,11 @@ registerForEvent("onDraw", function()
         DrawEnergyProgress(vars.energy, player.energy_tank.max_energy, player.experience, vars)
     end
 
+
+    --TODO: They only show every other time cet opens (they flash the other time)
+    --TODO: This is too simple, since they may need to show if input binding is active
+
+    --if isCETOpen and shouldShowConfig and player then
     if shouldShowConfig and player then
         shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, player, o, const)
         isConfigRepress = false
