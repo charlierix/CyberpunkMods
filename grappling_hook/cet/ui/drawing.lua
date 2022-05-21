@@ -54,14 +54,15 @@ end
 
 -- Draws the config screen
 -- Returns:
---  true: keep showing config
---  false: stop showing config
+--  continue_showing        true: keep showing config, false: stop showing config
+--  is_minimized            true: the window is in a collapsed state (or completely blocked)
 function DrawConfig(isCloseRequested, vars, vars_ui, player, o, const)
     if not player then
-        return false
+        return false, false
     end
 
     local continueShowing = true        -- this should go to false when isCloseRequested true, unless the window is in a dirty state
+    local is_minimized = false
 
     local window = vars_ui.configWindow
 
@@ -138,12 +139,14 @@ function DrawConfig(isCloseRequested, vars, vars_ui, player, o, const)
         elseif vars_ui.currentWindow == const.windows.grapple_straight_velaway then
             continueShowing = DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, player, window, const)
         end
+    else
+        is_minimized = true
     end
     ImGui.End()
 
     ImGui.PopStyleColor(8)
 
-    return continueShowing
+    return continueShowing, is_minimized
 end
 
 --https://stackoverflow.com/questions/26160327/sorting-a-lua-table-by-key

@@ -394,8 +394,13 @@ registerForEvent("onDraw", function()
 
     --if isCETOpen and shouldShowConfig and player and player_arcade then
     if shouldShowConfig and player and player_arcade then
-        shouldShowConfig = DrawConfig(isConfigRepress, vars, vars_ui, o, const, player, player_arcade)
+        local loc_shouldshow, is_minimized = DrawConfig(isConfigRepress, vars, vars_ui, o, const, player, player_arcade)
+        shouldShowConfig = loc_shouldshow
         isConfigRepress = false
+
+        if not isCETOpen and is_minimized then      -- can't just close when cet is gone, since input binding may need it showing
+            shouldShowConfig = false
+        end
 
         if not shouldShowConfig then
             -- They closed from an arbitrary window, make sure the next time config starts at main
