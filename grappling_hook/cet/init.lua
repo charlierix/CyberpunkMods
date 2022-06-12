@@ -15,6 +15,7 @@
 require "core/color"
 require "core/debug_code"
 require "core/debug_render_logger"
+require "core/even_dist_cone"
 require "core/gameobj_accessor"
 require "core/lists"
 require "core/math_basic"
@@ -468,6 +469,28 @@ end)
 registerInput("GrapplingHook_KeyG", "Custom Key G", function(isDown)
     keys:MapCustomKey(const.customKeyBase .. "G", isDown)
 end)
+
+
+
+-- registerHotkey("GrapplingHookConeCast", "Cone Cast", function()
+--     local log_build = DebugRenderLogger:new(true)
+--     local log_final = DebugRenderLogger:new(true)
+
+--     local axis = Vector4.new(1, 0, 0, 1)
+
+--     local points = GetConePointsEvenDistribution(144, axis, 45, 0, 12, 12, log_build)
+
+--     log_final:Add_Line(Vector4.new(0, 0, 0, 1), MultiplyVector(axis, 12))
+
+--     for i = 1, #points do
+--         log_final:Add_Dot(points[i])
+--     end
+
+--     log_build:Save("build")
+--     log_final:Save("final")
+-- end)
+
+
 
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then
