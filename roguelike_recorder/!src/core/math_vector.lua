@@ -16,7 +16,7 @@ function quat_str(quat)
     return tostring(Round(quat.i, 3)) .. ", " .. tostring(Round(quat.j, 3)) .. ", " .. tostring(Round(quat.k, 3)) .. ", " .. tostring(Round(quat.r, 3))
 end
 
-------------------------------------- Length -------------------------------------
+--------------------------------------- Length ----------------------------------------
 
 --TODO: See if vector4 already exposes a magnitude function --- it's GetSingleton('Vector4'):Distance(vector1, vector2)
 function GetVectorLength(vector)
@@ -56,7 +56,7 @@ function GetVectorLength2D(x, y)
     return math.sqrt((x * x) + (y * y))
 end
 
--------------------------------------- Misc ---------------------------------------
+---------------------------------------- Misc -----------------------------------------
 
 function DotProduct2D(x1, y1, x2, y2)
     return (x1 * x2) + (y1 * y2)
@@ -79,6 +79,51 @@ function CrossProduct3D(v1, v2)
         (v1.x * v2.y) - (v1.y * v2.x),
         1
     )
+end
+
+-- Returns:
+--  min: vector holding the lowest values of x,y,z
+--  max: vector with highest x,y,z
+function GetAABB(points)
+    if not points or #points == 0 then
+        -- No points passed in
+        return Vector4.new(0, 0, 0, 1), Vector4.new(0, 0, 0, 1)
+    end
+
+    local minX = 2147000000     -- 2147483647 (giving a little extra room) -- (math.maxinteger is returning nil)
+    local minY = 2147000000
+    local minZ = 2147000000
+    local maxX = -2147000000
+    local maxY = -2147000000
+    local maxZ = -2147000000
+
+    for i = 1, #points do
+        if points[i].x < minX then
+            minX = points[i].x
+        end
+
+        if points[i].y < minY then
+            minY = points[i].y
+        end
+
+        if points[i].z < minZ then
+            minZ = points[i].z
+        end
+
+        if points[i].x > maxX then
+            maxX = points[i].x
+        end
+
+        if points[i].y > maxY then
+            maxY = points[i].y
+        end
+
+        if points[i].z > maxZ then
+            maxZ = points[i].z
+        end
+    end
+
+    return Vector4.new(minX, minY, minZ, 1), Vector4.new(maxX, maxY, maxZ, 1)
 end
 
 function RadiansBetween2D(x1, y1, x2, y2)
@@ -131,6 +176,12 @@ end
 
 function RotateVector3D(vector, quat)
     return GetSingleton('Quaternion'):Transform(quat, vector)
+end
+function RotateVector3D_axis_angle(vector, axis, angle)
+    return RotateVector3D_axis_radian(vector, axis, Degrees_to_Radians(angle))
+end
+function RotateVector3D_axis_radian(vector, axis, radians)
+    return RotateVector3D(vector, Quaternion_FromAxisRadians(axis, radians))
 end
 
 -- This returns a quaternion that is the result of rotating by a delta
@@ -187,6 +238,16 @@ function Make2DUnit(vector)
     end
 
     return Vector4.new(retVal.x / length, retVal.y / length, 0, 1)
+end
+
+function ToUnit(vector)
+    local length = GetVectorLength(vector)
+
+    if IsNearZero(length) then
+        return Vector4.new(0, 0, 0, 1)
+    else
+        return Vector4.new(vector.x / length, vector.y / length, vector.z / length, 1)
+    end
 end
 
 -- This converts the vector into a unit vector (or leaves it zero length if zero length)
@@ -274,7 +335,121 @@ function AddAngle_neg180_pos180(current, delta)
     return this.AddAngle(current, delta, -180, 180)
 end
 
-------------------------------------- Convert -------------------------------------
+--------------------------------------- Random ----------------------------------------
+
+-- Returns a vector that is perpendicular to the vector passed in
+-- NOTE: Returned won't be a unit vector
+function GetArbitraryOrthogonal(vector)
+    if IsNearZero_vec4(vector) then
+        return Vector4.new(0, 0, 0, 1)
+    end
+
+    local rand = GetRandomVector_square(1)
+
+    for i = 1, 10 do
+        local retVal = CrossProduct3D(vector, rand)
+
+        if IsNearZero_vec4(retVal) then
+            rand = GetRandomVector_square(1)
+        else
+            return retVal
+        end
+    end
+
+    print("GetArbitraryOrhonganal: Infinite loop detected")
+    return Vector4.new(0, 0, 0, 1)
+end
+
+-- Get a random vector between boundry lower and boundry upper (lower and upper are vectors)
+function GetRandomVector_fromto(boundryLower, boundryUpper)
+    return Vector4.new
+    (
+        GetScaledValue(boundryLower.x, boundryUpper.x, 0, 1, math.random()),
+        GetScaledValue(boundryLower.y, boundryUpper.y, 0, 1, math.random()),
+        GetScaledValue(boundryLower.z, boundryUpper.z, 0, 1, math.random()),
+        1
+    )
+end
+-- Get a random vector between -maxValue and maxValue
+function GetRandomVector_square(maxValue)
+    return Vector4.new
+    (
+        GetScaledValue(-maxValue, maxValue, 0, 1, math.random()),
+        GetScaledValue(-maxValue, maxValue, 0, 1, math.random()),
+        GetScaledValue(-maxValue, maxValue, 0, 1, math.random()),
+        1
+    )
+end
+
+-- Gets a random vector with radius between maxRadius*-1 and maxRadius (bounds are spherical,
+-- rather than cube).  The radius will never be inside minRadius
+--
+-- The sqrt idea came from here:
+-- http://dzindzinovic.blogspot.com/2010/05/xna-random-point-in-circle.html
+function GetRandomVector_Spherical(minRadius, maxRadius)
+    -- A sqrt, sin and cos  :(           can it be made cheaper?
+    local radius = minRadius + ((maxRadius - minRadius) * math.sqrt(math.random()))     -- without the square root, there is more chance at the center than the edges
+
+    return GetRandomVector_Spherical_Shell(radius)
+end
+-- Gets a random vector with the radius passed in (bounds are spherical, rather than cube)
+function GetRandomVector_Spherical_Shell(radius)
+    local theta = math.random() * math.pi * 2
+
+    local phi = GetPhiForRandom(GetScaledValue(-1, 1, 0, 1, math.random()))
+
+    local sinPhi = math.sin(phi)
+
+    local x = radius * math.cos(theta) * sinPhi
+    local y = radius * math.sin(theta) * sinPhi
+    local z = radius * math.cos(phi)
+
+    return Vector4.new(x, y, z, 1)
+end
+
+-- Gets a random vector with radius between maxRadius*-1 and maxRadius (bounds are spherical,
+-- rather than cube).  The radius will never be inside minRadius.  Z will always be zero.
+--
+-- The sqrt idea came from here:
+-- http://dzindzinovic.blogspot.com/2010/05/xna-random-point-in-circle.html
+function GetRandomVector_Circular(minRadius, maxRadius)
+    local radius = minRadius + ((maxRadius - minRadius) * math.sqrt(math.random()))     -- without the square root, there is more chance at the center than the edges
+
+    return GetRandomVector_Circular_Shell(radius)
+end
+-- Gets a random vector with the radius passed in (bounds are spherical, rather than cube).  Z will always be zero
+function GetRandomVector_Circular_Shell(radius)
+    local angle = math.random() * math.pi * 2
+
+    local x = radius * math.cos(angle)
+    local y = radius * math.sin(angle)
+
+    return Vector4.new(x, y, 0, 1)
+end
+
+-- This returns a phi from 0 to pi based on an input from -1 to 1
+--
+-- NOTE: The input is linear (even chance of any value from -1 to 1), but the output is scaled to give an even chance of a Z
+-- on a sphere:
+--
+-- z is cos of phi, which isn't linear.  So the probability is higher that more will be at the poles.  Which means if I want
+-- a linear probability of z, I need to feed the cosine something that will flatten it into a line.  The curve that will do that
+-- is arccos (which basically rotates the cosine wave 90 degrees).  This means that it is undefined for any x outside the range
+-- of -1 to 1.  So I have to shift the random statement to go between -1 to 1, run it through the curve, then shift the result
+-- to go between 0 and pi
+function GetPhiForRandom(num_negone_posone)
+    --double phi = rand.NextDouble(-1, 1);		// value from -1 to 1
+    --phi = -Math.Asin(phi) / (Math.PI * .5d);		// another value from -1 to 1
+    --phi = (1d + phi) * Math.PI * .5d;		// from 0 to pi
+
+    return math.pi / 2 - math.asin(num_negone_posone)
+end
+-- This is a complimentary function to GetPhiForRandom.  It's used to figure out the range for random to get a desired phi
+function GetRandomForPhi(expectedRadians)
+    return -math.sin(expectedRadians - (math.pi / 2))
+end
+
+--------------------------------------- Convert ---------------------------------------
 
 function GetPoint(fromPos, unitDirection, length)
     return Vector4.new(fromPos.x + (unitDirection.x * length), fromPos.y + (unitDirection.y * length), fromPos.z + (unitDirection.z * length), 1)
@@ -303,7 +478,7 @@ function To2DUnit(vector)
     return vector.x / len, vector.y / len
 end
 
-------------------------------------- Operators -------------------------------------
+-------------------------------------- Operators --------------------------------------
 
 --TODO: See if some of these operators are already part of the Vector4
 

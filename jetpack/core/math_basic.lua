@@ -39,7 +39,10 @@ function IsNearZero_vec4(value)
     end
 
     -- Ignore w, it's always 1
-    return IsNearValue(value.x, 0) and IsNearValue(value.y, 0) and IsNearValue(value.z, 0)
+    return
+        IsNearValue(value.x, 0) and
+        IsNearValue(value.y, 0) and
+        IsNearValue(value.z, 0)
 end
 
 --http://lua-users.org/wiki/SimpleRound
@@ -76,6 +79,17 @@ function Clamp(min, max, value)
         return max
     else
         return value
+    end
+end
+
+-- Returns
+--  val_min: the lesser of value1 and value2
+--  val_max: the greater of value1 and value2
+function MinMax(value1, value2)
+    if value1 < value2 then
+        return value1, value2
+    else
+        return value2, value1
     end
 end
 

@@ -82,6 +82,17 @@ function Clamp(min, max, value)
     end
 end
 
+-- Returns
+--  val_min: the lesser of value1 and value2
+--  val_max: the greater of value1 and value2
+function MinMax(value1, value2)
+    if value1 < value2 then
+        return value1, value2
+    else
+        return value2, value1
+    end
+end
+
 -- CET uses lua 5.1, bit shifting doesn't get handled natively until 5.2
 function Bit_LShift(x, n)
     return x * (2^n)
