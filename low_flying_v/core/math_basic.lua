@@ -100,6 +100,10 @@ function Bit_LShift(x, n)
     return x * (2^n)
 end
 
+function Random_Float(min, max)
+    return min + (math.random() * (max - min));
+end
+
 -- This takes in a numeric value, returns a string in dozenal
 function Format_DecimalToDozenal(decimal_value, fractional_places)
     --https://www.reddit.com/r/dozenal/comments/4is9zm/dozenal_conversion/
