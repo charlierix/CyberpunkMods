@@ -252,7 +252,7 @@ end
 function GameObjectAccessor:AddImpulse(x, y, z)
     self:EnsurePlayerLoaded()
 
-    if self.player then
+    if self.player and not (IsNearZero(x) and IsNearZero(y) and IsNearZero(z)) then
         local impulseEvent = PSMImpulse.new()
         impulseEvent.id = "impulse"
         impulseEvent.impulse = Vector4.new(x, y, z, 1)

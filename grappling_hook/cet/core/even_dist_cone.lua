@@ -67,12 +67,19 @@ function this.DistributeCone(points, axisUnit, orthUnit, angle, maxDotProduct, h
 
     this.CapToCone(points, axisUnit, orthUnit, angle, maxDotProduct, heightMin, heightMax)
 
+
+    this.GetConeProps(angle, heightMin, heightMax)
+
+
     local aabb_min, aabb_max = GetAABB(points)
 
     local aabb_radius = GetVectorLength(SubtractVectors(aabb_max, aabb_min)) / 2
     local stopAmount = aabb_radius * stopRadiusPercent
 
     local minDistance = this.GetMinDistance_Cone(points, aabb_radius * 2)
+
+
+
 
     local heightMinSquared = heightMin * heightMin
     local heightMaxSquared = heightMax * heightMax
@@ -228,12 +235,25 @@ function this.GetAverageLength(pairs)
     return total / #pairs
 end
 
+function this.GetConeProps(angle, heightMin, heightMax)
+    local radians = Degrees_to_Radians(angle)
+
+
+
+end
+
 -- Without this, a 2 point request will never pull from each other
 --
 -- This was copied from MathND's cube
 --
 -- I didn't experiment too much with these values, but they seem pretty good
-function this.GetMinDistance_Cone(points, aabb_length)
+function this.GetMinDistance_Cone_BROKEN(points, aabb_length)
+    local log = DebugRenderLogger:new(true)
+
+    log:Add_Circle(Vector4.new(0,0,0,1), Vector4.new(0,0,1,1), aabb_length / 2)
+    log:Add_Circle(Vector4.new(0,0,0,1), Vector4.new(0,1,0,1), aabb_length / 2)
+    log:Add_Circle(Vector4.new(0,0,0,1), Vector4.new(1,0,0,1), aabb_length / 2)
+
     -- When there is no min distance, they get too relaxed.  If there are a lot of points, there are still holes after lots of iterations - sort
     -- of like the points form mesh crystals with voids between.  There's no pressure to push into those voids
     --
@@ -244,10 +264,26 @@ function this.GetMinDistance_Cone(points, aabb_length)
 
     local num_points = #points
 
+    log:WriteLine_Global("num_points: " .. tostring(num_points))
+    log:WriteLine_Global("aabb_length: " .. tostring(aabb_length))
+
     local numerator = aabb_length * 3 / 4
     local divisor = num_points ^ (1 / dimensions)       -- getting an error if directly using #points, may have just needed parenthesis:  attempt to perform arithmetic on local 'points' (a table value)
 
-    return numerator / divisor
+    local retVal = numerator / divisor
+
+    log:WriteLine_Global("min dist: " .. tostring(retVal))
+
+    log:Add_Circle(Vector4.new(0,0,0,1), Vector4.new(0,0,1,1), retVal / 2)
+    log:Add_Circle(Vector4.new(0,0,0,1), Vector4.new(0,1,0,1), retVal / 2)
+    log:Add_Circle(Vector4.new(0,0,0,1), Vector4.new(1,0,0,1), retVal / 2)
+
+    --log:Save("min dist " .. tostring(points) .. " " .. tostring(math.random(10000)))
+    log:Save("min dist " .. tostring(num_points))
+
+    return retVal
+end
+function this.GetMinDistance_Cone(points, aabb_length)
 end
 
 function this.CapToCone(points, axisUnit, orthUnit, angle, maxDotProduct, heightMin, heightMax)
@@ -300,6 +336,10 @@ function this.CapToCone_Point(point, axisUnit, orthUnit, angle, maxDotProduct, h
 end
 
 function this.LogPoints(log, points)
+    if not log then
+        do return end
+    end
+
     log:NewFrame()
 
     for i = 1, #points do

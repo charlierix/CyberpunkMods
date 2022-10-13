@@ -71,6 +71,8 @@ function this.DirectDistance(isHangDown, isJumpDown, isShiftDown, hits, fromPos,
         this.ResetVars(o, vars)
 
         local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
+
+        --TODO: This jump should use the planted jump style (same behavior is current)
         Transition_ToJump_Calculate(vars, const, debug, o, hangPos, hits[1].normal, startStopTracker)
 
     -- Grab

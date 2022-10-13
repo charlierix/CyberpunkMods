@@ -17,6 +17,7 @@ function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, del
         do return end
 
     elseif isJumpDown and ShouldJump(o, const, vars.normal, isShiftDown) then
+        --TODO: this jump should use the walljump style (takes incoming velocity into account, slider values for horz vs vert power)
         Transition_ToJump_Calculate(vars, const, debug, o, vars.hangPos, vars.normal, startStopTracker)
         do return end
     end

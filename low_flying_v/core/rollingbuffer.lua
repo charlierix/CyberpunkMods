@@ -55,7 +55,7 @@ function RollingBuffer:GetLatestEntries(count)
             retVal[index] = self[i]
         end
     end
-    
+
     for i=#self, self[1]+1, -1 do
         if self[i] ~= defaultVal then
             index = index + 1

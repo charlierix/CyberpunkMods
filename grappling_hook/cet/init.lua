@@ -472,7 +472,7 @@ end)
 
 
 
--- registerHotkey("GrapplingHookConeCast", "Cone Cast", function()
+-- registerHotkey("GrapplingHookConeCast_Points", "Cone Cast (points)", function()
 --     local log_build = DebugRenderLogger:new(true)
 --     local log_final = DebugRenderLogger:new(true)
 
@@ -488,6 +488,41 @@ end)
 
 --     log_build:Save("build")
 --     log_final:Save("final")
+-- end)
+
+-- registerHotkey("GrapplingHookConeCast_Rays", "Cone Cast (rays)", function()
+--     local axis = Vector4.new(1, 0, 0, 1)
+
+--     local log = DebugRenderLogger:new(true)
+--     log:Add_Line(Vector4.new(0, 0, 0, 1), MultiplyVector(axis, 12))
+
+
+--     --TODO: Play with stronger min dist
+
+
+--     -- Ray From
+--     local points_from = GetConePointsEvenDistribution(12, axis, 45, 0, 12, 4)
+
+--     for i = 1, #points_from do
+--         -- Ray To
+--         local points_to = GetConePointsEvenDistribution(3, axis, 45, 12, 12, 6)
+
+--         for j = 1, #points_to do
+--             points_to[j] = AddVectors(points_from[i], points_to[j])
+
+--             log:Add_Dot(points_from[i])
+--             log:Add_Line(points_from[i], points_to[j])
+
+--             local hit_pos, hit_normal, hit_material = o:RayCast(points_from[i], points_to[j])
+
+--             if hit_pos then
+--                 log:Add_Dot(hit_pos, nil, "6E6", 3, hit_material)
+--                 log:Add_Line(hit_pos, AddVectors(hit_pos, hit_normal), nil, "6E6", 1, hit_material)
+--             end
+--         end
+--     end
+
+--     log:Save("rays")
 -- end)
 
 
