@@ -392,7 +392,6 @@ registerForEvent("onDraw", function()
         do return end
     end
 
-    --if isCETOpen and shouldShowConfig and player and player_arcade then
     if shouldShowConfig and player and player_arcade then
         local loc_shouldshow, is_minimized = DrawConfig(isConfigRepress, vars, vars_ui, o, const, player, player_arcade)
         shouldShowConfig = loc_shouldshow
@@ -428,6 +427,17 @@ end
 
 function TODO()
     -- Wall attraction stays after switching to grappling hook
+
+	-- Wall Jump
+	--  There should be two types (and sets of settings) of wall jump:
+	--    Jumping from a hang
+	--    Jumping directly from midair collision
+
+	-- Wall Jump (from midair)
+	--    Option to not turn around when dot is close to 1 (directly facing the wall)
+	--    Slider for vertical as well as horizontal
+	--    Another slider to allow full vertical when dot product is high vs low or negative
+	--    A dead zone between looking straight up and sort of looking down (so they don't accidentally jump away from the wall when trying to go up it)
 
     -- Partial Disable Jump Away
     --  There is currently a checkbox to not jump away from a wall when facing the wall

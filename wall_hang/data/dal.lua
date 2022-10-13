@@ -49,7 +49,7 @@ function GetSetting_Bool(key, default)
     if sucess then
         return value, errMsg
     else
-        return nil, "GetSetting_Bool: Unknown Error"
+        return default, "GetSetting_Bool: Unknown Error"        -- getting this with a prerelease of cet that doesn't have db support
     end
 end
 -- Inserts/Updates the key/value pair
@@ -122,7 +122,7 @@ function GetSetting_Float(key, default)
     if sucess then
         return value, errMsg
     else
-        return nil, "GetSetting_Float: Unknown Error"
+        return default, "GetSetting_Float: Unknown Error"
     end
 end
 -- Inserts/Updates the key/value pair
