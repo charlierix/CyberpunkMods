@@ -67,9 +67,9 @@ end
 -- This gets called whenever an input action occurs (mouse movement, key press/release)
 function Keys:MapAction(action)
     local actionName = Game.NameToString(action:GetName())
-    local actionType = action:GetType(action).value
-    local pressed = actionType == "BUTTON_PRESSED"
-    local released = actionType == "BUTTON_RELEASED"
+    local actionType = action:GetType()
+    local pressed = actionType == gameinputActionType.BUTTON_PRESSED
+    local released = actionType == gameinputActionType.BUTTON_RELEASED
 
     --print(actionName .. ", pressed: " .. tostring(pressed) .. ", released: " .. tostring(released))
 
@@ -131,7 +131,7 @@ end
 
 function Keys:MapAction_Fixed(action, actionName, pressed, released)
     if actionName == "CameraMouseX" then
-        self.mouse_x = tonumber(action:GetValue(action))
+        self.mouse_x = tonumber(action:GetValue())
     else
         self.mouse_x = 0
     end

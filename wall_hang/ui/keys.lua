@@ -48,9 +48,9 @@ end
 -- This gets called whenever an input action occurs (mouse movement, key press/release)
 function Keys:MapAction(action)
     local actionName = Game.NameToString(action:GetName())
-    local actionType = action:GetType(action).value
-    local pressed = actionType == "BUTTON_PRESSED"
-    local released = actionType == "BUTTON_RELEASED"
+    local actionType = action:GetType()
+    local pressed = actionType == gameinputActionType.BUTTON_PRESSED
+    local released = actionType == gameinputActionType.BUTTON_RELEASED
 
     --print(actionName .. ", pressed: " .. tostring(pressed) .. ", released: " .. tostring(released))
 
@@ -147,10 +147,10 @@ end
 
 function Keys:MapAction_Fixed(action, actionName, pressed, released)
     if actionName == "CameraMouseX" then        -- actionType: "RELATIVE_CHANGE"
-        self.mouse_x = action:GetValue(action)
+        self.mouse_x = tonumber(action:GetValue())
 
     elseif actionName == "right_stick_x" then       -- actionType: "AXIS_CHANGE"
-        self.mouse_x = action:GetValue(action) * self.const.rightstick_sensitivity
+        self.mouse_x = tonumber(action:GetValue()) * self.const.rightstick_sensitivity
     end
 
     for key, value in pairs(self.hardcodedMapping) do
@@ -169,10 +169,10 @@ end
 function Keys:MapAction_Movement(action, actionName, pressed, released)
     -- This fires from controller's left thumbsick as well as ASDW
     if actionName == "MoveX" then       -- actionType: "AXIS_CHANGE"
-        self.analog_x = action:GetValue(action)
+        self.analog_x = tonumber(action:GetValue())
 
     elseif actionName == "MoveY" then
-        self.analog_y = action:GetValue(action)
+        self.analog_y = tonumber(action:GetValue())
     end
 
     --NOTE: This mostly duplicates the MoveX, MoveY above, but it ensures that keyboard movement is reliable
