@@ -59,6 +59,7 @@ function this.CalculateJumpDirection_Direct(lookdir, normal, const)
 
     if dot < 0 and upDot >= const.jumpcalc_straightupdot then
         -- They are facing the wall and looking up.  Jump straight up instead of spinning around and jumping away
+        -- TODO: Instead of going straight up, go perpendicular from normal along the up direction
         return true, up
     end
 

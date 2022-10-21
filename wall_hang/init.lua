@@ -428,12 +428,15 @@ end
 function TODO()
     -- Wall attraction stays after switching to grappling hook
 
+    -- Wall Reflection
+    --  After jumping along a wall, but about to collide at a shallow angle, apply a tiny impulse to keep from hitting
+
 	-- Wall Jump
 	--  There should be two types (and sets of settings) of wall jump:
-	--    Jumping from a hang
-	--    Jumping directly from midair collision
+	--    Jumping from a hang (planted)
+	--    Jumping directly from midair collision (rebound)
 
-	-- Wall Jump (from midair)
+	-- Wall Jump (rebound)
 	--    Option to not turn around when dot is close to 1 (directly facing the wall)
 	--    Slider for vertical as well as horizontal
 	--    Another slider to allow full vertical when dot product is high vs low or negative
