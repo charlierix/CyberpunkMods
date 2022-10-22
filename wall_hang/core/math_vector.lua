@@ -265,6 +265,10 @@ function Normalize(vector)
     end
 end
 
+function Negate(vector)
+    return Vector4.new(-vector.x, -vector.y, -vector.z, 1)
+end
+
 -- Returns the portion of this vector that lies along the other vector
 -- NOTE: The return will be the same direction as alongVector, but the length from zero to this vector's full length
 --

@@ -74,6 +74,17 @@ function GetScaledValue(minReturn, maxReturn, minRange, maxRange, valueRange)
     return minReturn + (percent * (maxReturn - minReturn))
 end
 
+function LERP(min, max, percent)
+    return min + ((max - min) * percent)
+end
+function LERP_vec4(min, max, percent)
+    return Vector4.new(
+        LERP(min.x, max.x, percent),
+        LERP(min.y, max.y, percent),
+        LERP(min.z, max.z, percent),
+        1)
+end
+
 function Clamp(min, max, value)
     if value < min then
         return min

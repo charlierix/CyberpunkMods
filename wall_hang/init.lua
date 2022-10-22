@@ -12,6 +12,8 @@
 
 --https://github.com/jac3km4/redscript
 
+require "core/bezier"
+require "core/bezier_segment"
 require "core/color"
 require "core/debug_code"
 require "core/debug_render_logger"
