@@ -22,6 +22,8 @@ using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+// NOTE: This is old and not used anymore.  The real window is part of Game.Math_WPF.dll (see App.xaml.cs)
+
 namespace DebugRenderViewer
 {
     /// <summary>
@@ -357,6 +359,18 @@ namespace DebugRenderViewer
                     return;
 
                 ShowFrame(_scene.frames[Convert.ToInt32(trkMultiFrame.Value)]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                new Game.Math_WPF.WPF.DebugLogViewer.DebugLogWindow().Show();
             }
             catch (Exception ex)
             {

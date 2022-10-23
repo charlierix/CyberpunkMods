@@ -8,10 +8,13 @@ using System.Windows;
 
 namespace DebugRenderViewer
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            // The viewer in this project is an old version.  The version in the dll is what is maintained, so using that instead
+            // https://github.com/charlierix/PartyPeople/tree/master/Math_WPF/WPF/DebugLogViewer
+            new Game.Math_WPF.WPF.DebugLogViewer.DebugLogWindow().Show();
+        }
     }
 }
