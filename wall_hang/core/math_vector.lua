@@ -473,7 +473,6 @@ function GetDirection(unitDirection, length)
     return Vector4.new(unitDirection.x * length, unitDirection.y * length, unitDirection.z * length, 1)
 end
 
-
 -- This removes the z and makes sure that that 2D portion is a length of 1
 -- Returns two numbers.  x and y
 function To2DUnit(vector)

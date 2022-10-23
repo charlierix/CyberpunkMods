@@ -32,7 +32,7 @@ function GetBezierPoints_ControlPoints(count, control_points)
 
     table.insert(retVal, control_points[1])
 
-    for i = 2, count - 2, 1 do
+    for i = 1, count - 2, 1 do
         table.insert(retVal, GetBezierPoint_ControlPoints(i / (count - 1), control_points))
     end
 
@@ -54,7 +54,7 @@ function GetBezierPoints_Segments(count, segments)
 
     for i = 2, count - 1, 1 do
         -- Get the location along the entire path
-        local total_percent = i / (count - 1)
+        local total_percent = (i - 1) / (count - 1)
         local portion_total_len = total_len * total_percent
 
         -- Advance to the appropriate segment
@@ -67,7 +67,7 @@ function GetBezierPoints_Segments(count, segments)
         local local_percent = local_len / segments[index].length_quick
 
         -- Calculate the bezier point
-        table.insert(retVal, GetPoint(local_percent, segments[index].combined))
+        table.insert(retVal, GetBezierPoint_ControlPoints(local_percent, segments[index].combined))
     end
 
     table.insert(retVal, segments[#segments].end1)      --NOTE: If the segment is a closed curve, this is the same point as retVal[0].  May want a boolean that tells whether the last point should be replicated
@@ -123,7 +123,7 @@ function GetBezierPoint_ControlPoints(percent, control_points)
     local prev = control_points
     local current = nil
 
-    for outer = #control_points, 1, -1 do
+    for outer = #control_points, 2, -1 do
         current = {}
 
         for inner = 1, outer - 1, 1 do
@@ -173,18 +173,18 @@ function this.GetBezierSegments_Closed(ends, along)
     for i = 2, #ends, 1 do
         local last_index
         if i == #ends then
-            last_index = 0
+            last_index = 1
         else
             last_index = i + 1
         end
 
-        local adjusted_along_1, adjusted_along_2 = this.GetAdjustedRatios(ends[i - 1], ends[i], ends[last_index], along);
+        local adjusted_along_1, adjusted_along_2 = this.GetAdjustedRatios(ends[i - 1], ends[i], ends[last_index], along)
 
-        table.insert(controls, GetControlPoints_Middle(ends[i - 1], ends[i], ends[last_index], adjusted_along_1, adjusted_along_2))
+        table.insert(controls, this.GetControlPoints_Middle(ends[i - 1], ends[i], ends[last_index], adjusted_along_1, adjusted_along_2))
     end
 
-    local adjusted_along_1, adjusted_along_2 = this.GetAdjustedRatios(ends[#ends], ends[0], ends[1], along);
-    local extra_control = GetControlPoints_Middle(ends[#ends], ends[0], ends[1], adjusted_along_1, adjusted_along_2);      -- loop back
+    local adjusted_along_1, adjusted_along_2 = this.GetAdjustedRatios(ends[#ends], ends[0], ends[1], along)
+    local extra_control = this.GetControlPoints_Middle(ends[#ends], ends[1], ends[2], adjusted_along_1, adjusted_along_2)      -- loop back
 
     -- Build the return segments
     local retVal = {}
@@ -206,7 +206,7 @@ function this.GetBezierSegments_Closed(ends, along)
 
         local lastIndex
         if i == #ends then
-            lastIndex = 0
+            lastIndex = 1
         else
             lastIndex = i + 1
         end
@@ -216,12 +216,45 @@ function this.GetBezierSegments_Closed(ends, along)
 
     return retVal;
 end
+function this.GetBezierSegments_Open(ends, along)
+    -- Precalculate the control points
+    local controls = {}
+
+    for i = 2, #ends - 1, 1 do
+        local adjusted_along_1, adjusted_along_2 = this.GetAdjustedRatios(ends[i - 1], ends[i], ends[i + 1], along)
+
+        table.insert(controls, this.GetControlPoints_Middle(ends[i - 1], ends[i], ends[i + 1], adjusted_along_1, adjusted_along_2))
+    end
+
+    -- Build the return segments
+    local retVal = {}
+
+    for i = 1, #ends - 1, 1 do
+        local ctrl0
+        if i == 1 then
+            ctrl0 = nil
+        else
+            ctrl0 = controls[i - 1][2]
+        end
+
+        local ctrl1
+        if i == #ends - 1 then
+            ctrl1 = nil
+        else
+            ctrl1 = controls[i][1]
+        end
+
+        table.insert(retVal, BezierSegment:new(ends[i], ends[i + 1], this.GetArray(ctrl0, ctrl1)))
+    end
+
+    return retVal;
+end
 
 -- p1,p2,p3 are points (Vector4)
 -- along is percent along each line segment (a length to make the control point away from end point)
 function this.GetAdjustedRatios(p1, p2, p3, along)
-    local len_12 = math.sqrt(GetVectorDiffLengthSqr(p2 - p1))
-    local len_23 = math.sqrt(GetVectorDiffLengthSqr(p3 - p2))
+    local len_12 = math.sqrt(GetVectorDiffLengthSqr(p2, p1))
+    local len_23 = math.sqrt(GetVectorDiffLengthSqr(p3, p2))
 
     -- The shorter segment gets the full amount, and the longer segment gets an adjusted amount
 
@@ -235,7 +268,6 @@ function this.GetAdjustedRatios(p1, p2, p3, along)
         return along * (len_23 / len_12), along
     end
 end
-
 
 -- This is a helper method to generate control points
 --
@@ -349,16 +381,16 @@ function this.GetRepeatingArray(count, value)
     return retVal
 end
 
--- Turns the two points into an array (the points could be nil)
+-- Turns the two points into an array (either of the points could be nil)
 function this.GetArray(p1, p2)
     local retVal = {}
 
     if p1 then
-        table.insert(p1)
+        table.insert(retVal, p1)
     end
 
     if p2 then
-        table.insert(p2)
+        table.insert(retVal, p2)
     end
 
     return retVal
