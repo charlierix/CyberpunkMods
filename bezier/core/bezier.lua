@@ -183,7 +183,7 @@ function this.GetBezierSegments_Closed(ends, along)
         table.insert(controls, this.GetControlPoints_Middle(ends[i - 1], ends[i], ends[last_index], adjusted_along_1, adjusted_along_2))
     end
 
-    local adjusted_along_1, adjusted_along_2 = this.GetAdjustedRatios(ends[#ends], ends[0], ends[1], along)
+    local adjusted_along_1, adjusted_along_2 = this.GetAdjustedRatios(ends[#ends], ends[1], ends[2], along)
     local extra_control = this.GetControlPoints_Middle(ends[#ends], ends[1], ends[2], adjusted_along_1, adjusted_along_2)      -- loop back
 
     -- Build the return segments
@@ -255,6 +255,23 @@ end
 function this.GetAdjustedRatios(p1, p2, p3, along)
     local len_12 = math.sqrt(GetVectorDiffLengthSqr(p2, p1))
     local len_23 = math.sqrt(GetVectorDiffLengthSqr(p3, p2))
+
+    local v12 = Vector4.new((p2.x - p1.x) / len_12, (p2.y - p1.y) / len_12, (p2.z - p1.z) / len_12, 1)      -- needs to be a unit vector for the dot product to make sense
+    local v23 = Vector4.new((p3.x - p2.x) / len_23, (p3.y - p2.y) / len_23, (p3.z - p2.z) / len_23, 1)
+
+    -- Adjust at extreme angles
+    local dot = DotProduct3D(v12, v23)
+
+    if dot < -0.9 then
+        along = GetScaledValue(along / 3, along, -1, -0.9, dot)     -- pinched.  need to reduce so it doesn't get so loopy
+
+    elseif dot > 0.25 then
+        along = GetScaledValue(along, along * 2, 0.25, 1, dot)       -- obtuse.  expanding so it becomes a smoother curve
+    end
+
+    if along > 0.5 then
+        along = 0.5     -- if length goes beyond midpoint, the final curve looks bad
+    end
 
     -- The shorter segment gets the full amount, and the longer segment gets an adjusted amount
 

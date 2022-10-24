@@ -57,7 +57,7 @@ registerHotkey("BezierTester_Multi", "multi", function()
     local beziers = nil
     if math.random(2) == 1 then
         log:WriteLine_Global("open path")
-        beziers= GetBezierSegments(endpoints, 0.2, false)
+        beziers = GetBezierSegments(endpoints, 0.3, false)
     else
         log:WriteLine_Global("closed path")
         beziers = GetBezierSegments(endpoints, 0.3, true)
