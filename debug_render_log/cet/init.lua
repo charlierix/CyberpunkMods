@@ -12,53 +12,10 @@
 
 --https://github.com/jac3km4/redscript
 
-require "code/debug_render_logger"
-require "code/debug_render_screen"
-require "code/test_ink"
-extern_json = require "code/external/json"       -- storing this in a global variable so that its functions must be accessed through that variable
+require "debug_render_logger"
+extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable
 
-local draw = nil
-local last_event1 = nil
-local last_event2 = nil
-
-registerForEvent("onInit", function()
-
-    -- This is firing whenever config comes up (talking to vendor, pressing I)
-    -- Observe('gameuiInGameMenuGameController', 'SpawnMenuInstanceEvent', function(self) -- Get Controller to spawn popup
-    --     last_event = self
-    --     print("gameuiInGameMenuGameController.SpawnMenuInstanceEvent: " .. tostring(self))
-    -- end)
-
-
-
-    -- These seem to fire once during game load
-    Observe('PopupsManager', 'OnPlayerAttach', function(self) -- Get Controller to spawn popup
-		last_event1 = self
-        print("PopupsManager.OnPlayerAttach: " .. tostring(self))
-	end)
-    Observe('PopupsManager', 'OnPlayerDetach', function()
-		last_event1 = nil
-        print("PopupsManager.OnPlayerDetach")
-	end)
-
-
-
-    -- These never fired
-    Observe("hudCameraController", "OnInitialize", function(self)
-        last_event2 = self
-        print("hudCameraController.OnInitialize")
-    end)
-	Observe("hudCameraController", "OnUninitialize", function() -- When the cam breaks / player takes damage
-        last_event2 = nil
-        print("hudCameraController.OnUninitialize")
-	end)
-
-
-
-
-end)
-
-registerHotkey("DebugRenderLoggerTestKey_log", "log hotkey", function()
+registerHotkey("DebugRenderLoggerTestKey", "tester hotkey", function()
 
     --NOTE: Be sure to add a folder "!logs" (or change the constant at the top of the logger class)
 
@@ -96,37 +53,3 @@ registerHotkey("DebugRenderLoggerTestKey_log", "log hotkey", function()
 
     log:Save()
 end)
-registerHotkey("DebugRenderLoggerTestKey_screen", "screen hotkey", function()
-    draw = DebugRenderScreen:new(true)
-
-    draw:DefineCategory("a", "DB0", 0.8)
-    draw:DefineCategory("b", "0FF", 3.14159)
-
-    draw:Add_Dot(Vector4.new(0, 0, 0, 1))
-
-    draw:Draw()
-
--- registerForEvent("onDraw", function()
---     if draw then
---         draw:Draw()
---     end
--- end)
-
-end)
-
-registerHotkey("DebugRenderLoggerTestKey_learn", "inkCanvas test", function()
-
-
-
-end)
-
-function NOTES()
-
-    -- anygoodname — Yesterday at 3:47 AM
-    -- BTW: have you had a chance to play with IsInCameraFrustum(obj : whandle:gameObject, objHeight : Float, objRadius : Float) : Bool?
-
-    
-    -- figure out how to create a simple graphic at the center of the screen
-    -- https://discord.com/channels/717692382849663036/786902567778910229/929416684459159583
-    
-end
