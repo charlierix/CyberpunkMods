@@ -141,6 +141,7 @@ local vars =
     flightMode = const.flightModes.standard,
     --kdash = KDashInputTracker:new(),          -- moved to init
     --rayHitStorage = RaycastHitStorage:new(),  -- moved to init
+    --keys      -- putting this here so it can be referenced elsewhere
 
     ----- these are added from other places -----
     --lasercats
@@ -204,6 +205,7 @@ registerForEvent("onInit", function()
     InitializeRandom()
 
     keys = Keys:new(debug, const)
+    vars.keys = keys
     vars.kdash = KDashInputTracker:new()
     vars.rayHitStorage = RaycastHitStorage:new()
 

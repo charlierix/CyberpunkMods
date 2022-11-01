@@ -10,6 +10,7 @@ function Transition_ToStandard(vars, debug, o, const)
     vars.flightMode = const.flightModes.standard
     o:Custom_CurrentlyFlying_Clear()
 
+    vars.keys.forceFlight = false       -- this was getting pressed while in menus, then flight activate when coming out of menu
     vars.kdash:Clear()
     vars.lasercats:Stop()
 
