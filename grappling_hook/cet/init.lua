@@ -584,6 +584,9 @@ end
 
 function TODO()
 
+    -- Clear on Start:
+    --  Call GameObjectAccessor:Custom_CurrentlyFlying_Clear() from init in case there was a crash during uninterupptible flight
+
     -- Aim Allows Death:
     --  I hit the ground hard while aiming, and grappling hook had stolen flight, which prevented jetpack from doing a safe landing
 

@@ -159,7 +159,7 @@ function GetBezierSegments(ends, along, isClosed)
         local ends_closed = table.move(ends, 1, #ends-1, 1, {})
         return this.GetBezierSegments_Closed(ends_closed, along)     -- removing the last point, which is redundant
     else
-        return this.GetBezierSegments_Open(ends, along);
+        return this.GetBezierSegments_Open(ends, along)
     end
 end
 
@@ -214,7 +214,7 @@ function this.GetBezierSegments_Closed(ends, along)
         table.insert(retVal, BezierSegment:new(ends[i], ends[lastIndex], this.GetArray(ctrl0, ctrl1)))
     end
 
-    return retVal;
+    return retVal
 end
 function this.GetBezierSegments_Open(ends, along)
     -- Precalculate the control points
@@ -247,7 +247,7 @@ function this.GetBezierSegments_Open(ends, along)
         table.insert(retVal, BezierSegment:new(ends[i], ends[i + 1], this.GetArray(ctrl0, ctrl1)))
     end
 
-    return retVal;
+    return retVal
 end
 
 -- p1,p2,p3 are points (Vector4)
@@ -326,7 +326,7 @@ function this.GetControlPoints_Middle(end1, end2, end3, percent_along_12, percen
         return { end2, end2 }
     end
 
-    local control_line_unit;
+    local control_line_unit
     if DotProduct3D(dir21, control_line) > 0 then
         -- Control line is toward end 1
         control_line_unit = ToUnit(control_line)
