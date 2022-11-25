@@ -98,7 +98,7 @@ end
 function this.GetInputOutputPercents(samples, lengths, length_quick)
     local retVal = {}
 
-    table.insert(retVal, { 0, 0 })
+    table.insert(retVal, { input = 0, output = 0 })
 
     local input_inc = 1 / (#samples - 1)
     local sum_input = 0
@@ -108,10 +108,10 @@ function this.GetInputOutputPercents(samples, lengths, length_quick)
         sum_input = sum_input + input_inc
         sum_output = sum_output + lengths[i]
 
-        table.insert(retVal, { sum_input, sum_output / length_quick })
+        table.insert(retVal, { input = sum_input, output = sum_output / length_quick })
     end
 
-    table.insert(retVal, { 1, 1 })
+    table.insert(retVal, { input = 1, output = 1 })
 
     return retVal;
 end

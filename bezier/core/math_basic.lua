@@ -160,6 +160,45 @@ function Format_DecimalToDozenal(decimal_value, fractional_places)
     return retVal
 end
 
+-- LINQ style operations
+-- Usage:
+--  local min = Min(list, function(o) return o.propname end)
+function Min(list, selector)
+    local retVal = nil
+
+    for _, item in pairs(list) do
+        local value = selector(item)
+
+        if retVal == nil or value < retVal then
+            retVal = value
+        end
+    end
+
+    return retVal
+end
+function Max(list, selector)
+    local retVal = nil
+
+    for _, item in pairs(list) do
+        local value = selector(item)
+
+        if retVal == nil or value > retVal then
+            retVal = value
+        end
+    end
+
+    return retVal
+end
+function Sum(list, selector)
+    local retVal = 0
+
+    for _, item in pairs(list) do
+        retVal = retVal + selector(item)
+    end
+
+    return retVal
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.GetDozenalParts(decimal_value, fractional_places)

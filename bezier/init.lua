@@ -4,8 +4,11 @@ require "core/debug_render_logger"
 require "core/math_basic"
 require "core/math_vector"
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
+require "temp/reporting"
 
 local this = {}
+
+--------------------------------------- HotKeys ---------------------------------------
 
 registerHotkey("BezierTester_Single", "single", function()
     local log = this.GetLogger()
@@ -34,10 +37,7 @@ registerHotkey("BezierTester_Single", "single", function()
     --local samples = GetBezierPoints_ControlPoints(36, bezier_seg.combined)
 
     local samples = GetBezierPoints_Segment(36, bezier_seg)
-
-    for i = 1, #samples, 1 do
-        log:Add_Dot(samples[i], "sample")
-    end
+    this.DrawSamples(log, samples)
 
     log:Save("single")
 end)
@@ -70,19 +70,63 @@ registerHotkey("BezierTester_Multi", "multi", function()
     end
 
     local samples = GetBezierPoints_Segments(72, beziers)
-    for i = 1, #samples, 1 do
-        log:Add_Dot(samples[i], "sample")
-    end
+    this.DrawSamples(log, samples)
 
     log:Save("multi")
 end)
 
+registerHotkey("BezierTester_Multi_Uniform", "multi uniform", function()
+    local log = this.GetLogger()
+
+    local endpoints = {}
+    local count = math.random(3, 6)
+    for i = 1, count, 1 do
+        table.insert(endpoints, GetRandomVector_Spherical(0, 4))
+        log:Add_Dot(endpoints[#endpoints], "end")
+    end
+
+    --table.insert(endpoints, endpoints[1])       -- this would cause the call to open detect a closed path (circle)
+
+    local beziers = nil
+    if math.random(2) == 1 then
+        log:WriteLine_Global("open path")
+        beziers = GetBezierSegments(endpoints, 0.3, false)
+    else
+        log:WriteLine_Global("closed path")
+        beziers = GetBezierSegments(endpoints, 0.3, true)
+    end
+
+    for i = 1, #beziers, 1 do
+        for j = 1, #beziers[i].control_points, 1 do
+            log:Add_Dot(beziers[i].control_points[j], "control")
+        end
+    end
+
+    local samples = GetBezierPoints_Segments_UniformDistribution(72, beziers)
+    this.DrawSamples(log, samples)
+
+    log:Save("multi_uniform")
+end)
+
+----------------------------------- Private Methods -----------------------------------
+
 function this.GetLogger()
     local log = DebugRenderLogger:new(true)
 
-    log:DefineCategory("end", "000", 1.5)
-    log:DefineCategory("control", "BA655F", 1.25)
-    log:DefineCategory("sample", "A2D7FC", 1)
+    log:DefineCategory("end", "000", 1)
+    log:DefineCategory("control", "BA655F", 0.75)
+    log:DefineCategory("sample", "81ABC9", 0.333)
+    log:DefineCategory("line", "FFF", 1)
 
     return log
+end
+
+function this.DrawSamples(log, samples)
+    for i = 1, #samples, 1 do
+        log:Add_Dot(samples[i], "sample")
+
+        if i < #samples then
+            log:Add_Line(samples[i], samples[i + 1], "line")
+        end
+    end
 end
