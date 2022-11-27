@@ -43,34 +43,44 @@ end
 function GetBezierPoints_Segment(count, segment)
     return GetBezierPoints_ControlPoints(count, segment.combined)
 end
-function GetBezierPoints_Segments(count, segments)
-    local total_len, cumulative_lengths = this.GetTotalLength2(segments)
 
+function GetBezierPoints_Segments(count, segments)
+    local _, counts, current_count = this.GetTotalLength3(segments, count)
+
+    while current_count ~= count do
+        local densities = this.GetDensities(segments, counts)
+
+        if current_count < count then
+            current_count = this.AddCountToSegment(current_count, counts, densities)
+        else
+            current_count = this.RemoveCountFromSegment(current_count, counts, densities)
+        end
+    end
+
+    return this.GetSamples(segments, counts)
+end
+-- Returns points across several segment definitions (linked together into a single path).  count is the total number of sample points to return
+--
+-- The points are evenly distributed (line segment length between two points is the same).  This looks good for
+-- sweeping curves, but pinched curves don't have enough points at the pinch point and look jagged
+function GetBezierPoints_Segments_UniformDistribution(count, segments)
     local retVal = {}
 
     table.insert(retVal, segments[1].end0)
 
-    local index = 1
-
+    local percents = {}
     for i = 2, count - 1, 1 do
-        -- Get the location along the entire path
-        local total_percent = (i - 1) / (count - 1)
-        local portion_total_len = total_len * total_percent
-
-        -- Advance to the appropriate segment
-        while cumulative_lengths[index + 1] < portion_total_len do
-            index = index + 1
-        end
-
-        -- Get the percent of the current segment
-        local local_len = portion_total_len - cumulative_lengths[index]
-        local local_percent = local_len / segments[index].length_quick
-
-        -- Calculate the bezier point
-        table.insert(retVal, GetBezierPoint_ControlPoints(local_percent, segments[index].combined))
+        table.insert(percents, (i - 1) / (count - 1))
     end
 
-    table.insert(retVal, segments[#segments].end1)      --NOTE: If the segment is a closed curve, this is the same point as retVal[0].  May want a boolean that tells whether the last point should be replicated
+    local normalized_percents = this.ConvertToNormalizedPositions_TotalToLocal(percents, segments)
+
+    for i = 1, #normalized_percents, 1 do
+        -- Calculate the bezier point
+        table.insert(retVal, GetBezierPoint_ControlPoints(normalized_percents[i].Segment_Local_Percent, segments[normalized_percents[i].Segment_Index].combined))
+    end
+
+    table.insert(retVal, segments[#segments].end1)     --NOTE: If the segment is a closed curve, this is the same point as retVal[1].  May want a boolean that tells whether the last point should be replicated
 
     return retVal
 end
@@ -159,7 +169,7 @@ function GetBezierSegments(ends, along, isClosed)
         local ends_closed = table.move(ends, 1, #ends-1, 1, {})
         return this.GetBezierSegments_Closed(ends_closed, along)     -- removing the last point, which is redundant
     else
-        return this.GetBezierSegments_Open(ends, along);
+        return this.GetBezierSegments_Open(ends, along)
     end
 end
 
@@ -183,7 +193,7 @@ function this.GetBezierSegments_Closed(ends, along)
         table.insert(controls, this.GetControlPoints_Middle(ends[i - 1], ends[i], ends[last_index], adjusted_along_1, adjusted_along_2))
     end
 
-    local adjusted_along_1, adjusted_along_2 = this.GetAdjustedRatios(ends[#ends], ends[0], ends[1], along)
+    local adjusted_along_1, adjusted_along_2 = this.GetAdjustedRatios(ends[#ends], ends[1], ends[2], along)
     local extra_control = this.GetControlPoints_Middle(ends[#ends], ends[1], ends[2], adjusted_along_1, adjusted_along_2)      -- loop back
 
     -- Build the return segments
@@ -214,7 +224,7 @@ function this.GetBezierSegments_Closed(ends, along)
         table.insert(retVal, BezierSegment:new(ends[i], ends[lastIndex], this.GetArray(ctrl0, ctrl1)))
     end
 
-    return retVal;
+    return retVal
 end
 function this.GetBezierSegments_Open(ends, along)
     -- Precalculate the control points
@@ -247,7 +257,7 @@ function this.GetBezierSegments_Open(ends, along)
         table.insert(retVal, BezierSegment:new(ends[i], ends[i + 1], this.GetArray(ctrl0, ctrl1)))
     end
 
-    return retVal;
+    return retVal
 end
 
 -- p1,p2,p3 are points (Vector4)
@@ -255,6 +265,23 @@ end
 function this.GetAdjustedRatios(p1, p2, p3, along)
     local len_12 = math.sqrt(GetVectorDiffLengthSqr(p2, p1))
     local len_23 = math.sqrt(GetVectorDiffLengthSqr(p3, p2))
+
+    local v12 = Vector4.new((p2.x - p1.x) / len_12, (p2.y - p1.y) / len_12, (p2.z - p1.z) / len_12, 1)      -- needs to be a unit vector for the dot product to make sense
+    local v23 = Vector4.new((p3.x - p2.x) / len_23, (p3.y - p2.y) / len_23, (p3.z - p2.z) / len_23, 1)
+
+    -- Adjust at extreme angles
+    local dot = DotProduct3D(v12, v23)
+
+    if dot < -0.9 then
+        along = GetScaledValue(along / 3, along, -1, -0.9, dot)     -- pinched.  need to reduce so it doesn't get so loopy
+
+    elseif dot > 0.25 then
+        along = GetScaledValue(along, along * 2, 0.25, 1, dot)       -- obtuse.  expanding so it becomes a smoother curve
+    end
+
+    if along > 0.5 then
+        along = 0.5     -- if length goes beyond midpoint, the final curve looks bad
+    end
 
     -- The shorter segment gets the full amount, and the longer segment gets an adjusted amount
 
@@ -309,7 +336,7 @@ function this.GetControlPoints_Middle(end1, end2, end3, percent_along_12, percen
         return { end2, end2 }
     end
 
-    local control_line_unit;
+    local control_line_unit
     if DotProduct3D(dir21, control_line) > 0 then
         -- Control line is toward end 1
         control_line_unit = ToUnit(control_line)
@@ -357,7 +384,6 @@ function this.GetTotalLength1(segments)
     return retVal
 end
 function this.GetTotalLength2(segments)
-
     local total_len = 0
     local cumulative_lengths = {}        -- this is one larger than #segments
 
@@ -369,6 +395,25 @@ function this.GetTotalLength2(segments)
     end
 
     return total_len, cumulative_lengths
+end
+function this.GetTotalLength3(segments, count)
+    local total_len = 0
+
+    for i = 1, #segments, 1 do
+        total_len = total_len + segments[i].length_quick
+    end
+
+    local counts = {}
+    local current_count = 0
+
+    for i = 1, #segments, 1 do
+        local ratio = segments[i].length_quick / total_len
+        table.insert(counts, Round(count * ratio))
+
+        current_count = current_count + counts[#counts]
+    end
+
+    return total_len, counts, current_count
 end
 
 function this.GetRepeatingArray(count, value)
@@ -391,6 +436,351 @@ function this.GetArray(p1, p2)
 
     if p2 then
         table.insert(retVal, p2)
+    end
+
+    return retVal
+end
+
+-- This walks through the list of desired percents and returns percents to use that when applied to the bezier
+-- will be that desired percent
+--
+-- This is a loop for optimization reasons, which requires the percents to be streamed in ascending order
+--private static IEnumerable<NormalizedPosPointer> ConvertToNormalizedPositions(IEnumerable<double> total_percents, BezierSegment3D_wpf[] segments)
+function this.ConvertToNormalizedPositions_TotalToLocal(total_percents, segments)
+    local total_len, cumulative_lengths = this.GetCumulativeLengths(segments)
+
+    local prev_percent = 0
+    local segment_index = 1
+    local sample_index = 1
+
+    local retVal = {}
+
+    for i = 1, #total_percents, 1 do
+        if total_percents[i] < prev_percent then
+            print("ConvertToNormalizedPositions: The percents must be passed in ascending order.  current: " .. tostring(total_percents[i]) .. ", prev: " .. tostring(prev_percent))
+        end
+
+        prev_percent = total_percents[i]
+
+        -- Get the location along the entire path
+        local portion_total_len = total_len * total_percents[i]
+
+        -- Advance to the appropriate segment
+        while cumulative_lengths[segment_index + 1] < portion_total_len do
+            segment_index = segment_index + 1
+        end
+
+        -- Get the percent of the current segment
+        local local_len = portion_total_len - cumulative_lengths[segment_index]
+        local local_percent_desired = local_len / segments[segment_index].length_quick
+        local local_percent_actual = this.GetInputForOutput(local_percent_desired, segments[segment_index].percents)
+
+        table.insert(retVal,
+        {
+            Desired_Index = sample_index,
+            Total_Percent = total_percents[i],
+            Segment_Index = segment_index,
+            Segment_Local_Percent = local_percent_actual,
+        })
+
+        sample_index = sample_index + 1
+    end
+
+    return retVal
+end
+--private static IEnumerable<NormalizedPosPointer> ConvertToNormalizedPositions(IEnumerable<(int segment_index, double percent_along_segment)> local_percents, BezierSegment3D_wpf[] segments)
+function this.ConvertToNormalizedPositions_LocalToTotal(local_percents, segments)
+    local total_len, cumulative_lengths = this.GetCumulativeLengths(segments)
+
+    local prev_index = 1
+    local prev_percent = 0
+    local sample_index = 1
+
+    local retVal = {}
+
+    for i = 1, #local_percents, 1 do
+        if local_percents[i].segment_index < prev_index or (local_percents[i].segment_index == prev_index and local_percents[i].percent_along_segment < prev_percent) then
+            print("The percents must be passed in ascending order.  current: " .. tostring(local_percents[i].segment_index) .. " - " .. tostring(local_percents[i].percent_along_segment) .. ", prev: " .. tostring(prev_index) .. " - " .. tostring(prev_percent))
+        end
+
+        prev_index = local_percents[i].segment_index
+        prev_percent = local_percents[i].percent_along_segment
+
+        local from_len = cumulative_lengths[local_percents[i].segment_index]
+        local to_len = cumulative_lengths[local_percents[i].segment_index + 1]      -- there is one more entry in cumulative_lengths.  Element 0 is always 0
+
+        local lerp_len = LERP(from_len, to_len, local_percents[i].percent_along_segment)
+
+        table.insert(retVal,
+        {
+            Desired_Index = sample_index,
+            Total_Percent = lerp_len / total_len,
+            Segment_Index = local_percents[i].segment_index,
+            Segment_Local_Percent = local_percents[i].percent_along_segment,
+        })
+
+        sample_index = sample_index + 1
+    end
+
+    return retVal
+end
+
+--private static (double total_len, double[] cumulative_lengths) GetCumulativeLengths(BezierSegment3D_wpf[] segments)
+function this.GetCumulativeLengths(segments)
+    -- Get the total length of the curve
+    local total_len = 0
+    local cumulative_lengths = {}
+
+    table.insert(cumulative_lengths, 0)
+
+    for i = 1, #segments, 1 do
+        total_len = total_len + segments[i].length_quick
+        table.insert(cumulative_lengths, cumulative_lengths[i] + segments[i].length_quick)
+    end
+
+    return total_len, cumulative_lengths
+end
+
+-- For percents, see BezierSegment.this.GetInputOutputPercents
+--private static double GetInputForOutput(double output, (double input, double output)[] percents)
+function this.GetInputForOutput(output, percents)
+    if output <= 0 then
+        return 0
+    elseif output >= 1 then
+        return 1
+    end
+
+    for i = 1, #percents, 1 do
+        if output <= percents[i].output then
+            return GetScaledValue(percents[i - 1].input, percents[i].input, percents[i - 1].output, percents[i].output, output)
+        end
+    end
+
+    print("GetInputForOutput: Couldn't find input for output: " .. tostring(output))
+end
+
+function this.GetDensities(segments, counts)
+    local retVal = {}
+
+    for i = 1, #segments, 1 do
+        table.insert(retVal,
+        {
+            Index = i,
+            Density_Minus = (counts[i] - 1) / segments[i].length_quick,
+            Density_Current = counts[i] / segments[i].length_quick,
+            Density_Plus = (counts[i] + 1) / segments[i].length_quick,
+        })
+    end
+
+    return retVal
+end
+
+function this.AddCountToSegment(current_count, counts, densities)
+    --#region NOPE
+
+    --var best = densities.
+    --    OrderBy(o => o.Density_Plus).
+    --    ToArray();
+
+    --var projections = Enumerable.Range(0, densities.Length).
+    --    Select(o => densities.
+    --        Select(p => new
+    --        {
+    --            item = p,
+    --            density = p.Index == o ?
+    --                p.Density_Plus :
+    --                p.Density_Current,
+    --        }).
+    --        OrderBy(p => p.density).
+    --        ToArray()).
+    --    Select((o,i) => new
+    --    {
+    --        index = i,
+    --        count_prev = counts[i],
+    --        count_new = counts[i] + 1,
+    --        projected_densities = o,
+    --        gap = o[^1].density - o[0].density,
+    --    }).
+    --    OrderBy(o => o.gap).
+    --    ToArray();
+
+
+    --var window = new Debug3DWindow();
+
+    --var graphs = projections.
+    --    Select(o => Debug3DWindow.GetGraph(o.projected_densities.Select(p => p.density).ToArray(), o.index.ToString())).
+    --    ToArray();
+
+    --window.AddGraphs(graphs, new Point3D(), 1);
+
+    --window.Show();
+
+    --counts[projections[0].index]++;
+
+    --#endregion
+
+    -- In this case, add to the one with the lowest density
+    local best_index = -1
+    local best_density = 1000000        --math.maxinteger      -- maxinteger is nil
+
+    for i = 1, #densities, 1 do
+        if densities[i].Density_Current < best_density then
+            best_index = densities[i].Index     -- probably the same as i
+            best_density = densities[i].Density_Current
+        end
+    end
+
+    counts[best_index] = counts[best_index] + 1
+
+    return current_count + 1
+end
+function this.RemoveCountFromSegment(current_count, counts, densities)
+    --#region NOPE
+
+    --var best = densities.
+    --    OrderByDescending(o => o.Density_Current).
+    --    ToArray();
+
+    -- In this case, use the one that after removing, it's still the highest density (it's the segment that will have the least impact of removal)
+    --NO: need to use aspects of the projected query
+    --var best = densities.
+    --    OrderByDescending(o => o.Density_Minus).        
+    --    ToArray();
+
+    --counts[best[0].Index]--;
+
+
+
+    --var projections = Enumerable.Range(0, densities.Length).
+    --    Select(o => densities.
+    --        Select(p => new
+    --        {
+    --            item = p,
+    --            density = p.Index == o ?
+    --                p.Density_Minus :
+    --                p.Density_Current,
+    --        }).
+    --        OrderByDescending(p => p.density).
+    --        ToArray()).
+    --    Select((o, i) => new
+    --    {
+    --        index = i,
+    --        count_prev = counts[i],
+    --        count_new = counts[i] - 1,
+    --        projected_densities = o,
+    --        gap = o[0].density - o[^1].density,
+    --    }).
+    --    OrderBy(o => o.gap).
+    --    ToArray();
+
+
+    --var window = new Debug3DWindow();
+
+    --var graphs = projections.
+    --    Select(o => Debug3DWindow.GetGraph(o.projected_densities.Select(p => p.density).ToArray(), o.index.ToString())).
+    --    ToArray();
+
+    --window.AddGraphs(graphs, new Point3D(), 1);
+
+    --window.Show();
+
+    --counts[projections[0].index]--;
+
+    --#endregion
+
+
+
+    -- Remove the index that will have the least impact
+    -- var projections = Enumerable.Range(0, densities.Length).
+    --     Select(o => densities.
+    --         Select(p => new
+    --         {
+    --             item = p,
+    --             density = p.Index == o ?
+    --                 p.Density_Minus :
+    --                 p.Density_Current,
+    --         }).
+    --         OrderByDescending(p => p.density).
+    --         ToArray()).
+    --     Select((o, i) => new
+    --     {
+    --         index = i,
+    --         projected_densities = o,        -- this is what the densities look like with that single index removed
+    --         lowest_density = o.Min(p => p.density),
+    --     }).
+    --     OrderByDescending(o => o.lowest_density).
+    --     ToArray();
+
+    local projections1 = {}
+
+    for i = 1, #densities, 1 do
+        table.insert(projections1, this.RemoveCountFromSegment_Projection1(i, densities))
+    end
+
+    local projections2 = {}
+
+    for i = 1, #projections1, 1 do
+        table.insert(projections2,
+        {
+            index = i,
+            projected_densities = projections1[i],      -- this is what the densities look like with that single index removed
+            lowest_density = Min(projections1[i], function(o) return o.density end),
+        })
+    end
+
+    table.sort(projections2, function(a, b) return a.lowest_density > b.lowest_density end)
+
+    counts[projections2[1].index] = counts[projections2[1].index] - 1
+
+    return current_count - 1
+end
+function this.RemoveCountFromSegment_Projection1(index, densities)
+    local retVal = {}
+
+    for i = 1, #densities, 1 do
+        local density
+        if densities[i].Index == index then
+            density = densities[i].Density_Minus
+        else
+            density = densities[i].Density_Current
+        end
+
+        table.insert(retVal,
+        {
+            item = densities[i],
+            density = density,
+        })
+    end
+
+    table.sort(retVal, function(a, b) return a.density > b.density end)
+
+    return retVal
+end
+
+function this.GetSamples(segments, counts)        --, is_closed)
+    local retVal = {}
+
+    for i = 1, #segments, 1 do
+        local count_adjusted = counts[i]
+        local take_first = true
+
+        if i > 1 then  -- || is_closed)        -- turns out the first point of the first segment is needed
+            -- The first point of i is the same as the last point of i-1.  If this is closed, then the last
+            -- point of ^1 will be used as the first point of 0
+            count_adjusted = count_adjusted + 1
+            take_first = false
+        end
+
+        local points = GetBezierPoints_Segment(count_adjusted, segments[i])
+
+        local start = 1
+        if not take_first then
+            start = 2
+        end
+
+        for j = start, #points, 1 do
+            table.insert(retVal, points[j])
+        end
     end
 
     return retVal
