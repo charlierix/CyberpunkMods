@@ -158,9 +158,14 @@ end
 
 -- Just wrapping it to be easier to remember/use
 function Quaternion_FromAxisRadians(axis, radians)
+    local axis_unit = axis
+    if not IsNearValue(GetVectorLengthSqr(axis), 1) then
+        axis_unit = ToUnit(axis)
+    end
+
     --https://redscript.redmodding.org/#30122
     --public static native SetAxisAngle(out q: Quaternion, axis: Vector4, angle: Float): Void
-    return GetSingleton('Quaternion'):SetAxisAngle(axis, radians)     -- looks like cet turns out param into return
+    return GetSingleton('Quaternion'):SetAxisAngle(axis_unit, radians)     -- looks like cet turns out param into return
 end
 
 -- Rotates a vector by the amount of radians (right hand rule, so positive radians are counter
