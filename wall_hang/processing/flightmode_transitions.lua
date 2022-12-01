@@ -34,13 +34,27 @@ function Transition_ToHang(vars, const, debug, o, hangPos, normal, from_slide)
     end
 end
 
-function Transition_ToJump_Calculate(vars, const, debug, o, hangPos, normal, startStopTracker)
+function Transition_ToJump_Planted_Calculate(vars, const, debug, o, hangPos, normal, startStopTracker)
     if not o:Custom_CurrentlyFlying_TryStartFlight(true, nil) then
         Transition_ToStandard(vars, const, debug, o)
         do return end
     end
 
-    vars.flightMode = const.flightModes.jump_calculate
+    vars.flightMode = const.flightModes.jump_planted_calculate
+
+    startStopTracker:ResetHangLatch()
+
+    vars.hangPos = hangPos
+    vars.normal = normal
+end
+
+function Transition_ToJump_Rebound_Calculate(vars, const, debug, o, hangPos, normal, startStopTracker)
+    if not o:Custom_CurrentlyFlying_TryStartFlight(true, nil) then
+        Transition_ToStandard(vars, const, debug, o)
+        do return end
+    end
+
+    vars.flightMode = const.flightModes.jump_rebound_calculate
 
     startStopTracker:ResetHangLatch()
 

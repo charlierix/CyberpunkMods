@@ -4,7 +4,7 @@ local BACKWARD_POW = 1.5
 
 local up = nil      -- can't use vector4 before init
 
-function Process_Jump_Calculate(o, player, vars, const, debug)
+function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     o:GetCamera()
     if not o.lookdir_forward then       -- shouldn't happen
         Transition_ToStandard(vars, const, debug, o)

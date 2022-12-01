@@ -35,7 +35,8 @@ require "data/util_data"
 require "processing/flightmode_transitions"
 require "processing/flightutil"
 require "processing/processing_hang"
-require "processing/processing_jump_calculate"
+require "processing/processing_jump_planted_calculate"
+require "processing/processing_jump_rebound_calculate"
 require "processing/processing_jump_impulse"
 require "processing/processing_jump_teleturn"
 require "processing/processing_standard"
@@ -91,7 +92,7 @@ local this = {}
 
 local const =
 {
-    flightModes = CreateEnum("standard", "hang", "jump_calculate", "jump_teleturn", "jump_impulse"),
+    flightModes = CreateEnum("standard", "hang", "jump_planted_calculate", "jump_rebound_calculate", "jump_teleturn", "jump_impulse"),
 
     -- Populated in InitializeSavedFields()
     --latch_wallhang,       -- false: must keep the hang key held in
@@ -172,7 +173,7 @@ local vars =
     --is_sliding,
     --is_attracting,
 
-    -- These get populated in Transition_ToHang() and/or Transition_ToJump_Calculate()
+    -- These get populated in Transition_ToHang() and/or Transition_ToJump_Planted_Calculate()/Transition_ToJump_Rebound_Calculate()
     --hangPos,
     --normal,
 
@@ -334,9 +335,13 @@ registerForEvent("onUpdate", function(deltaTime)
         -- Hanging from a wall
         Process_Hang(o, player, vars, const, debug, keys, startStopTracker, deltaTime)
 
-    elseif vars.flightMode == const.flightModes.jump_calculate then
+    elseif vars.flightMode == const.flightModes.jump_planted_calculate then
         -- Figure out direction/strength to jump
-        Process_Jump_Calculate(o, player, vars, const, debug)
+        Process_Jump_Planted_Calculate(o, player, vars, const, debug)
+
+    elseif vars.flightMode == const.flightModes.jump_rebound_calculate then
+        -- Figure out direction/strength to jump
+        Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
 
     elseif vars.flightMode == const.flightModes.jump_teleturn then
         -- Use teleport to adjust the look direction over a few frames
@@ -428,16 +433,16 @@ end
 function TODO()
     -- Wall attraction stays after switching to grappling hook
 
+	-- Wall Jump
+	--  There should be two types (and sets of settings) of wall jump:
+	--    Jumping from a hang (planted)
+	--    Jumping directly from midair collision (rebound)
+
     -- Sticky Hang
     --  Have an option to stick to the wall for a short time when they collide with a wall, but haven't pressed the latch button
 
     -- Wall Reflection
     --  After jumping along a wall, but about to collide at a shallow angle, apply a tiny impulse to keep from hitting
-
-	-- Wall Jump
-	--  There should be two types (and sets of settings) of wall jump:
-	--    Jumping from a hang (planted)
-	--    Jumping directly from midair collision (rebound)
 
 	-- Wall Jump (rebound)
 	--    Option to not turn around when dot is close to 1 (directly facing the wall)
