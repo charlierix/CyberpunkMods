@@ -158,9 +158,14 @@ end
 
 -- Just wrapping it to be easier to remember/use
 function Quaternion_FromAxisRadians(axis, radians)
+    local axis_unit = axis
+    if not IsNearValue(GetVectorLengthSqr(axis), 1) then
+        axis_unit = ToUnit(axis)
+    end
+
     --https://redscript.redmodding.org/#30122
     --public static native SetAxisAngle(out q: Quaternion, axis: Vector4, angle: Float): Void
-    return GetSingleton('Quaternion'):SetAxisAngle(axis, radians)     -- looks like cet turns out param into return
+    return GetSingleton('Quaternion'):SetAxisAngle(axis_unit, radians)     -- looks like cet turns out param into return
 end
 
 -- Rotates a vector by the amount of radians (right hand rule, so positive radians are counter
@@ -263,6 +268,10 @@ function Normalize(vector)
         vector.y = vector.y / length
         vector.z = vector.z / length
     end
+end
+
+function Negate(vector)
+    return Vector4.new(-vector.x, -vector.y, -vector.z, 1)
 end
 
 -- Returns the portion of this vector that lies along the other vector
@@ -468,7 +477,6 @@ end
 function GetDirection(unitDirection, length)
     return Vector4.new(unitDirection.x * length, unitDirection.y * length, unitDirection.z * length, 1)
 end
-
 
 -- This removes the z and makes sure that that 2D portion is a length of 1
 -- Returns two numbers.  x and y

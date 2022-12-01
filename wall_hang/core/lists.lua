@@ -1,5 +1,23 @@
 ---------------------------------- Key/Value Arrays -----------------------------------
 
+function Contains_Key(list, key)
+    for k, _ in pairs(list) do
+        if k == key then
+            return true
+        end
+    end
+
+    return false
+end
+function Contains_Value(list, value)
+    for _, v in pairs(list) do
+        if v == value then
+            return true
+        end
+    end
+
+    return false
+end
 
 ----------------------------------- Indexed Arrays ------------------------------------
 

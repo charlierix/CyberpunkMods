@@ -1,5 +1,23 @@
 ---------------------------------- Key/Value Arrays -----------------------------------
 
+function Contains_Key(list, key)
+    for k, _ in pairs(list) do
+        if k == key then
+            return true
+        end
+    end
+
+    return false
+end
+function Contains_Value(list, value)
+    for _, v in pairs(list) do
+        if v == value then
+            return true
+        end
+    end
+
+    return false
+end
 
 ----------------------------------- Indexed Arrays ------------------------------------
 
@@ -72,4 +90,46 @@ function Comparer(item1, item2)
     else
         return 0
     end
+end
+
+---------------------------------------- LINQ -----------------------------------------
+
+-- local new_list = Select(list, function(o) return o.propname end)
+function Select(list, selector)
+    local retVal = {}
+
+    for _, item in pairs(list) do
+        local value = selector(item)
+        table.insert(retVal, value)
+    end
+
+    return retVal
+end
+
+--public static IEnumerable<TResult> SelectMany<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, IEnumerable<TResult>> selector)
+function SelectMany(list, selector)
+    local retVal = {}
+
+    for _, item in pairs(list) do
+        local sub_list = selector(item)
+
+        for _, sub_item in pairs(sub_list) do
+            table.insert(retVal, sub_item)
+        end
+    end
+
+    return retVal
+end
+
+-- local new_list = Where(list, function(o) return o.propname == "match" end)
+function Where(list, predicate)
+    local retVal = {}
+
+    for _, item in pairs(list) do
+        if predicate(item) then
+            table.insert(retVal, item)
+        end
+    end
+
+    return retVal
 end
