@@ -1,8 +1,7 @@
 local this = {}
 
-local BACKWARD_POW = 1.5
-
 local up = nil      -- can't use vector4 before init
+local MAX_UPADJUSTED_DOT = 0.8      -- the max allowed tilt from straight up
 
 function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     o:GetCamera()
@@ -11,129 +10,166 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
         do return end
     end
 
-    -- Compare the look direction with the wall's normal, figure out the direction to go
-    local is_up, jump_dir = this.CalculateJumpDirection_Direct(o.lookdir_forward, vars.normal, const)
+    local log = DebugRenderLogger:new(true)
+    log:DefineCategory("player", "99A")
+    log:DefineCategory("hit", "A99")
+    log:DefineCategory("up", "6DB054")
+    log:DefineCategory("adjust", "914C72")
 
-    if is_up then
-        -- Going straight up is simpler and can go straight to impulse.  Though the impulse force needs
-        -- to be reduced if going up too fast
-        local has_impulse, impulse = this.GetImpulse_Up(jump_dir, o.vel, player.jump_strength, player.jump_speed_fullStrength, player.jump_speed_zeroStrength)
+    local up_adjusted, normal_horz, look_horz, up_dot, horz_dot = this.GetLookDirections(vars.normal, o.lookdir_forward, vars.hangPos, o.pos, log)
 
-        if has_impulse then
-            Transition_ToJump_Impulse(vars, const, debug, o, impulse, false)
-        else
-            PlaySound_FailJump(vars, o)
-            Transition_ToStandard(vars, const, debug, o)
+    log:WriteLine_Global("up_dot: " .. tostring(up_dot))
+    log:WriteLine_Global("horz_dot: " .. tostring(horz_dot))
+
+    local impulse_x = 0
+    local impulse_y = 0
+    local impulse_z = 0
+
+    --NOTE: there is the possibility of a blend between straight up and horizontal jumping
+    local straightup_percent = Clamp(0, 1, player.rebound.straightup_vert_percent:Evaluate(up_dot))
+
+    log:WriteLine_Global("straightup_percent A: " .. tostring(straightup_percent))
+
+    local percent_horz = 1
+    if straightup_percent > 0 then
+        local percent_vert = Clamp(0, 1, player.rebound.percent_vert_whenup:Evaluate(horz_dot))
+        percent_horz = Clamp(0, 1, player.rebound.percent_horz_whenup:Evaluate(horz_dot))
+
+        straightup_percent = straightup_percent * percent_vert
+
+        log:WriteLine_Global("percent_vert: " .. tostring(percent_vert))
+        log:WriteLine_Global("straightup_percent B: " .. tostring(straightup_percent))
+
+        -- this is the desired.  compare with current speed to see how much to apply, possibility play a fail sound
+        if straightup_percent > 0 then
+            local is_fail, vert_x, vert_y, vert_z = this.GetImpulse_StraightUp(straightup_percent, up_adjusted, o.vel, player.rebound.straightup_strength, player.rebound.straightup_percent_at_speed, log)
+
+            if is_fail then
+                log:WriteLine_Global("playing fail sound")
+                PlaySound_FailJump(vars, o)
+            else
+                log:WriteLine_Global("adding straight up impulse")
+                impulse_x = impulse_x + vert_x
+                impulse_y = impulse_y + vert_y
+                impulse_z = impulse_z + vert_z
+            end
         end
+    end
 
+    log:WriteLine_Global("percent_horz: " .. tostring(percent_horz))
+
+    if percent_horz > 0 then
+        local horz_x, horz_y, horz_z, yaw_turn_percent = this.GetImpulse_Horizontal(look_horz, horz_dot, normal_horz, player.rebound)
+
+        -- impulse_x = impulse_x + horz_x
+        -- impulse_y = impulse_y + horz_y
+        -- impulse_z = impulse_z + horz_z
+    end
+
+    log:WriteLine_Global("impulse: " .. tostring(impulse_x) .. ", " .. tostring(impulse_y) .. ", " .. tostring(impulse_z))
+
+
+    log:Save("rebound")
+
+    if IsNearZero(impulse_x) and IsNearZero(impulse_y) and IsNearZero(impulse_z) then
+        Transition_ToStandard(vars, const, debug, o)
     else
-        -- Rotate up so the jump will be in an arc
-        local impulse = this.GetImpulse_Out(jump_dir, player.jump_strength)
-
-        --NOTE: In the future, there may be reasons to not adjust the look direction (because they are
-        --holding a direction key, or config says not to).  In those cases, go straight to jump_impulse
-
-        Transition_ToJump_TeleTurn(vars, const, debug, o, impulse, jump_dir)
+        --TODO: may need to teleturn
+        local impulse = Vector4.new(impulse_x, impulse_y, impulse_z, 1)
+        Transition_ToJump_Impulse(vars, const, debug, o, impulse, false)
     end
 end
 
 ----------------------------------- Private Methods -----------------------------------
 
--- NOTE: This isn't the perfect final direction they will go.  It does tell what yaw to use
--- and how much power to put into the jump
--- Returns
---  is_up, direction
-function this.CalculateJumpDirection_Direct(lookdir, normal, const)
-    local dot = DotProduct3D(lookdir, normal)
-
-    if dot > const.jumpcalc_mindot then
-        -- They are looking away from the wall, jump the direction they're looking
-        return false, lookdir
-    end
-
+function this.GetLookDirections(normal, lookdir, hangPos, player_pos, log)
     if not up then
         up = Vector4.new(0, 0, 1, 0)
     end
 
-    local upDot = DotProduct3D(lookdir, up)
+    log:Add_Dot(player_pos, "player")
+    log:Add_Line(player_pos, AddVectors(player_pos, lookdir), "player")
+    log:Add_Line(player_pos, AddVectors(player_pos, up), "up")
 
-    if dot < 0 and upDot >= const.jumpcalc_straightupdot then
-        -- They are facing the wall and looking up.  Jump straight up instead of spinning around and jumping away
-        -- TODO: Instead of going straight up, go perpendicular from normal along the up direction
-        return true, up
-    end
+    log:Add_Dot(hangPos, "hit")
+    log:Add_Line(hangPos, AddVectors(hangPos, normal), "hit")
 
-    if dot < 0 then
-        -- Need to flip the look direction so it's going the same direction as the normal
-        local onPlane = GetProjectedVector_AlongPlane(lookdir, normal)
+    local adjusted_up = this.GetAdjustedUp(normal)
+    local normal_horz = this.GetHorizontalNormal(normal, lookdir, hangPos, player_pos)
+    local look_horz = GetProjectedVector_AlongPlane_Unit(lookdir, up)
 
-        lookdir = Vector4.new(onPlane.x * 2 - lookdir.x, onPlane.y * 2 - lookdir.y, onPlane.z * 2 - lookdir.z, 1)
-    end
+    log:Add_Line(player_pos, AddVectors(player_pos, adjusted_up), "adjust")
+    log:Add_Line(player_pos, AddVectors(player_pos, look_horz), "adjust")
+    log:Add_Line(hangPos, AddVectors(hangPos, normal_horz), "adjust")
 
-    -- Need to jump backward off the wall.  Figure out how to blend normal and look direction
-    local percentNormal = GetScaledValue(0, 1, const.jumpcalc_mindot, -1, dot)
-    percentNormal = percentNormal ^ BACKWARD_POW
+    local up_dot = DotProduct3D(lookdir, adjusted_up)
 
-    local rotate = GetRotation(lookdir, normal, percentNormal)
+    local horz_dot = DotProduct3D(look_horz, normal_horz)
 
-    return false, RotateVector3D(lookdir, rotate)
+    return adjusted_up, normal_horz, look_horz, up_dot, horz_dot
 end
 
--- Returns
---  hasImpulse, impulse_vector
-function this.GetImpulse_Up(direction, velocity, jump_strength, speed_fullStrength, speed_zeroStrength)
-    -- Get the speed going up
-    --local speed_up = GetVectorLength(GetProjectedVector_AlongVector(velocity, up, true))      -- this is how to do it for a direction other than up
-    local speed_up = velocity.z
-
-    local percent = 1
-    if speed_up >= speed_zeroStrength then
-        return false, nil
-    elseif speed_up >= speed_fullStrength then
-        percent = GetScaledValue(1, 0, speed_fullStrength, speed_zeroStrength, speed_up)
+function this.GetAdjustedUp(normal)
+    if IsNearZero(DotProduct3D(normal, up)) then
+        -- The plane they are jumping off of is horizontal
+        return up
     end
 
-    return true, MultiplyVector(direction, jump_strength * percent)
+    --NOTE: This would allow jumping backward if they are facing away from the wall, but other logic only jumps straight up
+    --when mostly looking toward the wall
+    local retVal = GetProjectedVector_AlongPlane_Unit(up, normal)
+
+    local dot_adjusted = DotProduct3D(up, retVal)
+    if dot_adjusted < MAX_UPADJUSTED_DOT then
+        retVal = RotateVector3D_axis_radian(up, CrossProduct3D(up, retVal), Dot_to_Radians(MAX_UPADJUSTED_DOT))
+    end
+
+    return retVal
 end
 
--- This returns the final impulse to apply
-function this.GetImpulse_Out(direction, jump_strength)
-    if not up then
-        up = Vector4.new(0, 0, 1, 0)
+function this.GetHorizontalNormal(normal, lookdir, hangPos, player_pos)
+    if IsNearValue(math.abs(DotProduct3D(normal, up)), 1) then
+        -- The normal is straight up or down (horizontal plate)
+        local retVal = GetProjectedVector_AlongPlane_Unit(SubtractVectors(player_pos, hangPos), up)
+        if IsNearZero_vec4(retVal) then
+            -- They are also directly above/below the point
+            retVal = GetProjectedVector_AlongPlane_Unit(Negate(lookdir), up)
+        end
+
+        return retVal
     end
 
-    local dot = DotProduct3D(direction, up)
+    return GetProjectedVector_AlongPlane_Unit(normal, up)
+end
 
-    -- pi       straight down
-    -- pi/2     horizontal
-    -- 0        straight up
-    local radian = Dot_to_Radians(dot)
+function this.GetImpulse_StraightUp(percent, up_adjusted, velocity, jump_strength, percent_at_speed, log)
+    local vel_along = GetProjectedVector_AlongVector(velocity, up_adjusted, false)
 
-    --https://mycurvefit.com/
-    --https://www.desmos.com/calculator
+    local speed_along = math.sqrt(GetVectorLengthSqr(vel_along))
+    log:WriteLine_Global("vertical speed along: " .. tostring(speed_along))
 
-    -- Rotate up, by this angle
-    --  phi is the angle they are looking
-    --  result is the angle they should jump
+    local percent_speed = Clamp(0, 1, percent_at_speed:Evaluate(speed_along))
+    if IsNearZero(percent_speed) then
+        return true, 0, 0, 0
+    end
 
-    -- -90  -90
-    --  0   45      -- when they are looking straight out, angle should be 45 for best arc
-    --  90  90
+    percent = percent * percent_speed
 
-    -- jumpAngle = 45 + phi - 0.005555556 * phi^2
+    return
+        false,
+        up_adjusted.x * jump_strength * percent,
+        up_adjusted.y * jump_strength * percent,
+        up_adjusted.z * jump_strength * percent
+end
 
-    -- Same idea, but with radians
-    --  pi      -pi/2
-    --  pi/2    pi/4
-    --  0       pi/2
+function this.GetImpulse_Horizontal(look, dot, wall_normal, rebound)
+    local percent_up = Clamp(0, 1, rebound.horz_percent_up:Evaluate(dot))
+    local percent_along = Clamp(0, 1, rebound.horz_percent_along:Evaluate(dot))
+    local percent_away = Clamp(0, 1, rebound.horz_percent_away:Evaluate(dot))
+    local strength = Clamp(0, 1, rebound.horz_strength:Evaluate(dot))
+    local yaw_turn_percent = Clamp(0, 1, rebound.yaw_turn_percent:Evaluate(dot))
 
-    local adjustRadians = 1.570796 - 0.3183099 * radian ^ 2
+    --TODO: take in horizontal component of look direction
 
-    local axis = CrossProduct3D(direction, up)
-
-    local horizontal = GetProjectedVector_AlongPlane(direction, up)
-
-    local rotated = RotateVector3D(horizontal, Quaternion_FromAxisRadians(axis, adjustRadians))
-
-    return MultiplyVector(rotated, jump_strength / GetVectorLength(rotated))      -- rotated isn't a unit vector, so dividing by len makes it 1
+    
 end

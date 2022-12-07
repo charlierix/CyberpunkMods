@@ -71,6 +71,34 @@ function PlayerArcade:MapModelToSelf(model)
     this.StoreModelValue(self, model, "wallcrawl_speed_horz", 1.2)
     this.StoreModelValue(self, model, "wallcrawl_speed_up", 0.8)
     this.StoreModelValue(self, model, "wallcrawl_speed_down", 1.6)
+
+    ----------------------- rebound jump settings -----------------------
+    --TODO: this shouldn't be coming from a json file in the future
+    --TODO: if no custom config, use a hardcoded default
+
+    local filename = "!settings/walljump.json"
+
+    local handle = io.open(filename, "r")
+    local json = handle:read("*all")
+
+    local deserialized = extern_json.decode(json)
+
+    self.rebound =
+    {
+        straightup_vert_percent = this.ToAnimationCurve(deserialized.straightup_vert_percent),
+
+        percent_vert_whenup = this.ToAnimationCurve(deserialized.percent_vert_whenup),
+        percent_horz_whenup = this.ToAnimationCurve(deserialized.percent_horz_whenup),
+
+        horz_percent_up = this.ToAnimationCurve(deserialized.horz_percent_up),
+        horz_percent_along = this.ToAnimationCurve(deserialized.horz_percent_along),
+        horz_percent_away = this.ToAnimationCurve(deserialized.horz_percent_away),
+        horz_strength = this.ToAnimationCurve(deserialized.horz_strength),
+        yaw_turn_percent = this.ToAnimationCurve(deserialized.yaw_turn_percent),
+
+        straightup_strength = deserialized.straightup_strength,
+        straightup_percent_at_speed = this.ToAnimationCurve(deserialized.straightup_percent_at_speed),
+    }
 end
 function PlayerArcade:MapSelfToModel()
     return
@@ -103,4 +131,14 @@ function this.StoreModelValue(obj, model, prop_name, default)
     else
         obj[prop_name] = default
     end
+end
+
+function this.ToAnimationCurve(key_values)
+    local retVal = AnimationCurve:new()
+
+    for _, item in ipairs(key_values) do
+        retVal:AddKeyValue(item.key, item.value)
+    end
+
+    return retVal
 end

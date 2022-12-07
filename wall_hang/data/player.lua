@@ -20,7 +20,7 @@ function Player:new(o, vars, const, debug, player_arcade)
 
     obj.isRealismMode = false
 
-    -- See MapRowToSelf() for the rest of the member variables
+    -- See PlayerArcade:MapModelToSelf for the rest of the member variables
 
     obj:Reset()
 
@@ -48,6 +48,11 @@ function Player:Reset()
     self.wallcrawl_speed_horz = self.player_arcade.wallcrawl_speed_horz
     self.wallcrawl_speed_up = self.player_arcade.wallcrawl_speed_up
     self.wallcrawl_speed_down = self.player_arcade.wallcrawl_speed_down
+
+
+    -------------- temp rebound --------------
+    self.rebound = self.player_arcade.rebound
+
 end
 
 ------------------------------- Private Instance Methods ------------------------------

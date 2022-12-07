@@ -359,6 +359,103 @@ registerForEvent("onUpdate", function(deltaTime)
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
 
+
+
+registerHotkey("WallHang_Test", "test json", function()
+    -- deserialize the json
+    local filename = "!settings/walljump.json"
+
+    local handle = io.open(filename, "r")
+    local json = handle:read("*all")
+
+    local deserialized = extern_json.decode(json)
+
+    ReportTable(deserialized)
+
+    -- turn the definitions into instances of animation_curve
+    local rebound =
+    {
+        straightup_vert_percent = this.ToAnimationCurve(deserialized.straightup_vert_percent),
+
+        percent_vert_whenup = this.ToAnimationCurve(deserialized.percent_vert_whenup),
+        percent_horz_whenup = this.ToAnimationCurve(deserialized.percent_horz_whenup),
+
+        horz_percent_up = this.ToAnimationCurve(deserialized.horz_percent_up),
+        horz_percent_along = this.ToAnimationCurve(deserialized.horz_percent_along),
+        horz_percent_away = this.ToAnimationCurve(deserialized.horz_percent_away),
+        horz_strength = this.ToAnimationCurve(deserialized.horz_strength),
+        yaw_turn_percent = this.ToAnimationCurve(deserialized.yaw_turn_percent),
+    }
+
+    print("-----------------------------------")
+
+    ReportTable(rebound)
+
+    -- graph each one in a separate frame of the debug logger (keep that grapher function around)
+    local log = DebugRenderLogger:new(true)
+    log:DefineCategory("graph_black", "000", 0.33)
+    log:DefineCategory("graph_gray", "CCC", 0.33)
+    log:DefineCategory("graph_key", "99A", 0.33)
+    log:DefineCategory("plot", "FFF", 1)
+
+    for key, value in pairs(rebound) do
+        this.LogAnimationCurve(log, value, key)
+    end
+
+    log:Save("rebound curves")
+
+end)
+
+function this.ToAnimationCurve(key_values)
+    local retVal = AnimationCurve:new()
+
+    for _, item in ipairs(key_values) do
+        retVal:AddKeyValue(item.key, item.value)
+    end
+
+    return retVal
+end
+
+function this.LogAnimationCurve(log, anim, name)
+    log:NewFrame(name)
+    log:WriteLine_Frame(name)
+
+    local count = 144
+
+    local prev = nil
+
+    log:Add_Line(Vector4.new(-1, 0, 0, 1), Vector4.new(1, 0, 0, 1), "graph_black")
+    log:Add_Line(Vector4.new(-1, 0, 0, 1), Vector4.new(-1, 1, 0, 1), "graph_black")
+    log:Add_Line(Vector4.new(1, 0, 0, 1), Vector4.new(1, 1, 0, 1), "graph_black")
+    log:Add_Line(Vector4.new(-1, 1, 0, 1), Vector4.new(1, 1, 0, 1), "graph_black")
+
+    log:Add_Line(Vector4.new(0, 0, 0, 1), Vector4.new(0, 1, 0, 1), "graph_gray")
+    log:Add_Line(Vector4.new(-1, 0.5, 0, 1), Vector4.new(1, 0.5, 0, 1), "graph_gray")
+
+    for i = 1, #anim.keyvalues, 1 do
+        local key = anim.keyvalues[i].key
+
+        log:Add_Line(Vector4.new(key, 0, 0, 1), Vector4.new(key, 1, 0, 1), "graph_key")
+    end
+
+    for i = 1, count, 1 do
+        local dot = GetScaledValue(-1, 1, 1, count, i)
+
+        local value = anim:Evaluate(dot)
+
+        local current = Vector4.new(dot, value, 0, 1)
+
+        if i > 1 then
+            log:Add_Line(prev, current, "plot")
+        end
+
+        prev = current
+    end
+end
+
+
+
+
 registerHotkey("WallHang_Config", "Show Config", function()
     if shouldShowConfig then
         isConfigRepress = true      -- this is used as a request to close.  The window will only close if they are on a main screen, and not dirty
