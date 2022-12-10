@@ -94,7 +94,11 @@ function PlayerArcade:MapModelToSelf(model)
         horz_percent_along = this.ToAnimationCurve(deserialized.horz_percent_along),
         horz_percent_away = this.ToAnimationCurve(deserialized.horz_percent_away),
         horz_strength = this.ToAnimationCurve(deserialized.horz_strength),
+        horizontal_percent_look = this.ToAnimationCurve(deserialized.horizontal_percent_look),
+
         yaw_turn_percent = this.ToAnimationCurve(deserialized.yaw_turn_percent),
+
+        horizontal_percent_at_speed = this.ToAnimationCurve(deserialized.horizontal_percent_at_speed),
 
         straightup_strength = deserialized.straightup_strength,
         straightup_percent_at_speed = this.ToAnimationCurve(deserialized.straightup_percent_at_speed),
