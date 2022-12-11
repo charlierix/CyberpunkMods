@@ -1,0 +1,2 @@
+## Dlls were never filtered in the root, but explicitly allowing them here
+!*.dll
