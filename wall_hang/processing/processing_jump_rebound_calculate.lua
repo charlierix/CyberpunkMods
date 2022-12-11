@@ -81,7 +81,7 @@ function this.GetImpulse_Vertical(o, player, up_dot, horz_dot, up_adjusted)
 
     straightup_percent = straightup_percent * percent_vert
 
-    if straightup_percent > 0 then
+    if IsNearZero(straightup_percent) then
         return percent_horz, false, 0, 0, 0
     end
 
@@ -118,10 +118,8 @@ function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz,
     local look_along_comp = GetProjectedVector_AlongVector(look, wall_normal_horz, true)
     local along_unit = ToUnit(AddVectors(wall_along_horz, MultiplyVector(look_along_comp, percent_look)))
 
-
-    -- TODO: instead of the add and clamp, use the percent to scale the inputs, then simply add them together
-    local horz_x, horz_y, horz_z = this.CombineHorizontal1(away_unit, along_unit, look, percent_away, percent_along, percent_up, percent_look)
-
+    --local horz_x, horz_y, horz_z = this.CombineHorizontal1(away_unit, along_unit, look, percent_away, percent_along, percent_up, percent_look)
+    local horz_x, horz_y, horz_z = this.CombineHorizontal2(away_unit, along_unit, look, percent_away, percent_along, percent_up, percent_look)
 
     local percent_speed = this.GetSpeedAdjustedPercent(velocity, ToUnit(Vector4.new(horz_x, horz_y, horz_z, 1)), rebound.horizontal_percent_at_speed)
 
@@ -138,6 +136,27 @@ function this.CombineHorizontal1(away_unit, along_unit, look, percent_away, perc
         Clamp(-1, 1, (away_unit.x * percent_away) + (along_unit.x * percent_along)),
         Clamp(-1, 1, (away_unit.y * percent_away) + (along_unit.y * percent_along)),
         Clamp(-1, 1, (up.z * percent_up) + (look.z * percent_look))
+end
+function this.CombineHorizontal2(away_unit, along_unit, look_unit, percent_away, percent_along, percent_up, percent_look)
+    -- Scale the unit vectors based on their percent influence
+    local percent_wall = 1 - percent_look
+
+    local away_x = away_unit.x * percent_wall
+    local away_y = away_unit.y * percent_wall
+
+    local along_x = along_unit.x * percent_wall
+    local along_y = along_unit.y * percent_wall
+
+    local up_z = up.z * percent_wall
+
+    local look_x = look_unit.x * percent_look
+    local look_y = look_unit.y * percent_look
+    local look_z = look_unit.z * percent_look
+
+    return
+        (away_x * percent_away) + (along_x * percent_along) + look_x,
+        (away_y * percent_away) + (along_y * percent_along) + look_y,
+        (up_z * percent_up) + look_z
 end
 
 function this.GetAdjustedUp(normal)
