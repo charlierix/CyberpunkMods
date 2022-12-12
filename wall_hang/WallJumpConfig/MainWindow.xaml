@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WallJumpConfig"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="WallJump Config" ResizeMode="CanResizeWithGrip" Width="800" Height="700" Loaded="Window_Loaded" Closing="Window_Closing">
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" x:Name="panelFolder">
+            <Label Content="mods\wall_hang folder"/>
+            <Label Content="example - D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\wall_hang" Foreground="#AAAAAA"/>
+            <TextBox x:Name="txtModFolder" AllowDrop="True" PreviewDragEnter="txtModFolder_PreviewDragEnter" PreviewDragOver="txtModFolder_PreviewDragEnter" Drop="txtModFolder_Drop" TextChanged="txtModFolder_TextChanged"/>
+        </StackPanel>
+
+        <Expander Grid.Row="0" x:Name="expanderFolder" Header="mod folder" HorizontalAlignment="Right" Expanded="expanderFolder_ExpandedCollapsed" Collapsed="expanderFolder_ExpandedCollapsed"/>
+
 
     </Grid>
 </Window>
