@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="Game.Core">
       <HintPath>lib\Game.Core.dll</HintPath>
     </Reference>

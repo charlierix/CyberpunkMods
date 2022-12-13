@@ -21,6 +21,29 @@
 
         <Expander Grid.Row="0" x:Name="expanderFolder" Header="mod folder" HorizontalAlignment="Right" Expanded="expanderFolder_ExpandedCollapsed" Collapsed="expanderFolder_ExpandedCollapsed"/>
 
-
+        
+        <!-- Option for vertical jump -->
+        <!-- True: fixed number of angles (5) -->
+        <!-- False: 0 and 180 with options to add/remove intermediate angles -->
+        
+        
+        
+        <!-- Panel on the left -->
+        <!-- This should change what row its on based on expander (row 0 rowspan 3 || row 2 rowspan 1) -->
+        
+        <!-- combobox -->
+        <!-- save button (also support ctrl+s) -->
+        
+        
+        
+        <!-- Two Columns: -->
+        <!-- Horizontal -->
+        <!-- Straight Up -->
+        
+        
+        <!-- Diagrams should be a separate window -->
+        <!-- Put a button along the top to show the diagrams -->
+        
+        
     </Grid>
 </Window>
