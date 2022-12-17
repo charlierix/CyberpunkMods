@@ -16,4 +16,12 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="presets\" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /e &quot;$(ProjectDir)presets\*.json&quot; &quot;$(ProjectDir)$(OutDir)presets\&quot;" />
+  </Target>
+
 </Project>

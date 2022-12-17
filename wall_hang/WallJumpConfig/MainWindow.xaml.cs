@@ -1,23 +1,13 @@
 ﻿using Game.Math_WPF.WPF;
-using Game.Math_WPF.WPF.DebugLogViewer;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Effects;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WallJumpConfig.Models.wpf;
 
 namespace WallJumpConfig
 {
@@ -31,16 +21,31 @@ namespace WallJumpConfig
 
             public double? Width { get; init; }
             public double? Height { get; init; }
+
+            public string PresetName { get; init; }
+        }
+
+        #endregion
+        #region record: PresetEntry
+
+        private record PresetEntry
+        {
+            public string Name { get; init; }
+            public SaveWPF Settings { get; init; }
         }
 
         #endregion
 
         #region Declaration Section
 
+        private readonly string _folder_presets;
+
         private readonly DropShadowEffect _errorEffect;
 
         private readonly string _settingsFilename;
         private WindowSettings _settings = null;
+
+        private PresetEntry[] _presets = null;
 
         #endregion
 
@@ -61,7 +66,9 @@ namespace WallJumpConfig
                 Opacity = .8,
             };
 
-            _settingsFilename = System.IO.Path.Combine(Environment.CurrentDirectory, "window settings.json");
+            string folder_exe = Environment.CurrentDirectory;
+            _settingsFilename = System.IO.Path.Combine(folder_exe, "window settings.json");
+            _folder_presets = System.IO.Path.Combine(folder_exe, "presets");
         }
 
         #endregion
@@ -72,6 +79,9 @@ namespace WallJumpConfig
         {
             try
             {
+                PopulateNamesCombo();
+
+
                 LoadSettings();
 
                 txtModFolder_TextChanged(this, null);       // make sure "" is highlighted red
@@ -87,6 +97,19 @@ namespace WallJumpConfig
             try
             {
                 SaveSettings();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.S)
+                    SaveSession();
             }
             catch (Exception ex)
             {
@@ -143,12 +166,18 @@ namespace WallJumpConfig
                     expanderFolder.Header = "";
                     expanderFolder.ToolTip = $"hide {HEADER}";
                     panelFolder.Visibility = Visibility.Visible;
+
+                    Grid.SetRow(content_grid, 2);
+                    Grid.SetRowSpan(content_grid, 1);
                 }
                 else
                 {
                     expanderFolder.Header = HEADER;
                     expanderFolder.ToolTip = null;
                     panelFolder.Visibility = Visibility.Collapsed;
+
+                    Grid.SetRow(content_grid, 0);
+                    Grid.SetRowSpan(content_grid, 3);
                 }
             }
             catch (Exception ex)
@@ -171,6 +200,18 @@ namespace WallJumpConfig
             }
         }
 
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SaveSession();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -180,6 +221,7 @@ namespace WallJumpConfig
             var settings = (_settings ?? new WindowSettings()) with
             {
                 ModFolder = txtModFolder.Text,
+                PresetName = cboName.Text,
             };
 
             if (WindowState == WindowState.Normal)
@@ -219,9 +261,43 @@ namespace WallJumpConfig
                     Height = settings.Height.Value;
                 }
 
+                cboName.Text = settings.PresetName;
+
                 _settings = settings;
             }
             catch (Exception) { }       // ignore errors, just show the window
+        }
+
+        private void SaveSession()
+        {
+
+        }
+
+        private void PopulateNamesCombo()
+        {
+            _presets = Directory.GetFiles(_folder_presets, "*.json").
+                Select(o =>
+                {
+                    SaveWPF save = null;
+                    try
+                    {
+                        save = JsonSerializer.Deserialize<SaveWPF>(File.ReadAllText(o));
+                    }
+                    catch (Exception) { }
+
+                    return new PresetEntry()
+                    {
+                        Name = System.IO.Path.GetFileNameWithoutExtension(o),
+                        Settings = save,
+                    };
+                }).
+                Where(o => o.Settings != null).
+                ToArray();
+
+            cboName.Items.Clear();
+
+            foreach (var preset in _presets)
+                cboName.Items.Add(preset.Name);
         }
 
         #endregion
