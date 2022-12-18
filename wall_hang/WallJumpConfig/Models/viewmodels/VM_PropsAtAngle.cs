@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Effects;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Windows;
 using WallJumpConfig.Models.wpf;
 using Game.Math_WPF.WPF;
-using System.Reflection.Metadata;
 
 namespace WallJumpConfig.Models.viewmodels
 {
@@ -21,23 +14,86 @@ namespace WallJumpConfig.Models.viewmodels
         }
         public static readonly DependencyProperty NameProperty = DependencyProperty.Register("Name", typeof(string), typeof(VM_PropsAtAngle), new PropertyMetadata(""));
 
-        public Brush Color
+        public Color HeaderBorder
         {
-            get { return (Brush)GetValue(ColorProperty); }
-            set { SetValue(ColorProperty, value); }
+            get { return (Color)GetValue(HeaderBorderProperty); }
+            set { SetValue(HeaderBorderProperty, value); }
         }
-        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register("Color", typeof(Brush), typeof(VM_PropsAtAngle), new PropertyMetadata(Brushes.Transparent));
+        public static readonly DependencyProperty HeaderBorderProperty = DependencyProperty.Register("HeaderBorder", typeof(Color), typeof(VM_PropsAtAngle), new PropertyMetadata(Colors.Transparent));
 
+        public Brush HeaderBackground
+        {
+            get { return (Brush)GetValue(HeaderBackgroundProperty); }
+            set { SetValue(HeaderBackgroundProperty, value); }
+        }
+        public static readonly DependencyProperty HeaderBackgroundProperty = DependencyProperty.Register("HeaderBackground", typeof(Brush), typeof(VM_PropsAtAngle), new PropertyMetadata(Brushes.Transparent));
+
+        public Color HeaderDropShadow
+        {
+            get { return (Color)GetValue(HeaderDropShadowProperty); }
+            set { SetValue(HeaderDropShadowProperty, value); }
+        }
+        public static readonly DependencyProperty HeaderDropShadowProperty = DependencyProperty.Register("HeaderDropShadow", typeof(Color), typeof(VM_PropsAtAngle), new PropertyMetadata(Colors.Transparent));
+
+        public VM_Slider Percent_Up { get; set; }
+        public VM_Slider Percent_Along { get; set; }
+        public VM_Slider Percent_Away { get; set; }
+
+        public VM_Slider Percent_YawTurn { get; set; }
+
+        public VM_Slider Percent_Look { get; set; }
+
+        // ------------- Helper Methods -------------
         public static VM_PropsAtAngle FromModel(PropsAtAngle props, string name, string color)
         {
+            var brushes = GetBrushes(color);
+
             return new VM_PropsAtAngle()
             {
                 Name = name,
 
-                Color = string.IsNullOrWhiteSpace(color) ?
-                    Brushes.Transparent :
-                    UtilityWPF.BrushFromHex(color),
+                HeaderBorder = brushes.border,
+                HeaderBackground = brushes.background,
+                HeaderDropShadow = brushes.dropshadow,
+
+                Percent_Up = VM_Slider.FromModel(SliderPropType.Percent, "Up %", 0, 1, props.Percent_Up, false),
+                Percent_Along = VM_Slider.FromModel(SliderPropType.Percent, "Along %", 0, 1, props.Percent_Along, false),
+                Percent_Away = VM_Slider.FromModel(SliderPropType.Percent, "Away %", 0, 1, props.Percent_Away, false),
+
+                Percent_YawTurn = VM_Slider.FromModel(SliderPropType.Percent, "Yaw Turn %", 0, 1, props.Percent_YawTurn, false),
+
+                Percent_Look = VM_Slider.FromModel(SliderPropType.Percent, "Look Influence %", 0, 1, props.Percent_Look, false),
             };
+        }
+
+        public static (Color border, Brush background, Color dropshadow) GetBrushes(string color)
+        {
+            Color color_cast = string.IsNullOrWhiteSpace(color) ?
+                Colors.Transparent :
+                UtilityWPF.ColorFromHex(color);
+
+            return GetBrushes(color_cast);
+        }
+        public static (Color border, Brush background, Color dropshadow) GetBrushes(Color color)
+        {
+            Color border = Colors.Transparent;
+            Brush background = Brushes.Transparent;
+            Color dropshadow = Colors.Transparent;
+
+            if (color != Colors.Transparent)
+            {
+                border = UtilityWPF.AlphaBlend(color, Colors.Transparent, 0.15);
+
+                // It can't have transparency, or the drop shadow will be around the text
+                //background = new SolidColorBrush(UtilityWPF.AlphaBlend(color, Colors.Transparent, 0.1));      
+                background = new SolidColorBrush(UtilityWPF.AlphaBlend(color, SystemColors.ControlColor, 0.1));
+
+                // No need to add transparency here, drop shadow has an opacity property
+                //dropshadow = UtilityWPF.AlphaBlend(color, Colors.Transparent, 1);
+                dropshadow = color;
+            }
+
+            return (border, background, dropshadow);
         }
     }
 }

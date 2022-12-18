@@ -9,7 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Stylesheet.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
             <!-- local styles here -->
 
         </ResourceDictionary>
@@ -25,7 +25,40 @@
             <ItemsControl x:Name="panelPropsAtAngle">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Expander Header="{Binding Name}"/>
+                        <Expander>
+                            <Expander.Header>
+                                <!-- that big mess of horizontal alignment is to change the parent expander header from left to stretch -->
+                                <Border CornerRadius="4,4,0,0" BorderThickness="1" Background="{Binding HeaderBackground}" Padding="7,3,2,2" Margin="2,0,2,6" HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=ContentPresenter}, Mode=OneWayToSource}">
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="{Binding HeaderBorder}" Offset="0"/>
+                                            <GradientStop Color="Transparent" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.BorderBrush>
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{Binding HeaderDropShadow}" Direction="270" ShadowDepth="4" BlurRadius="5" Opacity="0.09"/>
+                                    </Border.Effect>
+                                        
+                                    <TextBlock Text="{Binding Name}" FontSize="14"/>
+                                </Border>
+                            </Expander.Header>
+                            <Expander.Content>
+                                
+                                
+                                <!-- I think this needs to be its own user control -->
+                                <StackPanel>
+                                    <ContentPresenter x:Name="percentUp" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter x:Name="percentAlong" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter x:Name="percentAway" ContentTemplate="{StaticResource named_slider}"/>
+                                    <Separator Visibility="Hidden" Height="8"/>
+                                    <ContentPresenter x:Name="percentYawTurn" ContentTemplate="{StaticResource named_slider}"/>
+                                    <Separator Visibility="Hidden" Height="8"/>
+                                    <ContentPresenter x:Name="percentLook" ContentTemplate="{StaticResource named_slider}"/>
+                                </StackPanel>
+                                
+                                
+                            </Expander.Content>
+                        </Expander>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

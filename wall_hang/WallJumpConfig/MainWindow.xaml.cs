@@ -364,7 +364,7 @@ namespace WallJumpConfig
                         Percent_Up = 0.7651404036440723,
                         Percent_Along = 0.04847767977036907,
                         Percent_Away = 0.06060892809185233,
-                        YawTurn_Percent = 0,
+                        Percent_YawTurn = 0,
                         Percent_Look = 0.5,
                     },
 
@@ -375,7 +375,7 @@ namespace WallJumpConfig
                             Percent_Up = 0.7439462042181489,
                             Percent_Along = 0.18559118552351608,
                             Percent_Away = 0.07197310210907464,
-                            YawTurn_Percent = 0,
+                            Percent_YawTurn = 0,
                             Percent_Look = 0.5,
                         },
                         new PropsAtAngle()
@@ -383,7 +383,7 @@ namespace WallJumpConfig
                             Percent_Up = 0.5704626102583347,
                             Percent_Along = 0.2083431903157424,
                             Percent_Away = 0.06362991179333226,
-                            YawTurn_Percent = 0,
+                            Percent_YawTurn = 0,
                             Percent_Look = 0.5,
                         },
                         new PropsAtAngle()
@@ -391,7 +391,7 @@ namespace WallJumpConfig
                             Percent_Up = 0.4272834803444462,
                             Percent_Along = 0.2999763432422181,
                             Percent_Away = 0.33000000000000007,
-                            YawTurn_Percent = 0,
+                            Percent_YawTurn = 0,
                             Percent_Look = 0.5,
                         },
                     },
@@ -401,7 +401,7 @@ namespace WallJumpConfig
                         Percent_Up = 0.23485959635592776,
                         Percent_Along = 0.4507315891675882,
                         Percent_Away = 0.719683707575183,
-                        YawTurn_Percent = 0,
+                        Percent_YawTurn = 0,
                         Percent_Look = 0.5,
                     },
 

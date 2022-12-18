@@ -23,12 +23,17 @@ namespace WallJumpConfig.Models.viewmodels
         // ------------- Helper Methods -------------
         public void AddExtraAngle()
         {
+
+            //TODO: this should interpelate values between the items before and after it
+
             Color[] existing_colors = ExtraAngles.
                 Where(o => o.Color != Colors.Transparent).
                 Select(o => o.Color).
                 ToArray();
 
             Color item_color = UtilityWPF.GetRandomColors(1, 110, 170, existing_colors)[0];     // this function treats colors like evenly distributed points in a cube, so it will choose a color that is as far away as possible from existing colors
+
+            var brushes = VM_PropsAtAngle.GetBrushes(item_color);
 
             var angle = new VM_Slider()
             {
@@ -44,7 +49,15 @@ namespace WallJumpConfig.Models.viewmodels
             var props = new VM_PropsAtAngle()
             {
                 Name = angle.Name,
-                Color = new SolidColorBrush(item_color),
+                HeaderBorder = brushes.border,
+                HeaderBackground = brushes.background,
+                HeaderDropShadow = brushes.dropshadow,
+
+
+                //TODO: helper method that returns a vm_slider that is the average of two
+                //Percent_Along = 0.5,
+
+
             };
 
             AddExtraAngle(angle, props);
