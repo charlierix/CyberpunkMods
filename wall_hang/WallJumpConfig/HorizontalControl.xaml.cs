@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 using WallJumpConfig.Models.viewmodels;
 
 namespace WallJumpConfig
@@ -31,6 +18,7 @@ namespace WallJumpConfig
             {
                 _viewmodel = value;
                 panelAngles.ItemsSource = _viewmodel?.ExtraAngles;
+                panelPropsAtAngle.ItemsSource = _viewmodel?.PropsAtAngles;
                 speedFullStrength.DataContext = _viewmodel?.Speed_FullStrength;
                 speedZeroStrength.DataContext = _viewmodel?.Speed_ZeroStrength;
             }

@@ -21,6 +21,15 @@
         <ItemsControl x:Name="panelAngles" ItemTemplate="{StaticResource named_slider}"/>
 
         <Label Content="Props at Angle" Style="{StaticResource label_header}"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="panelPropsAtAngle">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Expander Header="{Binding Name}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
 
         <Label Content="Misc" Style="{StaticResource label_header}"/>
 

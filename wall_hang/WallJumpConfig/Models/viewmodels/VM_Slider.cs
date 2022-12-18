@@ -1,5 +1,6 @@
 ﻿using Game.Math_WPF.Mathematics;
 using Game.Math_WPF.WPF;
+using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -11,11 +12,26 @@ namespace WallJumpConfig.Models.viewmodels
     {
         public SliderPropType PropType { get; set; }
 
-        public string Name { get; set; }
-        public bool IsNameReadonly { get; set; }
-
         public double Minimum { get; set; }
         public double Maximum { get; set; }
+
+        // ------------- Name -------------
+        public bool IsNameReadonly { get; set; }
+
+        public string Name
+        {
+            get { return (string)GetValue(NameProperty); }
+            set { SetValue(NameProperty, value); }
+        }
+        public static readonly DependencyProperty NameProperty = DependencyProperty.Register("Name", typeof(string), typeof(VM_Slider), new PropertyMetadata("", OnNameChanged));
+
+        private static void OnNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            VM_Slider parent = (VM_Slider)d;
+            parent.NameChanged?.Invoke(parent, new EventArgs());
+        }
+
+        public event EventHandler NameChanged = null;
 
         // ------------- Color and dependent DropShadow -------------
         public Color Color

@@ -231,7 +231,10 @@ namespace WallJumpConfig
 
                 for (int i = 0; i < sample.Horizontal.Degrees_Extra.Length; i++)
                 {
-                    viewmodel.ExtraAngles.Add(VM_Slider.FromModel(sample.Horizontal.Degrees_Extra[i], true));
+                    var angle = VM_Slider.FromModel(sample.Horizontal.Degrees_Extra[i], true);
+                    var props = VM_PropsAtAngle.FromModel(sample.Horizontal.Props_Extra[i], sample.Horizontal.Degrees_Extra[i].Name, sample.Horizontal.Degrees_Extra[i].Color);
+
+                    viewmodel.AddExtraAngle(angle, props);
                 }
 
                 horizontalControl.ViewModel = viewmodel;
