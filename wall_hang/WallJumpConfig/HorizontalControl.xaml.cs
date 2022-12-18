@@ -31,6 +31,8 @@ namespace WallJumpConfig
             {
                 _viewmodel = value;
                 panelAngles.ItemsSource = _viewmodel?.ExtraAngles;
+                speedFullStrength.DataContext = _viewmodel?.Speed_FullStrength;
+                speedZeroStrength.DataContext = _viewmodel?.Speed_ZeroStrength;
             }
         }
     }

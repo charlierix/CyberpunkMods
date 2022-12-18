@@ -12,6 +12,7 @@ namespace WallJumpConfig.Models.viewmodels
         public SliderPropType PropType { get; set; }
 
         public string Name { get; set; }
+        public bool IsNameReadonly { get; set; }
 
         public double Minimum { get; set; }
         public double Maximum { get; set; }
@@ -89,18 +90,32 @@ namespace WallJumpConfig.Models.viewmodels
 
         // ------------- Helper Methods -------------
 
-        public static VM_Slider FromModel(NamedAngle angle)
+        public static VM_Slider FromModel(NamedAngle angle, bool allow_name_change)
         {
             return new VM_Slider()
             {
                 PropType = SliderPropType.Angle,
                 Name = angle.Name,
+                IsNameReadonly = !allow_name_change,
                 Minimum = 0,
                 Maximum = 180,
                 Value = angle.Degrees,
                 Color = string.IsNullOrWhiteSpace(angle.Color) ?
                     Colors.Transparent :
                     UtilityWPF.ColorFromHex(angle.Color),
+            };
+        }
+        public static VM_Slider FromModel(SliderPropType prop_type, string name, double minimum, double maximum, double value, bool allow_name_change)
+        {
+            return new VM_Slider()
+            {
+                PropType = prop_type,
+                Name = name,
+                IsNameReadonly = !allow_name_change,
+                Minimum = minimum,
+                Maximum = maximum,
+                Value = value,
+                Color = Colors.Transparent,
             };
         }
     }

@@ -221,31 +221,17 @@ namespace WallJumpConfig
             {
                 SaveWPF sample = GetSampleSession();
 
-                var horz_angle_0 = new NamedAngle()
-                {
-                    Name = "Directly Facing Wall",
-                    Degrees = 0,
-                    Color = "000",
-                };
-
-                var horz_angle_180 = new NamedAngle()
-                {
-                    Name = "Directly Away",
-                    Degrees = 180,
-                    Color = "FFF",
-                };
-
                 var viewmodel = new VM_Horizontal()
                 {
-                    DirectFaceWall = VM_Slider.FromModel(horz_angle_0),
-                    DirectAway = VM_Slider.FromModel(horz_angle_180),
+                    Speed_FullStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - full strength", 0, 18, sample.Horizontal.Speed_FullStrength, false),
+                    Speed_ZeroStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - zero strength", 0, 18, sample.Horizontal.Speed_ZeroStrength, false),
                 };
 
                 new VM_Horizontal();
 
-                for(int i = 0; i < sample.Horizontal.Degrees_Extra.Length; i++)
+                for (int i = 0; i < sample.Horizontal.Degrees_Extra.Length; i++)
                 {
-                    viewmodel.ExtraAngles.Add(VM_Slider.FromModel(sample.Horizontal.Degrees_Extra[i]));
+                    viewmodel.ExtraAngles.Add(VM_Slider.FromModel(sample.Horizontal.Degrees_Extra[i], true));
                 }
 
                 horizontalControl.ViewModel = viewmodel;
