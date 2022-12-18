@@ -34,9 +34,12 @@
                 <Button Visibility="Collapsed" Content="discard" ToolTip="discard unchanged changes"/>
 
                 <Button Content="save" Click="Save_Click"/>
+
+                <Button Content="test" Click="Test_Click" Margin="0,16,0,0"/>
             </StackPanel>
 
 
+            <local:HorizontalControl Grid.Column="2" x:Name="horizontalControl"/>
 
             <!-- Option for vertical jump -->
             <!-- True: fixed number of angles (5) -->

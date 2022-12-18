@@ -6,7 +6,9 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Effects;
+using WallJumpConfig.Models.viewmodels;
 using WallJumpConfig.Models.wpf;
 
 namespace WallJumpConfig
@@ -80,7 +82,6 @@ namespace WallJumpConfig
             try
             {
                 PopulateNamesCombo();
-
 
                 LoadSettings();
 
@@ -214,6 +215,47 @@ namespace WallJumpConfig
 
         #endregion
 
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SaveWPF sample = GetSampleSession();
+
+                var horz_angle_0 = new NamedAngle()
+                {
+                    Name = "Directly Facing Wall",
+                    Degrees = 0,
+                    Color = "000",
+                };
+
+                var horz_angle_180 = new NamedAngle()
+                {
+                    Name = "Directly Away",
+                    Degrees = 180,
+                    Color = "FFF",
+                };
+
+                var viewmodel = new VM_Horizontal()
+                {
+                    DirectFaceWall = VM_Slider.FromModel(horz_angle_0),
+                    DirectAway = VM_Slider.FromModel(horz_angle_180),
+                };
+
+                new VM_Horizontal();
+
+                for(int i = 0; i < sample.Horizontal.Degrees_Extra.Length; i++)
+                {
+                    viewmodel.ExtraAngles.Add(VM_Slider.FromModel(sample.Horizontal.Degrees_Extra[i]));
+                }
+
+                horizontalControl.ViewModel = viewmodel;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         #region Private Methods
 
         private void SaveSettings()
@@ -298,6 +340,99 @@ namespace WallJumpConfig
 
             foreach (var preset in _presets)
                 cboName.Items.Add(preset.Name);
+        }
+
+        private static SaveWPF GetSampleSession()
+        {
+            return new SaveWPF()
+            {
+                Horizontal = new SaveWPF_Horizontal()
+                {
+                    Degrees_Extra = new[]
+                    {
+                        new NamedAngle()
+                        {
+                            Name = "Face Wall",
+                            Degrees = 20,
+                            Color = "B3837F",
+                        },
+                        new NamedAngle()
+                        {
+                            Name = "Along Start",
+                            Degrees = 60,
+                            Color = "ADAC58",
+                        },
+                        new NamedAngle()
+                        {
+                            Name = "Along End",
+                            Degrees = 120,
+                            Color = "7BBDAA",
+                        },
+                    },
+
+                    Props_DirectFaceWall = new PropsAtAngle()
+                    {
+                        Percent_Up = 0.7651404036440723,
+                        Percent_Along = 0.04847767977036907,
+                        Percent_Away = 0.06060892809185233,
+                        YawTurn_Percent = 0,
+                        Percent_Look = 0.5,
+                    },
+
+                    Props_Extra = new[]
+                    {
+                        new PropsAtAngle()
+                        {
+                            Percent_Up = 0.7439462042181489,
+                            Percent_Along = 0.18559118552351608,
+                            Percent_Away = 0.07197310210907464,
+                            YawTurn_Percent = 0,
+                            Percent_Look = 0.5,
+                        },
+                        new PropsAtAngle()
+                        {
+                            Percent_Up = 0.5704626102583347,
+                            Percent_Along = 0.2083431903157424,
+                            Percent_Away = 0.06362991179333226,
+                            YawTurn_Percent = 0,
+                            Percent_Look = 0.5,
+                        },
+                        new PropsAtAngle()
+                        {
+                            Percent_Up = 0.4272834803444462,
+                            Percent_Along = 0.2999763432422181,
+                            Percent_Away = 0.33000000000000007,
+                            YawTurn_Percent = 0,
+                            Percent_Look = 0.5,
+                        },
+                    },
+
+                    Props_DirectAway = new PropsAtAngle()
+                    {
+                        Percent_Up = 0.23485959635592776,
+                        Percent_Along = 0.4507315891675882,
+                        Percent_Away = 0.719683707575183,
+                        YawTurn_Percent = 0,
+                        Percent_Look = 0.5,
+                    },
+
+                    Strength = 13,
+
+                    Speed_FullStrength = 4,
+                    Speed_ZeroStrength = 8,
+                },
+
+                Vertical_StraightUp = new SaveWPF_Vertical_StraightUp()
+                {
+                    Degrees_StraightUp = 60,
+                    Degrees_Standard = 40,
+
+                    Strength = 11,
+
+                    Speed_FullStrength = 3,
+                    Speed_ZeroStrength = 7,
+                },
+            };
         }
 
         #endregion

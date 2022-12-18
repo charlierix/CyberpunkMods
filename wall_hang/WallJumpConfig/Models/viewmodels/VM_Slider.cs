@@ -1,0 +1,107 @@
+﻿using Game.Math_WPF.Mathematics;
+using Game.Math_WPF.WPF;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Effects;
+using WallJumpConfig.Models.wpf;
+
+namespace WallJumpConfig.Models.viewmodels
+{
+    public class VM_Slider : DependencyObject
+    {
+        public SliderPropType PropType { get; set; }
+
+        public string Name { get; set; }
+
+        public double Minimum { get; set; }
+        public double Maximum { get; set; }
+
+        // ------------- Color and dependent DropShadow -------------
+        public Color Color
+        {
+            get { return (Color)GetValue(ColorProperty); }
+            set { SetValue(ColorProperty, value); }
+        }
+        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register("Color", typeof(Color), typeof(VM_Slider), new PropertyMetadata(Colors.Transparent, OnColorChanged));
+
+        private static void OnColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            VM_Slider parent = (VM_Slider)d;
+
+            parent.Effect = parent.Color == Colors.Transparent ?
+                null :
+                new DropShadowEffect()
+                {
+                    Color = parent.Color,
+                    Direction = 0,
+                    ShadowDepth = 0,
+                    BlurRadius = 6,
+                    Opacity = .66,
+                };
+        }
+
+        public Effect Effect
+        {
+            get { return (Effect)GetValue(EffectProperty); }
+            set { SetValue(EffectProperty, value); }
+        }
+        public static readonly DependencyProperty EffectProperty = DependencyProperty.Register("Effect", typeof(Effect), typeof(VM_Slider), new PropertyMetadata(null));
+
+        // ------------- Value and dependent ValueDisplay -------------
+        public double Value
+        {
+            get { return (double)GetValue(ValueProperty); }
+            set
+            {
+                SetValue(ValueProperty, value);
+            }
+        }
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(VM_Slider), new PropertyMetadata(0d, OnValueChanged));
+
+        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            VM_Slider parent = (VM_Slider)d;
+            parent.ValueDisplay = GetValueDisplay(parent.PropType, parent.Value);        // setting this to force the textblock to update
+        }
+
+        public string ValueDisplay
+        {
+            get { return (string)GetValue(ValueDisplayProperty); }
+            set { SetValue(ValueDisplayProperty, value); }
+        }
+        public static readonly DependencyProperty ValueDisplayProperty = DependencyProperty.Register("ValueDisplay", typeof(string), typeof(VM_Slider), new PropertyMetadata(""));
+
+        private static string GetValueDisplay(SliderPropType prop_type, double value)
+        {
+            switch (prop_type)
+            {
+                case SliderPropType.Angle:
+                    return value.ToInt_Round().ToString();
+
+                case SliderPropType.Percent:
+                    return (value * 100).ToInt_Round().ToString();
+
+                case SliderPropType.Other:
+                default:
+                    return value.ToStringSignificantDigits(1);
+            }
+        }
+
+        // ------------- Helper Methods -------------
+
+        public static VM_Slider FromModel(NamedAngle angle)
+        {
+            return new VM_Slider()
+            {
+                PropType = SliderPropType.Angle,
+                Name = angle.Name,
+                Minimum = 0,
+                Maximum = 180,
+                Value = angle.Degrees,
+                Color = string.IsNullOrWhiteSpace(angle.Color) ?
+                    Colors.Transparent :
+                    UtilityWPF.ColorFromHex(angle.Color),
+            };
+        }
+    }
+}

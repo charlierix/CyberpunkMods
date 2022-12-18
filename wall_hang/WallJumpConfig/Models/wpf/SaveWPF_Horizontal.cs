@@ -11,13 +11,11 @@ namespace WallJumpConfig.Models.wpf
         // NOTE: if they have vertical_straightup, extra angles must have at least one (face wall)
 
         // 0 and 180 are implied
-        public double[] Degrees_Extra { get; init; }
+        public NamedAngle[] Degrees_Extra { get; init; }
 
         public PropsAtAngle Props_DirectFaceWall { get; init; }
         public PropsAtAngle[] Props_Extra { get; init; }
         public PropsAtAngle Props_DirectAway { get; init; }
-
-        public string[] Colors_Extra { get; init; }
 
         public double Strength { get; init; }
 
