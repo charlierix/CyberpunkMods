@@ -2,6 +2,9 @@
 using System.Windows;
 using WallJumpConfig.Models.wpf;
 using Game.Math_WPF.WPF;
+using System.Windows.Controls;
+using System.Net;
+using System.Windows.Media.Effects;
 
 namespace WallJumpConfig.Models.viewmodels
 {
@@ -14,12 +17,12 @@ namespace WallJumpConfig.Models.viewmodels
         }
         public static readonly DependencyProperty NameProperty = DependencyProperty.Register("Name", typeof(string), typeof(VM_PropsAtAngle), new PropertyMetadata(""));
 
-        public Color HeaderBorder
+        public Brush HeaderBorder
         {
-            get { return (Color)GetValue(HeaderBorderProperty); }
+            get { return (Brush)GetValue(HeaderBorderProperty); }
             set { SetValue(HeaderBorderProperty, value); }
         }
-        public static readonly DependencyProperty HeaderBorderProperty = DependencyProperty.Register("HeaderBorder", typeof(Color), typeof(VM_PropsAtAngle), new PropertyMetadata(Colors.Transparent));
+        public static readonly DependencyProperty HeaderBorderProperty = DependencyProperty.Register("HeaderBorder", typeof(Brush), typeof(VM_PropsAtAngle), new PropertyMetadata(Brushes.Transparent));
 
         public Brush HeaderBackground
         {
@@ -28,12 +31,12 @@ namespace WallJumpConfig.Models.viewmodels
         }
         public static readonly DependencyProperty HeaderBackgroundProperty = DependencyProperty.Register("HeaderBackground", typeof(Brush), typeof(VM_PropsAtAngle), new PropertyMetadata(Brushes.Transparent));
 
-        public Color HeaderDropShadow
+        public Effect HeaderDropShadow
         {
-            get { return (Color)GetValue(HeaderDropShadowProperty); }
+            get { return (Effect)GetValue(HeaderDropShadowProperty); }
             set { SetValue(HeaderDropShadowProperty, value); }
         }
-        public static readonly DependencyProperty HeaderDropShadowProperty = DependencyProperty.Register("HeaderDropShadow", typeof(Color), typeof(VM_PropsAtAngle), new PropertyMetadata(Colors.Transparent));
+        public static readonly DependencyProperty HeaderDropShadowProperty = DependencyProperty.Register("HeaderDropShadow", typeof(Effect), typeof(VM_PropsAtAngle), new PropertyMetadata(null));
 
         public VM_Slider Percent_Up { get; set; }
         public VM_Slider Percent_Along { get; set; }
@@ -66,7 +69,7 @@ namespace WallJumpConfig.Models.viewmodels
             };
         }
 
-        public static (Color border, Brush background, Color dropshadow) GetBrushes(string color)
+        public static (Brush border, Brush background, Effect dropshadow) GetBrushes(string color)
         {
             Color color_cast = string.IsNullOrWhiteSpace(color) ?
                 Colors.Transparent :
@@ -74,23 +77,31 @@ namespace WallJumpConfig.Models.viewmodels
 
             return GetBrushes(color_cast);
         }
-        public static (Color border, Brush background, Color dropshadow) GetBrushes(Color color)
+        public static (Brush border, Brush background, Effect dropshadow) GetBrushes(Color color)
         {
-            Color border = Colors.Transparent;
+            Brush border = Brushes.Transparent;
             Brush background = Brushes.Transparent;
-            Color dropshadow = Colors.Transparent;
+            Effect dropshadow = null;
 
             if (color != Colors.Transparent)
             {
-                border = UtilityWPF.AlphaBlend(color, Colors.Transparent, 0.15);
+                border = new LinearGradientBrush(
+                    UtilityWPF.AlphaBlend(color, Colors.Transparent, 0.15),
+                    Colors.Transparent,
+                    270);
 
                 // It can't have transparency, or the drop shadow will be around the text
                 //background = new SolidColorBrush(UtilityWPF.AlphaBlend(color, Colors.Transparent, 0.1));      
                 background = new SolidColorBrush(UtilityWPF.AlphaBlend(color, SystemColors.ControlColor, 0.1));
 
-                // No need to add transparency here, drop shadow has an opacity property
-                //dropshadow = UtilityWPF.AlphaBlend(color, Colors.Transparent, 1);
-                dropshadow = color;
+                dropshadow = new DropShadowEffect()
+                {
+                    Color = color,
+                    Direction = 270,
+                    ShadowDepth = 4,
+                    BlurRadius = 5,
+                    Opacity = 0.09,
+                };
             }
 
             return (border, background, dropshadow);
