@@ -2,9 +2,9 @@
 
 namespace WallJumpConfig
 {
-    public partial class HorizontalControl : UserControl
+    public partial class StraightUpControl : UserControl
     {
-        public HorizontalControl()
+        public StraightUpControl()
         {
             InitializeComponent();
         }

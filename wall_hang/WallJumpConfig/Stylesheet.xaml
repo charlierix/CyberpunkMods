@@ -23,4 +23,9 @@
         </Grid>
     </DataTemplate>
 
+    <Style TargetType="Separator">
+        <Setter Property="Visibility" Value="Hidden"/>
+        <Setter Property="Height" Value="16"/>
+    </Style>
+
 </ResourceDictionary>

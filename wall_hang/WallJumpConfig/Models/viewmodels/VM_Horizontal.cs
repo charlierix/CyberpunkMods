@@ -85,7 +85,7 @@ namespace WallJumpConfig.Models.viewmodels
             {
                 Speed_FullStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - full strength", 0, 18, model.Speed_FullStrength, false),
                 Speed_ZeroStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - zero strength", 0, 18, model.Speed_ZeroStrength, false),
-                Strength = VM_Slider.FromModel(SliderPropType.Other, "Jump Strength", 0, 20, model.Strength, false),
+                Strength = VM_Slider.FromModel(SliderPropType.Other, "Jump Strength", 0, 24, model.Strength, false),
             };
 
             new VM_Horizontal();

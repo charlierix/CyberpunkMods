@@ -222,6 +222,7 @@ namespace WallJumpConfig
                 SaveWPF sample = GetSampleSession();
 
                 horizontalControl.DataContext = VM_Horizontal.FromModel(sample.Horizontal);
+                straightupControl.DataContext = VM_StraightUp.FromModel(sample.Vertical_StraightUp);
             }
             catch (Exception ex)
             {

@@ -19,13 +19,13 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <StackPanel Grid.IsSharedSizeScope="True">
-        <Label Content="Extra Angles" Style="{StaticResource label_header}"/>
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Grid.IsSharedSizeScope="True">
+            <Label Content="Extra Angles" Style="{StaticResource label_header}"/>
 
-        <ItemsControl ItemsSource="{Binding ExtraAngles}" ItemTemplate="{StaticResource named_slider}"/>
+            <ItemsControl ItemsSource="{Binding ExtraAngles}" ItemTemplate="{StaticResource named_slider}"/>
 
-        <Label Content="Props at Angle" Style="{StaticResource label_header}"/>
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <Label Content="Props at Angle" Style="{StaticResource label_header}"/>
             <ItemsControl ItemsSource="{Binding PropsAtAngles}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -51,13 +51,13 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </ScrollViewer>
 
-        <Label Content="Misc" Style="{StaticResource label_header}"/>
+            <Label Content="Misc" Style="{StaticResource label_header}"/>
 
-        <ContentPresenter Content="{Binding Speed_FullStrength}" ContentTemplate="{StaticResource named_slider}"/>
-        <ContentPresenter Content="{Binding Speed_ZeroStrength}" ContentTemplate="{StaticResource named_slider}"/>
-        <Separator Visibility="Hidden" Height="8"/>
-        <ContentPresenter Content="{Binding Strength}" ContentTemplate="{StaticResource named_slider}"/>
-    </StackPanel>
+            <ContentPresenter Content="{Binding Speed_FullStrength}" ContentTemplate="{StaticResource named_slider}"/>
+            <ContentPresenter Content="{Binding Speed_ZeroStrength}" ContentTemplate="{StaticResource named_slider}"/>
+            <Separator Visibility="Hidden" Height="8"/>
+            <ContentPresenter Content="{Binding Strength}" ContentTemplate="{StaticResource named_slider}"/>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
