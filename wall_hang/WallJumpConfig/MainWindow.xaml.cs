@@ -221,23 +221,7 @@ namespace WallJumpConfig
             {
                 SaveWPF sample = GetSampleSession();
 
-                var viewmodel = new VM_Horizontal()
-                {
-                    Speed_FullStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - full strength", 0, 18, sample.Horizontal.Speed_FullStrength, false),
-                    Speed_ZeroStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - zero strength", 0, 18, sample.Horizontal.Speed_ZeroStrength, false),
-                };
-
-                new VM_Horizontal();
-
-                for (int i = 0; i < sample.Horizontal.Degrees_Extra.Length; i++)
-                {
-                    var angle = VM_Slider.FromModel(sample.Horizontal.Degrees_Extra[i], true);
-                    var props = VM_PropsAtAngle.FromModel(sample.Horizontal.Props_Extra[i], sample.Horizontal.Degrees_Extra[i].Name, sample.Horizontal.Degrees_Extra[i].Color);
-
-                    viewmodel.AddExtraAngle(angle, props);
-                }
-
-                horizontalControl.ViewModel = viewmodel;
+                horizontalControl.DataContext = VM_Horizontal.FromModel(sample.Horizontal);
             }
             catch (Exception ex)
             {

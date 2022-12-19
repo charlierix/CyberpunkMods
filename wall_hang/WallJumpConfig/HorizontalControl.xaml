@@ -11,6 +11,10 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!-- local styles here -->
+            <Style TargetType="Separator">
+                <Setter Property="Visibility" Value="Hidden"/>
+                <Setter Property="Height" Value="8"/>
+            </Style>
 
         </ResourceDictionary>
     </UserControl.Resources>
@@ -18,11 +22,11 @@
     <StackPanel Grid.IsSharedSizeScope="True">
         <Label Content="Extra Angles" Style="{StaticResource label_header}"/>
 
-        <ItemsControl x:Name="panelAngles" ItemTemplate="{StaticResource named_slider}"/>
+        <ItemsControl ItemsSource="{Binding ExtraAngles}" ItemTemplate="{StaticResource named_slider}"/>
 
         <Label Content="Props at Angle" Style="{StaticResource label_header}"/>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-            <ItemsControl x:Name="panelPropsAtAngle">
+            <ItemsControl ItemsSource="{Binding PropsAtAngles}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Expander>
@@ -51,7 +55,9 @@
 
         <Label Content="Misc" Style="{StaticResource label_header}"/>
 
-        <ContentPresenter x:Name="speedFullStrength" ContentTemplate="{StaticResource named_slider}"/>
-        <ContentPresenter x:Name="speedZeroStrength" ContentTemplate="{StaticResource named_slider}"/>
+        <ContentPresenter Content="{Binding Speed_FullStrength}" ContentTemplate="{StaticResource named_slider}"/>
+        <ContentPresenter Content="{Binding Speed_ZeroStrength}" ContentTemplate="{StaticResource named_slider}"/>
+        <Separator Visibility="Hidden" Height="8"/>
+        <ContentPresenter Content="{Binding Strength}" ContentTemplate="{StaticResource named_slider}"/>
     </StackPanel>
 </UserControl>

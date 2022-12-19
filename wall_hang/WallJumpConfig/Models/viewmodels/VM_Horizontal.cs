@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
+using WallJumpConfig.Models.wpf;
 
 namespace WallJumpConfig.Models.viewmodels
 {
@@ -19,6 +20,8 @@ namespace WallJumpConfig.Models.viewmodels
 
         public VM_Slider Speed_FullStrength { get; set; }
         public VM_Slider Speed_ZeroStrength { get; set; }
+
+        public VM_Slider Strength { get; set; }
 
         // ------------- Helper Methods -------------
         public void AddExtraAngle()
@@ -74,6 +77,28 @@ namespace WallJumpConfig.Models.viewmodels
         {
             ExtraAngles.RemoveAt(index);
             PropsAtAngles.RemoveAt(index);
+        }
+
+        public static VM_Horizontal FromModel(SaveWPF_Horizontal model)
+        {
+            var retVal = new VM_Horizontal()
+            {
+                Speed_FullStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - full strength", 0, 18, model.Speed_FullStrength, false),
+                Speed_ZeroStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - zero strength", 0, 18, model.Speed_ZeroStrength, false),
+                Strength = VM_Slider.FromModel(SliderPropType.Other, "Jump Strength", 0, 20, model.Strength, false),
+            };
+
+            new VM_Horizontal();
+
+            for (int i = 0; i < model.Degrees_Extra.Length; i++)
+            {
+                var angle = VM_Slider.FromModel(model.Degrees_Extra[i], true);
+                var props = VM_PropsAtAngle.FromModel(model.Props_Extra[i], model.Degrees_Extra[i].Name, model.Degrees_Extra[i].Color);
+
+                retVal.AddExtraAngle(angle, props);
+            }
+
+            return retVal;
         }
     }
 }

@@ -17,9 +17,9 @@ namespace WallJumpConfig.Models.wpf
         public PropsAtAngle[] Props_Extra { get; init; }
         public PropsAtAngle Props_DirectAway { get; init; }
 
-        public double Strength { get; init; }
-
         public double Speed_FullStrength { get; init; }
         public double Speed_ZeroStrength { get; init; }
+
+        public double Strength { get; init; }
     }
 }
