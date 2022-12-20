@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
-using WallJumpConfig.Models.wpf;
+using WallJumpConfig.Models.savewpf;
 
 namespace WallJumpConfig.Models.viewmodels
 {

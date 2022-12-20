@@ -9,7 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using WallJumpConfig.Models.viewmodels;
-using WallJumpConfig.Models.wpf;
+using WallJumpConfig.Models.savewpf;
 
 namespace WallJumpConfig
 {

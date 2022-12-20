@@ -1,4 +1,4 @@
-﻿using WallJumpConfig.Models.wpf;
+﻿using WallJumpConfig.Models.savewpf;
 
 namespace WallJumpConfig.Models.viewmodels
 {

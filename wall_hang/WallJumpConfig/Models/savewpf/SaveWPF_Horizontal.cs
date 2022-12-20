@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WallJumpConfig.Models.wpf
+namespace WallJumpConfig.Models.savewpf
 {
     public record SaveWPF_Horizontal
     {

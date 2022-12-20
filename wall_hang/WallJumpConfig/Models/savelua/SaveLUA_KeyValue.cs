@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WallJumpConfig.Models.lua
+namespace WallJumpConfig.Models.savelua
 {
     public record SaveLUA_KeyValue
     {

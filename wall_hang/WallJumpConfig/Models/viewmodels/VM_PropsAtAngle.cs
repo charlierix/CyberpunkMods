@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media;
 using System.Windows;
-using WallJumpConfig.Models.wpf;
+using WallJumpConfig.Models.savewpf;
 using Game.Math_WPF.WPF;
 using System.Windows.Controls;
 using System.Net;

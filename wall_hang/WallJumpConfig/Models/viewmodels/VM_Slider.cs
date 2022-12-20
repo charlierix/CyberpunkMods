@@ -4,7 +4,7 @@ using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
-using WallJumpConfig.Models.wpf;
+using WallJumpConfig.Models.savewpf;
 
 namespace WallJumpConfig.Models.viewmodels
 {
