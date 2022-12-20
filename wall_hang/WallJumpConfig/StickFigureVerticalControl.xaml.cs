@@ -1,14 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace WallJumpConfig
 {
-    public partial class StickFigureHorizontalControl : UserControl
+    public partial class StickFigureVerticalControl : UserControl
     {
-        private const string TITLE = "StickFigureHorizontalControl";
+        private const string TITLE = "StickFigureVerticalControl";
 
-        public StickFigureHorizontalControl()
+        public StickFigureVerticalControl()
         {
             InitializeComponent();
         }
@@ -47,9 +58,9 @@ namespace WallJumpConfig
 
             canvas.Children.Add(StickFigureUtil.GetGraphic_Stickman(center));
 
-            canvas.Children.Add(StickFigureUtil.GetGraphic_Horizontal_Arrows_Four(center));
+            canvas.Children.Add(StickFigureUtil.GetGraphic_Vertical_Arrows_Three(center));
 
-            canvas.Children.Add(StickFigureUtil.GetGraphic_Horizontal_Wall(center + new Vector(0, -(Math.Max(StickFigureUtil.HORZ_RADIUS1, StickFigureUtil.HORZ_RADIUS2) + 24))));
+            canvas.Children.Add(StickFigureUtil.GetGraphic_Vertical_Wall(center + new Vector(Math.Max(StickFigureUtil.VERT_RADIUS1, StickFigureUtil.VERT_RADIUS2) + 24, 0)));
         }
     }
 }

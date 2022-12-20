@@ -16,29 +16,29 @@ namespace WallJumpConfig
 {
     public static class StickFigureUtil
     {
-        private const string COLOR_1 = "222";       // stationary,primary,static....?
-        private const string COLOR_2 = "DDD";       // background,info....?
+        public const string COLOR_1 = "222";       // stationary,primary,static....?
+        public const string COLOR_2 = "CCC";       // background,info....?
 
-        private const double ARROW_LENGTH = 9;
-        private const double ARROW_WIDTH = 7;
+        public const double ARROW_LENGTH = 9;
+        public const double ARROW_WIDTH = 7;
 
-        private const double HORZ_INNER1_RADIUS = 54;
-        private const double HORZ_OUTER1_RADIUS = 48;
+        public const double HORZ_INNER1_RADIUS = 54;
+        public const double HORZ_OUTER1_RADIUS = 48;
 
-        private const double HORZ_INNER2_RADIUS = 36;
-        private const double HORZ_OUTER2_RADIUS = 90;
+        public const double HORZ_INNER2_RADIUS = 36;
+        public const double HORZ_OUTER2_RADIUS = 90;
 
-        private const double HORZ_RADIUS1 = HORZ_INNER1_RADIUS + HORZ_OUTER1_RADIUS;
-        private const double HORZ_RADIUS2 = HORZ_INNER2_RADIUS + HORZ_OUTER2_RADIUS;
+        public const double HORZ_RADIUS1 = HORZ_INNER1_RADIUS + HORZ_OUTER1_RADIUS;
+        public const double HORZ_RADIUS2 = HORZ_INNER2_RADIUS + HORZ_OUTER2_RADIUS;
 
-        private const double VERT_INNER1_RADIUS = 54;
-        private const double VERT_OUTER1_RADIUS = 48;
+        public const double VERT_INNER1_RADIUS = 54;
+        public const double VERT_OUTER1_RADIUS = 48;
 
-        private const double VERT_INNER2_RADIUS = 36;
-        private const double VERT_OUTER2_RADIUS = 90;
+        public const double VERT_INNER2_RADIUS = 36;
+        public const double VERT_OUTER2_RADIUS = 90;
 
-        private const double VERT_RADIUS1 = VERT_INNER1_RADIUS + VERT_OUTER1_RADIUS;
-        private const double VERT_RADIUS2 = VERT_INNER2_RADIUS + VERT_OUTER2_RADIUS;
+        public const double VERT_RADIUS1 = VERT_INNER1_RADIUS + VERT_OUTER1_RADIUS;
+        public const double VERT_RADIUS2 = VERT_INNER2_RADIUS + VERT_OUTER2_RADIUS;
 
         public static FrameworkElement GetGraphic_Stickman(Point offset)
         {
@@ -172,7 +172,7 @@ namespace WallJumpConfig
             return retVal;
         }
 
-        private static FrameworkElement GetGraphic_Horizontal_Wall(Point offset)
+        public static FrameworkElement GetGraphic_Horizontal_Wall(Point offset)
         {
             Brush brush = UtilityWPF.BrushFromHex(COLOR_1);
             double thickness = 3;
@@ -199,7 +199,7 @@ namespace WallJumpConfig
 
             return retVal;
         }
-        private static FrameworkElement GetGraphic_Vertical_Wall(Point offset)
+        public static FrameworkElement GetGraphic_Vertical_Wall(Point offset)
         {
             Brush brush = UtilityWPF.BrushFromHex(COLOR_1);
             double thickness = 3;
@@ -227,7 +227,7 @@ namespace WallJumpConfig
             return retVal;
         }
 
-        private static RotatableLine GetGraphic_RotateableLine(Point offset, Brush brush, double inner_radius, double outer_radius, bool show_arrow)
+        public static RotatableLine GetGraphic_RotateableLine(Point offset, Brush brush, double inner_radius, double outer_radius, bool show_arrow)
         {
             double thickness = 1;
 
@@ -275,7 +275,7 @@ namespace WallJumpConfig
             };
         }
 
-        private static (Point tip, Point base1, Point base2) GetArrowCoords(Line line, double length, double width)
+        public static (Point tip, Point base1, Point base2) GetArrowCoords(Line line, double length, double width)
         {
             double magnitude = Math.Sqrt(Math2D.LengthSquared(line.X1, line.Y1, line.X2, line.Y2));
 
@@ -303,6 +303,5 @@ namespace WallJumpConfig
                 new Point(base_x + (edgeDir2_x * halfWidth), base_y + (edgeDir2_y * halfWidth))
             );
         }
-
     }
 }

@@ -215,6 +215,27 @@ namespace WallJumpConfig
             }
         }
 
+        private void tabcontrol_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (!(e.Source is TabControl))
+                    return;
+
+                horizontalStickFigure.Visibility = tabHorizontal.IsSelected ?
+                    Visibility.Visible :
+                    Visibility.Collapsed;
+
+                verticalStickFigure.Visibility = tabVertical.IsSelected ?
+                    Visibility.Visible :
+                    Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         #endregion
 
         private void Test_Click(object sender, RoutedEventArgs e)

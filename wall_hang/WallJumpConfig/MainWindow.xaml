@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WallJumpConfig"
         mc:Ignorable="d"
-        Title="WallJump Config" ResizeMode="CanResizeWithGrip" Width="1000" Height="700" Loaded="Window_Loaded" Closing="Window_Closing" KeyDown="Window_KeyDown">
+        Title="WallJump Config" ResizeMode="CanResizeWithGrip" Width="820" Height="820" Loaded="Window_Loaded" Closing="Window_Closing" KeyDown="Window_KeyDown">
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -40,18 +40,17 @@
                 <Button Content="test" Click="Test_Click" Margin="0,16,0,0"/>
             </StackPanel>
 
-            <TabControl x:Name="tabcontrol" Grid.Column="2">
-                <TabItem Header="Standard">
+            <TabControl x:Name="tabcontrol" Grid.Column="2" SelectionChanged="tabcontrol_SelectionChanged">
+                <TabItem x:Name="tabHorizontal" Header="Standard">
                     <local:HorizontalControl x:Name="horizontalControl" Margin="8"/>
                 </TabItem>
-                <TabItem Header="Straight Up">
+                <TabItem x:Name="tabVertical" Header="Straight Up">
                     <local:StraightUpControl x:Name="straightupControl" Margin="8"/>
                 </TabItem>
             </TabControl>
 
-            <local:StickFigureHorizontalControl Grid.Column="4"/>
-
-
+            <local:StickFigureHorizontalControl Grid.Column="4" x:Name="horizontalStickFigure"/>
+            <local:StickFigureVerticalControl Grid.Column="4" x:Name="verticalStickFigure"/>
         </Grid>
 
         <Expander Grid.Row="0" x:Name="expanderFolder" Header="mod folder" HorizontalAlignment="Right" Expanded="expanderFolder_ExpandedCollapsed" Collapsed="expanderFolder_ExpandedCollapsed"/>
