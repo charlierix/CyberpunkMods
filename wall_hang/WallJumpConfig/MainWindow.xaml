@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WallJumpConfig"
         mc:Ignorable="d"
-        Title="WallJump Config" ResizeMode="CanResizeWithGrip" Width="800" Height="700" Loaded="Window_Loaded" Closing="Window_Closing" KeyDown="Window_KeyDown">
+        Title="WallJump Config" ResizeMode="CanResizeWithGrip" Width="1000" Height="700" Loaded="Window_Loaded" Closing="Window_Closing" KeyDown="Window_KeyDown">
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -24,6 +24,8 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="8"/>
                 <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
@@ -47,7 +49,8 @@
                 </TabItem>
             </TabControl>
 
-            <!-- TODO: Diagrams should be in a column to the right -->
+            <local:StickFigureHorizontalControl Grid.Column="4"/>
+
 
         </Grid>
 
