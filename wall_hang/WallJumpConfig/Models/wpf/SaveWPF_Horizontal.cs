@@ -8,8 +8,6 @@ namespace WallJumpConfig.Models.wpf
 {
     public record SaveWPF_Horizontal
     {
-        // NOTE: if they have vertical_straightup, extra angles must have at least one (face wall)
-
         // 0 and 180 are implied
         public NamedAngle[] Degrees_Extra { get; init; }
 

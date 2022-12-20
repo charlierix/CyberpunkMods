@@ -90,6 +90,8 @@ namespace WallJumpConfig.Models.viewmodels
 
             new VM_Horizontal();
 
+            retVal.PropsAtAngles.Add(VM_PropsAtAngle.FromModel(model.Props_DirectFaceWall, "Directly Facing Wall", null));
+
             for (int i = 0; i < model.Degrees_Extra.Length; i++)
             {
                 var angle = VM_Slider.FromModel(model.Degrees_Extra[i], true);
@@ -97,6 +99,8 @@ namespace WallJumpConfig.Models.viewmodels
 
                 retVal.AddExtraAngle(angle, props);
             }
+
+            retVal.PropsAtAngles.Add(VM_PropsAtAngle.FromModel(model.Props_DirectAway, "Directly Away From Wall", null));
 
             return retVal;
         }

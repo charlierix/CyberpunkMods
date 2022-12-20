@@ -38,7 +38,7 @@
                 <Button Content="test" Click="Test_Click" Margin="0,16,0,0"/>
             </StackPanel>
 
-            <TabControl Grid.Column="2">
+            <TabControl x:Name="tabcontrol" Grid.Column="2">
                 <TabItem Header="Standard">
                     <local:HorizontalControl x:Name="horizontalControl" Margin="8"/>
                 </TabItem>

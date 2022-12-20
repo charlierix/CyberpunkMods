@@ -57,7 +57,9 @@ namespace WallJumpConfig
         {
             InitializeComponent();
 
-            Background = SystemColors.ControlBrush;
+            Background = new SolidColorBrush(UtilityWPF.AlphaBlend(Colors.Black, SystemColors.ControlColor, 0.05));
+
+            tabcontrol.Background = new SolidColorBrush(UtilityWPF.AlphaBlend(Colors.White, SystemColors.ControlColor, 0.09));
 
             _errorEffect = new DropShadowEffect()
             {
