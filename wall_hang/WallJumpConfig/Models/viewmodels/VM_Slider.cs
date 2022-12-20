@@ -79,7 +79,10 @@ namespace WallJumpConfig.Models.viewmodels
         {
             VM_Slider parent = (VM_Slider)d;
             parent.ValueDisplay = GetValueDisplay(parent.PropType, parent.Value);        // setting this to force the textblock to update
+            parent.ValueChanged?.Invoke(parent, new EventArgs());
         }
+
+        public event EventHandler ValueChanged = null;
 
         public string ValueDisplay
         {
@@ -121,7 +124,7 @@ namespace WallJumpConfig.Models.viewmodels
                     UtilityWPF.ColorFromHex(angle.Color),
             };
         }
-        public static VM_Slider FromModel(SliderPropType prop_type, string name, double minimum, double maximum, double value, bool allow_name_change)
+        public static VM_Slider FromModel(SliderPropType prop_type, string name, double minimum, double maximum, double value, bool allow_name_change, string color = null)
         {
             return new VM_Slider()
             {
@@ -131,7 +134,9 @@ namespace WallJumpConfig.Models.viewmodels
                 Minimum = minimum,
                 Maximum = maximum,
                 Value = value,
-                Color = Colors.Transparent,
+                Color = string.IsNullOrWhiteSpace(color) ?
+                    Colors.Transparent :
+                    UtilityWPF.ColorFromHex(color),
             };
         }
     }

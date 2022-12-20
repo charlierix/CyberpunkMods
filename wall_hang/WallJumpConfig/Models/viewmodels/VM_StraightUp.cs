@@ -15,7 +15,7 @@ namespace WallJumpConfig.Models.viewmodels
         public VM_Slider Strength { get; set; }
 
         // ------------- Helper Methods -------------
-        public static object FromModel(SaveWPF_Vertical_StraightUp model)
+        public static VM_StraightUp FromModel(SaveWPF_Vertical_StraightUp model)
         {
             var retVal = new VM_StraightUp()
             {
@@ -24,8 +24,8 @@ namespace WallJumpConfig.Models.viewmodels
 
             if (model != null)
             {
-                retVal.Angle_StraightUp = VM_Slider.FromModel(SliderPropType.Angle, "Angle - straight up", 0, 90, 60, false);
-                retVal.Angle_Standard = VM_Slider.FromModel(SliderPropType.Angle, "Angle - standard", 0, 90, 40, false);
+                retVal.Angle_StraightUp = VM_Slider.FromModel(SliderPropType.Angle, "Angle - straight up", 0, 90, 60, false, "5AA4E0");
+                retVal.Angle_Standard = VM_Slider.FromModel(SliderPropType.Angle, "Angle - standard", 0, 90, 40, false, "30A030");
 
                 retVal.Speed_FullStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - full strength", 0, 18, model.Speed_FullStrength, false);
                 retVal.Speed_ZeroStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - zero strength", 0, 18, model.Speed_ZeroStrength, false);

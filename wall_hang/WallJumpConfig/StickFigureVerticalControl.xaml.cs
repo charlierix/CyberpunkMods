@@ -12,17 +12,49 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WallJumpConfig.Models.misc;
+using WallJumpConfig.Models.viewmodels;
 
 namespace WallJumpConfig
 {
     public partial class StickFigureVerticalControl : UserControl
     {
+        #region Declaration Section
+
         private const string TITLE = "StickFigureVerticalControl";
+
+        private List<ShownAngle> _listeningAngles = new List<ShownAngle>();
+
+        #endregion
+
+        #region Constructor
 
         public StickFigureVerticalControl()
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Public Properties
+
+        private VM_StraightUp _viewmodel_straightup = null;
+        public VM_StraightUp ViewModelStraightUp
+        {
+            get
+            {
+                return _viewmodel_straightup;
+            }
+            set
+            {
+                _viewmodel_straightup = value;
+                Redraw();
+            }
+        }
+
+        #endregion
+
+        #region Event Listeners
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -35,7 +67,6 @@ namespace WallJumpConfig
                 MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             try
@@ -48,8 +79,25 @@ namespace WallJumpConfig
             }
         }
 
+        private void Angle_ValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                RefreshAngles();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
+
         private void Redraw()
         {
+            ClearListeningAngles();
             canvas.Children.Clear();
 
             double width = canvas.ActualWidth;
@@ -61,6 +109,54 @@ namespace WallJumpConfig
             canvas.Children.Add(StickFigureUtil.GetGraphic_Vertical_Arrows_Three(center));
 
             canvas.Children.Add(StickFigureUtil.GetGraphic_Vertical_Wall(center + new Vector(Math.Max(StickFigureUtil.VERT_RADIUS1, StickFigureUtil.VERT_RADIUS2) + 24, 0)));
+
+            if (_viewmodel_straightup == null)
+                return;
+
+            var angles = new[]
+            {
+                _viewmodel_straightup.Angle_StraightUp,
+                _viewmodel_straightup.Angle_Standard,
+            };
+
+            foreach (VM_Slider extra_angle in angles)
+            {
+                Color color = extra_angle.Color == Colors.Transparent ?
+                    Colors.Gray :
+                    extra_angle.Color;
+
+                Brush brush = new SolidColorBrush(color);
+                var right = StickFigureUtil.GetGraphic_RotateableLine(center, brush, StickFigureUtil.VERT_INNER2_RADIUS, StickFigureUtil.VERT_OUTER2_RADIUS, true);
+                canvas.Children.Add(right.Line);
+
+                extra_angle.ValueChanged += Angle_ValueChanged;
+                _listeningAngles.Add(new ShownAngle()
+                {
+                    ViewModel = extra_angle,
+                    Right = right,
+                });
+            }
+
+            RefreshAngles();
         }
+        private void RefreshAngles()
+        {
+            foreach (var angle in _listeningAngles)
+            {
+                angle.Right.Rotate.Angle = 90 - angle.ViewModel.Value;
+            }
+        }
+
+        private void ClearListeningAngles()
+        {
+            foreach (ShownAngle angle in _listeningAngles)
+            {
+                angle.ViewModel.ValueChanged -= Angle_ValueChanged;
+            }
+
+            _listeningAngles.Clear();
+        }
+
+        #endregion
     }
 }
