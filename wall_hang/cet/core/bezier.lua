@@ -51,11 +51,15 @@ function GetBezierPoints_Segments(count, segments)
         local densities = this.GetDensities(segments, counts)
 
         if current_count < count then
-            current_count = this.AddCountToSegment(current_count, counts, densities)
+            this.AddCountToSegment(counts, densities)
+            current_count = current_count + 1
         else
-            current_count = this.RemoveCountFromSegment(current_count, counts, densities)
+            this.RemoveCountFromSegment(counts, densities)
+            current_count = current_count - 1
         end
     end
+
+    this.EnsureCountsHaveEnds(counts, segments)
 
     return this.GetSamples(segments, counts)
 end
@@ -575,7 +579,7 @@ function this.GetDensities(segments, counts)
     return retVal
 end
 
-function this.AddCountToSegment(current_count, counts, densities)
+function this.AddCountToSegment(counts, densities)
     --#region NOPE
 
     --var best = densities.
@@ -631,10 +635,8 @@ function this.AddCountToSegment(current_count, counts, densities)
     end
 
     counts[best_index] = counts[best_index] + 1
-
-    return current_count + 1
 end
-function this.RemoveCountFromSegment(current_count, counts, densities)
+function this.RemoveCountFromSegment(counts, densities)
     --#region NOPE
 
     --var best = densities.
@@ -731,8 +733,6 @@ function this.RemoveCountFromSegment(current_count, counts, densities)
     table.sort(projections2, function(a, b) return a.lowest_density > b.lowest_density end)
 
     counts[projections2[1].index] = counts[projections2[1].index] - 1
-
-    return current_count - 1
 end
 function this.RemoveCountFromSegment_Projection1(index, densities)
     local retVal = {}
@@ -757,6 +757,29 @@ function this.RemoveCountFromSegment_Projection1(index, densities)
     return retVal
 end
 
+function this.EnsureCountsHaveEnds(counts, segments)
+    local first = false
+    if counts[1] == 0 then
+        this.RemoveCountFromSegment(counts, this.GetDensities(counts, segments))
+        first = true
+    end
+
+    -- There's no need to add to the last, since in GetSamples, it adds one to all but the first segment
+    --bool last = false;
+    --if (counts.Length > 0 && counts[^1] == 0)
+    --{
+    --    RemoveCountFromSegment(counts, getDensities(counts));
+    --    last = true;
+    --}
+
+    if first then
+        counts[1] = counts[1] + 1
+    end
+
+    --if(last)
+    --    counts[^1]++;
+end
+
 function this.GetSamples(segments, counts)        --, is_closed)
     local retVal = {}
 
@@ -771,15 +794,29 @@ function this.GetSamples(segments, counts)        --, is_closed)
             take_first = false
         end
 
-        local points = GetBezierPoints_Segment(count_adjusted, segments[i])
+        if count_adjusted == 0 then
+            -- this will happen if a segment is so short compared to other segments that it becomes a rounding error
 
-        local start = 1
-        if not take_first then
-            start = 2
-        end
+        elseif count_adjusted == 1 then
+            if i == 1 then
+                table.insert(retVal, segments[i].EndPoint0)
+            elseif i == #segments then
+                table.insert(retVal, segments[i].EndPoint1)
+            else
+                table.insert(retVal, Vector4.new(segments[i].EndPoint0.x + segments[i].EndPoint1.x / 2, segments[i].EndPoint0.y + segments[i].EndPoint1.y / 2, segments[i].EndPoint0.z + segments[i].EndPoint1.z / 2, 1))        -- just take the average of the two
+            end
 
-        for j = start, #points, 1 do
-            table.insert(retVal, points[j])
+        else
+            local points = GetBezierPoints_Segment(count_adjusted, segments[i])
+
+            local start = 1
+            if not take_first then
+                start = 2
+            end
+
+            for j = start, #points, 1 do
+                table.insert(retVal, points[j])
+            end
         end
     end
 
