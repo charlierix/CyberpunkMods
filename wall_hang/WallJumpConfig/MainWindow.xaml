@@ -49,8 +49,18 @@
                 </TabItem>
             </TabControl>
 
-            <local:StickFigureHorizontalControl Grid.Column="4" x:Name="horizontalStickFigure"/>
-            <local:StickFigureVerticalControl Grid.Column="4" x:Name="verticalStickFigure"/>
+            <Grid Grid.Column="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="8"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                
+                <local:StickFigureHorizontalControl Grid.Row="0" x:Name="horizontalStickFigure"/>
+                <local:StickFigureVerticalControl Grid.Row="0" x:Name="verticalStickFigure"/>
+
+                <local:CirclePlotsHorizontalControl Grid.Row="2" x:Name="circleplots"/>
+            </Grid>
         </Grid>
 
         <Expander Grid.Row="0" x:Name="expanderFolder" Header="mod folder" HorizontalAlignment="Right" Expanded="expanderFolder_ExpandedCollapsed" Collapsed="expanderFolder_ExpandedCollapsed"/>

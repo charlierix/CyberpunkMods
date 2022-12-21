@@ -252,6 +252,8 @@ namespace WallJumpConfig
 
                 horizontalStickFigure.ViewModelHorizontal = horizontal;
                 verticalStickFigure.ViewModelStraightUp = vertical;
+
+                circleplots.ViewModelHorizontal = horizontal;
             }
             catch (Exception ex)
             {
