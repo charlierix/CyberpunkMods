@@ -1,3 +1,4 @@
+require "core/animation_curve"
 require "core/bezier"
 require "core/bezier_segment"
 require "core/debug_render_logger"
@@ -108,6 +109,30 @@ registerHotkey("BezierTester_Multi_Uniform", "multi uniform", function()
     log:Save("multi_uniform")
 end)
 
+registerHotkey("BezierTester_AnimationCurve", "animation curve", function()
+    -- AnimationCurve was inspired by unity's class.  It uses a multi bezier under the hood
+
+    local log = this.GetLogger()
+
+    local log = DebugRenderLogger:new(true)
+    log:DefineCategory("graph_black", "000", 0.33)
+    log:DefineCategory("graph_gray", "CCC", 0.33)
+    log:DefineCategory("graph_key", "99A", 0.33)
+    log:DefineCategory("plot", "FFF", 1)
+
+    local curve = AnimationCurve:new()
+
+    curve:AddKeyValue(-1, 0.7651404036440723)
+    curve:AddKeyValue(-0.9396926207859083, 0.7439462042181489)
+    curve:AddKeyValue(-0.4999999999999998, 0.5704626102583347)
+    curve:AddKeyValue(0.5000000000000001, 0.4272834803444462)
+    curve:AddKeyValue(1, 0.23485959635592776)
+
+    this.LogAnimationCurve(log, curve, "dot: -1 to 1, percent power")
+
+    log:Save("animation_curve")
+end)
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.GetLogger()
@@ -128,5 +153,42 @@ function this.DrawSamples(log, samples)
         if i < #samples then
             log:Add_Line(samples[i], samples[i + 1], "line")
         end
+    end
+end
+
+function this.LogAnimationCurve(log, anim, name)
+    log:NewFrame(name)
+    log:WriteLine_Frame(name)
+
+    local count = 144
+
+    local prev = nil
+
+    log:Add_Line(Vector4.new(-1, 0, 0, 1), Vector4.new(1, 0, 0, 1), "graph_black")
+    log:Add_Line(Vector4.new(-1, 0, 0, 1), Vector4.new(-1, 1, 0, 1), "graph_black")
+    log:Add_Line(Vector4.new(1, 0, 0, 1), Vector4.new(1, 1, 0, 1), "graph_black")
+    log:Add_Line(Vector4.new(-1, 1, 0, 1), Vector4.new(1, 1, 0, 1), "graph_black")
+
+    log:Add_Line(Vector4.new(0, 0, 0, 1), Vector4.new(0, 1, 0, 1), "graph_gray")
+    log:Add_Line(Vector4.new(-1, 0.5, 0, 1), Vector4.new(1, 0.5, 0, 1), "graph_gray")
+
+    for i = 1, #anim.keyvalues, 1 do
+        local key = anim.keyvalues[i].key
+
+        log:Add_Line(Vector4.new(key, 0, 0, 1), Vector4.new(key, 1, 0, 1), "graph_key")
+    end
+
+    for i = 1, count, 1 do
+        local dot = GetScaledValue(-1, 1, 1, count, i)
+
+        local value = anim:Evaluate(dot)
+
+        local current = Vector4.new(dot, value, 0, 1)
+
+        if i > 1 then
+            log:Add_Line(prev, current, "plot")
+        end
+
+        prev = current
     end
 end
