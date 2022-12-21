@@ -3,18 +3,10 @@ using Game.Math_WPF.WPF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WallJumpConfig.Models.savewpf;
 using WallJumpConfig.Models.viewmodels;
 
 namespace WallJumpConfig
@@ -22,6 +14,9 @@ namespace WallJumpConfig
     public partial class CirclePlotsHorizontalControl : UserControl
     {
         private const double RADIUS = 30;
+        private const string TITLE = "CirclePlotsHorizontalControl";
+
+        private List<VM_Slider> _listeningProps = new List<VM_Slider>();
 
         public CirclePlotsHorizontalControl()
         {
@@ -37,13 +32,75 @@ namespace WallJumpConfig
             }
             set
             {
-                //if (_viewmodel_horizontal != null)
-                //    _viewmodel_horizontal.ExtraAngles.CollectionChanged -= ExtraAngles_CollectionChanged;
+                if (_viewmodel_horizontal != null)
+                    _viewmodel_horizontal.ExtraAngles.CollectionChanged -= ExtraAngles_CollectionChanged;
 
                 _viewmodel_horizontal = value;
 
-                //_viewmodel_horizontal.ExtraAngles.CollectionChanged += ExtraAngles_CollectionChanged;
+                _viewmodel_horizontal.ExtraAngles.CollectionChanged += ExtraAngles_CollectionChanged;
+                ReHookPropEvents();
                 Redraw();
+            }
+        }
+
+        private void ExtraAngles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            try
+            {
+                ReHookPropEvents();
+                Redraw();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void PropValue_ValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Redraw();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ReHookPropEvents()
+        {
+            // Clear
+            foreach (VM_Slider prop in _listeningProps)
+            {
+                prop.ValueChanged -= PropValue_ValueChanged;
+            }
+            _listeningProps.Clear();
+
+            if (_viewmodel_horizontal == null)
+                return;
+
+            // Extra Angles
+            foreach (VM_Slider angle in _viewmodel_horizontal.ExtraAngles)
+            {
+                angle.ValueChanged += PropValue_ValueChanged;
+                _listeningProps.Add(angle);
+            }
+
+            // Values for Props
+            var props = _viewmodel_horizontal.PropsAtAngles.
+                SelectMany(o => new[]
+                {
+                    o.Percent_Up,
+                    o.Percent_Along,
+                    o.Percent_Away,
+                    o.Percent_YawTurn,
+                    o.Percent_Look,
+                });
+
+            foreach (VM_Slider prop in props)
+            {
+                prop.ValueChanged += PropValue_ValueChanged;
+                _listeningProps.Add(prop);
             }
         }
 
