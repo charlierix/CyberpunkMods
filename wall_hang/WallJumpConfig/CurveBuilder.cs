@@ -13,10 +13,14 @@ namespace WallJumpConfig
             var retVal = new List<KeyValuePair<double, double>>();
 
             retVal.Add(new KeyValuePair<double, double>(0, getValue(horizontal.PropsAtAngles[0])));
+            double prev_angle = 0;
 
             for (int i = 0; i < horizontal.ExtraAngles.Count; i++)
             {
-                retVal.Add(new KeyValuePair<double, double>(horizontal.ExtraAngles[i].Value, getValue(horizontal.PropsAtAngles[i + 1])));
+                double angle = Math.Max(prev_angle, horizontal.ExtraAngles[i].Value);
+                prev_angle = angle;
+
+                retVal.Add(new KeyValuePair<double, double>(angle, getValue(horizontal.PropsAtAngles[i + 1])));
             }
 
             retVal.Add(new KeyValuePair<double, double>(180, getValue(horizontal.PropsAtAngles[^1])));

@@ -149,10 +149,16 @@ namespace WallJumpConfig
         }
         private void RefreshAngles()
         {
+            //NOTE: these are in order, so a later angle can't be less than one that came before
+            double prev_angle = 0;
+
             foreach(var angle in _listeningAngles)
             {
-                angle.Left.Rotate.Angle = angle.ViewModel.Value;
-                angle.Right.Rotate.Angle = -angle.ViewModel.Value;
+                double angle_cur = Math.Max(prev_angle, angle.ViewModel.Value);
+                prev_angle = angle_cur;
+
+                angle.Left.Rotate.Angle = angle_cur;
+                angle.Right.Rotate.Angle = -angle_cur;
             }
         }
 

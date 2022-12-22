@@ -141,9 +141,15 @@ namespace WallJumpConfig
         }
         private void RefreshAngles()
         {
+            //NOTE: these are in order, so a later angle can't be greater than one that came before
+            double prev_angle = 90;
+
             foreach (var angle in _listeningAngles)
             {
-                angle.Right.Rotate.Angle = 90 - angle.ViewModel.Value;
+                double angle_cur = Math.Min(prev_angle, angle.ViewModel.Value);
+                prev_angle = angle_cur;
+
+                angle.Right.Rotate.Angle = 90 - angle_cur;
             }
         }
 
