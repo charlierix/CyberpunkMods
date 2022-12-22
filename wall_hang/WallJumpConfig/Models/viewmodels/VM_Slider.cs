@@ -1,4 +1,5 @@
-﻿using Game.Math_WPF.Mathematics;
+﻿using Game.Core;
+using Game.Math_WPF.Mathematics;
 using Game.Math_WPF.WPF;
 using System;
 using System.Windows;
@@ -78,7 +79,7 @@ namespace WallJumpConfig.Models.viewmodels
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             VM_Slider parent = (VM_Slider)d;
-            parent.ValueDisplay = GetValueDisplay(parent.PropType, parent.Value);        // setting this to force the textblock to update
+            parent.ValueDisplay = GetValueDisplay_Dozenal(parent.PropType, parent.Value);        // setting this to force the textblock to update
             parent.ValueChanged?.Invoke(parent, new EventArgs());
         }
 
@@ -89,9 +90,9 @@ namespace WallJumpConfig.Models.viewmodels
             get { return (string)GetValue(ValueDisplayProperty); }
             set { SetValue(ValueDisplayProperty, value); }
         }
-        public static readonly DependencyProperty ValueDisplayProperty = DependencyProperty.Register("ValueDisplay", typeof(string), typeof(VM_Slider), new PropertyMetadata(""));
+        public static readonly DependencyProperty ValueDisplayProperty = DependencyProperty.Register("ValueDisplay", typeof(string), typeof(VM_Slider), new PropertyMetadata("0"));
 
-        private static string GetValueDisplay(SliderPropType prop_type, double value)
+        private static string GetValueDisplay_Decimal(SliderPropType prop_type, double value)
         {
             switch (prop_type)
             {
@@ -104,6 +105,21 @@ namespace WallJumpConfig.Models.viewmodels
                 case SliderPropType.Other:
                 default:
                     return value.ToStringSignificantDigits(1);
+            }
+        }
+        private static string GetValueDisplay_Dozenal(SliderPropType prop_type, double value)
+        {
+            switch (prop_type)
+            {
+                case SliderPropType.Angle:
+                    return UtilityCore.Format_DecimalToDozenal(value, 0);
+
+                case SliderPropType.Percent:
+                    return UtilityCore.Format_DecimalToDozenal(value * 144, 0);
+
+                case SliderPropType.Other:
+                default:
+                    return UtilityCore.Format_DecimalToDozenal(value, 1);
             }
         }
 
