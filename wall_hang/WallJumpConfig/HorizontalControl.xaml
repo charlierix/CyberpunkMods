@@ -16,13 +16,23 @@
                 <Setter Property="Height" Value="8"/>
             </Style>
 
+            <Style x:Key="addremove" TargetType="Button">
+                <Setter Property="Height" Value="Auto"/>
+                <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"/>
+                <Setter Property="Margin" Value="2"/>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <StackPanel Grid.IsSharedSizeScope="True">
-            <Label Content="Extra Angles" Style="{StaticResource label_header}"/>
-
+            <Grid>
+                <Label Content="Extra Angles" Style="{StaticResource label_header}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Button Content="-" ToolTip="Remove Extra Angle" Style="{StaticResource addremove}" Click="RemoveAngle_Click"/>
+                    <Button Content="+" ToolTip="Add Extra Angle" Style="{StaticResource addremove}" Click="AddAngle_Click"/>
+                </StackPanel>
+            </Grid>
             <ItemsControl ItemsSource="{Binding ExtraAngles}" ItemTemplate="{StaticResource named_slider}"/>
 
             <Label Content="Props at Angle" Style="{StaticResource label_header}"/>

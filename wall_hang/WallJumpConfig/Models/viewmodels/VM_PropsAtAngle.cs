@@ -1,10 +1,9 @@
-﻿using System.Windows.Media;
-using System.Windows;
-using WallJumpConfig.Models.savewpf;
+﻿using Game.Math_WPF.Mathematics;
 using Game.Math_WPF.WPF;
-using System.Windows.Controls;
-using System.Net;
+using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Effects;
+using WallJumpConfig.Models.savewpf;
 
 namespace WallJumpConfig.Models.viewmodels
 {
@@ -59,13 +58,13 @@ namespace WallJumpConfig.Models.viewmodels
                 HeaderBackground = brushes.background,
                 HeaderDropShadow = brushes.dropshadow,
 
-                Percent_Up = VM_Slider.FromModel(SliderPropType.Percent, "Up %", 0, 1, props.Percent_Up, false),
-                Percent_Along = VM_Slider.FromModel(SliderPropType.Percent, "Along %", 0, 1, props.Percent_Along, false),
-                Percent_Away = VM_Slider.FromModel(SliderPropType.Percent, "Away %", 0, 1, props.Percent_Away, false),
+                Percent_Up = Get_Percent_Up(props.Percent_Up),
+                Percent_Along = Get_Percent_Along(props.Percent_Along),
+                Percent_Away = Get_Percent_Away(props.Percent_Away),
 
-                Percent_YawTurn = VM_Slider.FromModel(SliderPropType.Percent, "Yaw Turn %", 0, 1, props.Percent_YawTurn, false),
+                Percent_YawTurn = Get_Percent_YawTurn(props.Percent_YawTurn),
 
-                Percent_Look = VM_Slider.FromModel(SliderPropType.Percent, "Look Influence %", 0, 1, props.Percent_Look, false),
+                Percent_Look = Get_Percent_Look(props.Percent_Look),
             };
         }
 
@@ -105,6 +104,27 @@ namespace WallJumpConfig.Models.viewmodels
             }
 
             return (border, background, dropshadow);
+        }
+
+        public static VM_Slider Get_Percent_Up(double value)
+        {
+            return VM_Slider.FromModel(SliderPropType.Percent, "Up %", 0, 1, value, false);
+        }
+        public static VM_Slider Get_Percent_Along(double value)
+        {
+            return VM_Slider.FromModel(SliderPropType.Percent, "Along %", 0, 1, value, false);
+        }
+        public static VM_Slider Get_Percent_Away(double value)
+        {
+            return VM_Slider.FromModel(SliderPropType.Percent, "Away %", 0, 1, value, false);
+        }
+        public static VM_Slider Get_Percent_YawTurn(double value)
+        {
+            return VM_Slider.FromModel(SliderPropType.Percent, "Yaw Turn %", 0, 1, value, false);
+        }
+        public static VM_Slider Get_Percent_Look(double value)
+        {
+            return VM_Slider.FromModel(SliderPropType.Percent, "Look Influence %", 0, 1, value, false);
         }
     }
 }
