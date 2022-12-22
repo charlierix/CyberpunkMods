@@ -37,6 +37,15 @@ namespace WallJumpConfig
         }
 
         #endregion
+        #region record: CurrentViewModel
+
+        private record CurrentViewModel
+        {
+            public VM_Horizontal Horizontal { get; init; }
+            public VM_StraightUp StraightUp { get; init; }
+        }
+
+        #endregion
 
         #region Declaration Section
 
@@ -48,6 +57,8 @@ namespace WallJumpConfig
         private WindowSettings _settings = null;
 
         private PresetEntry[] _presets = null;
+
+        private CurrentViewModel _viewmodel = null;
 
         #endregion
 
@@ -254,6 +265,12 @@ namespace WallJumpConfig
                 verticalStickFigure.ViewModelStraightUp = vertical;
 
                 circleplots.ViewModelHorizontal = horizontal;
+
+                _viewmodel = new CurrentViewModel()
+                {
+                    Horizontal = horizontal,
+                    StraightUp = vertical,
+                };
             }
             catch (Exception ex)
             {
@@ -317,6 +334,16 @@ namespace WallJumpConfig
 
         private void SaveSession()
         {
+            if (_viewmodel == null)
+                return;
+
+            SaveWPF save = SaveWPF.FromModel(_viewmodel.Horizontal, _viewmodel.StraightUp);
+
+
+
+
+
+
 
         }
 
@@ -421,10 +448,10 @@ namespace WallJumpConfig
                         Percent_Look = 0.5,
                     },
 
-                    Strength = 13,
-
                     Speed_FullStrength = 4,
                     Speed_ZeroStrength = 8,
+
+                    Strength = 13,
                 },
 
                 Vertical_StraightUp = new SaveWPF_Vertical_StraightUp()
