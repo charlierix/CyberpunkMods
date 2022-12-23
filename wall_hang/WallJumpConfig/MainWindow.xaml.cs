@@ -61,6 +61,8 @@ namespace WallJumpConfig
 
         private CurrentViewModel _viewmodel = null;
 
+        private bool _adjusting_expander = false;
+
         #endregion
 
         #region Constructor
@@ -100,7 +102,7 @@ namespace WallJumpConfig
                 LoadSettings();
 
                 txtModFolder_TextChanged(this, null);       // make sure "" is highlighted red
-                expanderFolder.IsExpanded = txtModFolder.Text == "";
+                AdjustExpander(txtModFolder.Text == "");
             }
             catch (Exception ex)
             {
@@ -170,30 +172,28 @@ namespace WallJumpConfig
             }
         }
 
-        private void expanderFolder_ExpandedCollapsed(object sender, RoutedEventArgs e)
+        private void expanderFolderOutside_ExpandedCollapsed(object sender, RoutedEventArgs e)
         {
-            const string HEADER = "mod folder";
-
             try
             {
-                if (expanderFolder.IsExpanded)
-                {
-                    expanderFolder.Header = "";
-                    expanderFolder.ToolTip = $"hide {HEADER}";
-                    panelFolder.Visibility = Visibility.Visible;
+                if (_adjusting_expander)
+                    return;
 
-                    Grid.SetRow(content_grid, 2);
-                    Grid.SetRowSpan(content_grid, 1);
-                }
-                else
-                {
-                    expanderFolder.Header = HEADER;
-                    expanderFolder.ToolTip = null;
-                    panelFolder.Visibility = Visibility.Collapsed;
+                AdjustExpander(expanderFolderOutside.IsExpanded);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void expanderFolderInside_ExpandedCollapsed(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_adjusting_expander)
+                    return;
 
-                    Grid.SetRow(content_grid, 0);
-                    Grid.SetRowSpan(content_grid, 3);
-                }
+                AdjustExpander(expanderFolderInside.IsExpanded);
             }
             catch (Exception ex)
             {
@@ -466,6 +466,40 @@ namespace WallJumpConfig
                     Speed_ZeroStrength = 7,
                 },
             };
+        }
+
+        private void AdjustExpander(bool should_expand)
+        {
+            _adjusting_expander = true;
+
+            if (should_expand)
+            {
+                expanderFolderOutside.IsExpanded = true;
+                expanderFolderInside.IsExpanded = true;
+
+                expanderFolderOutside.Visibility = Visibility.Visible;
+                expanderFolderInside.Visibility = Visibility.Collapsed;
+
+                panelFolder.Visibility = Visibility.Visible;
+
+                Grid.SetRow(content_grid, 2);
+                Grid.SetRowSpan(content_grid, 1);
+            }
+            else
+            {
+                expanderFolderOutside.IsExpanded = false;
+                expanderFolderInside.IsExpanded = false;
+
+                expanderFolderOutside.Visibility = Visibility.Collapsed;
+                expanderFolderInside.Visibility = Visibility.Visible;
+
+                panelFolder.Visibility = Visibility.Collapsed;
+
+                Grid.SetRow(content_grid, 0);
+                Grid.SetRowSpan(content_grid, 3);
+            }
+
+            _adjusting_expander = false;
         }
 
         #endregion

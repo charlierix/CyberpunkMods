@@ -6,6 +6,13 @@
         xmlns:local="clr-namespace:WallJumpConfig"
         mc:Ignorable="d"
         Title="WallJump Config" ResizeMode="CanResizeWithGrip" Width="820" Height="820" Loaded="Window_Loaded" Closing="Window_Closing" KeyDown="Window_KeyDown">
+    <Window.Resources>
+        <Style x:Key="filebutton" TargetType="Button">
+            <Setter Property="Margin" Value="4,0,0,0"/>
+            <Setter Property="Padding" Value="6,1,6,2"/>
+        </Style>
+    </Window.Resources>
+    
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -21,30 +28,12 @@
 
         <Grid Grid.Row="2" x:Name="content_grid">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="8"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="8"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-
             
-            <!-- TODO: move this to the top of the right panel -->
-            <StackPanel Grid.Column="0">
-                <ComboBox x:Name="cboName" IsEditable="True"/>
-
-                <!-- these buttons can be in horizontal uniform panel -->
-                <!-- new load save -->
-
-                <Button Content="save" Click="Save_Click"/>
-
-                <Button Content="test" Click="Test_Click" Margin="0,16,0,0"/>
-            </StackPanel>
-
-            
-            
-            
-            <TabControl x:Name="tabcontrol" Grid.Column="2" SelectionChanged="tabcontrol_SelectionChanged">
+            <TabControl x:Name="tabcontrol" Grid.Column="0" SelectionChanged="tabcontrol_SelectionChanged">
                 <TabItem x:Name="tabHorizontal" Header="Standard">
                     <local:HorizontalControl x:Name="horizontalControl" Margin="8"/>
                 </TabItem>
@@ -53,20 +42,37 @@
                 </TabItem>
             </TabControl>
 
-            <Grid Grid.Column="4">
+            <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="8"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="8"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                
-                <local:StickFigureHorizontalControl Grid.Row="0" x:Name="horizontalStickFigure"/>
-                <local:StickFigureVerticalControl Grid.Row="0" x:Name="verticalStickFigure"/>
 
-                <local:CirclePlotsHorizontalControl Grid.Row="2" x:Name="circleplots"/>
+                <StackPanel Grid.Row="0">
+                    <Expander x:Name="expanderFolderInside" Header="mod folder" HorizontalAlignment="Right" Margin="0,0,0,4" Expanded="expanderFolderInside_ExpandedCollapsed" Collapsed="expanderFolderInside_ExpandedCollapsed"/>
+
+                    <ComboBox x:Name="cboName" IsEditable="True"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+                        <Button Content="new" Style="{StaticResource filebutton}"/>
+                        <Button Content="load" Style="{StaticResource filebutton}"/>
+                        <Button Content="save" Style="{StaticResource filebutton}" Click="Save_Click"/>
+                    </StackPanel>
+
+                    <Button Content="test" HorizontalAlignment="Right" Click="Test_Click" Margin="0,16,0,0"/>
+                </StackPanel>
+
+
+                <local:StickFigureHorizontalControl Grid.Row="2" x:Name="horizontalStickFigure"/>
+                <local:StickFigureVerticalControl Grid.Row="2" x:Name="verticalStickFigure"/>
+
+                <local:CirclePlotsHorizontalControl Grid.Row="4" x:Name="circleplots"/>
             </Grid>
         </Grid>
 
-        <Expander Grid.Row="0" x:Name="expanderFolder" Header="mod folder" HorizontalAlignment="Right" Expanded="expanderFolder_ExpandedCollapsed" Collapsed="expanderFolder_ExpandedCollapsed"/>
+        <Expander Grid.Row="0" x:Name="expanderFolderOutside" ToolTip="hide mod folder" HorizontalAlignment="Right" Expanded="expanderFolderOutside_ExpandedCollapsed" Collapsed="expanderFolderOutside_ExpandedCollapsed"/>
     </Grid>
 </Window>
