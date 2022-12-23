@@ -41,7 +41,7 @@ namespace WallJumpConfig.Models.viewmodels
                 Select(o => o.Color).
                 ToArray();
 
-            Color[] random_colors = UtilityWPF.GetRandomColors(1, 110, 170, existing_colors);     // this function treats colors like evenly distributed points in a cube, so it will choose a color that is as far away as possible from existing colors
+            Color[] random_colors = UtilityWPF.GetRandomColors(1, 120, 210, existing_colors);     // this function treats colors like evenly distributed points in a cube, so it will choose a color that is as far away as possible from existing colors
             Color item_color = random_colors[0];        // statics are added to the end of the list
 
             var brushes = VM_PropsAtAngle.GetBrushes(item_color);

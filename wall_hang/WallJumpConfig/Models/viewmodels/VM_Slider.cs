@@ -56,6 +56,19 @@ namespace WallJumpConfig.Models.viewmodels
                     BlurRadius = 6,
                     Opacity = .66,
                 };
+
+            if (parent.IsNameReadonly)
+            {
+                parent.TextboxBack = Brushes.Transparent;
+                parent.TextboxBorder = Brushes.Transparent;
+                parent.TextboxBorderThickness = 0;
+            }
+            else
+            {
+                parent.TextboxBack = UtilityWPF.BrushFromHex("5FFF");
+                parent.TextboxBorder = UtilityWPF.BrushFromHex("2666");
+                parent.TextboxBorderThickness = 1;
+            }
         }
 
         public Effect Effect
@@ -64,6 +77,27 @@ namespace WallJumpConfig.Models.viewmodels
             set { SetValue(EffectProperty, value); }
         }
         public static readonly DependencyProperty EffectProperty = DependencyProperty.Register("Effect", typeof(Effect), typeof(VM_Slider), new PropertyMetadata(null));
+
+        public Brush TextboxBack
+        {
+            get { return (Brush)GetValue(TextboxBackProperty); }
+            set { SetValue(TextboxBackProperty, value); }
+        }
+        public static readonly DependencyProperty TextboxBackProperty = DependencyProperty.Register("TextboxBack", typeof(Brush), typeof(VM_Slider), new PropertyMetadata(Brushes.Transparent));
+
+        public Brush TextboxBorder
+        {
+            get { return (Brush)GetValue(TextboxBorderProperty); }
+            set { SetValue(TextboxBorderProperty, value); }
+        }
+        public static readonly DependencyProperty TextboxBorderProperty = DependencyProperty.Register("TextboxBorder", typeof(Brush), typeof(VM_Slider), new PropertyMetadata(Brushes.Transparent));
+
+        public double TextboxBorderThickness
+        {
+            get { return (double)GetValue(TextboxBorderThicknessProperty); }
+            set { SetValue(TextboxBorderThicknessProperty, value); }
+        }
+        public static readonly DependencyProperty TextboxBorderThicknessProperty = DependencyProperty.Register("TextboxBorderThickness", typeof(double), typeof(VM_Slider), new PropertyMetadata(0d));
 
         // ------------- Value and dependent ValueDisplay -------------
         public double Value

@@ -57,7 +57,7 @@
                     <ComboBox x:Name="cboName" IsEditable="True"/>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
-                        <Button Content="new" Style="{StaticResource filebutton}"/>
+                        <Button Content="new" Style="{StaticResource filebutton}" Click="New_Click"/>
                         <Button Content="load" Style="{StaticResource filebutton}"/>
                         <Button Content="save" Style="{StaticResource filebutton}" Click="Save_Click"/>
                     </StackPanel>

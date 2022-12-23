@@ -41,11 +41,15 @@ namespace WallJumpConfig
             set
             {
                 if (_viewmodel_horizontal != null)
+                {
                     _viewmodel_horizontal.ExtraAngles.CollectionChanged -= ExtraAngles_CollectionChanged;
+                    _viewmodel_horizontal.PropsAtAngles.CollectionChanged -= ExtraAngles_CollectionChanged;
+                }
 
                 _viewmodel_horizontal = value;
 
                 _viewmodel_horizontal.ExtraAngles.CollectionChanged += ExtraAngles_CollectionChanged;
+                _viewmodel_horizontal.PropsAtAngles.CollectionChanged += ExtraAngles_CollectionChanged;
                 Redraw();
             }
         }

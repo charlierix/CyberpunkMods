@@ -216,6 +216,17 @@ namespace WallJumpConfig
             }
         }
 
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LoadSession(GetDefaultSession());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -255,24 +266,7 @@ namespace WallJumpConfig
         {
             try
             {
-                SaveWPF sample = GetSampleSession();
-
-                var horizontal = VM_Horizontal.FromModel(sample.Horizontal);
-                var vertical = VM_StraightUp.FromModel(sample.Vertical_StraightUp);
-
-                horizontalControl.DataContext = horizontal;
-                straightupControl.DataContext = vertical;
-
-                horizontalStickFigure.ViewModelHorizontal = horizontal;
-                verticalStickFigure.ViewModelStraightUp = vertical;
-
-                circleplots.ViewModelHorizontal = horizontal;
-
-                _viewmodel = new CurrentViewModel()
-                {
-                    Horizontal = horizontal,
-                    StraightUp = vertical,
-                };
+                LoadSession(GetSampleSession());
             }
             catch (Exception ex)
             {
@@ -373,6 +367,25 @@ namespace WallJumpConfig
             serialized = JsonSerializer.Serialize(savelua, options);
             File.WriteAllText(filename, serialized);
         }
+        private void LoadSession(SaveWPF model)
+        {
+            var horizontal = VM_Horizontal.FromModel(model.Horizontal);
+            var vertical = VM_StraightUp.FromModel(model.Vertical_StraightUp);
+
+            horizontalControl.DataContext = horizontal;
+            straightupControl.DataContext = vertical;
+
+            horizontalStickFigure.ViewModelHorizontal = horizontal;
+            verticalStickFigure.ViewModelStraightUp = vertical;
+
+            circleplots.ViewModelHorizontal = horizontal;
+
+            _viewmodel = new CurrentViewModel()
+            {
+                Horizontal = horizontal,
+                StraightUp = vertical,
+            };
+        }
 
         private void PopulateNamesCombo()
         {
@@ -401,6 +414,52 @@ namespace WallJumpConfig
                 cboName.Items.Add(preset.Name);
         }
 
+        private static SaveWPF GetDefaultSession()
+        {
+            return new SaveWPF()
+            {
+                Horizontal = new SaveWPF_Horizontal()
+                {
+                    Degrees_Extra = new NamedAngle[0],
+
+                    Props_DirectFaceWall = new PropsAtAngle()
+                    {
+                        Percent_Up = 1,
+                        Percent_Along = 0.25,
+                        Percent_Away = 0,
+                        Percent_YawTurn = 0,
+                        Percent_Look = 0.25,
+                    },
+
+                    Props_DirectAway = new PropsAtAngle()
+                    {
+                        Percent_Up = 0,
+                        Percent_Along = 0.5,
+                        Percent_Away = 1,
+                        Percent_YawTurn = 0,
+                        Percent_Look = 0.75,
+                    },
+
+                    Props_Extra = new PropsAtAngle[0],
+
+                    Speed_FullStrength = 4,
+                    Speed_ZeroStrength = 8,
+
+                    Strength = 13,
+                },
+
+                Vertical_StraightUp = new SaveWPF_Vertical_StraightUp()
+                {
+                    Degrees_StraightUp = 60,
+                    Degrees_Standard = 40,
+
+                    Strength = 11,
+
+                    Speed_FullStrength = 3,
+                    Speed_ZeroStrength = 7,
+                },
+            };
+        }
         private static SaveWPF GetSampleSession()
         {
             return new SaveWPF()
