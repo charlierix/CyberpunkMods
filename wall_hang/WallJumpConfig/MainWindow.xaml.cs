@@ -11,6 +11,7 @@ using System.Windows.Media.Effects;
 using WallJumpConfig.Models.viewmodels;
 using WallJumpConfig.Models.savewpf;
 using WallJumpConfig.Models.savelua;
+using Game.Core;
 
 namespace WallJumpConfig
 {
@@ -338,14 +339,39 @@ namespace WallJumpConfig
             if (_viewmodel == null)
                 return;
 
+            if(!Directory.Exists(txtModFolder.Text))
+            {
+                MessageBox.Show("Please select the mod folder", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(cboName.Text))
+            {
+                MessageBox.Show("Please select a name to save as", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var options = new JsonSerializerOptions()
+            {
+                WriteIndented = true,
+            };
+
+            // Build snapshots
             SaveWPF savewpf = SaveWPF.FromModel(_viewmodel.Horizontal, _viewmodel.StraightUp);
             SaveLUA savelua = SaveLUA.FromModel(savewpf.Horizontal, savewpf.Vertical_StraightUp);
 
+            // Save Preset
+            string filename = UtilityCore.EscapeFilename_Windows(cboName.Text);
+            filename = System.IO.Path.Combine(_folder_presets, filename + ".json");
 
+            string serialized = JsonSerializer.Serialize(savewpf, options);
+            File.WriteAllText(filename, serialized);
 
+            // Save lua version
+            filename = System.IO.Path.Combine(txtModFolder.Text, "!wallhang configs", "walljump.json");
 
-
-
+            serialized = JsonSerializer.Serialize(savelua, options);
+            File.WriteAllText(filename, serialized);
         }
 
         private void PopulateNamesCombo()
