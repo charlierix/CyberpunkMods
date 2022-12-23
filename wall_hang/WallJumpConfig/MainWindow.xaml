@@ -58,13 +58,10 @@
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
                         <Button Content="new" Style="{StaticResource filebutton}" Click="New_Click"/>
-                        <Button Content="load" Style="{StaticResource filebutton}"/>
+                        <Button Content="load" Style="{StaticResource filebutton}" Click="Load_Click"/>
                         <Button Content="save" Style="{StaticResource filebutton}" Click="Save_Click"/>
                     </StackPanel>
-
-                    <Button Content="test" HorizontalAlignment="Right" Click="Test_Click" Margin="0,16,0,0"/>
                 </StackPanel>
-
 
                 <local:StickFigureHorizontalControl Grid.Row="2" x:Name="horizontalStickFigure"/>
                 <local:StickFigureVerticalControl Grid.Row="2" x:Name="verticalStickFigure"/>

@@ -227,6 +227,24 @@ namespace WallJumpConfig
                 MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void Load_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var preset = _presets.FirstOrDefault(o => o.Name == cboName.Text);
+                if (preset == null)
+                {
+                    MessageBox.Show("Item not found", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                LoadSession(preset.Settings);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -261,18 +279,6 @@ namespace WallJumpConfig
         }
 
         #endregion
-
-        private void Test_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                LoadSession(GetSampleSession());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
 
         #region Private Methods
 
@@ -323,6 +329,12 @@ namespace WallJumpConfig
 
                 cboName.Text = settings.PresetName;
 
+                var preset = _presets.FirstOrDefault(o => o.Name == cboName.Text);
+                if (preset != null)
+                    LoadSession(preset.Settings);
+                else
+                    LoadSession(GetDefaultSession());
+
                 _settings = settings;
             }
             catch (Exception) { }       // ignore errors, just show the window
@@ -333,7 +345,7 @@ namespace WallJumpConfig
             if (_viewmodel == null)
                 return;
 
-            if(!Directory.Exists(txtModFolder.Text))
+            if (!Directory.Exists(txtModFolder.Text))
             {
                 MessageBox.Show("Please select the mod folder", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
