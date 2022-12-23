@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using WallJumpConfig.Models.viewmodels;
 using WallJumpConfig.Models.savewpf;
+using WallJumpConfig.Models.savelua;
 
 namespace WallJumpConfig
 {
@@ -337,8 +338,8 @@ namespace WallJumpConfig
             if (_viewmodel == null)
                 return;
 
-            SaveWPF save = SaveWPF.FromModel(_viewmodel.Horizontal, _viewmodel.StraightUp);
-
+            SaveWPF savewpf = SaveWPF.FromModel(_viewmodel.Horizontal, _viewmodel.StraightUp);
+            SaveLUA savelua = SaveLUA.FromModel(savewpf.Horizontal, savewpf.Vertical_StraightUp);
 
 
 

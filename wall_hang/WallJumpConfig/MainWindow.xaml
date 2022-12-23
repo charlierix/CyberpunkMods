@@ -28,18 +28,22 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
+            
+            <!-- TODO: move this to the top of the right panel -->
             <StackPanel Grid.Column="0">
                 <ComboBox x:Name="cboName" IsEditable="True"/>
 
-                <!-- These are hidden until combo changes while in a dirty state -->
-                <Button Visibility="Collapsed" Content="new"/>
-                <Button Visibility="Collapsed" Content="discard" ToolTip="discard unchanged changes"/>
+                <!-- these buttons can be in horizontal uniform panel -->
+                <!-- new load save -->
 
                 <Button Content="save" Click="Save_Click"/>
 
                 <Button Content="test" Click="Test_Click" Margin="0,16,0,0"/>
             </StackPanel>
 
+            
+            
+            
             <TabControl x:Name="tabcontrol" Grid.Column="2" SelectionChanged="tabcontrol_SelectionChanged">
                 <TabItem x:Name="tabHorizontal" Header="Standard">
                     <local:HorizontalControl x:Name="horizontalControl" Margin="8"/>
