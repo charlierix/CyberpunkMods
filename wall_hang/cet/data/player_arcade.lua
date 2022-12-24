@@ -85,24 +85,57 @@ function PlayerArcade:MapModelToSelf(model)
 
     self.rebound =
     {
-        straightup_vert_percent = this.ToAnimationCurve(deserialized.straightup_vert_percent),
+        horizontal =
+        {
+            percent_up = this.ToAnimationCurve(deserialized.horizontal.percent_up),
+            percent_along = this.ToAnimationCurve(deserialized.horizontal.percent_along),
+            percent_away = this.ToAnimationCurve(deserialized.horizontal.percent_away),
 
-        percent_vert_whenup = this.ToAnimationCurve(deserialized.percent_vert_whenup),
-        percent_horz_whenup = this.ToAnimationCurve(deserialized.percent_horz_whenup),
+            percent_at_speed = this.ToAnimationCurve(deserialized.horizontal.percent_at_speed),
 
-        horz_percent_up = this.ToAnimationCurve(deserialized.horz_percent_up),
-        horz_percent_along = this.ToAnimationCurve(deserialized.horz_percent_along),
-        horz_percent_away = this.ToAnimationCurve(deserialized.horz_percent_away),
-        horz_strength = this.ToAnimationCurve(deserialized.horz_strength),
-        horizontal_percent_look = this.ToAnimationCurve(deserialized.horizontal_percent_look),
+            percent_look = this.ToAnimationCurve(deserialized.horizontal.percent_look),
 
-        yaw_turn_percent = this.ToAnimationCurve(deserialized.yaw_turn_percent),
+            yaw_turn_percent = this.ToAnimationCurve(deserialized.horizontal.yaw_turn_percent),
 
-        horizontal_percent_at_speed = this.ToAnimationCurve(deserialized.horizontal_percent_at_speed),
+            strength = deserialized.horizontal.strength,
+        },
 
-        straightup_strength = deserialized.straightup_strength,
-        straightup_percent_at_speed = this.ToAnimationCurve(deserialized.straightup_percent_at_speed),
+        has_straightup = deserialized.has_straightup,
     }
+
+    if deserialized.has_straightup then
+        self.rebound.straight_up =
+        {
+            percent = this.ToAnimationCurve(deserialized.straight_up.percent),
+
+            percent_vert_whenup = this.ToAnimationCurve(deserialized.straight_up.percent_vert_whenup),
+            percent_horz_whenup = this.ToAnimationCurve(deserialized.straight_up.percent_horz_whenup),
+
+            percent_at_speed = this.ToAnimationCurve(deserialized.straight_up.percent_at_speed),
+
+            strength = deserialized.straight_up.strength,
+        }
+    end
+
+    -- --------------- ORIG ---------------
+    -- straightup_vert_percent = this.ToAnimationCurve(deserialized.straightup_vert_percent),
+
+    -- percent_vert_whenup = this.ToAnimationCurve(deserialized.percent_vert_whenup),
+    -- percent_horz_whenup = this.ToAnimationCurve(deserialized.percent_horz_whenup),
+
+    -- horz_percent_up = this.ToAnimationCurve(deserialized.horz_percent_up),
+    -- horz_percent_along = this.ToAnimationCurve(deserialized.horz_percent_along),
+    -- horz_percent_away = this.ToAnimationCurve(deserialized.horz_percent_away),
+    -- horz_strength = this.ToAnimationCurve(deserialized.horz_strength),
+    -- horizontal_percent_look = this.ToAnimationCurve(deserialized.horizontal_percent_look),
+
+    -- yaw_turn_percent = this.ToAnimationCurve(deserialized.yaw_turn_percent),
+
+    -- horizontal_percent_at_speed = this.ToAnimationCurve(deserialized.horizontal_percent_at_speed),
+
+    -- straightup_strength = deserialized.straightup_strength,
+    -- straightup_percent_at_speed = this.ToAnimationCurve(deserialized.straightup_percent_at_speed),
+
 end
 function PlayerArcade:MapSelfToModel()
     return

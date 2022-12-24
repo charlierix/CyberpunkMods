@@ -310,11 +310,14 @@ namespace WallJumpConfig
         }
         private void LoadSettings()
         {
-            if (!File.Exists(_settingsFilename))
-                return;
-
             try
             {
+                if (!File.Exists(_settingsFilename))
+                {
+                    LoadSession(GetDefaultSession());
+                    return;
+                }
+
                 string jsonString = System.IO.File.ReadAllText(_settingsFilename);
 
                 var settings = JsonSerializer.Deserialize<WindowSettings>(jsonString);

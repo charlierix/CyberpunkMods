@@ -10,6 +10,10 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
         do return end
     end
 
+    if not up then
+        up = Vector4.new(0, 0, 1, 0)
+    end
+
     local up_adjusted, normal_horz, look_horz, up_dot, horz_dot = this.GetLookDirections(vars.normal, o.lookdir_forward, vars.hangPos, o.pos)
 
     local impulse_x = 0
@@ -17,7 +21,7 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     local impulse_z = 0
 
     -- Special logic for jumping straight up when facing the wall and looking up
-    local percent_horz, play_fail_sound1, vert_x, vert_y, vert_z = this.GetImpulse_Vertical(o, player, up_dot, horz_dot, up_adjusted)
+    local percent_horz, play_fail_sound1, vert_x, vert_y, vert_z = this.GetImpulse_Vertical(o, player.rebound.has_straightup, player.rebound.straight_up, up_dot, horz_dot, up_adjusted)
     impulse_x = impulse_x + vert_x
     impulse_y = impulse_y + vert_y
     impulse_z = impulse_z + vert_z
@@ -25,11 +29,13 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     local play_fail_sound2 = false
     if percent_horz > 0 then
         -- Standard jump logic (the term horizontal is just to differentiate from straight up)
-        local horz_x, horz_y, horz_z, yaw_turn_percent, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, player.rebound, o.vel)
+        local horz_x, horz_y, horz_z, yaw_turn_percent, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, player.rebound.horizontal, o.vel)
 
         impulse_x = impulse_x + (horz_x * percent_horz)
         impulse_y = impulse_y + (horz_y * percent_horz)
         impulse_z = impulse_z + (horz_z * percent_horz)
+
+        yaw_turn_percent = yaw_turn_percent * percent_horz
 
         play_fail_sound2 = play_fail_sound3
     end
@@ -53,10 +59,6 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function this.GetLookDirections(normal, lookdir, hangPos, player_pos)
-    if not up then
-        up = Vector4.new(0, 0, 1, 0)
-    end
-
     local adjusted_up = this.GetAdjustedUp(normal)
     local normal_horz = this.GetHorizontalNormal(normal, lookdir, hangPos, player_pos)
     local look_horz = GetProjectedVector_AlongPlane_Unit(lookdir, up)
@@ -68,16 +70,20 @@ function this.GetLookDirections(normal, lookdir, hangPos, player_pos)
     return adjusted_up, normal_horz, look_horz, up_dot, horz_dot
 end
 
-function this.GetImpulse_Vertical(o, player, up_dot, horz_dot, up_adjusted)
+function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_dot, up_adjusted)
+    if not has_straightup then
+        return 1, false, 0, 0, 0
+    end
+
     --NOTE: there is the possibility of a blend between straight up and horizontal jumping
-    local straightup_percent = Clamp(0, 1, player.rebound.straightup_vert_percent:Evaluate(up_dot))
+    local straightup_percent = Clamp(0, 1, straight_up.percent:Evaluate(up_dot))
 
     if IsNearZero(straightup_percent) then
         return 1, false, 0, 0, 0
     end
 
-    local percent_vert = Clamp(0, 1, player.rebound.percent_vert_whenup:Evaluate(horz_dot))
-    local percent_horz = Clamp(0, 1, player.rebound.percent_horz_whenup:Evaluate(horz_dot))
+    local percent_vert = Clamp(0, 1, straight_up.percent_vert_whenup:Evaluate(horz_dot))
+    local percent_horz = Clamp(0, 1, straight_up.percent_horz_whenup:Evaluate(horz_dot))
 
     straightup_percent = straightup_percent * percent_vert
 
@@ -85,7 +91,7 @@ function this.GetImpulse_Vertical(o, player, up_dot, horz_dot, up_adjusted)
         return percent_horz, false, 0, 0, 0
     end
 
-    local percent_speed = this.GetSpeedAdjustedPercent(o.vel, up_adjusted, player.rebound.straightup_percent_at_speed)
+    local percent_speed = this.GetSpeedAdjustedPercent(o.vel, up_adjusted, straight_up.percent_at_speed)
     if IsNearZero(percent_speed) then
         return percent_horz, true, 0, 0, 0      -- playing the fail sound because of over speed
     end
@@ -93,43 +99,116 @@ function this.GetImpulse_Vertical(o, player, up_dot, horz_dot, up_adjusted)
     return
         percent_horz,
         false,
-        up_adjusted.x * player.rebound.straightup_strength * straightup_percent * percent_speed,
-        up_adjusted.y * player.rebound.straightup_strength * straightup_percent * percent_speed,
-        up_adjusted.z * player.rebound.straightup_strength * straightup_percent * percent_speed
+        up_adjusted.x * straight_up.strength * straightup_percent * percent_speed,
+        up_adjusted.y * straight_up.strength * straightup_percent * percent_speed,
+        up_adjusted.z * straight_up.strength * straightup_percent * percent_speed
 end
 
-function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz, rebound, velocity)
-    local percent_up = Clamp(0, 1, rebound.horz_percent_up:Evaluate(horz_dot))
-    local percent_along = Clamp(0, 1, rebound.horz_percent_along:Evaluate(horz_dot))
-    local percent_away = Clamp(0, 1, rebound.horz_percent_away:Evaluate(horz_dot))
-    local strength = rebound.horz_strength:Evaluate(horz_dot)
-    local yaw_turn_percent = Clamp(0, 1, rebound.yaw_turn_percent:Evaluate(horz_dot))
-    local percent_look = Clamp(0, 1, rebound.horizontal_percent_look:Evaluate(horz_dot))
+function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz, horizontal, velocity)
+    local yaw_turn_percent = Clamp(0, 1, horizontal.yaw_turn_percent:Evaluate(horz_dot))
+    local strength = horizontal.strength
 
-    -- along and away are in the horizontal plane, so must be treated like vectors (only need the x and y)
-    local look_away_comp = GetProjectedVector_AlongVector(look, wall_normal_horz, false)
-    local away_unit = ToUnit(AddVectors(wall_normal_horz, MultiplyVector(look_away_comp, percent_look)))
+    local preset_x, preset_y, preset_z = this.GetImpulse_Horizontal_Preset(horz_dot, look_horz, wall_normal_horz, horizontal)
+
+    local combined_x, combined_y, combined_z = this.CombineHorizontal_Preset_Look(preset_x, preset_y, preset_z, look, horizontal, horz_dot)
+
+    local rotated = this.GetHorizontal_Rotated(Vector4.new(combined_x, combined_y, combined_z, 1))
+
+    local percent_speed = this.GetSpeedAdjustedPercent(velocity, ToUnit(rotated), horizontal.percent_at_speed)
+    if IsNearZero(percent_speed) then
+        return 0, 0, 0, 0, true     -- over speed, play the fail sound
+    end
+
+    return
+        rotated.x * percent_speed * strength,
+        rotated.y * percent_speed * strength,
+        rotated.z * percent_speed * strength,
+        yaw_turn_percent,
+        false
+end
+
+-- This takes the unit vectors of wall normal, up, along wall.  It then runs the dot product between look and normal
+-- through the config curve map to see how much percent of each to use
+function this.GetImpulse_Horizontal_Preset(horz_dot, look_horz, wall_normal_horz, horizontal)
+    local x = 0
+    local y = 0
+
+    -- Away
+    local percent_away = Clamp(0, 1, horizontal.percent_away:Evaluate(horz_dot))
+
+    x = x + wall_normal_horz.x * percent_away
+    y = y + wall_normal_horz.y * percent_away
+
+    -- Along
+    local percent_along = Clamp(0, 1, horizontal.percent_along:Evaluate(horz_dot))
 
     local wall_along_horz = CrossProduct3D(up, wall_normal_horz)
     if DotProduct3D(wall_along_horz, look_horz) < 0 then
         wall_along_horz = Negate(wall_along_horz)
     end
 
-    local look_along_comp = GetProjectedVector_AlongVector(look, wall_normal_horz, true)
-    local along_unit = ToUnit(AddVectors(wall_along_horz, MultiplyVector(look_along_comp, percent_look)))
+    x = x + wall_along_horz.x * percent_along
+    y = y + wall_along_horz.y * percent_along
 
-    --local horz_x, horz_y, horz_z = this.CombineHorizontal1(away_unit, along_unit, look, percent_away, percent_along, percent_up, percent_look)
-    local horz_x, horz_y, horz_z = this.CombineHorizontal2(away_unit, along_unit, look, percent_away, percent_along, percent_up, percent_look)
+    -- Up
+    local z = Clamp(0, 1, horizontal.percent_up:Evaluate(horz_dot))
 
-    local percent_speed = this.GetSpeedAdjustedPercent(velocity, ToUnit(Vector4.new(horz_x, horz_y, horz_z, 1)), rebound.horizontal_percent_at_speed)
+    return x, y, z
+end
+
+function this.CombineHorizontal_Preset_Look(preset_x, preset_y, preset_z, look, horizontal, horz_dot)
+    local percent_look = Clamp(0, 1, horizontal.percent_look:Evaluate(horz_dot))
+    local percent_preset = 1 - percent_look
 
     return
-        horz_x * strength * percent_speed,
-        horz_y * strength * percent_speed,
-        horz_z * strength * percent_speed,
-        yaw_turn_percent,
-        false
+        (preset_x * percent_preset) + (look.x * percent_look),
+        (preset_y * percent_preset) + (look.y * percent_look),
+        (preset_z * percent_preset) + (look.z * percent_look)
 end
+
+-- This rotates the vector upward.  Think of the vector passed in as desired direction.  This function rotates up
+-- to help counter gravity
+-- NOTE: the vector passed in isn't expected to be a unit vector
+function this.GetHorizontal_Rotated(vector)
+    local vec_len = math.sqrt(GetVectorLengthSqr(vector))
+    local direction_unit = DivideVector(vector, vec_len)
+
+    local dot = DotProduct3D(direction_unit, up)
+
+    -- pi       straight down
+    -- pi/2     horizontal
+    -- 0        straight up
+    local radian = Dot_to_Radians(dot)
+
+    --https://mycurvefit.com/
+    --https://www.desmos.com/calculator
+
+    -- Rotate up, by this angle
+    --  phi is the angle they are looking
+    --  result is the angle they should jump
+
+    -- -90  -90
+    --  0   45      -- when they are looking straight out, angle should be 45 for best arc
+    --  90  90
+
+    -- jumpAngle = 45 + phi - 0.005555556 * phi^2
+
+    -- Same idea, but with radians
+    --  pi      -pi/2
+    --  pi/2    pi/4
+    --  0       pi/2
+
+    local adjustRadians = 1.570796 - 0.3183099 * radian ^ 2
+
+    local axis = CrossProduct3D(direction_unit, up)
+
+    local horizontal = ToUnit(GetProjectedVector_AlongPlane(direction_unit, up))
+
+    local rotated = RotateVector3D(horizontal, Quaternion_FromAxisRadians(axis, adjustRadians))
+
+    return MultiplyVector(rotated, vec_len)
+end
+
 
 function this.CombineHorizontal1(away_unit, along_unit, look, percent_away, percent_along, percent_up, percent_look)
     return
