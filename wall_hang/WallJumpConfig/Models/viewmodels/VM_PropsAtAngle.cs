@@ -37,6 +37,13 @@ namespace WallJumpConfig.Models.viewmodels
         }
         public static readonly DependencyProperty HeaderDropShadowProperty = DependencyProperty.Register("HeaderDropShadow", typeof(Effect), typeof(VM_PropsAtAngle), new PropertyMetadata(null));
 
+        public Visibility LERPVisibility
+        {
+            get { return (Visibility)GetValue(LERPVisibilityProperty); }
+            set { SetValue(LERPVisibilityProperty, value); }
+        }
+        public static readonly DependencyProperty LERPVisibilityProperty = DependencyProperty.Register("LERPVisibility", typeof(Visibility), typeof(VM_PropsAtAngle), new PropertyMetadata(Visibility.Collapsed));
+
         public VM_Slider Percent_Up { get; set; }
         public VM_Slider Percent_Along { get; set; }
         public VM_Slider Percent_Away { get; set; }
@@ -57,6 +64,10 @@ namespace WallJumpConfig.Models.viewmodels
                 HeaderBorder = brushes.border,
                 HeaderBackground = brushes.background,
                 HeaderDropShadow = brushes.dropshadow,
+
+                LERPVisibility = string.IsNullOrEmpty(color) ?      // 0 and 180 are uncolored, everything in the middle are colored
+                    Visibility.Collapsed :
+                    Visibility.Visible,
 
                 Percent_Up = Get_Percent_Up(props.Percent_Up),
                 Percent_Along = Get_Percent_Along(props.Percent_Along),

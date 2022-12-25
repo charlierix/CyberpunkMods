@@ -3,6 +3,7 @@ using Game.Math_WPF.WPF;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Converters;
 using WallJumpConfig.Models.savewpf;
@@ -60,9 +61,12 @@ namespace WallJumpConfig.Models.viewmodels
             var props = new VM_PropsAtAngle()
             {
                 Name = angle.Name,
+
                 HeaderBorder = brushes.border,
                 HeaderBackground = brushes.background,
                 HeaderDropShadow = brushes.dropshadow,
+
+                LERPVisibility = Visibility.Visible,        // extra angles are always in the middle, so lerp is enabled
 
                 Percent_Up = GetAvg(prev_prop, next_prop, o => o.Percent_Up, () => VM_PropsAtAngle.Get_Percent_Up(0.5)),
                 Percent_Along = GetAvg(prev_prop, next_prop, o => o.Percent_Along, () => VM_PropsAtAngle.Get_Percent_Along(0.5)),
