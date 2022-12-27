@@ -1,4 +1,5 @@
-﻿using Game.Math_WPF.Mathematics;
+﻿using Game.Core;
+using Game.Math_WPF.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,37 @@ namespace WallJumpConfig
         {
             return GetPoints_HorizontalProps_Degrees(horizontal, getValue).
                 Select(o => new KeyValuePair<double, double>(Math1D.Degrees_to_Dot(180 - o.Key), o.Value)).     // 180 because looking at the wall is 180 degrees (look dot wall normal)
+                ToArray();
+        }
+
+        // The wpf preset just needs raw slider values, but the final code that uses yawturn mapping needs a map from
+        // input angle to output angle
+        public static KeyValuePair<double, double>[] BuildYawTurnPercent_Degrees(KeyValuePair<double, double>[] map)
+        {
+            const int COUNT = 36;
+
+            AnimationCurve curve = ToAnimationCurve(map);
+
+            var angles = new List<double>();
+            angles.AddRange(map.Select(o => o.Key));
+            angles.AddRange(Enumerable.Range(0, COUNT).Select(o => UtilityMath.GetScaledValue(0, 180, 0, COUNT - 1, o)));
+
+            return angles.
+                Distinct((o1, o2) => o1.IsNearValue(o2)).
+                OrderBy(o => o).
+                Select(o =>
+                {
+                    double percent = curve.Evaluate(o);
+
+                    if (percent.IsNearZero())
+                        return new KeyValuePair<double, double>(o, o);
+
+                    double diff = percent > 0 ?
+                        180 - o :
+                        -o;
+
+                    return new KeyValuePair<double, double>(o, o + (diff * percent));
+                }).
                 ToArray();
         }
 

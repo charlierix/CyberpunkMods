@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="WallJumpConfig.YawTurnVisualControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WallJumpConfig" Loaded="UserControl_Loaded" SizeChanged="UserControl_SizeChanged">
+    <Expander Header="Yaw Turn Percent Visualization">
+        <Border Width="320" Height="320" Background="Transparent" MouseMove="Border_MouseMove">
+            <Canvas x:Name="canvas"/>
+        </Border>
+    </Expander>
+</UserControl>

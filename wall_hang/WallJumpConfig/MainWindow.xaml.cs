@@ -395,6 +395,8 @@ namespace WallJumpConfig
 
             circleplots.ViewModelHorizontal = horizontal;
 
+            yawturnVisual.ViewModelHorizontal = horizontal;
+
             _viewmodel = new CurrentViewModel()
             {
                 Horizontal = horizontal,
