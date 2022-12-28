@@ -71,7 +71,7 @@ namespace WallJumpConfig.Models.viewmodels
                 Percent_Up = GetAvg(prev_prop, next_prop, o => o.Percent_Up, () => VM_PropsAtAngle.Get_Percent_Up(0.5)),
                 Percent_Along = GetAvg(prev_prop, next_prop, o => o.Percent_Along, () => VM_PropsAtAngle.Get_Percent_Along(0.5)),
                 Percent_Away = GetAvg(prev_prop, next_prop, o => o.Percent_Away, () => VM_PropsAtAngle.Get_Percent_Away(0.5)),
-                Percent_YawTurn = GetAvg(prev_prop, next_prop, o => o.Percent_YawTurn, () => VM_PropsAtAngle.Get_Percent_YawTurn(0.5)),
+                Percent_YawTurn = GetAvg(prev_prop, next_prop, o => o.Percent_YawTurn, () => VM_PropsAtAngle.Get_Percent_YawTurn(0)),
                 Percent_Look = GetAvg(prev_prop, next_prop, o => o.Percent_Look, () => VM_PropsAtAngle.Get_Percent_Look(0.5)),
             };
 

@@ -131,7 +131,7 @@ namespace WallJumpConfig.Models.viewmodels
         }
         public static VM_Slider Get_Percent_YawTurn(double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Percent, "Yaw Turn %", 0, 1, value, false);
+            return VM_Slider.FromModel(SliderPropType.Percent, "Yaw Turn %", -1, 1, value, false);
         }
         public static VM_Slider Get_Percent_Look(double value)
         {

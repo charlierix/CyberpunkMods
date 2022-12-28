@@ -18,7 +18,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBox Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center" IsReadOnly="{Binding IsNameReadonly}" HorizontalContentAlignment="Right" Background="{Binding TextboxBack}" BorderThickness="{Binding TextboxBorderThickness}" BorderBrush="{Binding TextboxBorder}"/>
-            <Slider Grid.Column="2" Minimum="{Binding Minimum}" Maximum="{Binding Maximum}" Value="{Binding Value}" VerticalAlignment="Center" Effect="{Binding Effect}"/>
+            <Slider Grid.Column="2" Minimum="{Binding Minimum}" Maximum="{Binding Maximum}" Value="{Binding Value}" VerticalAlignment="Center" Effect="{Binding Effect}" SmallChange="{Binding SmallChange}" LargeChange="{Binding LargChange}"/>
             <TextBlock Grid.Column="4" Text="{Binding ValueDisplay}" VerticalAlignment="Center"/>
         </Grid>
     </DataTemplate>

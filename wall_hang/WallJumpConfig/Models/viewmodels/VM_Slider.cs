@@ -13,8 +13,44 @@ namespace WallJumpConfig.Models.viewmodels
     {
         public SliderPropType PropType { get; set; }
 
-        public double Minimum { get; set; }
-        public double Maximum { get; set; }
+        // ------------- Min/Max Intervals -------------
+        public double Minimum
+        {
+            get { return (double)GetValue(MinimumProperty); }
+            set { SetValue(MinimumProperty, value); }
+        }
+        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(double), typeof(VM_Slider), new PropertyMetadata(0d, OnMinMaxChanged));
+
+        public double Maximum
+        {
+            get { return (double)GetValue(MaximumProperty); }
+            set { SetValue(MaximumProperty, value); }
+        }
+        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(VM_Slider), new PropertyMetadata(0d, OnMinMaxChanged));
+
+        private static void OnMinMaxChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            VM_Slider parent = (VM_Slider)d;
+
+            double diff = parent.Maximum - parent.Minimum;
+
+            parent.LargChange = diff / 12;
+            parent.SmallChange = diff / 144;
+        }
+
+        public double SmallChange
+        {
+            get { return (double)GetValue(SmallChangeProperty); }
+            set { SetValue(SmallChangeProperty, value); }
+        }
+        public static readonly DependencyProperty SmallChangeProperty = DependencyProperty.Register("SmallChange", typeof(double), typeof(VM_Slider), new PropertyMetadata(0d));
+
+        public double LargChange
+        {
+            get { return (double)GetValue(LargChangeProperty); }
+            set { SetValue(LargChangeProperty, value); }
+        }
+        public static readonly DependencyProperty LargChangeProperty = DependencyProperty.Register("LargChange", typeof(double), typeof(VM_Slider), new PropertyMetadata(0d));
 
         // ------------- Name -------------
         public bool IsNameReadonly { get; set; }

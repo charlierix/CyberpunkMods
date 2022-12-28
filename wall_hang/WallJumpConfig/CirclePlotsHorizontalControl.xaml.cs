@@ -167,9 +167,7 @@ namespace WallJumpConfig
 
             for (int i = 0; i < values.Count - 1; i++)
             {
-                double percent = UtilityMath.GetScaledValue(0, 1, minimum, maximum, (values[i].value + values[i + 1].value) / 2);
-                Brush brush = new SolidColorBrush(UtilityWPF.AlphaBlend(Colors.Black, Color.FromArgb(0, 255, 255, 255), percent));
-                double thickness = UtilityMath.GetScaledValue(0.25, 4, 0, 1, percent);
+                var (brush, thickness) = GetPlotPointValues(minimum, maximum, (values[i].value + values[i + 1].value) / 2);
 
                 retVal.Children.Add(new Line()
                 {
@@ -193,6 +191,33 @@ namespace WallJumpConfig
             }
 
             return retVal;
+        }
+
+        private static (Brush brush, double thickness) GetPlotPointValues(double minimum, double maximum, double value)
+        {
+            Color max_color = Colors.Black;
+
+            if (minimum < 0)
+            {
+                if(value < 0)
+                {
+                    maximum = minimum;        // -1 to 0 instead of -1 to 1
+                    minimum = 0;
+                    max_color = Colors.Maroon;
+                }
+                else
+                {
+                    minimum = 0;        // 0 to 1 instead of -1 to 1
+                    max_color = Colors.Navy;
+                }
+            }
+
+            double percent = UtilityMath.GetScaledValue(0, 1, minimum, maximum, value);
+
+            Brush brush = new SolidColorBrush(UtilityWPF.AlphaBlend(max_color, Color.FromArgb(0, 255, 255, 255), percent));
+            double thickness = UtilityMath.GetScaledValue(0.25, 4, 0, 1, percent);
+
+            return(brush, thickness);
         }
     }
 }

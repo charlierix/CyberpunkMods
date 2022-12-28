@@ -86,7 +86,7 @@ namespace WallJumpConfig
 
                     double diff = percent > 0 ?
                         180 - o :
-                        -o;
+                        o;      // if percent is negative, then go backward (percent of -1 would put them at zero degrees).  Setting diff to positive instead of negative, because percent is already negative (neg * neg would be pos)
 
                     return new KeyValuePair<double, double>(o, o + (diff * percent));
                 }).
