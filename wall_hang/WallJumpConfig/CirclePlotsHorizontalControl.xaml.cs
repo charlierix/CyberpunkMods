@@ -98,6 +98,7 @@ namespace WallJumpConfig
                     o.Percent_Along,
                     o.Percent_Away,
                     o.Percent_YawTurn,
+                    o.Percent_LatchAfterJump,
                     o.Percent_Look,
                 });
 
@@ -115,14 +116,15 @@ namespace WallJumpConfig
             if (_viewmodel_horizontal == null)
                 return;
 
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Percent Up", o => o.Percent_Up));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Percent Along", o => o.Percent_Along));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Percent Away", o => o.Percent_Away));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Yaw Turn Percent", o => o.Percent_YawTurn));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Percent Look", o => o.Percent_Look));
+            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Up %", o => o.Percent_Up));
+            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Along %", o => o.Percent_Along));
+            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Away %", o => o.Percent_Away));
+            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Yaw Turn %", o => o.Percent_YawTurn));
+            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Latch %", o => o.Percent_LatchAfterJump, true));
+            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Look %", o => o.Percent_Look));
         }
 
-        private static FrameworkElement BuildPlot(VM_Horizontal horizontal, string title, Func<VM_PropsAtAngle, VM_Slider> getSlider)
+        private static FrameworkElement BuildPlot(VM_Horizontal horizontal, string title, Func<VM_PropsAtAngle, VM_Slider> getSlider, bool isThresholdPlot = false)
         {
             var retVal = new StackPanel()
             {
@@ -134,7 +136,7 @@ namespace WallJumpConfig
             double minimum = getSlider(horizontal.PropsAtAngles[0]).Minimum;
             double maximum = getSlider(horizontal.PropsAtAngles[0]).Maximum;
 
-            retVal.Children.Add(DrawPlot(minimum, maximum, curve));
+            retVal.Children.Add(DrawPlot(minimum, maximum, curve, isThresholdPlot));
 
             retVal.Children.Add(new TextBlock()
             {
@@ -147,7 +149,7 @@ namespace WallJumpConfig
 
             return retVal;
         }
-        private static FrameworkElement DrawPlot(double minimum, double maximum, AnimationCurve curve)
+        private static FrameworkElement DrawPlot(double minimum, double maximum, AnimationCurve curve, bool isThresholdPlot)
         {
             var values = new List<(double angle, double value, double x, double y)>();
 
@@ -156,6 +158,10 @@ namespace WallJumpConfig
                 double value = curve.Evaluate(angle);
                 double x = RADIUS * Math.Cos(Math1D.DegreesToRadians(angle + 90));      // 0 should be +y
                 double y = RADIUS * Math.Sin(Math1D.DegreesToRadians(angle + 90));
+
+                if (isThresholdPlot)
+                    value = value >= Math1D.Avg(minimum, maximum) ? maximum : minimum;
+
                 values.Add((angle, value, x, y));
             }
 
@@ -199,7 +205,7 @@ namespace WallJumpConfig
 
             if (minimum < 0)
             {
-                if(value < 0)
+                if (value < 0)
                 {
                     maximum = minimum;        // -1 to 0 instead of -1 to 1
                     minimum = 0;
@@ -217,7 +223,7 @@ namespace WallJumpConfig
             Brush brush = new SolidColorBrush(UtilityWPF.AlphaBlend(max_color, Color.FromArgb(0, 255, 255, 255), percent));
             double thickness = UtilityMath.GetScaledValue(0.25, 4, 0, 1, percent);
 
-            return(brush, thickness);
+            return (brush, thickness);
         }
     }
 }

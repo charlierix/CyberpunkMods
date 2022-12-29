@@ -20,6 +20,8 @@ namespace WallJumpConfig.Models.savelua
 
         public SaveLUA_KeyValue[] yaw_turn { get; init; }
 
+        public SaveLUA_KeyValue[] percent_latch_after_jump { get; init; }
+
         public double strength { get; init; }
 
         // ------------- Helper Methods -------------
@@ -48,6 +50,10 @@ namespace WallJumpConfig.Models.savelua
                     ToArray(),
 
                 yaw_turn = CurveBuilder.BuildYawTurn_DotProduct_Radians(CurveBuilder.GetPoints_HorizontalProps_Degrees(model, o => o.Percent_YawTurn)).
+                    Select(o => to_lua(o)).
+                    ToArray(),
+
+                percent_latch_after_jump = CurveBuilder.GetPoints_HorizontalProps_DotProducts(model, o => o.Percent_LatchAfterJump).
                     Select(o => to_lua(o)).
                     ToArray(),
 

@@ -52,6 +52,8 @@ namespace WallJumpConfig.Models.viewmodels
 
         public VM_Slider Percent_Look { get; set; }
 
+        public VM_Slider Percent_LatchAfterJump { get; set; }
+
         // ------------- Helper Methods -------------
         public static VM_PropsAtAngle FromModel(PropsAtAngle props, string name, string color)
         {
@@ -76,6 +78,8 @@ namespace WallJumpConfig.Models.viewmodels
                 Percent_YawTurn = Get_Percent_YawTurn(props.Percent_YawTurn),
 
                 Percent_Look = Get_Percent_Look(props.Percent_Look),
+
+                Percent_LatchAfterJump = Get_Percent_LatchAfterJump(props.Percent_LatchAfterJump),
             };
         }
 
@@ -136,6 +140,10 @@ namespace WallJumpConfig.Models.viewmodels
         public static VM_Slider Get_Percent_Look(double value)
         {
             return VM_Slider.FromModel(SliderPropType.Percent, "Look Influence %", 0, 1, value, false);
+        }
+        public static VM_Slider Get_Percent_LatchAfterJump(double value)
+        {
+            return VM_Slider.FromModel(SliderPropType.Percent, "Latch After Jump %", 0, 1, value, false);
         }
     }
 }

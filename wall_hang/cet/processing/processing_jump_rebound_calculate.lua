@@ -6,7 +6,7 @@ local MAX_UPADJUSTED_DOT = 0.8      -- the max allowed tilt from straight up
 function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     o:GetCamera()
     if not o.lookdir_forward then       -- shouldn't happen
-        Transition_ToStandard(vars, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o, false)
         do return end
     end
 
@@ -28,15 +28,18 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     impulse_z = impulse_z + vert_z
 
     local play_fail_sound2 = false
+    local should_relatch = false
     if percent_horz > 0 then
         -- Standard jump logic (the term horizontal is just to differentiate from straight up)
-        local horz_x, horz_y, horz_z, yaw_turn_radians1, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, player.rebound.horizontal, o.vel)
+        local horz_x, horz_y, horz_z, yaw_turn_radians1, should_relatch1, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, player.rebound.horizontal, o.vel)
 
         impulse_x = impulse_x + (horz_x * percent_horz)
         impulse_y = impulse_y + (horz_y * percent_horz)
         impulse_z = impulse_z + (horz_z * percent_horz)
 
         yaw_turn_radians = yaw_turn_radians1 * percent_horz
+
+        should_relatch = should_relatch1
 
         play_fail_sound2 = play_fail_sound3
     end
@@ -46,15 +49,15 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     end
 
     if IsNearZero(impulse_x) and IsNearZero(impulse_y) and IsNearZero(impulse_z) then
-        Transition_ToStandard(vars, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o, false)
     else
         local impulse = Vector4.new(impulse_x, impulse_y, impulse_z, 1)
 
         if IsNearZero(yaw_turn_radians) then
-            Transition_ToJump_Impulse(vars, const, debug, o, impulse, false)
+            Transition_ToJump_Impulse(vars, const, debug, o, impulse, false, should_relatch)
         else
             local yaw_turn_direction = this.GetYawTurnDirection(normal_horz, look_horz, yaw_turn_radians)
-            Transition_ToJump_TeleTurn(vars, const, debug, o, impulse, yaw_turn_direction)
+            Transition_ToJump_TeleTurn(vars, const, debug, o, impulse, yaw_turn_direction, should_relatch)
         end
     end
 end
@@ -119,7 +122,7 @@ function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz,
 
     local percent_speed = this.GetSpeedAdjustedPercent(velocity, ToUnit(rotated), horizontal.percent_at_speed)
     if IsNearZero(percent_speed) then
-        return 0, 0, 0, 0, true     -- over speed, play the fail sound
+        return 0, 0, 0, 0, false, true     -- over speed, play the fail sound
     end
 
     return
@@ -127,6 +130,7 @@ function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz,
         rotated.y * percent_speed * strength,
         rotated.z * percent_speed * strength,
         yaw_turn,
+        horizontal.percent_latch_after_jump:Evaluate(horz_dot) >= 0.5,
         false
 end
 

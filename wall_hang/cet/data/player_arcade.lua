@@ -97,6 +97,8 @@ function PlayerArcade:MapModelToSelf(model)
 
             yaw_turn = this.ToAnimationCurve(deserialized.horizontal.yaw_turn),
 
+            percent_latch_after_jump = this.ToAnimationCurve(deserialized.horizontal.percent_latch_after_jump),
+
             strength = deserialized.horizontal.strength,
         },
 

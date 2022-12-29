@@ -17,6 +17,8 @@ function InputTracker_StartStop:new(o, vars, keys, const)
 
     obj.hang_latched = false
 
+    obj.relatch_time = nil
+
     return obj
 end
 
@@ -46,6 +48,11 @@ end
 
 function InputTracker_StartStop:ResetHangLatch()
     self.hang_latched = false
+    self.relatch_time = nil
+end
+
+function InputTracker_StartStop:SetRelatchTime()
+    self.relatch_time = self.o.timer + 0.25
 end
 
 -- Returns
@@ -62,6 +69,10 @@ function InputTracker_StartStop:GetButtonState()
         elseif not self.vars.wallhangkey_usecustom and self.keys.hang then      -- this looks at the checkbox==false, because the only way for it to be checked is if they checked it
             isHangDown = true
         end
+    end
+
+    if self.relatch_time and self.o.timer >= self.relatch_time then
+        isHangDown = true       -- relatch will pretend that they've pressed the latch key
     end
 
     -- Jump only reports true if it was very recently pressed

@@ -20,6 +20,8 @@ namespace WallJumpConfig.Models.savewpf
         /// </summary>
         public double Percent_Look { get; init; }
 
+        public double Percent_LatchAfterJump { get; init; }
+
         // ------------- Helper Methods -------------
         public static PropsAtAngle FromModel(VM_PropsAtAngle model)
         {
@@ -30,6 +32,7 @@ namespace WallJumpConfig.Models.savewpf
                 Percent_Away = model.Percent_Away.Value,
                 Percent_YawTurn = model.Percent_YawTurn.Value,
                 Percent_Look = model.Percent_Look.Value,
+                Percent_LatchAfterJump = model.Percent_LatchAfterJump.Value,
             };
         }
     }

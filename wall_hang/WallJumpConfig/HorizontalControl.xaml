@@ -66,6 +66,8 @@
                                     <Separator Visibility="Hidden" Height="8"/>
                                     <ContentPresenter Content="{Binding Percent_YawTurn}" ContentTemplate="{StaticResource named_slider}"/>
                                     <Separator Visibility="Hidden" Height="8"/>
+                                    <ContentPresenter Content="{Binding Percent_LatchAfterJump}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <Separator Visibility="Hidden" Height="8"/>
                                     <ContentPresenter Content="{Binding Percent_Look}" ContentTemplate="{StaticResource named_slider}"/>
                                 </StackPanel>
                             </Expander.Content>

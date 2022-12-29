@@ -446,6 +446,7 @@ namespace WallJumpConfig
                         Percent_Away = 0,
                         Percent_YawTurn = 0,
                         Percent_Look = 0.25,
+                        Percent_LatchAfterJump = 0,
                     },
 
                     Props_DirectAway = new PropsAtAngle()
@@ -455,6 +456,7 @@ namespace WallJumpConfig
                         Percent_Away = 1,
                         Percent_YawTurn = 0,
                         Percent_Look = 0.75,
+                        Percent_LatchAfterJump = 0,
                     },
 
                     Props_Extra = new PropsAtAngle[0],
@@ -512,6 +514,7 @@ namespace WallJumpConfig
                         Percent_Away = 0.06060892809185233,
                         Percent_YawTurn = 0,
                         Percent_Look = 0.5,
+                        Percent_LatchAfterJump = 0,
                     },
 
                     Props_Extra = new[]
@@ -523,6 +526,7 @@ namespace WallJumpConfig
                             Percent_Away = 0.07197310210907464,
                             Percent_YawTurn = 0,
                             Percent_Look = 0.5,
+                            Percent_LatchAfterJump = 0,
                         },
                         new PropsAtAngle()
                         {
@@ -531,6 +535,7 @@ namespace WallJumpConfig
                             Percent_Away = 0.06362991179333226,
                             Percent_YawTurn = 0,
                             Percent_Look = 0.5,
+                            Percent_LatchAfterJump = 0,
                         },
                         new PropsAtAngle()
                         {
@@ -539,6 +544,7 @@ namespace WallJumpConfig
                             Percent_Away = 0.33000000000000007,
                             Percent_YawTurn = 0,
                             Percent_Look = 0.5,
+                            Percent_LatchAfterJump = 0,
                         },
                     },
 
@@ -549,6 +555,7 @@ namespace WallJumpConfig
                         Percent_Away = 0.719683707575183,
                         Percent_YawTurn = 0,
                         Percent_Look = 0.5,
+                        Percent_LatchAfterJump = 0,
                     },
 
                     Speed_FullStrength = 4,

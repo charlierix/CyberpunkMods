@@ -181,6 +181,12 @@ local vars =
     --impulse,
     --final_lookdir,
 
+    -- Populated in Transition_ToJump_TeleTurn and Transition_ToJump_Impulse to tell Transition_ToStandard to set startStopTracker.relatch_time
+    --should_relatch,
+
+    -- This is needed by Transition_ToStandard to tell it when to relatch
+    --startStopTracker,
+
     --NOTE: These sound props are only used for sounds that should be one at a time.  There can
     --      be other sounds that are managed elsewhere
     --sound_current = nil,  -- can't store nil in a table, because it just goes away.  But non nil will use this name.  Keeping it simple, only allowing one sound at a time.  If multiple are needed, use StickyList
@@ -229,7 +235,7 @@ registerForEvent("onInit", function()
     Observe('QuestTrackerGameController', 'OnInitialize', function()
         if not isLoaded then
             isLoaded = true
-            Transition_ToStandard(vars, const, debug, o)
+            Transition_ToStandard(vars, const, debug, o, false)
         end
     end)
 
@@ -277,8 +283,9 @@ registerForEvent("onInit", function()
     InitializeKeyBindings(keys, vars, const)
 
     startStopTracker = InputTracker_StartStop:new(o, vars, keys, const)
+    vars.startStopTracker = startStopTracker
 
-    Transition_ToStandard(vars, const, debug, o)
+    Transition_ToStandard(vars, const, debug, o, false)
     TransitionWindows_Main(vars_ui, const)
 end)
 
@@ -290,7 +297,7 @@ end)
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = false
     if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
-        Transition_ToStandard(vars, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o, false)
         do return end
     end
 
@@ -298,7 +305,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
     if not o.player then
-        Transition_ToStandard(vars, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o, false)
         do return end
     end
 
@@ -311,7 +318,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
-        Transition_ToStandard(vars, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o, false)
         do return end
     end
 
@@ -329,7 +336,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     elseif not o:Custom_CurrentlyFlying_Update() then       -- velocity is considered to be zero
         -- Was hanging/jumping, but another mod took over
-        Transition_ToStandard(vars, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o, false)
 
     elseif vars.flightMode == const.flightModes.hang then
         -- Hanging from a wall
@@ -353,108 +360,11 @@ registerForEvent("onUpdate", function(deltaTime)
 
     else
         print("Wall Hang ERROR, unknown flightMode: " .. tostring(vars.flightMode))
-        Transition_ToStandard(vars, const, debug, o)
+        Transition_ToStandard(vars, const, debug, o, false)
     end
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 end)
-
-
-
-registerHotkey("WallHang_Test", "test json", function()
-    -- deserialize the json
-    local filename = "!settings/walljump.json"
-
-    local handle = io.open(filename, "r")
-    local json = handle:read("*all")
-
-    local deserialized = extern_json.decode(json)
-
-    ReportTable(deserialized)
-
-    -- turn the definitions into instances of animation_curve
-    local rebound =
-    {
-        straightup_vert_percent = this.ToAnimationCurve(deserialized.straightup_vert_percent),
-
-        percent_vert_whenup = this.ToAnimationCurve(deserialized.percent_vert_whenup),
-        percent_horz_whenup = this.ToAnimationCurve(deserialized.percent_horz_whenup),
-
-        horz_percent_up = this.ToAnimationCurve(deserialized.horz_percent_up),
-        horz_percent_along = this.ToAnimationCurve(deserialized.horz_percent_along),
-        horz_percent_away = this.ToAnimationCurve(deserialized.horz_percent_away),
-        horz_strength = this.ToAnimationCurve(deserialized.horz_strength),
-        yaw_turn_percent = this.ToAnimationCurve(deserialized.yaw_turn_percent),
-    }
-
-    print("-----------------------------------")
-
-    ReportTable(rebound)
-
-    -- graph each one in a separate frame of the debug logger (keep that grapher function around)
-    local log = DebugRenderLogger:new(true)
-    log:DefineCategory("graph_black", "000", 0.33)
-    log:DefineCategory("graph_gray", "CCC", 0.33)
-    log:DefineCategory("graph_key", "99A", 0.33)
-    log:DefineCategory("plot", "FFF", 1)
-
-    for key, value in pairs(rebound) do
-        this.LogAnimationCurve(log, value, key)
-    end
-
-    log:Save("rebound curves")
-
-end)
-
-function this.ToAnimationCurve(key_values)
-    local retVal = AnimationCurve:new()
-
-    for _, item in ipairs(key_values) do
-        retVal:AddKeyValue(item.key, item.value)
-    end
-
-    return retVal
-end
-
-function this.LogAnimationCurve(log, anim, name)
-    log:NewFrame(name)
-    log:WriteLine_Frame(name)
-
-    local count = 144
-
-    local prev = nil
-
-    log:Add_Line(Vector4.new(-1, 0, 0, 1), Vector4.new(1, 0, 0, 1), "graph_black")
-    log:Add_Line(Vector4.new(-1, 0, 0, 1), Vector4.new(-1, 1, 0, 1), "graph_black")
-    log:Add_Line(Vector4.new(1, 0, 0, 1), Vector4.new(1, 1, 0, 1), "graph_black")
-    log:Add_Line(Vector4.new(-1, 1, 0, 1), Vector4.new(1, 1, 0, 1), "graph_black")
-
-    log:Add_Line(Vector4.new(0, 0, 0, 1), Vector4.new(0, 1, 0, 1), "graph_gray")
-    log:Add_Line(Vector4.new(-1, 0.5, 0, 1), Vector4.new(1, 0.5, 0, 1), "graph_gray")
-
-    for i = 1, #anim.keyvalues, 1 do
-        local key = anim.keyvalues[i].key
-
-        log:Add_Line(Vector4.new(key, 0, 0, 1), Vector4.new(key, 1, 0, 1), "graph_key")
-    end
-
-    for i = 1, count, 1 do
-        local dot = GetScaledValue(-1, 1, 1, count, i)
-
-        local value = anim:Evaluate(dot)
-
-        local current = Vector4.new(dot, value, 0, 1)
-
-        if i > 1 then
-            log:Add_Line(prev, current, "plot")
-        end
-
-        prev = current
-    end
-end
-
-
-
 
 registerHotkey("WallHang_Config", "Show Config", function()
     if shouldShowConfig then
@@ -518,7 +428,7 @@ end)
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
-    Transition_ToStandard(vars, const, debug, o)
+    Transition_ToStandard(vars, const, debug, o, false)
 
     if o then
         o:Clear()

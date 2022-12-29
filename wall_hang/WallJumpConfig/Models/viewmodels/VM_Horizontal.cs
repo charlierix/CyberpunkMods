@@ -73,6 +73,7 @@ namespace WallJumpConfig.Models.viewmodels
                 Percent_Away = GetAvg(prev_prop, next_prop, o => o.Percent_Away, () => VM_PropsAtAngle.Get_Percent_Away(0.5)),
                 Percent_YawTurn = GetAvg(prev_prop, next_prop, o => o.Percent_YawTurn, () => VM_PropsAtAngle.Get_Percent_YawTurn(0)),
                 Percent_Look = GetAvg(prev_prop, next_prop, o => o.Percent_Look, () => VM_PropsAtAngle.Get_Percent_Look(0.5)),
+                Percent_LatchAfterJump = GetAvg(prev_prop, next_prop, o => o.Percent_LatchAfterJump, () => VM_PropsAtAngle.Get_Percent_LatchAfterJump(0.5)),
             };
 
             AddExtraAngle(angle, props);
