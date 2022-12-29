@@ -216,7 +216,7 @@ namespace WallJumpConfig
         private void RefreshYaw()
         {
             var percents = CurveBuilder.GetPoints_HorizontalProps_Degrees(_viewmodel_horizontal, o => o.Percent_YawTurn.Value);
-            var angles = CurveBuilder.BuildYawTurnPercent_Degrees(percents);
+            var angles = CurveBuilder.BuildYawTurn_Degrees(percents);
             _yawmap = CurveBuilder.ToAnimationCurve(angles);
 
             RefreshLines();
@@ -230,7 +230,7 @@ namespace WallJumpConfig
             double dot = Vector3D.DotProduct(up, current);
             double angle_input = Math1D.Dot_to_Degrees(dot);
 
-            double angle_output = _yawmap.Evaluate(angle_input);
+            double angle_output = angle_input + _yawmap.Evaluate(angle_input);
 
             _lines.Input_Left.Rotate.Angle = angle_input;
             _lines.Input_Right.Rotate.Angle = -angle_input;

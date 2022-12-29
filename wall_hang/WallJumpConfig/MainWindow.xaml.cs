@@ -377,7 +377,7 @@ namespace WallJumpConfig
             File.WriteAllText(filename, serialized);
 
             // Save lua version
-            filename = System.IO.Path.Combine(txtModFolder.Text, "!wallhang configs", "walljump.json");
+            filename = System.IO.Path.Combine(txtModFolder.Text, "!settings", "walljump.json");
 
             serialized = JsonSerializer.Serialize(savelua, options);
             File.WriteAllText(filename, serialized);

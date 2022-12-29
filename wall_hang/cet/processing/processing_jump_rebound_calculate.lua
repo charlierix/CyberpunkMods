@@ -19,6 +19,7 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     local impulse_x = 0
     local impulse_y = 0
     local impulse_z = 0
+    local yaw_turn_radians = 0
 
     -- Special logic for jumping straight up when facing the wall and looking up
     local percent_horz, play_fail_sound1, vert_x, vert_y, vert_z = this.GetImpulse_Vertical(o, player.rebound.has_straightup, player.rebound.straight_up, up_dot, horz_dot, up_adjusted)
@@ -29,13 +30,13 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     local play_fail_sound2 = false
     if percent_horz > 0 then
         -- Standard jump logic (the term horizontal is just to differentiate from straight up)
-        local horz_x, horz_y, horz_z, yaw_turn_percent, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, player.rebound.horizontal, o.vel)
+        local horz_x, horz_y, horz_z, yaw_turn_radians1, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, player.rebound.horizontal, o.vel)
 
         impulse_x = impulse_x + (horz_x * percent_horz)
         impulse_y = impulse_y + (horz_y * percent_horz)
         impulse_z = impulse_z + (horz_z * percent_horz)
 
-        yaw_turn_percent = yaw_turn_percent * percent_horz
+        yaw_turn_radians = yaw_turn_radians1 * percent_horz
 
         play_fail_sound2 = play_fail_sound3
     end
@@ -44,15 +45,17 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
         PlaySound_FailJump(vars, o)
     end
 
-    --TODO: implement this.  It would be a call to Transition_ToJump_TeleTurn instead of straight to Transition_ToJump_Impulse
-    --would also need to figure out the direction
-    --if yaw_turn_percent > 0
-
     if IsNearZero(impulse_x) and IsNearZero(impulse_y) and IsNearZero(impulse_z) then
         Transition_ToStandard(vars, const, debug, o)
     else
         local impulse = Vector4.new(impulse_x, impulse_y, impulse_z, 1)
-        Transition_ToJump_Impulse(vars, const, debug, o, impulse, false)
+
+        if IsNearZero(yaw_turn_radians) then
+            Transition_ToJump_Impulse(vars, const, debug, o, impulse, false)
+        else
+            local yaw_turn_direction = this.GetYawTurnDirection(normal_horz, look_horz, yaw_turn_radians)
+            Transition_ToJump_TeleTurn(vars, const, debug, o, impulse, yaw_turn_direction)
+        end
     end
 end
 
@@ -105,7 +108,7 @@ function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_d
 end
 
 function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz, horizontal, velocity)
-    local yaw_turn_percent = Clamp(0, 1, horizontal.yaw_turn_percent:Evaluate(horz_dot))
+    local yaw_turn = Clamp(0, 1, horizontal.yaw_turn:Evaluate(horz_dot))
     local strength = horizontal.strength
 
     local preset_x, preset_y, preset_z = this.GetImpulse_Horizontal_Preset(horz_dot, look_horz, wall_normal_horz, horizontal)
@@ -123,7 +126,7 @@ function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz,
         rotated.x * percent_speed * strength,
         rotated.y * percent_speed * strength,
         rotated.z * percent_speed * strength,
-        yaw_turn_percent,
+        yaw_turn,
         false
 end
 
@@ -276,4 +279,9 @@ function this.GetSpeedAdjustedPercent(velocity, impulse_dir_unit, percent_at_spe
     local speed_along = math.sqrt(GetVectorLengthSqr(vel_along))
 
     return Clamp(0, 1, percent_at_speed:Evaluate(speed_along))
+end
+
+function this.GetYawTurnDirection(normal_horz, look_horz, radians)
+    local axis = CrossProduct3D(look_horz, normal_horz)
+    return RotateVector3D_axis_radian(look_horz, axis, radians)
 end

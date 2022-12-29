@@ -18,7 +18,7 @@ namespace WallJumpConfig.Models.savelua
 
         public SaveLUA_KeyValue[] percent_look { get; init; }
 
-        public SaveLUA_KeyValue[] yaw_turn_percent { get; init; }
+        public SaveLUA_KeyValue[] yaw_turn { get; init; }
 
         public double strength { get; init; }
 
@@ -47,7 +47,7 @@ namespace WallJumpConfig.Models.savelua
                     Select(o => to_lua(o)).
                     ToArray(),
 
-                yaw_turn_percent = CurveBuilder.GetPoints_HorizontalProps_DotProducts(model, o => o.Percent_YawTurn).
+                yaw_turn = CurveBuilder.BuildYawTurn_DotProduct_Radians(CurveBuilder.GetPoints_HorizontalProps_Degrees(model, o => o.Percent_YawTurn)).
                     Select(o => to_lua(o)).
                     ToArray(),
 
