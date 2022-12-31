@@ -12,7 +12,7 @@
             <Setter Property="Padding" Value="6,1,6,2"/>
         </Style>
     </Window.Resources>
-    
+
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -32,7 +32,7 @@
                 <ColumnDefinition Width="8"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            
+
             <TabControl x:Name="tabcontrol" Grid.Column="0" SelectionChanged="tabcontrol_SelectionChanged">
                 <TabItem x:Name="tabHorizontal" Header="Standard">
                     <local:HorizontalControl x:Name="horizontalControl" Margin="8"/>
@@ -61,15 +61,16 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
                         <Button Content="new" Style="{StaticResource filebutton}" Click="New_Click"/>
                         <Button Content="load" Style="{StaticResource filebutton}" Click="Load_Click"/>
-                        <Button Content="save" Style="{StaticResource filebutton}" Click="Save_Click"/>
+                        <Button x:Name="btnSave" Content="save" Style="{StaticResource filebutton}" Click="Save_Click"/>
                     </StackPanel>
+
+                    <Popup x:Name="popupSaved" AllowsTransparency="True" Placement="Bottom" VerticalOffset="4" PlacementTarget="{Binding ElementName=btnSave}">
+                        <Border BorderThickness="1.5" BorderBrush="#7A7451" CornerRadius="4" Background="#B0F9EDA5" Padding="5,2">
+                            <TextBlock Text="saved" FontSize="9"/>
+                        </Border>
+                    </Popup>
                 </StackPanel>
 
-                
-                <!-- TODO: horizontal slider: auto latch % -->
-                <!-- Anything over 50% will auto latch 200 milliseconds after jumping -->
-                
-                
                 <local:StickFigureHorizontalControl Grid.Row="2" x:Name="horizontalStickFigure"/>
                 <local:StickFigureVerticalControl Grid.Row="2" x:Name="verticalStickFigure"/>
 

@@ -12,6 +12,7 @@ using WallJumpConfig.Models.viewmodels;
 using WallJumpConfig.Models.savewpf;
 using WallJumpConfig.Models.savelua;
 using Game.Core;
+using System.Windows.Threading;
 
 namespace WallJumpConfig
 {
@@ -63,6 +64,8 @@ namespace WallJumpConfig
         private CurrentViewModel _viewmodel = null;
 
         private bool _adjusting_expander = false;
+
+        private DispatcherTimer _popupTimer = null;
 
         #endregion
 
@@ -257,6 +260,19 @@ namespace WallJumpConfig
             }
         }
 
+        private void PopupTimer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                _popupTimer.Stop();
+                popupSaved.IsOpen = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void tabcontrol_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -381,6 +397,8 @@ namespace WallJumpConfig
 
             serialized = JsonSerializer.Serialize(savelua, options);
             File.WriteAllText(filename, serialized);
+
+            ShowSavedPopup();
         }
         private void LoadSession(SaveWPF model)
         {
@@ -609,6 +627,24 @@ namespace WallJumpConfig
             }
 
             _adjusting_expander = false;
+        }
+
+        private void ShowSavedPopup()
+        {
+            if (_popupTimer == null)
+            {
+                _popupTimer = new DispatcherTimer()
+                {
+                    Interval = TimeSpan.FromSeconds(0.5),
+                    IsEnabled = false,
+                };
+
+                _popupTimer.Tick += PopupTimer_Tick;
+            }
+
+            popupSaved.IsOpen = true;
+
+            _popupTimer.Start();
         }
 
         #endregion
