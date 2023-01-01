@@ -398,6 +398,8 @@ namespace WallJumpConfig
             serialized = JsonSerializer.Serialize(savelua, options);
             File.WriteAllText(filename, serialized);
 
+            PopulateNamesCombo();
+
             ShowSavedPopup();
         }
         private void LoadSession(SaveWPF model)
@@ -443,10 +445,13 @@ namespace WallJumpConfig
                 Where(o => o.Settings != null).
                 ToArray();
 
+            string text = cboName.Text;
             cboName.Items.Clear();
 
             foreach (var preset in _presets)
                 cboName.Items.Add(preset.Name);
+
+            cboName.Text = text;
         }
 
         private static SaveWPF GetDefaultSession()
