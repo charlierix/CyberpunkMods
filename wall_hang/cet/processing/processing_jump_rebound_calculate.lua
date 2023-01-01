@@ -111,7 +111,7 @@ function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_d
 end
 
 function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz, horizontal, velocity)
-    local yaw_turn = Clamp(0, 1, horizontal.yaw_turn:Evaluate(horz_dot))
+    local yaw_turn = horizontal.yaw_turn:Evaluate(horz_dot)
     local strength = horizontal.strength
 
     local preset_x, preset_y, preset_z = this.GetImpulse_Horizontal_Preset(horz_dot, look_horz, wall_normal_horz, horizontal)
