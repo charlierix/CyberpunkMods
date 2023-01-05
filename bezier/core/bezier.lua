@@ -760,7 +760,7 @@ end
 function this.EnsureCountsHaveEnds(counts, segments)
     local first = false
     if counts[1] == 0 then
-        this.RemoveCountFromSegment(counts, this.GetDensities(counts, segments))
+        this.RemoveCountFromSegment(counts, this.GetDensities(segments, counts))
         first = true
     end
 
