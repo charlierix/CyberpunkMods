@@ -132,8 +132,8 @@ function this.Define_Slide_Label(const)
 
         position =
         {
-            pos_x = -30,
-            pos_y = -190,
+            pos_x = -30 / const.em,
+            pos_y = -190 / const.em,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -170,7 +170,7 @@ function this.Define_SlideSpeed_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -195,7 +195,7 @@ function this.Define_SlideSpeed_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -229,7 +229,7 @@ function this.Define_SlideSpeed(relative_to, const)
         is_dozenal = true,
         decimal_places = 1,
 
-        width = 250,
+        width = 250 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
@@ -239,7 +239,7 @@ function this.Define_SlideSpeed(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 24,
+            pos_y = 24 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -269,7 +269,7 @@ function this.Define_SlideDrag_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -294,7 +294,7 @@ function this.Define_SlideDrag_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -324,7 +324,7 @@ function this.Define_SlideDrag(relative_to, const)
         is_dozenal = true,
         decimal_places = 1,
 
-        width = 250,
+        width = 250 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
@@ -334,7 +334,7 @@ function this.Define_SlideDrag(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 24,
+            pos_y = 24 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -365,7 +365,7 @@ function this.Define_Crawl_Label(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 120,
+            pos_y = 120 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -406,7 +406,7 @@ function this.Define_CrawlHorz_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -431,7 +431,7 @@ function this.Define_CrawlHorz_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -461,7 +461,7 @@ function this.Define_CrawlHorz(relative_to, const)
         is_dozenal = true,
         decimal_places = 1,
 
-        width = 250,
+        width = 250 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
@@ -471,7 +471,7 @@ function this.Define_CrawlHorz(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 24,
+            pos_y = 24 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -501,7 +501,7 @@ function this.Define_CrawlUp_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -526,7 +526,7 @@ function this.Define_CrawlUp_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -556,7 +556,7 @@ function this.Define_CrawlUp(relative_to, const)
         is_dozenal = true,
         decimal_places = 1,
 
-        width = 250,
+        width = 250 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
@@ -566,7 +566,7 @@ function this.Define_CrawlUp(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 24,
+            pos_y = 24 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -596,7 +596,7 @@ function this.Define_CrawlDown_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -621,7 +621,7 @@ function this.Define_CrawlDown_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -651,7 +651,7 @@ function this.Define_CrawlDown(relative_to, const)
         is_dozenal = true,
         decimal_places = 1,
 
-        width = 250,
+        width = 250 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
@@ -661,7 +661,7 @@ function this.Define_CrawlDown(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 24,
+            pos_y = 24 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,

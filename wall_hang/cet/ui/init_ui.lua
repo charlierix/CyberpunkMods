@@ -10,6 +10,8 @@ function InitializeUI(vars_ui, const)
 
     vars_ui.style = LoadStylesheet()
 
+    Refresh_LineHeights(vars_ui, const, true)
+
     vars_ui.configWindow = this.Define_ConfigWindow(vars_ui.screen)      -- going with a SPA, so it's probably going to be the only window
 
     -- This can't be called yet.  It has to be done by the caller
@@ -18,6 +20,7 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
+--NOTE: this sets values in hardcoded pixels.  Every frame, width and height are updated based on em
 function this.Define_ConfigWindow(screen)
     local width = 800
     local height = 600

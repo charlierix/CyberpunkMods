@@ -9,7 +9,7 @@ end
 function LoadStylesheet()
     local file = io.open("ui/stylesheet.json", "r")
     if not file then
-        print("GRAPPLING HOOK ERROR: Can't find file: ui/stylesheet.json")
+        print("WALL HANG ERROR: Can't find file: ui/stylesheet.json")
         return nil
     end
 

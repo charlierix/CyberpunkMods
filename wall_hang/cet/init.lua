@@ -139,6 +139,8 @@ local const =
     ledgeHop_impulse = 4,
     ledgeHop_angle = 86,        -- 90 would be straight up, 0 would be horizontal
 
+    em = 18,        -- the expected value of font height when using default scaling
+
     shouldShowLogging3D_latchRayTrace = false,
     shouldShowLogging3D_wallCrawl = false,
     shouldShowDebugWindow = false,
@@ -199,7 +201,6 @@ local vars_ui =
     --style     -- this gets loaded from json during init
     --configWindow  -- info about the location of the config window -- see Define_ConfigWindow()
     --line_heights  -- the height of strings -- see Refresh_LineHeights()
-    --frame_height  -- height of the title bar -- see Refresh_LineHeights()
 
     --autoshow_withconsole      -- bool that tells whether config shows the same time as the cet console, or requires a separate hotkey
 
@@ -421,7 +422,7 @@ registerForEvent("onDraw", function()
     end
 
     if const.shouldShowDebugWindow then
-        DrawDebugWindow(debug)
+        DrawDebugWindow(debug, vars_ui, const)
     end
 end)
 
@@ -441,23 +442,6 @@ end
 function TODO()
     -- Wall attraction stays after switching to grappling hook
 
-	-- Wall Jump
-	--  There should be two types (and sets of settings) of wall jump:
-	--    Jumping from a hang (planted)
-	--    Jumping directly from midair collision (rebound)
-
-    -- Sticky Hang
-    --  Have an option to stick to the wall for a short time when they collide with a wall, but haven't pressed the latch button
-
-    -- Wall Reflection
-    --  After jumping along a wall, but about to collide at a shallow angle, apply a tiny impulse to keep from hitting
-
-	-- Wall Jump (rebound)
-	--    Option to not turn around when dot is close to 1 (directly facing the wall)
-	--    Slider for vertical as well as horizontal
-	--    Another slider to allow full vertical when dot product is high vs low or negative
-	--    A dead zone between looking straight up and sort of looking down (so they don't accidentally jump away from the wall when trying to go up it)
-
     -- Partial Disable Jump Away
     --  There is currently a checkbox to not jump away from a wall when facing the wall
     --  Have it so that if you shift+jump, it will jump
@@ -465,16 +449,6 @@ function TODO()
     -- Crawl Cellophane
     --  Don't directly crawl on hit surfaces.  Scan an area, create some kind of bezier mesh that allows
     --  continous movement
-
-	-- Jump turning
-	--	When they jump off a wall and dot(look,normal) < -0.8, pay attention to their mouse_x velocity
-	--		zero: don't spin around, jump back and more up
-	--		swiping left/right: spin in that direction
-
-	-- Wall jump momentum
-	--	When they jump off a wall without using wall hang, keep some of that speed
-	--	Probably want to keep the part of the velocity that is perpendicular to the normal
-	--	May also want to allow that velocity to influence the reflection angle
 
     -- Enable double jump
     --  After they jump off a wall, reset the game's jump count so they can do a double jump

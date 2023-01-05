@@ -33,8 +33,8 @@ function DrawConfig(isCloseRequested, vars, vars_ui, o, const, player, player_ar
     -- NoNavInputs was used mainly for the input binding window.  But there are so many custom controls on the rest of the windows that mouse navigation is pretty much required anyway
     if (ImGui.Begin("Wall Hang", ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoNavInputs)) then     --NOTE: imgui.h doesn't mention this overload.  The overload that takes bool as second param only accepts true, and it adds the X button
         -- These will be used by workers for this window as well as sub windows
-        Refresh_WindowPos(window)
-        Refresh_LineHeights(vars_ui)
+        Refresh_LineHeights(vars_ui, const, false)
+        Refresh_WindowPos(window, vars_ui, const)
 
         if vars_ui.currentWindow == const.windows.main then
             continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade)
@@ -62,9 +62,9 @@ function DrawConfig(isCloseRequested, vars, vars_ui, o, const, player, player_ar
 end
 
 --https://stackoverflow.com/questions/26160327/sorting-a-lua-table-by-key
-function DrawDebugWindow(debugInfo)
-    ImGui.SetNextWindowPos(20, 300, ImGuiCond.FirstUseEver)
-    ImGui.SetNextWindowSize(300, 400, ImGuiCond.FirstUseEver)
+function DrawDebugWindow(debugInfo, vars_ui, const)
+    ImGui.SetNextWindowPos((20 / const.em) * vars_ui.em, (300 / const.em) * vars_ui.em, ImGuiCond.FirstUseEver)
+    ImGui.SetNextWindowSize((300 / const.em) * vars_ui.em, (400 / const.em) * vars_ui.em, ImGuiCond.FirstUseEver)
 
     if (ImGui.Begin("Wall Hang Debug")) then
         local keys = {}

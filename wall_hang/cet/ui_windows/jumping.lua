@@ -107,7 +107,7 @@ function this.Define_Strength_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -132,7 +132,7 @@ function this.Define_Strength_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -164,15 +164,15 @@ function this.Define_Strength(const)
         is_dozenal = true,
         decimal_places = 1,
 
-        width = 250,
+        width = 250 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
 
         position =
         {
-            pos_x = 65,
-            pos_y = -120,
+            pos_x = 65 / const.em,
+            pos_y = -120 / const.em,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -199,7 +199,7 @@ function this.Define_Speed_Label(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 120,
+            pos_y = 120 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -240,7 +240,7 @@ function this.Define_SpeedFull_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -265,7 +265,7 @@ function this.Define_SpeedFull_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -297,7 +297,7 @@ function this.Define_SpeedFull(relative_to, const)
         is_dozenal = true,
         decimal_places = 1,
 
-        width = 250,
+        width = 250 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
@@ -307,7 +307,7 @@ function this.Define_SpeedFull(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 24,
+            pos_y = 24 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -337,7 +337,7 @@ function this.Define_SpeedZero_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -362,7 +362,7 @@ function this.Define_SpeedZero_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -394,7 +394,7 @@ function this.Define_SpeedZero(relative_to, const)
         is_dozenal = true,
         decimal_places = 1,
 
-        width = 250,
+        width = 250 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
@@ -404,7 +404,7 @@ function this.Define_SpeedZero(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 24,
+            pos_y = 24 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,

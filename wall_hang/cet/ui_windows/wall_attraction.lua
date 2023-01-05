@@ -134,7 +134,7 @@ function this.Define_MaxDist_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -159,7 +159,7 @@ function this.Define_MaxDist_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -188,15 +188,15 @@ function this.Define_MaxDist(const)
         is_dozenal = true,
         decimal_places = 1,
 
-        width = 250,
+        width = 250 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
 
         position =
         {
-            pos_x = 65,
-            pos_y = -130,
+            pos_x = 65 / const.em,
+            pos_y = -130 / const.em,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -222,7 +222,7 @@ function this.Define_Accel_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -247,7 +247,7 @@ function this.Define_Accel_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -277,7 +277,7 @@ function this.Define_Accel(relative_to, const)
         is_dozenal = true,
         decimal_places = 1,
 
-        width = 250,
+        width = 250 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
@@ -287,7 +287,7 @@ function this.Define_Accel(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 72,
+            pos_y = 72 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -317,7 +317,7 @@ function this.Define_Pow_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -342,7 +342,7 @@ function this.Define_Pow_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -378,7 +378,7 @@ function this.Define_Pow(relative_to, const)
         is_dozenal = true,
         decimal_places = 1,
 
-        width = 250,
+        width = 250 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
@@ -388,7 +388,7 @@ function this.Define_Pow(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 24,
+            pos_y = 24 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -418,7 +418,7 @@ function this.Define_AntiGrav_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -443,7 +443,7 @@ function this.Define_AntiGrav_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -477,7 +477,7 @@ function this.Define_AntiGrav(relative_to, const)
         is_dozenal = true,
         decimal_places = 2,
 
-        width = 250,
+        width = 250 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
@@ -487,7 +487,7 @@ function this.Define_AntiGrav(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 72,
+            pos_y = 72 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,

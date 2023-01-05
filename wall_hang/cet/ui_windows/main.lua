@@ -154,7 +154,7 @@ function this.Define_ConsoleWarning(const)
         position =
         {
             pos_x = 0,
-            pos_y = 24,
+            pos_y = 24 / const.em,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.top,
         },
@@ -180,7 +180,7 @@ function this.Define_ShouldAutoShow(parent, const)
             relative_to = parent,
 
             pos_x = 0,
-            pos_y = 6,
+            pos_y = 6 / const.em,
 
             relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
@@ -216,8 +216,8 @@ function this.Define_InputBindings(const)
 
         position =
         {
-            pos_x = 48,
-            pos_y = 72,
+            pos_x = 48 / const.em,
+            pos_y = 72 / const.em,
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.top,
         },
@@ -240,8 +240,8 @@ function this.Define_LatchWallHang(const)
 
         position =
         {
-            pos_x = 110,
-            pos_y = -165,
+            pos_x = 110 / const.em,
+            pos_y = -165 / const.em,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -291,7 +291,7 @@ function this.Define_JumpBackward(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 24,
+            pos_y = 24 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -340,7 +340,7 @@ function this.Define_MouseSensitivity_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -365,7 +365,7 @@ function this.Define_MouseSensitivity_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -397,7 +397,7 @@ function this.Define_MouseSensitivity(relative_to, const)
         is_dozenal = true,
         decimal_places = 0,
 
-        width = 200,
+        width = 200 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
@@ -407,7 +407,7 @@ function this.Define_MouseSensitivity(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 30,
+            pos_y = 30 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -437,7 +437,7 @@ function this.Define_RightStickSensitivity_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 24,
+            pos_x = 24 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -462,7 +462,7 @@ function this.Define_RightStickSensitivity_Help(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 11,
+            pos_x = 11 / const.em,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -496,7 +496,7 @@ function this.Define_RightStickSensitivity(relative_to, const)
         is_dozenal = true,
         decimal_places = 0,
 
-        width = 200,
+        width = 200 / const.em,
 
         ctrlclickhint_horizontal = const.alignment_horizontal.right,
         ctrlclickhint_vertical = const.alignment_vertical.bottom,
@@ -506,7 +506,7 @@ function this.Define_RightStickSensitivity(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 24,
+            pos_y = 24 / const.em,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -542,8 +542,8 @@ function this.Define_Jumping(const)
 
         position =
         {
-            pos_x = -220,
-            pos_y = 130,
+            pos_x = -220 / const.em,
+            pos_y = 130 / const.em,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -578,7 +578,7 @@ function this.Define_CrawlSlide(const)
         position =
         {
             pos_x = 0,
-            pos_y = 130,
+            pos_y = 130 / const.em,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -612,8 +612,8 @@ function this.Define_WallAttraction(const)
 
         position =
         {
-            pos_x = 220,
-            pos_y = 130,
+            pos_x = 220 / const.em,
+            pos_y = 130 / const.em,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
