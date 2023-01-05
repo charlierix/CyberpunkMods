@@ -24,8 +24,10 @@ function Refresh_LineHeights(vars_ui)
         vars_ui.line_heights = {}
     end
 
-    vars_ui.line_heights.line = ImGui.GetTextLineHeight()
-    vars_ui.line_heights.gap = ImGui.GetTextLineHeightWithSpacing() - vars_ui.line_heights.line
+    vars_ui.line_heights.line = ImGui.GetTextLineHeight()       -- 18 (36 on 4k)
+    vars_ui.line_heights.gap = ImGui.GetTextLineHeightWithSpacing() - vars_ui.line_heights.line     -- 22 (44 on 4k)
+
+    vars_ui.frame_height = ImGui.GetFrameHeight()       -- 24 (48 on 4k)
 end
 
 -- There may be a way to call that enum natively, but for now, just hardcode the int

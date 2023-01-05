@@ -199,6 +199,7 @@ local vars_ui =
     --style     -- this gets loaded from json during init
     --configWindow  -- info about the location of the config window -- see Define_ConfigWindow()
     --line_heights  -- the height of strings -- see Refresh_LineHeights()
+    --frame_height  -- height of the title bar -- see Refresh_LineHeights()
 
     --autoshow_withconsole      -- bool that tells whether config shows the same time as the cet console, or requires a separate hotkey
 

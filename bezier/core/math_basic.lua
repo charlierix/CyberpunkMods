@@ -243,7 +243,7 @@ function this.GetDozenalWholeNum(decimal_whole)
 end
 
 function this.GetDozenalFractional(decimal_fractional, fractional_places)
-    --NOTE: A positive whole number must be passed in
+    --NOTE: A positive number must be passed in
 
     local ints = this.GetDozenalFractional_Ints(decimal_fractional, fractional_places)
 
