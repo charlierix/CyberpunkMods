@@ -6,8 +6,8 @@ function CalcSize_CheckBox(def, style, const, line_heights)
 
     -- Couldn't find a function to measure the size of the box and gap between box and text, so resorted
     -- to counting pixels (box is 19x19, gap is 5)
-    width = width + (((19 + 5) / const.em) * line_heights.line)
-    height = math.max(height, (19 / const.em) * line_heights.line)
+    width = width + ((19 + 5) * line_heights.line)
+    height = math.max(height, 19 * line_heights.line)
 
     def.render_pos.width = width
     def.render_pos.height = height

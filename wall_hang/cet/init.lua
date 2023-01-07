@@ -139,8 +139,6 @@ local const =
     ledgeHop_impulse = 4,
     ledgeHop_angle = 86,        -- 90 would be straight up, 0 would be horizontal
 
-    em = 18,        -- the expected value of font height when using default scaling
-
     shouldShowLogging3D_latchRayTrace = false,
     shouldShowLogging3D_wallCrawl = false,
     shouldShowDebugWindow = false,

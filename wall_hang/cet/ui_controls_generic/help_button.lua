@@ -45,7 +45,7 @@ function Draw_HelpButton(def, style_help, screenOffset_x, screenOffset_y, vars_u
     ImGui.PopStyleColor()
 
     if isHovered and def.tooltip then
-        local notouch = (style_help.radius + (12 / const.em)) * vars_ui.em
+        local notouch = (style_help.radius + 12) * vars_ui.em
         Draw_Tooltip(def.tooltip, vars_ui.style.tooltip, screenOffset_x + left + def.sizes.center_x, screenOffset_y + top + def.sizes.center_y, notouch, notouch, vars_ui)
     end
 

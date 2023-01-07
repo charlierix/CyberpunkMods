@@ -7,7 +7,7 @@ local hint = "ctrl+click to type"
 -- line_heights is models\misc\LineHeights
 function CalcSize_Slider(def, style, const, line_heights)
     def.render_pos.width = def.width * line_heights.line
-    def.render_pos.height = line_heights.line + ((11 / const.em) * line_heights.line)       -- just counted pixels
+    def.render_pos.height = line_heights.line + (11 * line_heights.line)       -- just counted pixels
 end
 
 -- Shows a slider.  The value is persisted in def.value

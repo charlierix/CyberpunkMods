@@ -10,8 +10,8 @@ function Define_Title(title, const)
 
         position =
         {
-            pos_x = 24 / const.em,
-            pos_y = 30 / const.em,
+            pos_x = 24,
+            pos_y = 30,
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.top,
         },
@@ -31,8 +31,8 @@ function Define_Name(const)
 
         position =
         {
-            pos_x = 24 / const.em,
-            pos_y = 24 / const.em,
+            pos_x = 24,
+            pos_y = 24,
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.top,
         },
@@ -100,7 +100,7 @@ function GetRelativePosition_HelpButton(relative_to, const)
     {
         relative_to = relative_to,
 
-        pos_x = 10 / const.em,
+        pos_x = 10,
         pos_y = 0,
 
         relative_horz = const.alignment_horizontal.right,
@@ -116,8 +116,8 @@ function GetRelativePosition_LabelAbove(relative_to, const)
     {
         relative_to = relative_to,
 
-        pos_x = 1 / const.em,
-        pos_y = 13 / const.em,
+        pos_x = 1,
+        pos_y = 13,
 
         relative_horz = const.alignment_horizontal.left,
         horizontal = const.alignment_horizontal.left,
@@ -171,7 +171,7 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
                 relative_to = label_value,
 
                 pos_x = 0,
-                pos_y = 11 / const.em,
+                pos_y = 11,
 
                 relative_horz = const.alignment_horizontal.center,
                 horizontal = const.alignment_horizontal.center,
@@ -195,7 +195,7 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
                 relative_to = label_value,
 
                 pos_x = 0,
-                pos_y = 11 / const.em,
+                pos_y = 11,
 
                 relative_horz = const.alignment_horizontal.center,
                 horizontal = const.alignment_horizontal.center,
@@ -223,7 +223,7 @@ function Define_PropertyPack_Vertical(text, x, y, const, isCheckbox, invisibleNa
             relative_to = label_value,
 
             pos_x = 0,
-            pos_y = 15 / const.em,
+            pos_y = 15,
 
             relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,

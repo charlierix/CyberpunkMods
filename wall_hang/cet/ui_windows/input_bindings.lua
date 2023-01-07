@@ -189,8 +189,8 @@ function this.Define_ConsoleWarning1(const)
 
         position =
         {
-            pos_x = -140 / const.em,
-            pos_y = 48 / const.em,
+            pos_x = -140,
+            pos_y = 48,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.top,
         },
@@ -211,7 +211,7 @@ function this.Define_ConsoleWarning2(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 8 / const.em,
+            pos_y = 8,
 
             relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
@@ -236,7 +236,7 @@ function this.Define_Help1_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 10 / const.em,
+            pos_x = 10,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -259,8 +259,8 @@ function this.Define_Help1_Button(const)
 
         position =
         {
-            pos_x = 24 / const.em,
-            pos_y = 36 / const.em,
+            pos_x = 24,
+            pos_y = 36,
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.top,
         },
@@ -288,7 +288,7 @@ function this.Define_Help2_Label(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 10 / const.em,
+            pos_x = 10,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -314,7 +314,7 @@ function this.Define_Help2_Button(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 8 / const.em,
+            pos_y = 8,
 
             relative_horz = const.alignment_horizontal.right,
             horizontal = const.alignment_horizontal.right,
@@ -344,13 +344,13 @@ function this.Define_WatchedActions(const)
     {
         sets = {},
 
-        width = 240 / const.em,
-        height = 370 / const.em,
+        width = 240,
+        height = 370,
 
         position =
         {
-            pos_x = 42 / const.em,
-            pos_y = 12 / const.em,
+            pos_x = 42,
+            pos_y = 12,
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.center,
         },
@@ -394,8 +394,8 @@ function this.Define_UseCustomWallHang(const)
 
         position =
         {
-            pos_x = -180 / const.em,
-            pos_y = -120 / const.em,
+            pos_x = -180,
+            pos_y = -120,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -468,7 +468,7 @@ function this.Define_BindButtons_Summary(relative_to, name, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 18 / const.em,
+            pos_y = 18,
 
             relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
@@ -477,8 +477,8 @@ function this.Define_BindButtons_Summary(relative_to, name, const)
             vertical = const.alignment_vertical.top,
         },
 
-        min_width = 80 / const.em,
-        min_height = 20 / const.em,
+        min_width = 80,
+        min_height = 20,
 
         -- Refresh will either populate the header or the unused
 
@@ -495,8 +495,8 @@ function this.Define_BindButtons_Remove(relative_to, name, const)
         {
             relative_to = relative_to,
 
-            pos_x = -8 / const.em,
-            pos_y = -8 / const.em,
+            pos_x = -8,
+            pos_y = -8,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -521,7 +521,7 @@ function this.Define_BindButtons_SummaryHoverLabel(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 18 / const.em,
+            pos_y = 18,
 
             relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
@@ -546,7 +546,7 @@ function this.Define_BindButtons_RemoveHoverLabel(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 18 / const.em,
+            pos_y = 18,
 
             relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
@@ -603,7 +603,7 @@ function this.Define_RestoreDefaults(vars_ui, const)
     {
         text = "Restore Defaults",
 
-        width_override = 140 / const.em,
+        width_override = 140,
 
         position =
         {
@@ -646,8 +646,8 @@ function this.Define_Instruction1(const)
 
         position =
         {
-            pos_x = -140 / const.em,
-            pos_y = -110 / const.em,
+            pos_x = -140,
+            pos_y = -110,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -665,8 +665,8 @@ function this.Define_Instruction2(const)
 
         position =
         {
-            pos_x = -140 / const.em,
-            pos_y = -30 / const.em,
+            pos_x = -140,
+            pos_y = -30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -685,8 +685,8 @@ function this.Define_CancelBind(const)
 
         position =
         {
-            pos_x = -140 / const.em,
-            pos_y = 180 / const.em,
+            pos_x = -140,
+            pos_y = 180,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },

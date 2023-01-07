@@ -65,7 +65,7 @@ function this.Calculate_Sizes(def, style_text, line_heights, const)
         if def.text then
             width = ImGui.CalcTextSize(def.text)
         else
-            width = (12 / const.em) * em
+            width = 12 * em
         end
 
         -- Grow if min_width says to

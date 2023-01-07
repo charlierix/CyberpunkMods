@@ -20,8 +20,8 @@ function Refresh_WindowPos(configWindow, vars_ui, const)
     configWindow.left = curLeft
     configWindow.top = curTop
 
-    configWindow.width = (800 / const.em) * vars_ui.em
-    configWindow.height = (600 / const.em) * vars_ui.em
+    configWindow.width = 800 * vars_ui.em
+    configWindow.height = 600 * vars_ui.em
 end
 function Refresh_LineHeights(vars_ui, const, is_from_init)
     if not vars_ui.line_heights then
@@ -29,9 +29,9 @@ function Refresh_LineHeights(vars_ui, const, is_from_init)
     end
 
     if is_from_init then
-        vars_ui.line_heights.line = const.em    --18        -- just using some reasonable results until the real call from draw event
+        vars_ui.line_heights.line = 18        -- just using some reasonable results until the real call from draw event
         vars_ui.line_heights.gap = 4
-        vars_ui.line_heights.frame_height = const.em + 6    --24
+        vars_ui.line_heights.frame_height = 24
     else
         vars_ui.line_heights.line = ImGui.GetTextLineHeight()       -- 18 (36 on 4k)
         vars_ui.line_heights.gap = ImGui.GetTextLineHeightWithSpacing() - vars_ui.line_heights.line     -- 22 (44 on 4k)
