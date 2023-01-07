@@ -13,9 +13,9 @@
 
     "textbox":
     {
-        "padding": 0.33333,
+        "padding": 6,
 
-        "border_cornerRadius": 0.11111,
+        "border_cornerRadius": 2,
         "border_thickness": 1,
     
         "border_color": "24505050",
@@ -42,7 +42,7 @@
 
     "slider":
     {
-        "border_cornerRadius": 0.11111,
+        "border_cornerRadius": 2,
         "border_thickness": 1,
 
         "border_color": "38606060",
@@ -61,10 +61,10 @@
 
     "button":
     {
-        "width": 4,
-        "height": 2,
+        "width": 72,
+        "height": 36,
 
-        "border_cornerRadius": 0.33333,
+        "border_cornerRadius": 6,
         "border_thickness": 2,
 
         "border_color": "888",
@@ -78,15 +78,15 @@
 
     "okcancelButtons":
     {
-        "pos_x": 1.33333,
-        "pos_y": 1.33333,
+        "pos_x": 24,
+        "pos_y": 24,
 
-        "width": 4,
-        "height": 2,
+        "width": 72,
+        "height": 36,
 
-        "gap": 0.66667,
+        "gap": 12,
 
-        "border_cornerRadius": 0.33333,
+        "border_cornerRadius": 6,
         "border_thickness": 2,
 
         "border_color": "888",
@@ -100,7 +100,7 @@
 
     "summaryButton":
     {
-        "border_cornerRadius": 0.44444,
+        "border_cornerRadius": 8,
         "border_thickness": 2,
     
         "border_color_standard": "14808080",
@@ -109,32 +109,32 @@
         "background_color_standard": "10606060",
         "background_color_hover": "20A0A0A0",
     
-        "padding": 1.05556,
+        "padding": 19,
     
         "unused_color": "555",
         
         "header_color_prompt": "EEE",
         "header_color_value": "BBF",
-        "header_gap": 0.66667,
+        "header_gap": 12,
     
         "content_color_prompt": "888",
         "content_color_prompt_novalue": "555",
         "content_color_value": "AAE",
 
         "suffix_color": "882",
-        "suffix_gap": 0.44444,
+        "suffix_gap": 8,
 
-        "prompt_value_gap": 0.88889
+        "prompt_value_gap": 16
     },
 
     "updownButtons":
     {
-        "padding_horizontal": 0.27778,
-        "padding_vertical": 0.27778,
+        "padding_horizontal": 5,
+        "padding_vertical": 5,
 
-        "gap": 0.33333,
+        "gap": 6,
 
-        "border_cornerRadius": 0.16667,
+        "border_cornerRadius": 3,
         "border_thickness": 2,
 
         "border_color": "3666",
@@ -159,9 +159,9 @@
 
     "listbox":
     {
-        "padding": 0.33333,
+        "padding": 6,
 
-        "border_cornerRadius": 0.16667,
+        "border_cornerRadius": 3,
         "border_thickness": 1,
 
         "border_color": "40686868",
@@ -184,15 +184,15 @@
 
     "multiitem_displaylist":
     {
-        "padding": 0.66667,
+        "padding": 12,
 
-        "border_cornerRadius": 0.22222,
+        "border_cornerRadius": 4,
         "border_thickness": 1,
 
         "border_color": "40686868",
 
-        "separator_gap_vert": 1,
-        "separator_gap_horz": 0.66667,
+        "separator_gap_vert": 18,
+        "separator_gap_horz": 12,
         "separator_thickness": 1,
 
         "separator_color": "589C8F76",
@@ -203,15 +203,15 @@
 
     "progressbar_slim":
     {
-        "border_cornerRadius": 0.11111,
+        "border_cornerRadius": 2,
         "border_thickness": 2,
 
-        "height": 0.5
+        "height": 9
     },
 
     "helpButton":
     {
-        "radius": 0.38889,
+        "radius": 7,
         "border_thickness": 1,
 
         "foreground_color_standard": "40A1A1A1",
@@ -226,7 +226,7 @@
 
     "removeButton":
     {
-        "radius": 0.61111,
+        "radius": 11,
 
         "border_thickness": 1,
         "x_thickness": 2,
@@ -243,10 +243,10 @@
 
     "tooltip":
     {
-        "max_width": 24,
-        "padding": 0.5,
+        "max_width": 432,
+        "padding": 9,
 
-        "border_cornerRadius": 0.16667,
+        "border_cornerRadius": 3,
         "border_thickness": 2,
 
         "text_color": "B5B098",
