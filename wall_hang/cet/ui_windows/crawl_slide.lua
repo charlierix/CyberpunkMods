@@ -77,40 +77,40 @@ function DrawWindow_CrawlSlide(isCloseRequested, vars_ui, window, const, player,
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(crawl_slide.render_nodes, vars_ui.style, vars_ui.line_heights)
-    CalculatePositions(crawl_slide.render_nodes, window.width, window.height, const)
+    CalculateSizes(crawl_slide.render_nodes, vars_ui.style, const, vars_ui.line_heights)
+    CalculatePositions(crawl_slide.render_nodes, window.width, window.height, const, vars_ui.em)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(crawl_slide.title, vars_ui.style.colors)
+    Draw_Label(crawl_slide.title, vars_ui.style.colors, vars_ui.em)
 
-    Draw_Label(crawl_slide.slide_label, vars_ui.style.colors)
-    Draw_HelpButton(crawl_slide.slide_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_Label(crawl_slide.slide_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(crawl_slide.slide_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
-    Draw_Label(crawl_slide.slide_speed_label, vars_ui.style.colors)
-    Draw_HelpButton(crawl_slide.slide_speed_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
-    Draw_Slider(crawl_slide.slide_speed, vars_ui.style.slider)
+    Draw_Label(crawl_slide.slide_speed_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(crawl_slide.slide_speed_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Slider(crawl_slide.slide_speed, vars_ui.style.slider, vars_ui.em)
 
-    Draw_Label(crawl_slide.slide_drag_label, vars_ui.style.colors)
-    Draw_HelpButton(crawl_slide.slide_drag_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
-    Draw_Slider(crawl_slide.slide_drag, vars_ui.style.slider)
+    Draw_Label(crawl_slide.slide_drag_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(crawl_slide.slide_drag_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Slider(crawl_slide.slide_drag, vars_ui.style.slider, vars_ui.em)
 
-    Draw_Label(crawl_slide.crawl_label, vars_ui.style.colors)
-    Draw_HelpButton(crawl_slide.crawl_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_Label(crawl_slide.crawl_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(crawl_slide.crawl_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
-    Draw_Label(crawl_slide.crawl_horz_label, vars_ui.style.colors)
-    Draw_HelpButton(crawl_slide.crawl_horz_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
-    Draw_Slider(crawl_slide.crawl_horz, vars_ui.style.slider)
+    Draw_Label(crawl_slide.crawl_horz_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(crawl_slide.crawl_horz_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Slider(crawl_slide.crawl_horz, vars_ui.style.slider, vars_ui.em)
 
-    Draw_Label(crawl_slide.crawl_up_label, vars_ui.style.colors)
-    Draw_HelpButton(crawl_slide.crawl_up_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
-    Draw_Slider(crawl_slide.crawl_up, vars_ui.style.slider)
+    Draw_Label(crawl_slide.crawl_up_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(crawl_slide.crawl_up_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Slider(crawl_slide.crawl_up, vars_ui.style.slider, vars_ui.em)
 
-    Draw_Label(crawl_slide.crawl_down_label, vars_ui.style.colors)
-    Draw_HelpButton(crawl_slide.crawl_down_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
-    Draw_Slider(crawl_slide.crawl_down, vars_ui.style.slider)
+    Draw_Label(crawl_slide.crawl_down_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(crawl_slide.crawl_down_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Slider(crawl_slide.crawl_down, vars_ui.style.slider, vars_ui.em)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(crawl_slide.okcancel, vars_ui.style.okcancelButtons)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(crawl_slide.okcancel, vars_ui.style.okcancelButtons, vars_ui.em)
     if isOKClicked then
         this.Save(player, player_arcade, crawl_slide.slide_speed, crawl_slide.slide_drag, crawl_slide.crawl_horz, crawl_slide.crawl_up, crawl_slide.crawl_down)
         TransitionWindows_Main(vars_ui, const)

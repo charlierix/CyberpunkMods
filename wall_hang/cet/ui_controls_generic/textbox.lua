@@ -3,12 +3,12 @@ local this = {}
 -- def is models\viewmodels\TextBox
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_TextBox(def, style, line_heights)
+function CalcSize_TextBox(def, style, const, line_heights)
 	if not def.sizes then
         def.sizes = {}
     end
 
-    this.Calculate_Sizes(def, style.textbox, line_heights)
+    this.Calculate_Sizes(def, style.textbox, line_heights, const)
 
     def.render_pos.width = def.sizes.width
     def.render_pos.height = def.sizes.height
@@ -18,10 +18,10 @@ end
 -- def is models\viewmodels\TextBox
 -- style_text is models\stylesheet\TextBox
 -- style_colors is stylesheet.colors
-function Draw_TextBox(def, style_text, style_colors)
-    ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_text.border_cornerRadius)
+function Draw_TextBox(def, style_text, style_colors, em)
+    ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_text.border_cornerRadius * em)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_text.border_thickness)
-    ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, style_text.padding, style_text.padding)
+    ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, style_text.padding * em, style_text.padding * em)
 
 	ImGui.PushStyleColor(ImGuiCol.NavHighlight, 0x00000000)
     ImGui.PushStyleColor(ImGuiCol.Border, style_text.border_color_abgr)
@@ -51,41 +51,43 @@ end
 
 ------------------------------------------- Private Methods -------------------------------------------
 
-function this.Calculate_Sizes(def, style_text, line_heights)
+function this.Calculate_Sizes(def, style_text, line_heights, const)
+    local em = line_heights.line
+
     -- Width
     local width = nil
     if def.width then
         -- An fixed width is defined
-        width = def.width
+        width = def.width * em
 
     else
         -- No fixed width, see how wide the text is
         if def.text then
             width = ImGui.CalcTextSize(def.text)
         else
-            width = 12
+            width = (12 / const.em) * em
         end
 
         -- Grow if min_width says to
-        if def.min_width and def.min_width > width then
-            width = def.min_width
+        if def.min_width and (def.min_width * em) > width then
+            width = def.min_width * em
         end
 
         -- Shrink if larger than max
-        if def.max_width and width > def.max_width then
-            width = def.max_width
+        if def.max_width and width > (def.max_width * em) then
+            width = def.max_width * em
         end
     end
 
     -- Height
-    local height = def.height
+    local height = def.height * em
     if not def.isMultiLine then
         height = line_heights.line
     end
 
     -- Store values
-	def.sizes.width = width + (style_text.padding * 2)
-	def.sizes.height = height + (style_text.padding * 2)
+	def.sizes.width = width + ((style_text.padding * 2) * em)
+	def.sizes.height = height + ((style_text.padding * 2) * em)
 end
 
 function this.GetForeground_int(def, style_text, style_colors)

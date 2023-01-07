@@ -61,29 +61,29 @@ function DrawWindow_Jumping(isCloseRequested, vars_ui, window, const, player, pl
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(jumping.render_nodes, vars_ui.style, vars_ui.line_heights)
-    CalculatePositions(jumping.render_nodes, window.width, window.height, const)
+    CalculateSizes(jumping.render_nodes, vars_ui.style, const, vars_ui.line_heights)
+    CalculatePositions(jumping.render_nodes, window.width, window.height, const, vars_ui.em)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(jumping.title, vars_ui.style.colors)
+    Draw_Label(jumping.title, vars_ui.style.colors, vars_ui.em)
 
-    Draw_Label(jumping.strength_label, vars_ui.style.colors)
-    Draw_HelpButton(jumping.strength_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
-    Draw_Slider(jumping.strength, vars_ui.style.slider)
+    Draw_Label(jumping.strength_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(jumping.strength_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Slider(jumping.strength, vars_ui.style.slider, vars_ui.em)
 
-    Draw_Label(jumping.speed_label, vars_ui.style.colors)
-    Draw_HelpButton(jumping.speed_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_Label(jumping.speed_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(jumping.speed_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
-    Draw_Label(jumping.speed_full_label, vars_ui.style.colors)
-    Draw_HelpButton(jumping.speed_full_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
-    Draw_Slider(jumping.speed_full, vars_ui.style.slider)
+    Draw_Label(jumping.speed_full_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(jumping.speed_full_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Slider(jumping.speed_full, vars_ui.style.slider, vars_ui.em)
 
-    Draw_Label(jumping.speed_zero_label, vars_ui.style.colors)
-    Draw_HelpButton(jumping.speed_zero_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
-    Draw_Slider(jumping.speed_zero, vars_ui.style.slider)
+    Draw_Label(jumping.speed_zero_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(jumping.speed_zero_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Slider(jumping.speed_zero, vars_ui.style.slider, vars_ui.em)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(jumping.okcancel, vars_ui.style.okcancelButtons)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(jumping.okcancel, vars_ui.style.okcancelButtons, vars_ui.em)
     if isOKClicked then
         this.Save(player, player_arcade, jumping.strength, jumping.speed_full, jumping.speed_zero)
         TransitionWindows_Main(vars_ui, const)

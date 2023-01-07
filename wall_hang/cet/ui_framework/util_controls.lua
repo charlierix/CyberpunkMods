@@ -118,11 +118,11 @@ function Draw_Tooltip(text, style_tooltip, screen_x, screen_y, notouch_halfwidth
     -- tooltip steals focus).  The bool will get set to false each following frame
     vars_ui.isTooltipShowing = true
 
-    local width, height = this.GetTooltip_Size(text, style_tooltip.max_width, style_tooltip.padding)
+    local width, height = this.GetTooltip_Size(text, style_tooltip.max_width * vars_ui.em, style_tooltip.padding * vars_ui.em)
 
     local screen_left, screen_top = this.GetTooltip_Position(width, height, screen_x, screen_y, notouch_halfwidth, notouch_halfheight, vars_ui.screen)
 
-    ImGui.PushStyleVar(ImGuiStyleVar.WindowRounding, style_tooltip.border_cornerRadius)
+    ImGui.PushStyleVar(ImGuiStyleVar.WindowRounding, style_tooltip.border_cornerRadius * vars_ui.em)
     ImGui.PushStyleVar(ImGuiStyleVar.WindowBorderSize, style_tooltip.border_thickness)
 
     ImGui.PushStyleColor(ImGuiCol.Text, style_tooltip.text_color_abgr)
@@ -133,8 +133,8 @@ function Draw_Tooltip(text, style_tooltip, screen_x, screen_y, notouch_halfwidth
     ImGui.SetNextWindowSize(width, height, ImGuiCond.Always)
 
     if (ImGui.Begin("tooltip", true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoScrollbar)) then
-        ImGui.SetCursorPos(style_tooltip.padding, style_tooltip.padding)
-        ImGui.PushTextWrapPos(width - style_tooltip.padding)
+        ImGui.SetCursorPos(style_tooltip.padding * vars_ui.em, style_tooltip.padding * vars_ui.em)
+        ImGui.PushTextWrapPos(width - (style_tooltip.padding * vars_ui.em))
 
         ImGui.Text(text)
     end

@@ -3,15 +3,15 @@ local this = {}
 -- def is models\viewmodels\LabelClickable
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_LabelClickable(def, style, line_heights)
+function CalcSize_LabelClickable(def, style, const, line_heights)
 	if not def.sizes then
         def.sizes = {}
     end
 
-    this.Calculate_Sizes(def, style.textbox)
+    this.Calculate_Sizes(def, style.textbox, line_heights.line)
 
-    def.render_pos.width = def.sizes.width
-    def.render_pos.height = def.sizes.height
+    def.render_pos.width = def.sizes.width * line_heights.line
+    def.render_pos.height = def.sizes.height * line_heights.line
 end
 
 -- Shows a wordwrapped label that is made to look like a textbox, but acts like a button.  If the user
@@ -21,20 +21,20 @@ end
 -- style_text is models\stylesheet\TextBox
 -- style_colors is stylesheet.colors
 -- Returns isClicked
-function Draw_LabelClickable(def, style_text, style_colors, screenOffset_x, screenOffset_y)
+function Draw_LabelClickable(def, style_text, style_colors, screenOffset_x, screenOffset_y, em)
     local left = def.render_pos.left
     local top = def.render_pos.top
 
     -- Invisible Button
-    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width_text, def.sizes.height_text, style_text.padding)
+    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width_text, def.sizes.height_text, style_text.padding * em)
 
     -- Border (regular textbox doesn't have a hover color, so this won't either)
-    Draw_Border(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width_text, def.sizes.height_text, style_text.padding, isHovered, style_text.background_color_argb, style_text.background_color_argb, style_text.border_color_argb, style_text.border_color_argb, style_text.border_cornerRadius, style_text.border_thickness)
+    Draw_Border(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width_text, def.sizes.height_text, style_text.padding * em, isHovered, style_text.background_color_argb, style_text.background_color_argb, style_text.border_color_argb, style_text.border_color_argb, style_text.border_cornerRadius * em, style_text.border_thickness)
 
     -- Draw the text
-    ImGui.SetCursorPos(left + style_text.padding, top + style_text.padding)
+    ImGui.SetCursorPos(left + (style_text.padding * em), top + (style_text.padding * em))
 
-    ImGui.PushTextWrapPos(left + style_text.padding + def.max_width)
+    ImGui.PushTextWrapPos(left + ((style_text.padding + def.max_width) * em))
     ImGui.PushStyleColor(ImGuiCol.Text, this.GetForeground_int(def, style_text, style_colors))
 
     ImGui.Text(def.text)
@@ -47,12 +47,12 @@ end
 
 ------------------------------------------- Private Methods -------------------------------------------
 
-function this.Calculate_Sizes(def, style_text)
+function this.Calculate_Sizes(def, style_text, em)
     local width_text, height_text = ImGui.CalcTextSize(def.text, false, def.max_width)
 
     -- Store values
-	def.sizes.width = width_text + (style_text.padding * 2)
-	def.sizes.height = height_text + (style_text.padding * 2)
+	def.sizes.width = width_text + ((style_text.padding * 2) * em)
+	def.sizes.height = height_text + ((style_text.padding * 2) * em)
 
     def.sizes.center_x = def.sizes.width / 2
     def.sizes.center_y = def.sizes.height / 2

@@ -3,15 +3,15 @@ local this = {}
 -- def is models\viewmodels\SummaryButton
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_SummaryButton(def, style, line_heights)
+function CalcSize_SummaryButton(def, style, const, line_heights)
     if not def.sizes then
         def.sizes = {}
     end
 
-    this.Calculate_UsedWidth(def, style.summaryButton)
+    this.Calculate_UsedWidth(def, style.summaryButton, line_heights.line)
     this.Calculate_UsedHeight(def, line_heights, style.summaryButton)
 
-    local padpad = style.summaryButton.padding * 2
+    local padpad = (style.summaryButton.padding * 2) * line_heights.line
 
     def.render_pos.width = def.sizes.horz_final + padpad
     def.render_pos.height = def.sizes.vert_final + padpad
@@ -24,18 +24,20 @@ end
 -- style_summary is models\stylesheet\SummaryButton
 -- Returns isClicked, isHovered
 function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, screenOffset_y)
-    local center_x = def.render_pos.left + style_summary.padding + (def.sizes.horz_final / 2)
-    local center_y = def.render_pos.top + style_summary.padding + (def.sizes.vert_final / 2)
+    local em = line_heights.line
+
+    local center_x = def.render_pos.left + (style_summary.padding * em) + (def.sizes.horz_final / 2)
+    local center_y = def.render_pos.top + (style_summary.padding * em) + (def.sizes.vert_final / 2)
 
     -- Invisible Button
-    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding)
+    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding * em)
 
     -- Border
-    local cornerRadius = style_summary.border_cornerRadius
+    local cornerRadius = style_summary.border_cornerRadius * em
     if def.border_cornerRadius_override then
-        cornerRadius = def.border_cornerRadius_override
+        cornerRadius = def.border_cornerRadius_override * em
     end
-    Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding, isHovered, style_summary.background_color_standard_argb, style_summary.background_color_hover_argb, style_summary.border_color_standard_argb, style_summary.border_color_hover_argb, cornerRadius, style_summary.border_thickness)
+    Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding * em, isHovered, style_summary.background_color_standard_argb, style_summary.background_color_hover_argb, style_summary.border_color_standard_argb, style_summary.border_color_hover_argb, cornerRadius, style_summary.border_thickness)
 
     -- Place the text
     this.Draw_Unused(def, line_heights, style_summary, center_x, center_y)
@@ -48,7 +50,7 @@ end
 
 ------------------------------------------- Private Methods -------------------------------------------
 
-function this.Calculate_UsedWidth(def, style_summary)
+function this.Calculate_UsedWidth(def, style_summary, em)
     local unused = 0
     local h_p = 0
     local h_g = 0
@@ -62,12 +64,12 @@ function this.Calculate_UsedWidth(def, style_summary)
         unused = ImGui.CalcTextSize(def.unused_text)
     else
         -- Header
-        h_p, h_g, h_v = this.Calculate_UsedWidth_PromptValue(def.header_prompt, def.header_value, style_summary.prompt_value_gap)
+        h_p, h_g, h_v = this.Calculate_UsedWidth_PromptValue(def.header_prompt, def.header_value, style_summary.prompt_value_gap * em)
 
         -- Content
         if def.content then
             for _, content in pairs(def.content) do
-                local p, g, v = this.Calculate_UsedWidth_PromptValue(content.prompt, content.value, style_summary.prompt_value_gap)
+                local p, g, v = this.Calculate_UsedWidth_PromptValue(content.prompt, content.value, style_summary.prompt_value_gap * em)
 
                 c_p = math.max(c_p, p)
                 c_g = math.max(c_g, g)
@@ -92,8 +94,8 @@ function this.Calculate_UsedWidth(def, style_summary)
     )
 
     local expadedByMinWidth = false
-    if def.min_width and def.min_width > final then
-        final = def.min_width
+    if def.min_width and (def.min_width * em) > final then
+        final = def.min_width * em
         expadedByMinWidth = true
     end
 
@@ -308,7 +310,7 @@ function this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
     end
 
     if def.header_prompt and def.header_value then
-        left = left + def.sizes.horz_header_prompt + style_summary.prompt_value_gap
+        left = left + def.sizes.horz_header_prompt + (style_summary.prompt_value_gap * line_heights.line)
         ImGui.SetCursorPos(left, top)
     end
 
@@ -347,7 +349,7 @@ function this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
         top = center_y - (def.sizes.vert_final / 2)
         if (def.header_prompt or def.header_value) then
             top = top + line_heights.line
-            top = top + style_summary.header_gap
+            top = top + (style_summary.header_gap * line_heights.line)
         end
     end
 

@@ -3,9 +3,9 @@ local this = {}
 -- def is models\viewmodels\MultiItemDisplayList
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_MultiItemDisplayList(def, style, line_heights)
-    def.render_pos.width = def.width
-    def.render_pos.height = def.height
+function CalcSize_MultiItemDisplayList(def, style, const, line_heights)
+    def.render_pos.width = def.width * line_heights.line
+    def.render_pos.height = def.height * line_heights.line
 end
 
 -- This shows a readonly list of items
@@ -15,13 +15,15 @@ function Draw_MultiItemDisplayList(def, style_list, screenOffset_x, screenOffset
     local left = def.render_pos.left
     local top = def.render_pos.top
 
+    local em = line_heights.line
+
     -- Border
-    Draw_Border(screenOffset_x, screenOffset_y, left + (def.width / 2), top + (def.height / 2), def.width, def.height, 0, false, style_list.background_color_argb, nil, style_list.border_color_argb, nil, style_list.border_cornerRadius, style_list.border_thickness)
+    Draw_Border(screenOffset_x, screenOffset_y, left + ((def.width / 2) * em), top + ((def.height / 2) * em), def.width * em, def.height * em, 0, false, style_list.background_color_argb, nil, style_list.border_color_argb, nil, style_list.border_cornerRadius * line_heights.line, style_list.border_thickness)
 
     -- Sets
     ImGui.PushStyleColor(ImGuiCol.Text, style_list.foreground_color_abgr)
 
-    local y_offset = style_list.padding
+    local y_offset = style_list.padding * em
     local isFirstSet = true
 
     for _, setKey in ipairs(def.sets_keys) do       -- sets_keys is sorted
@@ -29,13 +31,13 @@ function Draw_MultiItemDisplayList(def, style_list, screenOffset_x, screenOffset
             isFirstSet = false
         else
             -- Draw divider line
-            y_offset = y_offset + style_list.separator_gap_vert
-            Draw_Line(screenOffset_x, screenOffset_y, left + style_list.padding + style_list.separator_gap_horz, top + y_offset, left + def.width - style_list.padding - style_list.separator_gap_horz, top + y_offset, style_list.separator_color_abgr, style_list.separator_thickness)
-            y_offset = y_offset + style_list.separator_gap_vert
+            y_offset = y_offset + (style_list.separator_gap_vert * em)
+            Draw_Line(screenOffset_x, screenOffset_y, left + ((style_list.padding + style_list.separator_gap_horz) * em), top + y_offset, left + ((def.width - style_list.padding - style_list.separator_gap_horz) * em), top + y_offset, style_list.separator_color_abgr, style_list.separator_thickness)
+            y_offset = y_offset + (style_list.separator_gap_vert * em)
         end
 
         -- Items in this set
-        ImGui.SetCursorPos(left + style_list.padding, top + y_offset)
+        ImGui.SetCursorPos(left + (style_list.padding * em), top + y_offset)
         ImGui.BeginGroup()      -- new lines stay at the same x value instead of going to zero
 
         for _, item in ipairs(def.items_sorted[setKey]) do       -- this is sorted

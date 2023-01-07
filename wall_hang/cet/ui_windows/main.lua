@@ -89,14 +89,14 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(main.render_nodes, vars_ui.style, vars_ui.line_heights)
-    CalculatePositions(main.render_nodes, window.width, window.height, const)
+    CalculateSizes(main.render_nodes, vars_ui.style, const, vars_ui.line_heights)
+    CalculatePositions(main.render_nodes, window.width, window.height, const, vars_ui.em)
 
     -------------------------------- Show ui elements --------------------------------
 
-    --Draw_Label(main.title, vars_ui.style.colors)
+    --Draw_Label(main.title, vars_ui.style.colors, vars_ui.em)
 
-    Draw_Label(main.consoleWarning, vars_ui.style.colors)
+    Draw_Label(main.consoleWarning, vars_ui.style.colors, vars_ui.em)
 
     if Draw_CheckBox(main.should_autoshow, vars_ui.style.checkbox, vars_ui.style.colors) then
         this.Update_ShouldAutoShow(main.should_autoshow, vars_ui, const)
@@ -107,18 +107,18 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
     end
 
     Draw_CheckBox(main.latch_wallhang, vars_ui.style.checkbox, vars_ui.style.colors)
-    Draw_HelpButton(main.latch_wallhang_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_HelpButton(main.latch_wallhang_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     Draw_CheckBox(main.jump_backward, vars_ui.style.checkbox, vars_ui.style.colors)
-    Draw_HelpButton(main.jump_backward_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_HelpButton(main.jump_backward_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
-    Draw_Label(main.mouse_sensitivity_label, vars_ui.style.colors)
-    Draw_HelpButton(main.mouse_sensitivity_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
-    Draw_Slider(main.mouse_sensitivity, vars_ui.style.slider)
+    Draw_Label(main.mouse_sensitivity_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(main.mouse_sensitivity_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Slider(main.mouse_sensitivity, vars_ui.style.slider, vars_ui.em)
 
-    Draw_Label(main.rightstick_sensitivity_label, vars_ui.style.colors)
-    Draw_HelpButton(main.rightstick_sensitivity_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
-    Draw_Slider(main.rightstick_sensitivity, vars_ui.style.slider)
+    Draw_Label(main.rightstick_sensitivity_label, vars_ui.style.colors, vars_ui.em)
+    Draw_HelpButton(main.rightstick_sensitivity_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Slider(main.rightstick_sensitivity, vars_ui.style.slider, vars_ui.em)
 
     if Draw_SummaryButton(main.jumping, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
         TransitionWindows_Jumping(vars_ui, const)
@@ -132,7 +132,7 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
         TransitionWindows_WallAttraction(vars_ui, const)
     end
 
-    local isOKClicked, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons)
+    local isOKClicked, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, vars_ui.em)
     if isOKClicked then
         this.Save(main.latch_wallhang, main.jump_backward, main.mouse_sensitivity, main.rightstick_sensitivity, const)
     end
