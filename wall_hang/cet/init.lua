@@ -200,6 +200,8 @@ local vars_ui =
     --configWindow  -- info about the location of the config window -- see Define_ConfigWindow()
     --line_heights  -- the height of strings -- see Refresh_LineHeights()
 
+    scale = 1,      -- control and window sizes are defined in pixels, then get multiplied by scale at runtime.  CET may adjust scale on non 1920x1080 monitors to give a consistent relative size, but higher resolution
+
     --autoshow_withconsole      -- bool that tells whether config shows the same time as the cet console, or requires a separate hotkey
 
     isTooltipShowing = false,       -- the tooltip is actually a sub window.  This is needed so the parent window's titlebar can stay the active color

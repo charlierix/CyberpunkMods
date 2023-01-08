@@ -65,31 +65,31 @@ function DrawWindow_WallAttraction(isCloseRequested, vars_ui, window, const, pla
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(wall_attraction.render_nodes, vars_ui.style, const, vars_ui.line_heights)
-    CalculatePositions(wall_attraction.render_nodes, window.width, window.height, const, vars_ui.em)
+    CalculateSizes(wall_attraction.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
+    CalculatePositions(wall_attraction.render_nodes, window.width, window.height, const, vars_ui.scale)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(wall_attraction.title, vars_ui.style.colors, vars_ui.em)
+    Draw_Label(wall_attraction.title, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(wall_attraction.title_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
-    Draw_Label(wall_attraction.max_dist_label, vars_ui.style.colors, vars_ui.em)
+    Draw_Label(wall_attraction.max_dist_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(wall_attraction.max_dist_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
-    Draw_Slider(wall_attraction.max_dist, vars_ui.style.slider, vars_ui.em)
+    Draw_Slider(wall_attraction.max_dist, vars_ui.style.slider, vars_ui.scale)
 
-    Draw_Label(wall_attraction.accel_label, vars_ui.style.colors, vars_ui.em)
+    Draw_Label(wall_attraction.accel_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(wall_attraction.accel_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
-    Draw_Slider(wall_attraction.accel, vars_ui.style.slider, vars_ui.em)
+    Draw_Slider(wall_attraction.accel, vars_ui.style.slider, vars_ui.scale)
 
-    Draw_Label(wall_attraction.pow_label, vars_ui.style.colors, vars_ui.em)
+    Draw_Label(wall_attraction.pow_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(wall_attraction.pow_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
-    Draw_Slider(wall_attraction.pow, vars_ui.style.slider, vars_ui.em)
+    Draw_Slider(wall_attraction.pow, vars_ui.style.slider, vars_ui.scale)
 
-    Draw_Label(wall_attraction.antigrav_label, vars_ui.style.colors, vars_ui.em)
+    Draw_Label(wall_attraction.antigrav_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(wall_attraction.antigrav_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
-    Draw_Slider(wall_attraction.antigrav, vars_ui.style.slider, vars_ui.em)
+    Draw_Slider(wall_attraction.antigrav, vars_ui.style.slider, vars_ui.scale)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(wall_attraction.okcancel, vars_ui.style.okcancelButtons, vars_ui.em)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(wall_attraction.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
         this.Save(player, player_arcade, wall_attraction.max_dist, wall_attraction.accel, wall_attraction.pow, wall_attraction.antigrav)
         TransitionWindows_Main(vars_ui, const)

@@ -3,14 +3,14 @@ local this = {}
 -- def is models\viewmodels\UpDownButtons
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_UpDownButtons(def, style, const, line_heights)
+function CalcSize_UpDownButtons(def, style, const, line_heights, scale)
 	if not def.sizes then
         def.sizes = {}
     end
 
     local text_down, text_up = this.FinalText(def)
 
-    this.Calculate_Sizes(def, style.updownButtons, text_down, text_up, line_heights.line)
+    this.Calculate_Sizes(def, style.updownButtons, text_down, text_up, scale)
 
     def.render_pos.width = def.sizes.width
     def.render_pos.height = def.sizes.height
@@ -21,12 +21,12 @@ end
 -- style_updown is models\stylesheet\UpDownButtons
 -- Returns:
 --	isDownClicked, isUpClicked, isHovered
-function Draw_UpDownButtons(def, style_updown, em)
+function Draw_UpDownButtons(def, style_updown, scale)
 	-- Concatenate +- with model's text
     local text_down, text_up = this.FinalText(def)
 
 	-- Common properties
-    ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_updown.border_cornerRadius * em)
+    ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_updown.border_cornerRadius * scale)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_updown.border_thickness)
 
 	ImGui.PushStyleColor(ImGuiCol.NavHighlight, 0x00000000)
@@ -183,10 +183,10 @@ function this.FinalText(def)
     return text_down, text_up
 end
 
-function this.Calculate_Sizes(def, style_updown, text_down, text_up, em)
+function this.Calculate_Sizes(def, style_updown, text_down, text_up, scale)
 	-- Individual Sizes
-	local down_width, down_height = this.Calculate_Sizes_Single(text_down, style_updown, em)
-	local up_width, up_height = this.Calculate_Sizes_Single(text_up, style_updown, em)
+	local down_width, down_height = this.Calculate_Sizes_Single(text_down, style_updown, scale)
+	local up_width, up_height = this.Calculate_Sizes_Single(text_up, style_updown, scale)
 
 	-- The buttons need to be the same size, so take the larger values
 	local width = math.max(down_width, up_width)
@@ -207,11 +207,11 @@ function this.Calculate_Sizes(def, style_updown, text_down, text_up, em)
 	local height_final = height
 
 	if def.isHorizontal then
-		up_left = width + (style_updown.gap * em)		-- down gap up
-		width_final = (width * 2) + (style_updown.gap * em)
+		up_left = width + (style_updown.gap * scale)		-- down gap up
+		width_final = (width * 2) + (style_updown.gap * scale)
 	else
-		down_top = height + (style_updown.gap * em)		-- up gap down
-		height_final = (height * 2) + (style_updown.gap * em)
+		down_top = height + (style_updown.gap * scale)		-- up gap down
+		height_final = (height * 2) + (style_updown.gap * scale)
 	end
 
     -- Store values
@@ -223,12 +223,12 @@ function this.Calculate_Sizes(def, style_updown, text_down, text_up, em)
 	def.sizes.up_left = up_left
 	def.sizes.up_top = up_top
 
-	def.sizes.down_pad_h = (style_updown.padding_horizontal * em) + (down_width_extra / 2)
-	def.sizes.down_pad_v = (style_updown.padding_vertical * em) + (down_height_extra / 2)
-	def.sizes.up_pad_h = (style_updown.padding_horizontal * em) + (up_width_extra / 2)
-	def.sizes.up_pad_v = (style_updown.padding_vertical * em) + (up_height_extra / 2)
+	def.sizes.down_pad_h = (style_updown.padding_horizontal * scale) + (down_width_extra / 2)
+	def.sizes.down_pad_v = (style_updown.padding_vertical * scale) + (down_height_extra / 2)
+	def.sizes.up_pad_h = (style_updown.padding_horizontal * scale) + (up_width_extra / 2)
+	def.sizes.up_pad_v = (style_updown.padding_vertical * scale) + (up_height_extra / 2)
 end
-function this.Calculate_Sizes_Single(text, style_updown, em)
+function this.Calculate_Sizes_Single(text, style_updown, scale)
 	-- Ignoring border size, because it's more of an after effect.  Half the border thickness goes
 	-- into the button, half goes beyond the button.  Button placement ignores border size.  If
 	-- border thickness were extreme, it may need to get accounted for, but for standard sizes, it
@@ -236,8 +236,8 @@ function this.Calculate_Sizes_Single(text, style_updown, em)
 
     local width, height = ImGui.CalcTextSize(text)
 
-	width = width + ((style_updown.padding_horizontal * 2) * em) - 1
-	height = height + ((style_updown.padding_vertical * 2) * em)
+	width = width + ((style_updown.padding_horizontal * 2) * scale) - 1
+	height = height + ((style_updown.padding_vertical * 2) * scale)
 
 	return width, height
 end

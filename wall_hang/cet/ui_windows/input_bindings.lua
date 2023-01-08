@@ -88,21 +88,21 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, co
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(input_bindings.render_nodes, vars_ui.style, const, vars_ui.line_heights)
-    CalculatePositions(input_bindings.render_nodes, window.width, window.height, const, vars_ui.em)
+    CalculateSizes(input_bindings.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
+    CalculatePositions(input_bindings.render_nodes, window.width, window.height, const, vars_ui.scale)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(input_bindings.consoleWarning1, vars_ui.style.colors, vars_ui.em)
-    Draw_Label(input_bindings.consoleWarning2, vars_ui.style.colors, vars_ui.em)
+    Draw_Label(input_bindings.consoleWarning1, vars_ui.style.colors, vars_ui.scale)
+    Draw_Label(input_bindings.consoleWarning2, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_Label(input_bindings.help1_label, vars_ui.style.colors, vars_ui.em)
+    Draw_Label(input_bindings.help1_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(input_bindings.help1_button, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
-    Draw_Label(input_bindings.help2_label, vars_ui.style.colors, vars_ui.em)
+    Draw_Label(input_bindings.help2_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(input_bindings.help2_button, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
-    Draw_MultiItemDisplayList(input_bindings.watchedActions, vars_ui.style.multiitem_displaylist, window.left, window.top, vars_ui.line_heights)
+    Draw_MultiItemDisplayList(input_bindings.watchedActions, vars_ui.style.multiitem_displaylist, window.left, window.top, vars_ui.line_heights, vars_ui.scale)
 
     if setting_bind then
         -------------- Changing Binding --------------
@@ -117,10 +117,10 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, co
             vars_ui.keys:StopLatchingWatched()
         end
 
-        Draw_Label(input_bindings.instruction1, vars_ui.style.colors, vars_ui.em)
-        Draw_Label(input_bindings.instruction2, vars_ui.style.colors, vars_ui.em)
+        Draw_Label(input_bindings.instruction1, vars_ui.style.colors, vars_ui.scale)
+        Draw_Label(input_bindings.instruction2, vars_ui.style.colors, vars_ui.scale)
 
-        if Draw_Button(input_bindings.cancel_bind, vars_ui.style.button, vars_ui.em) then
+        if Draw_Button(input_bindings.cancel_bind, vars_ui.style.button, vars_ui.scale) then
             setting_bind = nil
         end
     else
@@ -140,8 +140,8 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, co
             end
 
             if shouldShow then
-                local summary_click, summary_hover = Draw_SummaryButton(current.summary, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
-                local remove_click, remove_hover = Draw_RemoveButton(current.remove, vars_ui.style.removeButton, window.left, window.top, vars_ui.em)
+                local summary_click, summary_hover = Draw_SummaryButton(current.summary, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale)
+                local remove_click, remove_hover = Draw_RemoveButton(current.remove, vars_ui.style.removeButton, window.left, window.top, vars_ui.scale)
 
                 if remove_hover then
                     this.Draw_Remove_Tooltip(current, vars_ui)
@@ -159,13 +159,13 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, co
             end
         end
 
-        if Draw_Button(input_bindings.restore_defaults, vars_ui.style.button, vars_ui.em) then
+        if Draw_Button(input_bindings.restore_defaults, vars_ui.style.button, vars_ui.scale) then
             this.RestoreDefaults(input_bindings.bind_buttons, const)
         end
     end
 
     -- OK/Cancel
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(input_bindings.okcancel, vars_ui.style.okcancelButtons, vars_ui.em)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(input_bindings.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
         --this.Save(input_bindings.bind_buttons, vars.startStopTracker, vars_ui.keys)
         this.Save(vars, const, input_bindings.usecustom_wallhang, input_bindings.bind_buttons, vars_ui.keys)
@@ -572,10 +572,10 @@ function this.Refresh_BindButtons_Summary(def, keys)
 end
 
 function this.Draw_Remove_Tooltip(current, vars_ui)
-    Draw_Label(current.remove_hover_label, vars_ui.style.colors, vars_ui.em)
+    Draw_Label(current.remove_hover_label, vars_ui.style.colors, vars_ui.scale)
 end
 function this.Draw_Summary_Tooltips(current, vars_ui, window)
-    Draw_Label(current.summary_hover_label, vars_ui.style.colors, vars_ui.em)
+    Draw_Label(current.summary_hover_label, vars_ui.style.colors, vars_ui.scale)
 
     local actionList = this.GetActionList(current, vars_ui.keys)
     if actionList then

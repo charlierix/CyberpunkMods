@@ -20,7 +20,7 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
---NOTE: this sets values in hardcoded pixels.  Every frame, width and height are updated based on em
+--NOTE: this sets values in hardcoded pixels.  Every frame, width and height are updated based on scale
 function this.Define_ConfigWindow(screen)
     local width = 800
     local height = 600

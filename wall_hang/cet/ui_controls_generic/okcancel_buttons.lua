@@ -3,14 +3,14 @@ local this = {}
 -- def is models\viewmodels\OkCancelButtons
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_OkCancelButtons(def, style, const, line_heights)
+function CalcSize_OkCancelButtons(def, style, const, line_heights, scale)
 	if not def.sizes then
         def.sizes = {}
     end
 
     local text_ok, text_cancel = this.GetText(def)
 
-    this.Calculate_Sizes(def, style.okcancelButtons, text_ok, text_cancel, line_heights.line)
+    this.Calculate_Sizes(def, style.okcancelButtons, text_ok, text_cancel, scale)
 
     def.render_pos.width = def.sizes.width
     def.render_pos.height = def.sizes.height
@@ -22,11 +22,11 @@ end
 -- Returns:
 --  isOKClicked         this is only true if two buttons are showing and they click OK (def.isDirty==true)
 --  isCancelClicked     this is true when they click the cancel button, or if there is a single button showing
-function Draw_OkCancelButtons(def, style_okcancel, em)
+function Draw_OkCancelButtons(def, style_okcancel, scale)
     local text_ok, text_cancel = this.GetText(def)
 
 	-- Common properties
-    ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_okcancel.border_cornerRadius * em)
+    ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_okcancel.border_cornerRadius * scale)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_okcancel.border_thickness)
 
     ImGui.PushStyleColor(ImGuiCol.Button, style_okcancel.back_color_standard_abgr)
@@ -83,7 +83,7 @@ function this.GetText(def)
     return ok, cancel
 end
 
-function this.Calculate_Sizes(def, style_okcancel, text_ok, text_cancel, em)
+function this.Calculate_Sizes(def, style_okcancel, text_ok, text_cancel, scale)
     -- Text Sizes
     local ok_width = 0
     local ok_height = 0
@@ -94,12 +94,12 @@ function this.Calculate_Sizes(def, style_okcancel, text_ok, text_cancel, em)
     local cancel_width, cancel_height = ImGui.CalcTextSize(text_cancel)
 
     -- Final Size
-    local width_final = style_okcancel.width * em
+    local width_final = style_okcancel.width * scale
     if def.isDirty then
-        width_final = (width_final * 2) + (style_okcancel.gap * em)
+        width_final = (width_final * 2) + (style_okcancel.gap * scale)
     end
 
-    local height_final = style_okcancel.height * em
+    local height_final = style_okcancel.height * scale
 
     -- Locations
     local ok_left = 0
@@ -108,7 +108,7 @@ function this.Calculate_Sizes(def, style_okcancel, text_ok, text_cancel, em)
     local cancel_top = 0
 
     if def.isDirty then
-        cancel_left = (style_okcancel.width + style_okcancel.gap) * em
+        cancel_left = (style_okcancel.width + style_okcancel.gap) * scale
     end
 
     -- Store values
@@ -120,8 +120,8 @@ function this.Calculate_Sizes(def, style_okcancel, text_ok, text_cancel, em)
 	def.sizes.cancel_left = cancel_left
 	def.sizes.cancel_top = cancel_top
 
-    def.sizes.ok_pad_h = ((style_okcancel.width * em) + 1 - ok_width) / 2
-	def.sizes.ok_pad_v = ((style_okcancel.height * em) - ok_height) / 2
-    def.sizes.cancel_pad_h = ((style_okcancel.width * em) + 1 - cancel_width) / 2
-	def.sizes.cancel_pad_v = ((style_okcancel.height * em) - cancel_height) / 2
+    def.sizes.ok_pad_h = ((style_okcancel.width * scale) + 1 - ok_width) / 2
+	def.sizes.ok_pad_v = ((style_okcancel.height * scale) - ok_height) / 2
+    def.sizes.cancel_pad_h = ((style_okcancel.width * scale) + 1 - cancel_width) / 2
+	def.sizes.cancel_pad_v = ((style_okcancel.height * scale) - cancel_height) / 2
 end

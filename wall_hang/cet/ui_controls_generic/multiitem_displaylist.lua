@@ -3,27 +3,25 @@ local this = {}
 -- def is models\viewmodels\MultiItemDisplayList
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_MultiItemDisplayList(def, style, const, line_heights)
-    def.render_pos.width = def.width * line_heights.line
-    def.render_pos.height = def.height * line_heights.line
+function CalcSize_MultiItemDisplayList(def, style, const, line_heights, scale)
+    def.render_pos.width = def.width * scale
+    def.render_pos.height = def.height * scale
 end
 
 -- This shows a readonly list of items
 -- def is models\viewmodels\MultiItemDisplayList
 -- style_list is models\stylesheet\MultiItemDisplayList
-function Draw_MultiItemDisplayList(def, style_list, screenOffset_x, screenOffset_y, line_heights)
+function Draw_MultiItemDisplayList(def, style_list, screenOffset_x, screenOffset_y, line_heights, scale)
     local left = def.render_pos.left
     local top = def.render_pos.top
 
-    local em = line_heights.line
-
     -- Border
-    Draw_Border(screenOffset_x, screenOffset_y, left + ((def.width / 2) * em), top + ((def.height / 2) * em), def.width * em, def.height * em, 0, false, style_list.background_color_argb, nil, style_list.border_color_argb, nil, style_list.border_cornerRadius * line_heights.line, style_list.border_thickness)
+    Draw_Border(screenOffset_x, screenOffset_y, left + ((def.width / 2) * scale), top + ((def.height / 2) * scale), def.width * scale, def.height * scale, 0, false, style_list.background_color_argb, nil, style_list.border_color_argb, nil, style_list.border_cornerRadius * line_heights.line, style_list.border_thickness)
 
     -- Sets
     ImGui.PushStyleColor(ImGuiCol.Text, style_list.foreground_color_abgr)
 
-    local y_offset = style_list.padding * em
+    local y_offset = style_list.padding * scale
     local isFirstSet = true
 
     for _, setKey in ipairs(def.sets_keys) do       -- sets_keys is sorted
@@ -31,13 +29,13 @@ function Draw_MultiItemDisplayList(def, style_list, screenOffset_x, screenOffset
             isFirstSet = false
         else
             -- Draw divider line
-            y_offset = y_offset + (style_list.separator_gap_vert * em)
-            Draw_Line(screenOffset_x, screenOffset_y, left + ((style_list.padding + style_list.separator_gap_horz) * em), top + y_offset, left + ((def.width - style_list.padding - style_list.separator_gap_horz) * em), top + y_offset, style_list.separator_color_abgr, style_list.separator_thickness)
-            y_offset = y_offset + (style_list.separator_gap_vert * em)
+            y_offset = y_offset + (style_list.separator_gap_vert * scale)
+            Draw_Line(screenOffset_x, screenOffset_y, left + ((style_list.padding + style_list.separator_gap_horz) * scale), top + y_offset, left + ((def.width - style_list.padding - style_list.separator_gap_horz) * scale), top + y_offset, style_list.separator_color_abgr, style_list.separator_thickness)
+            y_offset = y_offset + (style_list.separator_gap_vert * scale)
         end
 
         -- Items in this set
-        ImGui.SetCursorPos(left + (style_list.padding * em), top + y_offset)
+        ImGui.SetCursorPos(left + (style_list.padding * scale), top + y_offset)
         ImGui.BeginGroup()      -- new lines stay at the same x value instead of going to zero
 
         for _, item in ipairs(def.items_sorted[setKey]) do       -- this is sorted

@@ -9,7 +9,11 @@ function GetScreenInfo()
         height = height,
         center_x = width / 2,
         center_y = height / 2,
-        scale = math.min(width / 1920, height / 1080)
+
+        --TODO: This is what cet does, but that might just be a prerelease.  Once it's guaranteed that it's like this for everyone, uncomment
+        --and get rid of the font compare to infer scale (in Refresh_LineHeights)
+        --scale = math.min(width / 1920, height / 1080)
+        scale = 1,
     }
 end
 
@@ -20,8 +24,8 @@ function Refresh_WindowPos(configWindow, vars_ui, const)
     configWindow.left = curLeft
     configWindow.top = curTop
 
-    configWindow.width = 800 * vars_ui.em
-    configWindow.height = 600 * vars_ui.em
+    configWindow.width = 800 * vars_ui.scale
+    configWindow.height = 600 * vars_ui.scale
 end
 function Refresh_LineHeights(vars_ui, const, is_from_init)
     if not vars_ui.line_heights then
@@ -38,8 +42,8 @@ function Refresh_LineHeights(vars_ui, const, is_from_init)
         vars_ui.line_heights.frame_height = ImGui.GetFrameHeight()       -- 24 (48 on 4k)
     end
 
-    -- this will be used all over, so making the path shorter (also gives the option of making a small tweak if necessary)
-    vars_ui.em = vars_ui.line_heights.line
+    --TODO: Get rid of this and do the scale calculation in GetScreenInfo
+    vars_ui.scale = vars_ui.line_heights.line / 18
 end
 
 -- There may be a way to call that enum natively, but for now, just hardcode the int
@@ -99,11 +103,11 @@ end
 --  def = models\viewmodels\ControlPosition
 --  control_width, control_height = size of control
 --  parent_width, parent_height = size of parent window or div container
-function GetControlPosition(def, control_width, control_height, parent_width, parent_height, const, em)
+function GetControlPosition(def, control_width, control_height, parent_width, parent_height, const, scale)
     if def.relative_to then
-        return this.GetControlPosition_Relative(def, control_width, control_height, const, em)
+        return this.GetControlPosition_Relative(def, control_width, control_height, const, scale)
     else
-        return this.GetControlPosition_Absolute(def, control_width, control_height, parent_width, parent_height, const, em)
+        return this.GetControlPosition_Absolute(def, control_width, control_height, parent_width, parent_height, const, scale)
     end
 end
 
@@ -146,26 +150,26 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.GetControlPosition_Absolute(def, control_width, control_height, parent_width, parent_height, const, em)
+function this.GetControlPosition_Absolute(def, control_width, control_height, parent_width, parent_height, const, scale)
     -- Left
     local left = nil
 
     if def.horizontal then
         if def.horizontal == const.alignment_horizontal.left then
-            left = def.pos_x * em
+            left = def.pos_x * scale
 
         elseif def.horizontal == const.alignment_horizontal.center then
-            left = (parent_width / 2) - (control_width / 2) + (def.pos_x * em)
+            left = (parent_width / 2) - (control_width / 2) + (def.pos_x * scale)
 
         elseif def.horizontal == const.alignment_horizontal.right then
-            left = parent_width - control_width - (def.pos_x * em)
+            left = parent_width - control_width - (def.pos_x * scale)
 
         else
             print("GetControlPosition_Absolute: Unknown horizontal: " .. tostring(def.horizontal))
             left = 0
         end
     else
-        left = def.pos_x * em        -- default to left align
+        left = def.pos_x * scale        -- default to left align
     end
 
     -- Top
@@ -173,25 +177,25 @@ function this.GetControlPosition_Absolute(def, control_width, control_height, pa
 
     if def.vertical then
         if def.vertical == const.alignment_vertical.top then
-            top = def.pos_y * em
+            top = def.pos_y * scale
 
         elseif def.vertical == const.alignment_vertical.center then
-            top = (parent_height / 2) - (control_height / 2) + (def.pos_y * em)
+            top = (parent_height / 2) - (control_height / 2) + (def.pos_y * scale)
 
         elseif def.vertical == const.alignment_vertical.bottom then
-            top = parent_height - control_height - (def.pos_y * em)
+            top = parent_height - control_height - (def.pos_y * scale)
 
         else
             print("GetControlPosition_Absolute: Unknown vertical: " .. tostring(def.vertical))
             top = 0
         end
     else
-        top = def.pos_y * em     -- default to top align
+        top = def.pos_y * scale     -- default to top align
     end
 
     return left, top
 end
-function this.GetControlPosition_Relative(def, control_width, control_height, const, em)
+function this.GetControlPosition_Relative(def, control_width, control_height, const, scale)
     local parent_pos = def.relative_to.render_pos
 
     -- Left
@@ -214,13 +218,13 @@ function this.GetControlPosition_Relative(def, control_width, control_height, co
 
         -- Offset of this control's width
         if def.horizontal == const.alignment_horizontal.left then
-            left = left + (def.pos_x * em)
+            left = left + (def.pos_x * scale)
 
         elseif def.horizontal == const.alignment_horizontal.center then
-            left = left - (control_width / 2) + (def.pos_x * em)
+            left = left - (control_width / 2) + (def.pos_x * scale)
 
         elseif def.horizontal == const.alignment_horizontal.right then
-            left = left - control_width - (def.pos_x * em)
+            left = left - control_width - (def.pos_x * scale)
 
         else
             print("GetControlPosition_Relative: Unknown horizontal: " .. tostring(def.horizontal))
@@ -247,13 +251,13 @@ function this.GetControlPosition_Relative(def, control_width, control_height, co
 
         -- Offset of this control's width
         if def.vertical == const.alignment_vertical.top then
-            top = top + (def.pos_y * em)
+            top = top + (def.pos_y * scale)
 
         elseif def.vertical == const.alignment_vertical.center then
-            top = top - (control_height / 2) + (def.pos_y * em)
+            top = top - (control_height / 2) + (def.pos_y * scale)
 
         elseif def.vertical == const.alignment_vertical.bottom then
-            top = top - control_height - (def.pos_y * em)
+            top = top - control_height - (def.pos_y * scale)
 
         else
             print("GetControlPosition_Relative: Unknown vertical: " .. tostring(def.vertical))

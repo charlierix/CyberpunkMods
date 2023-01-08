@@ -5,9 +5,9 @@ local hint = "ctrl+click to type"
 -- def is models\viewmodels\Slider
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_Slider(def, style, const, line_heights)
-    def.render_pos.width = def.width * line_heights.line
-    def.render_pos.height = line_heights.line + (11 * line_heights.line)       -- just counted pixels
+function CalcSize_Slider(def, style, const, line_heights, scale)
+    def.render_pos.width = def.width * scale
+    def.render_pos.height = line_heights.line + (11 * scale)       -- just counted pixels
 end
 
 -- Shows a slider.  The value is persisted in def.value
@@ -15,14 +15,14 @@ end
 -- style_slider is models\stylesheet\Slider
 -- Returns
 --  wasChanged, isHovered
-function Draw_Slider(def, style_slider, em)
+function Draw_Slider(def, style_slider, scale)
     local width = def.render_pos.width
     local height = def.render_pos.height
     local left = def.render_pos.left
     local top = def.render_pos.top
 
     -- Draw the slider
-    ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_slider.border_cornerRadius * em)
+    ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_slider.border_cornerRadius * scale)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_slider.border_thickness)
 
     ImGui.PushStyleColor(ImGuiCol.Border, style_slider.border_color_abgr)

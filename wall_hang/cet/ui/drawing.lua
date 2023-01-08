@@ -63,8 +63,8 @@ end
 
 --https://stackoverflow.com/questions/26160327/sorting-a-lua-table-by-key
 function DrawDebugWindow(debugInfo, vars_ui, const)
-    ImGui.SetNextWindowPos(20 * vars_ui.em, 300 * vars_ui.em, ImGuiCond.FirstUseEver)
-    ImGui.SetNextWindowSize(300 * vars_ui.em, 400 * vars_ui.em, ImGuiCond.FirstUseEver)
+    ImGui.SetNextWindowPos(20 * vars_ui.scale, 300 * vars_ui.scale, ImGuiCond.FirstUseEver)
+    ImGui.SetNextWindowSize(300 * vars_ui.scale, 400 * vars_ui.scale, ImGuiCond.FirstUseEver)
 
     if (ImGui.Begin("Wall Hang Debug")) then
         local keys = {}
