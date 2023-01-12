@@ -40,7 +40,6 @@ function DefineWindow_Main(vars_ui, const)
     main.unlock_considered_label = this.Define_UnlockConsideredLabel(main.unlock_extra_label, const)
     main.unlock_considered_help = this.Define_UnlockConsideredHelp(main.unlock_considered_label, const)
 
-
     main.unlock_title = this.Define_UnlockTitle(main.unlock_note, const)
 
     main.unlock = this.Define_UnlockButton(main.unlock_grid, const)

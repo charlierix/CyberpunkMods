@@ -10,8 +10,8 @@ function CalcSize_LabelClickable(def, style, const, line_heights, scale)
 
     this.Calculate_Sizes(def, style.textbox, scale)
 
-    def.render_pos.width = def.sizes.width * scale
-    def.render_pos.height = def.sizes.height * scale
+    def.render_pos.width = def.sizes.width
+    def.render_pos.height = def.sizes.height
 end
 
 -- Shows a wordwrapped label that is made to look like a textbox, but acts like a button.  If the user
@@ -48,7 +48,7 @@ end
 ------------------------------------------- Private Methods -------------------------------------------
 
 function this.Calculate_Sizes(def, style_text, scale)
-    local width_text, height_text = ImGui.CalcTextSize(def.text, false, def.max_width)
+    local width_text, height_text = ImGui.CalcTextSize(def.text, false, def.max_width * scale)
 
     -- Store values
 	def.sizes.width = width_text + ((style_text.padding * 2) * scale)

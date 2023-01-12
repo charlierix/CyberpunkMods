@@ -6,11 +6,11 @@ function DefineWindow_GrappleStraight_Description(vars_ui, const)
 
     gst8_descr.changes = Changes:new()
 
-    gst8_descr.title = Define_Title("Grapple Straight - Aim Duration", const)
+    gst8_descr.title = Define_Title("Grapple Straight - Description", const)
 
     gst8_descr.name = Define_Name(const)
 
-    gst8_descr.description = this.Define_Description(const, vars_ui.configWindow.width, vars_ui.configWindow.height)
+    gst8_descr.description = this.Define_Description(const, vars_ui.configWindow.width / vars_ui.scale, vars_ui.configWindow.height / vars_ui.scale)        -- scale is already applied to config window, but is not applied in control definitions (those are multiplied by scale during draw)
 
 
     --TODO: Note explaining that wordwrap isn't supported by textbox
