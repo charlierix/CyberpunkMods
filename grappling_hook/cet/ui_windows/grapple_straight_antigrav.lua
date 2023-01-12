@@ -95,18 +95,18 @@ function DrawWindow_GrappleStraight_AntiGrav(isCloseRequested, vars_ui, player, 
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(gst8_antgrav.render_nodes, vars_ui.style, vars_ui.line_heights)
-    CalculatePositions(gst8_antgrav.render_nodes, window.width, window.height, const)
+    CalculateSizes(gst8_antgrav.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
+    CalculatePositions(gst8_antgrav.render_nodes, window.width, window.height, const, vars_ui.scale)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gst8_antgrav.title, vars_ui.style.colors)
+    Draw_Label(gst8_antgrav.title, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_Label(gst8_antgrav.name, vars_ui.style.colors)
+    Draw_Label(gst8_antgrav.name, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_StickFigure(gst8_antgrav.stickFigure, vars_ui.style.graphics, window.left, window.top)
-    Draw_GrappleArrows(gst8_antgrav.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
-    Draw_GrappleDesiredLength(gst8_antgrav.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+    Draw_StickFigure(gst8_antgrav.stickFigure, vars_ui.style.graphics, window.left, window.top, vars_ui.scale)
+    Draw_GrappleArrows(gst8_antgrav.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
+    Draw_GrappleDesiredLength(gst8_antgrav.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
 
     local wasChecked
     wasChecked, isHovered_has = Draw_CheckBox(gst8_antgrav.has_antigrav, vars_ui.style.checkbox, vars_ui.style.colors)
@@ -114,27 +114,27 @@ function DrawWindow_GrappleStraight_AntiGrav(isCloseRequested, vars_ui, player, 
         this.Update_HasAntiGrav(gst8_antgrav.has_antigrav, antigrav, changes, startedWithAG)
     end
 
-    Draw_HelpButton(gst8_antgrav.has_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_HelpButton(gst8_antgrav.has_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     if gst8_antgrav.has_antigrav.isChecked then
         -- Percent
-        Draw_Label(gst8_antgrav.percent_prompt, vars_ui.style.colors)
-        Draw_Label(gst8_antgrav.percent_value, vars_ui.style.colors)
+        Draw_Label(gst8_antgrav.percent_prompt, vars_ui.style.colors, vars_ui.scale)
+        Draw_Label(gst8_antgrav.percent_value, vars_ui.style.colors, vars_ui.scale)
 
         local isDownClicked, isUpClicked
-        isDownClicked, isUpClicked, isHovered_percent = Draw_UpDownButtons(gst8_antgrav.percent_updown, vars_ui.style.updownButtons)
+        isDownClicked, isUpClicked, isHovered_percent = Draw_UpDownButtons(gst8_antgrav.percent_updown, vars_ui.style.updownButtons, vars_ui.scale)
         this.Update_Percent(gst8_antgrav.percent_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_antgrav.percent_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        Draw_HelpButton(gst8_antgrav.percent_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
         -- Fade
-        Draw_Label(gst8_antgrav.fade_prompt, vars_ui.style.colors)
-        Draw_Label(gst8_antgrav.fade_value, vars_ui.style.colors)
+        Draw_Label(gst8_antgrav.fade_prompt, vars_ui.style.colors, vars_ui.scale)
+        Draw_Label(gst8_antgrav.fade_value, vars_ui.style.colors, vars_ui.scale)
 
-        isDownClicked, isUpClicked, isHovered_fade = Draw_UpDownButtons(gst8_antgrav.fade_updown, vars_ui.style.updownButtons)
+        isDownClicked, isUpClicked, isHovered_fade = Draw_UpDownButtons(gst8_antgrav.fade_updown, vars_ui.style.updownButtons, vars_ui.scale)
         this.Update_Fade(gst8_antgrav.fade_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_antgrav.fade_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        Draw_HelpButton(gst8_antgrav.fade_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     else
         isHovered_percent = false
         isHovered_fade = false
@@ -142,7 +142,7 @@ function DrawWindow_GrappleStraight_AntiGrav(isCloseRequested, vars_ui, player, 
 
     Draw_OrderedList(gst8_antgrav.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_antgrav.okcancel, vars_ui.style.okcancelButtons)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_antgrav.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
         this.Save(player, grapple, antigrav, changes, gst8_antgrav.has_antigrav.isChecked, startedWithAG)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)

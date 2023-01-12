@@ -213,6 +213,8 @@ local vars_ui =
     --configWindow  -- info about the location of the config window -- see Define_ConfigWindow()
     --line_heights  -- the height of strings -- see Refresh_LineHeights()
 
+    scale = 1,      -- control and window sizes are defined in pixels, then get multiplied by scale at runtime.  CET may adjust scale on non 1920x1080 monitors to give a consistent relative size, but higher resolution
+
     --autoshow_withconsole      -- bool that tells whether config shows the same time as the cet console, or requires a separate hotkey
 
     isTooltipShowing = false,       -- the tooltip is actually a sub window.  This is needed so the parent window's titlebar can stay the active color
@@ -227,6 +229,11 @@ local vars_ui =
     --grapple_straight
 
     --keys          -- gets added so it doesn't have to be included in a ton of function params (only used by the input bindings and transition to/from)
+}
+
+local vars_ui_progressbar =
+{
+    scale = 1,
 }
 
 local xp_gain = nil     -- this gets called each tick, watching the player's activity.  It will slowly accumulate grapple experience, periodically add xp to player, save to db
@@ -264,7 +271,7 @@ registerForEvent("onInit", function()
     InitializeRandom()
     EnsureTablesCreated()
     Define_UI_Framework_Constants(const)
-    InitializeUI(vars_ui, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
+    InitializeUI(vars_ui, vars_ui_progressbar, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -534,14 +541,9 @@ registerForEvent("onDraw", function()
     end
 
     if player and player.energy_tank and vars.energy < player.energy_tank.max_energy then
-        DrawEnergyProgress(vars.energy, player.energy_tank.max_energy, player.experience, vars)
+        DrawEnergyProgress(vars.energy, player.energy_tank.max_energy, player.experience, vars, vars_ui_progressbar, const)
     end
 
-
-    --TODO: They only show every other time cet opens (they flash the other time)
-    --TODO: This is too simple, since they may need to show if input binding is active
-
-    --if isCETOpen and shouldShowConfig and player then
     if shouldShowConfig and player then
         local loc_shouldshow, is_minimized = DrawConfig(isConfigRepress, vars, vars_ui, player, o, const)
         shouldShowConfig = loc_shouldshow
@@ -558,7 +560,7 @@ registerForEvent("onDraw", function()
     end
 
     if const.shouldShowDebugWindow then
-        DrawDebugWindow(debug)
+        DrawDebugWindow(debug, vars_ui, const)
     end
 end)
 

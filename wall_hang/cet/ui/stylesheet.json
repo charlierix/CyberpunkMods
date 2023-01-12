@@ -73,7 +73,11 @@
 
         "back_color_standard": "333",
         "back_color_hover": "555",
-        "back_color_click": "666"
+        "back_color_click": "666",
+
+        "disabled_back_color": "40808080",
+        "disabled_fore_color": "6CCC",
+        "disabled_border_color": "40666666"
     },
 
     "okcancelButtons":

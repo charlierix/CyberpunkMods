@@ -78,9 +78,9 @@ function this.Calculate_Sizes(def, style_text, line_heights, const, scale)
     end
 
     -- Height
-    local height = def.height * scale
-    if not def.isMultiLine then
-        height = line_heights.line
+    local height = line_heights.line
+    if def.isMultiLine then
+        height = def.height * scale
     end
 
     -- Store values

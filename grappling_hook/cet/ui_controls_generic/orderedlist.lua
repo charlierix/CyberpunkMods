@@ -3,12 +3,12 @@ local this = {}
 -- def is models\viewmodels\OrderedList
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_OrderedList(def, style, line_heights)
+function CalcSize_OrderedList(def, style, const, line_heights, scale)
 	if not def.sizes then
         def.sizes = {}
     end
 
-    local width_p, width_g, width_v, width_total = this.Calculate_Width(def)
+    local width_p, width_g, width_v, width_total = this.Calculate_Width(def, scale)
     local height = this.Calculate_Height(def, line_heights)
 
     def.sizes.width_p = width_p
@@ -75,15 +75,15 @@ function Draw_OrderedList(def, style_colors)
     end
 end
 
------------------------------------ Private Methods -----------------------------------
+------------------------------------------- Private Methods -------------------------------------------
 
-function this.Calculate_Width(def)
+function this.Calculate_Width(def, scale)
     local prompt = 0
     local gap = 0
     local value = 0
 
     for _, content in pairs(def.content) do
-        local p, g, v = this.Calculate_Width_PromptValue(content.prompt, content.value, def.gap)
+        local p, g, v = this.Calculate_Width_PromptValue(content.prompt, content.value, def.gap * scale)
 
         prompt = math.max(prompt, p)
         gap = math.max(gap, g)

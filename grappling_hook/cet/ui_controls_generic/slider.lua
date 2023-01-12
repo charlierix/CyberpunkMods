@@ -5,9 +5,9 @@ local hint = "ctrl+click to type"
 -- def is models\viewmodels\Slider
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_Slider(def, style, line_heights)
-    def.render_pos.width = def.width
-    def.render_pos.height = line_heights.line + 11       -- just counted pixels
+function CalcSize_Slider(def, style, const, line_heights, scale)
+    def.render_pos.width = def.width * scale
+    def.render_pos.height = line_heights.line + (11 * scale)       -- just counted pixels
 end
 
 -- Shows a slider.  The value is persisted in def.value
@@ -15,14 +15,14 @@ end
 -- style_slider is models\stylesheet\Slider
 -- Returns
 --  wasChanged, isHovered
-function Draw_Slider(def, style_slider)
+function Draw_Slider(def, style_slider, scale)
     local width = def.render_pos.width
     local height = def.render_pos.height
     local left = def.render_pos.left
     local top = def.render_pos.top
 
     -- Draw the slider
-    ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_slider.border_cornerRadius)
+    ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_slider.border_cornerRadius * scale)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_slider.border_thickness)
 
     ImGui.PushStyleColor(ImGuiCol.Border, style_slider.border_color_abgr)
@@ -39,7 +39,7 @@ function Draw_Slider(def, style_slider)
     ImGui.PushItemWidth(width)
 
     local changed
-    def.value, changed = ImGui.SliderFloat("##" .. def.invisible_name, def.value, def.min, def.max, this.GetFormat(def), Get_ImGuiSliderFlags_AlwaysClamp_NoRoundToFormat())
+    def.value, changed = ImGui.SliderFloat("##" .. def.invisible_name, def.value, def.min, def.max, this.GetFormat(def), Get_ImGuiSliderFlags_AlwaysClamp_NoRoundToFormat(def.is_dozenal))      -- since dozenal text would be displayed, it doesn't know how to convert back to decimal (it only allows 0-9)
 
     ImGui.PopItemWidth()
 
@@ -58,11 +58,6 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function this.GetFormat(def)
-    local decimal = ""
-    if def.decimal_places > 0 then
-        decimal = tostring(def.decimal_places)
-    end
-
     local prefix = def.prefix
     if not prefix then
         prefix = ""
@@ -71,6 +66,17 @@ function this.GetFormat(def)
     local suffix = def.suffix
     if not suffix then
         suffix = ""
+    end
+
+    if def.is_dozenal then
+        -- Even though this is going to the slider's format string, the slider will see this as plain
+        -- text and display it verbatim
+        return prefix .. Format_DecimalToDozenal(def.value, def.decimal_places) .. suffix
+    end
+
+    local decimal = ""
+    if def.decimal_places > 0 then
+        decimal = tostring(def.decimal_places)
     end
 
     return prefix .. "%." .. decimal .. "f" .. suffix

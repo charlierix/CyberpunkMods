@@ -94,18 +94,18 @@ function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player,
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(gst8_acclook.render_nodes, vars_ui.style, vars_ui.line_heights)
-    CalculatePositions(gst8_acclook.render_nodes, window.width, window.height, const)
+    CalculateSizes(gst8_acclook.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
+    CalculatePositions(gst8_acclook.render_nodes, window.width, window.height, const, vars_ui.scale)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gst8_acclook.title, vars_ui.style.colors)
+    Draw_Label(gst8_acclook.title, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_Label(gst8_acclook.name, vars_ui.style.colors)
+    Draw_Label(gst8_acclook.name, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_StickFigure(gst8_acclook.stickFigure, vars_ui.style.graphics, window.left, window.top)
-    Draw_GrappleArrows(gst8_acclook.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
-    Draw_GrappleDesiredLength(gst8_acclook.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+    Draw_StickFigure(gst8_acclook.stickFigure, vars_ui.style.graphics, window.left, window.top, vars_ui.scale)
+    Draw_GrappleArrows(gst8_acclook.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
+    Draw_GrappleDesiredLength(gst8_acclook.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
 
     local wasChecked
     wasChecked, isHovered_has = Draw_CheckBox(gst8_acclook.has_accellook, vars_ui.style.checkbox, vars_ui.style.colors)
@@ -113,27 +113,27 @@ function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player,
         this.Update_HasAccelLook(gst8_acclook.has_accellook, accel, changes, startedWithAL)
     end
 
-    Draw_HelpButton(gst8_acclook.has_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_HelpButton(gst8_acclook.has_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     if gst8_acclook.has_accellook.isChecked then
         -- Accel
-        Draw_Label(gst8_acclook.accel_prompt, vars_ui.style.colors)
-        Draw_Label(gst8_acclook.accel_value, vars_ui.style.colors)
+        Draw_Label(gst8_acclook.accel_prompt, vars_ui.style.colors, vars_ui.scale)
+        Draw_Label(gst8_acclook.accel_value, vars_ui.style.colors, vars_ui.scale)
 
         local isDownClicked, isUpClicked
-        isDownClicked, isUpClicked, isHovered_accel = Draw_UpDownButtons(gst8_acclook.accel_updown, vars_ui.style.updownButtons)
+        isDownClicked, isUpClicked, isHovered_accel = Draw_UpDownButtons(gst8_acclook.accel_updown, vars_ui.style.updownButtons, vars_ui.scale)
         this.Update_Accel(gst8_acclook.accel_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_acclook.accel_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        Draw_HelpButton(gst8_acclook.accel_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
         -- Speed
-        Draw_Label(gst8_acclook.speed_prompt, vars_ui.style.colors)
-        Draw_Label(gst8_acclook.speed_value, vars_ui.style.colors)
+        Draw_Label(gst8_acclook.speed_prompt, vars_ui.style.colors, vars_ui.scale)
+        Draw_Label(gst8_acclook.speed_value, vars_ui.style.colors, vars_ui.scale)
 
-        isDownClicked, isUpClicked, isHovered_speed = Draw_UpDownButtons(gst8_acclook.speed_updown, vars_ui.style.updownButtons)
+        isDownClicked, isUpClicked, isHovered_speed = Draw_UpDownButtons(gst8_acclook.speed_updown, vars_ui.style.updownButtons, vars_ui.scale)
         this.Update_Speed(gst8_acclook.speed_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_acclook.speed_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        Draw_HelpButton(gst8_acclook.speed_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     else
         isHovered_accel = false
         isHovered_speed = false
@@ -141,7 +141,7 @@ function DrawWindow_GrappleStraight_AccelLook(isCloseRequested, vars_ui, player,
 
     Draw_OrderedList(gst8_acclook.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_acclook.okcancel, vars_ui.style.okcancelButtons)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_acclook.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
         this.Save(player, grapple, accel, changes, gst8_acclook.has_accellook.isChecked, startedWithAL)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)

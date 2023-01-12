@@ -99,61 +99,61 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, o, const)
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(main.render_nodes, vars_ui.style, vars_ui.line_heights)
-    CalculatePositions(main.render_nodes, window.width, window.height, const)
+    CalculateSizes(main.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
+    CalculatePositions(main.render_nodes, window.width, window.height, const, vars_ui.scale)
 
     -------------------------------- Show ui elements --------------------------------
 
-    --Draw_Label(main.title, vars_ui.style.colors)
+    --Draw_Label(main.title, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_Label(main.consoleWarning, vars_ui.style.colors)
+    Draw_Label(main.consoleWarning, vars_ui.style.colors, vars_ui.scale)
 
     if Draw_CheckBox(main.should_autoshow, vars_ui.style.checkbox, vars_ui.style.colors) then
         this.Update_ShouldAutoShow(main.should_autoshow, vars_ui, const)
     end
 
-    if Draw_SummaryButton(main.input_bindings, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
+    if Draw_SummaryButton(main.input_bindings, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
         TransitionWindows_InputBindings(vars_ui, const)
     end
 
     if player.isUnlocked then
         -------------- Unlocked --------------
 
-        if Draw_SummaryButton(main.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
+        if Draw_SummaryButton(main.energyTank, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
             TransitionWindows_Energy_Tank(vars_ui, const)
         end
 
         for i = 1, 6 do
-            if Draw_RemoveButton(main["remove" .. tostring(i)], vars_ui.style.removeButton, window.left, window.top) then
+            if Draw_RemoveButton(main["remove" .. tostring(i)], vars_ui.style.removeButton, window.left, window.top, vars_ui.scale) then
                 --NOTE: This immediately removes the grapple.  Most actions populate a change list and require ok/cancel.  But that would be difficult in this case (a change that spans windows)
                 this.RemoveGrapple(player, i)
             end
         end
 
         for i = 1, 6 do
-            if Draw_SummaryButton(main["grapple" .. tostring(i)], vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
+            if Draw_SummaryButton(main["grapple" .. tostring(i)], vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
                 TransitionWindows_Grapple(vars_ui, const, player, i)
             end
         end
 
         Draw_OrderedList(main.experience, vars_ui.style.colors)
-        Draw_ProgressBarSlim(main.xp_progress, vars_ui.style.progressbar_slim, vars_ui.style.colors)
+        Draw_ProgressBarSlim(main.xp_progress, vars_ui.style.progressbar_slim, vars_ui.style.colors, vars_ui.scale)
     else
         --------------- Locked ---------------
 
-        Draw_Label(main.unlock_title, vars_ui.style.colors)
+        Draw_Label(main.unlock_title, vars_ui.style.colors, vars_ui.scale)
 
-        Draw_Label(main.unlock_note, vars_ui.style.colors)
+        Draw_Label(main.unlock_note, vars_ui.style.colors, vars_ui.scale)
 
-        Draw_Label(main.unlock_considered_label, vars_ui.style.colors)
-        Draw_HelpButton(main.unlock_considered_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        Draw_Label(main.unlock_considered_label, vars_ui.style.colors, vars_ui.scale)
+        Draw_HelpButton(main.unlock_considered_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
-        Draw_Label(main.unlock_extra_label, vars_ui.style.colors)
-        Draw_HelpButton(main.unlock_extra_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        Draw_Label(main.unlock_extra_label, vars_ui.style.colors, vars_ui.scale)
+        Draw_HelpButton(main.unlock_extra_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
-        Draw_GridView(main.unlock_grid, vars_ui.style.gridview, vars_ui.style.colors, const)
+        Draw_GridView(main.unlock_grid, vars_ui.style.gridview, vars_ui.style.colors, const, vars_ui.scale)
 
-        if Draw_Button(main.unlock, vars_ui.style.button) then
+        if Draw_Button(main.unlock, vars_ui.style.button, vars_ui.scale) then
             local success, errMsg = TryUnlockGrapple(o, player, const)
             if not success then
                 print("ERROR Unlocking Grapple: " .. tostring(errMsg))
@@ -161,7 +161,7 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, o, const)
         end
     end
 
-    local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons)
+    local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
 
     return not (isCloseRequested or isCloseClicked)       -- stop showing when they click the close button (or press config key a second time.  This main page doesn't have anything to save, so it's ok to exit at any time)
 end

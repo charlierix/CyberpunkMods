@@ -56,27 +56,27 @@ function DrawWindow_GrappleStraight_AimDuration(isCloseRequested, vars_ui, playe
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(gst8_aimdur.render_nodes, vars_ui.style, vars_ui.line_heights)
-    CalculatePositions(gst8_aimdur.render_nodes, window.width, window.height, const)
+    CalculateSizes(gst8_aimdur.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
+    CalculatePositions(gst8_aimdur.render_nodes, window.width, window.height, const, vars_ui.scale)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gst8_aimdur.title, vars_ui.style.colors)
+    Draw_Label(gst8_aimdur.title, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_Label(gst8_aimdur.name, vars_ui.style.colors)
+    Draw_Label(gst8_aimdur.name, vars_ui.style.colors, vars_ui.scale)
 
     -- Max Distance
-    Draw_Label(gst8_aimdur.dur_prompt, vars_ui.style.colors)
-    Draw_Label(gst8_aimdur.dur_value, vars_ui.style.colors)
+    Draw_Label(gst8_aimdur.dur_prompt, vars_ui.style.colors, vars_ui.scale)
+    Draw_Label(gst8_aimdur.dur_value, vars_ui.style.colors, vars_ui.scale)
 
-    local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_aimdur.dur_updown, vars_ui.style.updownButtons)
+    local isDownClicked, isUpClicked = Draw_UpDownButtons(gst8_aimdur.dur_updown, vars_ui.style.updownButtons, vars_ui.scale)
     this.Update_AimDuration(gst8_aimdur.dur_updown, changes, isDownClicked, isUpClicked)
 
-    Draw_HelpButton(gst8_aimdur.dur_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_HelpButton(gst8_aimdur.dur_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     Draw_OrderedList(gst8_aimdur.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_aimdur.okcancel, vars_ui.style.okcancelButtons)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_aimdur.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
         this.Save(player, grapple, changes)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)

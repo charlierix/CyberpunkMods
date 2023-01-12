@@ -4,7 +4,7 @@ local this = {}
 
 -- def is models\viewmodels\GrappleDesiredLength
 -- style_graphics is models\stylesheet\Graphics
-function Draw_GrappleDesiredLength(def, style_graphics, screenOffset_x, screenOffset_y, parent_width, parent_height)
+function Draw_GrappleDesiredLength(def, style_graphics, screenOffset_x, screenOffset_y, parent_width, parent_height, scale)
     if not def.should_show then
         do return end
     end
@@ -18,27 +18,27 @@ function Draw_GrappleDesiredLength(def, style_graphics, screenOffset_x, screenOf
         color = style_graphics.line_color_gray_abgr
     end
 
-    local x, y = this.GetXY(def, parent_width, parent_height)
+    local x, y = this.GetXY(def, parent_width, parent_height, scale)
 
-    local halfHeight = def.height / 2
+    local halfHeight = (def.height / 2) * scale
 
     Draw_Line(screenOffset_x, screenOffset_y, x, y - halfHeight, x, y + halfHeight, color, style_graphics.line_thickness_main)
 end
 
 -- def is models\viewmodels\GrappleAccelToDesired
 -- style_graphics is models\stylesheet\Graphics
-function Draw_GrappleAccelToDesired(def, style_graphics, screenOffset_x, screenOffset_y, parent_width, parent_height)
+function Draw_GrappleAccelToDesired(def, style_graphics, screenOffset_x, screenOffset_y, parent_width, parent_height, scale)
     if not def.show_accel_left and not def.show_accel_right and not def.show_dead then
         do return end
     end
 
-    local x, y = this.GetXY(def, parent_width, parent_height)
+    local x, y = this.GetXY(def, parent_width, parent_height, scale)
 
     local color
 
     -- Accel
     if def.show_accel_left or def.show_accel_right then
-        local acc_y = y + def.yOffset_accel
+        local acc_y = y + (def.yOffset_accel * scale)
 
         if def.show_accel_left then
             if def.isHighlight_accel_left then
@@ -49,7 +49,7 @@ function Draw_GrappleAccelToDesired(def, style_graphics, screenOffset_x, screenO
                 color = style_graphics.line_color_gray_abgr
             end
 
-            Draw_Arrow(screenOffset_x, screenOffset_y, x - def.length_accel, acc_y, x - def.length_accel_halfgap, acc_y, color, style_graphics.line_thickness_main, style_graphics.arrow_length, style_graphics.arrow_width)
+            Draw_Arrow(screenOffset_x, screenOffset_y, x - (def.length_accel * scale), acc_y, x - (def.length_accel_halfgap * scale), acc_y, color, style_graphics.line_thickness_main, style_graphics.arrow_length * scale, style_graphics.arrow_width * scale)
         end
 
         -- No need to draw the arrow from the anchor point to desired if desired is at the anchor point
@@ -62,7 +62,7 @@ function Draw_GrappleAccelToDesired(def, style_graphics, screenOffset_x, screenO
                 color = style_graphics.line_color_gray_abgr
             end
 
-            Draw_Arrow(screenOffset_x, screenOffset_y, x + def.length_accel, acc_y, x + def.length_accel_halfgap, acc_y, color, style_graphics.line_thickness_main, style_graphics.arrow_length, style_graphics.arrow_width)
+            Draw_Arrow(screenOffset_x, screenOffset_y, x + (def.length_accel * scale), acc_y, x + (def.length_accel_halfgap * scale), acc_y, color, style_graphics.line_thickness_main, style_graphics.arrow_length * scale, style_graphics.arrow_width * scale)
         end
     end
 
@@ -76,14 +76,14 @@ function Draw_GrappleAccelToDesired(def, style_graphics, screenOffset_x, screenO
             color = style_graphics.line_color_gray_abgr
         end
 
-        local dead_y = y + def.yOffset_dead
+        local dead_y = y + (def.yOffset_dead * scale)
 
-        local halfHeight = def.deadHeight / 2
+        local halfHeight = (def.deadHeight / 2) * scale
 
-        local from_x = x - def.length_dead
+        local from_x = x - (def.length_dead * scale)
         local to_x = x
         if not IsNearZero(def.percent) then
-            to_x = x + def.length_dead
+            to_x = x + (def.length_dead * scale)
         end
 
         -- Horizontal
@@ -98,14 +98,14 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 -- This returns the position of the center of the desired line (in parent coords)
-function this.GetXY(def, parent_width, parent_height)
+function this.GetXY(def, parent_width, parent_height, scale)
     local center_x = parent_width / 2
     local center_y = parent_height / 2
 
     --NOTE: 0 is at to, since desired is from the anchor point    
-    local x = GetScaledValue(def.to_x, def.from_x, 0, 1, def.percent)
+    local x = GetScaledValue(def.to_x * scale, def.from_x * scale, 0, 1, def.percent)
 
     return
         center_x + x,
-        center_y + def.y
+        center_y + (def.y * scale)
 end

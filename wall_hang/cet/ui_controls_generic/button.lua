@@ -3,7 +3,7 @@ local this = {}
 -- def is models\viewmodels\Button
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_Button(def, style, const, scale)
+function CalcSize_Button(def, style, const, line_heights, scale)
     local width = style.button.width
     if def.width_override then
         width = def.width_override
@@ -24,11 +24,19 @@ function Draw_Button(def, style_button, scale)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_button.border_thickness)
     ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, padding_h, padding_v)
 
-    ImGui.PushStyleColor(ImGuiCol.Button, style_button.back_color_standard_abgr)
-    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_button.back_color_hover_abgr)
-    ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_button.back_color_click_abgr)
-    ImGui.PushStyleColor(ImGuiCol.Text, style_button.foreground_color_abgr)
-    ImGui.PushStyleColor(ImGuiCol.Border, style_button.border_color_abgr)
+    if def.isEnabled then
+        ImGui.PushStyleColor(ImGuiCol.Button, style_button.back_color_standard_abgr)
+        ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_button.back_color_hover_abgr)
+        ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_button.back_color_click_abgr)
+        ImGui.PushStyleColor(ImGuiCol.Text, style_button.foreground_color_abgr)
+        ImGui.PushStyleColor(ImGuiCol.Border, style_button.border_color_abgr)
+    else
+        ImGui.PushStyleColor(ImGuiCol.Button, style_button.disabled_back_color_abgr)
+        ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_button.disabled_back_color_abgr)
+        ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_button.disabled_back_color_abgr)
+        ImGui.PushStyleColor(ImGuiCol.Text, style_button.disabled_fore_color_abgr)
+        ImGui.PushStyleColor(ImGuiCol.Border, style_button.disabled_border_color_abgr)
+    end
 
     ImGui.SetCursorPos(def.render_pos.left, def.render_pos.top)
 
@@ -37,7 +45,7 @@ function Draw_Button(def, style_button, scale)
     ImGui.PopStyleColor(5)
     ImGui.PopStyleVar(3)
 
-    return isClicked
+    return def.isEnabled and isClicked
 end
 
 ----------------------------------- Private Methods -----------------------------------

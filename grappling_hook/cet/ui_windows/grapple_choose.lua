@@ -59,28 +59,28 @@ function DrawWindow_Grapple_Choose(isCloseRequested, vars_ui, player, window, co
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(grapple_choose.render_nodes, vars_ui.style, vars_ui.line_heights)
-    CalculatePositions(grapple_choose.render_nodes, window.width, window.height, const)
+    CalculateSizes(grapple_choose.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
+    CalculatePositions(grapple_choose.render_nodes, window.width, window.height, const, vars_ui.scale)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(grapple_choose.title, vars_ui.style.colors)
+    Draw_Label(grapple_choose.title, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_ListBox(grapple_choose.available, vars_ui.style.listbox)
+    Draw_ListBox(grapple_choose.available, vars_ui.style.listbox, vars_ui.scale)
 
     if isAnyAvailable then
         if grapple_choose.available.selected_index > 0 then
-            Draw_Label(grapple_choose.name, vars_ui.style.colors)
-            Draw_Label(grapple_choose.description, vars_ui.style.colors)
+            Draw_Label(grapple_choose.name, vars_ui.style.colors, vars_ui.scale)
+            Draw_Label(grapple_choose.description, vars_ui.style.colors, vars_ui.scale)
         end
     else
-        Draw_Label(grapple_choose.low_xp1, vars_ui.style.colors)
-        Draw_Label(grapple_choose.low_xp2, vars_ui.style.colors)
+        Draw_Label(grapple_choose.low_xp1, vars_ui.style.colors, vars_ui.scale)
+        Draw_Label(grapple_choose.low_xp2, vars_ui.style.colors, vars_ui.scale)
     end
 
     Draw_OrderedList(grapple_choose.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_choose.okcancel, vars_ui.style.okcancelButtons)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_choose.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
         this.Save(player, vars_ui.transition_info.grappleIndex, available_info[grapple_choose.available.selected_index])
         TransitionWindows_Main(vars_ui, const)

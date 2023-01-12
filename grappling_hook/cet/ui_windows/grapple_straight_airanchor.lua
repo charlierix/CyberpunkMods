@@ -109,18 +109,18 @@ function DrawWindow_GrappleStraight_AirAnchor(isCloseRequested, vars_ui, player,
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(gst8_airanchor.render_nodes, vars_ui.style, vars_ui.line_heights)
-    CalculatePositions(gst8_airanchor.render_nodes, window.width, window.height, const)
+    CalculateSizes(gst8_airanchor.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
+    CalculatePositions(gst8_airanchor.render_nodes, window.width, window.height, const, vars_ui.scale)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gst8_airanchor.title, vars_ui.style.colors)
+    Draw_Label(gst8_airanchor.title, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_Label(gst8_airanchor.name, vars_ui.style.colors)
+    Draw_Label(gst8_airanchor.name, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_StickFigure(gst8_airanchor.stickFigure, vars_ui.style.graphics, window.left, window.top)
-    Draw_GrappleArrows(gst8_airanchor.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
-    Draw_GrappleDesiredLength(gst8_airanchor.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+    Draw_StickFigure(gst8_airanchor.stickFigure, vars_ui.style.graphics, window.left, window.top, vars_ui.scale)
+    Draw_GrappleArrows(gst8_airanchor.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
+    Draw_GrappleDesiredLength(gst8_airanchor.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
 
 
     local wasChecked
@@ -129,32 +129,32 @@ function DrawWindow_GrappleStraight_AirAnchor(isCloseRequested, vars_ui, player,
         this.Update_HasAirAnchor(gst8_airanchor.has_airanchor, airanchor, changes, startedWithAA)
     end
 
-    Draw_HelpButton(gst8_airanchor.has_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_HelpButton(gst8_airanchor.has_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     if gst8_airanchor.has_airanchor.isChecked then
         -- Cost
         Draw_OrderedList(gst8_airanchor.cost, vars_ui.style.colors)
 
-        Draw_Label(gst8_airanchor.cost_prompt, vars_ui.style.colors)
-        Draw_Label(gst8_airanchor.cost_value, vars_ui.style.colors)
+        Draw_Label(gst8_airanchor.cost_prompt, vars_ui.style.colors, vars_ui.scale)
+        Draw_Label(gst8_airanchor.cost_value, vars_ui.style.colors, vars_ui.scale)
 
         local isDownClicked, isUpClicked
-        isDownClicked, isUpClicked, isHovered_cost = Draw_UpDownButtons(gst8_airanchor.cost_updown, vars_ui.style.updownButtons)
+        isDownClicked, isUpClicked, isHovered_cost = Draw_UpDownButtons(gst8_airanchor.cost_updown, vars_ui.style.updownButtons, vars_ui.scale)
         this.Update_Cost(gst8_airanchor.cost_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_airanchor.cost_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        Draw_HelpButton(gst8_airanchor.cost_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
         -- Rate
         Draw_OrderedList(gst8_airanchor.rate, vars_ui.style.colors)
 
-        Draw_Label(gst8_airanchor.rate_prompt, vars_ui.style.colors)
-        Draw_Label(gst8_airanchor.rate_value, vars_ui.style.colors)
+        Draw_Label(gst8_airanchor.rate_prompt, vars_ui.style.colors, vars_ui.scale)
+        Draw_Label(gst8_airanchor.rate_value, vars_ui.style.colors, vars_ui.scale)
 
         local isDownClicked, isUpClicked
-        isDownClicked, isUpClicked, isHovered_rate = Draw_UpDownButtons(gst8_airanchor.rate_updown, vars_ui.style.updownButtons)
+        isDownClicked, isUpClicked, isHovered_rate = Draw_UpDownButtons(gst8_airanchor.rate_updown, vars_ui.style.updownButtons, vars_ui.scale)
         this.Update_Rate(gst8_airanchor.rate_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_airanchor.rate_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        Draw_HelpButton(gst8_airanchor.rate_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     else
         isHovered_cost = false
         isHovered_rate = false
@@ -162,7 +162,7 @@ function DrawWindow_GrappleStraight_AirAnchor(isCloseRequested, vars_ui, player,
 
     Draw_OrderedList(gst8_airanchor.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_airanchor.okcancel, vars_ui.style.okcancelButtons)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_airanchor.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
         this.Save(player, grapple, grapple.aim_straight, airanchor, changes, gst8_airanchor.has_airanchor.isChecked, startedWithAA)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)

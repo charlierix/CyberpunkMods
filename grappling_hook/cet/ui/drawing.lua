@@ -2,15 +2,20 @@
 --https://www.nexusmods.com/cyberpunk2077/mods/1405
 --NOTE: This is a copy of DrawJetpackProgress
 --NOTE: This is positioned according to how things look at 4K.  The progress is a bit low on 1K, but it's not bad.  I tried scaling position according to resolution, but text was still large, probably would need to scale that too
-function DrawEnergyProgress(energy, max, experience, vars)
-    ImGui.SetNextWindowPos(20, 230, ImGuiCond.Always)       -- this is under the top left combat graphic (placing under jetpack's progress bar)
-    ImGui.SetNextWindowSize(450, 50, ImGuiCond.Appearing)
+function DrawEnergyProgress(energy, max, experience, vars, vars_ui_progressbar, const)
+    local scale = vars_ui_progressbar.scale
+
+    ImGui.SetNextWindowPos(20 * scale, 230 * scale, ImGuiCond.Always)       -- this is under the top left combat graphic (placing under jetpack's progress bar)
+    ImGui.SetNextWindowSize(450 * scale, 50 * scale, ImGuiCond.Appearing)
 
     if (ImGui.Begin("energy", true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoBackground)) then
-        ImGui.SetWindowFontScale(1.5)
+        ImGui.SetWindowFontScale(0.75)
+
+        Refresh_LineHeights(vars_ui_progressbar, const, false)
+        scale = vars_ui_progressbar.scale       -- it might have gotten updated
 
         -- Progress Bar
-        ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 3)
+        ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 3 * scale)
 
         -- The color ints are in ABGR (comments to the side are ARGB for easy copy/pasting into color editor)
 
@@ -24,10 +29,12 @@ function DrawEnergyProgress(energy, max, experience, vars)
             ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0xE6D4D473)     --E673D4D4
         end
 
-        ImGui.SetCursorPos(0, 0)
-        ImGui.PushItemWidth(130)
+        --ImGui.SetCursorPos(0, 0)
+        ImGui.SetCursorPos(0, vars_ui_progressbar.line_heights.line / 2)
+        ImGui.PushItemWidth(130 * scale)
 
-        ImGui.ProgressBar(energy / max, 130, 24)     -- %, width, height
+        --ImGui.ProgressBar(energy / max, 130 * scale, 24 * scale)     -- %, width, height
+        ImGui.ProgressBar(energy / max, 130 * scale, 4 * scale)     -- %, width, height
 
         ImGui.PopItemWidth()
 
@@ -37,7 +44,7 @@ function DrawEnergyProgress(energy, max, experience, vars)
         -- Label
         ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)       --FFFF4C
 
-        ImGui.SetCursorPos(140, 0)
+        ImGui.SetCursorPos(140 * scale, 0)
 
         local text = "grappling hook"
         experience = math.floor(experience)
@@ -91,8 +98,8 @@ function DrawConfig(isCloseRequested, vars, vars_ui, player, o, const)
     -- NoNavInputs was used mainly for the input binding window.  But there are so many custom controls on the rest of the windows that mouse navigation is pretty much required anyway
     if (ImGui.Begin("Grappling Hook", ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoNavInputs)) then     --NOTE: imgui.h doesn't mention this overload.  The overload that takes bool as second param only accepts true, and it adds the X button
         -- These will be used by workers for this window as well as sub windows
-        Refresh_WindowPos(window)
-        Refresh_LineHeights(vars_ui)
+        Refresh_LineHeights(vars_ui, const, false)
+        Refresh_WindowPos(window, vars_ui, const)
 
         if vars_ui.currentWindow == const.windows.main then
             continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, player, window, o, const)
@@ -150,9 +157,9 @@ function DrawConfig(isCloseRequested, vars, vars_ui, player, o, const)
 end
 
 --https://stackoverflow.com/questions/26160327/sorting-a-lua-table-by-key
-function DrawDebugWindow(debugInfo)
-    ImGui.SetNextWindowPos(20, 300, ImGuiCond.FirstUseEver)
-    ImGui.SetNextWindowSize(300, 400, ImGuiCond.FirstUseEver)
+function DrawDebugWindow(debugInfo, vars_ui, const)
+    ImGui.SetNextWindowPos(20 * vars_ui.scale, 300 * vars_ui.scale, ImGuiCond.FirstUseEver)
+    ImGui.SetNextWindowSize(300 * vars_ui.scale, 400 * vars_ui.scale, ImGuiCond.FirstUseEver)
 
     if (ImGui.Begin("Grappling Hook Debug")) then
         local keys = {}

@@ -3,15 +3,15 @@ local this = {}
 -- def is models\viewmodels\SummaryButton
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_SummaryButton(def, style, line_heights)
+function CalcSize_SummaryButton(def, style, const, line_heights, scale)
     if not def.sizes then
         def.sizes = {}
     end
 
-    this.Calculate_UsedWidth(def, style.summaryButton)
-    this.Calculate_UsedHeight(def, line_heights, style.summaryButton)
+    this.Calculate_UsedWidth(def, style.summaryButton, scale)
+    this.Calculate_UsedHeight(def, line_heights, style.summaryButton, scale)
 
-    local padpad = style.summaryButton.padding * 2
+    local padpad = (style.summaryButton.padding * 2) * scale
 
     def.render_pos.width = def.sizes.horz_final + padpad
     def.render_pos.height = def.sizes.vert_final + padpad
@@ -23,24 +23,24 @@ end
 -- def is models\viewmodels\SummaryButton
 -- style_summary is models\stylesheet\SummaryButton
 -- Returns isClicked, isHovered
-function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, screenOffset_y)
-    local center_x = def.render_pos.left + style_summary.padding + (def.sizes.horz_final / 2)
-    local center_y = def.render_pos.top + style_summary.padding + (def.sizes.vert_final / 2)
+function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, screenOffset_y, scale)
+    local center_x = def.render_pos.left + (style_summary.padding * scale) + (def.sizes.horz_final / 2)
+    local center_y = def.render_pos.top + (style_summary.padding * scale) + (def.sizes.vert_final / 2)
 
     -- Invisible Button
-    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding)
+    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding * scale)
 
     -- Border
-    local cornerRadius = style_summary.border_cornerRadius
+    local cornerRadius = style_summary.border_cornerRadius * scale
     if def.border_cornerRadius_override then
-        cornerRadius = def.border_cornerRadius_override
+        cornerRadius = def.border_cornerRadius_override * scale
     end
-    Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding, isHovered, style_summary.background_color_standard_argb, style_summary.background_color_hover_argb, style_summary.border_color_standard_argb, style_summary.border_color_hover_argb, cornerRadius, style_summary.border_thickness)
+    Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, def.sizes.horz_final, def.sizes.vert_final, style_summary.padding * scale, isHovered, style_summary.background_color_standard_argb, style_summary.background_color_hover_argb, style_summary.border_color_standard_argb, style_summary.border_color_hover_argb, cornerRadius, style_summary.border_thickness)
 
     -- Place the text
     this.Draw_Unused(def, line_heights, style_summary, center_x, center_y)
-    this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
-    this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
+    this.Draw_Header(def, line_heights, style_summary, center_x, center_y, scale)
+    this.Draw_Content(def, line_heights, style_summary, center_x, center_y, scale)
     this.Draw_Suffix(def, line_heights, style_summary, center_x, center_y)
 
     return isClicked, isHovered
@@ -48,7 +48,7 @@ end
 
 ------------------------------------------- Private Methods -------------------------------------------
 
-function this.Calculate_UsedWidth(def, style_summary)
+function this.Calculate_UsedWidth(def, style_summary, scale)
     local unused = 0
     local h_p = 0
     local h_g = 0
@@ -62,12 +62,12 @@ function this.Calculate_UsedWidth(def, style_summary)
         unused = ImGui.CalcTextSize(def.unused_text)
     else
         -- Header
-        h_p, h_g, h_v = this.Calculate_UsedWidth_PromptValue(def.header_prompt, def.header_value, style_summary.prompt_value_gap)
+        h_p, h_g, h_v = this.Calculate_UsedWidth_PromptValue(def.header_prompt, def.header_value, style_summary.prompt_value_gap * scale)
 
         -- Content
         if def.content then
             for _, content in pairs(def.content) do
-                local p, g, v = this.Calculate_UsedWidth_PromptValue(content.prompt, content.value, style_summary.prompt_value_gap)
+                local p, g, v = this.Calculate_UsedWidth_PromptValue(content.prompt, content.value, style_summary.prompt_value_gap * scale)
 
                 c_p = math.max(c_p, p)
                 c_g = math.max(c_g, g)
@@ -92,8 +92,8 @@ function this.Calculate_UsedWidth(def, style_summary)
     )
 
     local expadedByMinWidth = false
-    if def.min_width and def.min_width > final then
-        final = def.min_width
+    if def.min_width and (def.min_width * scale) > final then
+        final = def.min_width * scale
         expadedByMinWidth = true
     end
 
@@ -135,19 +135,19 @@ function this.Calculate_UsedWidth_PromptValue(prompt, value, gap)
     return promptWidth, gapWidth, valueWidth
 end
 
-function this.Calculate_UsedHeight(def, line_heights, style_summary)
+function this.Calculate_UsedHeight(def, line_heights, style_summary, scale)
     -- Add up:
     --  unused (if exists) ELSE
     --  header and gap (if exists)
     --  content lines and gaps (if exists)
     --  summary and gap (if exists)
-    local content, nonSuffix, suffixGap, total = this.Calculate_UsedHeight_AddIt(def, line_heights, style_summary)
+    local content, nonSuffix, suffixGap, total = this.Calculate_UsedHeight_AddIt(def, line_heights, style_summary, scale)
 
     -- The calculated height is the minimum necessary to show the text.  If the minheight is defined
     -- and greater, then that is the height to use
     local expadedByMinHeight = false
-    if def.min_height and def.min_height > total then
-        total = def.min_height
+    if def.min_height and def.min_height * scale > total then
+        total = def.min_height * scale
         expadedByMinHeight = true
     end
 
@@ -164,7 +164,7 @@ end
 --  NonSuffix Height
 --  Gap between suffix and nonSuffix
 --  Total Height
-function this.Calculate_UsedHeight_AddIt(def, line_heights, style_summary)
+function this.Calculate_UsedHeight_AddIt(def, line_heights, style_summary, scale)
     local content = 0
     local nonSuffix = 0
     local suffixGap = 0
@@ -177,7 +177,7 @@ function this.Calculate_UsedHeight_AddIt(def, line_heights, style_summary)
         total = nonSuffix
 
         if def.suffix then
-            suffixGap = style_summary.suffix_gap
+            suffixGap = style_summary.suffix_gap * scale
             total = total + suffixGap
             total = total + line_heights.line
         end
@@ -199,13 +199,13 @@ function this.Calculate_UsedHeight_AddIt(def, line_heights, style_summary)
 
             if hasHeader then
                 nonSuffix = nonSuffix + line_heights.line
-                nonSuffix = nonSuffix + style_summary.header_gap
+                nonSuffix = nonSuffix + (style_summary.header_gap * scale)
             end
 
             total = nonSuffix
 
             if def.suffix then
-                suffixGap = style_summary.suffix_gap
+                suffixGap = style_summary.suffix_gap * scale
                 total = total + suffixGap
                 total = total + line_heights.line
             end
@@ -223,7 +223,7 @@ function this.Calculate_UsedHeight_AddIt(def, line_heights, style_summary)
             end
 
             if hasHeader and def.suffix then
-                suffixGap = math.max(style_summary.header_gap, style_summary.suffix_gap)        -- it's not the sum of the gaps, just the larger one
+                suffixGap = math.max(style_summary.header_gap * scale, style_summary.suffix_gap * scale)        -- it's not the sum of the gaps, just the larger one
                 total = total + suffixGap
             end
         end
@@ -283,7 +283,7 @@ function this.Draw_Unused(def, line_heights, style_summary, center_x, center_y)
     ImGui.Text(def.unused_text)
     ImGui.PopStyleColor()
 end
-function this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
+function this.Draw_Header(def, line_heights, style_summary, center_x, center_y, scale)
     if def.unused_text or (not (def.header_prompt or def.header_value)) then
         do return end
     end
@@ -308,7 +308,7 @@ function this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
     end
 
     if def.header_prompt and def.header_value then
-        left = left + def.sizes.horz_header_prompt + style_summary.prompt_value_gap
+        left = left + def.sizes.horz_header_prompt + (style_summary.prompt_value_gap * scale)
         ImGui.SetCursorPos(left, top)
     end
 
@@ -318,7 +318,7 @@ function this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
         ImGui.PopStyleColor()
     end
 end
-function this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
+function this.Draw_Content(def, line_heights, style_summary, center_x, center_y, scale)
     if def.unused_text or (not def.content) then
         do return end
     end
@@ -347,7 +347,7 @@ function this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
         top = center_y - (def.sizes.vert_final / 2)
         if (def.header_prompt or def.header_value) then
             top = top + line_heights.line
-            top = top + style_summary.header_gap
+            top = top + (style_summary.header_gap * scale)
         end
     end
 

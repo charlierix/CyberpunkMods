@@ -109,70 +109,70 @@ function DrawWindow_Grapple_Straight(isCloseRequested, vars_ui, player, window, 
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(grapple_straight.render_nodes, vars_ui.style, vars_ui.line_heights)
-    CalculatePositions(grapple_straight.render_nodes, window.width, window.height, const)
+    CalculateSizes(grapple_straight.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
+    CalculatePositions(grapple_straight.render_nodes, window.width, window.height, const, vars_ui.scale)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(grapple_straight.title, vars_ui.style.colors)
+    Draw_Label(grapple_straight.title, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_TextBox(grapple_straight.name, vars_ui.style.textbox, vars_ui.style.colors)
-    if Draw_LabelClickable(grapple_straight.description, vars_ui.style.textbox, vars_ui.style.colors, window.left, window.top) then
+    Draw_TextBox(grapple_straight.name, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
+    if Draw_LabelClickable(grapple_straight.description, vars_ui.style.textbox, vars_ui.style.colors, window.left, window.top, vars_ui.scale) then
         TransitionWindows_Straight_Description(vars_ui, const)
     end
 
-    Draw_StickFigure(grapple_straight.stickFigure, vars_ui.style.graphics, window.left, window.top)
-    Draw_GrappleArrows(grapple_straight.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
-    Draw_GrappleDesiredLength(grapple_straight.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+    Draw_StickFigure(grapple_straight.stickFigure, vars_ui.style.graphics, window.left, window.top, vars_ui.scale)
+    Draw_GrappleArrows(grapple_straight.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
+    Draw_GrappleDesiredLength(grapple_straight.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
 
     local isClicked = nil
-    isClicked, isHovered_distance = Draw_SummaryButton(grapple_straight.distances, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
+    isClicked, isHovered_distance = Draw_SummaryButton(grapple_straight.distances, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale)
     if isClicked then
         TransitionWindows_Straight_Distances(vars_ui, const)
     end
 
-    isClicked, isHovered_along = Draw_SummaryButton(grapple_straight.accel_along, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
+    isClicked, isHovered_along = Draw_SummaryButton(grapple_straight.accel_along, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale)
     if isClicked then
         TransitionWindows_Straight_AccelAlong(vars_ui, const)
     end
 
-    isClicked, isHovered_look = Draw_SummaryButton(grapple_straight.accel_look, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
+    isClicked, isHovered_look = Draw_SummaryButton(grapple_straight.accel_look, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale)
     if isClicked then
         TransitionWindows_Straight_AccelLook(vars_ui, const)
     end
 
-    isClicked, isHovered_drag = Draw_SummaryButton(grapple_straight.velocity_away, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
+    isClicked, isHovered_drag = Draw_SummaryButton(grapple_straight.velocity_away, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale)
     if isClicked then
         TransitionWindows_Straight_VelocityAway(vars_ui, const)
     end
 
-    if Draw_SummaryButton(grapple_straight.aim_duration, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top) then
+    if Draw_SummaryButton(grapple_straight.aim_duration, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
         TransitionWindows_Straight_AimDuration(vars_ui, const)
     end
 
-    isClicked, isHovered_airanchor = Draw_SummaryButton(grapple_straight.air_anchor, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
+    isClicked, isHovered_airanchor = Draw_SummaryButton(grapple_straight.air_anchor, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale)
     if isClicked then
         TransitionWindows_Straight_AirAnchor(vars_ui, const)
     end
 
-    -- isClicked, isHovered_airdash = Draw_SummaryButton(grapple_straight.air_dash, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
+    -- isClicked, isHovered_airdash = Draw_SummaryButton(grapple_straight.air_dash, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale)
     -- if isClicked then
     --     TransitionWindows_Straight_AirDash(vars_ui, const)
     -- end
 
-    isClicked, isHovered_antigrav = Draw_SummaryButton(grapple_straight.anti_grav, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
+    isClicked, isHovered_antigrav = Draw_SummaryButton(grapple_straight.anti_grav, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale)
     if isClicked then
         TransitionWindows_Straight_AntiGrav(vars_ui, const)
     end
 
-    isClicked, isHovered_stopEarly = Draw_SummaryButton(grapple_straight.stop_early, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top)
+    isClicked, isHovered_stopEarly = Draw_SummaryButton(grapple_straight.stop_early, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale)
     if isClicked then
         TransitionWindows_Straight_StopEarly(vars_ui, const)
     end
 
     Draw_OrderedList(grapple_straight.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_straight.okcancel, vars_ui.style.okcancelButtons)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_straight.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
         this.Save(player, grapple, grapple_straight.name)
         TransitionWindows_Main(vars_ui, const)

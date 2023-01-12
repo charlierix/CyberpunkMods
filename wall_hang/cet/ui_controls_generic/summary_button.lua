@@ -39,8 +39,8 @@ function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, sc
 
     -- Place the text
     this.Draw_Unused(def, line_heights, style_summary, center_x, center_y)
-    this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
-    this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
+    this.Draw_Header(def, line_heights, style_summary, center_x, center_y, scale)
+    this.Draw_Content(def, line_heights, style_summary, center_x, center_y, scale)
     this.Draw_Suffix(def, line_heights, style_summary, center_x, center_y)
 
     return isClicked, isHovered
@@ -283,7 +283,7 @@ function this.Draw_Unused(def, line_heights, style_summary, center_x, center_y)
     ImGui.Text(def.unused_text)
     ImGui.PopStyleColor()
 end
-function this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
+function this.Draw_Header(def, line_heights, style_summary, center_x, center_y, scale)
     if def.unused_text or (not (def.header_prompt or def.header_value)) then
         do return end
     end
@@ -308,7 +308,7 @@ function this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
     end
 
     if def.header_prompt and def.header_value then
-        left = left + def.sizes.horz_header_prompt + (style_summary.prompt_value_gap * line_heights.line)
+        left = left + def.sizes.horz_header_prompt + (style_summary.prompt_value_gap * scale)
         ImGui.SetCursorPos(left, top)
     end
 
@@ -318,7 +318,7 @@ function this.Draw_Header(def, line_heights, style_summary, center_x, center_y)
         ImGui.PopStyleColor()
     end
 end
-function this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
+function this.Draw_Content(def, line_heights, style_summary, center_x, center_y, scale)
     if def.unused_text or (not def.content) then
         do return end
     end
@@ -347,7 +347,7 @@ function this.Draw_Content(def, line_heights, style_summary, center_x, center_y)
         top = center_y - (def.sizes.vert_final / 2)
         if (def.header_prompt or def.header_value) then
             top = top + line_heights.line
-            top = top + (style_summary.header_gap * line_heights.line)
+            top = top + (style_summary.header_gap * scale)
         end
     end
 

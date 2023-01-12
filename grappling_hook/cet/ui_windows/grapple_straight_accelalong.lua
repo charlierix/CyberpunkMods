@@ -108,20 +108,20 @@ function DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(gst8_accalong.render_nodes, vars_ui.style, vars_ui.line_heights)
-    CalculatePositions(gst8_accalong.render_nodes, window.width, window.height, const)
+    CalculateSizes(gst8_accalong.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
+    CalculatePositions(gst8_accalong.render_nodes, window.width, window.height, const, vars_ui.scale)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gst8_accalong.title, vars_ui.style.colors)
+    Draw_Label(gst8_accalong.title, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_Label(gst8_accalong.name, vars_ui.style.colors)
+    Draw_Label(gst8_accalong.name, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_StickFigure(gst8_accalong.stickFigure, vars_ui.style.graphics, window.left, window.top)
-    Draw_GrappleArrows(gst8_accalong.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
-    Draw_GrappleDesiredLength(gst8_accalong.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+    Draw_StickFigure(gst8_accalong.stickFigure, vars_ui.style.graphics, window.left, window.top, vars_ui.scale)
+    Draw_GrappleArrows(gst8_accalong.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
+    Draw_GrappleDesiredLength(gst8_accalong.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
     if gst8_accalong.has_accelalong.isChecked then
-        Draw_GrappleAccelToDesired(gst8_accalong.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+        Draw_GrappleAccelToDesired(gst8_accalong.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
     end
 
     local wasChecked
@@ -130,32 +130,32 @@ function DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player
         this.Update_HasAccelAlong(gst8_accalong.has_accelalong, accel, changes, startedWithAG)
     end
 
-    Draw_HelpButton(gst8_accalong.has_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_HelpButton(gst8_accalong.has_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     if gst8_accalong.has_accelalong.isChecked then
         -- Accel
-        Draw_Label(gst8_accalong.accel_prompt, vars_ui.style.colors)
-        Draw_Label(gst8_accalong.accel_value, vars_ui.style.colors)
+        Draw_Label(gst8_accalong.accel_prompt, vars_ui.style.colors, vars_ui.scale)
+        Draw_Label(gst8_accalong.accel_value, vars_ui.style.colors, vars_ui.scale)
 
         local isDownClicked, isUpClicked
-        isDownClicked, isUpClicked, isHovered_accel = Draw_UpDownButtons(gst8_accalong.accel_updown, vars_ui.style.updownButtons)
+        isDownClicked, isUpClicked, isHovered_accel = Draw_UpDownButtons(gst8_accalong.accel_updown, vars_ui.style.updownButtons, vars_ui.scale)
         this.Update_Accel(gst8_accalong.accel_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_accalong.accel_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        Draw_HelpButton(gst8_accalong.accel_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
         -- Speed
-        Draw_Label(gst8_accalong.speed_prompt, vars_ui.style.colors)
-        Draw_Label(gst8_accalong.speed_value, vars_ui.style.colors)
+        Draw_Label(gst8_accalong.speed_prompt, vars_ui.style.colors, vars_ui.scale)
+        Draw_Label(gst8_accalong.speed_value, vars_ui.style.colors, vars_ui.scale)
 
-        isDownClicked, isUpClicked, isHovered_speed = Draw_UpDownButtons(gst8_accalong.speed_updown, vars_ui.style.updownButtons)
+        isDownClicked, isUpClicked, isHovered_speed = Draw_UpDownButtons(gst8_accalong.speed_updown, vars_ui.style.updownButtons, vars_ui.scale)
         this.Update_Speed(gst8_accalong.speed_updown, changes, isDownClicked, isUpClicked)
 
-        Draw_HelpButton(gst8_accalong.speed_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+        Draw_HelpButton(gst8_accalong.speed_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
         -- Dead Spot Distance
-        Draw_Label(gst8_accalong.deadspot_label, vars_ui.style.colors)
-        Draw_HelpButton(gst8_accalong.deadspot_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
-        _, isHovered_deadspot = Draw_Slider(gst8_accalong.deadspot_dist, vars_ui.style.slider)
+        Draw_Label(gst8_accalong.deadspot_label, vars_ui.style.colors, vars_ui.scale)
+        Draw_HelpButton(gst8_accalong.deadspot_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+        _, isHovered_deadspot = Draw_Slider(gst8_accalong.deadspot_dist, vars_ui.style.slider, vars_ui.scale)
     else
         isHovered_deadspot = false
         isHovered_accel = false
@@ -164,7 +164,7 @@ function DrawWindow_GrappleStraight_AccelAlong(isCloseRequested, vars_ui, player
 
     Draw_OrderedList(gst8_accalong.experience, vars_ui.style.colors)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_accalong.okcancel, vars_ui.style.okcancelButtons)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_accalong.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
         this.Save(player, grapple, accel, changes, gst8_accalong.has_accelalong.isChecked, startedWithAG, gst8_accalong.deadspot_dist)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)

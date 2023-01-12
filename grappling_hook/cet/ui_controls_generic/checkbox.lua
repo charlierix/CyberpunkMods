@@ -1,13 +1,13 @@
 -- def is models\viewmodels\CheckBox
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
-function CalcSize_CheckBox(def, style, line_heights)
+function CalcSize_CheckBox(def, style, const, line_heights, scale)
     local width, height = ImGui.CalcTextSize(def.text)
 
     -- Couldn't find a function to measure the size of the box and gap between box and text, so resorted
     -- to counting pixels (box is 19x19, gap is 5)
-    width = width + 19 + 5
-    height = math.max(height, 19)
+    width = width + ((19 + 5) * scale)
+    height = math.max(height, 19 * scale)
 
     def.render_pos.width = width
     def.render_pos.height = height

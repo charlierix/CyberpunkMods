@@ -91,41 +91,41 @@ function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player,
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(gst8_stop.render_nodes, vars_ui.style, vars_ui.line_heights)
-    CalculatePositions(gst8_stop.render_nodes, window.width, window.height, const)
+    CalculateSizes(gst8_stop.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
+    CalculatePositions(gst8_stop.render_nodes, window.width, window.height, const, vars_ui.scale)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gst8_stop.title, vars_ui.style.colors)
+    Draw_Label(gst8_stop.title, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_Label(gst8_stop.name, vars_ui.style.colors)
+    Draw_Label(gst8_stop.name, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_StickFigure(gst8_stop.stickFigure, vars_ui.style.graphics, window.left, window.top)
-    Draw_GrappleArrows(gst8_stop.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
-    Draw_GrappleDesiredLength(gst8_stop.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
-    Draw_GrappleAccelToDesired(gst8_stop.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height)
+    Draw_StickFigure(gst8_stop.stickFigure, vars_ui.style.graphics, window.left, window.top, vars_ui.scale)
+    Draw_GrappleArrows(gst8_stop.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
+    Draw_GrappleDesiredLength(gst8_stop.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
+    Draw_GrappleAccelToDesired(gst8_stop.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
 
     _, isHovered_stopAngle_checkbox = Draw_CheckBox(gst8_stop.has_stopAngle, vars_ui.style.checkbox, vars_ui.style.colors)
-    Draw_HelpButton(gst8_stop.stopAngle_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_HelpButton(gst8_stop.stopAngle_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     if gst8_stop.has_stopAngle.isChecked then
-        Draw_Slider(gst8_stop.stopAngle_value, vars_ui.style.slider)
-        Draw_MinDotGraphic(gst8_stop.stopAngle_graphic, vars_ui.style.graphics, vars_ui.style.mindotGraphic, window.left, window.top)
+        Draw_Slider(gst8_stop.stopAngle_value, vars_ui.style.slider, vars_ui.scale)
+        Draw_MinDotGraphic(gst8_stop.stopAngle_graphic, vars_ui.style.graphics, vars_ui.style.mindotGraphic, window.left, window.top, vars_ui.scale)
     end
 
     _, isHovered_stopdistance_checkbox = Draw_CheckBox(gst8_stop.has_stopDistance, vars_ui.style.checkbox, vars_ui.style.colors)
-    Draw_HelpButton(gst8_stop.stopDistance_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_HelpButton(gst8_stop.stopDistance_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     if gst8_stop.has_stopDistance.isChecked then
-        _, isHovered_stopdistance_slider = Draw_Slider(gst8_stop.stopDistance_value, vars_ui.style.slider)
+        _, isHovered_stopdistance_slider = Draw_Slider(gst8_stop.stopDistance_value, vars_ui.style.slider, vars_ui.scale)
     else
         isHovered_stopdistance_slider = false
     end
 
     _, isHovered_stopOnWallHit_checkbox = Draw_CheckBox(gst8_stop.should_stopOnWallHit, vars_ui.style.checkbox, vars_ui.style.colors)
-    Draw_HelpButton(gst8_stop.stopOnWallHit_help, vars_ui.style.helpButton, window.left, window.top, vars_ui)
+    Draw_HelpButton(gst8_stop.stopOnWallHit_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_stop.okcancel, vars_ui.style.okcancelButtons)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_stop.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
         this.Save(player, grapple, gst8_stop)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)

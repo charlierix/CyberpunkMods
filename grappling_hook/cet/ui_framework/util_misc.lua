@@ -9,23 +9,41 @@ function GetScreenInfo()
         height = height,
         center_x = width / 2,
         center_y = height / 2,
+
+        --TODO: This is what cet does, but that might just be a prerelease.  Once it's guaranteed that it's like this for everyone, uncomment
+        --and get rid of the font compare to infer scale (in Refresh_LineHeights)
+        --scale = math.min(width / 1920, height / 1080)
+        scale = 1,
     }
 end
 
 -- Called from draw each frame that the config is open
-function Refresh_WindowPos(configWindow)
+function Refresh_WindowPos(configWindow, vars_ui, const)
     local curLeft, curTop = ImGui.GetWindowPos()
 
     configWindow.left = curLeft
     configWindow.top = curTop
+
+    configWindow.width = 1000 * vars_ui.scale
+    configWindow.height = 800 * vars_ui.scale
 end
-function Refresh_LineHeights(vars_ui)
+function Refresh_LineHeights(vars_ui, const, is_from_init)
     if not vars_ui.line_heights then
         vars_ui.line_heights = {}
     end
 
-    vars_ui.line_heights.line = ImGui.GetTextLineHeight()
-    vars_ui.line_heights.gap = ImGui.GetTextLineHeightWithSpacing() - vars_ui.line_heights.line
+    if is_from_init then
+        vars_ui.line_heights.line = 18        -- just using some reasonable results until the real call from draw event
+        vars_ui.line_heights.gap = 4
+        vars_ui.line_heights.frame_height = 24
+    else
+        vars_ui.line_heights.line = ImGui.GetTextLineHeight()       -- 18 (36 on 4k)
+        vars_ui.line_heights.gap = ImGui.GetTextLineHeightWithSpacing() - vars_ui.line_heights.line     -- 22 (44 on 4k)
+        vars_ui.line_heights.frame_height = ImGui.GetFrameHeight()       -- 24 (48 on 4k)
+    end
+
+    --TODO: Get rid of this and do the scale calculation in GetScreenInfo
+    vars_ui.scale = vars_ui.line_heights.line / 18
 end
 
 -- There may be a way to call that enum natively, but for now, just hardcode the int
@@ -57,7 +75,7 @@ function Get_ImDrawFlags_RoundCornersAll()
         Bit_LShift(1, 7)    -- ImDrawFlags_RoundCornersBottomRight
 end
 
-function Get_ImGuiSliderFlags_AlwaysClamp_NoRoundToFormat()
+function Get_ImGuiSliderFlags_AlwaysClamp_NoRoundToFormat(disable_ctrlclick)
     -- // Flags for DragFloat(), DragInt(), SliderFloat(), SliderInt() etc.
     -- // We use the same sets of flags for DragXXX() and SliderXXX() functions as the features are the same and it makes it easier to swap them.
     -- enum ImGuiSliderFlags_
@@ -68,9 +86,15 @@ function Get_ImGuiSliderFlags_AlwaysClamp_NoRoundToFormat()
     --     ImGuiSliderFlags_NoRoundToFormat        = 1 << 6,       // Disable rounding underlying value to match precision of the display format string (e.g. %.3f values are rounded to those 3 digits)
     --     ImGuiSliderFlags_NoInput                = 1 << 7,       // Disable CTRL+Click or Enter key allowing to input text directly into the widget
 
+    local ctrl_click = 0
+    if disable_ctrlclick then
+        ctrl_click = Bit_LShift(1, 7)
+    end
+
     return
         Bit_LShift(1, 4) +
-        Bit_LShift(1, 6)
+        Bit_LShift(1, 6) +
+        ctrl_click
 end
 
 -- This will return the left,top of the control based on the definition, control's size,
@@ -79,11 +103,11 @@ end
 --  def = models\viewmodels\ControlPosition
 --  control_width, control_height = size of control
 --  parent_width, parent_height = size of parent window or div container
-function GetControlPosition(def, control_width, control_height, parent_width, parent_height, const)
+function GetControlPosition(def, control_width, control_height, parent_width, parent_height, const, scale)
     if def.relative_to then
-        return this.GetControlPosition_Relative(def, control_width, control_height, const)
+        return this.GetControlPosition_Relative(def, control_width, control_height, const, scale)
     else
-        return this.GetControlPosition_Absolute(def, control_width, control_height, parent_width, parent_height, const)
+        return this.GetControlPosition_Absolute(def, control_width, control_height, parent_width, parent_height, const, scale)
     end
 end
 
@@ -126,26 +150,26 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.GetControlPosition_Absolute(def, control_width, control_height, parent_width, parent_height, const)
+function this.GetControlPosition_Absolute(def, control_width, control_height, parent_width, parent_height, const, scale)
     -- Left
     local left = nil
 
     if def.horizontal then
         if def.horizontal == const.alignment_horizontal.left then
-            left = def.pos_x
+            left = def.pos_x * scale
 
         elseif def.horizontal == const.alignment_horizontal.center then
-            left = (parent_width / 2) - (control_width / 2) + def.pos_x
+            left = (parent_width / 2) - (control_width / 2) + (def.pos_x * scale)
 
         elseif def.horizontal == const.alignment_horizontal.right then
-            left = parent_width - control_width - def.pos_x
+            left = parent_width - control_width - (def.pos_x * scale)
 
         else
             print("GetControlPosition_Absolute: Unknown horizontal: " .. tostring(def.horizontal))
             left = 0
         end
     else
-        left = def.pos_x        -- default to left align
+        left = def.pos_x * scale        -- default to left align
     end
 
     -- Top
@@ -153,25 +177,25 @@ function this.GetControlPosition_Absolute(def, control_width, control_height, pa
 
     if def.vertical then
         if def.vertical == const.alignment_vertical.top then
-            top = def.pos_y
+            top = def.pos_y * scale
 
         elseif def.vertical == const.alignment_vertical.center then
-            top = (parent_height / 2) - (control_height / 2) + def.pos_y
+            top = (parent_height / 2) - (control_height / 2) + (def.pos_y * scale)
 
         elseif def.vertical == const.alignment_vertical.bottom then
-            top = parent_height - control_height - def.pos_y
+            top = parent_height - control_height - (def.pos_y * scale)
 
         else
             print("GetControlPosition_Absolute: Unknown vertical: " .. tostring(def.vertical))
             top = 0
         end
     else
-        top = def.pos_y     -- default to top align
+        top = def.pos_y * scale     -- default to top align
     end
 
     return left, top
 end
-function this.GetControlPosition_Relative(def, control_width, control_height, const)
+function this.GetControlPosition_Relative(def, control_width, control_height, const, scale)
     local parent_pos = def.relative_to.render_pos
 
     -- Left
@@ -194,13 +218,13 @@ function this.GetControlPosition_Relative(def, control_width, control_height, co
 
         -- Offset of this control's width
         if def.horizontal == const.alignment_horizontal.left then
-            left = left + def.pos_x
+            left = left + (def.pos_x * scale)
 
         elseif def.horizontal == const.alignment_horizontal.center then
-            left = left - (control_width / 2) + def.pos_x
+            left = left - (control_width / 2) + (def.pos_x * scale)
 
         elseif def.horizontal == const.alignment_horizontal.right then
-            left = left - control_width - def.pos_x
+            left = left - control_width - (def.pos_x * scale)
 
         else
             print("GetControlPosition_Relative: Unknown horizontal: " .. tostring(def.horizontal))
@@ -227,13 +251,13 @@ function this.GetControlPosition_Relative(def, control_width, control_height, co
 
         -- Offset of this control's width
         if def.vertical == const.alignment_vertical.top then
-            top = top + def.pos_y
+            top = top + (def.pos_y * scale)
 
         elseif def.vertical == const.alignment_vertical.center then
-            top = top - (control_height / 2) + def.pos_y
+            top = top - (control_height / 2) + (def.pos_y * scale)
 
         elseif def.vertical == const.alignment_vertical.bottom then
-            top = top - control_height - def.pos_y
+            top = top - control_height - (def.pos_y * scale)
 
         else
             print("GetControlPosition_Relative: Unknown vertical: " .. tostring(def.vertical))

@@ -16,7 +16,7 @@ function Draw_MultiItemDisplayList(def, style_list, screenOffset_x, screenOffset
     local top = def.render_pos.top
 
     -- Border
-    Draw_Border(screenOffset_x, screenOffset_y, left + ((def.width / 2) * scale), top + ((def.height / 2) * scale), def.width * scale, def.height * scale, 0, false, style_list.background_color_argb, nil, style_list.border_color_argb, nil, style_list.border_cornerRadius * line_heights.line, style_list.border_thickness)
+    Draw_Border(screenOffset_x, screenOffset_y, left + ((def.width / 2) * scale), top + ((def.height / 2) * scale), def.width * scale, def.height * scale, 0, false, style_list.background_color_argb, nil, style_list.border_color_argb, nil, style_list.border_cornerRadius * scale, style_list.border_thickness)
 
     -- Sets
     ImGui.PushStyleColor(ImGuiCol.Text, style_list.foreground_color_abgr)
