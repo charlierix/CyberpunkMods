@@ -63,13 +63,12 @@ end
 -- Returns:
 --  continue_showing        true: keep showing config, false: stop showing config
 --  is_minimized            true: the window is in a collapsed state (or completely blocked)
-function DrawConfig(isCloseRequested, vars, vars_ui, player, o, const)
+function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, player, o, const)
     if not player then
         return false, false
     end
 
     local continueShowing = true        -- this should go to false when isCloseRequested true, unless the window is in a dirty state
-    local is_minimized = false
 
     local window = vars_ui.configWindow
 
@@ -92,8 +91,13 @@ function DrawConfig(isCloseRequested, vars, vars_ui, player, o, const)
     ImGui.PushStyleColor(ImGuiCol.WindowBg, vars_ui.style.back_color_abgr)
     ImGui.PushStyleColor(ImGuiCol.Border, vars_ui.style.border_color_abgr)
 
+    local width = window.width
+    if is_minimized then
+        width = 200 * vars_ui.scale
+    end
+
     ImGui.SetNextWindowPos(window.left, window.top, ImGuiCond.FirstUseEver)     -- this will place it in the hardcoded location, but if they move it, it will show at the new location
-    ImGui.SetNextWindowSize(window.width, window.height, ImGuiCond.Always)
+    ImGui.SetNextWindowSize(width, window.height, ImGuiCond.Always)
 
     -- NoNavInputs was used mainly for the input binding window.  But there are so many custom controls on the rest of the windows that mouse navigation is pretty much required anyway
     if (ImGui.Begin("Grappling Hook", ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoNavInputs)) then     --NOTE: imgui.h doesn't mention this overload.  The overload that takes bool as second param only accepts true, and it adds the X button
@@ -146,6 +150,8 @@ function DrawConfig(isCloseRequested, vars, vars_ui, player, o, const)
         elseif vars_ui.currentWindow == const.windows.grapple_straight_velaway then
             continueShowing = DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, player, window, const)
         end
+
+        is_minimized = false
     else
         is_minimized = true
     end

@@ -154,6 +154,7 @@ local shouldDraw = false
 local shouldShowConfig = false
 local isConfigRepress = false
 local isCETOpen = false
+local isConfigMinimized = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
@@ -407,11 +408,12 @@ registerForEvent("onDraw", function()
     end
 
     if shouldShowConfig and player and player_arcade then
-        local loc_shouldshow, is_minimized = DrawConfig(isConfigRepress, vars, vars_ui, o, const, player, player_arcade)
+        local loc_shouldshow, is_minimized = DrawConfig(isConfigRepress, isConfigMinimized, vars, vars_ui, o, const, player, player_arcade)
         shouldShowConfig = loc_shouldshow
         isConfigRepress = false
+        isConfigMinimized = is_minimized
 
-        if not isCETOpen and is_minimized then      -- can't just close when cet is gone, since input binding may need it showing
+        if not isCETOpen and isConfigMinimized then      -- can't just close when cet is gone, since input binding may need it showing
             shouldShowConfig = false
         end
 
