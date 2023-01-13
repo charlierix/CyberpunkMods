@@ -153,6 +153,9 @@ function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, player, o, co
 
         is_minimized = false
     else
+        Refresh_LineHeights(vars_ui, const, false)      -- this won't be needed once scale is based on screen resolution instead of font height
+        Refresh_WindowPos(window, vars_ui, const)
+
         is_minimized = true
     end
     ImGui.End()
