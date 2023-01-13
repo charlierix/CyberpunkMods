@@ -52,7 +52,7 @@ function InputTracker_StartStop:ResetHangLatch()
 end
 
 function InputTracker_StartStop:SetRelatchTime()
-    self.relatch_time = self.o.timer + 0.25
+    self.relatch_time = self.o.timer + 0.75
 end
 
 -- Returns
