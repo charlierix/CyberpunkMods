@@ -347,7 +347,10 @@ registerForEvent("onUpdate", function(deltaTime)
 
     elseif vars.flightMode == const.flightModes.jump_planted_calculate then
         -- Figure out direction/strength to jump
-        Process_Jump_Planted_Calculate(o, player, vars, const, debug)
+        --Process_Jump_Planted_Calculate(o, player, vars, const, debug)
+
+        --TODO: jump planted and rebound should use the same logic, but possibly different configs
+        Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
 
     elseif vars.flightMode == const.flightModes.jump_rebound_calculate then
         -- Figure out direction/strength to jump
