@@ -46,6 +46,11 @@ function InputTracker_StartStop:Tick()
     end
 end
 
+function InputTracker_StartStop:EnteringHang()
+    self.hang_latched = true        -- when coming from a relatch (from a jump), this needs to be explicitly set
+    self.relatch_time = nil
+end
+
 function InputTracker_StartStop:ResetHangLatch()
     self.hang_latched = false
     self.relatch_time = nil

@@ -52,6 +52,7 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
         Transition_ToStandard(vars, const, debug, o, false)
     else
         local impulse = Vector4.new(impulse_x, impulse_y, impulse_z, 1)
+        --local impulse = this.AvoidOverhangs(Vector4.new(impulse_x, impulse_y, impulse_z, 1), vars.hangPos, normal_horz, o)
 
         if IsNearZero(yaw_turn_radians) then
             Transition_ToJump_Impulse(vars, const, debug, o, impulse, false, should_relatch)
@@ -216,7 +217,6 @@ function this.GetHorizontal_Rotated(vector)
     return MultiplyVector(rotated, vec_len)
 end
 
-
 function this.CombineHorizontal1(away_unit, along_unit, look, percent_away, percent_along, percent_up, percent_look)
     return
         Clamp(-1, 1, (away_unit.x * percent_away) + (along_unit.x * percent_along)),
@@ -288,4 +288,93 @@ end
 function this.GetYawTurnDirection(normal_horz, look_horz, radians)
     local axis = CrossProduct3D(look_horz, normal_horz)
     return RotateVector3D_axis_radian(look_horz, axis, radians)
+end
+
+function this.AvoidOverhangs(impulse, hangPos, normal_horz, o)
+    -- Only do this check if they are jumping mostly straight up
+    if impulse.z < 0 then
+        return impulse
+    end
+
+    local impulse_len = GetVectorLength(impulse)
+    if IsNearZero(impulse_len) then
+        return impulse
+    end
+
+    local impulse_unit = DivideVector(impulse, impulse_len)
+    if DotProduct3D(impulse_unit, up) < 0.9 then
+        return impulse
+    end
+
+    local ray_dist = 2 + 4      -- 2 for the height of the player, then whatever distance above the player to check
+    local player_radius = 0.33
+
+    --NOTE: o.pos and hangPos should be the same thing
+
+    local log = this.CreateLog()
+    this.LogWall(log, hangPos, normal_horz)
+    this.LogPlayer(log, o.pos, impulse)
+    this.LogRayPlate(log, hangPos, normal_horz, o.pos, ray_dist, player_radius, o)
+
+    --TODO: May need to fire a ray from the perimeter of the player's collision hull
+    -- local hit = o:RayCast(o.pos, AddVectors(o.pos, MultiplyVector(impulse_unit, ray_dist)))
+    -- if not hit then
+    --     return impulse
+    -- end
+
+    -- local offset_dist = 1       -- how far to check
+
+    --log:Save("avoid overhangs")
+
+    return impulse
+end
+
+function this.CreateLog()
+    local log = DebugRenderLogger:new(true)
+
+    log:DefineCategory("player", "FF5", 1)
+    log:DefineCategory("wall", "4000", 1)
+    log:DefineCategory("plate_start", "3888", 0.333)
+    log:DefineCategory("plate_miss", "6977", 0.333)
+    log:DefineCategory("plate_hit", "77A", 0.333)
+
+    return log
+end
+function this.LogWall(log, hangPos, normal_horz)
+    log:Add_Square(hangPos, normal_horz, 1, 1, "wall")
+    log:Add_Dot(hangPos, "wall")
+    log:Add_Line(hangPos, AddVectors(hangPos, normal_horz), "wall")
+end
+function this.LogPlayer(log, pos, impulse)
+    log:Add_Dot(pos, "player")
+    log:Add_Line(pos, AddVectors(pos, impulse), "player")
+end
+function this.LogRayPlate(log, hangPos, normal_horz, pos, ray_dist, player_radius, o)
+    local right = CrossProduct3D(normal_horz, up)
+
+    local steps = 4
+    local max_dist = 6
+
+    local origin = AddVectors(pos, MultiplyVector(normal_horz, -player_radius))
+
+    for x = -steps, steps, 1 do
+        for y = 0, steps, 1 do
+            local offset_along = MultiplyVector(right, max_dist * (x / steps))
+            local offset_out = MultiplyVector(normal_horz, max_dist * (y / steps))
+
+            local from = AddVectors(AddVectors(origin, offset_along), offset_out)
+
+            local to = Vector4.new(from.x, from.y, from.z + ray_dist, 1)
+            local hit, normal = o:RayCast(from, to)
+
+            log:Add_Dot(from, "plate_start")
+
+            if hit then
+                log:Add_Dot(hit, "plate_hit")
+                log:Add_Line(hit, AddVectors(hit, normal), "plate_hit")
+            else
+                log:Add_Dot(to, "plate_miss")
+            end
+        end
+    end
 end

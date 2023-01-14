@@ -33,6 +33,8 @@ function Transition_ToHang(vars, const, debug, o, hangPos, normal, from_slide)
     vars.hangPos = hangPos
     vars.normal = normal
 
+    vars.startStopTracker:EnteringHang()
+
     if from_slide then
         PlaySound_Hang_Soft(vars, o)
     else

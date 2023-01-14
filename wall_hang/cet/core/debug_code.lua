@@ -8,14 +8,14 @@ function PopulateDebug(debug, o, keys, vars, startStopTracker)
     debug.mutlmod_Vel = this.GetMultiModVelocity(quest)
     debug.mutlmod_IsOwnerOrNone = o:Custom_CurrentlyFlying_IsOwnerOrNone()
     debug.mutlmod_CanStartFlight = o:Custom_CurrentlyFlying_CanStartFlight()
-    
+
     -- debug.pos = vec_str(o.pos)
     -- debug.vel = vec_str(o.vel)
-    --debug.yaw = Round(o.yaw, 0)
+    -- debug.yaw = Round(o.yaw, 0)
 
-    -- if o.vel then
-    --     debug.speed = tostring(Round(GetVectorLength(o.vel), 1))
-    -- end
+    if o.vel then
+        debug.speed = tostring(Round(GetVectorLength(o.vel), 1))
+    end
 
     -- debug.key_forward = keys.forward
     -- debug.key_backward = keys.backward
@@ -23,16 +23,19 @@ function PopulateDebug(debug, o, keys, vars, startStopTracker)
     -- debug.key_right = keys.right
     -- debug.key_jump = keys.jump
     -- debug.key_hang = keys.hang
+    -- debug.key_prev_hang = keys.prev_hang
     -- debug.key_custom = keys.custom
+    -- debug.key_custom_hang = keys.custom_hang
+    -- debug.key_prev_custom_hang = keys.prev_custom_hang
     debug.hang_latched = startStopTracker.hang_latched
     -- debug.mouse_x = keys.mouse_x
 
-    -- local isHangDown, isJumpDown, isShiftDown = startStopTracker:GetButtonState()
-    -- debug.tracked_isHangDown = isHangDown
-    -- debug.tracked_isJumpDown = isJumpDown
-    -- debug.tracked_isShiftDown = isShiftDown
+    local isHangDown, isJumpDown, isShiftDown = startStopTracker:GetButtonState()
+    debug.tracked_isHangDown = isHangDown
+    debug.tracked_isJumpDown = isJumpDown
+    debug.tracked_isShiftDown = isShiftDown
 
-    --debug.isAirborne = IsAirborne(o)
+    debug.isAirborne = IsAirborne(o)
 
     -- debug.hang_hangPos = vec_str(vars.hangPos)
     -- debug.hang_normal = vec_str(vars.normal)
