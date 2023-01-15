@@ -34,6 +34,7 @@ require "data/util_data"
 
 require "processing/flightmode_transitions"
 require "processing/flightutil"
+require "processing/jump_avoid_overhangs"
 require "processing/processing_hang"
 require "processing/processing_jump_planted_calculate"
 require "processing/processing_jump_rebound_calculate"
