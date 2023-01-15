@@ -51,9 +51,7 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     if IsNearZero(impulse_x) and IsNearZero(impulse_y) and IsNearZero(impulse_z) then
         Transition_ToStandard(vars, const, debug, o, false)
     else
-        --local impulse = Vector4.new(impulse_x, impulse_y, impulse_z, 1)
-        --local impulse = Jump_AvoidOverhangs(Vector4.new(impulse_x, impulse_y, impulse_z, 1), vars.hangPos, normal_horz, o)
-        local impulse = Jump_AvoidOverhangs2(Vector4.new(impulse_x, impulse_y, impulse_z, 1), vars.hangPos, normal_horz, o)
+        local impulse = Jump_AvoidOverhangs(Vector4.new(impulse_x, impulse_y, impulse_z, 1), vars.hangPos, normal_horz, o)
 
         if IsNearZero(yaw_turn_radians) then
             Transition_ToJump_Impulse(vars, const, debug, o, impulse, false, should_relatch)

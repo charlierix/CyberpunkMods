@@ -2,7 +2,75 @@ local this = {}
 
 local up = nil      -- can't use vector4 before init
 
+-- This does a few ray casts and will rotate the impulse toward a free spot.  This is useful to avoid all the little trim pieces
+-- along the tops of buildings
+--
+-- This currently only looks front to back.  It could be expanded to look side to side, but I don't think that would be necessary.
+-- The player would look to the side (the player is limited to how far up they can look, so that's why this function is needed)
 function Jump_AvoidOverhangs(impulse, hangPos, normal_horz, o)
+    -- Only do this check if they are jumping mostly straight up
+    if impulse.z < 0 then
+        return impulse
+    end
+
+    local impulse_len = GetVectorLength(impulse)
+    if IsNearZero(impulse_len) then
+        return impulse
+    end
+
+    if not up then
+        up = Vector4.new(0, 0, 1, 0)
+    end
+
+    local impulse_unit = DivideVector(impulse, impulse_len)
+    if DotProduct3D(impulse_unit, up) < 0.75 then
+        return impulse
+    end
+
+    local ray_dist = 2 + 1.5      -- 2 for the height of the player, then whatever distance above the player to check
+    local player_radius = 0.25
+
+    local ray = MultiplyVector(impulse_unit, ray_dist)
+
+    -- Front
+    local from_front = AddVectors(o.pos, MultiplyVector(normal_horz, -player_radius))
+    local to_front = AddVectors(from_front, ray)
+    local hit_front = o:RayCast(from_front, to_front)
+
+    if not hit_front then
+        return impulse
+    end
+
+    -- Center
+    local to_center = AddVectors(o.pos, ray)
+    local hit_center = o:RayCast(o.pos, to_center)
+
+    if not hit_center then
+        return this.Rotate(impulse, from_front, hit_front, to_center)
+    end
+
+    -- Rear
+    local from = AddVectors(o.pos, MultiplyVector(normal_horz, player_radius))
+    local to_rear = AddVectors(from, ray)
+    local hit_rear = o:RayCast(from, to_rear)
+
+    if not hit_rear then
+        return this.Rotate(impulse, from_front, hit_center, to_rear)
+    end
+
+    -- Extra Rear
+    from = AddVectors(o.pos, MultiplyVector(normal_horz, player_radius * 3))
+    local to_extrarear = AddVectors(from, ray)
+    local hit_extrarear, normal_extrarear = o:RayCast(from, to_extrarear)
+
+    if not hit_extrarear then
+        return this.Rotate(impulse, from_front, hit_rear, to_extrarear)
+    end
+
+    return impulse      -- going to hit anyway
+end
+
+function Jump_AvoidOverhangs_ATTEMPT1(impulse, hangPos, normal_horz, o)
     -- Only do this check if they are jumping mostly straight up
     if impulse.z < 0 then
         return impulse
@@ -83,7 +151,7 @@ function Jump_AvoidOverhangs(impulse, hangPos, normal_horz, o)
 
     return impulse
 end
-function Jump_AvoidOverhangs2(impulse, hangPos, normal_horz, o)
+function Jump_AvoidOverhangs_ATTEMPT2(impulse, hangPos, normal_horz, o)
     -- Only do this check if they are jumping mostly straight up
     if impulse.z < 0 then
         return impulse
@@ -184,20 +252,21 @@ function this.AvoidOverhangs2_PossiblyRotate(impulse, from_front, hit_front, hit
     end
 
     if not hit_center then
-        return this.AvoidOverhangs2_Rotate(impulse, from_front, hit_front, to_center)
+        return this.Rotate(impulse, from_front, hit_front, to_center)
     end
 
     if not hit_rear then
-        return this.AvoidOverhangs2_Rotate(impulse, from_front, hit_center, to_rear)
+        return this.Rotate(impulse, from_front, hit_center, to_rear)
     end
 
     if not hit_extrarear then
-        return this.AvoidOverhangs2_Rotate(impulse, from_front, hit_rear, to_extrarear)
+        return this.Rotate(impulse, from_front, hit_rear, to_extrarear)
     end
 
     return impulse
 end
-function this.AvoidOverhangs2_Rotate(impulse, from, hit, miss)
+
+function this.Rotate(impulse, from, hit, miss)
     local rotate_to_point = GetClosestPoint_Line_Point(from, SubtractVectors(miss, from), hit)
 
     local dir_from = ToUnit(SubtractVectors(hit, from))
