@@ -165,12 +165,13 @@ end
 
 function this.CombineHorizontal_Preset_Look(preset_x, preset_y, preset_z, look, horizontal, horz_dot)
     local percent_look = Clamp(0, 1, horizontal.percent_look:Evaluate(horz_dot))
+    local percent_look_strength = Clamp(0, 1, horizontal.percent_look_strength:Evaluate(horz_dot))
     local percent_preset = 1 - percent_look
 
     return
-        (preset_x * percent_preset) + (look.x * percent_look),
-        (preset_y * percent_preset) + (look.y * percent_look),
-        (preset_z * percent_preset) + (look.z * percent_look)
+        (preset_x * percent_preset) + (look.x * percent_look * percent_look_strength),
+        (preset_y * percent_preset) + (look.y * percent_look * percent_look_strength),
+        (preset_z * percent_preset) + (look.z * percent_look * percent_look_strength)
 end
 
 -- This rotates the vector upward.  Think of the vector passed in as desired direction.  This function rotates up
@@ -214,34 +215,6 @@ function this.GetHorizontal_Rotated(vector)
     local rotated = RotateVector3D(horizontal, Quaternion_FromAxisRadians(axis, adjustRadians))
 
     return MultiplyVector(rotated, vec_len)
-end
-
-function this.CombineHorizontal1(away_unit, along_unit, look, percent_away, percent_along, percent_up, percent_look)
-    return
-        Clamp(-1, 1, (away_unit.x * percent_away) + (along_unit.x * percent_along)),
-        Clamp(-1, 1, (away_unit.y * percent_away) + (along_unit.y * percent_along)),
-        Clamp(-1, 1, (up.z * percent_up) + (look.z * percent_look))
-end
-function this.CombineHorizontal2(away_unit, along_unit, look_unit, percent_away, percent_along, percent_up, percent_look)
-    -- Scale the unit vectors based on their percent influence
-    local percent_wall = 1 - percent_look
-
-    local away_x = away_unit.x * percent_wall
-    local away_y = away_unit.y * percent_wall
-
-    local along_x = along_unit.x * percent_wall
-    local along_y = along_unit.y * percent_wall
-
-    local up_z = up.z * percent_wall
-
-    local look_x = look_unit.x * percent_look
-    local look_y = look_unit.y * percent_look
-    local look_z = look_unit.z * percent_look
-
-    return
-        (away_x * percent_away) + (along_x * percent_along) + look_x,
-        (away_y * percent_away) + (along_y * percent_along) + look_y,
-        (up_z * percent_up) + look_z
 end
 
 function this.GetAdjustedUp(normal)

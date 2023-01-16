@@ -94,10 +94,15 @@ function PlayerArcade:MapModelToSelf(model)
             percent_at_speed = this.ToAnimationCurve(deserialized.horizontal.percent_at_speed),
 
             percent_look = this.ToAnimationCurve(deserialized.horizontal.percent_look),
+            percent_look_strength = this.ToAnimationCurve(deserialized.horizontal.percent_look_strength),
 
             yaw_turn = this.ToAnimationCurve(deserialized.horizontal.yaw_turn),
 
             percent_latch_after_jump = this.ToAnimationCurve(deserialized.horizontal.percent_latch_after_jump),
+            wallattract_distance_max = this.ToAnimationCurve(deserialized.horizontal.wallattract_distance_max),
+            wallattract_accel = this.ToAnimationCurve(deserialized.horizontal.wallattract_accel),
+            wallattract_pow = this.ToAnimationCurve(deserialized.horizontal.wallattract_pow),
+            wallattract_antigrav = this.ToAnimationCurve(deserialized.horizontal.wallattract_antigrav),
 
             strength = deserialized.horizontal.strength,
         },
