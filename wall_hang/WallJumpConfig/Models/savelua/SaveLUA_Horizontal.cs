@@ -17,10 +17,15 @@ namespace WallJumpConfig.Models.savelua
         public SaveLUA_KeyValue[] percent_at_speed { get; init; }
 
         public SaveLUA_KeyValue[] percent_look { get; init; }
+        public SaveLUA_KeyValue[] percent_look_strength { get; init; }
 
         public SaveLUA_KeyValue[] yaw_turn { get; init; }
 
         public SaveLUA_KeyValue[] percent_latch_after_jump { get; init; }
+        public SaveLUA_KeyValue[] wallattract_distance_max { get; init; }
+        public SaveLUA_KeyValue[] wallattract_accel { get; init; }
+        public SaveLUA_KeyValue[] wallattract_pow { get; init; }
+        public SaveLUA_KeyValue[] wallattract_antigrav { get; init; }
 
         public double strength { get; init; }
 
@@ -49,11 +54,31 @@ namespace WallJumpConfig.Models.savelua
                     Select(o => to_lua(o)).
                     ToArray(),
 
+                percent_look_strength = CurveBuilder.GetPoints_HorizontalProps_DotProducts(model, o => o.Percent_LookStrength).
+                    Select(o => to_lua(o)).
+                    ToArray(),
+
                 yaw_turn = CurveBuilder.BuildYawTurn_DotProduct_Radians(CurveBuilder.GetPoints_HorizontalProps_Degrees(model, o => o.Percent_YawTurn)).
                     Select(o => to_lua(o)).
                     ToArray(),
 
                 percent_latch_after_jump = CurveBuilder.GetPoints_HorizontalProps_DotProducts(model, o => o.Percent_LatchAfterJump).
+                    Select(o => to_lua(o)).
+                    ToArray(),
+
+                wallattract_distance_max = CurveBuilder.GetPoints_HorizontalProps_DotProducts(model, o => o.WallAttract_DistanceMax).
+                    Select(o => to_lua(o)).
+                    ToArray(),
+
+                wallattract_accel = CurveBuilder.GetPoints_HorizontalProps_DotProducts(model, o => o.WallAttract_Accel).
+                    Select(o => to_lua(o)).
+                    ToArray(),
+
+                wallattract_pow = CurveBuilder.GetPoints_HorizontalProps_DotProducts(model, o => o.WallAttract_Pow).
+                    Select(o => to_lua(o)).
+                    ToArray(),
+
+                wallattract_antigrav = CurveBuilder.GetPoints_HorizontalProps_DotProducts(model, o => o.WallAttract_Antigrav).
                     Select(o => to_lua(o)).
                     ToArray(),
 

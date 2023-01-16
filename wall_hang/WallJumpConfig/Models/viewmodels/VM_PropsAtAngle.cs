@@ -51,8 +51,13 @@ namespace WallJumpConfig.Models.viewmodels
         public VM_Slider Percent_YawTurn { get; set; }
 
         public VM_Slider Percent_Look { get; set; }
+        public VM_Slider Percent_LookStrength { get; set; }
 
         public VM_Slider Percent_LatchAfterJump { get; set; }
+        public VM_Slider WallAttract_DistanceMax { get; set; }
+        public VM_Slider WallAttract_Accel { get; set; }
+        public VM_Slider WallAttract_Pow { get; set; }
+        public VM_Slider WallAttract_Antigrav { get; set; }
 
         // ------------- Helper Methods -------------
         public static VM_PropsAtAngle FromModel(PropsAtAngle props, string name, string color)
@@ -78,8 +83,13 @@ namespace WallJumpConfig.Models.viewmodels
                 Percent_YawTurn = Get_Percent_YawTurn(props.Percent_YawTurn),
 
                 Percent_Look = Get_Percent_Look(props.Percent_Look),
+                Percent_LookStrength = Get_Percent_LookStrength(props.Percent_LookStrength),
 
                 Percent_LatchAfterJump = Get_Percent_LatchAfterJump(props.Percent_LatchAfterJump),
+                WallAttract_DistanceMax = Get_WallAttract_DistanceMax(props.WallAttract_DistanceMax),
+                WallAttract_Accel = Get_WallAttract_Accel(props.WallAttract_Accel),
+                WallAttract_Pow = Get_WallAttract_Pow(props.WallAttract_Pow),
+                WallAttract_Antigrav = Get_WallAttract_Antigrav(props.WallAttract_Antigrav),
             };
         }
 
@@ -141,9 +151,30 @@ namespace WallJumpConfig.Models.viewmodels
         {
             return VM_Slider.FromModel(SliderPropType.Percent, "Look Influence %", 0, 1, value, false);
         }
+        public static VM_Slider Get_Percent_LookStrength(double value)
+        {
+            return VM_Slider.FromModel(SliderPropType.Percent, "Look Strength %", 0, 1, value, false);
+        }
         public static VM_Slider Get_Percent_LatchAfterJump(double value)
         {
             return VM_Slider.FromModel(SliderPropType.Percent, "Latch After Jump %", 0, 1, value, false);
+        }
+
+        public static VM_Slider Get_WallAttract_DistanceMax(double value)
+        {
+            return VM_Slider.FromModel(SliderPropType.Other, "WallAttract Distance", 1.2, 16, value, false);
+        }
+        public static VM_Slider Get_WallAttract_Accel(double value)
+        {
+            return VM_Slider.FromModel(SliderPropType.Other, "WallAttract Accel", 4, 24, value, false);
+        }
+        public static VM_Slider Get_WallAttract_Pow(double value)
+        {
+            return VM_Slider.FromModel(SliderPropType.Other, "WallAttract Pow", 1, 12, value, false);
+        }
+        public static VM_Slider Get_WallAttract_Antigrav(double value)
+        {
+            return VM_Slider.FromModel(SliderPropType.Other, "WallAttract AntiGrav", 0, 1.5, value, false);
         }
     }
 }

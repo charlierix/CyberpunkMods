@@ -469,7 +469,12 @@ namespace WallJumpConfig
                         Percent_Away = 0,
                         Percent_YawTurn = 0,
                         Percent_Look = 0.25,
+                        Percent_LookStrength = 1,
                         Percent_LatchAfterJump = 0,
+                        WallAttract_DistanceMax = 6,
+                        WallAttract_Accel = 8,
+                        WallAttract_Pow = 4,
+                        WallAttract_Antigrav = 0.666667,
                     },
 
                     Props_DirectAway = new PropsAtAngle()
@@ -479,7 +484,12 @@ namespace WallJumpConfig
                         Percent_Away = 1,
                         Percent_YawTurn = 0,
                         Percent_Look = 0.75,
+                        Percent_LookStrength = 1,
                         Percent_LatchAfterJump = 0,
+                        WallAttract_DistanceMax = 6,
+                        WallAttract_Accel = 8,
+                        WallAttract_Pow = 4,
+                        WallAttract_Antigrav = 0.666667,
                     },
 
                     Props_Extra = new PropsAtAngle[0],

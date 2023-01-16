@@ -98,8 +98,13 @@ namespace WallJumpConfig
                     o.Percent_Along,
                     o.Percent_Away,
                     o.Percent_YawTurn,
-                    o.Percent_LatchAfterJump,
                     o.Percent_Look,
+                    o.Percent_LookStrength,
+                    o.Percent_LatchAfterJump,
+                    o.WallAttract_DistanceMax,
+                    o.WallAttract_Accel,
+                    o.WallAttract_Pow,
+                    o.WallAttract_Antigrav,
                 });
 
             foreach (VM_Slider prop in props)
@@ -120,8 +125,13 @@ namespace WallJumpConfig
             panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Along %", o => o.Percent_Along));
             panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Away %", o => o.Percent_Away));
             panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Yaw Turn %", o => o.Percent_YawTurn));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Latch %", o => o.Percent_LatchAfterJump, true));
             panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Look %", o => o.Percent_Look));
+            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Look Strength %", o => o.Percent_LookStrength));
+            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Latch %", o => o.Percent_LatchAfterJump, true));
+            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Dist", o => o.WallAttract_DistanceMax));
+            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Accel", o => o.WallAttract_Accel));
+            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Pos", o => o.WallAttract_Pow));
+            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Antigrav", o => o.WallAttract_Antigrav));
         }
 
         private static FrameworkElement BuildPlot(VM_Horizontal horizontal, string title, Func<VM_PropsAtAngle, VM_Slider> getSlider, bool isThresholdPlot = false)

@@ -66,9 +66,15 @@
                                     <Separator Visibility="Hidden" Height="8"/>
                                     <ContentPresenter Content="{Binding Percent_YawTurn}" ContentTemplate="{StaticResource named_slider}"/>
                                     <Separator Visibility="Hidden" Height="8"/>
+                                    <ContentPresenter Content="{Binding Percent_Look}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter Content="{Binding Percent_LookStrength}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <Separator Visibility="Hidden" Height="8"/>
                                     <ContentPresenter Content="{Binding Percent_LatchAfterJump}" ContentTemplate="{StaticResource named_slider}"/>
                                     <Separator Visibility="Hidden" Height="8"/>
-                                    <ContentPresenter Content="{Binding Percent_Look}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter Content="{Binding WallAttract_DistanceMax}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter Content="{Binding WallAttract_Accel}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter Content="{Binding WallAttract_Pow}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter Content="{Binding WallAttract_Antigrav}" ContentTemplate="{StaticResource named_slider}"/>
                                 </StackPanel>
                             </Expander.Content>
                         </Expander>

@@ -4,5 +4,5 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WallJumpConfig">
-    <UniformGrid x:Name="panel" Rows="2"/>
+    <UniformGrid x:Name="panel" Columns="3"/>
 </UserControl>

@@ -89,6 +89,12 @@ namespace WallJumpConfig
                 vm_props.Percent_Away.Value = UtilityMath.GetScaledValue(prev.Percent_Away.Value, next.Percent_Away.Value, 0, 1, percent);
                 vm_props.Percent_YawTurn.Value = UtilityMath.GetScaledValue(prev.Percent_YawTurn.Value, next.Percent_YawTurn.Value, 0, 1, percent);
                 vm_props.Percent_Look.Value = UtilityMath.GetScaledValue(prev.Percent_Look.Value, next.Percent_Look.Value, 0, 1, percent);
+                vm_props.Percent_LookStrength.Value = UtilityMath.GetScaledValue(prev.Percent_LookStrength.Value, next.Percent_LookStrength.Value, 0, 1, percent);
+                vm_props.Percent_LatchAfterJump.Value = UtilityMath.GetScaledValue(prev.Percent_LatchAfterJump.Value, next.Percent_LatchAfterJump.Value, 0, 1, percent);
+                vm_props.WallAttract_DistanceMax.Value = UtilityMath.GetScaledValue(prev.WallAttract_DistanceMax.Value, next.WallAttract_DistanceMax.Value, 0, 1, percent);
+                vm_props.WallAttract_Accel.Value = UtilityMath.GetScaledValue(prev.WallAttract_Accel.Value, next.WallAttract_Accel.Value, 0, 1, percent);
+                vm_props.WallAttract_Pow.Value = UtilityMath.GetScaledValue(prev.WallAttract_Pow.Value, next.WallAttract_Pow.Value, 0, 1, percent);
+                vm_props.WallAttract_Antigrav.Value = UtilityMath.GetScaledValue(prev.WallAttract_Antigrav.Value, next.WallAttract_Antigrav.Value, 0, 1, percent);
             }
             catch (Exception ex)
             {
