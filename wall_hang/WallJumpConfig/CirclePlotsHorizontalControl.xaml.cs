@@ -16,6 +16,7 @@ namespace WallJumpConfig
         private const double RADIUS = 30;
         private const string TITLE = "CirclePlotsHorizontalControl";
 
+        private VM_Horizontal _listeningShow = null;
         private List<VM_Slider> _listeningProps = new List<VM_Slider>();
 
         public CirclePlotsHorizontalControl()
@@ -70,10 +71,25 @@ namespace WallJumpConfig
                 MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void Horizontal_ShowFilterChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Redraw();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void ReHookPropEvents()
         {
             // Clear
+            if (_listeningShow != null)
+                _listeningShow.ShowFilterChanged -= Horizontal_ShowFilterChanged;
+            _listeningShow = null;
+
             foreach (VM_Slider prop in _listeningProps)
             {
                 prop.ValueChanged -= PropValue_ValueChanged;
@@ -82,6 +98,10 @@ namespace WallJumpConfig
 
             if (_viewmodel_horizontal == null)
                 return;
+
+            // Visibility
+            _viewmodel_horizontal.ShowFilterChanged += Horizontal_ShowFilterChanged;
+            _listeningShow = _viewmodel_horizontal;
 
             // Extra Angles
             foreach (VM_Slider angle in _viewmodel_horizontal.ExtraAngles)
@@ -121,17 +141,32 @@ namespace WallJumpConfig
             if (_viewmodel_horizontal == null)
                 return;
 
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Up %", o => o.Percent_Up));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Along %", o => o.Percent_Along));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Away %", o => o.Percent_Away));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Yaw Turn %", o => o.Percent_YawTurn));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Look %", o => o.Percent_Look));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Look Strength %", o => o.Percent_LookStrength));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Latch %", o => o.Percent_LatchAfterJump, true));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Dist", o => o.WallAttract_DistanceMax));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Accel", o => o.WallAttract_Accel));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Pos", o => o.WallAttract_Pow));
-            panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Antigrav", o => o.WallAttract_Antigrav));
+            if (_viewmodel_horizontal.ShowUpAlongAway)
+            {
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Up %", o => o.Percent_Up));
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Along %", o => o.Percent_Along));
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Away %", o => o.Percent_Away));
+            }
+
+            if (_viewmodel_horizontal.ShowYaw)
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Yaw Turn %", o => o.Percent_YawTurn));
+
+            if (_viewmodel_horizontal.ShowLook)
+            {
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Look %", o => o.Percent_Look));
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Look Strength %", o => o.Percent_LookStrength));
+            }
+
+            if (_viewmodel_horizontal.ShowLatchPercent)
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Latch %", o => o.Percent_LatchAfterJump, true));
+
+            if (_viewmodel_horizontal.ShowWallAttract)
+            {
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Dist", o => o.WallAttract_DistanceMax));
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Accel", o => o.WallAttract_Accel));
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Pos", o => o.WallAttract_Pow));
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Antigrav", o => o.WallAttract_Antigrav));
+            }
         }
 
         private static FrameworkElement BuildPlot(VM_Horizontal horizontal, string title, Func<VM_PropsAtAngle, VM_Slider> getSlider, bool isThresholdPlot = false)

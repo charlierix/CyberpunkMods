@@ -28,4 +28,7 @@
         <Setter Property="Height" Value="16"/>
     </Style>
 
+    <Style TargetType="Image">
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+    </Style>    
 </ResourceDictionary>

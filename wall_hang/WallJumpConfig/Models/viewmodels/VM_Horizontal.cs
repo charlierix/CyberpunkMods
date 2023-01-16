@@ -10,7 +10,7 @@ using WallJumpConfig.Models.savewpf;
 
 namespace WallJumpConfig.Models.viewmodels
 {
-    public class VM_Horizontal
+    public class VM_Horizontal : DependencyObject
     {
         public VM_Horizontal()
         {
@@ -26,6 +26,198 @@ namespace WallJumpConfig.Models.viewmodels
         public VM_Slider Speed_ZeroStrength { get; set; }
 
         public VM_Slider Strength { get; set; }
+
+        public event EventHandler ShowFilterChanged = null;
+
+        // ------------- Show: UpAlongAway -------------
+
+        public bool ShowUpAlongAway
+        {
+            get { return (bool)GetValue(ShowUpAlongAwayProperty); }
+            set { SetValue(ShowUpAlongAwayProperty, value); }
+        }
+        public static readonly DependencyProperty ShowUpAlongAwayProperty = DependencyProperty.Register("ShowUpAlongAway", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnUpAlongAwayChanged));
+
+        private static void OnUpAlongAwayChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            VM_Horizontal parent = (VM_Horizontal)d;
+
+            parent.VisibilityUpAlongAway = parent.ShowUpAlongAway ?
+                Visibility.Visible :
+                Visibility.Collapsed;
+
+            parent.VisibilityUpAlongAwaySeparator = parent.ShowUpAlongAway ?
+                Visibility.Hidden :
+                Visibility.Collapsed;
+
+            parent.ShowFilterChanged?.Invoke(parent, new EventArgs());
+        }
+
+        public Visibility VisibilityUpAlongAway
+        {
+            get { return (Visibility)GetValue(VisibilityUpAlongAwayProperty); }
+            set { SetValue(VisibilityUpAlongAwayProperty, value); }
+        }
+        public static readonly DependencyProperty VisibilityUpAlongAwayProperty = DependencyProperty.Register("VisibilityUpAlongAway", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Visible));
+
+        public Visibility VisibilityUpAlongAwaySeparator
+        {
+            get { return (Visibility)GetValue(VisibilityUpAlongAwaySeparatorProperty); }
+            set { SetValue(VisibilityUpAlongAwaySeparatorProperty, value); }
+        }
+        public static readonly DependencyProperty VisibilityUpAlongAwaySeparatorProperty = DependencyProperty.Register("VisibilityUpAlongAwaySeparator", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Hidden));
+
+        // ------------- Show: Yaw -------------
+
+        public bool ShowYaw
+        {
+            get { return (bool)GetValue(ShowYawProperty); }
+            set { SetValue(ShowYawProperty, value); }
+        }
+        public static readonly DependencyProperty ShowYawProperty = DependencyProperty.Register("ShowYaw", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnYawChanged));
+
+        private static void OnYawChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            VM_Horizontal parent = (VM_Horizontal)d;
+
+            parent.VisibilityYaw = parent.ShowYaw ?
+                Visibility.Visible :
+                Visibility.Collapsed;
+
+            parent.VisibilityYawSeparator = parent.ShowYaw ?
+                Visibility.Hidden :
+                Visibility.Collapsed;
+
+            parent.ShowFilterChanged?.Invoke(parent, new EventArgs());
+        }
+
+        public Visibility VisibilityYaw
+        {
+            get { return (Visibility)GetValue(VisibilityYawProperty); }
+            set { SetValue(VisibilityYawProperty, value); }
+        }
+        public static readonly DependencyProperty VisibilityYawProperty = DependencyProperty.Register("VisibilityYaw", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Visible));
+
+        public Visibility VisibilityYawSeparator
+        {
+            get { return (Visibility)GetValue(VisibilityYawSeparatorProperty); }
+            set { SetValue(VisibilityYawSeparatorProperty, value); }
+        }
+        public static readonly DependencyProperty VisibilityYawSeparatorProperty = DependencyProperty.Register("VisibilityYawSeparator", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Hidden));
+
+        // ------------- Show: Look -------------
+
+        public bool ShowLook
+        {
+            get { return (bool)GetValue(ShowLookProperty); }
+            set { SetValue(ShowLookProperty, value); }
+        }
+        public static readonly DependencyProperty ShowLookProperty = DependencyProperty.Register("ShowLook", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnLookChanged));
+
+        private static void OnLookChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            VM_Horizontal parent = (VM_Horizontal)d;
+
+            parent.VisibilityLook = parent.ShowLook ?
+                Visibility.Visible :
+                Visibility.Collapsed;
+
+            parent.VisibilityLookSeparator = parent.ShowLook ?
+                Visibility.Hidden :
+                Visibility.Collapsed;
+
+            parent.ShowFilterChanged?.Invoke(parent, new EventArgs());
+        }
+
+        public Visibility VisibilityLook
+        {
+            get { return (Visibility)GetValue(VisibilityLookProperty); }
+            set { SetValue(VisibilityLookProperty, value); }
+        }
+        public static readonly DependencyProperty VisibilityLookProperty = DependencyProperty.Register("VisibilityLook", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Visible));
+
+        public Visibility VisibilityLookSeparator
+        {
+            get { return (Visibility)GetValue(VisibilityLookSeparatorProperty); }
+            set { SetValue(VisibilityLookSeparatorProperty, value); }
+        }
+        public static readonly DependencyProperty VisibilityLookSeparatorProperty = DependencyProperty.Register("VisibilityLookSeparator", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Hidden));
+
+        // ------------- Show: LatchPercent -------------
+
+        public bool ShowLatchPercent
+        {
+            get { return (bool)GetValue(ShowLatchPercentProperty); }
+            set { SetValue(ShowLatchPercentProperty, value); }
+        }
+        public static readonly DependencyProperty ShowLatchPercentProperty = DependencyProperty.Register("ShowLatchPercent", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnLatchPercentChanged));
+
+        private static void OnLatchPercentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            VM_Horizontal parent = (VM_Horizontal)d;
+
+            parent.VisibilityLatchPercent = parent.ShowLatchPercent ?
+                Visibility.Visible :
+                Visibility.Collapsed;
+
+            parent.VisibilityLatchPercentSeparator = parent.ShowLatchPercent ?
+                Visibility.Hidden :
+                Visibility.Collapsed;
+
+            parent.ShowFilterChanged?.Invoke(parent, new EventArgs());
+        }
+
+        public Visibility VisibilityLatchPercent
+        {
+            get { return (Visibility)GetValue(VisibilityLatchPercentProperty); }
+            set { SetValue(VisibilityLatchPercentProperty, value); }
+        }
+        public static readonly DependencyProperty VisibilityLatchPercentProperty = DependencyProperty.Register("VisibilityLatchPercent", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Visible));
+
+        public Visibility VisibilityLatchPercentSeparator
+        {
+            get { return (Visibility)GetValue(VisibilityLatchPercentSeparatorProperty); }
+            set { SetValue(VisibilityLatchPercentSeparatorProperty, value); }
+        }
+        public static readonly DependencyProperty VisibilityLatchPercentSeparatorProperty = DependencyProperty.Register("VisibilityLatchPercentSeparator", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Hidden));
+
+        // ------------- Show: WallAttract -------------
+
+        public bool ShowWallAttract
+        {
+            get { return (bool)GetValue(ShowWallAttractProperty); }
+            set { SetValue(ShowWallAttractProperty, value); }
+        }
+        public static readonly DependencyProperty ShowWallAttractProperty = DependencyProperty.Register("ShowWallAttract", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnWallAttractChanged));
+
+        private static void OnWallAttractChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            VM_Horizontal parent = (VM_Horizontal)d;
+
+            parent.VisibilityWallAttract = parent.ShowWallAttract ?
+                Visibility.Visible :
+                Visibility.Collapsed;
+
+            parent.VisibilityWallAttractSeparator = parent.ShowWallAttract ?
+                Visibility.Hidden :
+                Visibility.Collapsed;
+
+            parent.ShowFilterChanged?.Invoke(parent, new EventArgs());
+        }
+
+        public Visibility VisibilityWallAttract
+        {
+            get { return (Visibility)GetValue(VisibilityWallAttractProperty); }
+            set { SetValue(VisibilityWallAttractProperty, value); }
+        }
+        public static readonly DependencyProperty VisibilityWallAttractProperty = DependencyProperty.Register("VisibilityWallAttract", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Visible));
+
+        public Visibility VisibilityWallAttractSeparator
+        {
+            get { return (Visibility)GetValue(VisibilityWallAttractSeparatorProperty); }
+            set { SetValue(VisibilityWallAttractSeparatorProperty, value); }
+        }
+        public static readonly DependencyProperty VisibilityWallAttractSeparatorProperty = DependencyProperty.Register("VisibilityWallAttractSeparator", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Hidden));
 
         // ------------- Helper Methods -------------
         public void AddExtraAngle()

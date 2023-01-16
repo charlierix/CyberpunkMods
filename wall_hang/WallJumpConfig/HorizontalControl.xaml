@@ -21,6 +21,12 @@
                 <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"/>
                 <Setter Property="Margin" Value="2"/>
             </Style>
+
+            <Style x:Key="filterButton" TargetType="ToggleButton">
+                <Setter Property="Padding" Value="4,1"/>
+                <Setter Property="Margin" Value="6,0,0,0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -36,6 +42,16 @@
             <ItemsControl ItemsSource="{Binding ExtraAngles}" ItemTemplate="{StaticResource named_slider}"/>
 
             <Label Content="Props at Angle" Style="{StaticResource label_header}"/>
+            <Border ToolTip="Toggle Visibility" Background="#10808080" BorderBrush="#20808080" BorderThickness="1" CornerRadius="4">
+                <StackPanel Orientation="Horizontal" Margin="4" ToggleButton.Checked="Filter_Checked" ToggleButton.Unchecked="Filter_Checked">
+                    <Image Width="12" VerticalAlignment="Center" Source="pack://application:,,,/resources/filter2.png"/>
+                    <ToggleButton x:Name="chkUpAlongAway" IsChecked="True" Content="up/along/away" Style="{StaticResource filterButton}"/>
+                    <ToggleButton x:Name="chkYaw" IsChecked="True" Content="yaw" Style="{StaticResource filterButton}"/>
+                    <ToggleButton x:Name="chkLook" IsChecked="True" Content="look" Style="{StaticResource filterButton}"/>
+                    <ToggleButton x:Name="chkLatchPercent" IsChecked="True" Content="latch%" Style="{StaticResource filterButton}"/>
+                    <ToggleButton x:Name="chkWallAttract" IsChecked="True" Content="wall attract" Style="{StaticResource filterButton}"/>
+                </StackPanel>
+            </Border>
             <ItemsControl ItemsSource="{Binding PropsAtAngles}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -60,21 +76,25 @@
                             </Expander.Header>
                             <Expander.Content>
                                 <StackPanel>
-                                    <ContentPresenter Content="{Binding Percent_Up}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <ContentPresenter Content="{Binding Percent_Along}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <ContentPresenter Content="{Binding Percent_Away}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <Separator Visibility="Hidden" Height="8"/>
-                                    <ContentPresenter Content="{Binding Percent_YawTurn}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <Separator Visibility="Hidden" Height="8"/>
-                                    <ContentPresenter Content="{Binding Percent_Look}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <ContentPresenter Content="{Binding Percent_LookStrength}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <Separator Visibility="Hidden" Height="8"/>
-                                    <ContentPresenter Content="{Binding Percent_LatchAfterJump}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <Separator Visibility="Hidden" Height="8"/>
-                                    <ContentPresenter Content="{Binding WallAttract_DistanceMax}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <ContentPresenter Content="{Binding WallAttract_Accel}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <ContentPresenter Content="{Binding WallAttract_Pow}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <ContentPresenter Content="{Binding WallAttract_Antigrav}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter Content="{Binding Percent_Up}" Visibility="{Binding DataContext.VisibilityUpAlongAway, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter Content="{Binding Percent_Along}" Visibility="{Binding DataContext.VisibilityUpAlongAway, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter Content="{Binding Percent_Away}" Visibility="{Binding DataContext.VisibilityUpAlongAway, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <Separator Visibility="{Binding DataContext.VisibilityUpAlongAwaySeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
+                                    
+                                    <ContentPresenter Content="{Binding Percent_YawTurn}" Visibility="{Binding DataContext.VisibilityYaw, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <Separator Visibility="{Binding DataContext.VisibilityYawSeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
+                                    
+                                    <ContentPresenter Content="{Binding Percent_Look}" Visibility="{Binding DataContext.VisibilityLook, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter Content="{Binding Percent_LookStrength}" Visibility="{Binding DataContext.VisibilityLook, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <Separator Visibility="{Binding DataContext.VisibilityLookSeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
+                                    
+                                    <ContentPresenter Content="{Binding Percent_LatchAfterJump}" Visibility="{Binding DataContext.VisibilityLatchPercent, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <Separator Visibility="{Binding DataContext.VisibilityLatchPercentSeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
+                                    
+                                    <ContentPresenter Content="{Binding WallAttract_DistanceMax}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter Content="{Binding WallAttract_Accel}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter Content="{Binding WallAttract_Pow}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <ContentPresenter Content="{Binding WallAttract_Antigrav}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
                                 </StackPanel>
                             </Expander.Content>
                         </Expander>

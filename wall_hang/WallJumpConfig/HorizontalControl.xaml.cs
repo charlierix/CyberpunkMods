@@ -102,6 +102,35 @@ namespace WallJumpConfig
             }
         }
 
+        private void Filter_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var viewmodel = DataContext as VM_Horizontal;
+                if (viewmodel == null)
+                    return;
+
+                if (e.OriginalSource == chkUpAlongAway)
+                    viewmodel.ShowUpAlongAway = !viewmodel.ShowUpAlongAway;
+
+                else if (e.OriginalSource == chkYaw)
+                    viewmodel.ShowYaw = !viewmodel.ShowYaw;
+
+                else if (e.OriginalSource == chkLook)
+                    viewmodel.ShowLook = !viewmodel.ShowLook;
+
+                else if (e.OriginalSource == chkLatchPercent)
+                    viewmodel.ShowLatchPercent = !viewmodel.ShowLatchPercent;
+
+                else if (e.OriginalSource == chkWallAttract)
+                    viewmodel.ShowWallAttract = !viewmodel.ShowWallAttract;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private static double GetAnglePercent(int index, VM_Horizontal vm_horz)
         {
             var angles = CurveBuilder.GetPoints_HorizontalProps_Degrees(vm_horz, o => 0);       // using this, because the sliders aren't reliable.  They may have a slider value less than a prev angle.  The curve builder has logic to ignore stuff like that
