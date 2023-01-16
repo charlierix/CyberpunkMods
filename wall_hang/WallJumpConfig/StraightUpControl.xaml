@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WallJumpConfig">
+             xmlns:local="clr-namespace:WallJumpConfig" DataContextChanged="UserControl_DataContextChanged" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,14 +15,17 @@
     </UserControl.Resources>
 
     <StackPanel Grid.IsSharedSizeScope="True">
-        <CheckBox IsChecked="{Binding HasStraightUp}" Content="Has Straight Up" HorizontalAlignment="Center" Margin="0,6"/>
-        <Separator Visibility="Hidden" Height="8"/>
-        <ContentPresenter Content="{Binding Angle_StraightUp}" ContentTemplate="{StaticResource named_slider}"/>
-        <ContentPresenter Content="{Binding Angle_Standard}" ContentTemplate="{StaticResource named_slider}"/>
-        <Separator Visibility="Hidden" Height="8"/>
-        <ContentPresenter Content="{Binding Speed_FullStrength}" ContentTemplate="{StaticResource named_slider}"/>
-        <ContentPresenter Content="{Binding Speed_ZeroStrength}" ContentTemplate="{StaticResource named_slider}"/>
-        <Separator Visibility="Hidden" Height="8"/>
-        <ContentPresenter Content="{Binding Strength}" ContentTemplate="{StaticResource named_slider}"/>
+        <CheckBox IsChecked="{Binding HasStraightUp}" Content="Has Straight Up" HorizontalAlignment="Center" Margin="0,6" Checked="HasStraightUp_Checked" Unchecked="HasStraightUp_Checked"/>
+
+        <StackPanel x:Name="panelDetails">
+            <Separator Visibility="Hidden" Height="8"/>
+            <ContentPresenter Content="{Binding Angle_StraightUp}" ContentTemplate="{StaticResource named_slider}"/>
+            <ContentPresenter Content="{Binding Angle_Standard}" ContentTemplate="{StaticResource named_slider}"/>
+            <Separator Visibility="Hidden" Height="8"/>
+            <ContentPresenter Content="{Binding Speed_FullStrength}" ContentTemplate="{StaticResource named_slider}"/>
+            <ContentPresenter Content="{Binding Speed_ZeroStrength}" ContentTemplate="{StaticResource named_slider}"/>
+            <Separator Visibility="Hidden" Height="8"/>
+            <ContentPresenter Content="{Binding Strength}" ContentTemplate="{StaticResource named_slider}"/>
+        </StackPanel>
     </StackPanel>
 </UserControl>

@@ -110,7 +110,7 @@ namespace WallJumpConfig
 
             canvas.Children.Add(StickFigureUtil.GetGraphic_Vertical_Wall(center + new Vector(Math.Max(StickFigureUtil.VERT_RADIUS1, StickFigureUtil.VERT_RADIUS2) + 24, 0)));
 
-            if (_viewmodel_straightup == null)
+            if (_viewmodel_straightup == null || !_viewmodel_straightup.HasStraightUp)
                 return;
 
             var angles = new[]
