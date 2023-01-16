@@ -17,6 +17,12 @@ namespace WallJumpConfig.Models.savewpf
 
         public double Strength { get; init; }
 
+        public bool LatchAfterJump { get; init; }
+        public double WallAttract_DistanceMax { get; init; }
+        public double WallAttract_Accel { get; init; }
+        public double WallAttract_Pow { get; init; }
+        public double WallAttract_Antigrav { get; init; }
+
         // ------------- Helper Methods -------------
         public static SaveWPF_Vertical_StraightUp FromModel(VM_StraightUp model)
         {
@@ -29,6 +35,12 @@ namespace WallJumpConfig.Models.savewpf
                 Speed_ZeroStrength = model.Speed_ZeroStrength.Value,
 
                 Strength = model.Strength.Value,
+
+                LatchAfterJump = model.LatchAfterJump,
+                WallAttract_DistanceMax = model.WallAttract_DistanceMax.Value,
+                WallAttract_Accel = model.WallAttract_Accel.Value,
+                WallAttract_Pow = model.WallAttract_Pow.Value,
+                WallAttract_Antigrav = model.WallAttract_Antigrav.Value,
             };
         }
     }

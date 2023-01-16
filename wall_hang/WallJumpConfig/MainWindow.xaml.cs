@@ -509,6 +509,12 @@ namespace WallJumpConfig
 
                     Speed_FullStrength = 3,
                     Speed_ZeroStrength = 7,
+
+                    LatchAfterJump = false,
+                    WallAttract_DistanceMax = 6,
+                    WallAttract_Accel = 8,
+                    WallAttract_Pow = 4,
+                    WallAttract_Antigrav = 0.666667,
                 },
             };
         }

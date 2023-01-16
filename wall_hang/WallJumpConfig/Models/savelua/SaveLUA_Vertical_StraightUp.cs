@@ -19,6 +19,12 @@ namespace WallJumpConfig.Models.savelua
 
         public double strength { get; init; }
 
+        public bool latch_after_jump { get; init; }
+        public double wallattract_distance_max { get; init; }
+        public double wallattract_accel { get; init; }
+        public double wallattract_pow { get; init; }
+        public double wallattract_antigrav { get; init; }
+
         // ------------- Helper Methods -------------
         public static SaveLUA_Vertical_StraightUp FromModel(SaveWPF_Vertical_StraightUp model, SaveWPF_Horizontal model_horz)
         {
@@ -32,6 +38,12 @@ namespace WallJumpConfig.Models.savelua
                 percent_at_speed = SaveLUA_Horizontal.GetPercentAtSpeed(model.Speed_FullStrength, model.Speed_ZeroStrength),
 
                 strength = model.Strength,
+
+                latch_after_jump = model.LatchAfterJump,
+                wallattract_distance_max = model.WallAttract_DistanceMax,
+                wallattract_accel = model.WallAttract_Accel,
+                wallattract_pow = model.WallAttract_Pow,
+                wallattract_antigrav = model.WallAttract_Antigrav,
             };
         }
 

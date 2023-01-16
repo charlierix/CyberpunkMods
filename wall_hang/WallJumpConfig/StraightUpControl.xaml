@@ -26,6 +26,13 @@
             <ContentPresenter Content="{Binding Speed_ZeroStrength}" ContentTemplate="{StaticResource named_slider}"/>
             <Separator Visibility="Hidden" Height="8"/>
             <ContentPresenter Content="{Binding Strength}" ContentTemplate="{StaticResource named_slider}"/>
+            <Separator Visibility="Hidden" Height="8"/>
+            <CheckBox IsChecked="{Binding LatchAfterJump}" Content="Latch After Jump"/>
+            <Separator Visibility="Hidden" Height="8"/>
+            <ContentPresenter Content="{Binding WallAttract_DistanceMax}" ContentTemplate="{StaticResource named_slider}"/>
+            <ContentPresenter Content="{Binding WallAttract_Accel}" ContentTemplate="{StaticResource named_slider}"/>
+            <ContentPresenter Content="{Binding WallAttract_Pow}" ContentTemplate="{StaticResource named_slider}"/>
+            <ContentPresenter Content="{Binding WallAttract_Antigrav}" ContentTemplate="{StaticResource named_slider}"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

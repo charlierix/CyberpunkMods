@@ -38,10 +38,17 @@ namespace WallJumpConfig.Models.savewpf
                 Percent_Up = model.Percent_Up.Value,
                 Percent_Along = model.Percent_Along.Value,
                 Percent_Away = model.Percent_Away.Value,
+
                 Percent_YawTurn = model.Percent_YawTurn.Value,
+
                 Percent_Look = model.Percent_Look.Value,
                 Percent_LookStrength = model.Percent_LookStrength.Value,
+
                 Percent_LatchAfterJump = model.Percent_LatchAfterJump.Value,
+                WallAttract_DistanceMax = model.WallAttract_DistanceMax.Value,
+                WallAttract_Accel = model.WallAttract_Accel.Value,
+                WallAttract_Pow = model.WallAttract_Pow.Value,
+                WallAttract_Antigrav = model.WallAttract_Antigrav.Value,
             };
         }
     }

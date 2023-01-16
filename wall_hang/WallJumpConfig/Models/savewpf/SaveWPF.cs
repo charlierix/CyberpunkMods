@@ -20,7 +20,7 @@ namespace WallJumpConfig.Models.savewpf
             var save_horz = SaveWPF_Horizontal.FromModel(horizontal);
 
             SaveWPF_Vertical_StraightUp save_vert = null;
-            if (straightUp != null && straightUp.HasStraightUp)
+            if (straightUp != null)
                 save_vert = SaveWPF_Vertical_StraightUp.FromModel(straightUp);
 
             return new SaveWPF()

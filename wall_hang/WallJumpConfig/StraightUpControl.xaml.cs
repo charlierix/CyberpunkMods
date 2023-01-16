@@ -61,6 +61,5 @@ namespace WallJumpConfig
                 panelDetails.Visibility = Visibility.Visible;
             }
         }
-
     }
 }

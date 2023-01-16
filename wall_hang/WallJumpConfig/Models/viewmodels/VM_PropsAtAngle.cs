@@ -159,7 +159,6 @@ namespace WallJumpConfig.Models.viewmodels
         {
             return VM_Slider.FromModel(SliderPropType.Percent, "Latch After Jump %", 0, 1, value, false);
         }
-
         public static VM_Slider Get_WallAttract_DistanceMax(double value)
         {
             return VM_Slider.FromModel(SliderPropType.Other, "WallAttract Distance", 1.2, 16, value, false);

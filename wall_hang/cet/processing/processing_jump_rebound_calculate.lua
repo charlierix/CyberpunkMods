@@ -20,18 +20,19 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     local impulse_y = 0
     local impulse_z = 0
     local yaw_turn_radians = 0
+    local should_relatch = false
 
     -- Special logic for jumping straight up when facing the wall and looking up
-    local percent_horz, play_fail_sound1, vert_x, vert_y, vert_z = this.GetImpulse_Vertical(o, player.rebound.has_straightup, player.rebound.straight_up, up_dot, horz_dot, up_adjusted)
+    local percent_horz, play_fail_sound1, vert_x, vert_y, vert_z, should_relatch1 = this.GetImpulse_Vertical(o, player.rebound.has_straightup, player.rebound.straight_up, up_dot, horz_dot, up_adjusted)
     impulse_x = impulse_x + vert_x
     impulse_y = impulse_y + vert_y
     impulse_z = impulse_z + vert_z
+    should_relatch = should_relatch or should_relatch1
 
     local play_fail_sound2 = false
-    local should_relatch = false
     if percent_horz > 0 then
         -- Standard jump logic (the term horizontal is just to differentiate from straight up)
-        local horz_x, horz_y, horz_z, yaw_turn_radians1, should_relatch1, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, player.rebound.horizontal, o.vel)
+        local horz_x, horz_y, horz_z, yaw_turn_radians1, should_relatch2, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, player.rebound.horizontal, o.vel)
 
         impulse_x = impulse_x + (horz_x * percent_horz)
         impulse_y = impulse_y + (horz_y * percent_horz)
@@ -39,7 +40,7 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
 
         yaw_turn_radians = yaw_turn_radians1 * percent_horz
 
-        should_relatch = should_relatch1
+        should_relatch = should_relatch or should_relatch2
 
         play_fail_sound2 = play_fail_sound3
     end
@@ -78,14 +79,14 @@ end
 
 function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_dot, up_adjusted)
     if not has_straightup then
-        return 1, false, 0, 0, 0
+        return 1, false, 0, 0, 0, false
     end
 
     --NOTE: there is the possibility of a blend between straight up and horizontal jumping
     local straightup_percent = Clamp(0, 1, straight_up.percent:Evaluate(up_dot))
 
     if IsNearZero(straightup_percent) then
-        return 1, false, 0, 0, 0
+        return 1, false, 0, 0, 0, false
     end
 
     local percent_vert = Clamp(0, 1, straight_up.percent_vert_whenup:Evaluate(horz_dot))
@@ -94,12 +95,12 @@ function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_d
     straightup_percent = straightup_percent * percent_vert
 
     if IsNearZero(straightup_percent) then
-        return percent_horz, false, 0, 0, 0
+        return percent_horz, false, 0, 0, 0, false
     end
 
     local percent_speed = this.GetSpeedAdjustedPercent(o.vel, up_adjusted, straight_up.percent_at_speed)
     if IsNearZero(percent_speed) then
-        return percent_horz, true, 0, 0, 0      -- playing the fail sound because of over speed
+        return percent_horz, true, 0, 0, 0, false      -- playing the fail sound because of over speed
     end
 
     return
@@ -107,7 +108,8 @@ function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_d
         false,
         up_adjusted.x * straight_up.strength * straightup_percent * percent_speed,
         up_adjusted.y * straight_up.strength * straightup_percent * percent_speed,
-        up_adjusted.z * straight_up.strength * straightup_percent * percent_speed
+        up_adjusted.z * straight_up.strength * straightup_percent * percent_speed,
+        straight_up.latch_after_jump
 end
 
 function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz, horizontal, velocity)

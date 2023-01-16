@@ -73,7 +73,12 @@ namespace WallJumpConfig.Models.viewmodels
                 Percent_Away = GetAvg(prev_prop, next_prop, o => o.Percent_Away, () => VM_PropsAtAngle.Get_Percent_Away(0.5)),
                 Percent_YawTurn = GetAvg(prev_prop, next_prop, o => o.Percent_YawTurn, () => VM_PropsAtAngle.Get_Percent_YawTurn(0)),
                 Percent_Look = GetAvg(prev_prop, next_prop, o => o.Percent_Look, () => VM_PropsAtAngle.Get_Percent_Look(0.5)),
+                Percent_LookStrength = GetAvg(prev_prop, next_prop, o => o.Percent_LookStrength, () => VM_PropsAtAngle.Get_Percent_LookStrength(0.5)),
                 Percent_LatchAfterJump = GetAvg(prev_prop, next_prop, o => o.Percent_LatchAfterJump, () => VM_PropsAtAngle.Get_Percent_LatchAfterJump(0.5)),
+                WallAttract_DistanceMax = GetAvg(prev_prop, next_prop, o => o.WallAttract_DistanceMax, () => VM_PropsAtAngle.Get_WallAttract_DistanceMax(0.5)),
+                WallAttract_Accel = GetAvg(prev_prop, next_prop, o => o.WallAttract_Accel, () => VM_PropsAtAngle.Get_WallAttract_Accel(0.5)),
+                WallAttract_Pow = GetAvg(prev_prop, next_prop, o => o.WallAttract_Pow, () => VM_PropsAtAngle.Get_WallAttract_Pow(0.5)),
+                WallAttract_Antigrav = GetAvg(prev_prop, next_prop, o => o.WallAttract_Antigrav, () => VM_PropsAtAngle.Get_WallAttract_Antigrav(0.5)),
             };
 
             AddExtraAngle(angle, props);
