@@ -383,7 +383,7 @@ namespace WallJumpConfig
 
             // Build snapshots
             SaveWPF savewpf = SaveWPF.FromModel(_viewmodel.Horizontal, _viewmodel.StraightUp);
-            SaveLUA savelua = SaveLUA.FromModel(savewpf.Horizontal, savewpf.Vertical_StraightUp);
+            SaveLUA savelua = SaveLUA.FromModel(savewpf);
 
             // Save Preset
             string filename = UtilityCore.EscapeFilename_Windows(cboName.Text);
@@ -404,11 +404,12 @@ namespace WallJumpConfig
         }
         private void LoadSession(SaveWPF model)
         {
-            var horizontal = VM_Horizontal.FromModel(model.Horizontal);
+            var horizontal = VM_Horizontal.FromModel(model.Horizontal, model.Description);
             var vertical = VM_StraightUp.FromModel(model.Vertical_StraightUp);
 
             horizontalControl.DataContext = horizontal;
             straightupControl.DataContext = vertical;
+            txtDescription.DataContext = horizontal;
 
             horizontalStickFigure.ViewModelHorizontal = horizontal;
             verticalStickFigure.ViewModelStraightUp = vertical;

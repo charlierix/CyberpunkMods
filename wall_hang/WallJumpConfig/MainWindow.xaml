@@ -40,6 +40,9 @@
                 <TabItem x:Name="tabVertical" Header="Straight Up">
                     <local:StraightUpControl x:Name="straightupControl" Margin="8"/>
                 </TabItem>
+                <TabItem Header="Description">
+                    <TextBox x:Name="txtDescription" Text="{Binding Description}" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" BorderThickness="0" BorderBrush="Transparent" Margin="1"/>
+                </TabItem>
             </TabControl>
 
             <Grid Grid.Column="2">

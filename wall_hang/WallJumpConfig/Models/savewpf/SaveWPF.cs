@@ -9,6 +9,8 @@ namespace WallJumpConfig.Models.savewpf
 {
     public record SaveWPF
     {
+        public string Description { get; init; }
+
         public SaveWPF_Horizontal Horizontal { get; init; }
         public SaveWPF_Vertical_StraightUp Vertical_StraightUp { get; init; }
 
@@ -25,6 +27,7 @@ namespace WallJumpConfig.Models.savewpf
 
             return new SaveWPF()
             {
+                Description = horizontal.Description,
                 Horizontal = save_horz,
                 Vertical_StraightUp = save_vert,
             };

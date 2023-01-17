@@ -12,6 +12,14 @@ namespace WallJumpConfig.Models.viewmodels
 {
     public class VM_Horizontal : DependencyObject
     {
+        // This belongs in a parent class, but there isn't one.  So just putting it here
+        public string Description
+        {
+            get { return (string)GetValue(DescriptionProperty); }
+            set { SetValue(DescriptionProperty, value); }
+        }
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(VM_Horizontal), new PropertyMetadata(""));
+
         public VM_Horizontal()
         {
             ExtraAngles = new ObservableCollection<VM_Slider>();
@@ -283,16 +291,15 @@ namespace WallJumpConfig.Models.viewmodels
             PropsAtAngles.Insert(ExtraAngles.Count, props);     // props has an extra item at [0], so using the 1 based extra.count as the 0 based insert index
         }
 
-        public static VM_Horizontal FromModel(SaveWPF_Horizontal model)
+        public static VM_Horizontal FromModel(SaveWPF_Horizontal model, string description)
         {
             var retVal = new VM_Horizontal()
             {
+                Description = description,
                 Speed_FullStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - full strength", 0, 18, model.Speed_FullStrength, false),
                 Speed_ZeroStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - zero strength", 0, 18, model.Speed_ZeroStrength, false),
                 Strength = VM_Slider.FromModel(SliderPropType.Other, "Jump Strength", 0, 24, model.Strength, false),
             };
-
-            new VM_Horizontal();
 
             retVal.PropsAtAngles.Add(VM_PropsAtAngle.FromModel(model.Props_DirectFaceWall, "Directly Facing Wall", null));
             retVal.PropsAtAngles.Add(VM_PropsAtAngle.FromModel(model.Props_DirectAway, "Directly Away From Wall", null));
