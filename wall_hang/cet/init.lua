@@ -185,6 +185,7 @@ local vars =
 
     -- Populated in Transition_ToJump_TeleTurn and Transition_ToJump_Impulse to tell Transition_ToStandard to set startStopTracker.relatch_time
     --should_relatch,
+    --wallattract,      -- this overrides wall attraction props during a relatch (driven by the jump config)
 
     -- This is needed by Transition_ToStandard to tell it when to relatch
     --startStopTracker,
@@ -239,7 +240,7 @@ registerForEvent("onInit", function()
     Observe('QuestTrackerGameController', 'OnInitialize', function()
         if not isLoaded then
             isLoaded = true
-            Transition_ToStandard(vars, const, debug, o, false)
+            Transition_ToStandard(vars, const, debug, o, false, nil)
         end
     end)
 
@@ -289,7 +290,7 @@ registerForEvent("onInit", function()
     startStopTracker = InputTracker_StartStop:new(o, vars, keys, const)
     vars.startStopTracker = startStopTracker
 
-    Transition_ToStandard(vars, const, debug, o, false)
+    Transition_ToStandard(vars, const, debug, o, false, nil)
     TransitionWindows_Main(vars_ui, const)
 end)
 
@@ -301,7 +302,7 @@ end)
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = false
     if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
-        Transition_ToStandard(vars, const, debug, o, false)
+        Transition_ToStandard(vars, const, debug, o, false, nil)
         do return end
     end
 
@@ -309,7 +310,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
     if not o.player then
-        Transition_ToStandard(vars, const, debug, o, false)
+        Transition_ToStandard(vars, const, debug, o, false, nil)
         do return end
     end
 
@@ -322,7 +323,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
-        Transition_ToStandard(vars, const, debug, o, false)
+        Transition_ToStandard(vars, const, debug, o, false, nil)
         do return end
     end
 
@@ -340,7 +341,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     elseif not o:Custom_CurrentlyFlying_Update() then       -- velocity is considered to be zero
         -- Was hanging/jumping, but another mod took over
-        Transition_ToStandard(vars, const, debug, o, false)
+        Transition_ToStandard(vars, const, debug, o, false, nil)
 
     elseif vars.flightMode == const.flightModes.hang then
         -- Hanging from a wall
@@ -367,7 +368,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     else
         print("Wall Hang ERROR, unknown flightMode: " .. tostring(vars.flightMode))
-        Transition_ToStandard(vars, const, debug, o, false)
+        Transition_ToStandard(vars, const, debug, o, false, nil)
     end
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
@@ -436,7 +437,7 @@ end)
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
-    Transition_ToStandard(vars, const, debug, o, false)
+    Transition_ToStandard(vars, const, debug, o, false, nil)
 
     if o then
         o:Clear()

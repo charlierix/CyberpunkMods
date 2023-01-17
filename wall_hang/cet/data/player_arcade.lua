@@ -122,11 +122,11 @@ function PlayerArcade:MapModelToSelf(model)
 
             strength = deserialized.straight_up.strength,
 
-            latch_after_jump = deserialized.latch_after_jump,
-            wallattract_distance_max = deserialized.wallattract_distance_max,
-            wallattract_accel = deserialized.wallattract_accel,
-            wallattract_pow = deserialized.wallattract_pow,
-            wallattract_antigrav = deserialized.wallattract_antigrav,
+            latch_after_jump = deserialized.straight_up.latch_after_jump,
+            wallattract_distance_max = deserialized.straight_up.wallattract_distance_max,
+            wallattract_accel = deserialized.straight_up.wallattract_accel,
+            wallattract_pow = deserialized.straight_up.wallattract_pow,
+            wallattract_antigrav = deserialized.straight_up.wallattract_antigrav,
         }
     end
 

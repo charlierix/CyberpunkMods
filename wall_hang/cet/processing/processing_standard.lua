@@ -9,7 +9,7 @@ local log = nil
 --  slow down if hang desired, but going too fast
 function Process_Standard(o, player, vars, const, debug, startStopTracker, deltaTime)
     -- Cheapest check is looking at keys
-    local isHangDown, isJumpDown, isShiftDown = startStopTracker:GetButtonState()
+    local isHangDown, isJumpDown, isShiftDown, wallattract = startStopTracker:GetButtonState()
     if not isHangDown and not isJumpDown then
         if log and log:IsPopulated() then
             log:Save("LatchRayTrace")
@@ -45,7 +45,7 @@ function Process_Standard(o, player, vars, const, debug, startStopTracker, delta
     -- Fire a few rays, see if there's are wall around
     local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.rayFrom_Z, 1)
 
-    local hits = RayCast_NearbyWalls_Initial(fromPos, o, log, player.wallDistance_attract_max)
+    local hits = RayCast_NearbyWalls_Initial(fromPos, o, log, this.GetWallAttraction_MaxDist(player, wallattract))
     if #hits == 0 then
         this.ResetVars(o, vars)
         do return end
@@ -59,7 +59,7 @@ function Process_Standard(o, player, vars, const, debug, startStopTracker, delta
     else
         -- Somewhat close to the wall, maybe apply an attraction acceleration
         this.ResetVars(o, vars, false, true)
-        this.AttractDistance(isHangDown, hits, fromPos, o, player, vars, const, debug, deltaTime)
+        this.AttractDistance(isHangDown, hits, fromPos, o, player, wallattract, vars, const, debug, deltaTime)
     end
 end
 
@@ -86,7 +86,7 @@ function this.DirectDistance(isHangDown, isJumpDown, isShiftDown, hits, fromPos,
     end
 end
 
-function this.AttractDistance(isHangDown, hits, fromPos, o, player, vars, const, debug, deltaTime)
+function this.AttractDistance(isHangDown, hits, fromPos, o, player, wallattract, vars, const, debug, deltaTime)
     if not isHangDown then
         do return end
     end
@@ -100,9 +100,9 @@ function this.AttractDistance(isHangDown, hits, fromPos, o, player, vars, const,
 
     local distance = math.sqrt(hit.distSqr)
 
-    local accel = this.GetAttractAccel(distance, player, const)
+    local accel = this.GetAttractAccel(distance, player, wallattract, const)
 
-    local antigrav = 16 * player.attract_antigrav
+    local antigrav = 16 * this.GetWallAttraction_AntiGrav(player, wallattract)
 
     local x = ((hit.hit.x - fromPos.x) / distance) * accel * deltaTime
     local y = ((hit.hit.y - fromPos.y) / distance) * accel * deltaTime
@@ -156,14 +156,14 @@ function this.SlideDrag(hit, fromPos, o, player, vars, const, debug, deltaTime)
     return true
 end
 
-function this.GetAttractAccel(distance, player, const)
-    local percent = GetScaledValue(0, 1, const.wallDistance_stick_max, player.wallDistance_attract_max, distance)
+function this.GetAttractAccel(distance, player, wallattract, const)
+    local percent = GetScaledValue(0, 1, const.wallDistance_stick_max, this.GetWallAttraction_MaxDist(player, wallattract), distance)
     percent = Clamp(0, 1, percent)
 
     -- This strong ramp up stronger than linear (maybe not realistic, but should work well in practice)
-    local accel = 1 - (percent ^ player.attract_pow)
+    local accel = 1 - (percent ^ this.GetWallAttraction_Pow(player, wallattract))
 
-    return accel * player.attract_accel
+    return accel * this.GetWallAttraction_Accel(player, wallattract)
 end
 
 -- If the slope is horizontal enough to stand on, this returns false
@@ -183,5 +183,34 @@ function this.ResetVars(o, vars, skip_slide, skip_attract)
     if not skip_attract and vars.is_attracting then
         PossiblyStopSound(o, vars, true)
         vars.is_attracting = false
+    end
+end
+
+function this.GetWallAttraction_MaxDist(player, wallattract)
+    if wallattract then
+        return wallattract.distance_max
+    else
+        return player.wallDistance_attract_max
+    end
+end
+function this.GetWallAttraction_Accel(player, wallattract)
+    if wallattract then
+        return wallattract.accel
+    else
+        return player.attract_accel
+    end
+end
+function this.GetWallAttraction_Pow(player, wallattract)
+    if wallattract then
+        return wallattract.pow
+    else
+        return player.attract_pow
+    end
+end
+function this.GetWallAttraction_AntiGrav(player, wallattract)
+    if wallattract then
+        return wallattract.antigrav
+    else
+        return player.attract_antigrav
     end
 end

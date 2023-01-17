@@ -9,7 +9,7 @@ function Process_Jump_TeleTurn(o, vars, const, debug, deltaTime)
 
     o:GetCamera()
     if not o.lookdir_forward then       -- shouldn't happen
-        Transition_ToStandard(vars, const, debug, o, false)
+        Transition_ToStandard(vars, const, debug, o, false, nil)
         do return end
     end
     local lookdir = o.lookdir_forward

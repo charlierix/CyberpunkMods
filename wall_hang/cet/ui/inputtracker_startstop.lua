@@ -18,6 +18,7 @@ function InputTracker_StartStop:new(o, vars, keys, const)
     obj.hang_latched = false
 
     obj.relatch_time = nil
+    obj.wallattract = nil
 
     return obj
 end
@@ -49,22 +50,27 @@ end
 function InputTracker_StartStop:EnteringHang()
     self.hang_latched = true        -- when coming from a relatch (from a jump), this needs to be explicitly set
     self.relatch_time = nil
+    self.wallattract = nil
 end
 
 function InputTracker_StartStop:ResetHangLatch()
     self.hang_latched = false
     self.relatch_time = nil
+    self.wallattract = nil
 end
 
-function InputTracker_StartStop:SetRelatchTime()
+function InputTracker_StartStop:SetRelatchTime(wallattract)
     self.relatch_time = self.o.timer + 0.75
+    self.wallattract = wallattract
 end
 
 -- Returns
---  isHangDown, isJumpDown, isShiftDown
+--  isHangDown, isJumpDown, isShiftDown, wallattract
 function InputTracker_StartStop:GetButtonState()
     -- Hang doesn't care how long the button has been held down
     local isHangDown = false
+    local wallattract = nil
+
 
     if self.const.latch_wallhang then
         isHangDown = self.hang_latched
@@ -78,6 +84,7 @@ function InputTracker_StartStop:GetButtonState()
 
     if self.relatch_time and self.o.timer >= self.relatch_time then
         isHangDown = true       -- relatch will pretend that they've pressed the latch key
+        wallattract = self.wallattract      -- this is used to override the default wall attraction (relatch will probably be stronger than default)
     end
 
     -- Jump only reports true if it was very recently pressed
@@ -92,5 +99,5 @@ function InputTracker_StartStop:GetButtonState()
         isShiftDown = true
     end
 
-    return isHangDown, isJumpDown, isShiftDown
+    return isHangDown, isJumpDown, isShiftDown, wallattract
 end

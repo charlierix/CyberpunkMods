@@ -6,7 +6,7 @@ local MAX_UPADJUSTED_DOT = 0.8      -- the max allowed tilt from straight up
 function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     o:GetCamera()
     if not o.lookdir_forward then       -- shouldn't happen
-        Transition_ToStandard(vars, const, debug, o, false)
+        Transition_ToStandard(vars, const, debug, o, false, nil)
         do return end
     end
 
@@ -23,16 +23,17 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     local should_relatch = false
 
     -- Special logic for jumping straight up when facing the wall and looking up
-    local percent_horz, play_fail_sound1, vert_x, vert_y, vert_z, should_relatch1 = this.GetImpulse_Vertical(o, player.rebound.has_straightup, player.rebound.straight_up, up_dot, horz_dot, up_adjusted)
+    local percent_horz, play_fail_sound1, vert_x, vert_y, vert_z, should_relatch1, wallattract_vert = this.GetImpulse_Vertical(o, player.rebound.has_straightup, player.rebound.straight_up, up_dot, horz_dot, up_adjusted)
     impulse_x = impulse_x + vert_x
     impulse_y = impulse_y + vert_y
     impulse_z = impulse_z + vert_z
     should_relatch = should_relatch or should_relatch1
 
     local play_fail_sound2 = false
+    local wallattract_horz = nil
     if percent_horz > 0 then
         -- Standard jump logic (the term horizontal is just to differentiate from straight up)
-        local horz_x, horz_y, horz_z, yaw_turn_radians1, should_relatch2, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, player.rebound.horizontal, o.vel)
+        local horz_x, horz_y, horz_z, yaw_turn_radians1, should_relatch2, wallattract_horz1, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, player.rebound.horizontal, o.vel)
 
         impulse_x = impulse_x + (horz_x * percent_horz)
         impulse_y = impulse_y + (horz_y * percent_horz)
@@ -41,6 +42,7 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
         yaw_turn_radians = yaw_turn_radians1 * percent_horz
 
         should_relatch = should_relatch or should_relatch2
+        wallattract_horz = wallattract_horz1
 
         play_fail_sound2 = play_fail_sound3
     end
@@ -50,15 +52,17 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     end
 
     if IsNearZero(impulse_x) and IsNearZero(impulse_y) and IsNearZero(impulse_z) then
-        Transition_ToStandard(vars, const, debug, o, false)
+        Transition_ToStandard(vars, const, debug, o, false, nil)
     else
+        local should_relatch3, wallattract = this.CombineWallAttract(should_relatch, wallattract_vert, wallattract_horz, percent_horz)
+
         local impulse = Jump_AvoidOverhangs(Vector4.new(impulse_x, impulse_y, impulse_z, 1), vars.hangPos, normal_horz, o)
 
         if IsNearZero(yaw_turn_radians) then
-            Transition_ToJump_Impulse(vars, const, debug, o, impulse, false, should_relatch)
+            Transition_ToJump_Impulse(vars, const, debug, o, impulse, false, should_relatch3, wallattract)
         else
             local yaw_turn_direction = this.GetYawTurnDirection(normal_horz, look_horz, yaw_turn_radians)
-            Transition_ToJump_TeleTurn(vars, const, debug, o, impulse, yaw_turn_direction, should_relatch)
+            Transition_ToJump_TeleTurn(vars, const, debug, o, impulse, yaw_turn_direction, should_relatch3, wallattract)
         end
     end
 end
@@ -79,14 +83,14 @@ end
 
 function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_dot, up_adjusted)
     if not has_straightup then
-        return 1, false, 0, 0, 0, false
+        return 1, false, 0, 0, 0, false, nil
     end
 
     --NOTE: there is the possibility of a blend between straight up and horizontal jumping
     local straightup_percent = Clamp(0, 1, straight_up.percent:Evaluate(up_dot))
 
     if IsNearZero(straightup_percent) then
-        return 1, false, 0, 0, 0, false
+        return 1, false, 0, 0, 0, false, nil
     end
 
     local percent_vert = Clamp(0, 1, straight_up.percent_vert_whenup:Evaluate(horz_dot))
@@ -95,12 +99,12 @@ function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_d
     straightup_percent = straightup_percent * percent_vert
 
     if IsNearZero(straightup_percent) then
-        return percent_horz, false, 0, 0, 0, false
+        return percent_horz, false, 0, 0, 0, false, nil
     end
 
     local percent_speed = this.GetSpeedAdjustedPercent(o.vel, up_adjusted, straight_up.percent_at_speed)
     if IsNearZero(percent_speed) then
-        return percent_horz, true, 0, 0, 0, false      -- playing the fail sound because of over speed
+        return percent_horz, true, 0, 0, 0, false, nil      -- playing the fail sound because of over speed
     end
 
     return
@@ -109,7 +113,8 @@ function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_d
         up_adjusted.x * straight_up.strength * straightup_percent * percent_speed,
         up_adjusted.y * straight_up.strength * straightup_percent * percent_speed,
         up_adjusted.z * straight_up.strength * straightup_percent * percent_speed,
-        straight_up.latch_after_jump
+        straight_up.latch_after_jump,
+        this.GetWallAttraction(straight_up.wallattract_distance_max, straight_up.wallattract_accel, straight_up.wallattract_pow, straight_up.wallattract_antigrav)
 end
 
 function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz, horizontal, velocity)
@@ -124,7 +129,7 @@ function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz,
 
     local percent_speed = this.GetSpeedAdjustedPercent(velocity, ToUnit(rotated), horizontal.percent_at_speed)
     if IsNearZero(percent_speed) then
-        return 0, 0, 0, 0, false, true     -- over speed, play the fail sound
+        return 0, 0, 0, 0, false, nil, true     -- over speed, play the fail sound
     end
 
     return
@@ -133,6 +138,11 @@ function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz,
         rotated.z * percent_speed * strength,
         yaw_turn,
         horizontal.percent_latch_after_jump:Evaluate(horz_dot) >= 0.5,
+        this.GetWallAttraction(
+            horizontal.wallattract_distance_max:Evaluate(horz_dot),
+            horizontal.wallattract_accel:Evaluate(horz_dot),
+            horizontal.wallattract_pow:Evaluate(horz_dot),
+            horizontal.wallattract_antigrav:Evaluate(horz_dot)),
         false
 end
 
@@ -262,4 +272,44 @@ end
 function this.GetYawTurnDirection(normal_horz, look_horz, radians)
     local axis = CrossProduct3D(look_horz, normal_horz)
     return RotateVector3D_axis_radian(look_horz, axis, radians)
+end
+
+function this.GetWallAttraction(distance_max, accel, pow, antigrav)
+    return
+    {
+        distance_max = distance_max,
+        accel = accel,
+        pow = pow,
+        antigrav = antigrav,
+    }
+end
+
+function this.CombineWallAttract(should_relatch, wallattract_vert, wallattract_horz, percent_horz)
+    if not should_relatch or (not wallattract_vert and not wallattract_horz) then
+        return false, nil
+    end
+
+    if IsNearZero(percent_horz) then
+        if not wallattract_vert then
+            return false, nil       -- only using vert, but there is no vert defined (should never happen)
+        end
+
+        return true, wallattract_vert
+
+    elseif IsNearValue(percent_horz, 1) then
+        if not wallattract_horz then
+            return false, nil       -- only using horz, but there is no horz defined (should never happen)
+        end
+
+        return true, wallattract_horz
+    end
+
+    return
+        true,
+        {
+            distance_max = GetScaledValue(wallattract_vert.distance_max, wallattract_horz.distance_max, 0, 1, percent_horz),
+            accel = GetScaledValue(wallattract_vert.accel, wallattract_horz.accel, 0, 1, percent_horz),
+            pow = GetScaledValue(wallattract_vert.pow, wallattract_horz.pow, 0, 1, percent_horz),
+            antigrav = GetScaledValue(wallattract_vert.antigrav, wallattract_horz.antigrav, 0, 1, percent_horz),
+        }
 end

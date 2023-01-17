@@ -7,7 +7,7 @@ local up = nil      -- can't use vector4 before init
 function Process_Jump_Planted_Calculate(o, player, vars, const, debug)
     o:GetCamera()
     if not o.lookdir_forward then       -- shouldn't happen
-        Transition_ToStandard(vars, const, debug, o, false)
+        Transition_ToStandard(vars, const, debug, o, false, nil)
         do return end
     end
 
@@ -23,7 +23,7 @@ function Process_Jump_Planted_Calculate(o, player, vars, const, debug)
             Transition_ToJump_Impulse(vars, const, debug, o, impulse, false, false)
         else
             PlaySound_FailJump(vars, o)
-            Transition_ToStandard(vars, const, debug, o, false)
+            Transition_ToStandard(vars, const, debug, o, false, nil)
         end
 
     else
