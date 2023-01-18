@@ -251,6 +251,7 @@ namespace WallJumpConfig.Models.viewmodels
             {
                 PropType = SliderPropType.Angle,
                 Name = $"Extra Angle {ExtraAngles.Count + 1}",
+                HelpText = HelpMessages.ExtraAngle,
                 Minimum = 0,
                 Maximum = 180,
                 Value = Math1D.Avg(prev_angle, 180),        // this goes between the prev and 180 angle
@@ -296,9 +297,9 @@ namespace WallJumpConfig.Models.viewmodels
             var retVal = new VM_Horizontal()
             {
                 Description = description,
-                Speed_FullStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - full strength", 0, 18, model.Speed_FullStrength, false),
-                Speed_ZeroStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - zero strength", 0, 18, model.Speed_ZeroStrength, false),
-                Strength = VM_Slider.FromModel(SliderPropType.Other, "Jump Strength", 0, 24, model.Strength, false),
+                Speed_FullStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - full strength", HelpMessages.Speed_FullStrength, 0, 18, model.Speed_FullStrength, false),
+                Speed_ZeroStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - zero strength", HelpMessages.Speed_ZeroStrength, 0, 18, model.Speed_ZeroStrength, false),
+                Strength = VM_Slider.FromModel(SliderPropType.Other, "Jump Strength", HelpMessages.JumpStrength, 0, 24, model.Strength, false),
             };
 
             retVal.PropsAtAngles.Add(VM_PropsAtAngle.FromModel(model.Props_DirectFaceWall, "Directly Facing Wall", null));
@@ -306,7 +307,7 @@ namespace WallJumpConfig.Models.viewmodels
 
             for (int i = 0; i < model.Degrees_Extra.Length; i++)
             {
-                var angle = VM_Slider.FromModel(model.Degrees_Extra[i], true);
+                var angle = VM_Slider.FromModel(model.Degrees_Extra[i], HelpMessages.ExtraAngle, true);
                 var props = VM_PropsAtAngle.FromModel(model.Props_Extra[i], model.Degrees_Extra[i].Name, model.Degrees_Extra[i].Color);
 
                 retVal.AddExtraAngle(angle, props);
@@ -328,6 +329,7 @@ namespace WallJumpConfig.Models.viewmodels
                 PropType = prev_val.PropType,
                 IsNameReadonly = true,
                 Name = prev_val.Name,
+                HelpText = prev_val.HelpText,
                 Color = Colors.Transparent,
 
                 Minimum = prev_val.Minimum,

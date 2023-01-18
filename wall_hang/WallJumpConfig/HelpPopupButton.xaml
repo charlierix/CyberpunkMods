@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="WallJumpConfig.HelpPopupButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WallJumpConfig"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid x:Name="btnHelp" MouseEnter="Grid_MouseEnter" MouseMove="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseDown="Grid_MouseDown">
+            <Ellipse Fill="PaleTurquoise" StrokeThickness="1" Stroke="HotPink" Width="12" Height="12"/>
+            <TextBlock Foreground="Indigo" Text="?" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,-1,0,0"/>
+        </Grid>
+
+        <Popup x:Name="popupHelp" AllowsTransparency="True" Placement="Right" HorizontalOffset="12" PlacementTarget="{Binding ElementName=btnHelp}">
+            <Border BorderThickness="1.5" BorderBrush="#7A7451" CornerRadius="4" Background="#B0F9EDA5" Padding="5,2">
+                <!-- NOTE: This expects to be tied to a viewmodel that has a HelpText property -->
+                <TextBlock Text="{Binding HelpText}" FontSize="9" MaxWidth="400" TextWrapping="Wrap"/>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

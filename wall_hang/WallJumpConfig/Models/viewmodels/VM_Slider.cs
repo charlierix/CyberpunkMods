@@ -193,14 +193,40 @@ namespace WallJumpConfig.Models.viewmodels
             }
         }
 
+        // ------------- Help Popup Text -------------
+
+        public string HelpText
+        {
+            get { return (string)GetValue(HelpTextProperty); }
+            set { SetValue(HelpTextProperty, value); }
+        }
+        public static readonly DependencyProperty HelpTextProperty = DependencyProperty.Register("HelpText", typeof(string), typeof(VM_Slider), new PropertyMetadata("test string", OnHelpTextChanged));
+
+        private static void OnHelpTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            VM_Slider parent = (VM_Slider)d;
+
+            parent.HelpTextVisibility = string.IsNullOrWhiteSpace(parent.HelpText) ?
+                Visibility.Collapsed :
+                Visibility.Visible;
+        }
+
+        public Visibility HelpTextVisibility
+        {
+            get { return (Visibility)GetValue(HelpTextVisibilityProperty); }
+            set { SetValue(HelpTextVisibilityProperty, value); }
+        }
+        public static readonly DependencyProperty HelpTextVisibilityProperty = DependencyProperty.Register("HelpTextVisibility", typeof(Visibility), typeof(VM_Slider), new PropertyMetadata(Visibility.Collapsed));
+
         // ------------- Helper Methods -------------
 
-        public static VM_Slider FromModel(NamedAngle angle, bool allow_name_change)
+        public static VM_Slider FromModel(NamedAngle angle, string help_text, bool allow_name_change)
         {
             return new VM_Slider()
             {
                 PropType = SliderPropType.Angle,
                 Name = angle.Name,
+                HelpText = help_text,
                 IsNameReadonly = !allow_name_change,
                 Minimum = 0,
                 Maximum = 180,
@@ -210,12 +236,13 @@ namespace WallJumpConfig.Models.viewmodels
                     UtilityWPF.ColorFromHex(angle.Color),
             };
         }
-        public static VM_Slider FromModel(SliderPropType prop_type, string name, double minimum, double maximum, double value, bool allow_name_change, string color = null)
+        public static VM_Slider FromModel(SliderPropType prop_type, string name, string help_text, double minimum, double maximum, double value, bool allow_name_change, string color = null)
         {
             return new VM_Slider()
             {
                 PropType = prop_type,
                 Name = name,
+                HelpText = help_text,
                 IsNameReadonly = !allow_name_change,
                 Minimum = minimum,
                 Maximum = maximum,

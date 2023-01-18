@@ -519,6 +519,7 @@ namespace WallJumpConfig
                 },
             };
         }
+
         private static SaveWPF GetSampleSession()
         {
             return new SaveWPF()
