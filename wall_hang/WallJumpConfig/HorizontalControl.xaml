@@ -46,10 +46,10 @@
                 <StackPanel Orientation="Horizontal" Margin="4" ToggleButton.Checked="Filter_Checked" ToggleButton.Unchecked="Filter_Checked">
                     <Image Width="12" VerticalAlignment="Center" Source="pack://application:,,,/resources/filter2.png"/>
                     <ToggleButton x:Name="chkUpAlongAway" IsChecked="True" Content="up/along/away" Style="{StaticResource filterButton}"/>
-                    <ToggleButton x:Name="chkYaw" IsChecked="True" Content="yaw" Style="{StaticResource filterButton}"/>
+                    <ToggleButton x:Name="chkYaw" IsChecked="False" Content="yaw" Style="{StaticResource filterButton}"/>
                     <ToggleButton x:Name="chkLook" IsChecked="True" Content="look" Style="{StaticResource filterButton}"/>
-                    <ToggleButton x:Name="chkRelatch" IsChecked="True" Content="relatch" Style="{StaticResource filterButton}"/>
-                    <ToggleButton x:Name="chkWallAttract" IsChecked="True" Content="wall attract" Style="{StaticResource filterButton}"/>
+                    <ToggleButton x:Name="chkRelatch" IsChecked="False" Content="relatch" Style="{StaticResource filterButton}"/>
+                    <ToggleButton x:Name="chkWallAttract" IsChecked="False" Content="wall attract" Style="{StaticResource filterButton}"/>
                 </StackPanel>
             </Border>
             <ItemsControl ItemsSource="{Binding PropsAtAngles}">
