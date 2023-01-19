@@ -54,6 +54,8 @@ namespace WallJumpConfig.Models.viewmodels
         public VM_Slider Percent_LookStrength { get; set; }
 
         public VM_Slider Percent_LatchAfterJump { get; set; }
+        public VM_Slider RelatchTime_Emoseconds { get; set; }
+
         public VM_Slider WallAttract_DistanceMax { get; set; }
         public VM_Slider WallAttract_Accel { get; set; }
         public VM_Slider WallAttract_Pow { get; set; }
@@ -86,6 +88,8 @@ namespace WallJumpConfig.Models.viewmodels
                 Percent_LookStrength = Get_Percent_LookStrength(props.Percent_LookStrength),
 
                 Percent_LatchAfterJump = Get_Percent_LatchAfterJump(props.Percent_LatchAfterJump),
+                RelatchTime_Emoseconds = Get_RelatchTime_Emoseconds(props.RelatchTime_Emoseconds),
+
                 WallAttract_DistanceMax = Get_WallAttract_DistanceMax(props.WallAttract_DistanceMax),
                 WallAttract_Accel = Get_WallAttract_Accel(props.WallAttract_Accel),
                 WallAttract_Pow = Get_WallAttract_Pow(props.WallAttract_Pow),
@@ -159,21 +163,25 @@ namespace WallJumpConfig.Models.viewmodels
         {
             return VM_Slider.FromModel(SliderPropType.Percent, "Latch After Jump %", HelpMessages.LatchAfterJumpPercent, 0, 1, value, false);
         }
+        public static VM_Slider Get_RelatchTime_Emoseconds(double value)
+        {
+            return VM_Slider.FromModel(SliderPropType.Other_Large, "Relatch Time (emoseconds)", HelpMessages.RelatchTime, 0, 2 * 12 * 12 * 12, value, false);
+        }
         public static VM_Slider Get_WallAttract_DistanceMax(double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Other, "WallAttract Distance", HelpMessages.WallAttract_Distance, 1.2, 16, value, false);
+            return VM_Slider.FromModel(SliderPropType.Other_Small, "WallAttract Distance", HelpMessages.WallAttract_Distance, 1.2, 16, value, false);
         }
         public static VM_Slider Get_WallAttract_Accel(double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Other, "WallAttract Accel", HelpMessages.WallAttract_Accel, 4, 24, value, false);
+            return VM_Slider.FromModel(SliderPropType.Other_Small, "WallAttract Accel", HelpMessages.WallAttract_Accel, 4, 24, value, false);
         }
         public static VM_Slider Get_WallAttract_Pow(double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Other, "WallAttract Pow", HelpMessages.WallAttract_Pow, 1, 12, value, false);
+            return VM_Slider.FromModel(SliderPropType.Other_Small, "WallAttract Pow", HelpMessages.WallAttract_Pow, 1, 12, value, false);
         }
         public static VM_Slider Get_WallAttract_Antigrav(double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Other, "WallAttract AntiGrav", HelpMessages.WallAttract_AntiGrav, 0, 1.5, value, false);
+            return VM_Slider.FromModel(SliderPropType.Other_Small, "WallAttract AntiGrav", HelpMessages.WallAttract_AntiGrav, 0, 1.5, value, false);
         }
     }
 }

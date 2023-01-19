@@ -9,6 +9,8 @@ local log = nil
 --  slow down if hang desired, but going too fast
 function Process_Standard(o, player, vars, const, debug, startStopTracker, deltaTime)
     -- Cheapest check is looking at keys
+    -- NOTE: the wallattract struct is called relatch everywhere except what is returned from GetButtonState.  This is because there could be other
+    -- cases that redefine wall attraction in the future besides relatching
     local isHangDown, isJumpDown, isShiftDown, wallattract = startStopTracker:GetButtonState()
     if not isHangDown and not isJumpDown then
         if log and log:IsPopulated() then

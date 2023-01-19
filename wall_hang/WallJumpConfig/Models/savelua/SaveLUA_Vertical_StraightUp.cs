@@ -20,6 +20,8 @@ namespace WallJumpConfig.Models.savelua
         public double strength { get; init; }
 
         public bool latch_after_jump { get; init; }
+        public double relatch_time_seconds { get; init; }
+
         public double wallattract_distance_max { get; init; }
         public double wallattract_accel { get; init; }
         public double wallattract_pow { get; init; }
@@ -40,6 +42,8 @@ namespace WallJumpConfig.Models.savelua
                 strength = model.Strength,
 
                 latch_after_jump = model.LatchAfterJump,
+                relatch_time_seconds = model.RelatchTime_Emoseconds / (12 * 12 * 12),
+
                 wallattract_distance_max = model.WallAttract_DistanceMax,
                 wallattract_accel = model.WallAttract_Accel,
                 wallattract_pow = model.WallAttract_Pow,

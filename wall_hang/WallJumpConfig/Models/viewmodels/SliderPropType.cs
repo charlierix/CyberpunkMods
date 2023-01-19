@@ -10,6 +10,7 @@ namespace WallJumpConfig.Models.viewmodels
     {
         Percent,
         Angle,
-        Other,
+        Other_Small,
+        Other_Large,
     }
 }

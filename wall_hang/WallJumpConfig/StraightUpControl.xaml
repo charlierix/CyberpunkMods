@@ -28,6 +28,8 @@
             <ContentPresenter Content="{Binding Strength}" ContentTemplate="{StaticResource named_slider}"/>
             <Separator Visibility="Hidden" Height="8"/>
             <CheckBox IsChecked="{Binding LatchAfterJump}" Content="Latch After Jump"/>
+            <Separator Visibility="Hidden" Height="2"/>
+            <ContentPresenter Content="{Binding RelatchTime_Emoseconds}" ContentTemplate="{StaticResource named_slider}"/>
             <Separator Visibility="Hidden" Height="8"/>
             <ContentPresenter Content="{Binding WallAttract_DistanceMax}" ContentTemplate="{StaticResource named_slider}"/>
             <ContentPresenter Content="{Binding WallAttract_Accel}" ContentTemplate="{StaticResource named_slider}"/>

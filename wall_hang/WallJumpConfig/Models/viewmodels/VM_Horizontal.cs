@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Converters;
 using WallJumpConfig.Models.savewpf;
 
 namespace WallJumpConfig.Models.viewmodels
@@ -153,41 +152,41 @@ namespace WallJumpConfig.Models.viewmodels
 
         // ------------- Show: LatchPercent -------------
 
-        public bool ShowLatchPercent
+        public bool ShowRelatch
         {
-            get { return (bool)GetValue(ShowLatchPercentProperty); }
-            set { SetValue(ShowLatchPercentProperty, value); }
+            get { return (bool)GetValue(ShowRelatchProperty); }
+            set { SetValue(ShowRelatchProperty, value); }
         }
-        public static readonly DependencyProperty ShowLatchPercentProperty = DependencyProperty.Register("ShowLatchPercent", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnLatchPercentChanged));
+        public static readonly DependencyProperty ShowRelatchProperty = DependencyProperty.Register("ShowRelatch", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnLatchPercentChanged));
 
         private static void OnLatchPercentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             VM_Horizontal parent = (VM_Horizontal)d;
 
-            parent.VisibilityLatchPercent = parent.ShowLatchPercent ?
+            parent.VisibilityRelatch = parent.ShowRelatch ?
                 Visibility.Visible :
                 Visibility.Collapsed;
 
-            parent.VisibilityLatchPercentSeparator = parent.ShowLatchPercent ?
+            parent.VisibilityRelatchSeparator = parent.ShowRelatch ?
                 Visibility.Hidden :
                 Visibility.Collapsed;
 
             parent.ShowFilterChanged?.Invoke(parent, new EventArgs());
         }
 
-        public Visibility VisibilityLatchPercent
+        public Visibility VisibilityRelatch
         {
-            get { return (Visibility)GetValue(VisibilityLatchPercentProperty); }
-            set { SetValue(VisibilityLatchPercentProperty, value); }
+            get { return (Visibility)GetValue(VisibilityRelatchProperty); }
+            set { SetValue(VisibilityRelatchProperty, value); }
         }
-        public static readonly DependencyProperty VisibilityLatchPercentProperty = DependencyProperty.Register("VisibilityLatchPercent", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Visible));
+        public static readonly DependencyProperty VisibilityRelatchProperty = DependencyProperty.Register("VisibilityRelatch", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Visible));
 
-        public Visibility VisibilityLatchPercentSeparator
+        public Visibility VisibilityRelatchSeparator
         {
-            get { return (Visibility)GetValue(VisibilityLatchPercentSeparatorProperty); }
-            set { SetValue(VisibilityLatchPercentSeparatorProperty, value); }
+            get { return (Visibility)GetValue(VisibilityRelatchSeparatorProperty); }
+            set { SetValue(VisibilityRelatchSeparatorProperty, value); }
         }
-        public static readonly DependencyProperty VisibilityLatchPercentSeparatorProperty = DependencyProperty.Register("VisibilityLatchPercentSeparator", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Hidden));
+        public static readonly DependencyProperty VisibilityRelatchSeparatorProperty = DependencyProperty.Register("VisibilityRelatchSeparator", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Hidden));
 
         // ------------- Show: WallAttract -------------
 
@@ -269,17 +268,18 @@ namespace WallJumpConfig.Models.viewmodels
 
                 LERPVisibility = Visibility.Visible,        // extra angles are always in the middle, so lerp is enabled
 
-                Percent_Up = GetAvg(prev_prop, next_prop, o => o.Percent_Up, () => VM_PropsAtAngle.Get_Percent_Up(0.5)),
-                Percent_Along = GetAvg(prev_prop, next_prop, o => o.Percent_Along, () => VM_PropsAtAngle.Get_Percent_Along(0.5)),
-                Percent_Away = GetAvg(prev_prop, next_prop, o => o.Percent_Away, () => VM_PropsAtAngle.Get_Percent_Away(0.5)),
-                Percent_YawTurn = GetAvg(prev_prop, next_prop, o => o.Percent_YawTurn, () => VM_PropsAtAngle.Get_Percent_YawTurn(0)),
-                Percent_Look = GetAvg(prev_prop, next_prop, o => o.Percent_Look, () => VM_PropsAtAngle.Get_Percent_Look(0.5)),
-                Percent_LookStrength = GetAvg(prev_prop, next_prop, o => o.Percent_LookStrength, () => VM_PropsAtAngle.Get_Percent_LookStrength(0.5)),
-                Percent_LatchAfterJump = GetAvg(prev_prop, next_prop, o => o.Percent_LatchAfterJump, () => VM_PropsAtAngle.Get_Percent_LatchAfterJump(0.5)),
-                WallAttract_DistanceMax = GetAvg(prev_prop, next_prop, o => o.WallAttract_DistanceMax, () => VM_PropsAtAngle.Get_WallAttract_DistanceMax(0.5)),
-                WallAttract_Accel = GetAvg(prev_prop, next_prop, o => o.WallAttract_Accel, () => VM_PropsAtAngle.Get_WallAttract_Accel(0.5)),
-                WallAttract_Pow = GetAvg(prev_prop, next_prop, o => o.WallAttract_Pow, () => VM_PropsAtAngle.Get_WallAttract_Pow(0.5)),
-                WallAttract_Antigrav = GetAvg(prev_prop, next_prop, o => o.WallAttract_Antigrav, () => VM_PropsAtAngle.Get_WallAttract_Antigrav(0.5)),
+                Percent_Up = GetAvg(prev_prop, next_prop, o => o.Percent_Up),
+                Percent_Along = GetAvg(prev_prop, next_prop, o => o.Percent_Along),
+                Percent_Away = GetAvg(prev_prop, next_prop, o => o.Percent_Away),
+                Percent_YawTurn = GetAvg(prev_prop, next_prop, o => o.Percent_YawTurn),
+                Percent_Look = GetAvg(prev_prop, next_prop, o => o.Percent_Look),
+                Percent_LookStrength = GetAvg(prev_prop, next_prop, o => o.Percent_LookStrength),
+                Percent_LatchAfterJump = GetAvg(prev_prop, next_prop, o => o.Percent_LatchAfterJump),
+                RelatchTime_Emoseconds = GetAvg(prev_prop, next_prop, o => o.RelatchTime_Emoseconds),
+                WallAttract_DistanceMax = GetAvg(prev_prop, next_prop, o => o.WallAttract_DistanceMax),
+                WallAttract_Accel = GetAvg(prev_prop, next_prop, o => o.WallAttract_Accel),
+                WallAttract_Pow = GetAvg(prev_prop, next_prop, o => o.WallAttract_Pow),
+                WallAttract_Antigrav = GetAvg(prev_prop, next_prop, o => o.WallAttract_Antigrav),
             };
 
             AddExtraAngle(angle, props);
@@ -297,9 +297,9 @@ namespace WallJumpConfig.Models.viewmodels
             var retVal = new VM_Horizontal()
             {
                 Description = description,
-                Speed_FullStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - full strength", HelpMessages.Speed_FullStrength, 0, 18, model.Speed_FullStrength, false),
-                Speed_ZeroStrength = VM_Slider.FromModel(SliderPropType.Other, "Speed - zero strength", HelpMessages.Speed_ZeroStrength, 0, 18, model.Speed_ZeroStrength, false),
-                Strength = VM_Slider.FromModel(SliderPropType.Other, "Jump Strength", HelpMessages.JumpStrength, 0, 24, model.Strength, false),
+                Speed_FullStrength = VM_Slider.FromModel(SliderPropType.Other_Small, "Speed - full strength", HelpMessages.Speed_FullStrength, 0, 18, model.Speed_FullStrength, false),
+                Speed_ZeroStrength = VM_Slider.FromModel(SliderPropType.Other_Small, "Speed - zero strength", HelpMessages.Speed_ZeroStrength, 0, 18, model.Speed_ZeroStrength, false),
+                Strength = VM_Slider.FromModel(SliderPropType.Other_Small, "Jump Strength", HelpMessages.JumpStrength, 0, 24, model.Strength, false),
             };
 
             retVal.PropsAtAngles.Add(VM_PropsAtAngle.FromModel(model.Props_DirectFaceWall, "Directly Facing Wall", null));
@@ -316,10 +316,10 @@ namespace WallJumpConfig.Models.viewmodels
             return retVal;
         }
 
-        private static VM_Slider GetAvg(VM_PropsAtAngle prev, VM_PropsAtAngle next, Func<VM_PropsAtAngle, VM_Slider> selector, Func<VM_Slider> getDefault)
+        private static VM_Slider GetAvg(VM_PropsAtAngle prev, VM_PropsAtAngle next, Func<VM_PropsAtAngle, VM_Slider> selector)
         {
             if (prev == null || next == null)
-                return getDefault();
+                throw new ArgumentNullException($"prev and next must both be populated.  prev: {(prev == null ? "null" : "populated")}, next: {(next == null ? "null" : "populated")}");
 
             VM_Slider prev_val = selector(prev);
             VM_Slider next_val = selector(next);

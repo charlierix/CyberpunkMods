@@ -465,13 +465,14 @@ namespace WallJumpConfig
 
                     Props_DirectFaceWall = new PropsAtAngle()
                     {
-                        Percent_Up = 1,
+                        Percent_Up = 0.75,
                         Percent_Along = 0.25,
-                        Percent_Away = 0,
+                        Percent_Away = 0.1,
                         Percent_YawTurn = 0,
                         Percent_Look = 0.25,
                         Percent_LookStrength = 1,
-                        Percent_LatchAfterJump = 0,
+                        Percent_LatchAfterJump = 1,
+                        RelatchTime_Emoseconds = 1152,      // 800 dozenal, 2/3 second
                         WallAttract_DistanceMax = 6,
                         WallAttract_Accel = 8,
                         WallAttract_Pow = 4,
@@ -486,7 +487,8 @@ namespace WallJumpConfig
                         Percent_YawTurn = 0,
                         Percent_Look = 0.75,
                         Percent_LookStrength = 1,
-                        Percent_LatchAfterJump = 0,
+                        Percent_LatchAfterJump = 1,
+                        RelatchTime_Emoseconds = 1152,
                         WallAttract_DistanceMax = 6,
                         WallAttract_Accel = 8,
                         WallAttract_Pow = 4,
@@ -511,109 +513,12 @@ namespace WallJumpConfig
                     Speed_FullStrength = 3,
                     Speed_ZeroStrength = 7,
 
-                    LatchAfterJump = false,
+                    LatchAfterJump = true,
+                    RelatchTime_Emoseconds = 1152,
                     WallAttract_DistanceMax = 6,
                     WallAttract_Accel = 8,
                     WallAttract_Pow = 4,
                     WallAttract_Antigrav = 0.666667,
-                },
-            };
-        }
-
-        private static SaveWPF GetSampleSession()
-        {
-            return new SaveWPF()
-            {
-                Horizontal = new SaveWPF_Horizontal()
-                {
-                    Degrees_Extra = new[]
-                    {
-                        new NamedAngle()
-                        {
-                            Name = "Face Wall",
-                            Degrees = 20,
-                            Color = "B3837F",
-                        },
-                        new NamedAngle()
-                        {
-                            Name = "Along Start",
-                            Degrees = 60,
-                            Color = "ADAC58",
-                        },
-                        new NamedAngle()
-                        {
-                            Name = "Along End",
-                            Degrees = 120,
-                            Color = "7BBDAA",
-                        },
-                    },
-
-                    Props_DirectFaceWall = new PropsAtAngle()
-                    {
-                        Percent_Up = 0.7651404036440723,
-                        Percent_Along = 0.04847767977036907,
-                        Percent_Away = 0.06060892809185233,
-                        Percent_YawTurn = 0,
-                        Percent_Look = 0.5,
-                        Percent_LatchAfterJump = 0,
-                    },
-
-                    Props_Extra = new[]
-                    {
-                        new PropsAtAngle()
-                        {
-                            Percent_Up = 0.7439462042181489,
-                            Percent_Along = 0.18559118552351608,
-                            Percent_Away = 0.07197310210907464,
-                            Percent_YawTurn = 0,
-                            Percent_Look = 0.5,
-                            Percent_LatchAfterJump = 0,
-                        },
-                        new PropsAtAngle()
-                        {
-                            Percent_Up = 0.5704626102583347,
-                            Percent_Along = 0.2083431903157424,
-                            Percent_Away = 0.06362991179333226,
-                            Percent_YawTurn = 0,
-                            Percent_Look = 0.5,
-                            Percent_LatchAfterJump = 0,
-                        },
-                        new PropsAtAngle()
-                        {
-                            Percent_Up = 0.4272834803444462,
-                            Percent_Along = 0.2999763432422181,
-                            Percent_Away = 0.33000000000000007,
-                            Percent_YawTurn = 0,
-                            Percent_Look = 0.5,
-                            Percent_LatchAfterJump = 0,
-                        },
-                    },
-
-                    Props_DirectAway = new PropsAtAngle()
-                    {
-                        Percent_Up = 0.23485959635592776,
-                        Percent_Along = 0.4507315891675882,
-                        Percent_Away = 0.719683707575183,
-                        Percent_YawTurn = 0,
-                        Percent_Look = 0.5,
-                        Percent_LatchAfterJump = 0,
-                    },
-
-                    Speed_FullStrength = 4,
-                    Speed_ZeroStrength = 8,
-
-                    Strength = 13,
-                },
-
-                Vertical_StraightUp = new SaveWPF_Vertical_StraightUp()
-                {
-                    Degrees_StraightUp = 60,
-                    Degrees_Standard = 40,
-
-                    Strength = 11,
-
-                    Speed_FullStrength = 3,
-                    Speed_ZeroStrength = 7,
                 },
             };
         }

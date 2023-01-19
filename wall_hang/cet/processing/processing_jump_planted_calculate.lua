@@ -7,7 +7,7 @@ local up = nil      -- can't use vector4 before init
 function Process_Jump_Planted_Calculate(o, player, vars, const, debug)
     o:GetCamera()
     if not o.lookdir_forward then       -- shouldn't happen
-        Transition_ToStandard(vars, const, debug, o, false, nil)
+        Transition_ToStandard(vars, const, debug, o, nil)
         do return end
     end
 
@@ -20,10 +20,10 @@ function Process_Jump_Planted_Calculate(o, player, vars, const, debug)
         local has_impulse, impulse = this.GetImpulse_Up(jump_dir, o.vel, player.jump_strength, player.jump_speed_fullStrength, player.jump_speed_zeroStrength)
 
         if has_impulse then
-            Transition_ToJump_Impulse(vars, const, debug, o, impulse, false, false)
+            Transition_ToJump_Impulse(vars, const, debug, o, impulse, false, nil)
         else
             PlaySound_FailJump(vars, o)
-            Transition_ToStandard(vars, const, debug, o, false, nil)
+            Transition_ToStandard(vars, const, debug, o, nil)
         end
 
     else
@@ -33,7 +33,7 @@ function Process_Jump_Planted_Calculate(o, player, vars, const, debug)
         --NOTE: In the future, there may be reasons to not adjust the look direction (because they are
         --holding a direction key, or config says not to).  In those cases, go straight to jump_impulse
 
-        Transition_ToJump_TeleTurn(vars, const, debug, o, impulse, jump_dir, false)
+        Transition_ToJump_TeleTurn(vars, const, debug, o, impulse, jump_dir, nil)
     end
 end
 

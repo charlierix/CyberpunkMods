@@ -99,6 +99,7 @@ function PlayerArcade:MapModelToSelf(model)
             yaw_turn = this.ToAnimationCurve(deserialized.horizontal.yaw_turn),
 
             percent_latch_after_jump = this.ToAnimationCurve(deserialized.horizontal.percent_latch_after_jump),
+            relatch_time_seconds = this.ToAnimationCurve(deserialized.horizontal.relatch_time_seconds),
             wallattract_distance_max = this.ToAnimationCurve(deserialized.horizontal.wallattract_distance_max),
             wallattract_accel = this.ToAnimationCurve(deserialized.horizontal.wallattract_accel),
             wallattract_pow = this.ToAnimationCurve(deserialized.horizontal.wallattract_pow),
@@ -123,6 +124,7 @@ function PlayerArcade:MapModelToSelf(model)
             strength = deserialized.straight_up.strength,
 
             latch_after_jump = deserialized.straight_up.latch_after_jump,
+            relatch_time_seconds = deserialized.straight_up.relatch_time_seconds,
             wallattract_distance_max = deserialized.straight_up.wallattract_distance_max,
             wallattract_accel = deserialized.straight_up.wallattract_accel,
             wallattract_pow = deserialized.straight_up.wallattract_pow,

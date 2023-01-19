@@ -17,6 +17,26 @@ namespace WallJumpConfig
             InitializeComponent();
         }
 
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            try
+            {
+                var viewmodel = DataContext as VM_Horizontal;
+                if (viewmodel == null)
+                    return;
+
+                viewmodel.ShowUpAlongAway = chkUpAlongAway.IsChecked.Value;
+                viewmodel.ShowYaw = chkYaw.IsChecked.Value;
+                viewmodel.ShowLook = chkLook.IsChecked.Value;
+                viewmodel.ShowRelatch = chkRelatch.IsChecked.Value;
+                viewmodel.ShowWallAttract = chkWallAttract.IsChecked.Value;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void RemoveAngle_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             try
@@ -91,6 +111,7 @@ namespace WallJumpConfig
                 vm_props.Percent_Look.Value = UtilityMath.GetScaledValue(prev.Percent_Look.Value, next.Percent_Look.Value, 0, 1, percent);
                 vm_props.Percent_LookStrength.Value = UtilityMath.GetScaledValue(prev.Percent_LookStrength.Value, next.Percent_LookStrength.Value, 0, 1, percent);
                 vm_props.Percent_LatchAfterJump.Value = UtilityMath.GetScaledValue(prev.Percent_LatchAfterJump.Value, next.Percent_LatchAfterJump.Value, 0, 1, percent);
+                vm_props.RelatchTime_Emoseconds.Value = UtilityMath.GetScaledValue(prev.RelatchTime_Emoseconds.Value, next.RelatchTime_Emoseconds.Value, 0, 1, percent);
                 vm_props.WallAttract_DistanceMax.Value = UtilityMath.GetScaledValue(prev.WallAttract_DistanceMax.Value, next.WallAttract_DistanceMax.Value, 0, 1, percent);
                 vm_props.WallAttract_Accel.Value = UtilityMath.GetScaledValue(prev.WallAttract_Accel.Value, next.WallAttract_Accel.Value, 0, 1, percent);
                 vm_props.WallAttract_Pow.Value = UtilityMath.GetScaledValue(prev.WallAttract_Pow.Value, next.WallAttract_Pow.Value, 0, 1, percent);
@@ -111,19 +132,19 @@ namespace WallJumpConfig
                     return;
 
                 if (e.OriginalSource == chkUpAlongAway)
-                    viewmodel.ShowUpAlongAway = !viewmodel.ShowUpAlongAway;
+                    viewmodel.ShowUpAlongAway = chkUpAlongAway.IsChecked.Value;
 
                 else if (e.OriginalSource == chkYaw)
-                    viewmodel.ShowYaw = !viewmodel.ShowYaw;
+                    viewmodel.ShowYaw = chkYaw.IsChecked.Value;
 
                 else if (e.OriginalSource == chkLook)
-                    viewmodel.ShowLook = !viewmodel.ShowLook;
+                    viewmodel.ShowLook = chkLook.IsChecked.Value;
 
-                else if (e.OriginalSource == chkLatchPercent)
-                    viewmodel.ShowLatchPercent = !viewmodel.ShowLatchPercent;
+                else if (e.OriginalSource == chkRelatch)
+                    viewmodel.ShowRelatch = chkRelatch.IsChecked.Value;
 
                 else if (e.OriginalSource == chkWallAttract)
-                    viewmodel.ShowWallAttract = !viewmodel.ShowWallAttract;
+                    viewmodel.ShowWallAttract = chkWallAttract.IsChecked.Value;
             }
             catch (Exception ex)
             {

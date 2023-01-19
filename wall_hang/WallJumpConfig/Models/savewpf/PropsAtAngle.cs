@@ -25,6 +25,18 @@ namespace WallJumpConfig.Models.savewpf
         public double Percent_LookStrength { get; init; }
 
         public double Percent_LatchAfterJump { get; init; }
+        /// <summary>
+        /// Dozenal name for milliseconds
+        /// </summary>
+        /// <remarks>
+        /// It could be stored as a fraction of a second, but milliseconds are usually used for this sort of timing and I want to
+        /// try to keep it that way (it's seconds in lua, because that's most efficient for the if statement it's used in)
+        /// 
+        /// NOTE: the values stored in this property have to be decimal, but they are presented as dozenal.  So 12^3 (1728) is what's
+        /// stored as 1 second.  It gets presented as 1000
+        /// </remarks>
+        public double RelatchTime_Emoseconds { get; init; }
+
         public double WallAttract_DistanceMax { get; init; }
         public double WallAttract_Accel { get; init; }
         public double WallAttract_Pow { get; init; }
@@ -45,6 +57,8 @@ namespace WallJumpConfig.Models.savewpf
                 Percent_LookStrength = model.Percent_LookStrength.Value,
 
                 Percent_LatchAfterJump = model.Percent_LatchAfterJump.Value,
+                RelatchTime_Emoseconds = model.RelatchTime_Emoseconds.Value,
+
                 WallAttract_DistanceMax = model.WallAttract_DistanceMax.Value,
                 WallAttract_Accel = model.WallAttract_Accel.Value,
                 WallAttract_Pow = model.WallAttract_Pow.Value,

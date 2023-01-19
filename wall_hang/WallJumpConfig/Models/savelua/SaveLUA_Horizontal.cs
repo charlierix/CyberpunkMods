@@ -22,6 +22,8 @@ namespace WallJumpConfig.Models.savelua
         public SaveLUA_KeyValue[] yaw_turn { get; init; }
 
         public SaveLUA_KeyValue[] percent_latch_after_jump { get; init; }
+        public SaveLUA_KeyValue[] relatch_time_seconds { get; init; }
+
         public SaveLUA_KeyValue[] wallattract_distance_max { get; init; }
         public SaveLUA_KeyValue[] wallattract_accel { get; init; }
         public SaveLUA_KeyValue[] wallattract_pow { get; init; }
@@ -63,6 +65,10 @@ namespace WallJumpConfig.Models.savelua
                     ToArray(),
 
                 percent_latch_after_jump = CurveBuilder.GetPoints_HorizontalProps_DotProducts(model, o => o.Percent_LatchAfterJump).
+                    Select(o => to_lua(o)).
+                    ToArray(),
+
+                relatch_time_seconds = CurveBuilder.GetPoints_HorizontalProps_DotProducts(model, o => o.RelatchTime_Emoseconds / (12 * 12 * 12)).       // converting emoseconds to seconds (base 12 1000s)
                     Select(o => to_lua(o)).
                     ToArray(),
 

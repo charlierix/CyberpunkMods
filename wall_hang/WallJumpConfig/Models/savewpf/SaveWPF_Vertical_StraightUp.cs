@@ -18,6 +18,8 @@ namespace WallJumpConfig.Models.savewpf
         public double Strength { get; init; }
 
         public bool LatchAfterJump { get; init; }
+        public double RelatchTime_Emoseconds { get; init; }
+
         public double WallAttract_DistanceMax { get; init; }
         public double WallAttract_Accel { get; init; }
         public double WallAttract_Pow { get; init; }
@@ -37,6 +39,8 @@ namespace WallJumpConfig.Models.savewpf
                 Strength = model.Strength.Value,
 
                 LatchAfterJump = model.LatchAfterJump,
+                RelatchTime_Emoseconds = model.RelatchTime_Emoseconds.Value,
+
                 WallAttract_DistanceMax = model.WallAttract_DistanceMax.Value,
                 WallAttract_Accel = model.WallAttract_Accel.Value,
                 WallAttract_Pow = model.WallAttract_Pow.Value,

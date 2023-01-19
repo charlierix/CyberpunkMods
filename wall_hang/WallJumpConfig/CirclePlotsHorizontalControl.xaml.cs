@@ -121,6 +121,7 @@ namespace WallJumpConfig
                     o.Percent_Look,
                     o.Percent_LookStrength,
                     o.Percent_LatchAfterJump,
+                    o.RelatchTime_Emoseconds,
                     o.WallAttract_DistanceMax,
                     o.WallAttract_Accel,
                     o.WallAttract_Pow,
@@ -157,8 +158,11 @@ namespace WallJumpConfig
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Look Strength %", o => o.Percent_LookStrength));
             }
 
-            if (_viewmodel_horizontal.ShowLatchPercent)
+            if (_viewmodel_horizontal.ShowRelatch)
+            {
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Latch %", o => o.Percent_LatchAfterJump, true));
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Relatch Time", o => o.RelatchTime_Emoseconds));
+            }
 
             if (_viewmodel_horizontal.ShowWallAttract)
             {

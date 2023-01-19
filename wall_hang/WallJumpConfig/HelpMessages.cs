@@ -23,6 +23,7 @@ namespace WallJumpConfig
         public static string LookStrengthPercent => @"";
 
         public static string LatchAfterJumpPercent => @"";
+        public static string RelatchTime => @"";
 
         public static string WallAttract_Distance => @"";
         public static string WallAttract_Accel => @"";

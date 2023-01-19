@@ -172,7 +172,8 @@ namespace WallJumpConfig.Models.viewmodels
                 case SliderPropType.Percent:
                     return (value * 100).ToInt_Round().ToString();
 
-                case SliderPropType.Other:
+                case SliderPropType.Other_Small:
+                case SliderPropType.Other_Large:
                 default:
                     return value.ToStringSignificantDigits(1);
             }
@@ -187,7 +188,10 @@ namespace WallJumpConfig.Models.viewmodels
                 case SliderPropType.Percent:
                     return UtilityCore.Format_DecimalToDozenal(value * 144, 0);
 
-                case SliderPropType.Other:
+                case SliderPropType.Other_Large:
+                    return UtilityCore.Format_DecimalToDozenal(value, 0);
+
+                case SliderPropType.Other_Small:
                 default:
                     return UtilityCore.Format_DecimalToDozenal(value, 1);
             }

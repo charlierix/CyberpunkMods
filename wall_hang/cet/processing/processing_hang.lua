@@ -13,7 +13,7 @@ function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, del
     end
 
     if not isHangDown then
-        Transition_ToStandard(vars, const, debug, o, false, nil)
+        Transition_ToStandard(vars, const, debug, o, nil)
         do return end
 
     elseif isJumpDown and ShouldJump(o, const, vars.normal, isShiftDown) then
@@ -36,7 +36,7 @@ function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, del
         -- Need to give them a small upward kick (and a little toward the wall), then transition back to standard
         startStopTracker:ResetHangLatch()
         this.HopUpOntoLedge(o, vars.hangPos, pos, const)
-        Transition_ToStandard(vars, const, debug, o, false, nil)
+        Transition_ToStandard(vars, const, debug, o, nil)
     else
         vars.hangPos = pos
         vars.normal = normal
