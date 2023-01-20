@@ -1,5 +1,4 @@
-﻿using Game.Math_WPF.Mathematics;
-using Game.Math_WPF.WPF;
+﻿using Game.Math_WPF.WPF;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -66,7 +65,7 @@ namespace WallJumpConfig.Models.viewmodels
         {
             var brushes = GetBrushes(color);
 
-            return new VM_PropsAtAngle()
+            var retVal = new VM_PropsAtAngle()
             {
                 Name = name,
 
@@ -77,24 +76,26 @@ namespace WallJumpConfig.Models.viewmodels
                 LERPVisibility = string.IsNullOrEmpty(color) ?      // 0 and 180 are uncolored, everything in the middle are colored
                     Visibility.Collapsed :
                     Visibility.Visible,
-
-                Percent_Up = Get_Percent_Up(props.Percent_Up),
-                Percent_Along = Get_Percent_Along(props.Percent_Along),
-                Percent_Away = Get_Percent_Away(props.Percent_Away),
-
-                Percent_YawTurn = Get_Percent_YawTurn(props.Percent_YawTurn),
-
-                Percent_Look = Get_Percent_Look(props.Percent_Look),
-                Percent_LookStrength = Get_Percent_LookStrength(props.Percent_LookStrength),
-
-                Percent_LatchAfterJump = Get_Percent_LatchAfterJump(props.Percent_LatchAfterJump),
-                RelatchTime_Emoseconds = Get_RelatchTime_Emoseconds(props.RelatchTime_Emoseconds),
-
-                WallAttract_DistanceMax = Get_WallAttract_DistanceMax(props.WallAttract_DistanceMax),
-                WallAttract_Accel = Get_WallAttract_Accel(props.WallAttract_Accel),
-                WallAttract_Pow = Get_WallAttract_Pow(props.WallAttract_Pow),
-                WallAttract_Antigrav = Get_WallAttract_Antigrav(props.WallAttract_Antigrav),
             };
+
+            retVal.Percent_Up = Get_Percent_Up(retVal, props.Percent_Up);
+            retVal.Percent_Along = Get_Percent_Along(retVal, props.Percent_Along);
+            retVal.Percent_Away = Get_Percent_Away(retVal, props.Percent_Away);
+
+            retVal.Percent_YawTurn = Get_Percent_YawTurn(retVal, props.Percent_YawTurn);
+
+            retVal.Percent_Look = Get_Percent_Look(retVal, props.Percent_Look);
+            retVal.Percent_LookStrength = Get_Percent_LookStrength(retVal, props.Percent_LookStrength);
+
+            retVal.Percent_LatchAfterJump = Get_Percent_LatchAfterJump(retVal, props.Percent_LatchAfterJump);
+            retVal.RelatchTime_Emoseconds = Get_RelatchTime_Emoseconds(retVal, props.RelatchTime_Emoseconds);
+
+            retVal.WallAttract_DistanceMax = Get_WallAttract_DistanceMax(retVal, props.WallAttract_DistanceMax);
+            retVal.WallAttract_Accel = Get_WallAttract_Accel(retVal, props.WallAttract_Accel);
+            retVal.WallAttract_Pow = Get_WallAttract_Pow(retVal, props.WallAttract_Pow);
+            retVal.WallAttract_Antigrav = Get_WallAttract_Antigrav(retVal, props.WallAttract_Antigrav);
+
+            return retVal;
         }
 
         public static (Brush border, Brush background, Effect dropshadow) GetBrushes(string color)
@@ -135,53 +136,53 @@ namespace WallJumpConfig.Models.viewmodels
             return (border, background, dropshadow);
         }
 
-        public static VM_Slider Get_Percent_Up(double value)
+        public static VM_Slider Get_Percent_Up(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Percent, "Up %", HelpMessages.UpPercent, 0, 1, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Percent, "Up %", HelpMessages.UpPercent, 0, 1, value, false);
         }
-        public static VM_Slider Get_Percent_Along(double value)
+        public static VM_Slider Get_Percent_Along(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Percent, "Along %", HelpMessages.AlongPercent, 0, 1, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Percent, "Along %", HelpMessages.AlongPercent, 0, 1, value, false);
         }
-        public static VM_Slider Get_Percent_Away(double value)
+        public static VM_Slider Get_Percent_Away(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Percent, "Away %", HelpMessages.AwayPercent, 0, 1, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Percent, "Away %", HelpMessages.AwayPercent, 0, 1, value, false);
         }
-        public static VM_Slider Get_Percent_YawTurn(double value)
+        public static VM_Slider Get_Percent_YawTurn(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Percent, "Yaw Turn %", HelpMessages.YawTurnPercent, -1, 1, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Percent, "Yaw Turn %", HelpMessages.YawTurnPercent, -1, 1, value, false);
         }
-        public static VM_Slider Get_Percent_Look(double value)
+        public static VM_Slider Get_Percent_Look(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Percent, "Look Influence %", HelpMessages.LookInfluencePercent, 0, 1, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Percent, "Look Influence %", HelpMessages.LookInfluencePercent, 0, 1, value, false);
         }
-        public static VM_Slider Get_Percent_LookStrength(double value)
+        public static VM_Slider Get_Percent_LookStrength(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Percent, "Look Strength %", HelpMessages.LookStrengthPercent, 0, 1, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Percent, "Look Strength %", HelpMessages.LookStrengthPercent, 0, 1, value, false);
         }
-        public static VM_Slider Get_Percent_LatchAfterJump(double value)
+        public static VM_Slider Get_Percent_LatchAfterJump(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Percent, "Latch After Jump %", HelpMessages.LatchAfterJumpPercent, 0, 1, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Percent, "Latch After Jump %", HelpMessages.LatchAfterJumpPercent, 0, 1, value, false);
         }
-        public static VM_Slider Get_RelatchTime_Emoseconds(double value)
+        public static VM_Slider Get_RelatchTime_Emoseconds(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Other_Large, "Relatch Time (emoseconds)", HelpMessages.RelatchTime, 0, 2 * 12 * 12 * 12, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Other_Large, "Relatch Time (emoseconds)", HelpMessages.RelatchTime, 0, 2 * 12 * 12 * 12, value, false);
         }
-        public static VM_Slider Get_WallAttract_DistanceMax(double value)
+        public static VM_Slider Get_WallAttract_DistanceMax(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Other_Small, "WallAttract Distance", HelpMessages.WallAttract_Distance, 1.2, 16, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Other_Small, "WallAttract Distance", HelpMessages.WallAttract_Distance, 1.2, 16, value, false);
         }
-        public static VM_Slider Get_WallAttract_Accel(double value)
+        public static VM_Slider Get_WallAttract_Accel(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Other_Small, "WallAttract Accel", HelpMessages.WallAttract_Accel, 4, 24, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Other_Small, "WallAttract Accel", HelpMessages.WallAttract_Accel, 4, 24, value, false);
         }
-        public static VM_Slider Get_WallAttract_Pow(double value)
+        public static VM_Slider Get_WallAttract_Pow(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Other_Small, "WallAttract Pow", HelpMessages.WallAttract_Pow, 1, 12, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Other_Small, "WallAttract Pow", HelpMessages.WallAttract_Pow, 1, 12, value, false);
         }
-        public static VM_Slider Get_WallAttract_Antigrav(double value)
+        public static VM_Slider Get_WallAttract_Antigrav(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(SliderPropType.Other_Small, "WallAttract AntiGrav", HelpMessages.WallAttract_AntiGrav, 0, 1.5, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Other_Small, "WallAttract AntiGrav", HelpMessages.WallAttract_AntiGrav, 0, 1.5, value, false);
         }
     }
 }

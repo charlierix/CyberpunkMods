@@ -227,14 +227,26 @@ namespace WallJumpConfig.Models.viewmodels
         public static readonly DependencyProperty VisibilityWallAttractSeparatorProperty = DependencyProperty.Register("VisibilityWallAttractSeparator", typeof(Visibility), typeof(VM_Horizontal), new PropertyMetadata(Visibility.Hidden));
 
         // ------------- Helper Methods -------------
-        public void AddExtraAngle()
+        public void AddExtraAngle(VM_Slider under = null)
         {
-            double prev_angle = 0;
-            if (ExtraAngles.Count > 0)
-                prev_angle = ExtraAngles[^1].Value;
+            int angle_index = 0;        // this is the index into ExtraAngles.  PropsAtAngles has an entry for 0 and 180 degrees, so will need an offset of 1
+            if (under != null)
+            {
+                int index = ExtraAngles.IndexOf(under);
+                if (index >= 0)
+                    angle_index = index + 1;
+            }
 
-            var prev_prop = PropsAtAngles.Count >= 2 ? PropsAtAngles[^2] : null;
-            var next_prop = PropsAtAngles.Count >= 2 ? PropsAtAngles[^1] : null;
+            double prev_angle = angle_index == 0 ?
+                0 :
+                ExtraAngles[angle_index - 1].Value;
+
+            double next_angle = angle_index >= ExtraAngles.Count ?
+                180 :
+                ExtraAngles[angle_index].Value;     // the new one hasn't been added yet, so the angle at this place is the next
+
+            var prev_prop = PropsAtAngles.Count > angle_index ? PropsAtAngles[angle_index] : null;
+            var next_prop = PropsAtAngles.Count > angle_index + 1 ? PropsAtAngles[angle_index + 1] : null;
 
             Color[] existing_colors = ExtraAngles.
                 Where(o => o.Color != Colors.Transparent).
@@ -248,12 +260,13 @@ namespace WallJumpConfig.Models.viewmodels
 
             var angle = new VM_Slider()
             {
+                Parent = this,
                 PropType = SliderPropType.Angle,
-                Name = $"Extra Angle {ExtraAngles.Count + 1}",
+                Name = $"Extra Angle",
                 HelpText = HelpMessages.ExtraAngle,
                 Minimum = 0,
                 Maximum = 180,
-                Value = Math1D.Avg(prev_angle, 180),        // this goes between the prev and 180 angle
+                Value = Math1D.Avg(prev_angle, next_angle),
                 Color = item_color,
                 IsNameReadonly = false,
             };
@@ -282,14 +295,14 @@ namespace WallJumpConfig.Models.viewmodels
                 WallAttract_Antigrav = GetAvg(prev_prop, next_prop, o => o.WallAttract_Antigrav),
             };
 
-            AddExtraAngle(angle, props);
+            AddExtraAngle(angle, props, angle_index);
         }
-        public void AddExtraAngle(VM_Slider angle, VM_PropsAtAngle props)
+        public void AddExtraAngle(VM_Slider angle, VM_PropsAtAngle props, int extraangle_index)
         {
             angle.NameChanged += (s, e) => { props.Name = angle.Name; };        // they can only change the name from the angle control
 
-            ExtraAngles.Add(angle);
-            PropsAtAngles.Insert(ExtraAngles.Count, props);     // props has an extra item at [0], so using the 1 based extra.count as the 0 based insert index
+            ExtraAngles.Insert(extraangle_index, angle);
+            PropsAtAngles.Insert(extraangle_index + 1, props);     // props has an extra item at [0], so using the 1 based extra.count as the 0 based insert index
         }
 
         public static VM_Horizontal FromModel(SaveWPF_Horizontal model, string description)
@@ -297,20 +310,21 @@ namespace WallJumpConfig.Models.viewmodels
             var retVal = new VM_Horizontal()
             {
                 Description = description,
-                Speed_FullStrength = VM_Slider.FromModel(SliderPropType.Other_Small, "Speed - full strength", HelpMessages.Speed_FullStrength, 0, 18, model.Speed_FullStrength, false),
-                Speed_ZeroStrength = VM_Slider.FromModel(SliderPropType.Other_Small, "Speed - zero strength", HelpMessages.Speed_ZeroStrength, 0, 18, model.Speed_ZeroStrength, false),
-                Strength = VM_Slider.FromModel(SliderPropType.Other_Small, "Jump Strength", HelpMessages.JumpStrength, 0, 24, model.Strength, false),
             };
+
+            retVal.Speed_FullStrength = VM_Slider.FromModel(retVal, SliderPropType.Other_Small, "Speed - full strength", HelpMessages.Speed_FullStrength, 0, 18, model.Speed_FullStrength, false);
+            retVal.Speed_ZeroStrength = VM_Slider.FromModel(retVal, SliderPropType.Other_Small, "Speed - zero strength", HelpMessages.Speed_ZeroStrength, 0, 18, model.Speed_ZeroStrength, false);
+            retVal.Strength = VM_Slider.FromModel(retVal, SliderPropType.Other_Small, "Jump Strength", HelpMessages.JumpStrength, 0, 24, model.Strength, false);
 
             retVal.PropsAtAngles.Add(VM_PropsAtAngle.FromModel(model.Props_DirectFaceWall, "Directly Facing Wall", null));
             retVal.PropsAtAngles.Add(VM_PropsAtAngle.FromModel(model.Props_DirectAway, "Directly Away From Wall", null));
 
             for (int i = 0; i < model.Degrees_Extra.Length; i++)
             {
-                var angle = VM_Slider.FromModel(model.Degrees_Extra[i], HelpMessages.ExtraAngle, true);
+                var angle = VM_Slider.FromModel(retVal, model.Degrees_Extra[i], HelpMessages.ExtraAngle, true);
                 var props = VM_PropsAtAngle.FromModel(model.Props_Extra[i], model.Degrees_Extra[i].Name, model.Degrees_Extra[i].Color);
 
-                retVal.AddExtraAngle(angle, props);
+                retVal.AddExtraAngle(angle, props, i);
             }
 
             return retVal;
@@ -326,6 +340,7 @@ namespace WallJumpConfig.Models.viewmodels
 
             return new VM_Slider()
             {
+                Parent = prev_val.Parent,
                 PropType = prev_val.PropType,
                 IsNameReadonly = true,
                 Name = prev_val.Name,

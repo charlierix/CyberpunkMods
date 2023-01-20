@@ -33,21 +33,21 @@ namespace WallJumpConfig.Models.viewmodels
 
             if (model != null)
             {
-                retVal.Angle_StraightUp = VM_Slider.FromModel(SliderPropType.Angle, "Angle - straight up", HelpMessages.AngleStraightUp, 0, 90, 60, false, "5AA4E0");
-                retVal.Angle_Standard = VM_Slider.FromModel(SliderPropType.Angle, "Angle - standard", HelpMessages.AngleStandard, 0, 90, 40, false, "30A030");
+                retVal.Angle_StraightUp = VM_Slider.FromModel(retVal, SliderPropType.Angle, "Angle - straight up", HelpMessages.AngleStraightUp, 0, 90, 60, false, "5AA4E0");
+                retVal.Angle_Standard = VM_Slider.FromModel(retVal, SliderPropType.Angle, "Angle - standard", HelpMessages.AngleStandard, 0, 90, 40, false, "30A030");
 
-                retVal.Speed_FullStrength = VM_Slider.FromModel(SliderPropType.Other_Small, "Speed - full strength", HelpMessages.Speed_FullStrength, 0, 18, model.Speed_FullStrength, false);
-                retVal.Speed_ZeroStrength = VM_Slider.FromModel(SliderPropType.Other_Small, "Speed - zero strength", HelpMessages.Speed_ZeroStrength, 0, 18, model.Speed_ZeroStrength, false);
+                retVal.Speed_FullStrength = VM_Slider.FromModel(retVal, SliderPropType.Other_Small, "Speed - full strength", HelpMessages.Speed_FullStrength, 0, 18, model.Speed_FullStrength, false);
+                retVal.Speed_ZeroStrength = VM_Slider.FromModel(retVal, SliderPropType.Other_Small, "Speed - zero strength", HelpMessages.Speed_ZeroStrength, 0, 18, model.Speed_ZeroStrength, false);
 
-                retVal.Strength = VM_Slider.FromModel(SliderPropType.Other_Small, "Jump Strength", HelpMessages.JumpStrength, 0, 24, model.Strength, false);
+                retVal.Strength = VM_Slider.FromModel(retVal, SliderPropType.Other_Small, "Jump Strength", HelpMessages.JumpStrength, 0, 24, model.Strength, false);
 
                 retVal.LatchAfterJump = model.LatchAfterJump;
-                retVal.RelatchTime_Emoseconds = VM_PropsAtAngle.Get_RelatchTime_Emoseconds(model.RelatchTime_Emoseconds);
+                retVal.RelatchTime_Emoseconds = VM_PropsAtAngle.Get_RelatchTime_Emoseconds(retVal, model.RelatchTime_Emoseconds);
 
-                retVal.WallAttract_DistanceMax = VM_PropsAtAngle.Get_WallAttract_DistanceMax(model.WallAttract_DistanceMax);
-                retVal.WallAttract_Accel = VM_PropsAtAngle.Get_WallAttract_Accel(model.WallAttract_Accel);
-                retVal.WallAttract_Pow = VM_PropsAtAngle.Get_WallAttract_Pow(model.WallAttract_Pow);
-                retVal.WallAttract_Antigrav = VM_PropsAtAngle.Get_WallAttract_Antigrav(model.WallAttract_Antigrav);
+                retVal.WallAttract_DistanceMax = VM_PropsAtAngle.Get_WallAttract_DistanceMax(retVal, model.WallAttract_DistanceMax);
+                retVal.WallAttract_Accel = VM_PropsAtAngle.Get_WallAttract_Accel(retVal, model.WallAttract_Accel);
+                retVal.WallAttract_Pow = VM_PropsAtAngle.Get_WallAttract_Pow(retVal, model.WallAttract_Pow);
+                retVal.WallAttract_Antigrav = VM_PropsAtAngle.Get_WallAttract_Antigrav(retVal, model.WallAttract_Antigrav);
             }
 
             return retVal;

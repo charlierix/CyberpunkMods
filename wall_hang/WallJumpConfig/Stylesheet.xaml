@@ -8,6 +8,12 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
 
+    <Style x:Key="addremove" TargetType="Button">
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="Margin" Value="2"/>
+    </Style>
+
     <DataTemplate x:Key="named_slider">
         <Grid Margin="0,0,0,4">
             <Grid.ColumnDefinitions>
@@ -35,5 +41,5 @@
 
     <Style TargetType="Image">
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
-    </Style>    
+    </Style>
 </ResourceDictionary>

@@ -11,6 +11,8 @@ namespace WallJumpConfig.Models.viewmodels
 {
     public class VM_Slider : DependencyObject
     {
+        public DependencyObject Parent { get; set; }
+
         public SliderPropType PropType { get; set; }
 
         // ------------- Min/Max Intervals -------------
@@ -224,10 +226,11 @@ namespace WallJumpConfig.Models.viewmodels
 
         // ------------- Helper Methods -------------
 
-        public static VM_Slider FromModel(NamedAngle angle, string help_text, bool allow_name_change)
+        public static VM_Slider FromModel(DependencyObject parent, NamedAngle angle, string help_text, bool allow_name_change)
         {
             return new VM_Slider()
             {
+                Parent = parent,
                 PropType = SliderPropType.Angle,
                 Name = angle.Name,
                 HelpText = help_text,
@@ -240,10 +243,11 @@ namespace WallJumpConfig.Models.viewmodels
                     UtilityWPF.ColorFromHex(angle.Color),
             };
         }
-        public static VM_Slider FromModel(SliderPropType prop_type, string name, string help_text, double minimum, double maximum, double value, bool allow_name_change, string color = null)
+        public static VM_Slider FromModel(DependencyObject parent, SliderPropType prop_type, string name, string help_text, double minimum, double maximum, double value, bool allow_name_change, string color = null)
         {
             return new VM_Slider()
             {
+                Parent = parent,
                 PropType = prop_type,
                 Name = name,
                 HelpText = help_text,

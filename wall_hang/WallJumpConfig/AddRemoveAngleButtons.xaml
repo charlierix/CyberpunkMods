@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="WallJumpConfig.AddRemoveAngleButtons"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WallJumpConfig">
+    <UserControl.Resources>
+        <Style x:Key="addremove" TargetType="Button">
+            <Setter Property="Height" Value="Auto"/>
+            <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="-" ToolTip="Remove Extra Angle" Style="{StaticResource addremove}" Click="Remove_Click"/>
+            <Button Content="+" ToolTip="Add Extra Angle" Style="{StaticResource addremove}" Click="Add_Click"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

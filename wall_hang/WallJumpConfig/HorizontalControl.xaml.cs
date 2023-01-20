@@ -37,25 +37,10 @@ namespace WallJumpConfig
             }
         }
 
-        private void RemoveAngle_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            try
-            {
-                var viewmodel = DataContext as VM_Horizontal;
-                if (viewmodel == null)
-                    return;
-
-                if (viewmodel.ExtraAngles.Count == 0)
-                    return;
-
-                viewmodel.ExtraAngles.RemoveAt(viewmodel.ExtraAngles.Count - 1);
-                viewmodel.PropsAtAngles.RemoveAt(viewmodel.PropsAtAngles.Count - 2);        // props at angles always has one for 0 degrees and one for 180.  Extras sit between
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+        /// <summary>
+        /// This adds an angle after 0.  All other Add/Remove angles are handled in the AddRemoveAngleButtons control tied
+        /// to each entry in VM_Horizontal.ExtraAngles
+        /// </summary>
         private void AddAngle_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             try
