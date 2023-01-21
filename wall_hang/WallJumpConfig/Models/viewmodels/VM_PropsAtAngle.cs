@@ -166,7 +166,7 @@ namespace WallJumpConfig.Models.viewmodels
         }
         public static VM_Slider Get_RelatchTime_Emoseconds(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(parent, SliderPropType.Other_Large, "Relatch Time (emoseconds)", HelpMessages.RelatchTime, 0, 2 * 12 * 12 * 12, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Other_Large, "Relatch Time (emoseconds)", HelpMessages.RelatchTime, 0, 1.5 * 12 * 12 * 12, value, false);
         }
         public static VM_Slider Get_WallAttract_DistanceMax(DependencyObject parent, double value)
         {
@@ -178,7 +178,7 @@ namespace WallJumpConfig.Models.viewmodels
         }
         public static VM_Slider Get_WallAttract_Pow(DependencyObject parent, double value)
         {
-            return VM_Slider.FromModel(parent, SliderPropType.Other_Small, "WallAttract Pow", HelpMessages.WallAttract_Pow, 1, 12, value, false);
+            return VM_Slider.FromModel(parent, SliderPropType.Other_Small, "WallAttract Power", HelpMessages.WallAttract_Pow, 1, 12, value, false);
         }
         public static VM_Slider Get_WallAttract_Antigrav(DependencyObject parent, double value)
         {

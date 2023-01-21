@@ -34,12 +34,26 @@
             </Grid.ColumnDefinitions>
 
             <TabControl x:Name="tabcontrol" Grid.Column="0" SelectionChanged="tabcontrol_SelectionChanged">
-                <TabItem x:Name="tabHorizontal" Header="Standard">
+                <TabItem x:Name="tabHorizontal">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Standard" VerticalAlignment="Center"/>
+                            <local:HelpPopupButton x:Name="helpHorz" VerticalAlignment="Center" Margin="3,2,3,0"/>
+                        </StackPanel>
+                    </TabItem.Header>
                     <local:HorizontalControl x:Name="horizontalControl" Margin="8"/>
                 </TabItem>
-                <TabItem x:Name="tabVertical" Header="Straight Up">
+                
+                <TabItem x:Name="tabVertical">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Straight Up" VerticalAlignment="Center"/>
+                            <local:HelpPopupButton x:Name="helpVert" VerticalAlignment="Center" Margin="3,2,3,0"/>
+                        </StackPanel>
+                    </TabItem.Header>
                     <local:StraightUpControl x:Name="straightupControl" Margin="8"/>
                 </TabItem>
+                
                 <TabItem Header="Description">
                     <TextBox x:Name="txtDescription" Text="{Binding Description}" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" BorderThickness="0" BorderBrush="Transparent" Margin="1"/>
                 </TabItem>

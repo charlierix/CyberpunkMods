@@ -101,6 +101,9 @@ namespace WallJumpConfig
         {
             try
             {
+                helpHorz.DataContext = new VM_Help() { HelpText = HelpMessages.Horizonal };
+                helpVert.DataContext = new VM_Help() { HelpText = HelpMessages.Vertical };
+
                 PopulateNamesCombo();
 
                 LoadSettings();
@@ -506,7 +509,7 @@ namespace WallJumpConfig
                 Vertical_StraightUp = new SaveWPF_Vertical_StraightUp()
                 {
                     Degrees_StraightUp = 60,
-                    Degrees_Standard = 40,
+                    Degrees_Standard = 50,
 
                     Strength = 11,
 

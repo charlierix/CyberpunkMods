@@ -457,7 +457,7 @@ function this.Define_AntiGrav_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[0 would be full gravity
+[[0 is full gravity
 
 1 is weightless
 

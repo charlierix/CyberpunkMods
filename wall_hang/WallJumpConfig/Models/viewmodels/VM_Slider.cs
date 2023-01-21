@@ -206,7 +206,7 @@ namespace WallJumpConfig.Models.viewmodels
             get { return (string)GetValue(HelpTextProperty); }
             set { SetValue(HelpTextProperty, value); }
         }
-        public static readonly DependencyProperty HelpTextProperty = DependencyProperty.Register("HelpText", typeof(string), typeof(VM_Slider), new PropertyMetadata("test string", OnHelpTextChanged));
+        public static readonly DependencyProperty HelpTextProperty = DependencyProperty.Register("HelpText", typeof(string), typeof(VM_Slider), new PropertyMetadata("", OnHelpTextChanged));
 
         private static void OnHelpTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

@@ -33,8 +33,8 @@ namespace WallJumpConfig.Models.viewmodels
 
             if (model != null)
             {
-                retVal.Angle_StraightUp = VM_Slider.FromModel(retVal, SliderPropType.Angle, "Angle - straight up", HelpMessages.AngleStraightUp, 0, 90, 60, false, "5AA4E0");
-                retVal.Angle_Standard = VM_Slider.FromModel(retVal, SliderPropType.Angle, "Angle - standard", HelpMessages.AngleStandard, 0, 90, 40, false, "30A030");
+                retVal.Angle_StraightUp = VM_Slider.FromModel(retVal, SliderPropType.Angle, "Angle - straight up", HelpMessages.AngleStraightUp, 0, 90, model.Degrees_StraightUp, false, "5AA4E0");
+                retVal.Angle_Standard = VM_Slider.FromModel(retVal, SliderPropType.Angle, "Angle - standard", HelpMessages.AngleStandard, 0, 90, model.Degrees_Standard, false, "30A030");
 
                 retVal.Speed_FullStrength = VM_Slider.FromModel(retVal, SliderPropType.Other_Small, "Speed - full strength", HelpMessages.Speed_FullStrength, 0, 18, model.Speed_FullStrength, false);
                 retVal.Speed_ZeroStrength = VM_Slider.FromModel(retVal, SliderPropType.Other_Small, "Speed - zero strength", HelpMessages.Speed_ZeroStrength, 0, 18, model.Speed_ZeroStrength, false);

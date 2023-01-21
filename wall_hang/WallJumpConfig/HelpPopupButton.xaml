@@ -8,14 +8,14 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid x:Name="btnHelp" MouseEnter="Grid_MouseEnter" MouseMove="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseDown="Grid_MouseDown">
-            <Ellipse Fill="PaleTurquoise" StrokeThickness="1" Stroke="HotPink" Width="12" Height="12"/>
-            <TextBlock Foreground="Indigo" Text="?" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,-1,0,0"/>
+            <Ellipse Fill="#60FFFFFF" StrokeThickness="1" Stroke="#D9D9D9" Width="13" Height="13"/>
+            <TextBlock Foreground="#C0929DA8" Text="?" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,-1,0,0"/>
         </Grid>
 
-        <Popup x:Name="popupHelp" AllowsTransparency="True" Placement="Right" HorizontalOffset="12" PlacementTarget="{Binding ElementName=btnHelp}">
-            <Border BorderThickness="1.5" BorderBrush="#7A7451" CornerRadius="4" Background="#B0F9EDA5" Padding="5,2">
+        <Popup x:Name="popupHelp" AllowsTransparency="True" Placement="Right" HorizontalOffset="16" VerticalOffset="-4" PlacementTarget="{Binding ElementName=btnHelp}">
+            <Border BorderThickness="1" BorderBrush="#99988D" CornerRadius="4" Background="#F5F1DF" Padding="10,6">
                 <!-- NOTE: This expects to be tied to a viewmodel that has a HelpText property -->
-                <TextBlock Text="{Binding HelpText}" FontSize="9" MaxWidth="400" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding HelpText}" FontFamily="Consolas" MaxWidth="500" TextWrapping="Wrap"/>
             </Border>
         </Popup>
     </Grid>
