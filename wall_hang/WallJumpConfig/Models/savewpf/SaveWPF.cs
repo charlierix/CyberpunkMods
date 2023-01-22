@@ -11,8 +11,6 @@ namespace WallJumpConfig.Models.savewpf
     {
         public string Description { get; init; }
 
-        public bool HasStraightUp { get; init; }
-
         public SaveWPF_Horizontal Horizontal { get; init; }
         public SaveWPF_Vertical_StraightUp Vertical_StraightUp { get; init; }
 

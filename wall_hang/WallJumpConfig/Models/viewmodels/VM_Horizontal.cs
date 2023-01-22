@@ -11,6 +11,31 @@ namespace WallJumpConfig.Models.viewmodels
 {
     public class VM_Horizontal : DependencyObject
     {
+        // ------------- HasHorizontal -------------
+
+        public bool HasHorizontal
+        {
+            get { return (bool)GetValue(HasHorizontalProperty); }
+            set { SetValue(HasHorizontalProperty, value); }
+        }
+        public static readonly DependencyProperty HasHorizontalProperty = DependencyProperty.Register("HasHorizontal", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnHasHorizontalChanged));
+
+        private static void OnHasHorizontalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            OnUpAlongAwayChanged(d, e);
+            OnShowYawChanged(d, e);
+            OnShowLookChanged(d, e);
+            OnShowRelatchChanged(d, e);
+            OnShowWallAttractChanged(d, e);
+
+            VM_Horizontal parent = (VM_Horizontal)d;
+            parent.HasHorizontalChanged?.Invoke(parent, new EventArgs());
+        }
+
+        public event EventHandler HasHorizontalChanged = null;
+
+        // ------------- Misc -------------
+
         // This belongs in a parent class, but there isn't one.  So just putting it here
         public string Description
         {
@@ -49,11 +74,11 @@ namespace WallJumpConfig.Models.viewmodels
         {
             VM_Horizontal parent = (VM_Horizontal)d;
 
-            parent.VisibilityUpAlongAway = parent.ShowUpAlongAway ?
+            parent.VisibilityUpAlongAway = parent.HasHorizontal && parent.ShowUpAlongAway ?
                 Visibility.Visible :
                 Visibility.Collapsed;
 
-            parent.VisibilityUpAlongAwaySeparator = parent.ShowUpAlongAway ?
+            parent.VisibilityUpAlongAwaySeparator = parent.HasHorizontal && parent.ShowUpAlongAway ?
                 Visibility.Hidden :
                 Visibility.Collapsed;
 
@@ -81,17 +106,17 @@ namespace WallJumpConfig.Models.viewmodels
             get { return (bool)GetValue(ShowYawProperty); }
             set { SetValue(ShowYawProperty, value); }
         }
-        public static readonly DependencyProperty ShowYawProperty = DependencyProperty.Register("ShowYaw", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnYawChanged));
+        public static readonly DependencyProperty ShowYawProperty = DependencyProperty.Register("ShowYaw", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnShowYawChanged));
 
-        private static void OnYawChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnShowYawChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             VM_Horizontal parent = (VM_Horizontal)d;
 
-            parent.VisibilityYaw = parent.ShowYaw ?
+            parent.VisibilityYaw = parent.HasHorizontal && parent.ShowYaw ?
                 Visibility.Visible :
                 Visibility.Collapsed;
 
-            parent.VisibilityYawSeparator = parent.ShowYaw ?
+            parent.VisibilityYawSeparator = parent.HasHorizontal && parent.ShowYaw ?
                 Visibility.Hidden :
                 Visibility.Collapsed;
 
@@ -119,17 +144,17 @@ namespace WallJumpConfig.Models.viewmodels
             get { return (bool)GetValue(ShowLookProperty); }
             set { SetValue(ShowLookProperty, value); }
         }
-        public static readonly DependencyProperty ShowLookProperty = DependencyProperty.Register("ShowLook", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnLookChanged));
+        public static readonly DependencyProperty ShowLookProperty = DependencyProperty.Register("ShowLook", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnShowLookChanged));
 
-        private static void OnLookChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnShowLookChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             VM_Horizontal parent = (VM_Horizontal)d;
 
-            parent.VisibilityLook = parent.ShowLook ?
+            parent.VisibilityLook = parent.HasHorizontal && parent.ShowLook ?
                 Visibility.Visible :
                 Visibility.Collapsed;
 
-            parent.VisibilityLookSeparator = parent.ShowLook ?
+            parent.VisibilityLookSeparator = parent.HasHorizontal && parent.ShowLook ?
                 Visibility.Hidden :
                 Visibility.Collapsed;
 
@@ -157,17 +182,17 @@ namespace WallJumpConfig.Models.viewmodels
             get { return (bool)GetValue(ShowRelatchProperty); }
             set { SetValue(ShowRelatchProperty, value); }
         }
-        public static readonly DependencyProperty ShowRelatchProperty = DependencyProperty.Register("ShowRelatch", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnLatchPercentChanged));
+        public static readonly DependencyProperty ShowRelatchProperty = DependencyProperty.Register("ShowRelatch", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnShowRelatchChanged));
 
-        private static void OnLatchPercentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnShowRelatchChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             VM_Horizontal parent = (VM_Horizontal)d;
 
-            parent.VisibilityRelatch = parent.ShowRelatch ?
+            parent.VisibilityRelatch = parent.HasHorizontal && parent.ShowRelatch ?
                 Visibility.Visible :
                 Visibility.Collapsed;
 
-            parent.VisibilityRelatchSeparator = parent.ShowRelatch ?
+            parent.VisibilityRelatchSeparator = parent.HasHorizontal && parent.ShowRelatch ?
                 Visibility.Hidden :
                 Visibility.Collapsed;
 
@@ -195,17 +220,17 @@ namespace WallJumpConfig.Models.viewmodels
             get { return (bool)GetValue(ShowWallAttractProperty); }
             set { SetValue(ShowWallAttractProperty, value); }
         }
-        public static readonly DependencyProperty ShowWallAttractProperty = DependencyProperty.Register("ShowWallAttract", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnWallAttractChanged));
+        public static readonly DependencyProperty ShowWallAttractProperty = DependencyProperty.Register("ShowWallAttract", typeof(bool), typeof(VM_Horizontal), new PropertyMetadata(true, OnShowWallAttractChanged));
 
-        private static void OnWallAttractChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnShowWallAttractChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             VM_Horizontal parent = (VM_Horizontal)d;
 
-            parent.VisibilityWallAttract = parent.ShowWallAttract ?
+            parent.VisibilityWallAttract = parent.HasHorizontal && parent.ShowWallAttract ?
                 Visibility.Visible :
                 Visibility.Collapsed;
 
-            parent.VisibilityWallAttractSeparator = parent.ShowWallAttract ?
+            parent.VisibilityWallAttractSeparator = parent.HasHorizontal && parent.ShowWallAttract ?
                 Visibility.Hidden :
                 Visibility.Collapsed;
 
@@ -309,6 +334,7 @@ namespace WallJumpConfig.Models.viewmodels
         {
             var retVal = new VM_Horizontal()
             {
+                HasHorizontal = model.HasHorizontal,
                 Description = description,
             };
 

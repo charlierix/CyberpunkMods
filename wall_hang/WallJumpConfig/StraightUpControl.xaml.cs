@@ -50,7 +50,7 @@ namespace WallJumpConfig
 
         private void RefreshDetailVisibility()
         {
-            if(DataContext is VM_StraightUp viewmodel)
+            if (DataContext is VM_StraightUp viewmodel)
             {
                 panelDetails.Visibility = viewmodel.HasStraightUp ?
                     Visibility.Visible :

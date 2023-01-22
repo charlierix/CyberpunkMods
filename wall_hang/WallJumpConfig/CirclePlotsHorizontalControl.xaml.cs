@@ -142,29 +142,29 @@ namespace WallJumpConfig
             if (_viewmodel_horizontal == null)
                 return;
 
-            if (_viewmodel_horizontal.ShowUpAlongAway)
+            if (_viewmodel_horizontal.HasHorizontal && _viewmodel_horizontal.ShowUpAlongAway)
             {
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Up %", o => o.Percent_Up));
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Along %", o => o.Percent_Along));
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Away %", o => o.Percent_Away));
             }
 
-            if (_viewmodel_horizontal.ShowYaw)
+            if (_viewmodel_horizontal.HasHorizontal && _viewmodel_horizontal.ShowYaw)
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Yaw Turn %", o => o.Percent_YawTurn));
 
-            if (_viewmodel_horizontal.ShowLook)
+            if (_viewmodel_horizontal.HasHorizontal && _viewmodel_horizontal.ShowLook)
             {
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Look %", o => o.Percent_Look));
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Look Strength %", o => o.Percent_LookStrength));
             }
 
-            if (_viewmodel_horizontal.ShowRelatch)
+            if (_viewmodel_horizontal.HasHorizontal && _viewmodel_horizontal.ShowRelatch)
             {
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Latch %", o => o.Percent_LatchAfterJump, true));
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Relatch Time", o => o.RelatchTime_Emoseconds));
             }
 
-            if (_viewmodel_horizontal.ShowWallAttract)
+            if (_viewmodel_horizontal.HasHorizontal && _viewmodel_horizontal.ShowWallAttract)
             {
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Dist", o => o.WallAttract_DistanceMax));
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "WallAttract Accel", o => o.WallAttract_Accel));

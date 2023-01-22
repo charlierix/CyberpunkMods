@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WallJumpConfig" DataContextChanged="UserControl_DataContextChanged">
+             xmlns:local="clr-namespace:WallJumpConfig" Loaded="UserControl_Loaded" DataContextChanged="UserControl_DataContextChanged">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -51,91 +51,95 @@
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <StackPanel Grid.IsSharedSizeScope="True">
-            <Grid>
-                <Label Content="Extra Angles" Style="{StaticResource label_header}"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <Button Content="+" ToolTip="Add Extra Angle" Style="{StaticResource addremove}" Click="AddAngle_Click"/>
-                </StackPanel>
-            </Grid>
-            <ItemsControl ItemsSource="{Binding ExtraAngles}" ItemTemplate="{StaticResource extra_angles}"/>
+            <CheckBox IsChecked="{Binding HasHorizontal}" Content="Has Standard" Checked="HasHorizontal_Checked" Unchecked="HasHorizontal_Checked" Style="{StaticResource hasFeature}"/>
 
-            <Label Content="Props at Angle" Style="{StaticResource label_header}"/>
-            <Border ToolTip="Toggle Visibility" Background="#10808080" BorderBrush="#20808080" BorderThickness="1" CornerRadius="4">
-                <Grid Margin="4" ToggleButton.Checked="Filter_Checked" ToggleButton.Unchecked="Filter_Checked">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="2"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Image Grid.Column="0" Width="12" VerticalAlignment="Center" Source="pack://application:,,,/resources/filter2.png"/>
-                    <UniformGrid Grid.Column="2" Rows="1" HorizontalAlignment="Stretch">
-                        <ToggleButton x:Name="chkUpAlongAway" IsChecked="True" Content="up/along/away" Style="{StaticResource filterButton}"/>
-                        <ToggleButton x:Name="chkYaw" IsChecked="False" Content="yaw" Style="{StaticResource filterButton}"/>
-                        <ToggleButton x:Name="chkLook" IsChecked="True" Content="look" Style="{StaticResource filterButton}"/>
-                        <ToggleButton x:Name="chkRelatch" IsChecked="False" Content="relatch" Style="{StaticResource filterButton}"/>
-                        <ToggleButton x:Name="chkWallAttract" IsChecked="False" Content="wall attract" Style="{StaticResource filterButton}"/>
-                    </UniformGrid>
+            <StackPanel x:Name="panelHorizontal">
+                <Grid>
+                    <Label Content="Extra Angles" Style="{StaticResource label_header}"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Button Content="+" ToolTip="Add Extra Angle" Style="{StaticResource addremove}" Click="AddAngle_Click"/>
+                    </StackPanel>
                 </Grid>
-            </Border>
-            <ItemsControl ItemsSource="{Binding PropsAtAngles}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Expander>
-                            <Expander.Header>
-                                <!-- that big mess of horizontal alignment is to change the parent expander header from left to stretch -->
-                                <Border CornerRadius="4,4,0,0" BorderThickness="1" BorderBrush="{Binding HeaderBorder}" Background="{Binding HeaderBackground}" Effect="{Binding HeaderDropShadow}" Padding="7,3,2,2" Margin="2,0,2,6" HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=ContentPresenter}, Mode=OneWayToSource}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Name}" FontSize="14"/>
-                                        <Button Grid.Column="2" Content="lerp" Visibility="{Binding LERPVisibility}" Click="LERP_Click">
-                                            <Button.ToolTip>
-                                                <TextBlock>Set slider values to what they would be at this angle<LineBreak/>(lerp betwen the prev and next properties)</TextBlock>
-                                            </Button.ToolTip>
-                                        </Button>
-                                    </Grid>
-                                </Border>
-                            </Expander.Header>
-                            <Expander.Content>
-                                <StackPanel>
-                                    <ContentPresenter Content="{Binding Percent_Up}" Visibility="{Binding DataContext.VisibilityUpAlongAway, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <ContentPresenter Content="{Binding Percent_Along}" Visibility="{Binding DataContext.VisibilityUpAlongAway, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <ContentPresenter Content="{Binding Percent_Away}" Visibility="{Binding DataContext.VisibilityUpAlongAway, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <Separator Visibility="{Binding DataContext.VisibilityUpAlongAwaySeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
-                                    
-                                    <ContentPresenter Content="{Binding Percent_YawTurn}" Visibility="{Binding DataContext.VisibilityYaw, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <Separator Visibility="{Binding DataContext.VisibilityYawSeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
-                                    
-                                    <ContentPresenter Content="{Binding Percent_Look}" Visibility="{Binding DataContext.VisibilityLook, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <ContentPresenter Content="{Binding Percent_LookStrength}" Visibility="{Binding DataContext.VisibilityLook, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <Separator Visibility="{Binding DataContext.VisibilityLookSeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
+                <ItemsControl ItemsSource="{Binding ExtraAngles}" ItemTemplate="{StaticResource extra_angles}"/>
 
-                                    <ContentPresenter Content="{Binding Percent_LatchAfterJump}" Visibility="{Binding DataContext.VisibilityRelatch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <ContentPresenter Content="{Binding RelatchTime_Emoseconds}" Visibility="{Binding DataContext.VisibilityRelatch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <Separator Visibility="{Binding DataContext.VisibilityRelatchSeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
-                                    
-                                    <ContentPresenter Content="{Binding WallAttract_DistanceMax}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <ContentPresenter Content="{Binding WallAttract_Accel}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <ContentPresenter Content="{Binding WallAttract_Pow}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                    <local:PowerGraphControl HorizontalAlignment="Right" Margin="0,0,35,0" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}"/>
-                                    <ContentPresenter Content="{Binding WallAttract_Antigrav}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                </StackPanel>
-                            </Expander.Content>
-                        </Expander>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                <Label Content="Props at Angle" Style="{StaticResource label_header}"/>
+                <Border ToolTip="Toggle Visibility" Background="#10808080" BorderBrush="#20808080" BorderThickness="1" CornerRadius="4">
+                    <Grid Margin="4" ToggleButton.Checked="Filter_Checked" ToggleButton.Unchecked="Filter_Checked">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="2"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
 
-            <Label Content="Misc" Style="{StaticResource label_header}"/>
+                        <Image Grid.Column="0" Width="12" VerticalAlignment="Center" Source="pack://application:,,,/resources/filter2.png"/>
+                        <UniformGrid Grid.Column="2" Rows="1" HorizontalAlignment="Stretch">
+                            <ToggleButton x:Name="chkUpAlongAway" IsChecked="True" Content="up/along/away" Style="{StaticResource filterButton}"/>
+                            <ToggleButton x:Name="chkYaw" IsChecked="False" Content="yaw" Style="{StaticResource filterButton}"/>
+                            <ToggleButton x:Name="chkLook" IsChecked="True" Content="look" Style="{StaticResource filterButton}"/>
+                            <ToggleButton x:Name="chkRelatch" IsChecked="False" Content="relatch" Style="{StaticResource filterButton}"/>
+                            <ToggleButton x:Name="chkWallAttract" IsChecked="False" Content="wall attract" Style="{StaticResource filterButton}"/>
+                        </UniformGrid>
+                    </Grid>
+                </Border>
+                <ItemsControl ItemsSource="{Binding PropsAtAngles}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Expander>
+                                <Expander.Header>
+                                    <!-- that big mess of horizontal alignment is to change the parent expander header from left to stretch -->
+                                    <Border CornerRadius="4,4,0,0" BorderThickness="1" BorderBrush="{Binding HeaderBorder}" Background="{Binding HeaderBackground}" Effect="{Binding HeaderDropShadow}" Padding="7,3,2,2" Margin="2,0,2,6" HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=ContentPresenter}, Mode=OneWayToSource}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Name}" FontSize="14"/>
+                                            <Button Grid.Column="2" Content="lerp" Visibility="{Binding LERPVisibility}" Click="LERP_Click">
+                                                <Button.ToolTip>
+                                                    <TextBlock>Set slider values to what they would be at this angle<LineBreak/>(lerp betwen the prev and next properties)</TextBlock>
+                                                </Button.ToolTip>
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </Expander.Header>
+                                <Expander.Content>
+                                    <StackPanel>
+                                        <ContentPresenter Content="{Binding Percent_Up}" Visibility="{Binding DataContext.VisibilityUpAlongAway, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <ContentPresenter Content="{Binding Percent_Along}" Visibility="{Binding DataContext.VisibilityUpAlongAway, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <ContentPresenter Content="{Binding Percent_Away}" Visibility="{Binding DataContext.VisibilityUpAlongAway, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <Separator Visibility="{Binding DataContext.VisibilityUpAlongAwaySeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
 
-            <ContentPresenter Content="{Binding Speed_FullStrength}" ContentTemplate="{StaticResource named_slider}"/>
-            <ContentPresenter Content="{Binding Speed_ZeroStrength}" ContentTemplate="{StaticResource named_slider}"/>
-            <Separator Visibility="Hidden" Height="8"/>
-            <ContentPresenter Content="{Binding Strength}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <ContentPresenter Content="{Binding Percent_YawTurn}" Visibility="{Binding DataContext.VisibilityYaw, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <Separator Visibility="{Binding DataContext.VisibilityYawSeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
+
+                                        <ContentPresenter Content="{Binding Percent_Look}" Visibility="{Binding DataContext.VisibilityLook, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <ContentPresenter Content="{Binding Percent_LookStrength}" Visibility="{Binding DataContext.VisibilityLook, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <Separator Visibility="{Binding DataContext.VisibilityLookSeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
+
+                                        <ContentPresenter Content="{Binding Percent_LatchAfterJump}" Visibility="{Binding DataContext.VisibilityRelatch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <ContentPresenter Content="{Binding RelatchTime_Emoseconds}" Visibility="{Binding DataContext.VisibilityRelatch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <Separator Visibility="{Binding DataContext.VisibilityRelatchSeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
+
+                                        <ContentPresenter Content="{Binding WallAttract_DistanceMax}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <ContentPresenter Content="{Binding WallAttract_Accel}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <ContentPresenter Content="{Binding WallAttract_Pow}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <local:PowerGraphControl HorizontalAlignment="Right" Margin="0,0,35,0" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}"/>
+                                        <ContentPresenter Content="{Binding WallAttract_Antigrav}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                    </StackPanel>
+                                </Expander.Content>
+                            </Expander>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Label Content="Misc" Style="{StaticResource label_header}"/>
+
+                <ContentPresenter Content="{Binding Speed_FullStrength}" ContentTemplate="{StaticResource named_slider}"/>
+                <ContentPresenter Content="{Binding Speed_ZeroStrength}" ContentTemplate="{StaticResource named_slider}"/>
+                <Separator Visibility="Hidden" Height="8"/>
+                <ContentPresenter Content="{Binding Strength}" ContentTemplate="{StaticResource named_slider}"/>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

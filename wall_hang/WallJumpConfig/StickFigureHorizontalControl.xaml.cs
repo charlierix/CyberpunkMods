@@ -42,14 +42,17 @@ namespace WallJumpConfig
             {
                 if (_viewmodel_horizontal != null)
                 {
+                    _viewmodel_horizontal.HasHorizontalChanged -= Horizontal_HasHorizontalChanged;
                     _viewmodel_horizontal.ExtraAngles.CollectionChanged -= ExtraAngles_CollectionChanged;
                     _viewmodel_horizontal.PropsAtAngles.CollectionChanged -= ExtraAngles_CollectionChanged;
                 }
 
                 _viewmodel_horizontal = value;
 
+                _viewmodel_horizontal.HasHorizontalChanged += Horizontal_HasHorizontalChanged;
                 _viewmodel_horizontal.ExtraAngles.CollectionChanged += ExtraAngles_CollectionChanged;
                 _viewmodel_horizontal.PropsAtAngles.CollectionChanged += ExtraAngles_CollectionChanged;
+
                 Redraw();
             }
         }
@@ -70,6 +73,18 @@ namespace WallJumpConfig
             }
         }
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            try
+            {
+                Redraw();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Horizontal_HasHorizontalChanged(object sender, EventArgs e)
         {
             try
             {
@@ -123,7 +138,7 @@ namespace WallJumpConfig
 
             canvas.Children.Add(StickFigureUtil.GetGraphic_Horizontal_Wall(center + new Vector(0, -(Math.Max(StickFigureUtil.HORZ_RADIUS1, StickFigureUtil.HORZ_RADIUS2) + 24))));
 
-            if (_viewmodel_horizontal == null)
+            if (_viewmodel_horizontal == null || !_viewmodel_horizontal.HasHorizontal)
                 return;
 
             //TODO: add 0 and 180, but only show when they have mouse over the corresponding props expander

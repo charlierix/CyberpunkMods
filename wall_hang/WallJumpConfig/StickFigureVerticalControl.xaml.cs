@@ -47,7 +47,14 @@ namespace WallJumpConfig
             }
             set
             {
+                if(_viewmodel_straightup != null)
+                    _viewmodel_straightup.HasStraightUpChanged -= HasStraightUpChanged;
+
                 _viewmodel_straightup = value;
+
+                if(_viewmodel_straightup != null)
+                    _viewmodel_straightup.HasStraightUpChanged += HasStraightUpChanged;
+
                 Redraw();
             }
         }
@@ -68,6 +75,18 @@ namespace WallJumpConfig
             }
         }
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            try
+            {
+                Redraw();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void HasStraightUpChanged(object sender, EventArgs e)
         {
             try
             {

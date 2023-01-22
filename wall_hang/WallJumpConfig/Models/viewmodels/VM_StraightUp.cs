@@ -6,7 +6,25 @@ namespace WallJumpConfig.Models.viewmodels
 {
     public class VM_StraightUp : DependencyObject
     {
-        public bool HasStraightUp { get; set; }
+        // ------------- HasHorizontal -------------
+
+        public bool HasStraightUp
+        {
+            get { return (bool)GetValue(HasStraightUpProperty); }
+            set { SetValue(HasStraightUpProperty, value); }
+        }
+        public static readonly DependencyProperty HasStraightUpProperty = DependencyProperty.Register("HasStraightUp", typeof(bool), typeof(VM_StraightUp), new PropertyMetadata(false, OnHasStraightUpChanged));
+
+        private static void OnHasStraightUpChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            VM_StraightUp parent = (VM_StraightUp)d;
+
+            parent.HasStraightUpChanged?.Invoke(parent, new EventArgs());
+        }
+
+        public event EventHandler HasStraightUpChanged = null;
+
+        // ------------- Other Props -------------
 
         public VM_Slider Angle_StraightUp { get; set; }
         public VM_Slider Angle_Standard { get; set; }
@@ -25,6 +43,7 @@ namespace WallJumpConfig.Models.viewmodels
         public VM_Slider WallAttract_Antigrav { get; set; }
 
         // ------------- Helper Methods -------------
+
         public static VM_StraightUp FromModel(SaveWPF_Vertical_StraightUp model)
         {
             var retVal = new VM_StraightUp()

@@ -464,6 +464,8 @@ namespace WallJumpConfig
             {
                 Horizontal = new SaveWPF_Horizontal()
                 {
+                    HasHorizontal = true,
+
                     Degrees_Extra = new NamedAngle[0],
 
                     Props_DirectFaceWall = new PropsAtAngle()

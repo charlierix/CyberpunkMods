@@ -43,4 +43,16 @@
     <Style TargetType="Image">
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
     </Style>
+
+    <Style x:Key="hasFeature" TargetType="CheckBox">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0,6"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="#808080" ShadowDepth="0" BlurRadius="12" Direction="0" Opacity="0.2"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

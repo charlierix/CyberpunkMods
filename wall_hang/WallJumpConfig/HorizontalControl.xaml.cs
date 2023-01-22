@@ -17,10 +17,23 @@ namespace WallJumpConfig
             InitializeComponent();
         }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                RefreshHorizontalVisibility();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             try
             {
+                RefreshHorizontalVisibility();
+
                 var viewmodel = DataContext as VM_Horizontal;
                 if (viewmodel == null)
                     return;
@@ -30,6 +43,17 @@ namespace WallJumpConfig
                 viewmodel.ShowLook = chkLook.IsChecked.Value;
                 viewmodel.ShowRelatch = chkRelatch.IsChecked.Value;
                 viewmodel.ShowWallAttract = chkWallAttract.IsChecked.Value;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void HasHorizontal_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                RefreshHorizontalVisibility();
             }
             catch (Exception ex)
             {
@@ -134,6 +158,20 @@ namespace WallJumpConfig
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void RefreshHorizontalVisibility()
+        {
+            if (DataContext is VM_Horizontal viewmodel)
+            {
+                panelHorizontal.Visibility = viewmodel.HasHorizontal ?
+                    Visibility.Visible :
+                    Visibility.Collapsed;
+            }
+            else
+            {
+                panelHorizontal.Visibility = Visibility.Visible;
             }
         }
 

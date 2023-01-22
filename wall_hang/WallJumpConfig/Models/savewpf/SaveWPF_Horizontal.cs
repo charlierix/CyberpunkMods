@@ -9,6 +9,8 @@ namespace WallJumpConfig.Models.savewpf
 {
     public record SaveWPF_Horizontal
     {
+        public bool HasHorizontal { get; init; }
+
         // 0 and 180 are implied
         public NamedAngle[] Degrees_Extra { get; init; }
 
@@ -33,6 +35,8 @@ namespace WallJumpConfig.Models.savewpf
 
             return new SaveWPF_Horizontal()
             {
+                HasHorizontal = horizontal.HasHorizontal,
+
                 Degrees_Extra = horizontal.ExtraAngles.
                     Select(o => NamedAngle.FromModel(o)).
                     ToArray(),

@@ -15,7 +15,7 @@
     </UserControl.Resources>
 
     <StackPanel Grid.IsSharedSizeScope="True">
-        <CheckBox IsChecked="{Binding HasStraightUp}" Content="Has Straight Up" HorizontalAlignment="Center" Margin="0,6" Checked="HasStraightUp_Checked" Unchecked="HasStraightUp_Checked"/>
+        <CheckBox IsChecked="{Binding HasStraightUp}" Content="Has Straight Up" Checked="HasStraightUp_Checked" Unchecked="HasStraightUp_Checked" Style="{StaticResource hasFeature}"/>
 
         <StackPanel x:Name="panelDetails">
             <Separator Visibility="Hidden" Height="8"/>
