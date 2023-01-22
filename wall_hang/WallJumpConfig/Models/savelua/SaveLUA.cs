@@ -21,9 +21,9 @@ namespace WallJumpConfig.Models.savelua
         {
             var lua_horz = SaveLUA_Horizontal.FromModel(save.Horizontal);
 
-            SaveLUA_Vertical_StraightUp lua_vert = null;
-            if (save.Vertical_StraightUp != null)
-                lua_vert = SaveLUA_Vertical_StraightUp.FromModel(save.Vertical_StraightUp, save.Horizontal);
+            var lua_vert = save.Vertical_StraightUp.HasStraightUp ?
+                SaveLUA_Vertical_StraightUp.FromModel(save.Vertical_StraightUp, save.Horizontal) :
+                null;
 
             return new SaveLUA()
             {

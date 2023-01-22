@@ -306,9 +306,10 @@ function this.CombineRelatchProps(should_relatch, relatchprops_vert, relatchprop
         return relatchprops_horz
     end
 
-    if not relatchprops_horz or not relatchprops_vert then
-        print("horz or vert relatch nil")
-        return nil
+    if relatchprops_horz and not relatchprops_vert then     -- sometimes vert calculation stops early, so doesn't return relatch props
+        return relatchprops_horz
+    elseif relatchprops_vert and not relatchprops_horz then
+        return relatchprops_vert
     end
 
     return

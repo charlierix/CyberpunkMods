@@ -9,6 +9,8 @@ namespace WallJumpConfig.Models.savewpf
 {
     public record SaveWPF_Vertical_StraightUp
     {
+        public bool HasStraightUp { get; init; }
+
         public double Degrees_StraightUp { get; init; }
         public double Degrees_Standard { get; init; }
 
@@ -30,6 +32,8 @@ namespace WallJumpConfig.Models.savewpf
         {
             return new SaveWPF_Vertical_StraightUp()
             {
+                HasStraightUp = model.HasStraightUp,
+
                 Degrees_StraightUp = model.Angle_StraightUp.Value,
                 Degrees_Standard = model.Angle_Standard.Value,
 

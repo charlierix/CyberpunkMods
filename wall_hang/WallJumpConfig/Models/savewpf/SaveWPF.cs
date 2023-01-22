@@ -11,25 +11,19 @@ namespace WallJumpConfig.Models.savewpf
     {
         public string Description { get; init; }
 
+        public bool HasStraightUp { get; init; }
+
         public SaveWPF_Horizontal Horizontal { get; init; }
         public SaveWPF_Vertical_StraightUp Vertical_StraightUp { get; init; }
-
-        public bool HasStraightUp => Vertical_StraightUp != null;
 
         // ------------- Helper Methods -------------
         public static SaveWPF FromModel(VM_Horizontal horizontal, VM_StraightUp straightUp)
         {
-            var save_horz = SaveWPF_Horizontal.FromModel(horizontal);
-
-            SaveWPF_Vertical_StraightUp save_vert = null;
-            if (straightUp != null)
-                save_vert = SaveWPF_Vertical_StraightUp.FromModel(straightUp);
-
             return new SaveWPF()
             {
                 Description = horizontal.Description,
-                Horizontal = save_horz,
-                Vertical_StraightUp = save_vert,
+                Horizontal = SaveWPF_Horizontal.FromModel(horizontal),
+                Vertical_StraightUp = SaveWPF_Vertical_StraightUp.FromModel(straightUp),
             };
         }
     }

@@ -476,10 +476,10 @@ namespace WallJumpConfig
                         Percent_LookStrength = 1,
                         Percent_LatchAfterJump = 1,
                         RelatchTime_Emoseconds = 1152,      // 800 dozenal, 2/3 second
-                        WallAttract_DistanceMax = 6,
+                        WallAttract_DistanceMax = 8,
                         WallAttract_Accel = 8,
-                        WallAttract_Pow = 4,
-                        WallAttract_Antigrav = 0.666667,
+                        WallAttract_Pow = 3,
+                        WallAttract_Antigrav = 0.75,
                     },
 
                     Props_DirectAway = new PropsAtAngle()
@@ -492,10 +492,10 @@ namespace WallJumpConfig
                         Percent_LookStrength = 1,
                         Percent_LatchAfterJump = 1,
                         RelatchTime_Emoseconds = 1152,
-                        WallAttract_DistanceMax = 6,
+                        WallAttract_DistanceMax = 8,
                         WallAttract_Accel = 8,
-                        WallAttract_Pow = 4,
-                        WallAttract_Antigrav = 0.666667,
+                        WallAttract_Pow = 3,
+                        WallAttract_Antigrav = 0.75,
                     },
 
                     Props_Extra = new PropsAtAngle[0],
@@ -503,11 +503,13 @@ namespace WallJumpConfig
                     Speed_FullStrength = 4,
                     Speed_ZeroStrength = 8,
 
-                    Strength = 13,
+                    Strength = 12,
                 },
 
                 Vertical_StraightUp = new SaveWPF_Vertical_StraightUp()
                 {
+                    HasStraightUp = false,
+
                     Degrees_StraightUp = 60,
                     Degrees_Standard = 50,
 
@@ -518,10 +520,10 @@ namespace WallJumpConfig
 
                     LatchAfterJump = true,
                     RelatchTime_Emoseconds = 1152,
-                    WallAttract_DistanceMax = 6,
+                    WallAttract_DistanceMax = 8,
                     WallAttract_Accel = 8,
-                    WallAttract_Pow = 4,
-                    WallAttract_Antigrav = 0.666667,
+                    WallAttract_Pow = 3,
+                    WallAttract_Antigrav = 0.75,
                 },
             };
         }
