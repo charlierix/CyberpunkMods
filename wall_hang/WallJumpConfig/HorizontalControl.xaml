@@ -121,6 +121,7 @@
                                     <ContentPresenter Content="{Binding WallAttract_DistanceMax}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
                                     <ContentPresenter Content="{Binding WallAttract_Accel}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
                                     <ContentPresenter Content="{Binding WallAttract_Pow}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                    <local:PowerGraphControl HorizontalAlignment="Right" Margin="0,0,35,0" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}"/>
                                     <ContentPresenter Content="{Binding WallAttract_Antigrav}" Visibility="{Binding DataContext.VisibilityWallAttract, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
                                 </StackPanel>
                             </Expander.Content>
