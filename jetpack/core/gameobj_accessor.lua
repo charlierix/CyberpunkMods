@@ -221,7 +221,10 @@ function GameObjectAccessor:RayCast(fromPos, toPos)
     if self.spacialQueries then
         local hit = this.RayCast_Closest(self.spacialQueries, fromPos, toPos)
         if hit then
-            return ToVector4(hit.position), ToVector4(hit.normal), hit.material
+            return
+                Vector4.new(hit.position.x, hit.position.y, hit.position.z, 1),
+                Vector4.new(hit.normal.x, hit.normal.y, hit.normal.z, 1),
+                hit.material
         else
             return nil, nil, nil
         end
