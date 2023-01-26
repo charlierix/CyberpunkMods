@@ -30,7 +30,7 @@ function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, o, const, pla
     if is_minimized then
         width = 200 * vars_ui.scale
     end
-    
+
     ImGui.SetNextWindowPos(window.left, window.top, ImGuiCond.FirstUseEver)     -- this will place it in the hardcoded location, but if they move it, it will show at the new location
     ImGui.SetNextWindowSize(width, window.height, ImGuiCond.Always)
 
@@ -48,6 +48,9 @@ function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, o, const, pla
 
         elseif vars_ui.currentWindow == const.windows.jumping then
             continueShowing = DrawWindow_Jumping(isCloseRequested, vars_ui, window, const, player, player_arcade)
+
+        elseif vars_ui.currentWindow == const.windows.jumping2 then
+            continueShowing = DrawWindow_Jumping2(isCloseRequested, vars_ui, window, const, player, player_arcade)
 
         elseif vars_ui.currentWindow == const.windows.wall_attraction then
             continueShowing = DrawWindow_WallAttraction(isCloseRequested, vars_ui, window, const, player, player_arcade)

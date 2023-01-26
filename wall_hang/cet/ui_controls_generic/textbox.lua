@@ -4,7 +4,7 @@ local this = {}
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
 function CalcSize_TextBox(def, style, const, line_heights, scale)
-	if not def.sizes then
+    if not def.sizes then
         def.sizes = {}
     end
 
@@ -49,7 +49,7 @@ function Draw_TextBox(def, style_text, style_colors, scale)
     ImGui.PopStyleVar(3)
 end
 
-------------------------------------------- Private Methods -------------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.Calculate_Sizes(def, style_text, line_heights, const, scale)
     -- Width

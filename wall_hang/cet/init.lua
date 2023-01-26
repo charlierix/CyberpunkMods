@@ -55,6 +55,7 @@ require "ui/transition_windows"
 
 require "ui_controls_generic/button"
 require "ui_controls_generic/checkbox"
+require "ui_controls_generic/combobox"
 require "ui_controls_generic/help_button"
 require "ui_controls_generic/label"
 require "ui_controls_generic/label_clickable"
@@ -80,6 +81,7 @@ require "ui_framework/util_setup"
 require "ui_windows/crawl_slide"
 require "ui_windows/input_bindings"
 require "ui_windows/jumping"
+require "ui_windows/jumping2"
 require "ui_windows/main"
 require "ui_windows/wall_attraction"
 
@@ -110,6 +112,7 @@ local const =
         "main",
             "input_bindings",
             "jumping",
+            "jumping2",
             "wall_attraction",
             "crawl_slide"
     ),
