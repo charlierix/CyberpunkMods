@@ -1,5 +1,9 @@
 local this = {}
 
+local COMBO_NONE = "*  none  *"       -- using asterisk, because files can't have that in the name
+
+local dropdown_items = nil
+
 function DefineWindow_Jumping2(vars_ui, const)
     local jumping = {}
     vars_ui.jumping2 = jumping
@@ -11,10 +15,33 @@ function DefineWindow_Jumping2(vars_ui, const)
     --jumping.combo = this.Define_Combo(const)
 
 
-    
+    jumping.planted_label = this.Define_Planted_Label(const)
+    jumping.planted_help = this.Define_Planted_Help(jumping.planted_label, const)
+    jumping.planted_combo = this.Define_Planted_Combo(jumping.planted_label, const)
+
+    jumping.planted_shift_label = this.Define_Planted_Shift_Label(jumping.planted_combo, const)
+    jumping.planted_shift_help = this.Define_Planted_Shift_Help(jumping.planted_shift_label, const)
+    jumping.planted_shift_combo = this.Define_Planted_Shift_Combo(jumping.planted_shift_label, const)
+
+    jumping.rebound_label = this.Define_Rebound_Label(jumping.planted_shift_combo, const)
+    jumping.rebound_help = this.Define_Rebound_Help(jumping.rebound_label, const)
+    jumping.rebound_combo = this.Define_Rebound_Combo(jumping.rebound_label, const)
+
+    jumping.rebound_shift_label = this.Define_Rebound_Shift_Label(jumping.rebound_combo, const)
+    jumping.rebound_shift_help = this.Define_Rebound_Shift_Help(jumping.rebound_shift_label, const)
+    jumping.rebound_shift_combo = this.Define_Rebound_Shift_Combo(jumping.rebound_shift_label, const)
 
 
+    --TODO: Buttons
+    --  All Off
+    --  Default
+    --  Default (old)
 
+
+    --TODO: Overrides
+    --  Relatch { use config | always | never }
+    --  Strength [.5 ------ 1 ------ 2]
+    --  Speed [.5 ------ 1 ------ 2]
 
 
     jumping.okcancel = Define_OkCancelButtons(false, vars_ui, const)
@@ -33,6 +60,14 @@ function DrawWindow_Jumping2(isCloseRequested, vars_ui, window, const, player, p
 
     ------------------------- Finalize models for this frame -------------------------
 
+    this.Refresh_Planted_Combo(jumping.planted_combo)
+
+    this.Refresh_Planted_Shift_Combo(jumping.planted_shift_combo)
+
+    this.Refresh_Rebound_Combo(jumping.rebound_combo)
+
+    this.Refresh_Rebound_Shift_Combo(jumping.rebound_shift_combo)
+
     ------------------------------ Calculate Positions -------------------------------
 
     CalculateSizes(jumping.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
@@ -42,7 +77,21 @@ function DrawWindow_Jumping2(isCloseRequested, vars_ui, window, const, player, p
 
     --Draw_ComboBox(jumping.combo, vars_ui.style.combobox, vars_ui.scale)
 
+    Draw_Label(jumping.planted_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(jumping.planted_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_ComboBox(jumping.planted_combo, vars_ui.style.combobox, vars_ui.scale)
 
+    Draw_Label(jumping.planted_shift_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(jumping.planted_shift_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_ComboBox(jumping.planted_shift_combo, vars_ui.style.combobox, vars_ui.scale)
+
+    Draw_Label(jumping.rebound_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(jumping.rebound_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_ComboBox(jumping.rebound_combo, vars_ui.style.combobox, vars_ui.scale)
+
+    Draw_Label(jumping.rebound_shift_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(jumping.rebound_shift_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_ComboBox(jumping.rebound_shift_combo, vars_ui.style.combobox, vars_ui.scale)
 
 
 
@@ -136,5 +185,324 @@ function this.Define_Combo(const)
         invisible_name = "Jumping2_Combo",
 
         CalcSize = CalcSize_ComboBox,
+    }
+end
+
+function this.Define_Planted_Label(const)
+    -- Label
+    return
+    {
+        text = "Jump while hanging on wall",
+
+        position =
+        {
+            pos_x = 40,
+            pos_y = -180,
+            horizontal = const.alignment_horizontal.left,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_Planted_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Jumping2_Planted_Help",
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[]]
+
+    return retVal
+end
+function this.Define_Planted_Combo(relative_to, const)
+    -- ComboBox
+    return
+    {
+        preview_text = COMBO_NONE,
+        selected_item = COMBO_NONE,
+
+        items = nil,
+
+        width = 300,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 12,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        invisible_name = "Jumping2_Planted_Combo",
+
+        CalcSize = CalcSize_ComboBox,
+    }
+end
+function this.Refresh_Planted_Combo(def)
+    if not dropdown_items then
+        dropdown_items = this.GetDropdownItems()
+    end
+
+    def.items = dropdown_items
+end
+
+function this.Define_Planted_Shift_Label(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Jump while hanging on wall + Shift Key",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 36,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_Planted_Shift_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Jumping2_Planted_Shift_Help",
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[]]
+
+    return retVal
+end
+function this.Define_Planted_Shift_Combo(relative_to, const)
+    -- ComboBox
+    return
+    {
+        preview_text = COMBO_NONE,
+        selected_item = COMBO_NONE,
+
+        items = nil,
+
+        width = 300,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 12,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        invisible_name = "Jumping2_Planted_Shift_Combo",
+
+        CalcSize = CalcSize_ComboBox,
+    }
+end
+function this.Refresh_Planted_Shift_Combo(def)
+    if not dropdown_items then
+        dropdown_items = this.GetDropdownItems()
+    end
+
+    def.items = dropdown_items
+end
+
+function this.Define_Rebound_Label(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Jump when close to a wall",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 36,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_Rebound_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Jumping2_Rebound_Help",
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[]]
+
+    return retVal
+end
+function this.Define_Rebound_Combo(relative_to, const)
+    -- ComboBox
+    return
+    {
+        preview_text = COMBO_NONE,
+        selected_item = COMBO_NONE,
+
+        items = nil,
+
+        width = 300,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 12,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        invisible_name = "Jumping2_Rebound_Combo",
+
+        CalcSize = CalcSize_ComboBox,
+    }
+end
+function this.Refresh_Rebound_Combo(def)
+    if not dropdown_items then
+        dropdown_items = this.GetDropdownItems()
+    end
+
+    def.items = dropdown_items
+end
+
+function this.Define_Rebound_Shift_Label(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Jump when close to a wall + Shift Key",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 36,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_Rebound_Shift_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Jumping2_Rebound_Shift_Help",
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[]]
+
+    return retVal
+end
+function this.Define_Rebound_Shift_Combo(relative_to, const)
+    -- ComboBox
+    return
+    {
+        preview_text = COMBO_NONE,
+        selected_item = COMBO_NONE,
+
+        items = nil,
+
+        width = 300,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 12,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        invisible_name = "Jumping2_Rebound_Shift_Combo",
+
+        CalcSize = CalcSize_ComboBox,
+    }
+end
+function this.Refresh_Rebound_Shift_Combo(def)
+    if not dropdown_items then
+        dropdown_items = this.GetDropdownItems()
+    end
+
+    def.items = dropdown_items
+end
+
+function this.GetDropdownItems()
+    --TODO: scan folder for json files
+
+    return
+    {
+        COMBO_NONE,
     }
 end
