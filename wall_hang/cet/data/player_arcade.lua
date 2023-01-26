@@ -51,7 +51,7 @@ function PlayerArcade:MapModelToSelf(model)
     --NOTE: This function is written very defensively, the assumption is that properties will be added over time,
     --so new code will try to load old db entries.  Missing properties will take the default value
 
-    -- jumping
+    -- jumping OLD
     this.StoreModelValue(self, model, "jump_strength", 11)
 
     this.StoreModelValue(self, model, "jump_speed_fullStrength", 3)     -- any vertical speed lower than this will get full jump strength
@@ -73,8 +73,6 @@ function PlayerArcade:MapModelToSelf(model)
     this.StoreModelValue(self, model, "wallcrawl_speed_down", 1.6)
 
     ----------------------- rebound jump settings -----------------------
-    --TODO: this shouldn't be coming from a json file in the future
-    --TODO: if no custom config, use a hardcoded default
 
     local filename = "!settings/walljump.json"
 
@@ -131,26 +129,6 @@ function PlayerArcade:MapModelToSelf(model)
             wallattract_antigrav = deserialized.straight_up.wallattract_antigrav,
         }
     end
-
-    -- --------------- ORIG ---------------
-    -- straightup_vert_percent = this.ToAnimationCurve(deserialized.straightup_vert_percent),
-
-    -- percent_vert_whenup = this.ToAnimationCurve(deserialized.percent_vert_whenup),
-    -- percent_horz_whenup = this.ToAnimationCurve(deserialized.percent_horz_whenup),
-
-    -- horz_percent_up = this.ToAnimationCurve(deserialized.horz_percent_up),
-    -- horz_percent_along = this.ToAnimationCurve(deserialized.horz_percent_along),
-    -- horz_percent_away = this.ToAnimationCurve(deserialized.horz_percent_away),
-    -- horz_strength = this.ToAnimationCurve(deserialized.horz_strength),
-    -- horizontal_percent_look = this.ToAnimationCurve(deserialized.horizontal_percent_look),
-
-    -- yaw_turn_percent = this.ToAnimationCurve(deserialized.yaw_turn_percent),
-
-    -- horizontal_percent_at_speed = this.ToAnimationCurve(deserialized.horizontal_percent_at_speed),
-
-    -- straightup_strength = deserialized.straightup_strength,
-    -- straightup_percent_at_speed = this.ToAnimationCurve(deserialized.straightup_percent_at_speed),
-
 end
 function PlayerArcade:MapSelfToModel()
     return
