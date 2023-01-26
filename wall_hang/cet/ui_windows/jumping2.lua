@@ -16,9 +16,6 @@ function DefineWindow_Jumping2(vars_ui, const)
 
     jumping.title = Define_Title("Jumping", const)
 
-    --jumping.combo = this.Define_Combo(const)
-
-
     jumping.planted_label = this.Define_Planted_Label(const)
     jumping.planted_help = this.Define_Planted_Help(jumping.planted_label, const)
     jumping.planted_combo = this.Define_Planted_Combo(jumping.planted_label, const)
@@ -77,8 +74,6 @@ function DrawWindow_Jumping2(isCloseRequested, vars_ui, window, const, player, p
 
     -------------------------------- Show ui elements --------------------------------
 
-    --Draw_ComboBox(jumping.combo, vars_ui.style.combobox, vars_ui.scale)
-
     Draw_Label(jumping.planted_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(jumping.planted_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_ComboBox(jumping.planted_combo, vars_ui.style.combobox, vars_ui.scale)
@@ -123,85 +118,6 @@ function DrawWindow_Jumping2(isCloseRequested, vars_ui, window, const, player, p
 end
 
 ----------------------------------- Private Methods -----------------------------------
-
-function this.Define_Combo(const)
-    -- ComboBox
-    return
-    {
-        preview_text = "select an item",
-        selected_item = nil,
-
-        items =
-        {
-            "hello",
-            "there",
-            "all",
-            "item1",
-            "item2",
-            "item3",
-            "item4",
-            "item5",
-            "item6",
-            "item7",
-            "item8",
-            "item9",
-            "itemX",
-            "itemE",
-            "item10",
-            "item11",
-            "really long text that needs to expand",
-            "item12",
-            "item13",
-            "item21",
-            "item22",
-            "item23",
-            "item24",
-            "item25",
-            "item26",
-            "item27",
-            "item28",
-            "item29",
-            "item2X",
-            "item2E",
-            "item31",
-            "item32",
-            "item33",
-            "item34",
-            "item35",
-            "item36",
-            "item37",
-            "item38",
-            "item39",
-            "item3X",
-            "item3E",
-            "item41",
-            "item42",
-            "item43",
-            "item44",
-            "item45",
-            "item46",
-            "item47",
-            "item48",
-            "item49",
-            "item4X",
-            "item4E",
-        },
-
-        --width = 240,
-
-        position =
-        {
-            pos_x = -100,
-            pos_y = 0,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
-
-        invisible_name = "Jumping2_Combo",
-
-        CalcSize = CalcSize_ComboBox,
-    }
-end
 
 function this.Define_Planted_Label(const)
     -- Label
