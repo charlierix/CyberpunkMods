@@ -1,6 +1,10 @@
 local this = {}
 
 local COMBO_NONE = "*  none  *"       -- using asterisk, because files can't have that in the name
+local COMBO_DEFAULT = "default"
+local COMBO_DEFAULT_SHIFT = "default - strong"
+local COMBO_UPONLY = "up only"
+local COMBO_BACKJUMP = "back jump"
 
 local dropdown_items = nil
 
@@ -31,11 +35,9 @@ function DefineWindow_Jumping2(vars_ui, const)
     jumping.rebound_shift_help = this.Define_Rebound_Shift_Help(jumping.rebound_shift_label, const)
     jumping.rebound_shift_combo = this.Define_Rebound_Shift_Combo(jumping.rebound_shift_label, const)
 
-
-    --TODO: Buttons
-    --  All Off
-    --  Default
-    --  Default (old)
+    jumping.button_clear = this.Define_Button_Clear(const)
+    jumping.button_default = this.Define_Button_Default(jumping.button_clear, const)
+    jumping.button_default_old = this.Define_Button_DefaultOld(jumping.button_default, const)
 
 
     --TODO: Overrides
@@ -92,6 +94,19 @@ function DrawWindow_Jumping2(isCloseRequested, vars_ui, window, const, player, p
     Draw_Label(jumping.rebound_shift_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(jumping.rebound_shift_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_ComboBox(jumping.rebound_shift_combo, vars_ui.style.combobox, vars_ui.scale)
+
+    if Draw_Button(jumping.button_clear, vars_ui.style.button, vars_ui.scale) then
+        this.Pressed_Clear(jumping)
+    end
+
+    if Draw_Button(jumping.button_default, vars_ui.style.button, vars_ui.scale) then
+        this.Pressed_Default(jumping)
+    end
+
+    if Draw_Button(jumping.button_default_old, vars_ui.style.button, vars_ui.scale) then
+        this.Pressed_DefaultOld(jumping)
+    end
+
 
 
 
@@ -496,6 +511,108 @@ function this.Refresh_Rebound_Shift_Combo(def)
     end
 
     def.items = dropdown_items
+end
+
+function this.Define_Button_Clear(const)
+    -- Button
+    return
+    {
+        text = "Clear",
+
+        width_override = 100,
+
+        position =
+        {
+            pos_x = 40,
+            pos_y = -180,
+            horizontal = const.alignment_horizontal.right,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "hint",
+
+        isEnabled = true,
+
+        CalcSize = CalcSize_Button,
+    }
+end
+function this.Pressed_Clear(jumping)
+    jumping.planted_combo.selected_item = COMBO_NONE
+    jumping.planted_shift_combo.selected_item = COMBO_NONE
+    jumping.rebound_combo.selected_item = COMBO_NONE
+    jumping.rebound_shift_combo.selected_item = COMBO_NONE
+end
+
+function this.Define_Button_Default(relative_to, const)
+    -- Button
+    return
+    {
+        text = "Default",
+
+        width_override = 100,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 18,
+
+            relative_horz = const.alignment_horizontal.right,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "hint",
+
+        isEnabled = true,
+
+        CalcSize = CalcSize_Button,
+    }
+end
+function this.Pressed_Default(jumping)
+    jumping.planted_combo.selected_item = COMBO_DEFAULT
+    jumping.planted_shift_combo.selected_item = COMBO_DEFAULT_SHIFT
+    jumping.rebound_combo.selected_item = COMBO_DEFAULT
+    jumping.rebound_shift_combo.selected_item = COMBO_DEFAULT_SHIFT
+end
+
+function this.Define_Button_DefaultOld(relative_to, const)
+    -- Button
+    return
+    {
+        text = "Default (old)",
+
+        width_override = 100,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 18,
+
+            relative_horz = const.alignment_horizontal.right,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "hint",
+
+        isEnabled = true,
+
+        CalcSize = CalcSize_Button,
+    }
+end
+function this.Pressed_DefaultOld(jumping)
+    jumping.planted_combo.selected_item = COMBO_DEFAULT
+    jumping.planted_shift_combo.selected_item = COMBO_DEFAULT
+    jumping.rebound_combo.selected_item = COMBO_UPONLY
+    jumping.rebound_shift_combo.selected_item = COMBO_BACKJUMP
 end
 
 function this.GetDropdownItems()
