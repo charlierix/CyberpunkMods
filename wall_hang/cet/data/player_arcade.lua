@@ -74,61 +74,8 @@ function PlayerArcade:MapModelToSelf(model)
 
     ----------------------- rebound jump settings -----------------------
 
-    local filename = "!settings/walljump.json"
+    self.rebound = this.DeserializeConfig("walljump")
 
-    local handle = io.open(filename, "r")
-    local json = handle:read("*all")
-
-    local deserialized = extern_json.decode(json)
-
-    self.rebound =
-    {
-        horizontal =
-        {
-            percent_up = this.ToAnimationCurve(deserialized.horizontal.percent_up),
-            percent_along = this.ToAnimationCurve(deserialized.horizontal.percent_along),
-            percent_away = this.ToAnimationCurve(deserialized.horizontal.percent_away),
-
-            percent_at_speed = this.ToAnimationCurve(deserialized.horizontal.percent_at_speed),
-
-            percent_look = this.ToAnimationCurve(deserialized.horizontal.percent_look),
-            percent_look_strength = this.ToAnimationCurve(deserialized.horizontal.percent_look_strength),
-
-            yaw_turn = this.ToAnimationCurve(deserialized.horizontal.yaw_turn),
-
-            percent_latch_after_jump = this.ToAnimationCurve(deserialized.horizontal.percent_latch_after_jump),
-            relatch_time_seconds = this.ToAnimationCurve(deserialized.horizontal.relatch_time_seconds),
-            wallattract_distance_max = this.ToAnimationCurve(deserialized.horizontal.wallattract_distance_max),
-            wallattract_accel = this.ToAnimationCurve(deserialized.horizontal.wallattract_accel),
-            wallattract_pow = this.ToAnimationCurve(deserialized.horizontal.wallattract_pow),
-            wallattract_antigrav = this.ToAnimationCurve(deserialized.horizontal.wallattract_antigrav),
-
-            strength = deserialized.horizontal.strength,
-        },
-
-        has_straightup = deserialized.has_straightup,
-    }
-
-    if deserialized.has_straightup then
-        self.rebound.straight_up =
-        {
-            percent = this.ToAnimationCurve(deserialized.straight_up.percent),
-
-            percent_vert_whenup = this.ToAnimationCurve(deserialized.straight_up.percent_vert_whenup),
-            percent_horz_whenup = this.ToAnimationCurve(deserialized.straight_up.percent_horz_whenup),
-
-            percent_at_speed = this.ToAnimationCurve(deserialized.straight_up.percent_at_speed),
-
-            strength = deserialized.straight_up.strength,
-
-            latch_after_jump = deserialized.straight_up.latch_after_jump,
-            relatch_time_seconds = deserialized.straight_up.relatch_time_seconds,
-            wallattract_distance_max = deserialized.straight_up.wallattract_distance_max,
-            wallattract_accel = deserialized.straight_up.wallattract_accel,
-            wallattract_pow = deserialized.straight_up.wallattract_pow,
-            wallattract_antigrav = deserialized.straight_up.wallattract_antigrav,
-        }
-    end
 end
 function PlayerArcade:MapSelfToModel()
     return
@@ -161,6 +108,80 @@ function this.StoreModelValue(obj, model, prop_name, default)
     else
         obj[prop_name] = default
     end
+end
+
+function this.DeserializeConfig(name)
+    if not name then
+        return
+        {
+            has_horizontal = false,
+            has_straightup = false,
+        }
+    end
+
+    local filename = "!settings/" .. name .. ".json"
+
+    --TODO: fail gracefully if file doesn't exist
+
+    local handle = io.open(filename, "r")
+    local json = handle:read("*all")
+
+    local deserialized = extern_json.decode(json)
+
+    local retVal =
+    {
+        description = deserialized.description,
+        has_horizontal = deserialized.has_horizontal,
+        has_straightup = deserialized.has_straightup,
+    }
+
+    if deserialized.has_horizontal then
+        retVal.horizontal =
+        {
+            percent_up = this.ToAnimationCurve(deserialized.horizontal.percent_up),
+            percent_along = this.ToAnimationCurve(deserialized.horizontal.percent_along),
+            percent_away = this.ToAnimationCurve(deserialized.horizontal.percent_away),
+
+            percent_at_speed = this.ToAnimationCurve(deserialized.horizontal.percent_at_speed),
+
+            percent_look = this.ToAnimationCurve(deserialized.horizontal.percent_look),
+            percent_look_strength = this.ToAnimationCurve(deserialized.horizontal.percent_look_strength),
+
+            yaw_turn = this.ToAnimationCurve(deserialized.horizontal.yaw_turn),
+
+            percent_latch_after_jump = this.ToAnimationCurve(deserialized.horizontal.percent_latch_after_jump),
+            relatch_time_seconds = this.ToAnimationCurve(deserialized.horizontal.relatch_time_seconds),
+            wallattract_distance_max = this.ToAnimationCurve(deserialized.horizontal.wallattract_distance_max),
+            wallattract_accel = this.ToAnimationCurve(deserialized.horizontal.wallattract_accel),
+            wallattract_pow = this.ToAnimationCurve(deserialized.horizontal.wallattract_pow),
+            wallattract_antigrav = this.ToAnimationCurve(deserialized.horizontal.wallattract_antigrav),
+
+            strength = deserialized.horizontal.strength,
+        }
+    end
+
+    if deserialized.has_straightup then
+        retVal.straight_up =
+        {
+            percent = this.ToAnimationCurve(deserialized.straight_up.percent),
+
+            percent_vert_whenup = this.ToAnimationCurve(deserialized.straight_up.percent_vert_whenup),
+            percent_horz_whenup = this.ToAnimationCurve(deserialized.straight_up.percent_horz_whenup),
+
+            percent_at_speed = this.ToAnimationCurve(deserialized.straight_up.percent_at_speed),
+
+            strength = deserialized.straight_up.strength,
+
+            latch_after_jump = deserialized.straight_up.latch_after_jump,
+            relatch_time_seconds = deserialized.straight_up.relatch_time_seconds,
+            wallattract_distance_max = deserialized.straight_up.wallattract_distance_max,
+            wallattract_accel = deserialized.straight_up.wallattract_accel,
+            wallattract_pow = deserialized.straight_up.wallattract_pow,
+            wallattract_antigrav = deserialized.straight_up.wallattract_antigrav,
+        }
+    end
+
+    return retVal
 end
 
 function this.ToAnimationCurve(key_values)
