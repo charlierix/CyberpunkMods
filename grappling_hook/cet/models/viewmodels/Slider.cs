@@ -16,6 +16,11 @@ namespace models.viewmodels
         public double max { get; init; }
 
         /// <summary>
+        /// If true, the value displayed will be dozenal
+        /// </summary>
+        public bool is_dozenal { get; init; }
+
+        /// <summary>
         /// This only affects the displayed decimal places.  The actual value isn't rounded
         /// </summary>
         public int decimal_places { get; init; }
@@ -24,6 +29,11 @@ namespace models.viewmodels
         // WARNING: Be careful with potential special characters.  % should be %%
         public string prefix { get; init; }
         public string suffix { get; init; }
+
+        /// <summary>
+        /// If this is populated, it will ignore is_dozenal, decimal_places, prefix, suffix
+        /// </summary>
+        public Func<double, string> get_custom_text { get; init; }
 
         public double width { get; init; }
 

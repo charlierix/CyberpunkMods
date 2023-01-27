@@ -58,6 +58,10 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function this.GetFormat(def)
+    if def.get_custom_text then
+        return def.get_custom_text(def.value)
+    end
+
     local prefix = def.prefix
     if not prefix then
         prefix = ""
