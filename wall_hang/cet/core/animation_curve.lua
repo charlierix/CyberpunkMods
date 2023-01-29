@@ -63,7 +63,7 @@ function AnimationCurve:Evaluate(key)
     end
 
     local dump = String_Join(", ", Select(self.derived.Bezier_Samples, function(o) return tostring(o.key) end))
-    print("AnimationCurve.Evaluate: Didn't find key: " .. tostring(key) .. " | " .. dump)
+    LogError("AnimationCurve.Evaluate: Didn't find key: " .. tostring(key) .. " | " .. dump)
 end
 
 function AnimationCurve:Min_Key()

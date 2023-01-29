@@ -4,6 +4,8 @@
 
 local this = {}
 
+local FOLDER = "!settings"
+
 PlayerArcade = {}
 
 function PlayerArcade:new(o, vars, const, debug)
@@ -72,10 +74,33 @@ function PlayerArcade:MapModelToSelf(model)
     this.StoreModelValue(self, model, "wallcrawl_speed_up", 0.8)
     this.StoreModelValue(self, model, "wallcrawl_speed_down", 1.6)
 
-    ----------------------- rebound jump settings -----------------------
+    -- jump from json files
+    this.PossiblyPortJumpSettings(model, self.const)
 
-    self.rebound = this.DeserializeConfig("walljump")
+    self.planted_name = model.planted_name
+    if self.planted_name ~= self.const.jump_config_none then
+        self.planted = this.DeserializeConfigFile(self.planted_name)
+    end
 
+    self.planted_shift_name = model.planted_shift_name
+    if self.planted_shift_name ~= self.const.jump_config_none then
+        self.planted_shift = this.DeserializeConfigFile(self.planted_shift_name)
+    end
+
+    self.rebound_name = model.rebound_name
+    if self.rebound_name ~= self.const.jump_config_none then
+        self.rebound = this.DeserializeConfigFile(self.rebound_name)
+    end
+
+    self.rebound_shift_name = model.rebound_shift_name
+    if self.rebound_shift_name ~= self.const.jump_config_none then
+        self.rebound_shift = this.DeserializeConfigFile(self.rebound_shift_name)
+    end
+
+    -- jump config overrides
+    this.StoreModelValue(self, model, "override_relatch", self.const.override_relatch.use_config)
+    this.StoreModelValue(self, model, "override_strength_mult", 1)
+    this.StoreModelValue(self, model, "override_speed_mult", 1)
 end
 function PlayerArcade:MapSelfToModel()
     return
@@ -97,6 +122,15 @@ function PlayerArcade:MapSelfToModel()
         wallcrawl_speed_horz = self.wallcrawl_speed_horz,
         wallcrawl_speed_up = self.wallcrawl_speed_up,
         wallcrawl_speed_down = self.wallcrawl_speed_down,
+
+        planted_name = self.planted_name,
+        planted_shift_name = self.planted_shift_name,
+        rebound_name = self.rebound_name,
+        rebound_shift_name = self.rebound_shift_name,
+
+        override_relatch = self.override_relatch,
+        override_strength_mult = self.override_strength_mult,
+        override_speed_mult = self.override_speed_mult,
     }
 end
 
@@ -110,7 +144,7 @@ function this.StoreModelValue(obj, model, prop_name, default)
     end
 end
 
-function this.DeserializeConfig(name)
+function this.DeserializeConfigFile(name)
     if not name then
         return
         {
@@ -119,11 +153,18 @@ function this.DeserializeConfig(name)
         }
     end
 
-    local filename = "!settings/" .. name .. ".json"
-
-    --TODO: fail gracefully if file doesn't exist
+    local filename = FOLDER .. "/" .. name .. ".json"
 
     local handle = io.open(filename, "r")
+    if not handle then
+        LogError("jump config file name not found: " .. filename)
+        return
+        {
+            has_horizontal = false,
+            has_straightup = false,
+        }
+    end
+
     local json = handle:read("*all")
 
     local deserialized = extern_json.decode(json)
@@ -182,6 +223,53 @@ function this.DeserializeConfig(name)
     end
 
     return retVal
+end
+
+function this.PossiblyPortJumpSettings(model, const)
+    if model.planted_name or model.planted_shift_name or model.rebound_name or model.rebound_shift_name then
+        -- Some are populated, make sure all are populated (shouldn't need to do this, just being safe)
+        if not model.planted_name then
+            model.planted_name = const.jump_config_none
+        end
+
+        if not model.planted_shift_name then
+            model.planted_shift_name = const.jump_config_none
+        end
+
+        if not model.rebound_name then
+            model.rebound_name = const.jump_config_none
+        end
+
+        if not model.rebound_shift_name then
+            model.rebound_shift_name = const.jump_config_none
+        end
+    else
+        -- Nothing is populated
+        local db_value = GetSetting_Bool(const.settings.ShouldJumpBackward, nil)
+
+        if db_value == nil then
+            -- Database is empty, use new defaults
+            -- NOTE: this would also be the case where they left default settings alone (never touched the checkbox)
+            model.planted_name = const.jump_config_default
+            model.planted_shift_name = const.jump_config_default_shift
+            model.rebound_name = const.jump_config_default
+            model.rebound_shift_name = const.jump_config_default_shift
+
+        elseif db_value == true then
+            -- They explicitly set jump back to true, so use the configs that give the same functionality
+            model.planted_name = const.jump_config_default
+            model.planted_shift_name = const.jump_config_default_shift
+            model.rebound_name = const.jump_config_backjump
+            model.rebound_shift_name = const.jump_config_backjump
+
+        else
+            -- They explicitly set jump back to false, so use the configs that give the same functionality
+            model.planted_name = const.jump_config_default
+            model.planted_shift_name = const.jump_config_default_shift
+            model.rebound_name = const.jump_config_uponly
+            model.rebound_shift_name = const.jump_config_backjump
+        end
+    end
 end
 
 function this.ToAnimationCurve(key_values)

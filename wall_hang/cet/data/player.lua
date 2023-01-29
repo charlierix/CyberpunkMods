@@ -49,10 +49,21 @@ function Player:Reset()
     self.wallcrawl_speed_up = self.player_arcade.wallcrawl_speed_up
     self.wallcrawl_speed_down = self.player_arcade.wallcrawl_speed_down
 
+    self.planted_name = self.player_arcade.planted_name
+    self.planted = self.player_arcade.planted
 
-    -------------- temp rebound --------------
+    self.planted_shift_name = self.player_arcade.planted_shift_name
+    self.planted_shift = self.player_arcade.planted_shift
+
+    self.rebound_name = self.player_arcade.rebound_name
     self.rebound = self.player_arcade.rebound
 
+    self.rebound_shift_name = self.player_arcade.rebound_shift_name
+    self.rebound_shift = self.player_arcade.rebound_shift
+
+    self.override_relatch = self.player_arcade.override_relatch
+    self.override_strength_mult = self.player_arcade.override_strength_mult
+    self.override_speed_mult = self.player_arcade.override_speed_mult
 end
 
 ------------------------------- Private Instance Methods ------------------------------

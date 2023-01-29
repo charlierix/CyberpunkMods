@@ -136,7 +136,7 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, co
             if current.binding == const.bindings.hang then
                 shouldShow = not input_bindings.usecustom_wallhang.isChecked
             else
-                print("ERROR: " .. current.binding)
+                LogError(current.binding)
             end
 
             if shouldShow then
@@ -732,7 +732,7 @@ function this.Save(vars, const, usecustom_wallhang, bind_buttons, keys)
             if bind_buttons[i].binding == const.bindings.hang then
                 keys:ClearHangActions()
             else
-                print("ERROR: " .. bind_buttons[i].binding)
+                LogError(bind_buttons[i].binding)
             end
 
         elseif bind_buttons[i].newActions then
@@ -741,7 +741,7 @@ function this.Save(vars, const, usecustom_wallhang, bind_buttons, keys)
             if bind_buttons[i].binding == const.bindings.hang then
                 keys:SetHangActions(bind_buttons[i].newActions)
             else
-                print("ERROR: " .. bind_buttons[i].binding)
+                LogError(bind_buttons[i].binding)
             end
         end
     end

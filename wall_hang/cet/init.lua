@@ -98,10 +98,14 @@ local const =
     flightModes = CreateEnum("standard", "hang", "jump_planted_calculate", "jump_rebound_calculate", "jump_teleturn", "jump_impulse"),
 
     -- Populated in InitializeSavedFields()
-    --latch_wallhang,       -- false: must keep the hang key held in
     --mouse_sensitivity = -0.08,
     --rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
+
+
+    --TODO: Move this to player
+    --latch_wallhang,       -- false: must keep the hang key held in
     --should_jump_backward
+
 
     -- These are set in Define_UI_Framework_Constants() called during init
     -- alignment_horizontal = CreateEnum("left", "center", "right"),
@@ -128,6 +132,16 @@ local const =
         -- Floats
         "MouseSensitivity",
         "RightStickSensitivity"),
+
+    jump_config_none = "*  none  *",        -- this is the string to use for no config (can't use nil, because then it's not known if a port from old version is needed).  Using asterisk, because files can't have that in the name
+    jump_config_default = "default",
+    jump_config_default_shift = "default - strong",
+    jump_config_uponly = "up only",
+    jump_config_backjump = "back jump",
+
+    override_relatch = CreateEnum("use_config", "always", "never"),
+
+    filetype = CreateEnum("file", "directory"),     -- this is the .type property of items when iterating the dir fuction
 
     rayFrom_Z = 1.5,
 
@@ -377,7 +391,7 @@ registerForEvent("onUpdate", function(deltaTime)
         Process_Jump_Impulse(o, vars, const, debug)
 
     else
-        print("Wall Hang ERROR, unknown flightMode: " .. tostring(vars.flightMode))
+        LogError("Unknown flightMode: " .. tostring(vars.flightMode))
         Transition_ToStandard(vars, const, debug, o, nil)
     end
 

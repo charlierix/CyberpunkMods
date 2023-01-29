@@ -461,7 +461,7 @@ function this.ConvertToNormalizedPositions_TotalToLocal(total_percents, segments
 
     for i = 1, #total_percents, 1 do
         if total_percents[i] < prev_percent then
-            print("ConvertToNormalizedPositions: The percents must be passed in ascending order.  current: " .. tostring(total_percents[i]) .. ", prev: " .. tostring(prev_percent))
+            LogError("ConvertToNormalizedPositions: The percents must be passed in ascending order.  current: " .. tostring(total_percents[i]) .. ", prev: " .. tostring(prev_percent))
         end
 
         prev_percent = total_percents[i]
@@ -504,7 +504,7 @@ function this.ConvertToNormalizedPositions_LocalToTotal(local_percents, segments
 
     for i = 1, #local_percents, 1 do
         if local_percents[i].segment_index < prev_index or (local_percents[i].segment_index == prev_index and local_percents[i].percent_along_segment < prev_percent) then
-            print("The percents must be passed in ascending order.  current: " .. tostring(local_percents[i].segment_index) .. " - " .. tostring(local_percents[i].percent_along_segment) .. ", prev: " .. tostring(prev_index) .. " - " .. tostring(prev_percent))
+            LogError("The percents must be passed in ascending order.  current: " .. tostring(local_percents[i].segment_index) .. " - " .. tostring(local_percents[i].percent_along_segment) .. ", prev: " .. tostring(prev_index) .. " - " .. tostring(prev_percent))
         end
 
         prev_index = local_percents[i].segment_index
@@ -560,7 +560,7 @@ function this.GetInputForOutput(output, percents)
         end
     end
 
-    print("GetInputForOutput: Couldn't find input for output: " .. tostring(output))
+    LogError("GetInputForOutput: Couldn't find input for output: " .. tostring(output))
 end
 
 function this.GetDensities(segments, counts)

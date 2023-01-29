@@ -61,6 +61,13 @@ function PossiblyStopSound(o, vars, forceStop)
     end
 end
 
+function LogError(message)
+    message = "Wall Hang [ERROR] : " .. message
+
+    print(message)
+    spdlog.error(message)
+end
+
 -- This takes a set of names ("a", "b", "c") and turns it into a key value table where the key and value are
 -- the same
 --

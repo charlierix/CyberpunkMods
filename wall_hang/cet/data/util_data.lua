@@ -30,8 +30,10 @@ end
 
 -- This pulls other settings out of the database
 function InitializeSavedFields(const)
-    const.latch_wallhang = GetSetting_Bool(const.settings.Latch_WallHang, true)
     const.mouse_sensitivity = GetSetting_Float(const.settings.MouseSensitivity, -0.06)
     const.rightstick_sensitivity = GetSetting_Float(const.settings.RightStickSensitivity, 50)
+
+    --TODO: these should be in player arcade
+    const.latch_wallhang = GetSetting_Bool(const.settings.Latch_WallHang, true)
     const.should_jump_backward = GetSetting_Bool(const.settings.ShouldJumpBackward, false)
 end

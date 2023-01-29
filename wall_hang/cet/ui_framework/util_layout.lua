@@ -10,7 +10,7 @@ function CalculateSizes(render_nodes, style, const, line_heights, scale)
         if control.CalcSize then
             control.CalcSize(control, style, const, line_heights, scale)      --NOTE: CalcSize is just a delegate to a static method, so can't use the :, need to pass control explicitely
         else
-            print("ERROR: Control doesn't have CalcSize")
+            LogError("ERROR: Control doesn't have CalcSize")
             ReportTable(control)
         end
 

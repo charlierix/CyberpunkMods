@@ -1,14 +1,6 @@
 local this = {}
 
-local COMBO_NONE = "*  none  *"       -- using asterisk, because files can't have that in the name
-local COMBO_DEFAULT = "default"
-local COMBO_DEFAULT_SHIFT = "default - strong"
-local COMBO_UPONLY = "up only"
-local COMBO_BACKJUMP = "back jump"
-
-local OVERRIDE_RELATCH_NONE = "use config"
-local OVERRIDE_RELATCH_ALWAYS = "always"
-local OVERRIDE_RELATCH_NEVER = "never"
+local FOLDER = "!settings"
 
 local dropdown_items = nil
 
@@ -67,6 +59,11 @@ function ActivateWindow_Jumping2(vars_ui, const)
 
     local jumping = vars_ui.jumping2
 
+    jumping.planted_combo.selected_item = nil
+    jumping.planted_shift_combo.selected_item = nil
+    jumping.rebound_combo.selected_item = nil
+    jumping.rebound_shift_combo.selected_item = nil
+
     jumping.override_relatch_combo.selected_item = nil
     jumping.override_strength_slider.value = nil
     jumping.override_speed_slider.value = nil
@@ -77,19 +74,21 @@ function DrawWindow_Jumping2(isCloseRequested, vars_ui, window, const, player, p
 
     ------------------------- Finalize models for this frame -------------------------
 
-    this.Refresh_Planted_Combo(jumping.planted_combo)
+    this.Refresh_Planted_Combo(jumping.planted_combo, player_arcade, const)
 
-    this.Refresh_Planted_Shift_Combo(jumping.planted_shift_combo)
+    this.Refresh_Planted_Shift_Combo(jumping.planted_shift_combo, player_arcade, const)
 
-    this.Refresh_Rebound_Combo(jumping.rebound_combo)
+    this.Refresh_Rebound_Combo(jumping.rebound_combo, player_arcade, const)
 
-    this.Refresh_Rebound_Shift_Combo(jumping.rebound_shift_combo)
+    this.Refresh_Rebound_Shift_Combo(jumping.rebound_shift_combo, player_arcade, const)
 
-    this.Refresh_Override_Relatch_Combo(jumping.override_relatch_combo)
+    this.Refresh_Override_Relatch_Combo(jumping.override_relatch_combo, player_arcade)
 
-    this.Refresh_Override_Strength_Slider(jumping.override_strength_slider)
+    this.Refresh_Override_Strength_Slider(jumping.override_strength_slider, player_arcade)
 
-    this.Refresh_Override_Speed_Slider(jumping.override_speed_slider)
+    this.Refresh_Override_Speed_Slider(jumping.override_speed_slider, player_arcade)
+
+    this.Refresh_IsDirty(jumping.okcancel, player_arcade, jumping.planted_combo, jumping.planted_shift_combo, jumping.rebound_combo, jumping.rebound_shift_combo, jumping.override_relatch_combo, jumping.override_strength_slider, jumping.override_speed_slider)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -115,15 +114,15 @@ function DrawWindow_Jumping2(isCloseRequested, vars_ui, window, const, player, p
     Draw_ComboBox(jumping.rebound_shift_combo, vars_ui.style.combobox, vars_ui.scale)
 
     if Draw_Button(jumping.button_clear, vars_ui.style.button, vars_ui.scale) then
-        this.Pressed_Clear(jumping)
+        this.Pressed_Clear(jumping, const)
     end
 
     if Draw_Button(jumping.button_default, vars_ui.style.button, vars_ui.scale) then
-        this.Pressed_Default(jumping)
+        this.Pressed_Default(jumping, const)
     end
 
     if Draw_Button(jumping.button_default_old, vars_ui.style.button, vars_ui.scale) then
-        this.Pressed_DefaultOld(jumping)
+        this.Pressed_DefaultOld(jumping, const)
     end
 
     Draw_Label(jumping.override_relatch_label, vars_ui.style.colors, vars_ui.scale)
@@ -140,7 +139,7 @@ function DrawWindow_Jumping2(isCloseRequested, vars_ui, window, const, player, p
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(jumping.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        --this.Save(player, player_arcade)
+        this.Save(player, player_arcade, jumping.planted_combo, jumping.planted_shift_combo, jumping.rebound_combo, jumping.rebound_shift_combo, jumping.override_relatch_combo, jumping.override_strength_slider, jumping.override_speed_slider)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
@@ -191,8 +190,8 @@ function this.Define_Planted_Combo(relative_to, const)
     -- ComboBox
     return
     {
-        preview_text = COMBO_NONE,
-        selected_item = COMBO_NONE,
+        preview_text = const.jump_config_none,
+        selected_item = nil,
 
         items = nil,
 
@@ -217,12 +216,16 @@ function this.Define_Planted_Combo(relative_to, const)
         CalcSize = CalcSize_ComboBox,
     }
 end
-function this.Refresh_Planted_Combo(def)
+function this.Refresh_Planted_Combo(def, player_arcade, const)
     if not dropdown_items then
-        dropdown_items = this.GetDropdownItems()
+        dropdown_items = this.GetDropdownItems(const)
     end
 
     def.items = dropdown_items
+
+    if not def.selected_item then
+        def.selected_item = player_arcade.planted_name
+    end
 end
 
 function this.Define_Planted_Shift_Label(relative_to, const)
@@ -270,8 +273,8 @@ function this.Define_Planted_Shift_Combo(relative_to, const)
     -- ComboBox
     return
     {
-        preview_text = COMBO_NONE,
-        selected_item = COMBO_NONE,
+        preview_text = const.jump_config_none,
+        selected_item = nil,
 
         items = nil,
 
@@ -296,12 +299,16 @@ function this.Define_Planted_Shift_Combo(relative_to, const)
         CalcSize = CalcSize_ComboBox,
     }
 end
-function this.Refresh_Planted_Shift_Combo(def)
+function this.Refresh_Planted_Shift_Combo(def, player_arcade, const)
     if not dropdown_items then
-        dropdown_items = this.GetDropdownItems()
+        dropdown_items = this.GetDropdownItems(const)
     end
 
     def.items = dropdown_items
+
+    if not def.selected_item then
+        def.selected_item = player_arcade.planted_shift_name
+    end
 end
 
 function this.Define_Rebound_Label(relative_to, const)
@@ -349,8 +356,8 @@ function this.Define_Rebound_Combo(relative_to, const)
     -- ComboBox
     return
     {
-        preview_text = COMBO_NONE,
-        selected_item = COMBO_NONE,
+        preview_text = const.jump_config_none,
+        selected_item = nil,
 
         items = nil,
 
@@ -375,12 +382,16 @@ function this.Define_Rebound_Combo(relative_to, const)
         CalcSize = CalcSize_ComboBox,
     }
 end
-function this.Refresh_Rebound_Combo(def)
+function this.Refresh_Rebound_Combo(def, player_arcade, const)
     if not dropdown_items then
-        dropdown_items = this.GetDropdownItems()
+        dropdown_items = this.GetDropdownItems(const)
     end
 
     def.items = dropdown_items
+
+    if not def.selected_item then
+        def.selected_item = player_arcade.rebound_name
+    end
 end
 
 function this.Define_Rebound_Shift_Label(relative_to, const)
@@ -428,8 +439,8 @@ function this.Define_Rebound_Shift_Combo(relative_to, const)
     -- ComboBox
     return
     {
-        preview_text = COMBO_NONE,
-        selected_item = COMBO_NONE,
+        preview_text = const.jump_config_none,
+        selected_item = nil,
 
         items = nil,
 
@@ -454,12 +465,16 @@ function this.Define_Rebound_Shift_Combo(relative_to, const)
         CalcSize = CalcSize_ComboBox,
     }
 end
-function this.Refresh_Rebound_Shift_Combo(def)
+function this.Refresh_Rebound_Shift_Combo(def, player_arcade, const)
     if not dropdown_items then
-        dropdown_items = this.GetDropdownItems()
+        dropdown_items = this.GetDropdownItems(const)
     end
 
     def.items = dropdown_items
+
+    if not def.selected_item then
+        def.selected_item = player_arcade.rebound_shift_name
+    end
 end
 
 function this.Define_Button_Clear(style, const)
@@ -485,11 +500,11 @@ function this.Define_Button_Clear(style, const)
         CalcSize = CalcSize_Button,
     }
 end
-function this.Pressed_Clear(jumping)
-    jumping.planted_combo.selected_item = COMBO_NONE
-    jumping.planted_shift_combo.selected_item = COMBO_NONE
-    jumping.rebound_combo.selected_item = COMBO_NONE
-    jumping.rebound_shift_combo.selected_item = COMBO_NONE
+function this.Pressed_Clear(jumping, const)
+    jumping.planted_combo.selected_item = const.jump_config_none
+    jumping.planted_shift_combo.selected_item = const.jump_config_none
+    jumping.rebound_combo.selected_item = const.jump_config_none
+    jumping.rebound_shift_combo.selected_item = const.jump_config_none
 end
 
 function this.Define_Button_Default(relative_to, const)
@@ -521,11 +536,11 @@ function this.Define_Button_Default(relative_to, const)
         CalcSize = CalcSize_Button,
     }
 end
-function this.Pressed_Default(jumping)
-    jumping.planted_combo.selected_item = COMBO_DEFAULT
-    jumping.planted_shift_combo.selected_item = COMBO_DEFAULT_SHIFT
-    jumping.rebound_combo.selected_item = COMBO_DEFAULT
-    jumping.rebound_shift_combo.selected_item = COMBO_DEFAULT_SHIFT
+function this.Pressed_Default(jumping, const)
+    jumping.planted_combo.selected_item = const.jump_config_default
+    jumping.planted_shift_combo.selected_item = const.jump_config_default_shift
+    jumping.rebound_combo.selected_item = const.jump_config_default
+    jumping.rebound_shift_combo.selected_item = const.jump_config_default_shift
 end
 
 function this.Define_Button_DefaultOld(relative_to, const)
@@ -557,11 +572,11 @@ function this.Define_Button_DefaultOld(relative_to, const)
         CalcSize = CalcSize_Button,
     }
 end
-function this.Pressed_DefaultOld(jumping)
-    jumping.planted_combo.selected_item = COMBO_DEFAULT
-    jumping.planted_shift_combo.selected_item = COMBO_DEFAULT
-    jumping.rebound_combo.selected_item = COMBO_UPONLY
-    jumping.rebound_shift_combo.selected_item = COMBO_BACKJUMP
+function this.Pressed_DefaultOld(jumping, const)
+    jumping.planted_combo.selected_item = const.jump_config_default
+    jumping.planted_shift_combo.selected_item = const.jump_config_default
+    jumping.rebound_combo.selected_item = const.jump_config_uponly
+    jumping.rebound_shift_combo.selected_item = const.jump_config_backjump
 end
 
 function this.Define_Override_Relatch_Label(const)
@@ -608,9 +623,9 @@ function this.Define_Override_Relatch_Combo(relative_to, const)
 
         items =
         {
-            OVERRIDE_RELATCH_NONE,
-            OVERRIDE_RELATCH_ALWAYS,
-            OVERRIDE_RELATCH_NEVER,
+            const.override_relatch.use_config:gsub("_", " "),
+            const.override_relatch.always,
+            const.override_relatch.never,
         },
 
         width = 100,
@@ -634,10 +649,10 @@ function this.Define_Override_Relatch_Combo(relative_to, const)
         CalcSize = CalcSize_ComboBox,
     }
 end
-function this.Refresh_Override_Relatch_Combo(def)
+function this.Refresh_Override_Relatch_Combo(def, player_arcade)
     --NOTE: Activate function sets this to nil
     if not def.selected_item then
-        def.selected_item = OVERRIDE_RELATCH_NONE
+        def.selected_item = player_arcade.override_relatch:gsub("_", " ")
     end
 end
 
@@ -715,10 +730,10 @@ function this.Define_Override_Strength_Slider(relative_to, const)
         CalcSize = CalcSize_Slider,
     }
 end
-function this.Refresh_Override_Strength_Slider(def)
+function this.Refresh_Override_Strength_Slider(def, player_arcade)
     --NOTE: Activate function sets this to nil
     if not def.value then
-        def.value = 1
+        def.value = player_arcade.override_strength_mult
     end
 end
 
@@ -796,20 +811,72 @@ function this.Define_Override_Speed_Slider(relative_to, const)
         CalcSize = CalcSize_Slider,
     }
 end
-function this.Refresh_Override_Speed_Slider(def)
+function this.Refresh_Override_Speed_Slider(def, player_arcade)
     --NOTE: Activate function sets this to nil
     if not def.value then
-        def.value = 1
+        def.value = player_arcade.override_speed_mult
     end
 end
 
-function this.GetDropdownItems()
-    --TODO: scan folder for json files
+function this.Refresh_IsDirty(def, player_arcade, planted_combo, planted_shift_combo, rebound_combo, rebound_shift_combo, override_relatch_combo, override_strength_slider, override_speed_slider)
+    local isDirty = false
 
-    return
+    if planted_combo.selected_item ~= player_arcade.planted_name then
+        isDirty = true
+
+    elseif planted_shift_combo.selected_item ~= player_arcade.planted_shift_name then
+        isDirty = true
+
+    elseif rebound_combo.selected_item ~= player_arcade.rebound_name then
+        isDirty = true
+
+    elseif rebound_shift_combo.selected_item ~= player_arcade.rebound_shift_name then
+        isDirty = true
+
+    elseif override_relatch_combo.selected_item ~= player_arcade.override_relatch:gsub("_", " ") then
+        isDirty = true
+
+    elseif not IsNearValue(override_strength_slider.value, player_arcade.override_strength_mult) then
+        isDirty = true
+
+    elseif not IsNearValue(override_speed_slider.value, player_arcade.override_speed_mult) then
+        isDirty = true
+    end
+
+    def.isDirty = isDirty
+end
+
+function this.Save(player, player_arcade, planted_combo, planted_shift_combo, rebound_combo, rebound_shift_combo, override_relatch_combo, override_strength_slider, override_speed_slider)
+    player_arcade.planted_name = planted_combo.selected_item
+    player_arcade.planted_shift_name = planted_shift_combo.selected_item
+    player_arcade.rebound_name = rebound_combo.selected_item
+    player_arcade.rebound_shift_name = rebound_shift_combo.selected_item
+
+    player_arcade.override_relatch = override_relatch_combo.selected_item:gsub(" ", "_")
+    player_arcade.override_strength_mult = override_strength_slider.value
+    player_arcade.override_speed_mult = override_speed_slider.value
+
+    player_arcade:Save()
+    player:Reset()
+end
+
+---------------------------------------------------------------------------------------
+
+function this.GetDropdownItems(const)
+    local retVal =
     {
-        COMBO_NONE,
+        const.jump_config_none,
     }
+
+    for _, file in pairs(dir(FOLDER)) do
+        if file.type == const.filetype.file and file.name:match("%.json$") then
+            -- file.name is only the name (no folder)
+            -- gsub is a regex replace, but % is the escape char instead of \
+            retVal[#retVal+1] = file.name:gsub("%.json", "")
+        end
+    end
+
+    return retVal
 end
 
 -- The sliders go from 0 to 2, but the multiplier is from half to double
