@@ -46,7 +46,7 @@ end
 function Player:GetGrappleByIndex(index)
     local errMsg = this.ValidateIndex(index)
     if errMsg then
-        print("Player:GetGrappleByIndex: " .. errMsg .. ": " .. tostring(index))
+        LogError("Player:GetGrappleByIndex: " .. errMsg .. ": " .. tostring(index))
         return nil
     end
 
@@ -55,7 +55,7 @@ end
 function Player:SetGrappleByIndex(index, grapple)
     local errMsg = this.ValidateIndex(index)
     if errMsg then
-        print("Player:SetGrappleByIndex: " .. errMsg .. ": " .. tostring(index))
+        LogError("Player:SetGrappleByIndex: " .. errMsg .. ": " .. tostring(index))
     end
 
     self["grapple" .. tostring(index)] = grapple
@@ -63,11 +63,11 @@ end
 
 function Player:TransferExperience_GrappleStraight(grapple, purchaseXP)
     if self.experience - purchaseXP < 0 then
-        print("TransferExperience_GrappleStraight: Not enough player xp: " .. tostring(self.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
+        LogError("TransferExperience_GrappleStraight: Not enough player xp: " .. tostring(self.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
         return false
 
     elseif grapple.experience + purchaseXP < 0 then
-        print("TransferExperience_GrappleStraight: Not enough grapple xp: " .. tostring(grapple.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
+        LogError("TransferExperience_GrappleStraight: Not enough grapple xp: " .. tostring(grapple.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
         return false
     end
 
@@ -80,11 +80,11 @@ function Player:TransferExperience_GrappleStraight(grapple, purchaseXP)
 end
 function Player:TransferExperience_EnergyTank(energy_tank, purchaseXP)
     if self.experience - purchaseXP < 0 then
-        print("TransferExperience_EnergyTank: Not enough player xp: " .. tostring(self.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
+        LogError("TransferExperience_EnergyTank: Not enough player xp: " .. tostring(self.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
         return false
 
     elseif energy_tank.experience + purchaseXP < 0 then
-        print("TransferExperience_EnergyTank: Not enough energy tank xp: " .. tostring(energy_tank.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
+        LogError("TransferExperience_EnergyTank: Not enough energy tank xp: " .. tostring(energy_tank.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
         return false
     end
 

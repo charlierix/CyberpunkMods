@@ -319,7 +319,7 @@ function this.Save(player, grappleIndex, info)
     end
 
     if not grapple then
-        print("ERROR: Couldn't get grapple")
+        LogError("Couldn't get grapple")
         do return end
     end
 

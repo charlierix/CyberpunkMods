@@ -253,7 +253,7 @@ function this.DrawCell(x, y, text, text_width, text_height, cell_width, cell_hei
         left = x + cell_width - text_width
 
     else
-        print("DrawCell: Unknown alignment: " .. tostring(alignment))
+        LogError("DrawCell: Unknown alignment: " .. tostring(alignment))
     end
 
     local top = y + (cell_height / 2) - (text_height / 2)

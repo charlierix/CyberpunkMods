@@ -9,7 +9,7 @@ end
 function LoadStylesheet()
     local file = io.open("!src/ui/stylesheet.json", "r")
     if not file then
-        print("HEAD ROLL PITCH DEMO ERROR: Can't find file: ui/stylesheet.json")
+        LogError("Can't find file: ui/stylesheet.json")
         return nil
     end
 
@@ -151,7 +151,7 @@ function this.GroupRelativeTo(nodes)
 
             local parent = this.FindParent(nodes, node)
             if not parent then      -- letting control flow so a nil exception will also be logged
-                print("Couldn't find the control referenced by relative_to")
+                LogError("Couldn't find the control referenced by relative_to")
                 ReportTable(node.control)
             end
 

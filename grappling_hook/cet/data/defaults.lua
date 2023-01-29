@@ -97,7 +97,7 @@ function GetDefault_Grapple_ByName(name)
         return GetDefault_Grapple_Swing()
 
     else
-        print("GetDefault_Grapple_ByName: Unknown name: " .. tostring(name))
+        LogError("GetDefault_Grapple_ByName: Unknown name: " .. tostring(name))
         return nil
     end
 end

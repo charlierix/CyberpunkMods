@@ -281,7 +281,7 @@ registerForEvent("onUpdate", function(deltaTime)
         Process_InFlight(o, vars, keys, debug, const, deltaTime)
 
     else
-        print("Low Flying V ERROR, unknown flightMode: " .. tostring(vars.flightMode))
+        LogError("Unknown flightMode: " .. tostring(vars.flightMode))
         Transition_ToStandard(vars, debug, o, const)
     end
 

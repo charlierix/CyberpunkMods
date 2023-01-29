@@ -155,7 +155,7 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, o, const)
         if Draw_Button(main.unlock, vars_ui.style.button, vars_ui.scale) then
             local success, errMsg = TryUnlockGrapple(o, player, const)
             if not success then
-                print("ERROR Unlocking Grapple: " .. tostring(errMsg))
+                LogError("ERROR Unlocking Grapple: " .. tostring(errMsg))
             end
         end
     end

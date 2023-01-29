@@ -87,7 +87,6 @@ end
 ---------------------------------------------------------------------------------------
 
 function ReportInventory_All(o)
-
     o:GetPlayerInfo()
     if not o.player then
         print("no player")
@@ -123,7 +122,6 @@ function ReportInventory_All(o)
         -- local quality = o:GetItemQuality(items[i])
         -- print(tostring(quality) .. " | " .. type(quality) .. " || " .. tostring(quality.value) .. " | " .. tostring(type(quality.value)))
         print(o:GetItemQuality(items[i]))
-
 
         print("   ")
     end
@@ -301,7 +299,7 @@ end
 function this.RemoveItems_Uniques(o, items, count)
     local max = #items
     if max < count then
-        print("ERROR: TryUnlockGrapple -> RemoveItems_Uniques: Not enough items passed in, removing all the items that were passed in anyway")
+        LogError("TryUnlockGrapple -> RemoveItems_Uniques: Not enough items passed in, removing all the items that were passed in anyway")
         count = max
     end
 
@@ -403,7 +401,7 @@ function this.PickRandomFromBuckets(remaining, total)
         end
     end
 
-    print("Grappling Hook: Error finding random bucket")
+    LogError("Error finding random bucket")
     return -1
 end
 

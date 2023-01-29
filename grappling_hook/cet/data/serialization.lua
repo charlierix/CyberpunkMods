@@ -37,7 +37,7 @@ function Serialize_Table(t, maxDepth, depth)
 		if ktype == 'string' then
 			kstr = string.format('[%q] = ', k)
         else
-            print("Serialization Error: Unexpected key's type: " .. tostring(ktype) .. " (" .. tostring(k) .. ")")
+            LogError("Serialization Error: Unexpected key's type: " .. tostring(ktype) .. " (" .. tostring(k) .. ")")
             return nil
 		end
 

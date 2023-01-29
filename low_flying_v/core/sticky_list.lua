@@ -32,7 +32,7 @@ end
 -- This returns the item at the requested index
 function StickyList:GetItem(index)
     if (index < 1) or (index > self.maxIndex) then
-        print("StickyList.GetItem: index out of range (index=" .. tostring(index) .. ") (max=" .. tostring(self.maxIndex) .. ")")
+        LogError("StickyList.GetItem: index out of range (index=" .. tostring(index) .. ") (max=" .. tostring(self.maxIndex) .. ")")
         return nil
     end
 
@@ -70,7 +70,7 @@ end
 -- It shifts the item into the garbage zone and decrements the public max
 function StickyList:RemoveItem(index)
     if (index < 1) or (index > self.maxIndex) then
-        print("StickyList.RemoveItem: index out of range (index=" .. tostring(index) .. ") (max=" .. tostring(self.maxIndex) .. ")")
+        LogError("StickyList.RemoveItem: index out of range (index=" .. tostring(index) .. ") (max=" .. tostring(self.maxIndex) .. ")")
         return nil
     end
     

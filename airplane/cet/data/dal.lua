@@ -185,7 +185,7 @@ function this.Bind_Select_SingleRow(stmt, name, ...)
         local err = stmt:bind_values(...)
         if err ~= sqlite3.OK then
             local errMsg = name .. ": bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
+            LogError(errMsg)
             return nil, errMsg
         end
     end
@@ -211,7 +211,7 @@ function this.Bind_Select_MultiplRows_Iterator(stmt, name, ...)
     if not this.IsEmptyParam(...) then
         local err = stmt:bind_values(...)
         if err ~= sqlite3.OK then
-            print(name .. ": bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")")
+            LogError(name .. ": bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")")
 
             return function ()
                 -- The error was already logged, so this is just a function that does nothing and returns nil for the row
@@ -231,7 +231,7 @@ function this.Bind_Select_MultiplRows_Iterator(stmt, name, ...)
             return nil
 
         else
-            print(name .. ": Unknown Error: " .. tostring(result))
+            LogError(name .. ": Unknown Error: " .. tostring(result))
             return nil
         end
     end
@@ -264,7 +264,7 @@ function this.Bind_NonSelect(stmt, name, ...)
         local err = stmt:bind_values(...)
         if err ~= sqlite3.OK then
             local errMsg = name .. ": bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-            print(errMsg)
+            LogError(errMsg)
             return errMsg
         end
     end
@@ -272,14 +272,14 @@ function this.Bind_NonSelect(stmt, name, ...)
     local err = stmt:step()
     if err ~= sqlite3.DONE then
         local errMsg = name .. ": step returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-        print(errMsg)
+        LogError(errMsg)
         return errMsg
     end
 
     err = stmt:finalize()
     if err ~= sqlite3.OK then
         local errMsg = name .. ": finalize returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")"
-        print(errMsg)
+        LogError(errMsg)
         return errMsg
     end
 

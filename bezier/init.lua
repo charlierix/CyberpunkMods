@@ -4,6 +4,7 @@ require "core/bezier_segment"
 require "core/debug_render_logger"
 require "core/math_basic"
 require "core/math_vector"
+require "core/util"
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 require "temp/reporting"
 

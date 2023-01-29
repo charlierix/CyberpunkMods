@@ -30,7 +30,7 @@ function Process_Aim(o, player, vars, const, debug, deltaTime)
         this.Aim_Swing(vars.grapple.aim_swing, o, player, vars, const, debug)
 
     else
-        print("Grappling ERROR, unknown aim")
+        LogError("Unknown aim")
         Transition_ToStandard(vars, const, debug, o)
     end
 end

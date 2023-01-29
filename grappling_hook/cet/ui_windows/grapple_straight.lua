@@ -66,7 +66,7 @@ end
 function DrawWindow_Grapple_Straight(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
     if not grapple then
-        print("DrawWindow_Grapple_Straight: grapple is nil")
+        LogError("DrawWindow_Grapple_Straight: grapple is nil")
         TransitionWindows_Main(vars_ui, const)
         do return end
     end

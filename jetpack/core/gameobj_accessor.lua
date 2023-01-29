@@ -236,7 +236,7 @@ end
 --  up to 1
 function GameObjectAccessor:SetTimeSpeed(speed, player_percent)
     if speed <= 0 or speed >= 1 or player_percent <= 0 or player_percent > 1 then
-        print("SetTimeSpeed args error: " .. tostring(speed) .. ", " .. tostring(player_percent))
+        LogError("SetTimeSpeed args error: " .. tostring(speed) .. ", " .. tostring(player_percent))
         do return end
     end
 

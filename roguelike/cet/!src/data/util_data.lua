@@ -148,7 +148,7 @@ function this.GetDelegate_Position_Exact(center, radius_min, radius_max, is3D)
         end
 
     else
-        print("this.GetDelegate_Position_Exact: the code is broken")
+        LogError("this.GetDelegate_Position_Exact: the code is broken")
         return nil
     end
 end

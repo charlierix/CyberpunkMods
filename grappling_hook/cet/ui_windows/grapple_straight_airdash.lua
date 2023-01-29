@@ -69,7 +69,7 @@ end
 function DrawWindow_GrappleStraight_AirDash(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
     if not grapple then
-        print("DrawWindow_GrappleStraight_AirDash: grapple is nil")
+        LogError("DrawWindow_GrappleStraight_AirDash: grapple is nil")
         TransitionWindows_Main(vars_ui, const)
         do return end
     end

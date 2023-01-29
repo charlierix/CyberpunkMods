@@ -42,3 +42,10 @@ function PossiblyStopSound(o, vars, maxTime)
         vars.sound_current = nil
     end
 end
+
+function LogError(message)
+    message = "Ghost Forward [ERROR] : " .. message
+
+    print(message)
+    spdlog.error(message)
+end

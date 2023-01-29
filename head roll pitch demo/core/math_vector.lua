@@ -366,7 +366,7 @@ function GetArbitraryOrthogonal(vector)
         end
     end
 
-    print("GetArbitraryOrhonganal: Infinite loop detected")
+    LogError("GetArbitraryOrhonganal: Infinite loop detected")
     return Vector4.new(0, 0, 0, 1)
 end
 

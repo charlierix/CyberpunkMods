@@ -141,7 +141,7 @@ function this.GetControlPosition_Absolute(def, control_width, control_height, pa
             left = parent_width - control_width - def.pos_x
 
         else
-            print("GetControlPosition_Absolute: Unknown horizontal: " .. tostring(def.horizontal))
+            LogError("GetControlPosition_Absolute: Unknown horizontal: " .. tostring(def.horizontal))
             left = 0
         end
     else
@@ -162,7 +162,7 @@ function this.GetControlPosition_Absolute(def, control_width, control_height, pa
             top = parent_height - control_height - def.pos_y
 
         else
-            print("GetControlPosition_Absolute: Unknown vertical: " .. tostring(def.vertical))
+            LogError("GetControlPosition_Absolute: Unknown vertical: " .. tostring(def.vertical))
             top = 0
         end
     else
@@ -189,7 +189,7 @@ function this.GetControlPosition_Relative(def, control_width, control_height, co
             left = parent_pos.left + parent_pos.width
 
         else
-            print("GetControlPosition_Relative: Unknown relative_horz: " .. tostring(def.relative_horz))
+            LogError("GetControlPosition_Relative: Unknown relative_horz: " .. tostring(def.relative_horz))
         end
 
         -- Offset of this control's width
@@ -203,7 +203,7 @@ function this.GetControlPosition_Relative(def, control_width, control_height, co
             left = left - control_width - def.pos_x
 
         else
-            print("GetControlPosition_Relative: Unknown horizontal: " .. tostring(def.horizontal))
+            LogError("GetControlPosition_Relative: Unknown horizontal: " .. tostring(def.horizontal))
         end
     end
 
@@ -222,7 +222,7 @@ function this.GetControlPosition_Relative(def, control_width, control_height, co
             top = parent_pos.top + parent_pos.height
 
         else
-            print("GetControlPosition_Relative: Unknown relative_vert: " .. tostring(def.relative_vert))
+            LogError("GetControlPosition_Relative: Unknown relative_vert: " .. tostring(def.relative_vert))
         end
 
         -- Offset of this control's width
@@ -236,7 +236,7 @@ function this.GetControlPosition_Relative(def, control_width, control_height, co
             top = top - control_height - def.pos_y
 
         else
-            print("GetControlPosition_Relative: Unknown vertical: " .. tostring(def.vertical))
+            LogError("GetControlPosition_Relative: Unknown vertical: " .. tostring(def.vertical))
         end
     end
 

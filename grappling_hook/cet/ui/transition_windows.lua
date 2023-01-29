@@ -27,11 +27,11 @@ function TransitionWindows_Grapple(vars_ui, const, player, grappleIndex)
             ActivateWindow_Grapple_Straight(vars_ui, const)
 
         elseif grapple.aim_swing then
-            print("TransitionWindows_Grapple: TODO: Implement web swing")
+            LogError("TransitionWindows_Grapple: TODO: Implement web swing")
             TransitionWindows_Main(vars_ui, const)
 
         else
-            print("TransitionWindows_Grapple: Unknown type of grapple")
+            LogError("TransitionWindows_Grapple: Unknown type of grapple")
             TransitionWindows_Main(vars_ui, const)
         end
 
