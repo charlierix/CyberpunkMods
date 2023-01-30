@@ -178,6 +178,19 @@ namespace WallJumpConfig
                 MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void txtModFolder_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                txtModFolder.Effect = Directory.Exists(txtModFolder.Text) ?
+                    null :
+                    _errorEffect;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void expanderFolderOutside_ExpandedCollapsed(object sender, RoutedEventArgs e)
         {
@@ -208,13 +221,18 @@ namespace WallJumpConfig
             }
         }
 
-        private void txtModFolder_TextChanged(object sender, TextChangedEventArgs e)
+        private void cboName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                txtModFolder.Effect = Directory.Exists(txtModFolder.Text) ?
-                    null :
-                    _errorEffect;
+                // Can't use cboName.Text, because it's the old value at the time this event fires
+                string selected_text = cboName.SelectedValue as string;
+                if (string.IsNullOrWhiteSpace(selected_text))
+                    return;
+
+                var preset = _presets.FirstOrDefault(o => o.Name == selected_text);
+                if (preset != null)
+                    LoadSession(preset.Settings);
             }
             catch (Exception ex)
             {
@@ -233,6 +251,7 @@ namespace WallJumpConfig
                 MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        //NOTE: This isn't visible, since it auto loads on selection change
         private void Load_Click(object sender, RoutedEventArgs e)
         {
             try
