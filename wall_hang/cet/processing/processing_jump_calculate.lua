@@ -3,7 +3,7 @@ local this = {}
 local up = nil      -- can't use vector4 before init
 local MAX_UPADJUSTED_DOT = 0.8      -- the max allowed tilt from straight up
 
-function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
+function Process_Jump_Calculate(o, vars, const, debug)
     o:GetCamera()
     if not o.lookdir_forward then       -- shouldn't happen
         Transition_ToStandard(vars, const, debug, o, nil)
@@ -23,7 +23,7 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     local should_relatch = false
 
     -- Special logic for jumping straight up when facing the wall and looking up
-    local percent_horz, play_fail_sound1, vert_x, vert_y, vert_z, should_relatch1, relatchprops_vert = this.GetImpulse_Vertical(o, player.rebound.has_straightup, player.rebound.straight_up, up_dot, horz_dot, up_adjusted)
+    local percent_horz, play_fail_sound1, vert_x, vert_y, vert_z, should_relatch1, relatchprops_vert = this.GetImpulse_Vertical(o, vars.jump_settings.has_straightup, vars.jump_settings.straight_up, up_dot, horz_dot, up_adjusted)
     impulse_x = impulse_x + vert_x
     impulse_y = impulse_y + vert_y
     impulse_z = impulse_z + vert_z
@@ -33,7 +33,7 @@ function Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
     local relatchprops_horz = nil
     if percent_horz > 0 then
         -- Standard jump logic (the term horizontal is just to differentiate from straight up)
-        local horz_x, horz_y, horz_z, yaw_turn_radians1, should_relatch2, relatchprops_horz1, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, player.rebound.horizontal, o.vel)
+        local horz_x, horz_y, horz_z, yaw_turn_radians1, should_relatch2, relatchprops_horz1, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, vars.jump_settings.horizontal, o.vel)
 
         impulse_x = impulse_x + (horz_x * percent_horz)
         impulse_y = impulse_y + (horz_y * percent_horz)

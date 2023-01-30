@@ -16,9 +16,18 @@ function Process_Hang(o, player, vars, const, debug, keys, startStopTracker, del
         Transition_ToStandard(vars, const, debug, o, nil)
         do return end
 
-    elseif isJumpDown and ShouldJump(o, const, vars.normal, isShiftDown) then
-        Transition_ToJump_Planted_Calculate(vars, const, debug, o, vars.hangPos, vars.normal, startStopTracker)
-        do return end
+    elseif isJumpDown then
+        local jump_settings = nil
+        if isShiftDown then
+            jump_settings = player.planted_shift
+        else
+            jump_settings = player.planted
+        end
+
+        if jump_settings then
+            Transition_ToJump_Calculate(vars, const, debug, o, vars.hangPos, vars.normal, jump_settings, startStopTracker)
+            do return end
+        end
     end
 
     if not log2 then

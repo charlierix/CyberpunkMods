@@ -29,6 +29,9 @@ function PlayerArcade:Save()
     local model = self:MapSelfToModel()
     local json = extern_json.encode(model)
     SetPlayerArcade(json)
+
+    -- Save is likely called from ui, which means they may have changed the jump combos
+    self:LoadJumpConfigs()
 end
 
 ------------------------------- Private Instance Methods ------------------------------
@@ -47,6 +50,7 @@ function PlayerArcade:Load()
     end
 
     self:MapModelToSelf(entry)
+    self:LoadJumpConfigs()
 end
 
 function PlayerArcade:MapModelToSelf(model)
@@ -78,24 +82,9 @@ function PlayerArcade:MapModelToSelf(model)
     this.PossiblyPortJumpSettings(model, self.const)
 
     self.planted_name = model.planted_name
-    if self.planted_name ~= self.const.jump_config_none then
-        self.planted = this.DeserializeConfigFile(self.planted_name)
-    end
-
     self.planted_shift_name = model.planted_shift_name
-    if self.planted_shift_name ~= self.const.jump_config_none then
-        self.planted_shift = this.DeserializeConfigFile(self.planted_shift_name)
-    end
-
     self.rebound_name = model.rebound_name
-    if self.rebound_name ~= self.const.jump_config_none then
-        self.rebound = this.DeserializeConfigFile(self.rebound_name)
-    end
-
     self.rebound_shift_name = model.rebound_shift_name
-    if self.rebound_shift_name ~= self.const.jump_config_none then
-        self.rebound_shift = this.DeserializeConfigFile(self.rebound_shift_name)
-    end
 
     -- jump config overrides
     this.StoreModelValue(self, model, "override_relatch", self.const.override_relatch.use_config)
@@ -134,6 +123,32 @@ function PlayerArcade:MapSelfToModel()
     }
 end
 
+function PlayerArcade:LoadJumpConfigs()
+    if self.planted_name ~= self.const.jump_config_none then
+        self.planted = this.DeserializeConfigFile(self.planted_name)
+    else
+        self.planted = nil
+    end
+
+    if self.planted_shift_name ~= self.const.jump_config_none then
+        self.planted_shift = this.DeserializeConfigFile(self.planted_shift_name)
+    else
+        self.planted_shift = nil
+    end
+
+    if self.rebound_name ~= self.const.jump_config_none then
+        self.rebound = this.DeserializeConfigFile(self.rebound_name)
+    else
+        self.rebound = nil
+    end
+
+    if self.rebound_shift_name ~= self.const.jump_config_none then
+        self.rebound_shift = this.DeserializeConfigFile(self.rebound_shift_name)
+    else
+        self.rebound_shift = nil
+    end
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.StoreModelValue(obj, model, prop_name, default)
@@ -146,11 +161,7 @@ end
 
 function this.DeserializeConfigFile(name)
     if not name then
-        return
-        {
-            has_horizontal = false,
-            has_straightup = false,
-        }
+        return nil
     end
 
     local filename = FOLDER .. "/" .. name .. ".json"
@@ -158,11 +169,7 @@ function this.DeserializeConfigFile(name)
     local handle = io.open(filename, "r")
     if not handle then
         LogError("jump config file name not found: " .. filename)
-        return
-        {
-            has_horizontal = false,
-            has_straightup = false,
-        }
+        return nil
     end
 
     local json = handle:read("*all")

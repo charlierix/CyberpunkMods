@@ -36,8 +36,7 @@ require "processing/flightmode_transitions"
 require "processing/flightutil"
 require "processing/jump_avoid_overhangs"
 require "processing/processing_hang"
-require "processing/processing_jump_planted_calculate"
-require "processing/processing_jump_rebound_calculate"
+require "processing/processing_jump_calculate"
 require "processing/processing_jump_impulse"
 require "processing/processing_jump_teleturn"
 require "processing/processing_standard"
@@ -95,17 +94,13 @@ local this = {}
 
 local const =
 {
-    flightModes = CreateEnum("standard", "hang", "jump_planted_calculate", "jump_rebound_calculate", "jump_teleturn", "jump_impulse"),
+    flightModes = CreateEnum("standard", "hang", "jump_calculate", "jump_teleturn", "jump_impulse"),
 
     -- Populated in InitializeSavedFields()
     --mouse_sensitivity = -0.08,
     --rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
-
-
-    --TODO: Move this to player
     --latch_wallhang,       -- false: must keep the hang key held in
     --should_jump_backward
-
 
     -- These are set in Define_UI_Framework_Constants() called during init
     -- alignment_horizontal = CreateEnum("left", "center", "right"),
@@ -192,9 +187,12 @@ local vars =
     --is_sliding,
     --is_attracting,
 
-    -- These get populated in Transition_ToHang() and/or Transition_ToJump_Planted_Calculate()/Transition_ToJump_Rebound_Calculate()
+    -- These get populated in Transition_ToHang() and/or Transition_ToJump_Calculate()
     --hangPos,
     --normal,
+
+    -- This gets populated in Transition_ToJump_Calculate()
+    --jump_settings,
 
     -- These get populated in Transition_ToJump_TeleTurn()
     --impulse,
@@ -371,16 +369,9 @@ registerForEvent("onUpdate", function(deltaTime)
         -- Hanging from a wall
         Process_Hang(o, player, vars, const, debug, keys, startStopTracker, deltaTime)
 
-    elseif vars.flightMode == const.flightModes.jump_planted_calculate then
+    elseif vars.flightMode == const.flightModes.jump_calculate then
         -- Figure out direction/strength to jump
-        --Process_Jump_Planted_Calculate(o, player, vars, const, debug)
-
-        --TODO: jump planted and rebound should use the same logic, but possibly different configs
-        Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
-
-    elseif vars.flightMode == const.flightModes.jump_rebound_calculate then
-        -- Figure out direction/strength to jump
-        Process_Jump_Rebound_Calculate(o, player, vars, const, debug)
+        Process_Jump_Calculate(o, vars, const, debug)
 
     elseif vars.flightMode == const.flightModes.jump_teleturn then
         -- Use teleport to adjust the look direction over a few frames

@@ -68,13 +68,23 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function this.DirectDistance(isHangDown, isJumpDown, isShiftDown, hits, fromPos, o, player, vars, const, debug, startStopTracker, deltaTime)
+    -- See if jump is pressed and there's a corresponding config loaded
+    local jump_settings = nil
+    if isJumpDown and this.ValidateSlope_Jump(hits[1].normal) then
+        if isShiftDown then
+            jump_settings = player.rebound_shift
+        else
+            jump_settings = player.rebound
+        end
+    end
+
     -- Jump
-    if isJumpDown and this.ValidateSlope_Jump(hits[1].normal) and ShouldJump(o, const, hits[1].normal, isShiftDown) then
+    if jump_settings then
         this.ResetVars(o, vars)
 
         local hangPos = Vector4.new(fromPos.x, fromPos.y, fromPos.z - const.rayFrom_Z, 1)
 
-        Transition_ToJump_Rebound_Calculate(vars, const, debug, o, hangPos, hits[1].normal, startStopTracker)
+        Transition_ToJump_Calculate(vars, const, debug, o, hangPos, hits[1].normal, jump_settings, startStopTracker)
 
     -- Grab
     elseif isHangDown and this.ValidateSlope_Hang(hits[1].normal) then      --NOTE: slope check for hang is pretty much unnecessary.  The IsAirborne eliminates slopes already
