@@ -29,11 +29,6 @@ function DefineWindow_Jumping(vars_ui, const)
     jumping.rebound_shift_help = this.Define_Rebound_Shift_Help(jumping.rebound_shift_label, const)
     jumping.rebound_shift_combo = this.Define_Rebound_Shift_Combo(jumping.rebound_shift_label, const)
 
-    -- Helper Buttons
-    jumping.button_clear = this.Define_Button_Clear(vars_ui.style, const)
-    jumping.button_default = this.Define_Button_Default(jumping.button_clear, const)
-    jumping.button_default_old = this.Define_Button_DefaultOld(jumping.button_default, const)
-
     -- Config Overrides
     jumping.override_relatch_label = this.Define_Override_Relatch_Label(const)
     jumping.override_relatch_help = this.Define_Override_Relatch_Help(jumping.override_relatch_label, const)
@@ -46,6 +41,11 @@ function DefineWindow_Jumping(vars_ui, const)
     jumping.override_speed_label = this.Define_Override_Speed_Label(jumping.override_strength_slider, const)
     jumping.override_speed_help = this.Define_Override_Speed_Help(jumping.override_speed_label, const)
     jumping.override_speed_slider = this.Define_Override_Speed_Slider(jumping.override_speed_label, const)
+
+    -- Helper Buttons
+    jumping.button_clear = this.Define_Button_Clear(vars_ui.style, const)
+    jumping.button_default = this.Define_Button_Default(jumping.button_clear, const)
+    jumping.button_default_old = this.Define_Button_DefaultOld(jumping.button_default, const)
 
     jumping.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 
@@ -97,6 +97,8 @@ function DrawWindow_Jumping(isCloseRequested, vars_ui, window, const, player, pl
 
     -------------------------------- Show ui elements --------------------------------
 
+    Draw_Label(jumping.title, vars_ui.style.colors, vars_ui.scale)
+
     Draw_Label(jumping.planted_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(jumping.planted_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_ComboBox(jumping.planted_combo, vars_ui.style.combobox, vars_ui.scale)
@@ -113,18 +115,6 @@ function DrawWindow_Jumping(isCloseRequested, vars_ui, window, const, player, pl
     Draw_HelpButton(jumping.rebound_shift_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_ComboBox(jumping.rebound_shift_combo, vars_ui.style.combobox, vars_ui.scale)
 
-    if Draw_Button(jumping.button_clear, vars_ui.style.button, vars_ui.scale) then
-        this.Pressed_Clear(jumping, const)
-    end
-
-    if Draw_Button(jumping.button_default, vars_ui.style.button, vars_ui.scale) then
-        this.Pressed_Default(jumping, const)
-    end
-
-    if Draw_Button(jumping.button_default_old, vars_ui.style.button, vars_ui.scale) then
-        this.Pressed_DefaultOld(jumping, const)
-    end
-
     Draw_Label(jumping.override_relatch_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(jumping.override_relatch_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_ComboBox(jumping.override_relatch_combo, vars_ui.style.combobox, vars_ui.scale)
@@ -136,6 +126,18 @@ function DrawWindow_Jumping(isCloseRequested, vars_ui, window, const, player, pl
     Draw_Label(jumping.override_speed_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(jumping.override_speed_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_Slider(jumping.override_speed_slider, vars_ui.style.slider, vars_ui.scale)
+
+    if Draw_Button(jumping.button_clear, vars_ui.style.button, vars_ui.scale) then
+        this.Pressed_Clear(jumping, const)
+    end
+
+    if Draw_Button(jumping.button_default, vars_ui.style.button, vars_ui.scale) then
+        this.Pressed_Default(jumping, const)
+    end
+
+    if Draw_Button(jumping.button_default_old, vars_ui.style.button, vars_ui.scale) then
+        this.Pressed_DefaultOld(jumping, const)
+    end
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(jumping.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
@@ -159,8 +161,8 @@ function this.Define_Planted_Label(const)
 
         position =
         {
-            pos_x = 40,
-            pos_y = -180,
+            pos_x = 35,
+            pos_y = -160,
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.center,
         },
@@ -239,7 +241,7 @@ function this.Define_Planted_Shift_Label(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 36,
+            pos_y = 24,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -322,7 +324,7 @@ function this.Define_Rebound_Label(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 36,
+            pos_y = 24,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -405,7 +407,7 @@ function this.Define_Rebound_Shift_Label(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 36,
+            pos_y = 24,
 
             relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
@@ -477,108 +479,6 @@ function this.Refresh_Rebound_Shift_Combo(def, player_arcade, const)
     end
 end
 
-function this.Define_Button_Clear(style, const)
-    -- Button
-    return
-    {
-        text = "Clear",
-
-        width_override = 100,
-
-        position =
-        {
-            pos_x = style.okcancelButtons.pos_x,
-            pos_y = style.okcancelButtons.pos_y + 24,       -- ImGui.GetFrameHeight()
-            horizontal = const.alignment_horizontal.right,
-            vertical = const.alignment_vertical.top,
-        },
-
-        color = "hint",
-
-        isEnabled = true,
-
-        CalcSize = CalcSize_Button,
-    }
-end
-function this.Pressed_Clear(jumping, const)
-    jumping.planted_combo.selected_item = const.jump_config_none
-    jumping.planted_shift_combo.selected_item = const.jump_config_none
-    jumping.rebound_combo.selected_item = const.jump_config_none
-    jumping.rebound_shift_combo.selected_item = const.jump_config_none
-end
-
-function this.Define_Button_Default(relative_to, const)
-    -- Button
-    return
-    {
-        text = "Default",
-
-        width_override = 100,
-
-        position =
-        {
-            relative_to = relative_to,
-
-            pos_x = 0,
-            pos_y = 18,
-
-            relative_horz = const.alignment_horizontal.right,
-            horizontal = const.alignment_horizontal.right,
-
-            relative_vert = const.alignment_vertical.bottom,
-            vertical = const.alignment_vertical.top,
-        },
-
-        color = "hint",
-
-        isEnabled = true,
-
-        CalcSize = CalcSize_Button,
-    }
-end
-function this.Pressed_Default(jumping, const)
-    jumping.planted_combo.selected_item = const.jump_config_default
-    jumping.planted_shift_combo.selected_item = const.jump_config_default_shift
-    jumping.rebound_combo.selected_item = const.jump_config_default
-    jumping.rebound_shift_combo.selected_item = const.jump_config_default_shift
-end
-
-function this.Define_Button_DefaultOld(relative_to, const)
-    -- Button
-    return
-    {
-        text = "Default (old)",
-
-        width_override = 100,
-
-        position =
-        {
-            relative_to = relative_to,
-
-            pos_x = 0,
-            pos_y = 18,
-
-            relative_horz = const.alignment_horizontal.right,
-            horizontal = const.alignment_horizontal.right,
-
-            relative_vert = const.alignment_vertical.bottom,
-            vertical = const.alignment_vertical.top,
-        },
-
-        color = "hint",
-
-        isEnabled = true,
-
-        CalcSize = CalcSize_Button,
-    }
-end
-function this.Pressed_DefaultOld(jumping, const)
-    jumping.planted_combo.selected_item = const.jump_config_default
-    jumping.planted_shift_combo.selected_item = const.jump_config_default
-    jumping.rebound_combo.selected_item = const.jump_config_uponly
-    jumping.rebound_shift_combo.selected_item = const.jump_config_backjump
-end
-
 function this.Define_Override_Relatch_Label(const)
     -- Label
     return
@@ -587,8 +487,8 @@ function this.Define_Override_Relatch_Label(const)
 
         position =
         {
-            pos_x = 240,
-            pos_y = -60,
+            pos_x = 210,
+            pos_y = -80,
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.center,
         },
@@ -816,6 +716,108 @@ function this.Refresh_Override_Speed_Slider(def, player_arcade)
     if not def.value then
         def.value = player_arcade.override_speed_mult
     end
+end
+
+function this.Define_Button_Clear(style, const)
+    -- Button
+    return
+    {
+        text = "Clear",
+
+        width_override = 100,
+
+        position =
+        {
+            pos_x = style.okcancelButtons.pos_x,
+            pos_y = style.okcancelButtons.pos_y,
+            horizontal = const.alignment_horizontal.left,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        color = "hint",
+
+        isEnabled = true,
+
+        CalcSize = CalcSize_Button,
+    }
+end
+function this.Pressed_Clear(jumping, const)
+    jumping.planted_combo.selected_item = const.jump_config_none
+    jumping.planted_shift_combo.selected_item = const.jump_config_none
+    jumping.rebound_combo.selected_item = const.jump_config_none
+    jumping.rebound_shift_combo.selected_item = const.jump_config_none
+end
+
+function this.Define_Button_Default(relative_to, const)
+    -- Button
+    return
+    {
+        text = "Default",
+
+        width_override = 100,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 12,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.right,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        color = "hint",
+
+        isEnabled = true,
+
+        CalcSize = CalcSize_Button,
+    }
+end
+function this.Pressed_Default(jumping, const)
+    jumping.planted_combo.selected_item = const.jump_config_default
+    jumping.planted_shift_combo.selected_item = const.jump_config_default_shift
+    jumping.rebound_combo.selected_item = const.jump_config_default
+    jumping.rebound_shift_combo.selected_item = const.jump_config_default_shift
+end
+
+function this.Define_Button_DefaultOld(relative_to, const)
+    -- Button
+    return
+    {
+        text = "Default (old)",
+
+        width_override = 100,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 12,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.right,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        color = "hint",
+
+        isEnabled = true,
+
+        CalcSize = CalcSize_Button,
+    }
+end
+function this.Pressed_DefaultOld(jumping, const)
+    jumping.planted_combo.selected_item = const.jump_config_default
+    jumping.planted_shift_combo.selected_item = const.jump_config_default
+    jumping.rebound_combo.selected_item = const.jump_config_uponly
+    jumping.rebound_shift_combo.selected_item = const.jump_config_backjump
 end
 
 function this.Refresh_IsDirty(def, player_arcade, planted_combo, planted_shift_combo, rebound_combo, rebound_shift_combo, override_relatch_combo, override_strength_slider, override_speed_slider)

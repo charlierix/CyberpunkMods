@@ -21,7 +21,7 @@ function DefineWindow_Main(vars_ui, const)
     main.consoleWarning = this.Define_ConsoleWarning(const)
     main.should_autoshow = this.Define_ShouldAutoShow(main.consoleWarning, const)
 
-    main.input_bindings = this.Define_InputBindings(const)
+    main.input_bindings = this.Define_InputBindings(vars_ui.style, const)
 
     main.latch_wallhang = this.Define_LatchWallHang(const)
     main.latch_wallhang_help = this.Define_LatchWallHang_Help(main.latch_wallhang, const)
@@ -146,7 +146,7 @@ function this.Define_ConsoleWarning(const)
         position =
         {
             pos_x = 0,
-            pos_y = 24,
+            pos_y = 30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.top,
         },
@@ -200,7 +200,7 @@ function this.Update_ShouldAutoShow(def, vars_ui, const)
     SetSetting_Bool(const.settings.AutoShowConfig_WithConsole, def.isChecked)
 end
 
-function this.Define_InputBindings(const)
+function this.Define_InputBindings(style, const)
     -- SummaryButton
     return
     {
@@ -208,10 +208,10 @@ function this.Define_InputBindings(const)
 
         position =
         {
-            pos_x = 48,
-            pos_y = 72,
-            horizontal = const.alignment_horizontal.left,
-            vertical = const.alignment_vertical.top,
+            pos_x = -220,
+            pos_y = -140,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
         },
 
         invisible_name = "Main_InputBindings",
@@ -232,8 +232,8 @@ function this.Define_LatchWallHang(const)
 
         position =
         {
-            pos_x = 110,
-            pos_y = -165,
+            pos_x = 180,
+            pos_y = -150,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -473,15 +473,16 @@ function this.Define_Jumping(const)
         content =
         {
             -- the content is presented as sorted by name
-            a_horz = { prompt = "standard" },
-            b_vert = { prompt = "straight up" },
+            a_planted = { prompt = "hang" },
+            b_planted_shift = { prompt = "hang + shift" },
+            c_rebound = { prompt = "close" },
+            d_rebound_shift = { prompt = "close + shift" },
         },
 
         position =
         {
-            --pos_x = -220,
-            pos_x = -260,
-            pos_y = 6,
+            pos_x = 110,
+            pos_y = 95,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -492,8 +493,10 @@ function this.Define_Jumping(const)
     }
 end
 function this.Refresh_Jumping(def, player_arcade)
-    def.content.a_horz.value = ""
-    def.content.b_vert.value = ""
+    def.content.a_planted.value = player_arcade.planted_name
+    def.content.b_planted_shift.value = player_arcade.planted_shift_name
+    def.content.c_rebound.value = player_arcade.rebound_name
+    def.content.d_rebound_shift.value = player_arcade.rebound_shift_name
 end
 
 function this.Define_CrawlSlide(const)
@@ -514,8 +517,8 @@ function this.Define_CrawlSlide(const)
 
         position =
         {
-            pos_x = 0,
-            pos_y = 130,
+            pos_x = -220,
+            pos_y = 140,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -549,8 +552,8 @@ function this.Define_WallAttraction(const)
 
         position =
         {
-            pos_x = 220,
-            pos_y = 130,
+            pos_x = -220,
+            pos_y = -30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },

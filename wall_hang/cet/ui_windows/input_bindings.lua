@@ -345,7 +345,7 @@ function this.Define_WatchedActions(const)
         sets = {},
 
         width = 240,
-        height = 370,
+        height = 340,
 
         position =
         {
@@ -394,8 +394,8 @@ function this.Define_UseCustomWallHang(const)
 
         position =
         {
-            pos_x = -180,
-            pos_y = -120,
+            pos_x = -160,
+            pos_y = -50,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -649,7 +649,7 @@ function this.Define_Instruction1(const)
         position =
         {
             pos_x = -140,
-            pos_y = -110,
+            pos_y = -80,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -668,7 +668,7 @@ function this.Define_Instruction2(const)
         position =
         {
             pos_x = -140,
-            pos_y = -30,
+            pos_y = 0,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -688,7 +688,7 @@ function this.Define_CancelBind(const)
         position =
         {
             pos_x = -140,
-            pos_y = 180,
+            pos_y = 140,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
