@@ -24,8 +24,8 @@ function Refresh_WindowPos(configWindow, vars_ui, const)
     configWindow.left = curLeft
     configWindow.top = curTop
 
-    configWindow.width = 800 * vars_ui.scale
-    configWindow.height = 600 * vars_ui.scale
+    configWindow.width = 700 * vars_ui.scale
+    configWindow.height = 525 * vars_ui.scale
 end
 function Refresh_LineHeights(vars_ui, const, is_from_init)
     if not vars_ui.line_heights then

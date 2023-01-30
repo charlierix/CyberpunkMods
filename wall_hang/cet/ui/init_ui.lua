@@ -22,8 +22,8 @@ end
 
 --NOTE: this sets values in hardcoded pixels.  Every frame, width and height are updated based on scale
 function this.Define_ConfigWindow(screen)
-    local width = 800
-    local height = 600
+    local width = 700       -- this is also hardcoded in util_misc.Refresh_WindowPos()
+    local height = 525
 
     return
     {
