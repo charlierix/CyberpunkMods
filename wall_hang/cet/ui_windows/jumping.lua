@@ -188,7 +188,13 @@ function this.Define_Planted_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[Jump settings to use when holding onto a wall and pressing the jump button
+
+These are .json files in \mods\wall_hang\!settings
+
+There is an optional download for the editor of these files if you'd like to make your own
+
+These specify jump direction and strength to apply based on where the player is looking relative to the wall's normal]]
 
     return retVal
 end
@@ -271,7 +277,13 @@ function this.Define_Planted_Shift_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[Jump settings to use when holding onto a wall and pressing the shift + jump button
+
+These are .json files in \mods\wall_hang\!settings
+
+There is an optional download for the editor of these files if you'd like to make your own
+
+These specify jump direction and strength to apply based on where the player is looking relative to the wall's normal]]
 
     return retVal
 end
@@ -354,7 +366,15 @@ function this.Define_Rebound_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[Jump settings to use when jumping off a wall (not hanging from the wall)
+
+You must be midair when jumping off the wall.  So run toward a wall, jump, then jump off the wall
+
+These are .json files in \mods\wall_hang\!settings
+
+There is an optional download for the editor of these files if you'd like to make your own
+
+These specify jump direction and strength to apply based on where the player is looking relative to the wall's normal]]
 
     return retVal
 end
@@ -437,7 +457,15 @@ function this.Define_Rebound_Shift_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[Jump settings to use when shift + jumping off a wall (not hanging from the wall)
+
+You must be midair when jumping off the wall.  So run toward a wall, jump, then shift+jump off the wall
+
+These are .json files in \mods\wall_hang\!settings
+
+There is an optional download for the editor of these files if you'd like to make your own
+
+These specify jump direction and strength to apply based on where the player is looking relative to the wall's normal]]
 
     return retVal
 end
@@ -514,7 +542,13 @@ function this.Define_Override_Relatch_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[Relatching auto applies latch after jumping (will get sucked back to the nearest wall and stick when slow enough)
+
+The configs can specify whether relatching is enabled, disabled, or only enabled at certain angles
+
+This override is a way to guarantee always or never relatch
+
+NOTE: The latch won't stay applied if 'Latch WallHang Key' is unchecked.  The wall attraction still works, but there won't be an auto latch when you touch the wall]]
 
     return retVal
 end
@@ -564,7 +598,7 @@ function this.Define_Override_Strength_Label(relative_to, const)
     -- Label
     return
     {
-        text = "Override Strength Multiplier",
+        text = "Strength Multiplier",
 
         position =
         {
@@ -597,7 +631,9 @@ function this.Define_Override_Strength_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[The configs specify how strong of an impulse to apply
+
+This is a multiplier in case you'd like to make the jump weaker or stronger]]
 
     return retVal
 end
@@ -645,7 +681,7 @@ function this.Define_Override_Speed_Label(relative_to, const)
     -- Label
     return
     {
-        text = "Override Speed Multiplier",
+        text = "Zero Speed Multiplier",
 
         position =
         {
@@ -678,7 +714,13 @@ function this.Define_Override_Speed_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[If the player is moving too fast when jump is pressed, the impulse is reduced (or zero)
+
+This lets you adjust the speeds defined by the configs
+
+If greater than 1: The player's speed is allowed to be greater before jump impulse is reduced
+
+If less than 1: The jump impulse is reduced at lower speeds]]
 
     return retVal
 end
@@ -842,10 +884,10 @@ function this.Refresh_IsDirty(def, player_arcade, planted_combo, planted_shift_c
     elseif override_relatch_combo.selected_item ~= player_arcade.override_relatch:gsub("_", " ") then
         isDirty = true
 
-    elseif not IsNearValue(override_strength_slider.value, player_arcade.override_strength_mult) then
+    elseif not IsNearValue(this.GetMultSlider_Value_Save(override_strength_slider.value, STRENGTH_0, STRENGTH_2), player_arcade.override_strength_mult) then
         isDirty = true
 
-    elseif not IsNearValue(override_speed_slider.value, player_arcade.override_speed_mult) then
+    elseif not IsNearValue(this.GetMultSlider_Value_Save(override_speed_slider.value, SPEED_0, SPEED_2), player_arcade.override_speed_mult) then
         isDirty = true
     end
 

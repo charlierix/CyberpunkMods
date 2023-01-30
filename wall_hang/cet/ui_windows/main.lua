@@ -261,7 +261,7 @@ function this.Define_LatchWallHang_Help(relative_to, const)
     retVal.tooltip =
 [[checked: Once you jump, you only need to press the wall hang key once
 
-uncheckd: The wall hang key must be held in
+unchecked: The wall hang key must be held in
 
 If latch is set, then pressing the key again will disengage (also jumping from the wall)]]
 
