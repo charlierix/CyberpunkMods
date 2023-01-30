@@ -57,12 +57,6 @@ function PlayerArcade:MapModelToSelf(model)
     --NOTE: This function is written very defensively, the assumption is that properties will be added over time,
     --so new code will try to load old db entries.  Missing properties will take the default value
 
-    -- jumping OLD
-    this.StoreModelValue(self, model, "jump_strength", 11)
-
-    this.StoreModelValue(self, model, "jump_speed_fullStrength", 3)     -- any vertical speed lower than this will get full jump strength
-    this.StoreModelValue(self, model, "jump_speed_zeroStrength", 7)     -- this is the vertical speed where no more impulse will be applied.  Gradient to full at jump_speed_fullStrength
-
     -- wall attraction
     this.StoreModelValue(self, model, "wallDistance_attract_max", 6)
 
@@ -94,8 +88,6 @@ end
 function PlayerArcade:MapSelfToModel()
     return
     {
-        jump_strength = self.jump_strength,
-
         wallDistance_attract_max = self.wallDistance_attract_max,
 
         attract_accel = self.attract_accel,
@@ -104,9 +96,6 @@ function PlayerArcade:MapSelfToModel()
 
         wallSlide_minSpeed = self.wallSlide_minSpeed,
         wallSlide_dragAccel = self.wallSlide_dragAccel,
-
-        jump_speed_fullStrength = self.jump_speed_fullStrength,
-        jump_speed_zeroStrength = self.jump_speed_zeroStrength,
 
         wallcrawl_speed_horz = self.wallcrawl_speed_horz,
         wallcrawl_speed_up = self.wallcrawl_speed_up,
