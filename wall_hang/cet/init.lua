@@ -79,7 +79,7 @@ require "ui_framework/util_setup"
 
 require "ui_windows/crawl_slide"
 require "ui_windows/input_bindings"
-require "ui_windows/jumping2"
+require "ui_windows/jumping"
 require "ui_windows/main"
 require "ui_windows/wall_attraction"
 
@@ -109,7 +109,7 @@ local const =
     (
         "main",
             "input_bindings",
-            "jumping2",
+            "jumping",
             "wall_attraction",
             "crawl_slide"
     ),

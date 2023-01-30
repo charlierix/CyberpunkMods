@@ -34,7 +34,7 @@ function DefineWindow_Main(vars_ui, const)
     main.rightstick_sensitivity_label = this.Define_RightStickSensitivity_Label(main.rightstick_sensitivity, const)
     main.rightstick_sensitivity_help = this.Define_RightStickSensitivity_Help(main.rightstick_sensitivity_label, const)
 
-    main.jumping2 = this.Define_Jumping2(const)
+    main.jumping = this.Define_Jumping(const)
 
     main.crawl_slide = this.Define_CrawlSlide(const)
 
@@ -74,7 +74,7 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
 
     this.Refresh_RightStickSensitivity(main.rightstick_sensitivity, const)
 
-    this.Refresh_Jumping2(main.jumping2, player_arcade)
+    this.Refresh_Jumping(main.jumping, player_arcade)
 
     this.Refresh_CrawlSlide(main.crawl_slide, player_arcade)
 
@@ -112,8 +112,8 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
     Draw_HelpButton(main.rightstick_sensitivity_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_Slider(main.rightstick_sensitivity, vars_ui.style.slider, vars_ui.scale)
 
-    if Draw_SummaryButton(main.jumping2, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        TransitionWindows_Jumping2(vars_ui, const)
+    if Draw_SummaryButton(main.jumping, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
+        TransitionWindows_Jumping(vars_ui, const)
     end
 
     if Draw_SummaryButton(main.crawl_slide, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
@@ -464,7 +464,7 @@ function this.Refresh_RightStickSensitivity(def, const)
     end
 end
 
-function this.Define_Jumping2(const)
+function this.Define_Jumping(const)
     -- SummaryButton
     return
     {
@@ -486,12 +486,12 @@ function this.Define_Jumping2(const)
             vertical = const.alignment_vertical.center,
         },
 
-        invisible_name = "Main_Jumping2",
+        invisible_name = "Main_Jumping",
 
         CalcSize = CalcSize_SummaryButton,
     }
 end
-function this.Refresh_Jumping2(def, player_arcade)
+function this.Refresh_Jumping(def, player_arcade)
     def.content.a_horz.value = ""
     def.content.b_vert.value = ""
 end

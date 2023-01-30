@@ -10,10 +10,10 @@ function TransitionWindows_InputBindings(vars_ui, const)
     ActivateWindow_InputBindings(vars_ui, const)
 end
 
-function TransitionWindows_Jumping2(vars_ui, const)
-    vars_ui.currentWindow = const.windows.jumping2
+function TransitionWindows_Jumping(vars_ui, const)
+    vars_ui.currentWindow = const.windows.jumping
 
-    ActivateWindow_Jumping2(vars_ui, const)
+    ActivateWindow_Jumping(vars_ui, const)
 end
 
 function TransitionWindows_WallAttraction(vars_ui, const)

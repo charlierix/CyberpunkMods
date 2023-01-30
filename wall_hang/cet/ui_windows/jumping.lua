@@ -4,9 +4,9 @@ local FOLDER = "!settings"
 
 local dropdown_items = nil
 
-function DefineWindow_Jumping2(vars_ui, const)
+function DefineWindow_Jumping(vars_ui, const)
     local jumping = {}
-    vars_ui.jumping2 = jumping
+    vars_ui.jumping = jumping
 
     jumping.changes = Changes:new()
 
@@ -52,12 +52,12 @@ function DefineWindow_Jumping2(vars_ui, const)
     FinishDefiningWindow(jumping)
 end
 
-function ActivateWindow_Jumping2(vars_ui, const)
-    if not vars_ui.jumping2 then
-        DefineWindow_Jumping2(vars_ui, const)
+function ActivateWindow_Jumping(vars_ui, const)
+    if not vars_ui.jumping then
+        DefineWindow_Jumping(vars_ui, const)
     end
 
-    local jumping = vars_ui.jumping2
+    local jumping = vars_ui.jumping
 
     jumping.planted_combo.selected_item = nil
     jumping.planted_shift_combo.selected_item = nil
@@ -69,8 +69,8 @@ function ActivateWindow_Jumping2(vars_ui, const)
     jumping.override_speed_slider.value = nil
 end
 
-function DrawWindow_Jumping2(isCloseRequested, vars_ui, window, const, player, player_arcade)
-    local jumping = vars_ui.jumping2
+function DrawWindow_Jumping(isCloseRequested, vars_ui, window, const, player, player_arcade)
+    local jumping = vars_ui.jumping
 
     ------------------------- Finalize models for this frame -------------------------
 
@@ -174,7 +174,7 @@ function this.Define_Planted_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        invisible_name = "Jumping2_Planted_Help",
+        invisible_name = "Jumping_Planted_Help",
 
         position = GetRelativePosition_HelpButton(relative_to, const),
 
@@ -211,7 +211,7 @@ function this.Define_Planted_Combo(relative_to, const)
             vertical = const.alignment_vertical.top,
         },
 
-        invisible_name = "Jumping2_Planted_Combo",
+        invisible_name = "Jumping_Planted_Combo",
 
         CalcSize = CalcSize_ComboBox,
     }
@@ -257,7 +257,7 @@ function this.Define_Planted_Shift_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        invisible_name = "Jumping2_Planted_Shift_Help",
+        invisible_name = "Jumping_Planted_Shift_Help",
 
         position = GetRelativePosition_HelpButton(relative_to, const),
 
@@ -294,7 +294,7 @@ function this.Define_Planted_Shift_Combo(relative_to, const)
             vertical = const.alignment_vertical.top,
         },
 
-        invisible_name = "Jumping2_Planted_Shift_Combo",
+        invisible_name = "Jumping_Planted_Shift_Combo",
 
         CalcSize = CalcSize_ComboBox,
     }
@@ -340,7 +340,7 @@ function this.Define_Rebound_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        invisible_name = "Jumping2_Rebound_Help",
+        invisible_name = "Jumping_Rebound_Help",
 
         position = GetRelativePosition_HelpButton(relative_to, const),
 
@@ -377,7 +377,7 @@ function this.Define_Rebound_Combo(relative_to, const)
             vertical = const.alignment_vertical.top,
         },
 
-        invisible_name = "Jumping2_Rebound_Combo",
+        invisible_name = "Jumping_Rebound_Combo",
 
         CalcSize = CalcSize_ComboBox,
     }
@@ -423,7 +423,7 @@ function this.Define_Rebound_Shift_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        invisible_name = "Jumping2_Rebound_Shift_Help",
+        invisible_name = "Jumping_Rebound_Shift_Help",
 
         position = GetRelativePosition_HelpButton(relative_to, const),
 
@@ -460,7 +460,7 @@ function this.Define_Rebound_Shift_Combo(relative_to, const)
             vertical = const.alignment_vertical.top,
         },
 
-        invisible_name = "Jumping2_Rebound_Shift_Combo",
+        invisible_name = "Jumping_Rebound_Shift_Combo",
 
         CalcSize = CalcSize_ComboBox,
     }
@@ -602,7 +602,7 @@ function this.Define_Override_Relatch_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        invisible_name = "Jumping2_Override_Relatch_Help",
+        invisible_name = "Jumping_Override_Relatch_Help",
 
         position = GetRelativePosition_HelpButton(relative_to, const),
 
@@ -644,7 +644,7 @@ function this.Define_Override_Relatch_Combo(relative_to, const)
             vertical = const.alignment_vertical.center,
         },
 
-        invisible_name = "Jumping2_Override_Relatch_Combo",
+        invisible_name = "Jumping_Override_Relatch_Combo",
 
         CalcSize = CalcSize_ComboBox,
     }
@@ -685,7 +685,7 @@ function this.Define_Override_Strength_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        invisible_name = "Jumping2_Override_Strength_Help",
+        invisible_name = "Jumping_Override_Strength_Help",
 
         position = GetRelativePosition_HelpButton(relative_to, const),
 
@@ -701,7 +701,7 @@ function this.Define_Override_Strength_Slider(relative_to, const)
     -- Slider
     return
     {
-        invisible_name = "Jumping2_Override_Strength_Slider",
+        invisible_name = "Jumping_Override_Strength_Slider",
 
         min = 0,
         max = 2,
@@ -766,7 +766,7 @@ function this.Define_Override_Speed_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        invisible_name = "Jumping2_Override_Speed_Help",
+        invisible_name = "Jumping_Override_Speed_Help",
 
         position = GetRelativePosition_HelpButton(relative_to, const),
 
@@ -782,7 +782,7 @@ function this.Define_Override_Speed_Slider(relative_to, const)
     -- Slider
     return
     {
-        invisible_name = "Jumping2_Override_Speed_Slider",
+        invisible_name = "Jumping_Override_Speed_Slider",
 
         min = 0,
         max = 2,
