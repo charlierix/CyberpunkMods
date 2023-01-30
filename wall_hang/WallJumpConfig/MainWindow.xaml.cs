@@ -389,14 +389,14 @@ namespace WallJumpConfig
             SaveLUA savelua = SaveLUA.FromModel(savewpf);
 
             // Save Preset
-            string filename = UtilityCore.EscapeFilename_Windows(cboName.Text);
-            filename = System.IO.Path.Combine(_folder_presets, filename + ".json");
+            string name = UtilityCore.EscapeFilename_Windows(cboName.Text);
+            string filename = System.IO.Path.Combine(_folder_presets, name + ".json");
 
             string serialized = JsonSerializer.Serialize(savewpf, options);
             File.WriteAllText(filename, serialized);
 
             // Save lua version
-            filename = System.IO.Path.Combine(txtModFolder.Text, "!settings", "walljump.json");
+            filename = System.IO.Path.Combine(txtModFolder.Text, "!settings", name + ".json");
 
             serialized = JsonSerializer.Serialize(savelua, options);
             File.WriteAllText(filename, serialized);
