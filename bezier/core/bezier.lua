@@ -799,11 +799,11 @@ function this.GetSamples(segments, counts)        --, is_closed)
 
         elseif count_adjusted == 1 then
             if i == 1 then
-                table.insert(retVal, segments[i].EndPoint0)
+                table.insert(retVal, segments[i].end0)
             elseif i == #segments then
-                table.insert(retVal, segments[i].EndPoint1)
+                table.insert(retVal, segments[i].end1)
             else
-                table.insert(retVal, Vector4.new(segments[i].EndPoint0.x + segments[i].EndPoint1.x / 2, segments[i].EndPoint0.y + segments[i].EndPoint1.y / 2, segments[i].EndPoint0.z + segments[i].EndPoint1.z / 2, 1))        -- just take the average of the two
+                table.insert(retVal, Vector4.new(segments[i].end0.x + segments[i].end1.x / 2, segments[i].end0.y + segments[i].end1.y / 2, segments[i].end0.z + segments[i].end1.z / 2, 1))        -- just take the average of the two
             end
 
         else

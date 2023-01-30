@@ -119,11 +119,11 @@ namespace WallJumpConfig.Models.savelua
             const double MAX_FACEWALL = 45;
             const double MAX_FACEAWAY = 90;
 
-            double face_wall = model.Degrees_Extra.Length > 0 && model.Degrees_Extra[0].Degrees < MAX_FACEWALL ?
+            double face_wall = model.HasHorizontal && model.Degrees_Extra.Length > 0 && model.Degrees_Extra[0].Degrees < MAX_FACEWALL ?
                 model.Degrees_Extra[0].Degrees :
                 MAX_FACEWALL;
 
-            double face_away = model.Degrees_Extra.Length > 1 && model.Degrees_Extra[1].Degrees < MAX_FACEAWAY ?
+            double face_away = model.HasHorizontal && model.Degrees_Extra.Length > 1 && model.Degrees_Extra[1].Degrees < MAX_FACEAWAY ?
                 model.Degrees_Extra[1].Degrees :
                 MAX_FACEAWAY;
 

@@ -33,7 +33,7 @@ function Process_Jump_Calculate(o, player, vars, const, debug)
     local relatchprops_horz = nil
     if percent_horz > 0 then
         -- Standard jump logic (the term horizontal is just to differentiate from straight up)
-        local horz_x, horz_y, horz_z, yaw_turn_radians1, should_relatch2, relatchprops_horz1, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, vars.jump_settings.horizontal, o.vel, player)
+        local horz_x, horz_y, horz_z, yaw_turn_radians1, should_relatch2, relatchprops_horz1, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, vars.jump_settings.has_horizontal, vars.jump_settings.horizontal, o.vel, player)
 
         impulse_x = impulse_x + (horz_x * percent_horz)
         impulse_y = impulse_y + (horz_y * percent_horz)
@@ -117,8 +117,13 @@ function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_d
         this.GetRelatchProps(straight_up.relatch_time_seconds, straight_up.wallattract_distance_max, straight_up.wallattract_accel, straight_up.wallattract_pow, straight_up.wallattract_antigrav)
 end
 
-function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz, horizontal, velocity, player)
+function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz, has_horizontal, horizontal, velocity, player)
+    if not has_horizontal then
+        return 0, 0, 0, 0, false, nil, false
+    end
+
     local yaw_turn = horizontal.yaw_turn:Evaluate(horz_dot)
+
     local strength = horizontal.strength * player.override_strength_mult
 
     local preset_x, preset_y, preset_z = this.GetImpulse_Horizontal_Preset(horz_dot, look_horz, wall_normal_horz, horizontal)
