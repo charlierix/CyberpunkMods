@@ -129,8 +129,9 @@ local const =
     jump_config_none = "*  none  *",        -- this is the string to use for no config (can't use nil, because then it's not known if a port from old version is needed).  Using asterisk, because files can't have that in the name
     jump_config_default = "default",
     jump_config_default_shift = "default - strong",
-    jump_config_uponly = "up only",
-    jump_config_backjump = "back jump",
+    jump_config_default_nolatch = "default - nolatch",
+    jump_config_uponly_nolatch = "up only - nolatch",
+    jump_config_backjump_nolatch = "back jump - nolatch",
 
     override_relatch = CreateEnum("use_config", "always", "never"),
 

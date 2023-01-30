@@ -1,6 +1,10 @@
 local this = {}
 
 local FOLDER = "!settings"
+local STRENGTH_0 = 0.75
+local STRENGTH_2 = 3
+local SPEED_0 = 0.5
+local SPEED_2 = 2
 
 local dropdown_items = nil
 
@@ -606,7 +610,7 @@ function this.Define_Override_Strength_Slider(relative_to, const)
         min = 0,
         max = 2,
 
-        get_custom_text = this.GetMultSlider_Display,
+        get_custom_text = function(val) return this.GetMultSlider_Display(val, STRENGTH_0, STRENGTH_2) end,
 
         width = 280,
 
@@ -633,7 +637,7 @@ end
 function this.Refresh_Override_Strength_Slider(def, player_arcade)
     --NOTE: Activate function sets this to nil
     if not def.value then
-        def.value = player_arcade.override_strength_mult
+        def.value = this.GetMultSlider_Value_UI(player_arcade.override_strength_mult, STRENGTH_0, STRENGTH_2)
     end
 end
 
@@ -687,7 +691,7 @@ function this.Define_Override_Speed_Slider(relative_to, const)
         min = 0,
         max = 2,
 
-        get_custom_text = this.GetMultSlider_Display,
+        get_custom_text = function(val) return this.GetMultSlider_Display(val, SPEED_0, SPEED_2) end,
 
         width = 280,
 
@@ -714,7 +718,7 @@ end
 function this.Refresh_Override_Speed_Slider(def, player_arcade)
     --NOTE: Activate function sets this to nil
     if not def.value then
-        def.value = player_arcade.override_speed_mult
+        def.value = this.GetMultSlider_Value_UI(player_arcade.override_speed_mult, SPEED_0, SPEED_2)
     end
 end
 
@@ -814,10 +818,10 @@ function this.Define_Button_DefaultOld(relative_to, const)
     }
 end
 function this.Pressed_DefaultOld(jumping, const)
-    jumping.planted_combo.selected_item = const.jump_config_default
-    jumping.planted_shift_combo.selected_item = const.jump_config_default
-    jumping.rebound_combo.selected_item = const.jump_config_uponly
-    jumping.rebound_shift_combo.selected_item = const.jump_config_backjump
+    jumping.planted_combo.selected_item = const.jump_config_default_nolatch
+    jumping.planted_shift_combo.selected_item = const.jump_config_default_nolatch
+    jumping.rebound_combo.selected_item = const.jump_config_uponly_nolatch
+    jumping.rebound_shift_combo.selected_item = const.jump_config_backjump_nolatch
 end
 
 function this.Refresh_IsDirty(def, player_arcade, planted_combo, planted_shift_combo, rebound_combo, rebound_shift_combo, override_relatch_combo, override_strength_slider, override_speed_slider)
@@ -855,8 +859,8 @@ function this.Save(player, player_arcade, planted_combo, planted_shift_combo, re
     player_arcade.rebound_shift_name = rebound_shift_combo.selected_item
 
     player_arcade.override_relatch = override_relatch_combo.selected_item:gsub(" ", "_")
-    player_arcade.override_strength_mult = override_strength_slider.value
-    player_arcade.override_speed_mult = override_speed_slider.value
+    player_arcade.override_strength_mult = this.GetMultSlider_Value_Save(override_strength_slider.value, STRENGTH_0, STRENGTH_2)
+    player_arcade.override_speed_mult = this.GetMultSlider_Value_Save(override_speed_slider.value, SPEED_0, SPEED_2)
 
     player_arcade:Save()
     player:Reset()
@@ -881,19 +885,29 @@ function this.GetDropdownItems(const)
     return retVal
 end
 
--- The sliders go from 0 to 2, but the multiplier is from half to double
-function this.GetMultSlider_Display(value)
-    local mult = this.GetMultSlider_Value(value)
+-- The sliders go from 0 to 2, but the multiplier is from value_0 to value_2
+function this.GetMultSlider_Display(value, value_0, value_2)
+    local mult = this.GetMultSlider_Value_Save(value, value_0, value_2)
     return Format_DecimalToDozenal(mult, 2)
 end
-function this.GetMultSlider_Value(value)
+
+-- Converts from saved value to ui value (ui is from 0 to 2)
+function this.GetMultSlider_Value_UI(value, value_0, value_2)
     if value == nil then
         return 1
+    elseif value < 1 then
+        return GetScaledValue(0, 1, value_0, 1, value)
+    else
+        return GetScaledValue(1, 2, 1, value_2, value)
     end
-
-    if value > 1 then
-        return value
+end
+-- Converts from ui value (0 to 2) to saved value
+function this.GetMultSlider_Value_Save(value, value_0, value_2)
+    if value == nil then
+        return 1
+    elseif value < 1 then
+        return GetScaledValue(value_0, 1, 0, 1, value)
+    else
+        return GetScaledValue(1, value_2, 1, 2, value)
     end
-
-    return GetScaledValue(0.5, 1, 0, 1, value)
 end

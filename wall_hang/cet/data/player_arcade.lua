@@ -253,17 +253,17 @@ function this.PossiblyPortJumpSettings(model, const)
 
         elseif db_value == true then
             -- They explicitly set jump back to true, so use the configs that give the same functionality
-            model.planted_name = const.jump_config_default
-            model.planted_shift_name = const.jump_config_default_shift
-            model.rebound_name = const.jump_config_backjump
-            model.rebound_shift_name = const.jump_config_backjump
+            model.planted_name = const.jump_config_default_nolatch
+            model.planted_shift_name = const.jump_config_default_nolatch
+            model.rebound_name = const.jump_config_backjump_nolatch
+            model.rebound_shift_name = const.jump_config_backjump_nolatch
 
         else
             -- They explicitly set jump back to false, so use the configs that give the same functionality
-            model.planted_name = const.jump_config_default
-            model.planted_shift_name = const.jump_config_default_shift
-            model.rebound_name = const.jump_config_uponly
-            model.rebound_shift_name = const.jump_config_backjump
+            model.planted_name = const.jump_config_default_nolatch
+            model.planted_shift_name = const.jump_config_default_nolatch
+            model.rebound_name = const.jump_config_uponly_nolatch
+            model.rebound_shift_name = const.jump_config_backjump_nolatch
         end
     end
 end
