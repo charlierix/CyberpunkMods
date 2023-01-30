@@ -50,8 +50,10 @@
         "border_color": "40686868",
 
         "background_color_standard": "12707070",
+
+        "background_color_dropdown_standard": "0A0B0A",
         "background_color_selected": "40B5BF7C",
-        "background_color_hover": "4777",
+        "background_color_hover": "44777977",
         "background_color_click": "70E2F283",
 
         "foreground_color": "909090",

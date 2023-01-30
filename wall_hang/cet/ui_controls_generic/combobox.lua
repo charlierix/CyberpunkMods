@@ -27,6 +27,7 @@ function Draw_ComboBox(def, style_combo, scale)
 	ImGui.PushStyleColor(ImGuiCol.NavHighlight, 0x00000000)
     ImGui.PushStyleColor(ImGuiCol.Border, style_combo.border_color_abgr)
     ImGui.PushStyleColor(ImGuiCol.FrameBg, style_combo.background_color_standard_abgr)
+    ImGui.PushStyleColor(ImGuiCol.PopupBg, style_combo.background_color_dropdown_standard_abgr)
     ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, style_combo.background_color_hover_abgr)
     ImGui.PushStyleColor(ImGuiCol.FrameBgActive, style_combo.background_color_standard_abgr)
     ImGui.PushStyleColor(ImGuiCol.Text, style_combo.foreground_color_abgr)
@@ -63,7 +64,7 @@ function Draw_ComboBox(def, style_combo, scale)
 
     ImGui.PopItemWidth()
 
-    ImGui.PopStyleColor(16)
+    ImGui.PopStyleColor(17)
     ImGui.PopStyleVar(3)
 
     return

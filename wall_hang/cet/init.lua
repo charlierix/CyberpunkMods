@@ -144,9 +144,6 @@ local const =
 
     teleturn_radians_per_second = math.pi * 3.5,      -- this needs to be very fast, teleturn is a hack and can't last very long.  Just enough motion that the player can sense the direction change (it's very disorienting to instantly face a new direction)
 
-    jumpcalc_mindot = 0.05,
-    jumpcalc_straightupdot = 0.75,
-
     ledgeHop_impulse = 4,
     ledgeHop_angle = 86,        -- 90 would be straight up, 0 would be horizontal
 
@@ -369,7 +366,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     elseif vars.flightMode == const.flightModes.jump_calculate then
         -- Figure out direction/strength to jump
-        Process_Jump_Calculate(o, vars, const, debug)
+        Process_Jump_Calculate(o, player, vars, const, debug)
 
     elseif vars.flightMode == const.flightModes.jump_teleturn then
         -- Use teleport to adjust the look direction over a few frames

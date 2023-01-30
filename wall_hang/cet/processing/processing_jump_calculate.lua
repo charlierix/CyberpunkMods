@@ -3,7 +3,7 @@ local this = {}
 local up = nil      -- can't use vector4 before init
 local MAX_UPADJUSTED_DOT = 0.8      -- the max allowed tilt from straight up
 
-function Process_Jump_Calculate(o, vars, const, debug)
+function Process_Jump_Calculate(o, player, vars, const, debug)
     o:GetCamera()
     if not o.lookdir_forward then       -- shouldn't happen
         Transition_ToStandard(vars, const, debug, o, nil)
@@ -23,7 +23,7 @@ function Process_Jump_Calculate(o, vars, const, debug)
     local should_relatch = false
 
     -- Special logic for jumping straight up when facing the wall and looking up
-    local percent_horz, play_fail_sound1, vert_x, vert_y, vert_z, should_relatch1, relatchprops_vert = this.GetImpulse_Vertical(o, vars.jump_settings.has_straightup, vars.jump_settings.straight_up, up_dot, horz_dot, up_adjusted)
+    local percent_horz, play_fail_sound1, vert_x, vert_y, vert_z, should_relatch1, relatchprops_vert = this.GetImpulse_Vertical(o, vars.jump_settings.has_straightup, vars.jump_settings.straight_up, up_dot, horz_dot, up_adjusted, player)
     impulse_x = impulse_x + vert_x
     impulse_y = impulse_y + vert_y
     impulse_z = impulse_z + vert_z
@@ -33,7 +33,7 @@ function Process_Jump_Calculate(o, vars, const, debug)
     local relatchprops_horz = nil
     if percent_horz > 0 then
         -- Standard jump logic (the term horizontal is just to differentiate from straight up)
-        local horz_x, horz_y, horz_z, yaw_turn_radians1, should_relatch2, relatchprops_horz1, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, vars.jump_settings.horizontal, o.vel)
+        local horz_x, horz_y, horz_z, yaw_turn_radians1, should_relatch2, relatchprops_horz1, play_fail_sound3 = this.GetImpulse_Horizontal(o.lookdir_forward, look_horz, horz_dot, normal_horz, vars.jump_settings.horizontal, o.vel, player)
 
         impulse_x = impulse_x + (horz_x * percent_horz)
         impulse_y = impulse_y + (horz_y * percent_horz)
@@ -54,7 +54,7 @@ function Process_Jump_Calculate(o, vars, const, debug)
     if IsNearZero(impulse_x) and IsNearZero(impulse_y) and IsNearZero(impulse_z) then
         Transition_ToStandard(vars, const, debug, o, nil)
     else
-        local relatchprops = this.CombineRelatchProps(should_relatch, relatchprops_vert, relatchprops_horz, percent_horz)
+        local relatchprops = this.CombineRelatchProps(should_relatch, relatchprops_vert, relatchprops_horz, percent_horz, player, const)
 
         local impulse = Jump_AvoidOverhangs(Vector4.new(impulse_x, impulse_y, impulse_z, 1), vars.hangPos, normal_horz, o)
 
@@ -81,7 +81,7 @@ function this.GetLookDirections(normal, lookdir, hangPos, player_pos)
     return adjusted_up, normal_horz, look_horz, up_dot, horz_dot
 end
 
-function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_dot, up_adjusted)
+function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_dot, up_adjusted, player)
     if not has_straightup then
         return 1, false, 0, 0, 0, false, nil
     end
@@ -102,7 +102,7 @@ function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_d
         return percent_horz, false, 0, 0, 0, false, nil
     end
 
-    local percent_speed = this.GetSpeedAdjustedPercent(o.vel, up_adjusted, straight_up.percent_at_speed)
+    local percent_speed = this.GetSpeedAdjustedPercent(o.vel, up_adjusted, straight_up.percent_at_speed, player.override_speed_mult)
     if IsNearZero(percent_speed) then
         return percent_horz, true, 0, 0, 0, false, nil      -- playing the fail sound because of over speed
     end
@@ -110,16 +110,16 @@ function this.GetImpulse_Vertical(o, has_straightup, straight_up, up_dot, horz_d
     return
         percent_horz,
         false,
-        up_adjusted.x * straight_up.strength * straightup_percent * percent_speed,
-        up_adjusted.y * straight_up.strength * straightup_percent * percent_speed,
-        up_adjusted.z * straight_up.strength * straightup_percent * percent_speed,
+        up_adjusted.x * straight_up.strength * player.override_strength_mult * straightup_percent * percent_speed,
+        up_adjusted.y * straight_up.strength * player.override_strength_mult * straightup_percent * percent_speed,
+        up_adjusted.z * straight_up.strength * player.override_strength_mult * straightup_percent * percent_speed,
         straight_up.latch_after_jump,
         this.GetRelatchProps(straight_up.relatch_time_seconds, straight_up.wallattract_distance_max, straight_up.wallattract_accel, straight_up.wallattract_pow, straight_up.wallattract_antigrav)
 end
 
-function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz, horizontal, velocity)
+function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz, horizontal, velocity, player)
     local yaw_turn = horizontal.yaw_turn:Evaluate(horz_dot)
-    local strength = horizontal.strength
+    local strength = horizontal.strength * player.override_strength_mult
 
     local preset_x, preset_y, preset_z = this.GetImpulse_Horizontal_Preset(horz_dot, look_horz, wall_normal_horz, horizontal)
 
@@ -127,7 +127,7 @@ function this.GetImpulse_Horizontal(look, look_horz, horz_dot, wall_normal_horz,
 
     local rotated = this.GetHorizontal_Rotated(Vector4.new(combined_x, combined_y, combined_z, 1))
 
-    local percent_speed = this.GetSpeedAdjustedPercent(velocity, ToUnit(rotated), horizontal.percent_at_speed)
+    local percent_speed = this.GetSpeedAdjustedPercent(velocity, ToUnit(rotated), horizontal.percent_at_speed, player.override_speed_mult)
     if IsNearZero(percent_speed) then
         return 0, 0, 0, 0, false, nil, true     -- over speed, play the fail sound
     end
@@ -263,9 +263,14 @@ function this.GetHorizontalNormal(normal, lookdir, hangPos, player_pos)
     return GetProjectedVector_AlongPlane_Unit(normal, up)
 end
 
-function this.GetSpeedAdjustedPercent(velocity, impulse_dir_unit, percent_at_speed)
+function this.GetSpeedAdjustedPercent(velocity, impulse_dir_unit, percent_at_speed, override_speed_mult)
     local vel_along = GetProjectedVector_AlongVector(velocity, impulse_dir_unit, false)
     local speed_along = math.sqrt(GetVectorLengthSqr(vel_along))
+
+    -- The multiplier would modify the animation curve.  So if the value is 2, the curve would give percents
+    -- twice as long, but there are multiple configs with their own curve.  So dividing the input speed gives
+    -- the same result
+    speed_along = speed_along / override_speed_mult
 
     return Clamp(0, 1, percent_at_speed:Evaluate(speed_along))
 end
@@ -286,7 +291,13 @@ function this.GetRelatchProps(relatch_time_seconds, distance_max, accel, pow, an
     }
 end
 
-function this.CombineRelatchProps(should_relatch, relatchprops_vert, relatchprops_horz, percent_horz)
+function this.CombineRelatchProps(should_relatch, relatchprops_vert, relatchprops_horz, percent_horz, player, const)
+    if player.override_relatch == const.override_relatch.never then
+        return nil
+    elseif player.override_relatch == const.override_relatch.always then
+        return this.GetRelatchProps(0.66667, player.wallDistance_attract_max, player.attract_accel, player.attract_pow, player.attract_antigrav)
+    end
+
     if not should_relatch or (not relatchprops_vert and not relatchprops_horz) then
         return nil
     end
