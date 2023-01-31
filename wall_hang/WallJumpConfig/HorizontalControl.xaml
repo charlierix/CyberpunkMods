@@ -74,8 +74,8 @@
                         <Image Grid.Column="0" Width="12" VerticalAlignment="Center" Source="pack://application:,,,/resources/filter2.png"/>
                         <UniformGrid Grid.Column="2" Rows="1" HorizontalAlignment="Stretch">
                             <ToggleButton x:Name="chkUpAlongAway" IsChecked="True" Content="up/along/away" Style="{StaticResource filterButton}"/>
-                            <ToggleButton x:Name="chkYaw" IsChecked="False" Content="yaw" Style="{StaticResource filterButton}"/>
                             <ToggleButton x:Name="chkLook" IsChecked="True" Content="look" Style="{StaticResource filterButton}"/>
+                            <ToggleButton x:Name="chkYaw" IsChecked="False" Content="yaw" Style="{StaticResource filterButton}"/>
                             <ToggleButton x:Name="chkRelatch" IsChecked="False" Content="relatch" Style="{StaticResource filterButton}"/>
                             <ToggleButton x:Name="chkWallAttract" IsChecked="False" Content="wall attract" Style="{StaticResource filterButton}"/>
                         </UniformGrid>
@@ -110,12 +110,12 @@
                                         <ContentPresenter Content="{Binding Percent_Away}" Visibility="{Binding DataContext.VisibilityUpAlongAway, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
                                         <Separator Visibility="{Binding DataContext.VisibilityUpAlongAwaySeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
 
-                                        <ContentPresenter Content="{Binding Percent_YawTurn}" Visibility="{Binding DataContext.VisibilityYaw, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
-                                        <Separator Visibility="{Binding DataContext.VisibilityYawSeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
-
                                         <ContentPresenter Content="{Binding Percent_Look}" Visibility="{Binding DataContext.VisibilityLook, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
                                         <ContentPresenter Content="{Binding Percent_LookStrength}" Visibility="{Binding DataContext.VisibilityLook, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
                                         <Separator Visibility="{Binding DataContext.VisibilityLookSeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
+
+                                        <ContentPresenter Content="{Binding Percent_YawTurn}" Visibility="{Binding DataContext.VisibilityYaw, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
+                                        <Separator Visibility="{Binding DataContext.VisibilityYawSeparator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" Height="8"/>
 
                                         <ContentPresenter Content="{Binding Percent_LatchAfterJump}" Visibility="{Binding DataContext.VisibilityRelatch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>
                                         <ContentPresenter Content="{Binding RelatchTime_Emoseconds}" Visibility="{Binding DataContext.VisibilityRelatch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalControl}}}" ContentTemplate="{StaticResource named_slider}"/>

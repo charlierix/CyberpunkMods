@@ -149,14 +149,14 @@ namespace WallJumpConfig
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Away %", o => o.Percent_Away));
             }
 
-            if (_viewmodel_horizontal.HasHorizontal && _viewmodel_horizontal.ShowYaw)
-                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Yaw Turn %", o => o.Percent_YawTurn));
-
             if (_viewmodel_horizontal.HasHorizontal && _viewmodel_horizontal.ShowLook)
             {
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Look %", o => o.Percent_Look));
                 panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Look Strength %", o => o.Percent_LookStrength));
             }
+
+            if (_viewmodel_horizontal.HasHorizontal && _viewmodel_horizontal.ShowYaw)
+                panel.Children.Add(BuildPlot(_viewmodel_horizontal, "Yaw Turn %", o => o.Percent_YawTurn));
 
             if (_viewmodel_horizontal.HasHorizontal && _viewmodel_horizontal.ShowRelatch)
             {
