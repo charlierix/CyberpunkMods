@@ -20,18 +20,22 @@ function DefineWindow_Jumping(vars_ui, const)
     jumping.planted_label = this.Define_Planted_Label(const)
     jumping.planted_help = this.Define_Planted_Help(jumping.planted_label, const)
     jumping.planted_combo = this.Define_Planted_Combo(jumping.planted_label, const)
+    jumping.planted_combo_help = this.Define_Planted_Combo_Help(jumping.planted_combo, const)
 
     jumping.planted_shift_label = this.Define_Planted_Shift_Label(jumping.planted_combo, const)
     jumping.planted_shift_help = this.Define_Planted_Shift_Help(jumping.planted_shift_label, const)
     jumping.planted_shift_combo = this.Define_Planted_Shift_Combo(jumping.planted_shift_label, const)
+    jumping.planted_shift_combo_help = this.Define_Planted_Shift_Combo_Help(jumping.planted_shift_combo, const)
 
     jumping.rebound_label = this.Define_Rebound_Label(jumping.planted_shift_combo, const)
     jumping.rebound_help = this.Define_Rebound_Help(jumping.rebound_label, const)
     jumping.rebound_combo = this.Define_Rebound_Combo(jumping.rebound_label, const)
+    jumping.rebound_combo_help = this.Define_Rebound_Combo_Help(jumping.rebound_combo, const)
 
     jumping.rebound_shift_label = this.Define_Rebound_Shift_Label(jumping.rebound_combo, const)
     jumping.rebound_shift_help = this.Define_Rebound_Shift_Help(jumping.rebound_shift_label, const)
     jumping.rebound_shift_combo = this.Define_Rebound_Shift_Combo(jumping.rebound_shift_label, const)
+    jumping.rebound_shift_combo_help = this.Define_Rebound_Shift_Combo_Help(jumping.rebound_shift_combo, const)
 
     -- Config Overrides
     jumping.override_relatch_label = this.Define_Override_Relatch_Label(const)
@@ -68,6 +72,18 @@ function ActivateWindow_Jumping(vars_ui, const)
     jumping.rebound_combo.selected_item = nil
     jumping.rebound_shift_combo.selected_item = nil
 
+    jumping.planted_combo_help.tooltip = nil
+    jumping.planted_combo_help.combo_value = nil
+
+    jumping.planted_shift_combo_help.tooltip = nil
+    jumping.planted_shift_combo_help.combo_value = nil
+
+    jumping.rebound_combo_help.tooltip = nil
+    jumping.rebound_combo_help.combo_value = nil
+
+    jumping.rebound_shift_combo.tooltip = nil
+    jumping.rebound_shift_combo.combo_value = nil
+
     jumping.override_relatch_combo.selected_item = nil
     jumping.override_strength_slider.value = nil
     jumping.override_speed_slider.value = nil
@@ -79,17 +95,17 @@ function DrawWindow_Jumping(isCloseRequested, vars_ui, window, const, player, pl
     ------------------------- Finalize models for this frame -------------------------
 
     this.Refresh_Planted_Combo(jumping.planted_combo, player_arcade, const)
-
     this.Refresh_Planted_Shift_Combo(jumping.planted_shift_combo, player_arcade, const)
-
     this.Refresh_Rebound_Combo(jumping.rebound_combo, player_arcade, const)
-
     this.Refresh_Rebound_Shift_Combo(jumping.rebound_shift_combo, player_arcade, const)
 
+    this.Refresh_Planted_Combo_Help(jumping.planted_combo_help, jumping.planted_combo, const)
+    this.Refresh_Planted_Combo_Help(jumping.planted_shift_combo_help, jumping.planted_shift_combo, const)
+    this.Refresh_Planted_Combo_Help(jumping.rebound_combo_help, jumping.rebound_combo, const)
+    this.Refresh_Planted_Combo_Help(jumping.rebound_shift_combo_help, jumping.rebound_shift_combo, const)
+
     this.Refresh_Override_Relatch_Combo(jumping.override_relatch_combo, player_arcade)
-
     this.Refresh_Override_Strength_Slider(jumping.override_strength_slider, player_arcade)
-
     this.Refresh_Override_Speed_Slider(jumping.override_speed_slider, player_arcade)
 
     this.Refresh_IsDirty(jumping.okcancel, player_arcade, jumping.planted_combo, jumping.planted_shift_combo, jumping.rebound_combo, jumping.rebound_shift_combo, jumping.override_relatch_combo, jumping.override_strength_slider, jumping.override_speed_slider)
@@ -106,18 +122,22 @@ function DrawWindow_Jumping(isCloseRequested, vars_ui, window, const, player, pl
     Draw_Label(jumping.planted_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(jumping.planted_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_ComboBox(jumping.planted_combo, vars_ui.style.combobox, vars_ui.scale)
+    Draw_HelpButton(jumping.planted_combo_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     Draw_Label(jumping.planted_shift_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(jumping.planted_shift_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_ComboBox(jumping.planted_shift_combo, vars_ui.style.combobox, vars_ui.scale)
+    Draw_HelpButton(jumping.planted_shift_combo_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     Draw_Label(jumping.rebound_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(jumping.rebound_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_ComboBox(jumping.rebound_combo, vars_ui.style.combobox, vars_ui.scale)
+    Draw_HelpButton(jumping.rebound_combo_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     Draw_Label(jumping.rebound_shift_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(jumping.rebound_shift_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_ComboBox(jumping.rebound_shift_combo, vars_ui.style.combobox, vars_ui.scale)
+    Draw_HelpButton(jumping.rebound_shift_combo_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     Draw_Label(jumping.override_relatch_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(jumping.override_relatch_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
@@ -239,6 +259,25 @@ function this.Refresh_Planted_Combo(def, player_arcade, const)
         def.selected_item = player_arcade.planted_name
     end
 end
+function this.Define_Planted_Combo_Help(relative_to, const)
+    -- HelpButton
+    return
+    {
+        invisible_name = "Jumping_Planted_Combo_Help",
+
+        tooltip = nil,
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+end
+function this.Refresh_Planted_Combo_Help(def, combo_def, const)
+    if combo_def.selected_item ~= def.combo_value then
+        def.tooltip = this.GetComboHelp(combo_def, const)
+        def.combo_value = combo_def.selected_item
+    end
+end
 
 function this.Define_Planted_Shift_Label(relative_to, const)
     -- Label
@@ -326,6 +365,25 @@ function this.Refresh_Planted_Shift_Combo(def, player_arcade, const)
 
     if not def.selected_item then
         def.selected_item = player_arcade.planted_shift_name
+    end
+end
+function this.Define_Planted_Shift_Combo_Help(relative_to, const)
+    -- HelpButton
+    return
+    {
+        invisible_name = "Jumping_Planted_Shift_Combo_Help",
+
+        tooltip = nil,
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+end
+function this.Refresh_Planted_Shift_Combo_Help(def, combo_def, const)
+    if combo_def.selected_item ~= def.combo_value then
+        def.tooltip = this.GetComboHelp(combo_def, const)
+        def.combo_value = combo_def.selected_item
     end
 end
 
@@ -419,6 +477,25 @@ function this.Refresh_Rebound_Combo(def, player_arcade, const)
         def.selected_item = player_arcade.rebound_name
     end
 end
+function this.Define_Rebound_Combo_Help(relative_to, const)
+    -- HelpButton
+    return
+    {
+        invisible_name = "Jumping_Rebound_Combo_Help",
+
+        tooltip = nil,
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+end
+function this.Refresh_Rebound_Combo_Help(def, combo_def, const)
+    if combo_def.selected_item ~= def.combo_value then
+        def.tooltip = this.GetComboHelp(combo_def, const)
+        def.combo_value = combo_def.selected_item
+    end
+end
 
 function this.Define_Rebound_Shift_Label(relative_to, const)
     -- Label
@@ -508,6 +585,25 @@ function this.Refresh_Rebound_Shift_Combo(def, player_arcade, const)
 
     if not def.selected_item then
         def.selected_item = player_arcade.rebound_shift_name
+    end
+end
+function this.Define_Rebound_Shift_Combo_Help(relative_to, const)
+    -- HelpButton
+    return
+    {
+        invisible_name = "Jumping_Rebound_Shift_Combo_Help",
+
+        tooltip = nil,
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+end
+function this.Refresh_Rebound_Shift_Combo_Help(def, combo_def, const)
+    if combo_def.selected_item ~= def.combo_value then
+        def.tooltip = this.GetComboHelp(combo_def, const)
+        def.combo_value = combo_def.selected_item
     end
 end
 
@@ -952,4 +1048,169 @@ function this.GetMultSlider_Value_Save(value, value_0, value_2)
     else
         return GetScaledValue(1, value_2, 1, 2, value)
     end
+end
+
+-- Tries to summarize a jump config as a text dump
+function this.GetComboHelp(combo_def, const)
+    if combo_def.selected_item == const.jump_config_none then
+        return "Jump disabled"
+    end
+
+    local settings = PlayerArcade_DeserializeConfigFile(combo_def.selected_item)
+    if not settings then
+        return "-- INVALID CONFIG FILE --"
+    end
+
+    local sections = {}
+    if settings.description and settings.description ~= "" then
+        table.insert(sections, settings.description)
+    end
+
+    if settings.has_horizontal or settings.has_straightup then
+        local legend =
+[[Below are graphs, available characters are extremely limited and not monospaced.  Space is none, # is full
+|<--- facing wall       away from wall --->|]]
+        table.insert(sections, legend)
+    end
+
+    if settings.has_horizontal then
+        local sub_sections = {}
+
+        table.insert(sub_sections, this.GetHelpKeyValue("strength", Format_DecimalToDozenal(settings.horizontal.strength, 1)))
+        table.insert(sub_sections, this.GetHelpKeyValue("look %", this.GraphAnimCurve(settings.horizontal.percent_look)))
+        table.insert(sub_sections, this.GetHelpKeyValue("look strength %", this.GraphAnimCurve(settings.horizontal.percent_look_strength)))
+        table.insert(sub_sections, this.GetHelpKeyValue("up %", this.GraphAnimCurve(settings.horizontal.percent_up)))
+        table.insert(sub_sections, this.GetHelpKeyValue("along %", this.GraphAnimCurve(settings.horizontal.percent_along)))
+        table.insert(sub_sections, this.GetHelpKeyValue("away %", this.GraphAnimCurve(settings.horizontal.percent_away)))
+        table.insert(sub_sections, this.GetHelpKeyValue("relatch", this.GraphAnimCurve(settings.horizontal.percent_latch_after_jump, true)))
+
+        table.insert(sections, this.AddSection("Standard", sub_sections))
+    end
+
+    if settings.has_straightup then
+        local sub_sections = {}
+
+        table.insert(sub_sections, this.GetHelpKeyValue("strength", Format_DecimalToDozenal(settings.straight_up.strength, 1)))
+        table.insert(sub_sections, this.GetHelpKeyValue("relatch", tostring(settings.straight_up.latch_after_jump)))
+
+        table.insert(sections, this.AddSection("Straight Up", sub_sections))
+    end
+
+    return this.BuildFinal(sections)
+end
+function this.GraphAnimCurve_ATTEMPT1(curve, is_bool)
+    local symbols =
+    {
+        "▁",        -- unicode 2581
+        "▂",
+        "▃",
+        "▄",
+        "▅",
+        "▆",
+        "▇",
+        "█",        -- unicode 2588
+    }
+
+    local symbols2 =        -- still ????
+    {
+        " ",
+        "░",        -- 176
+        "▒",        -- 177
+        "▓",        -- 178
+        "█"         -- 219
+    }
+
+    local test = ""
+
+    for i = 1, #symbols, 1 do
+        test = test .. symbols[i]
+    end
+
+    --return test       -- just prints ????????
+
+    return " .:#"
+end
+function this.GraphAnimCurve(curve, is_bool)
+    -- The available chars are incredibly limited.  Unicode 2581 - 2588 would be ideal, but they just show as ?.  Same with 176, 177, 178, 219
+    -- So going with a vertically centered bar graph
+    local symbols =
+    {
+        " ",
+        "-",
+        "=",
+        "#",
+    }
+
+    local count = 36
+
+    local retVal = ""
+
+    for i = 1, count, 1 do
+        local angle = 180 - (180 * (i - 0.5) / count)
+        print("i: " .. tostring(i) .. ", angle: " .. tostring(angle))
+        local dot = Angle_to_Dot(angle)
+        local value = curve:Evaluate(dot)
+        print("dot: " .. tostring(dot) .. ", value: " .. tostring(value))
+
+        value = Clamp(0, 1, value)
+
+        local char = ""
+        if is_bool then
+            if value >= 0.5 then
+                char = symbols[#symbols]
+            else
+                char = symbols[1]
+            end
+        else
+            local index = 1 + math.floor(value * #symbols)
+            index = Clamp(1, #symbols, index)
+            print("value: " .. tostring(value) .. ", index: " .. tostring(index))
+            char = symbols[index]
+        end
+
+        retVal = retVal .. char
+    end
+
+    return "|" .. retVal .. "|"
+end
+function this.GetHelpKeyValue(key, value)
+    return
+    {
+        key = key,
+        value = value,
+    }
+end
+function this.AddSection(header, sub_sections)
+    local retVal = "------------ " .. header .. [[ ------------
+
+]]
+
+    for i = 1, #sub_sections, 1 do
+        if i > 1 then
+            retVal = retVal .. [[
+
+]]
+        end
+
+        retVal = retVal .. sub_sections[i].key .. ": " .. sub_sections[i].value .. [[
+]]
+    end
+
+    return retVal
+end
+function this.BuildFinal(sections)
+    local retVal = ""
+
+    for i = 1, #sections, 1 do
+        if i > 1 then
+            retVal = retVal .. [[
+
+
+]]
+        end
+
+        retVal = retVal .. sections[i]
+    end
+
+    return retVal
 end
