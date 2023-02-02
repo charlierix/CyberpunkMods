@@ -53,6 +53,7 @@ namespace WallJumpConfig
         #region Declaration Section
 
         private readonly string _folder_presets;
+        private readonly string _folder_presets_history;
 
         private readonly DropShadowEffect _errorEffect;
 
@@ -91,6 +92,7 @@ namespace WallJumpConfig
             string folder_exe = Environment.CurrentDirectory;
             _settingsFilename = System.IO.Path.Combine(folder_exe, "window settings.json");
             _folder_presets = System.IO.Path.Combine(folder_exe, "presets");
+            _folder_presets_history = System.IO.Path.Combine(folder_exe, "presets - history");
         }
 
         #endregion
@@ -412,6 +414,9 @@ namespace WallJumpConfig
             string filename = System.IO.Path.Combine(_folder_presets, name + ".json");
 
             string serialized = JsonSerializer.Serialize(savewpf, options);
+            File.WriteAllText(filename, serialized);
+
+            filename = System.IO.Path.Combine(_folder_presets_history, $"{name} - {DateTime.Now:yyyyMMdd HHmmss}.json");
             File.WriteAllText(filename, serialized);
 
             // Save lua version
