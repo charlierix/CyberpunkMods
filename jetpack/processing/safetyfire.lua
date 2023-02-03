@@ -39,7 +39,7 @@ function GetSafetyFireHitPoint(o, pos, velZ, mode, deltaTime)
         return hitPoint
     end
 
-    from = Vector4.new(pos.x - 0.02, pos.y + 0.02, pos.z, 1);
+    from = Vector4.new(pos.x - 0.02, pos.y + 0.02, pos.z, 1)
     hitPoint = o:RayCast(from, GetPoint(from, Vector4.new(-0.09901475467, 0.09901475467, -0.99014754298, 1), searchDist))
     if hitPoint then
         return hitPoint

@@ -41,7 +41,7 @@ function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, o, const, pla
         Refresh_WindowPos(window, vars_ui, const)
 
         if vars_ui.currentWindow == const.windows.main then
-            continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade)
+            continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, window, const, player, player_arcade)
 
         elseif vars_ui.currentWindow == const.windows.input_bindings then
             continueShowing = DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, o, window, const)

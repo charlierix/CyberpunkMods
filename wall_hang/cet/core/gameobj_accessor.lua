@@ -11,6 +11,7 @@ local pullInterval_sensor = this.GetRandom_Variance(12, 1)
 local pullInterval_quest = this.GetRandom_Variance(12, 1)
 local pullInterval_spacialQueries = this.GetRandom_Variance(12, 1)
 local pullInterval_targeting = this.GetRandom_Variance(12, 1)
+local pullInterval_stats = this.GetRandom_Variance(12, 1)
 
 GameObjectAccessor = {}
 
@@ -32,6 +33,7 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_quest = -(pullInterval_quest * 2)
     obj.lastPulled_spacialQueries = -(pullInterval_spacialQueries * 2)
     obj.lastPulled_targeting = -(pullInterval_targeting * 2)
+    obj.lastPulled_stats = -(pullInterval_stats * 2)
 
     obj.lastGot_lookDir = -1
 
@@ -263,6 +265,30 @@ function GameObjectAccessor:AddImpulse(x, y, z)
     end
 end
 
+function GameObjectAccessor:GetPlayerHealth_Percent()
+    self:EnsureLoaded_Stats()
+    self:EnsurePlayerLoaded()
+
+    if self.stats and self.player then
+        return self.wrappers.GetStatPoolValue(self.stats, self.player:GetEntityID(), gamedataStatPoolType.Health, true)
+    end
+end
+function GameObjectAccessor:SetPlayerHealth_Percent(percent, is_delta)
+    self:EnsureLoaded_Stats()
+    self:EnsurePlayerLoaded()
+
+    if self.stats and self.player then
+        local entityID = self.player:GetEntityID()
+
+        if is_delta then
+            self.wrappers.SetStatPoolValue(self.stats, entityID, self.player, gamedataStatPoolType.Health, percent, true)
+        else
+            local health = self.wrappers.GetStatPoolValue(self.stats, entityID, gamedataStatPoolType.Health, true)
+            self.wrappers.SetStatPoolValue(self.stats, entityID, self.player, gamedataStatPoolType.Health, percent - health, true)
+        end
+    end
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function GameObjectAccessor:EnsurePlayerLoaded()
@@ -294,6 +320,14 @@ function GameObjectAccessor:EnsureLoaded_Targeting()
         self.lastPulled_targeting = self.timer
 
         self.targeting = self.wrappers.GetTargetingSystem()
+    end
+end
+
+function GameObjectAccessor:EnsureLoaded_Stats()
+    if not self.stats or (self.timer - self.lastPulled_stats) >= pullInterval_stats then
+        self.lastPulled_stats = self.timer
+
+        self.stats = self.wrappers.GetStatPoolsSystem()
     end
 end
 

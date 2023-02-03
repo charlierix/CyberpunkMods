@@ -8,6 +8,8 @@ local log = nil
 --  attract to wall if hang desired, but too far away
 --  slow down if hang desired, but going too fast
 function Process_Standard(o, player, vars, const, debug, startStopTracker, deltaTime)
+    PossiblySafetyFire(o, player, vars, const, debug, deltaTime)
+
     -- Cheapest check is looking at keys
     -- NOTE: the wallattract struct is called relatch everywhere except what is returned from GetButtonState.  This is because there could be other
     -- cases that redefine wall attraction in the future besides relatching

@@ -11,14 +11,14 @@ function PossiblySafetyFire(o, vars, const, debug, deltaTime)
         do return end
     end
 
-    local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
+    local safetyFireHit = this.GetSafetyFireHitPoint(o, o.pos, o.vel, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
 
     if safetyFireHit then
         -- They're about to hit hard.  Teleport just above the ground, which sets velocity to zero
         Transition_ToStandard(vars, const, debug, o)
         vars.isSafetyFireCandidate = false
 
-        SafetyFire(o, safetyFireHit)
+        this.SafetyFire(o, safetyFireHit)
 
     elseif not IsAirborne(o) then
         -- They're on the ground.  Stopping doing the safety fire check
@@ -26,7 +26,9 @@ function PossiblySafetyFire(o, vars, const, debug, deltaTime)
     end
 end
 
-function GetSafetyFireHitPoint_STRAIGHTDOWN(o, pos, velZ, deltaTime)
+----------------------------------- Private Methods -----------------------------------
+
+function this.GetSafetyFireHitPoint_STRAIGHTDOWN(o, pos, velZ, deltaTime)
     if velZ > -16 then
         return nil
     end
@@ -76,7 +78,7 @@ function GetSafetyFireHitPoint_STRAIGHTDOWN(o, pos, velZ, deltaTime)
     return nil
 end
 
-function GetSafetyFireHitPoint(o, pos, vel, deltaTime)
+function this.GetSafetyFireHitPoint(o, pos, vel, deltaTime)
     if vel.z > -16 then
         return nil
     end
@@ -124,7 +126,7 @@ function GetSafetyFireHitPoint(o, pos, vel, deltaTime)
     return nil
 end
 
-function SafetyFire(o, groundPoint)
+function this.SafetyFire(o, groundPoint)
     -- Calling teleport sets velocity to zero, so this should eliminate death from fall damage
     -- Need to go slightly above where they are currently or they will still die - fine tuning
     -- these params was kind of fun and morbid :)

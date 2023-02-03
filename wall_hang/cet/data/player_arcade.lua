@@ -132,6 +132,9 @@ function PlayerArcade:MapModelToSelf(model)
     --NOTE: This function is written very defensively, the assumption is that properties will be added over time,
     --so new code will try to load old db entries.  Missing properties will take the default value
 
+    -- fall damage
+    this.StoreModelValue(self, model, "fall_damage", self.const.fall_damage.none)
+
     -- wall attraction
     this.StoreModelValue(self, model, "wallDistance_attract_max", 6)
 
@@ -163,6 +166,8 @@ end
 function PlayerArcade:MapSelfToModel()
     return
     {
+        fall_damage = self.fall_damage,
+
         wallDistance_attract_max = self.wallDistance_attract_max,
 
         attract_accel = self.attract_accel,

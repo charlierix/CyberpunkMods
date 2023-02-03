@@ -1162,7 +1162,7 @@ function this.GraphAnimCurve(curve, is_bool)
                 char = symbols[1]
             end
         else
-            local index = 1 + math.floor(value * #symbols)
+            local index = 1 + Round(value * #symbols, 0)
             index = Clamp(1, #symbols, index)
             print("value: " .. tostring(value) .. ", index: " .. tostring(index))
             char = symbols[index]

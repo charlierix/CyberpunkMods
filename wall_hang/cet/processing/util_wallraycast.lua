@@ -45,6 +45,10 @@ function RayCast_NearbyWalls_Initial(fromPos, o, log, rayLen)
     local horz_left = RotateVector3D(horz_forward, rot_left)
     this.FireRay(retVal, fromPos, fromPos, horz_left, rayLen, o, log)
 
+    -- Horizontal backward
+    local horz_backward = Negate(horz_forward)
+    this.FireRay(retVal, fromPos, fromPos, horz_backward, rayLen, o, log)
+
     if #retVal > 0 then
         log:Add_Line(fromPos, retVal[1].hit, "closest")
     end

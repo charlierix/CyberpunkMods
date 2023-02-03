@@ -31,6 +31,8 @@ function Player:Reset()
     --TODO: When realism is implemented, query the player table to see if this playthrough is realism or arcade mode
     self.isRealismMode = false
 
+    self.fall_damage = self.player_arcade.fall_damage
+
     self.wallDistance_attract_max = self.player_arcade.wallDistance_attract_max
 
     self.attract_accel = self.player_arcade.attract_accel

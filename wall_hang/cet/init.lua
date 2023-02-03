@@ -40,6 +40,7 @@ require "processing/processing_jump_calculate"
 require "processing/processing_jump_impulse"
 require "processing/processing_jump_teleturn"
 require "processing/processing_standard"
+require "processing/safetyfire"
 require "processing/util_idealdist"
 require "processing/util_wallcrawl"
 require "processing/util_wallraycast"
@@ -136,6 +137,8 @@ local const =
     override_relatch = CreateEnum("use_config", "always", "never"),
 
     filetype = CreateEnum("file", "directory"),     -- this is the .type property of items when iterating the dir fuction
+
+    fall_damage = CreateEnum("none", "damage_safe", "damage_lethal", "no_damage"),
 
     rayFrom_Z = 1.5,
 
@@ -297,6 +300,9 @@ registerForEvent("onInit", function()
     function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
     function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
     function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end
+    function wrappers.GetStatPoolsSystem() return Game.GetStatPoolsSystem() end
+    function wrappers.GetStatPoolValue(stats, entityid, stat_type, is_percent) return stats:GetStatPoolValue(entityid, stat_type, is_percent) end
+    function wrappers.SetStatPoolValue(stats, entityid, instigator, stat_type, delta, is_percent) stats:RequestChangingStatPoolValue(entityid, stat_type, delta, instigator, true, is_percent) end
 
     o = GameObjectAccessor:new(wrappers)
 
@@ -460,10 +466,6 @@ end
 function TODO()
     -- Wall attraction stays after switching to grappling hook
 
-    -- Partial Disable Jump Away
-    --  There is currently a checkbox to not jump away from a wall when facing the wall
-    --  Have it so that if you shift+jump, it will jump
-
     -- Crawl Cellophane
     --  Don't directly crawl on hit surfaces.  Scan an area, create some kind of bezier mesh that allows
     --  continous movement
@@ -497,5 +499,4 @@ function TODO()
 	-- Purchase
 	--	For bare hand, require them to purchase this before it starts working
 	--	Another option is to start with jump unlocked, gain experience from that before they can unlock wall hang
-
 end

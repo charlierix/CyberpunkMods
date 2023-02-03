@@ -34,6 +34,10 @@ function DefineWindow_Main(vars_ui, const)
     main.rightstick_sensitivity_label = this.Define_RightStickSensitivity_Label(main.rightstick_sensitivity, const)
     main.rightstick_sensitivity_help = this.Define_RightStickSensitivity_Help(main.rightstick_sensitivity_label, const)
 
+    main.fall_damage_combo = this.Define_FallDamage_Combo(main.rightstick_sensitivity, const)
+    main.fall_damage_label = this.Define_FallDamage_Label(main.fall_damage_combo, const)
+    main.fall_damage_help = this.Define_FallDamage_Help(main.fall_damage_label, const)
+
     main.jumping = this.Define_Jumping(const)
 
     main.crawl_slide = this.Define_CrawlSlide(const)
@@ -50,18 +54,23 @@ function ActivateWindow_Main(vars_ui, const)
         DefineWindow_Main(vars_ui, const)
     end
 
-    vars_ui.main.changes:Clear()
+    local main = vars_ui.main
 
-    vars_ui.main.should_autoshow.isChecked = nil
-    vars_ui.main.latch_wallhang.isChecked = nil
-    vars_ui.main.mouse_sensitivity.value = nil
-    vars_ui.main.rightstick_sensitivity.value = nil
+    main.changes:Clear()
+
+    main.should_autoshow.isChecked = nil
+    main.latch_wallhang.isChecked = nil
+    main.mouse_sensitivity.value = nil
+    main.rightstick_sensitivity.value = nil
+    main.fall_damage_help.tooltip = nil
+    main.fall_damage_help.custom_buildagainst = nil
+    main.fall_damage_combo.selected_item = nil
 
     vars_ui.keys:StopWatching()     -- doing this in case it came from the input bindings window (which put keys in a watching state)
 end
 
 -- This gets called each frame from DrawConfig()
-function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade)
+function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player, player_arcade)
     local main = vars_ui.main
 
     ------------------------- Finalize models for this frame -------------------------
@@ -74,13 +83,16 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
 
     this.Refresh_RightStickSensitivity(main.rightstick_sensitivity, const)
 
+    this.Refresh_FallDamage_Help(main.fall_damage_help, main.fall_damage_combo, const)
+    this.Refresh_FallDamage_Combo(main.fall_damage_combo, player_arcade)
+
     this.Refresh_Jumping(main.jumping, player_arcade)
 
     this.Refresh_CrawlSlide(main.crawl_slide, player_arcade)
 
     this.Refresh_WallAttraction(main.wall_attraction, player_arcade)
 
-    this.Refresh_IsDirty(main.okcancel, const, main.latch_wallhang, main.mouse_sensitivity, main.rightstick_sensitivity)
+    this.Refresh_IsDirty(main.okcancel, player_arcade, const, main.latch_wallhang, main.mouse_sensitivity, main.rightstick_sensitivity, main.fall_damage_combo)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -112,6 +124,10 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
     Draw_HelpButton(main.rightstick_sensitivity_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_Slider(main.rightstick_sensitivity, vars_ui.style.slider, vars_ui.scale)
 
+    Draw_Label(main.fall_damage_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(main.fall_damage_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_ComboBox(main.fall_damage_combo, vars_ui.style.combobox, vars_ui.scale)
+
     if Draw_SummaryButton(main.jumping, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
         TransitionWindows_Jumping(vars_ui, const)
     end
@@ -126,7 +142,7 @@ function DrawWindow_Main(isCloseRequested, vars_ui, window, const, player_arcade
 
     local isOKClicked, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        this.Save(main.latch_wallhang, main.mouse_sensitivity, main.rightstick_sensitivity, const)
+        this.Save(main.latch_wallhang, main.mouse_sensitivity, main.rightstick_sensitivity, main.fall_damage_combo, player, player_arcade, const)
     end
 
     local shouldClose = isOKClicked or isCloseClicked or (isCloseRequested and not main.okcancel.isDirty)       -- they can't close with keyboard if dirty.  Once dirty, they must click Ok or Cancel
@@ -464,6 +480,149 @@ function this.Refresh_RightStickSensitivity(def, const)
     end
 end
 
+function this.Define_FallDamage_Label(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Fall Damage Reduction",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 24,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_FallDamage_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Main_FallDamage_Help",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 11,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip = nil
+    retVal.custom_buildagainst = nil
+
+    return retVal
+end
+function this.Refresh_FallDamage_Help(def, combo_def, const)
+    if not def.tooltip or def.custom_buildagainst ~= combo_def.selected_item then
+        local tooltip =
+[[This can intercept high speed falls
+
+My mods (and Alternative Midair Movement) talk to each other so if one is flying, the others don't interfere.  That may cause this fall damage reduction to not activate]]
+
+        if combo_def.selected_item then
+            local selected = combo_def.selected_item:gsub(" ", "_")
+
+            local spacer =
+[[
+
+
+--------------------------------
+
+]] .. combo_def.selected_item .. ": "
+
+            local description = nil
+            if selected == const.fall_damage.none then
+                description = spacer .. "This mod won't interfere with falling damage"
+
+            elseif selected == const.fall_damage.damage_safe then
+                description = spacer .. [[This will damage the player based on impact speed, but leave some health remaining
+
+The idea with this one is to make falling still painful, but not actually kill the player]]
+
+            elseif selected == const.fall_damage.damage_lethal then
+                description = spacer .. [[This will damage the player based on impact speed by a fixed percent of max health
+
+The maximum removed is 95%, so if health starts at 100%, then you'll be fine.  But if health was 50%, that maximum damage would be lethal
+    
+This is meant to be a more dangerous version, but still safer than vanilla, which just kills you over a certain speed]]
+
+            elseif selected == const.fall_damage.no_damage then
+                description = spacer .. "Stops the fall and doesn't damage the player"
+            end
+
+            if description then
+                tooltip = tooltip .. description
+            end
+        end
+
+        def.tooltip = tooltip
+        def.custom_buildagainst = combo_def.selected_item
+    end
+end
+function this.Define_FallDamage_Combo(relative_to, const)
+    local items = {}
+    items[#items+1] = const.fall_damage.none
+    items[#items+1] = const.fall_damage.damage_lethal:gsub("_", " ")
+    items[#items+1] = const.fall_damage.damage_safe:gsub("_", " ")      -- need to use this method of adding to the list because of the spaces
+    items[#items+1] = const.fall_damage.no_damage:gsub("_", " ")
+
+    -- ComboBox
+    return
+    {
+        preview_text = "---",
+        selected_item = nil,
+
+        items = items,
+
+        width = 188,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 24,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        invisible_name = "Main_FallDamage_Combo",
+
+        CalcSize = CalcSize_ComboBox,
+    }
+end
+function this.Refresh_FallDamage_Combo(def, player_arcade)
+    --NOTE: Activate function sets this to nil
+    if not def.selected_item then
+        def.selected_item = player_arcade.fall_damage:gsub("_", " ")
+    end
+end
+
 function this.Define_Jumping(const)
     -- SummaryButton
     return
@@ -481,8 +640,8 @@ function this.Define_Jumping(const)
 
         position =
         {
-            pos_x = 110,
-            pos_y = 95,
+            pos_x = 60,
+            pos_y = 135,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -569,7 +728,7 @@ function this.Refresh_WallAttraction(def, player_arcade)
     def.content.c_antigrav.value = Format_DecimalToDozenal(player_arcade.attract_antigrav, 2)
 end
 
-function this.Refresh_IsDirty(def, const, latch_wallhang, mouse_sensitivity, rightstick_sensitivity)
+function this.Refresh_IsDirty(def, player_arcade, const, latch_wallhang, mouse_sensitivity, rightstick_sensitivity, fall_damage_combo)
     local isDirty = false
 
     if const.latch_wallhang ~= latch_wallhang.isChecked then
@@ -580,17 +739,23 @@ function this.Refresh_IsDirty(def, const, latch_wallhang, mouse_sensitivity, rig
 
     elseif not IsNearValue(GetScaledValue(rightstick_sensitivity.min, rightstick_sensitivity.max, STICK_MIN, STICK_MAX, const.rightstick_sensitivity), rightstick_sensitivity.value) then
         isDirty = true
+    elseif fall_damage_combo.selected_item ~= player_arcade.fall_damage:gsub("_", " ") then
+        isDirty = true
     end
 
     def.isDirty = isDirty
 end
 
-function this.Save(latch_wallhang, mouse_sensitivity, rightstick_sensitivity, const)
+function this.Save(latch_wallhang, mouse_sensitivity, rightstick_sensitivity, fall_damage_combo, player, player_arcade, const)
     const.latch_wallhang = latch_wallhang.isChecked
     const.mouse_sensitivity = GetScaledValue(MOUSE_MIN, MOUSE_MAX, mouse_sensitivity.min, mouse_sensitivity.max, mouse_sensitivity.value)
     const.rightstick_sensitivity = GetScaledValue(STICK_MIN, STICK_MAX, rightstick_sensitivity.min, rightstick_sensitivity.max, rightstick_sensitivity.value)
+    player_arcade.fall_damage = fall_damage_combo.selected_item:gsub(" ", "_")
 
     SetSetting_Bool(const.settings.Latch_WallHang, const.latch_wallhang)
     SetSetting_Float(const.settings.MouseSensitivity, const.mouse_sensitivity)
     SetSetting_Float(const.settings.RightStickSensitivity, const.rightstick_sensitivity)
+
+    player_arcade:Save()
+    player:Reset()
 end
