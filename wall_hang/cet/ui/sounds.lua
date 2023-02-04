@@ -9,8 +9,13 @@ function PlaySound_Hang_Hard(vars, o)
     o:PlaySound(sound, vars)
 end
 
-function PlaySound_Jump(vars, o)
-    o:PlaySound("lcm_player_double_jump", vars)
+function PlaySound_Jump(vars, o, const)
+    if const.jump_sound_standard then
+        o:PlaySound("lcm_player_double_jump", vars)
+    else
+        local sound = this.GetRandomSound(this.sounds_jump_alt)
+        o:PlaySound(sound, vars)
+    end
 end
 
 function PlaySound_FailJump(vars, o)
@@ -24,6 +29,15 @@ end
 
 function PlaySound_Attract(vars, o)
     local sound = this.GetRandomSound(this.sounds_attract)
+    o:PlaySound(sound, vars)
+end
+
+function PlaySound_Impact_Soft(vars, o)
+    local sound = this.GetRandomSound(this.sounds_impact_low)
+    o:PlaySound(sound, vars)
+end
+function PlaySound_Impact_Hard(vars, o)
+    local sound = this.GetRandomSound(this.sounds_impact_high)
     o:PlaySound(sound, vars)
 end
 
@@ -46,6 +60,30 @@ this.sounds_hang =
     "w_cyb_mantis_impact_debris",
 
     --"v_car_dst_fx_impact_debris_wood",
+}
+
+this.sounds_impact_low =
+{
+    "ph_basketball_soft",
+    "ph_fabric_pillow_soft",
+    "ph_leather_soft",
+    "ph_sand_soft",
+}
+
+this.sounds_impact_high =
+{
+    "q103_sc_06b_panam_fist_bump",
+    "q003_sc_03_deal_jackie_pushes",
+    "w_bul_hit_dirt_shotgun",
+    "w_bul_hit_cardboard_shotgun",
+    "q101_sc_06c_p1_Johnny_push",
+}
+
+this.sounds_jump_alt =
+{
+    "w_bul_hit_linoleum_shotgun",
+    "w_bul_hit_subdermal_shotgun",
+    "w_bul_npc_hit_flesh_shotgun",
 }
 
 -- These are an option if

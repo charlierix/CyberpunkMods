@@ -1147,10 +1147,8 @@ function this.GraphAnimCurve(curve, is_bool)
 
     for i = 1, count, 1 do
         local angle = 180 - (180 * (i - 0.5) / count)
-        print("i: " .. tostring(i) .. ", angle: " .. tostring(angle))
         local dot = Angle_to_Dot(angle)
         local value = curve:Evaluate(dot)
-        print("dot: " .. tostring(dot) .. ", value: " .. tostring(value))
 
         value = Clamp(0, 1, value)
 
@@ -1164,7 +1162,6 @@ function this.GraphAnimCurve(curve, is_bool)
         else
             local index = 1 + Round(value * #symbols, 0)
             index = Clamp(1, #symbols, index)
-            print("value: " .. tostring(value) .. ", index: " .. tostring(index))
             char = symbols[index]
         end
 

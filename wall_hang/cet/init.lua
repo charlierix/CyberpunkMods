@@ -140,6 +140,8 @@ local const =
 
     fall_damage = CreateEnum("none", "damage_safe", "damage_lethal", "no_damage"),
 
+    jump_sound_standard = false,     -- true: regular jump sound, false: a lighter sound
+
     rayFrom_Z = 1.5,
 
     wallDistance_stick_min = 0.45,

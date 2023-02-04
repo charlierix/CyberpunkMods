@@ -28,10 +28,13 @@ function PossiblySafetyFire(o, player, vars, const, debug, deltaTime)
 
         -- Possibly damage the player
         if player.fall_damage == const.fall_damage.damage_safe then
-            this.Damage_Safe(o, vel_z)
+            this.Damage_Safe(o, vars, vel_z)
 
         elseif player.fall_damage == const.fall_damage.damage_lethal then
-            this.Damage_Lethal(o, vel_z)
+            this.Damage_Lethal(o, vars, vel_z)
+
+        else
+            PlaySound_Impact_Soft(vars, o)
         end
     end
 end
@@ -144,7 +147,7 @@ function this.SafetyFire(o, groundPoint)
 end
 
 -- This will take the player down to as little as 5% health
-function this.Damage_Safe(o, vel_z)
+function this.Damage_Safe(o, vars, vel_z)
     if vel_z > Z_DMG_MIN or vel_z < Z_MENU then
         do return end
     end
@@ -162,13 +165,20 @@ function this.Damage_Safe(o, vel_z)
         remove = GetScaledValue(0, 1, Z_DMG_MIN, Z_DMG_MAX, vel_z)
     end
 
+    local is_high_impact = remove > 0.6
+
     remove = remove * health_gap        -- health gap is health above 5%.  So a 100% removal would take the final health down to 5%.  50% removal takes health 50% toward 5% (so if health is 60% with a 50% removal, final health will be 32.5%)
 
     o:SetPlayerHealth_Percent(-remove, true)
-    this.PlayPainSound(o)
+
+    if is_high_impact then
+        PlaySound_Impact_Hard(vars, o)
+    else
+        PlaySound_Impact_Soft(vars, o)
+    end
 end
 -- This will remove up to 95% of the player's health, so they will die if their starting health is too low
-function this.Damage_Lethal(o, vel_z)
+function this.Damage_Lethal(o, vars, vel_z)
     if vel_z > Z_DMG_MIN or vel_z < Z_MENU then
         do return end
     end
@@ -180,12 +190,15 @@ function this.Damage_Lethal(o, vel_z)
         remove = GetScaledValue(0, 95, Z_DMG_MIN, Z_DMG_MAX, vel_z)
     end
 
-    o:SetPlayerHealth_Percent(-remove, true)
-    this.PlayPainSound(o)
-end
+    local is_high_impact = remove > 60
 
-function this.PlayPainSound(o)
-    --TODO: play a sound, maybe based on damage taken
+    o:SetPlayerHealth_Percent(-remove, true)
+
+    if is_high_impact then
+        PlaySound_Impact_Hard(vars, o)
+    else
+        PlaySound_Impact_Soft(vars, o)
+    end
 end
 
 function this.NOTES()

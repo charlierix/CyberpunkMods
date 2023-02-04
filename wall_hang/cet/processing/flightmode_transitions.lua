@@ -69,7 +69,7 @@ function Transition_ToJump_TeleTurn(vars, const, debug, o, impulse, final_lookdi
     vars.final_lookdir = final_lookdir
     vars.relatch = relatch
 
-    PlaySound_Jump(vars, o)
+    PlaySound_Jump(vars, o, const)
 end
 
 function Transition_ToJump_Impulse(vars, const, debug, o, impulse, from_teleturn, relatch)
@@ -84,6 +84,6 @@ function Transition_ToJump_Impulse(vars, const, debug, o, impulse, from_teleturn
     vars.relatch = relatch
 
     if not from_teleturn then
-        PlaySound_Jump(vars, o)
+        PlaySound_Jump(vars, o, const)
     end
 end
