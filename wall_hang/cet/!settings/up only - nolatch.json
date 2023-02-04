@@ -1,0 +1,99 @@
+{
+  "description": "Emulates the previous wall hang version\u0027s straight up only logic",
+  "has_horizontal": false,
+  "has_straightup": true,
+  "horizontal": null,
+  "straight_up": {
+    "percent": [
+      {
+        "key": 1,
+        "value": 1
+      },
+      {
+        "key": 0.6921414341592884,
+        "value": 1
+      },
+      {
+        "key": 0.6640409081771708,
+        "value": 0
+      },
+      {
+        "key": 0.6349694017180005,
+        "value": 0
+      }
+    ],
+    "percent_vert_whenup": [
+      {
+        "key": -1,
+        "value": 1
+      },
+      {
+        "key": -0.7071067811865475,
+        "value": 1
+      },
+      {
+        "key": -0.3826834323650897,
+        "value": 0
+      },
+      {
+        "key": 6.123233995736766E-17,
+        "value": 0
+      },
+      {
+        "key": 1,
+        "value": 0
+      }
+    ],
+    "percent_horz_whenup": [
+      {
+        "key": -1,
+        "value": 0
+      },
+      {
+        "key": -0.7071067811865475,
+        "value": 0
+      },
+      {
+        "key": -0.3826834323650897,
+        "value": 0
+      },
+      {
+        "key": 6.123233995736766E-17,
+        "value": 1
+      },
+      {
+        "key": 0.7071067811865476,
+        "value": 1
+      },
+      {
+        "key": 1,
+        "value": 1
+      }
+    ],
+    "percent_at_speed": [
+      {
+        "key": 0,
+        "value": 1
+      },
+      {
+        "key": 3,
+        "value": 1
+      },
+      {
+        "key": 7,
+        "value": 0
+      },
+      {
+        "key": 14,
+        "value": 0
+      }
+    ],
+    "strength": 11,
+    "latch_after_jump": false,
+    "relatch_time_seconds": 0.6666666666666666,
+    "wallattract_distance_max": 8,
+    "wallattract_accel": 8,
+    "wallattract_pow": 3,
+    "wallattract_antigrav": 0.75
+  }
+}

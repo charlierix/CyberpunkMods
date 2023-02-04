@@ -1,0 +1,53 @@
+{
+  "Description": "Emulates the previous wall hang version\u0027s straight up only logic",
+  "Horizontal": {
+    "HasHorizontal": false,
+    "Degrees_Extra": [],
+    "Props_DirectFaceWall": {
+      "Percent_Up": 0.75,
+      "Percent_Along": 0.25,
+      "Percent_Away": 0.1,
+      "Percent_YawTurn": 0,
+      "Percent_Look": 0.25,
+      "Percent_LookStrength": 1,
+      "Percent_LatchAfterJump": 1,
+      "RelatchTime_Emoseconds": 1152,
+      "WallAttract_DistanceMax": 8,
+      "WallAttract_Accel": 8,
+      "WallAttract_Pow": 3,
+      "WallAttract_Antigrav": 0.75
+    },
+    "Props_Extra": [],
+    "Props_DirectAway": {
+      "Percent_Up": 0,
+      "Percent_Along": 0.5,
+      "Percent_Away": 1,
+      "Percent_YawTurn": 0,
+      "Percent_Look": 0.75,
+      "Percent_LookStrength": 1,
+      "Percent_LatchAfterJump": 1,
+      "RelatchTime_Emoseconds": 1152,
+      "WallAttract_DistanceMax": 8,
+      "WallAttract_Accel": 8,
+      "WallAttract_Pow": 3,
+      "WallAttract_Antigrav": 0.75
+    },
+    "Speed_FullStrength": 4,
+    "Speed_ZeroStrength": 8,
+    "Strength": 12
+  },
+  "Vertical_StraightUp": {
+    "HasStraightUp": true,
+    "Degrees_StraightUp": 43.79986189597933,
+    "Degrees_Standard": 39.417715086683884,
+    "Speed_FullStrength": 3,
+    "Speed_ZeroStrength": 7,
+    "Strength": 11,
+    "LatchAfterJump": false,
+    "RelatchTime_Emoseconds": 1152,
+    "WallAttract_DistanceMax": 8,
+    "WallAttract_Accel": 8,
+    "WallAttract_Pow": 3,
+    "WallAttract_Antigrav": 0.75
+  }
+}

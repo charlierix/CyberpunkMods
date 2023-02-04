@@ -1,0 +1,93 @@
+{
+  "Description": "Emulates the previous wall hang version\u0027s straight up \u002B jumping backward off the wall",
+  "Horizontal": {
+    "HasHorizontal": true,
+    "Degrees_Extra": [
+      {
+        "Name": "Extra Angle",
+        "Degrees": 90.2412256510564,
+        "Color": "#FFB3B8C7"
+      },
+      {
+        "Name": "Extra Angle",
+        "Degrees": 96.2754599828648,
+        "Color": "#FF78D2D2"
+      }
+    ],
+    "Props_DirectFaceWall": {
+      "Percent_Up": 0,
+      "Percent_Along": 0,
+      "Percent_Away": 1,
+      "Percent_YawTurn": 1,
+      "Percent_Look": 0,
+      "Percent_LookStrength": 1,
+      "Percent_LatchAfterJump": 1,
+      "RelatchTime_Emoseconds": 1152,
+      "WallAttract_DistanceMax": 8,
+      "WallAttract_Accel": 8,
+      "WallAttract_Pow": 3,
+      "WallAttract_Antigrav": 0.75
+    },
+    "Props_Extra": [
+      {
+        "Percent_Up": 0,
+        "Percent_Along": 1,
+        "Percent_Away": 0,
+        "Percent_YawTurn": 0.4017366690834121,
+        "Percent_Look": 0,
+        "Percent_LookStrength": 1,
+        "Percent_LatchAfterJump": 1,
+        "RelatchTime_Emoseconds": 1152,
+        "WallAttract_DistanceMax": 8,
+        "WallAttract_Accel": 8,
+        "WallAttract_Pow": 3,
+        "WallAttract_Antigrav": 0.75
+      },
+      {
+        "Percent_Up": 0.24960972885503582,
+        "Percent_Along": 1,
+        "Percent_Away": 0.015337938760268783,
+        "Percent_YawTurn": 0.30151965908177203,
+        "Percent_Look": 0.6442068022835087,
+        "Percent_LookStrength": 1,
+        "Percent_LatchAfterJump": 1,
+        "RelatchTime_Emoseconds": 1152,
+        "WallAttract_DistanceMax": 8,
+        "WallAttract_Accel": 8,
+        "WallAttract_Pow": 3,
+        "WallAttract_Antigrav": 0.75
+      }
+    ],
+    "Props_DirectAway": {
+      "Percent_Up": 0.5006067961165049,
+      "Percent_Along": 0.5,
+      "Percent_Away": 0.499393203883495,
+      "Percent_YawTurn": -0.0010452681514833684,
+      "Percent_Look": 1,
+      "Percent_LookStrength": 1,
+      "Percent_LatchAfterJump": 1,
+      "RelatchTime_Emoseconds": 1152,
+      "WallAttract_DistanceMax": 8,
+      "WallAttract_Accel": 8,
+      "WallAttract_Pow": 3,
+      "WallAttract_Antigrav": 0.75
+    },
+    "Speed_FullStrength": 2.9997045866139214,
+    "Speed_ZeroStrength": 7.039778054638631,
+    "Strength": 12.005804235310155
+  },
+  "Vertical_StraightUp": {
+    "HasStraightUp": true,
+    "Degrees_StraightUp": 43.79986189597933,
+    "Degrees_Standard": 39.417715086683884,
+    "Speed_FullStrength": 3,
+    "Speed_ZeroStrength": 7,
+    "Strength": 11,
+    "LatchAfterJump": true,
+    "RelatchTime_Emoseconds": 1152,
+    "WallAttract_DistanceMax": 8,
+    "WallAttract_Accel": 8,
+    "WallAttract_Pow": 3,
+    "WallAttract_Antigrav": 0.75
+  }
+}
