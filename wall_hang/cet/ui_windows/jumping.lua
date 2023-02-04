@@ -37,8 +37,11 @@ function DefineWindow_Jumping(vars_ui, const)
     jumping.rebound_shift_combo = this.Define_Rebound_Shift_Combo(jumping.rebound_shift_label, const)
     jumping.rebound_shift_combo_help = this.Define_Rebound_Shift_Combo_Help(jumping.rebound_shift_combo, const)
 
-    -- Config Overrides
-    jumping.override_relatch_label = this.Define_Override_Relatch_Label(const)
+    -- Misc
+    jumping.jumpsound_checkbox = this.Define_JumpSound_Checkbox(const)
+    jumping.jumpsound_help = this.Define_JumpSound_Help(jumping.jumpsound_checkbox, const)
+
+    jumping.override_relatch_label = this.Define_Override_Relatch_Label(jumping.jumpsound_checkbox, const)
     jumping.override_relatch_help = this.Define_Override_Relatch_Help(jumping.override_relatch_label, const)
     jumping.override_relatch_combo = this.Define_Override_Relatch_Combo(jumping.override_relatch_help, const)
 
@@ -84,6 +87,7 @@ function ActivateWindow_Jumping(vars_ui, const)
     jumping.rebound_shift_combo.tooltip = nil
     jumping.rebound_shift_combo.combo_value = nil
 
+    jumping.jumpsound_checkbox.isChecked = nil
     jumping.override_relatch_combo.selected_item = nil
     jumping.override_strength_slider.value = nil
     jumping.override_speed_slider.value = nil
@@ -104,11 +108,12 @@ function DrawWindow_Jumping(isCloseRequested, vars_ui, window, const, player, pl
     this.Refresh_Planted_Combo_Help(jumping.rebound_combo_help, jumping.rebound_combo, const)
     this.Refresh_Planted_Combo_Help(jumping.rebound_shift_combo_help, jumping.rebound_shift_combo, const)
 
+    this.Refresh_JumpSound_Checkbox(jumping.jumpsound_checkbox, const)
     this.Refresh_Override_Relatch_Combo(jumping.override_relatch_combo, player_arcade)
     this.Refresh_Override_Strength_Slider(jumping.override_strength_slider, player_arcade)
     this.Refresh_Override_Speed_Slider(jumping.override_speed_slider, player_arcade)
 
-    this.Refresh_IsDirty(jumping.okcancel, player_arcade, jumping.planted_combo, jumping.planted_shift_combo, jumping.rebound_combo, jumping.rebound_shift_combo, jumping.override_relatch_combo, jumping.override_strength_slider, jumping.override_speed_slider)
+    this.Refresh_IsDirty(jumping.okcancel, player_arcade, const, jumping.planted_combo, jumping.planted_shift_combo, jumping.rebound_combo, jumping.rebound_shift_combo, jumping.jumpsound_checkbox, jumping.override_relatch_combo, jumping.override_strength_slider, jumping.override_speed_slider)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -139,6 +144,9 @@ function DrawWindow_Jumping(isCloseRequested, vars_ui, window, const, player, pl
     Draw_ComboBox(jumping.rebound_shift_combo, vars_ui.style.combobox, vars_ui.scale)
     Draw_HelpButton(jumping.rebound_shift_combo_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
+    Draw_CheckBox(jumping.jumpsound_checkbox, vars_ui.style.checkbox, vars_ui.style.colors)
+    Draw_HelpButton(jumping.jumpsound_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+
     Draw_Label(jumping.override_relatch_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(jumping.override_relatch_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_ComboBox(jumping.override_relatch_combo, vars_ui.style.combobox, vars_ui.scale)
@@ -165,7 +173,7 @@ function DrawWindow_Jumping(isCloseRequested, vars_ui, window, const, player, pl
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(jumping.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        this.Save(player, player_arcade, jumping.planted_combo, jumping.planted_shift_combo, jumping.rebound_combo, jumping.rebound_shift_combo, jumping.override_relatch_combo, jumping.override_strength_slider, jumping.override_speed_slider)
+        this.Save(player, player_arcade, const, jumping.planted_combo, jumping.planted_shift_combo, jumping.rebound_combo, jumping.rebound_shift_combo, jumping.jumpsound_checkbox, jumping.override_relatch_combo, jumping.override_strength_slider, jumping.override_speed_slider)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
@@ -185,7 +193,7 @@ function this.Define_Planted_Label(const)
 
         position =
         {
-            pos_x = 35,
+            pos_x = 30,
             pos_y = -160,
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.center,
@@ -607,7 +615,53 @@ function this.Refresh_Rebound_Shift_Combo_Help(def, combo_def, const)
     end
 end
 
-function this.Define_Override_Relatch_Label(const)
+function this.Define_JumpSound_Checkbox(const)
+    -- CheckBox
+    return
+    {
+        invisible_name = "Jumping_JumpSound_Checkbox",
+
+        text = "Use Double Jump Sound",
+
+        isEnabled = true,
+
+        position =
+        {
+            pos_x = 130,
+            pos_y = -110,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_CheckBox,
+    }
+end
+function this.Refresh_JumpSound_Checkbox(def, const)
+    --NOTE: ActivateWindow_Jumping sets this to nil
+    if def.isChecked == nil then
+        def.isChecked = const.jump_sound_standard
+    end
+end
+function this.Define_JumpSound_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Jumping_JumpSound_Help",
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[Double jump sound is the standard sound, but it gets annoying when repeatedly jumping around
+
+The non double jump sound is a set of much lighter sounds]]
+
+    return retVal
+end
+
+function this.Define_Override_Relatch_Label(relative_to, const)
     -- Label
     return
     {
@@ -615,10 +669,16 @@ function this.Define_Override_Relatch_Label(const)
 
         position =
         {
-            pos_x = 210,
-            pos_y = -80,
-            horizontal = const.alignment_horizontal.right,
-            vertical = const.alignment_vertical.center,
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 36,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
         },
 
         color = "edit_prompt",
@@ -962,7 +1022,7 @@ function this.Pressed_DefaultOld(jumping, const)
     jumping.rebound_shift_combo.selected_item = const.jump_config_backjump_nolatch
 end
 
-function this.Refresh_IsDirty(def, player_arcade, planted_combo, planted_shift_combo, rebound_combo, rebound_shift_combo, override_relatch_combo, override_strength_slider, override_speed_slider)
+function this.Refresh_IsDirty(def, player_arcade, const, planted_combo, planted_shift_combo, rebound_combo, rebound_shift_combo, jumpsound_checkbox, override_relatch_combo, override_strength_slider, override_speed_slider)
     local isDirty = false
 
     if planted_combo.selected_item ~= player_arcade.planted_name then
@@ -975,6 +1035,9 @@ function this.Refresh_IsDirty(def, player_arcade, planted_combo, planted_shift_c
         isDirty = true
 
     elseif rebound_shift_combo.selected_item ~= player_arcade.rebound_shift_name then
+        isDirty = true
+
+    elseif jumpsound_checkbox.isChecked ~= const.jump_sound_standard then
         isDirty = true
 
     elseif override_relatch_combo.selected_item ~= player_arcade.override_relatch:gsub("_", " ") then
@@ -990,15 +1053,18 @@ function this.Refresh_IsDirty(def, player_arcade, planted_combo, planted_shift_c
     def.isDirty = isDirty
 end
 
-function this.Save(player, player_arcade, planted_combo, planted_shift_combo, rebound_combo, rebound_shift_combo, override_relatch_combo, override_strength_slider, override_speed_slider)
+function this.Save(player, player_arcade, const, planted_combo, planted_shift_combo, rebound_combo, rebound_shift_combo, jumpsound_checkbox, override_relatch_combo, override_strength_slider, override_speed_slider)
     player_arcade.planted_name = planted_combo.selected_item
     player_arcade.planted_shift_name = planted_shift_combo.selected_item
     player_arcade.rebound_name = rebound_combo.selected_item
     player_arcade.rebound_shift_name = rebound_shift_combo.selected_item
 
+    const.jump_sound_standard = jumpsound_checkbox.isChecked
     player_arcade.override_relatch = override_relatch_combo.selected_item:gsub(" ", "_")
     player_arcade.override_strength_mult = this.GetMultSlider_Value_Save(override_strength_slider.value, STRENGTH_0, STRENGTH_2)
     player_arcade.override_speed_mult = this.GetMultSlider_Value_Save(override_speed_slider.value, SPEED_0, SPEED_2)
+
+    SetSetting_Bool(const.settings.JumpSoundStandard, const.jump_sound_standard)
 
     player_arcade:Save()
     player:Reset()

@@ -98,9 +98,10 @@ local const =
 
     -- Populated in InitializeSavedFields()
     --mouse_sensitivity = -0.08,
-    --rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
-    --latch_wallhang,       -- false: must keep the hang key held in
-    --should_jump_backward
+    --rightstick_sensitivity = 50,      -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
+    --latch_wallhang,                   -- false: must keep the hang key held in
+    --should_jump_backward,             -- replaced by the new jumping config (values stored in player)
+    --jump_sound_standard,              -- true: regular jump sound, false: a lighter sound
 
     -- These are set in Define_UI_Framework_Constants() called during init
     -- alignment_horizontal = CreateEnum("left", "center", "right"),
@@ -123,6 +124,7 @@ local const =
         "WallHangKey_UseCustom",
         "Latch_WallHang",
         "ShouldJumpBackward",
+        "JumpSoundStandard",
         -- Floats
         "MouseSensitivity",
         "RightStickSensitivity"),
@@ -139,8 +141,6 @@ local const =
     filetype = CreateEnum("file", "directory"),     -- this is the .type property of items when iterating the dir fuction
 
     fall_damage = CreateEnum("none", "damage_safe", "damage_lethal", "no_damage"),
-
-    jump_sound_standard = false,     -- true: regular jump sound, false: a lighter sound
 
     rayFrom_Z = 1.5,
 
