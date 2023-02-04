@@ -130,19 +130,6 @@ namespace WallJumpConfig
             }
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.S)
-                    SaveSession();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), Title, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
         private void txtModFolder_PreviewDragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
