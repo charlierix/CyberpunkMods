@@ -107,7 +107,7 @@ function this.Aim_Straight(aim, o, player, vars, const, debug)
     end
 end
 
-function this.Aim_Swing(aim, o, player, vars, const, debug)
+function this.Aim_Swing_ATTEMPT1(aim, o, player, vars, const, debug)
     if this.RecoverEnergy_Switch(o, player, vars, const) then
         do return end
     end
@@ -133,6 +133,32 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     -- else (much more work to do here, but get the above working first)
     --this.Aim_Swing_45Only(o, vars, const)
     this.Aim_Swing_Slingshot(o, vars, const)
+end
+function this.Aim_Swing(aim, o, player, vars, const, debug)
+    if this.RecoverEnergy_Switch(o, player, vars, const) then
+        do return end
+    end
+
+    local is_airborne = IsAirborne(o)
+
+    local SPEED_STRAIGHT = 4
+
+    local speed_sqr = GetVectorLengthSqr(o.vel)
+
+    if not is_airborne or speed_sqr <= SPEED_STRAIGHT * SPEED_STRAIGHT then
+        -- Moving too slow, just do a straight line grapple
+        this.Aim_Swing_Slingshot(is_airborne, o, vars, const)
+        do return end
+    end
+
+    -- Use velocity and direction looking to define a cone and fire some rays
+    --aimswing_raycasts.Scan_LookAndVelocity1()
+
+    -- If the path is clear, swing
+    this.Aim_Swing_45Only(o, vars, const)
+
+    -- else
+    --this.Aim_Swing_Slingshot(is_airborne, o, vars, const)
 end
 
 function this.RecoverEnergy_Switch(o, player, vars, const)
@@ -172,30 +198,40 @@ function this.Aim_Swing_45Only(o, vars, const)
     Transition_ToFlight_Swing(vars.grapple, vars, const, o, from, to, nil)
 end
 
+--TODO: aim distance should be based on current velocity (length of component of velocity along look)
 -- This first attempt just shoots the player like a slingshot, possibly applying an extra impulse to get them
 -- off the ground
-function this.Aim_Swing_Slingshot(o, vars, const)
+function this.Aim_Swing_Slingshot(is_airborne, o, vars, const)
+    local MIN_DIST = 12
+    local MAX_DIST = 60
+    local SPEED_MAX = 24
+
     o:GetCamera()
 
     local position, look_dir = o:GetCrosshairInfo()
 
+    local vel_look = GetProjectedVector_AlongVector(o.vel, look_dir, false)
+    local speed_look = GetVectorLength(vel_look)
+
+    local anchor_dist = Clamp(0, MAX_DIST, GetScaledValue(MIN_DIST, MAX_DIST, 0, SPEED_MAX, speed_look))
+
     --TODO: If looking down, and there is ground in the way, choose a point above the ground
     --TODO: Distance should be based on current speed (also how cluttered the area is)
-    local anchor_pos = AddVectors(position, MultiplyVector(look_dir, 60))
+    local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
 
     -- Ensure pin is drawn and placed properly (flight pin, not aim pin)
     EnsureMapPinVisible(anchor_pos, vars.grapple.mappin_name, vars, o)
 
     local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos)
 
-    this.MaybePopUp(o, new_grapple.anti_gravity)
+    this.MaybePopUp(is_airborne, o, new_grapple.anti_gravity)
 
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil)
 end
 
 -- If on the ground and angle is too low, apply an up impulse
-function this.MaybePopUp(o, anti_gravity)
-    if IsAirborne(o) then
+function this.MaybePopUp(is_airborne, o, anti_gravity)
+    if is_airborne then
         do return end
     end
 
