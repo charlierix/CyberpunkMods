@@ -13,7 +13,6 @@
 --https://github.com/jac3km4/redscript
 
 require "!src/core/color"
-require "!src/core/debug_code"
 require "!src/core/gameobj_accessor"
 require "!src/core/lists"
 require "!src/core/math_basic"
@@ -30,10 +29,12 @@ require "!src/data/logging"
 require "!src/data/util_data"
 require "!src/data/validations"
 
+require "!src/debug/debug_code"
+require "!src/debug/reporting"
+
 require "!src/spawning/spawn_tests.lua"
 
 require "!src/ui/drawing"
-require "!src/ui/reporting"
 
 extern_json = require "!src/external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 

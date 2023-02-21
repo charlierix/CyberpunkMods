@@ -7,7 +7,6 @@
 --https://codeberg.org/adamsmasher/cyberpunk/src/branch/master
 --https://redscript.redmodding.org/
 
-require "core/debug_code"
 require "core/gameobj_accessor"
 require "core/lists"
 require "core/math_basic"
@@ -17,6 +16,9 @@ require "core/util"
 
 require "data/dal"
 require "data/modes"
+
+require "debug/debug_code"
+require "debug/reporting"
 
 require "processing/flightutil"
 require "processing/flightutil_cet"
@@ -34,7 +36,6 @@ require "ui/key_accel"
 require "ui/keydash_tracker"
 require "ui/keydash_tracker_analog"
 require "ui/keys"
-require "ui/reporting"
 require "ui/sounds_thrusting"
 require "ui/sounds_wallhit"
 

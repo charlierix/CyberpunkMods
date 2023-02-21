@@ -13,8 +13,6 @@
 --https://github.com/jac3km4/redscript
 
 require "core/color"
-require "core/debug_code"
-require "core/debug_render_logger"
 require "core/even_dist_cone"
 require "core/gameobj_accessor"
 require "core/lists"
@@ -31,6 +29,10 @@ require "data/defaults"
 require "data/player"
 --require "data/serialization"      -- using json instead.  Keeping this around in case there is something that needs the more direct way of encoding
 require "data/util_data"
+
+require "debug/debug_code"
+require "debug/debug_render_logger"
+require "debug/reporting"
 
 require "inventory/util_inventory"
 
@@ -52,7 +54,6 @@ require "ui/init_ui"
 require "ui/inputtracker_startstop"
 require "ui/keys"
 require "ui/mappinutil"
-require "ui/reporting"
 require "ui/transition_windows"
 require "ui/util_ui"
 require "ui/util_vm_binding"

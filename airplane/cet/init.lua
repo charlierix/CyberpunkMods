@@ -15,8 +15,6 @@
 require "core/check_other_mods"
 require "core/color"
 require "core/customprops_wrapper"
-require "core/debug_code"
-require "core/debug_render_logger"
 require "core/gameobj_accessor"
 require "core/lists"
 require "core/math_basic"
@@ -29,6 +27,9 @@ require "core/util"
 
 require "data/dal"
 require "data/util_data"
+
+require "debug/debug_code"
+require "debug/debug_render_logger"
 
 require "processing/flightmode_transitions"
 require "processing/processing_flying"

@@ -13,13 +13,14 @@
 --https://github.com/jac3km4/redscript
 
 require "!src/core/color"
-require "!src/core/debug_code"
 require "!src/core/gameobj_accessor"
 require "!src/core/math_basic"
 require "!src/core/math_raycast"
 require "!src/core/math_vector"
 require "!src/core/math_yaw"
 require "!src/core/util"
+
+require "!src/debug/debug_code"
 
 require "!src/processing/recorder"
 

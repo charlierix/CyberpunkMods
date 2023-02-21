@@ -8,7 +8,6 @@
 --https://redscript.redmodding.org/
 
 require "core/color"
-require "core/debug_code"
 require "core/gameobj_accessor"
 require "core/lists"
 require "core/math_basic"
@@ -21,7 +20,9 @@ require "core/rollingbuffer"
 require "core/sticky_list"
 require "core/util"
 
-require "lib/unittests"
+require "debug/debug_code"
+require "debug/reporting"
+require "debug/unittests"
 
 require "processing/flightmode_transitions"
 require "processing/flightutil"
@@ -37,7 +38,6 @@ require "ui/input_actionMapper"
 require "ui/input_processing"
 require "ui/kdashinputtracker"
 require "ui/keys"
-require "ui/reporting"
 require "ui/sounds_wallhit"
 
 local this = {}
