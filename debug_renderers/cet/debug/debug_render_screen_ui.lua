@@ -1,0 +1,85 @@
+local DebugRenderScreen_UI = {}
+
+local this = {}
+
+function DebugRenderScreen_UI.DrawCanvas(visuals_circle, visuals_line)
+    local width, height = this.GetScreenInfo()
+    local center_x = width / 2
+    local center_y = height / 2
+
+    ImGui.SetNextWindowPos(0, 0, ImGuiCond.Always)
+    ImGui.SetNextWindowSize(width, height, ImGuiCond.Always)
+
+    if (ImGui.Begin("debug_canvas", true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoBackground)) then
+        for _, circle in ipairs(visuals_circle) do
+            local screen_x, screen_y = this.TransformToScreen(circle.center_x, circle.center_y, center_x, center_y)
+            this.Draw_Circle(screen_x, screen_y, circle.radius, circle.color_background, circle.color_border, circle.thickness)
+        end
+
+        -- for _, line in ipairs(visuals_line) do
+        --     this.Draw_Line()
+        -- end
+    end
+    ImGui.End()
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.Draw_Circle(center_x, center_y, radius, color_background, color_border, thickness)
+    --local numSegments = 13
+    local numSegments = -1      -- < 0 is an auto calculate
+
+    if color_background then
+        ImGui.ImDrawListAddCircleFilled(ImGui.GetWindowDrawList(), center_x, center_y, radius, color_background, numSegments)
+    end
+
+    if color_border then
+        ImGui.ImDrawListAddCircle(ImGui.GetWindowDrawList(), center_x, center_y, radius, color_border, numSegments, thickness)
+    end
+end
+
+function this.Draw_Line(x1, y1, x2, y2, color, thickness)
+    ImGui.ImDrawListAddLine(ImGui.GetWindowDrawList(), x1, y1, x2, y2, color, thickness)
+end
+
+function this.Draw_Triangle(x1, y1, x2, y2, x3, y3, color_background, color_border, thickness)
+    if color_background then
+        ImGui.ImDrawListAddTriangleFilled(ImGui.GetWindowDrawList(), x1, y1, x2, y2, x3, y3, color_background)
+    end
+
+    if color_border then
+        ImGui.ImDrawListAddTriangle(ImGui.GetWindowDrawList(), x1, y1, x2, y2, x3, y3, color_border, thickness)
+    end
+end
+
+function this.Draw_Text(center_x, center_y, text, color)
+    local width, height = ImGui.CalcTextSize(text, false, -1)
+
+    ImGui.PushStyleColor(ImGuiCol.Text, color)
+
+
+
+
+
+    ImGui.PopStyleColor(1)
+end
+
+-- Looks like scale isn't needed.  Everything draws fine without multiplying by it
+---@return integer screen_width, integer screen_height --, number scale
+function this.GetScreenInfo()
+    local width, height = GetDisplayResolution()
+    --local line_height = ImGui.GetTextLineHeight()
+
+    return
+        width,
+        height--,
+        --line_height / 18        -- it's 18 at a 1:1 scale, 36 on 4k (scale of 2)
+end
+
+function this.TransformToScreen(x, y, screen_half_x, screen_half_y)
+    return
+        screen_half_x + (x * screen_half_x),        -- just assuming that it's normalized -1 to 1.  Need to test if it depends on aspect ratio
+        screen_half_y + (-y * screen_half_y)
+end
+
+return DebugRenderScreen_UI

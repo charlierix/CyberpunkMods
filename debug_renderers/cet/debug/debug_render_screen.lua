@@ -4,6 +4,9 @@
 --  "FF8040" becomes "FFFF8040" (sort of a coral)
 --  "80FFFFFF" (50% transparent white)
 
+local frame = require "debug/debug_render_screen_frame"
+local ui = require "debug/debug_render_screen_ui"
+
 local DebugRenderScreen = {}
 
 local this = {}
@@ -47,7 +50,7 @@ function DebugRenderScreen.CallFrom_onUpdate(deltaTime)
 
     -- Go through items and populate visuals (only items that are in front of the camera).  Turns high level concepts
     -- like circle/square into line paths that match this frame's perspective
-    this.RebuildVisuals()
+    frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line)
 end
 
 -- It's up to the caller to only call this function in valid conditions (not in menus or workspots, not shutdown)
@@ -56,24 +59,7 @@ function DebugRenderScreen.CallFrom_onDraw()
         do return end
     end
 
-    local width, height, scale = this.GetScreenInfo()
-    local center_x = width / 2
-    local center_y = height / 2
-
-    ImGui.SetNextWindowPos(0, 0, ImGuiCond.Always)
-    ImGui.SetNextWindowSize(width, height, ImGuiCond.Always)
-
-    if (ImGui.Begin("debug_canvas", true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoBackground)) then
-        for _, circle in ipairs(visuals_circle) do
-            local screen_x, screen_y = this.TransformToScreen(circle.center_x, circle.center_y, center_x, center_y)
-            this.Draw_Circle(screen_x, screen_y, circle.radius, circle.color_background, circle.color_border, circle.thickness)
-        end
-
-        -- for _, line in ipairs(visuals_line) do
-        --     this.Draw_Line()
-        -- end
-    end
-    ImGui.End()
+    ui.DrawCanvas(visuals_circle, visuals_line)
 end
 
 ----------------------------------- Public Methods ------------------------------------
@@ -193,128 +179,6 @@ function this.RemoveExpiredItems()
             index = index + 1
         end
     end
-end
-
-function this.IsValidScreenPoint(point)
-    return not ((point.X == -1 or point.X == 1) and (point.Y == -1 or point.Y == 1))
-end
-
-function this.TransformToScreen(x, y, screen_half_x, screen_half_y)
-    return
-        screen_half_x + (x * screen_half_x),        -- just assuming that it's normalized -1 to 1.  Need to test if it depends on aspect ratio
-        screen_half_y + (-y * screen_half_y)
-end
-
---------------------------- Private Methods (Build Visuals) ---------------------------
-
-function this.ClearVisuals()
-    while #visuals_circle > 0 do
-        table.remove(visuals_circle, 1)
-    end
-
-    while #visuals_line > 0 do
-        table.remove(visuals_line, 1)
-    end
-end
-
-function this.RebuildVisuals()
-    this.ClearVisuals()
-
-    if not controller then      -- should never happen
-        do return end
-    end
-
-    for _, item in ipairs(items) do
-        if item.item_type == item_types.dot then
-            this.RebuildVisuals_Dot(item)
-        end
-    end
-end
-function this.RebuildVisuals_Dot(item)
-    local point = controller:ProjectWorldToScreen(item.position)
-
-    if not this.IsValidScreenPoint(point) then
-        do return end
-    end
-
-    local size_mult = 1
-    if item.size_mult then
-        size_mult = item.size_mult
-    end
-
-    local visual =
-    {
-        color_background = this.GetColor_ABGR(item.color),
-        color_border = nil,
-        thickness = nil,
-        center_x = point.X,
-        center_y = point.Y,
-        radius = 6 * size_mult,
-    }
-
-    table.insert(visuals_circle, visual)
-end
-
-function this.GetColor_ABGR(color)
-    if not color then
-        local magenta = ConvertHexStringToNumbers_Magenta()
-        return magenta
-    end
-
-    local _, color_abgr = ConvertHexStringToNumbers()
-    return color_abgr
-end
-
-------------------------------- Private Methods (ImGui) -------------------------------
-
-function this.Draw_Circle(center_x, center_y, radius, color_background, color_border, thickness)
-    --local numSegments = 13
-    local numSegments = -1      -- < 0 is an auto calculate
-
-    if color_background then
-        ImGui.ImDrawListAddCircleFilled(ImGui.GetWindowDrawList(), center_x, center_y, radius, color_background, numSegments)
-    end
-
-    if color_border then
-        ImGui.ImDrawListAddCircle(ImGui.GetWindowDrawList(), center_x, center_y, radius, color_border, numSegments, thickness)
-    end
-end
-
-function this.Draw_Line(x1, y1, x2, y2, color, thickness)
-    ImGui.ImDrawListAddLine(ImGui.GetWindowDrawList(), x1, y1, x2, y2, color, thickness)
-end
-
-function this.Draw_Triangle(x1, y1, x2, y2, x3, y3, color_background, color_border, thickness)
-    if color_background then
-        ImGui.ImDrawListAddTriangleFilled(ImGui.GetWindowDrawList(), x1, y1, x2, y2, x3, y3, color_background)
-    end
-
-    if color_border then
-        ImGui.ImDrawListAddTriangle(ImGui.GetWindowDrawList(), x1, y1, x2, y2, x3, y3, color_border, thickness)
-    end
-end
-
-function this.Draw_Text(center_x, center_y, text, color)
-    local width, height = ImGui.CalcTextSize(text, false, -1)
-
-    ImGui.PushStyleColor(ImGuiCol.Text, color)
-
-
-
-
-
-    ImGui.PopStyleColor(1)
-end
-
----@return integer screen_width, integer screen_height, number scale
-function this.GetScreenInfo()
-    local width, height = GetDisplayResolution()
-    local line_height = ImGui.GetTextLineHeight()
-
-    return
-        width,
-        height,
-        line_height / 18        -- it's 18 at a 1:1 scale, 36 on 4k (scale of 2)
 end
 
 return DebugRenderScreen
