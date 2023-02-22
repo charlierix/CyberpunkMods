@@ -12,10 +12,58 @@
 
 --https://github.com/jac3km4/redscript
 
-require "debug_render_logger"
+require "core/color"
+require "core/util"
+
+require "debug/debug_render_logger"
+local debug_render_screen = require "debug/debug_render_screen"
+
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable
 
-registerHotkey("DebugRenderLoggerTestKey", "tester hotkey", function()
+local this = {}
+
+local isShutdown = true
+local isLoaded = false
+local shouldDraw = false
+
+registerForEvent("onInit", function()
+    debug_render_screen.CallFrom_onInit(true)
+
+    isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
+
+    Observe('QuestTrackerGameController', 'OnInitialize', function()
+        isLoaded = true
+    end)
+
+    Observe('QuestTrackerGameController', 'OnUninitialize', function()
+        if Game.GetPlayer() == nil then
+            isLoaded = false
+        end
+    end)
+
+    isShutdown = false
+end)
+
+registerForEvent("onShutdown", function()
+    isShutdown = true
+end)
+
+registerForEvent("onUpdate", function(deltaTime)
+    shouldDraw = false
+    if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
+        do return end
+    end
+
+    if Game.GetWorkspotSystem():IsActorInWorkspot(Game.GetPlayer()) then      -- in a vehicle
+        do return end
+    end
+
+    shouldDraw = true
+
+    debug_render_screen.CallFrom_onUpdate(deltaTime)
+end)
+
+registerHotkey("DebugRenderers_Log", "test logger", function()
 
     --NOTE: Be sure to add a folder "!logs" (or change the constant at the top of the logger class)
 
@@ -52,4 +100,24 @@ registerHotkey("DebugRenderLoggerTestKey", "tester hotkey", function()
     log:WriteLine_Global("finished", nil, 0.5)
 
     log:Save()
+end)
+
+registerHotkey('DebugRenderers_Screen', 'test screen', function()
+    local player = Game.GetPlayer()
+    local targeting = Game.GetTargetingSystem()
+
+    local position, direction = targeting:GetDefaultCrosshairData(player)
+
+    local dist = 2
+    local forward = Vector4.new(position.x + (direction.x * dist), position.y + (direction.y * dist), position.z + (direction.z * dist), 1)
+
+    debug_render_screen.Add_Dot(forward, nil, nil, 2.5, 30)
+end)
+
+registerForEvent("onDraw", function()
+    if isShutdown or not isLoaded or not shouldDraw then
+        do return end
+    end
+
+    debug_render_screen.CallFrom_onDraw()
 end)
