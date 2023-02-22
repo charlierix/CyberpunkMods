@@ -8,6 +8,7 @@ local this = {}
 --
 -- Returns:
 --  full int:  This is an int built from 0xAARRGGBB (this is how imgui's draw functions want color)
+--  full int:  0xAABBGGRR
 --  a float:   alpha from 0 to 1 (this is how imgui's other functions want color)
 --  r float
 --  g float
@@ -75,7 +76,7 @@ function ConvertHexStringToNumbers(hex)
     end
 
     return
-        tonumber("0x" .. a .. r .. g .. b),     --NOTE: gmgui_draw.cpp rectangle uses this ARGB (maybe others), all other functions I've seen use AGBR
+        tonumber("0x" .. a .. r .. g .. b),     --NOTE: gmgui_draw.cpp rectangle uses this ARGB (maybe others), all other functions I've seen use ABGR
         tonumber("0x" .. a .. b .. g .. r),
         num_a / 255,
         num_r / 255,
