@@ -1,5 +1,7 @@
 local this = {}
 
+local circlePoints_byCount = {}
+
 function vec_str(vector)
     if not vector then
         return "nil"
@@ -352,6 +354,18 @@ function AddAngle_neg180_pos180(current, delta)
     return this.AddAngle(current, delta, -180, 180)
 end
 
+-- Returns an array of Vector2
+-- NOTE: Vector2 has X,Y capitalized.  Vector4 is lower case
+function GetCircle_Cached(num_sides)
+    local key = "sides" .. tostring(num_sides)
+
+    if not circlePoints_byCount[key] then
+        circlePoints_byCount[key] = this.GetCirclePoints(num_sides)
+    end
+
+    return circlePoints_byCount[key]
+end
+
 ------------------------------------ Intersection -------------------------------------
 
 -- Calculates the intersection line segment between 2 lines (not segments).
@@ -605,4 +619,19 @@ function this.AddAngle(current, delta, min, max)
     end
 
     return retVal
+end
+
+function this.GetCirclePoints(num_sides)
+    local delta_theta = 2 * math.pi / num_sides
+    local theta = 0
+
+    local points = {}       -- these define a unit circle
+
+    for i = 1, num_sides, 1 do
+        table.insert(points, Vector2.new({ X = math.cos(theta), Y = math.sin(theta)}))
+
+        theta = theta + delta_theta;
+    end
+
+    return points
 end

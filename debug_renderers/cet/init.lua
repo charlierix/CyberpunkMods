@@ -19,6 +19,7 @@ require "core/util"
 
 require "debug/debug_render_logger"
 local debug_render_screen = require "debug/debug_render_screen"
+require "debug/reporting"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable
 
@@ -133,6 +134,24 @@ registerHotkey('DebugRenderers_Screen2', 'screen line', function()
     debug_render_screen.Add_Line(point1, point2, nil, "FFF", nil, nil, 30)
     debug_render_screen.Add_Dot(point1, nil, "F00", nil, nil, 30)
     debug_render_screen.Add_Dot(point2, nil, "0F0", nil, nil, 30)
+end)
+
+registerHotkey('DebugRenderers_Screen3', 'screen circle', function()
+    local player = Game.GetPlayer()
+    local targeting = Game.GetTargetingSystem()
+
+    local position, direction = targeting:GetDefaultCrosshairData(player)
+
+    local dist = 2 + math.random() * 16
+    local forward = Vector4.new(position.x + (direction.x * dist), position.y + (direction.y * dist), position.z + (direction.z * dist), 1)
+
+    local radius = 0.05 + math.random() * 2
+
+    local normal = GetRandomVector_Spherical_Shell(1)
+
+    local color = GetRandomColor_RGB1_ToHex(0.4, 0.8)
+
+    debug_render_screen.Add_Circle(forward, normal, radius, nil, color, 16, nil, 30)
 end)
 
 registerForEvent("onDraw", function()

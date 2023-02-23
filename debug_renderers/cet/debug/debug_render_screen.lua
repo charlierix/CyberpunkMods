@@ -22,6 +22,8 @@ local items = {}
 local visuals_circle = {}
 local visuals_line = {}
 
+local up = nil
+
 local is_enabled = false
 
 --------------------------------- Called From Events ----------------------------------
@@ -105,7 +107,6 @@ function DebugRenderScreen.Add_Dot(position, category, color, size_mult, const_s
 
     return item
 end
-
 function DebugRenderScreen.Add_Line(point1, point2, category, color, size_mult, const_size, lifespan_seconds)
     if not is_enabled then
         return nil
@@ -119,6 +120,24 @@ function DebugRenderScreen.Add_Line(point1, point2, category, color, size_mult, 
     table.insert(items, item)
 
     return item
+end
+function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, size_mult, const_size, lifespan_seconds)
+    if not is_enabled then
+        return nil
+    end
+
+    -- Turn the circle into lines
+    -- NOTE: if the player starts far away, then walks close the circle, then the num sides will be too small.  But it's not worth
+    -- the expense of converting to lines every frame for that edge case
+    local num_sides = this.GetCircleNumSides(center, radius)
+
+    local points = this.GetCirclePoints(center, radius, normal, num_sides)
+
+    for i = 1, #points - 1, 1 do
+        DebugRenderScreen.Add_Line(points[i], points[i + 1], categories, color, size_mult, const_size, lifespan_seconds)
+    end
+
+    DebugRenderScreen.Add_Line(points[#points], points[1], categories, color, size_mult, const_size, lifespan_seconds)
 end
 
 ---@param item table This is an item that was returned by one of the add functions
@@ -197,6 +216,47 @@ function this.RemoveExpiredItems()
             index = index + 1
         end
     end
+end
+
+function this.GetCircleNumSides(center, radius)
+    local distance = math.sqrt(GetVectorDiffLengthSqr(Game.GetPlayer():GetWorldPosition(), center))
+    if IsNearZero(distance) then
+        distance = 0.01
+    end
+    local size = radius / distance
+
+    local min_sides = 11
+    local max_sides = 40
+    local num_sides = Round(GetScaledValue(min_sides, max_sides, 0.01, 0.1, size), 0)
+    num_sides = Clamp(min_sides, max_sides, num_sides)
+
+    -- print("radius: " .. tostring(radius))
+    -- print("distance: " .. tostring(distance))
+    -- print("size: " .. tostring(size))
+    -- print("num sides: " .. tostring(num_sides))
+
+    return num_sides
+end
+
+function this.GetCirclePoints(center, radius, normal, num_sides)
+    if not up then
+        up = Vector4.new(0, 0, 1, 1)
+    end
+
+    local quat = GetRotation(up, ToUnit(normal))
+
+    local points2D = GetCircle_Cached(num_sides)
+
+    local retVal = {}
+
+    for _, point2D in ipairs(points2D) do
+        local offset = Vector4.new(point2D.X * radius, point2D.Y * radius, 0, 1)
+        offset = RotateVector3D(offset, quat)
+
+        table.insert(retVal, AddVectors(center, offset))
+    end
+
+    return retVal
 end
 
 return DebugRenderScreen
