@@ -2,7 +2,7 @@ local DebugRenderScreen_Frame = {}
 
 local MIN_SIZE = 0.05                -- don't bother drawing items smaller than this
 local DOT_RADIUS = 18
-local LINE_THICKNESS = 1
+local LINE_THICKNESS = 2
 local THICKNESS_EPSILON = 0.5
 local LINE_DIST_EPSILON = 0.05      -- this is world distance, it tells when to stop trying smaller line splits
 local MAX_RECURSE_VV = 4

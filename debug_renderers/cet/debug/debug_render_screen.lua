@@ -94,7 +94,7 @@ end
 -- Category and after are all optional.  If a category is passed in, then the item will use that
 -- category's values, unless overridden in the add method call
 ---@param position Vector4
----@return table? Item Use this if you want to modify a value after creation (like position)
+---@return integer id Pass this to the remove function
 function DebugRenderScreen.Add_Dot(position, category, color, size_mult, const_size, lifespan_seconds)
     if not is_enabled then
         return nil
@@ -106,7 +106,7 @@ function DebugRenderScreen.Add_Dot(position, category, color, size_mult, const_s
 
     table.insert(items, item)
 
-    return item
+    return item.id
 end
 function DebugRenderScreen.Add_Line(point1, point2, category, color, size_mult, const_size, lifespan_seconds)
     if not is_enabled then
@@ -120,7 +120,7 @@ function DebugRenderScreen.Add_Line(point1, point2, category, color, size_mult, 
 
     table.insert(items, item)
 
-    return item
+    return item.id
 end
 function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, size_mult, const_size, lifespan_seconds)
     if not is_enabled then
@@ -129,7 +129,7 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, s
 
     -- The default line thickness is too thin for a circle.  Use a larger value if there is nothing specified
     if not ((category and categories[category].size_mult) or size_mult) then
-        size_mult = 16
+        size_mult = 8
     end
 
     -- Turn the circle into lines
@@ -139,38 +139,81 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, s
 
     local points = this.GetCirclePoints(center, radius, normal, num_sides)
 
+    local id = this.GetNextID()
+
     for i = 1, #points - 1, 1 do
-        DebugRenderScreen.Add_Line(points[i], points[i + 1], category, color, size_mult, const_size, lifespan_seconds)
+        local item = this.GetItemBase(item_types.line, category, color, size_mult, const_size, lifespan_seconds, id)
+
+        item.point1 = points[i]
+        item.point2 = points[i + 1]
+
+        table.insert(items, item)
     end
 
-    DebugRenderScreen.Add_Line(points[#points], points[1], category, color, size_mult, const_size, lifespan_seconds)
+    local item = this.GetItemBase(item_types.line, category, color, size_mult, const_size, lifespan_seconds, id)
+
+    item.point1 = points[#points]
+    item.point2 = points[1]
+
+    table.insert(items, item)
+
+    return id
 end
-function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color, lifespan_seconds)
+-- size_mult and const_size refer to line thickness, which is only used if color_fore is populated
+function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_back, color_fore, size_mult, const_size, lifespan_seconds)
     if not is_enabled then
         return nil
     end
 
-    local item = this.GetItemBase(item_types.triangle, category, color, nil, nil, lifespan_seconds)
+    local id = this.GetNextID()
 
-    item.point1 = point1
-    item.point2 = point2
-    item.point3 = point3
+    if color_back then
+        local item = this.GetItemBase(item_types.triangle, category, color_back, nil, nil, lifespan_seconds, id)
 
-    table.insert(items, item)
+        item.point1 = point1
+        item.point2 = point2
+        item.point3 = point3
 
-    return item
+        table.insert(items, item)
+    end
+
+    if color_fore then
+        if not ((category and categories[category].size_mult) or size_mult) then
+            size_mult = 8
+        end
+
+        local item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        item.point1 = point1
+        item.point2 = point2
+        table.insert(items, item)
+
+        item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        item.point1 = point2
+        item.point2 = point3
+        table.insert(items, item)
+
+        item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        item.point1 = point3
+        item.point2 = point1
+        table.insert(items, item)
+    end
+
+    return id
 end
 
----@param item table This is an item that was returned by one of the add functions
-function DebugRenderScreen.Remove(item)
+---@param id integer This is the id from one of the add functions
+function DebugRenderScreen.Remove(id)
     if not is_enabled then
         do return end
     end
 
-    for i = 1, #items, 1 do
-        if items[i].id == item.id then
-            table.remove(items, i)
-            do return end       -- no need to keep scanning, there should never be duplicate IDs
+    local index = 1
+
+    while index <= #items do        -- there can be multiple items tied to the same id, so need to scan the whole list
+        if items[index].id == id then
+            table.remove(items, index)
+        else
+            index = index + 1
         end
     end
 end
@@ -188,7 +231,8 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.GetItemBase(item_type, category, color, size_mult, const_size, lifespan_seconds)
+-- id is optional.  Pass it in if multiple entries need to be tied to the same id
+function this.GetItemBase(item_type, category, color, size_mult, const_size, lifespan_seconds, id)
     -- Populate from category if there is one.  If explicit values are passed in, they override category's definition
     if category then
         for i = 1, #categories, 1 do
@@ -208,9 +252,13 @@ function this.GetItemBase(item_type, category, color, size_mult, const_size, lif
         end
     end
 
+    if not id then
+        id = this.GetNextID()
+    end
+
     return
     {
-        id = this.GetNextID(),
+        id = id,
         create_time = timer,
 
         item_type = item_type,

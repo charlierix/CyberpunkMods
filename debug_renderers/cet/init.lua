@@ -167,14 +167,19 @@ registerHotkey('DebugRenderers_Screen4', 'screen triangle', function()
     local point2 = AddVectors(forward, GetRandomVector_Spherical(0.25, 4))
     local point3 = AddVectors(forward, GetRandomVector_Spherical(0.25, 4))
 
-    local color = nil
+    local color_back = nil
     if math.random(2) == 1 then
-        color = GetRandomColor_RGB1_ToHex(0.5, 1)
+        color_back = GetRandomColor_RGB1_ToHex(0.5, 1)
     else
-        color = GetRandomColor_RGB1_ToHex(0.5, 1, 0.4, 0.8)
+        color_back = GetRandomColor_RGB1_ToHex(0.5, 1, 0.4, 0.8)
     end
 
-    debug_render_screen.Add_Triangle(point1, point2, point3, nil, color, 30)
+    local color_fore = nil
+    if math.random(2) == 1 then
+        color_fore = GetRandomColor_RGB1_ToHex(0.25, 0.75)
+    end
+
+    debug_render_screen.Add_Triangle(point1, point2, point3, nil, color_back, color_fore, nil, nil, 30)
 end)
 
 registerForEvent("onDraw", function()
