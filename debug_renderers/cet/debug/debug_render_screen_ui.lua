@@ -16,9 +16,11 @@ function DebugRenderScreen_UI.DrawCanvas(visuals_circle, visuals_line)
             this.Draw_Circle(screen_x, screen_y, circle.radius, circle.color_background, circle.color_border, circle.thickness)
         end
 
-        -- for _, line in ipairs(visuals_line) do
-        --     this.Draw_Line()
-        -- end
+        for _, line in ipairs(visuals_line) do
+            local screen_x1, screen_y1 = this.TransformToScreen(line.x1, line.y1, center_x, center_y)
+            local screen_x2, screen_y2 = this.TransformToScreen(line.x2, line.y2, center_x, center_y)
+            this.Draw_Line(screen_x1, screen_y1, screen_x2, screen_y2, line.color, line.thickness)
+        end
     end
     ImGui.End()
 end

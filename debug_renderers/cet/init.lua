@@ -13,6 +13,8 @@
 --https://github.com/jac3km4/redscript
 
 require "core/color"
+require "core/math_basic"
+require "core/math_vector"
 require "core/util"
 
 require "debug/debug_render_logger"
@@ -27,6 +29,8 @@ local isLoaded = false
 local shouldDraw = false
 
 registerForEvent("onInit", function()
+    InitializeRandom()
+
     debug_render_screen.CallFrom_onInit(true)
 
     isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
@@ -102,7 +106,7 @@ registerHotkey("DebugRenderers_Log", "test logger", function()
     log:Save()
 end)
 
-registerHotkey('DebugRenderers_Screen', 'test screen', function()
+registerHotkey('DebugRenderers_Screen1', 'screen dot', function()
     local player = Game.GetPlayer()
     local targeting = Game.GetTargetingSystem()
 
@@ -111,7 +115,24 @@ registerHotkey('DebugRenderers_Screen', 'test screen', function()
     local dist = 2
     local forward = Vector4.new(position.x + (direction.x * dist), position.y + (direction.y * dist), position.z + (direction.z * dist), 1)
 
-    debug_render_screen.Add_Dot(forward, nil, nil, 2.5, 30)
+    debug_render_screen.Add_Dot(forward, nil, nil, nil, nil, 30)
+end)
+
+registerHotkey('DebugRenderers_Screen2', 'screen line', function()
+    local player = Game.GetPlayer()
+    local targeting = Game.GetTargetingSystem()
+
+    local position, direction = targeting:GetDefaultCrosshairData(player)
+
+    local dist = 6
+    local forward = Vector4.new(position.x + (direction.x * dist), position.y + (direction.y * dist), position.z + (direction.z * dist), 1)
+
+    local point1 = AddVectors(forward, GetRandomVector_Spherical(0.25, 6))
+    local point2 = AddVectors(forward, GetRandomVector_Spherical(0.25, 6))
+
+    debug_render_screen.Add_Line(point1, point2, nil, "FFF", nil, nil, 30)
+    debug_render_screen.Add_Dot(point1, nil, "F00", nil, nil, 30)
+    debug_render_screen.Add_Dot(point2, nil, "0F0", nil, nil, 30)
 end)
 
 registerForEvent("onDraw", function()
