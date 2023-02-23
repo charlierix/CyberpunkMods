@@ -11,8 +11,8 @@ local MAX_RECURSE_VI = 8
 local this = {}
 
 -- Looks at the high level 3D items, creates 2D circles/lines/triangles that will be shown in the draw event
-function DebugRenderScreen_Frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line)
-    this.ClearVisuals(visuals_circle, visuals_line)
+function DebugRenderScreen_Frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line, visuals_triangle)
+    this.ClearVisuals(visuals_circle, visuals_line, visuals_triangle)
 
     if not controller or #items == 0 then      -- controller should always be populated (unless there's a reload cet mods, then loading a prevous save is required)
         do return end
@@ -26,21 +26,14 @@ function DebugRenderScreen_Frame.RebuildVisuals(controller, items, item_types, v
 
         elseif item.item_type == item_types.line then
             this.Line(controller, item, visuals_line, pos, dir)
+
+        elseif item.item_type == item_types.triangle then
+            this.Triangle(controller, item, visuals_triangle, pos, dir)
         end
     end
 end
 
------------------------------------ Private Methods -----------------------------------
-
-function this.ClearVisuals(visuals_circle, visuals_line)
-    while #visuals_circle > 0 do
-        table.remove(visuals_circle, 1)
-    end
-
-    while #visuals_line > 0 do
-        table.remove(visuals_line, 1)
-    end
-end
+-------------------------------- Private Methods (Dot) --------------------------------
 
 function this.Dot(controller, item, visuals_circle, pos)
     local point = controller:ProjectWorldToScreen(item.position)
@@ -71,6 +64,8 @@ function this.Dot(controller, item, visuals_circle, pos)
 
     table.insert(visuals_circle, visual)
 end
+
+-------------------------------- Private Methods (Line) -------------------------------
 
 function this.Line(controller, item, visuals_line, pos, dir)
     local point1 = controller:ProjectWorldToScreen(item.point1)
@@ -174,6 +169,53 @@ function this.Line_Commit(item, visuals_line, point2D_1, point2D_2, thickness1, 
     }
 
     table.insert(visuals_line, visual)
+end
+
+------------------------------ Private Methods (Triangle) -----------------------------
+
+function this.Triangle(controller, item, visuals_triangle, pos, dir)
+    local point1 = controller:ProjectWorldToScreen(item.point1)
+    local isValid1 = this.IsValidScreenPoint(point1)
+
+    local point2 = controller:ProjectWorldToScreen(item.point2)
+    local isValid2 = this.IsValidScreenPoint(point2)
+
+    local point3 = controller:ProjectWorldToScreen(item.point3)
+    local isValid3 = this.IsValidScreenPoint(point3)
+
+    --TODO: handle partial off screen
+    --ImGui supports a polygon, but it takes an array of vector2 and I think cet handles that funny
+
+    if isValid1 and isValid2 and isValid3 then
+        local visual =
+        {
+            x1 = point1.X,
+            y1 = point1.Y,
+            x2 = point2.X,
+            y2 = point2.Y,
+            x3 = point3.X,
+            y3 = point3.Y,
+            color = this.GetColor_ABGR(item.color),
+        }
+
+        table.insert(visuals_triangle, visual)
+    end
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.ClearVisuals(visuals_circle, visuals_line, visuals_triangle)
+    while #visuals_circle > 0 do
+        table.remove(visuals_circle, 1)
+    end
+
+    while #visuals_line > 0 do
+        table.remove(visuals_line, 1)
+    end
+
+    while #visuals_triangle > 0 do
+        table.remove(visuals_triangle, 1)
+    end
 end
 
 function this.GetColor_ABGR(color)

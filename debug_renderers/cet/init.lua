@@ -154,6 +154,29 @@ registerHotkey('DebugRenderers_Screen3', 'screen circle', function()
     debug_render_screen.Add_Circle(forward, normal, radius, nil, color, nil, nil, 30)
 end)
 
+registerHotkey('DebugRenderers_Screen4', 'screen triangle', function()
+    local player = Game.GetPlayer()
+    local targeting = Game.GetTargetingSystem()
+
+    local position, direction = targeting:GetDefaultCrosshairData(player)
+
+    local dist = 2 + math.random() * 6
+    local forward = Vector4.new(position.x + (direction.x * dist), position.y + (direction.y * dist), position.z + (direction.z * dist), 1)
+
+    local point1 = AddVectors(forward, GetRandomVector_Spherical(0.25, 4))
+    local point2 = AddVectors(forward, GetRandomVector_Spherical(0.25, 4))
+    local point3 = AddVectors(forward, GetRandomVector_Spherical(0.25, 4))
+
+    local color = nil
+    if math.random(2) == 1 then
+        color = GetRandomColor_RGB1_ToHex(0.5, 1)
+    else
+        color = GetRandomColor_RGB1_ToHex(0.5, 1, 0.4, 0.8)
+    end
+
+    debug_render_screen.Add_Triangle(point1, point2, point3, nil, color, 30)
+end)
+
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then
         do return end

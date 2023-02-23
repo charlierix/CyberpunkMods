@@ -13,7 +13,7 @@ local this = {}
 
 local next_id = 0
 local timer = 0
-local item_types = CreateEnum("dot", "line", "circle", "rectangle", "text")
+local item_types = CreateEnum("dot", "line", "circle", "triangle", "rectangle", "text")
 
 local controller = nil
 
@@ -21,6 +21,7 @@ local categories = {}
 local items = {}
 local visuals_circle = {}
 local visuals_line = {}
+local visuals_triangle = {}
 
 local up = nil
 
@@ -53,15 +54,15 @@ function DebugRenderScreen.CallFrom_onUpdate(deltaTime)
 
     -- Go through items and populate visuals (only items that are in front of the camera).  Turns high level concepts
     -- like circle/square into line paths that match this frame's perspective
-    frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line)
+    frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line, visuals_triangle)
 end
 
 function DebugRenderScreen.CallFrom_onDraw()
-    if not is_enabled or (#visuals_circle == 0 and #visuals_line == 0) then
+    if not is_enabled or (#visuals_circle == 0 and #visuals_line == 0 and #visuals_triangle == 0) then
         do return end
     end
 
-    ui.DrawCanvas(visuals_circle, visuals_line)
+    ui.DrawCanvas(visuals_circle, visuals_line, visuals_triangle)
 end
 
 ----------------------------------- Public Methods ------------------------------------
@@ -143,6 +144,21 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, s
     end
 
     DebugRenderScreen.Add_Line(points[#points], points[1], category, color, size_mult, const_size, lifespan_seconds)
+end
+function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color, lifespan_seconds)
+    if not is_enabled then
+        return nil
+    end
+
+    local item = this.GetItemBase(item_types.triangle, category, color, nil, nil, lifespan_seconds)
+
+    item.point1 = point1
+    item.point2 = point2
+    item.point3 = point3
+
+    table.insert(items, item)
+
+    return item
 end
 
 ---@param item table This is an item that was returned by one of the add functions

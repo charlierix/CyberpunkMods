@@ -2,7 +2,7 @@ local DebugRenderScreen_UI = {}
 
 local this = {}
 
-function DebugRenderScreen_UI.DrawCanvas(visuals_circle, visuals_line)
+function DebugRenderScreen_UI.DrawCanvas(visuals_circle, visuals_line, visuals_triangle)
     local width, height = this.GetScreenInfo()
     local center_x = width / 2
     local center_y = height / 2
@@ -12,14 +12,21 @@ function DebugRenderScreen_UI.DrawCanvas(visuals_circle, visuals_line)
 
     if (ImGui.Begin("debug_canvas", true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoBackground)) then
         for _, circle in ipairs(visuals_circle) do
-            local screen_x, screen_y = this.TransformToScreen(circle.center_x, circle.center_y, center_x, center_y)
-            this.Draw_Circle(screen_x, screen_y, circle.radius, circle.color_background, circle.color_border, circle.thickness)
+            local x, y = this.TransformToScreen(circle.center_x, circle.center_y, center_x, center_y)
+            this.Draw_Circle(x, y, circle.radius, circle.color_background, circle.color_border, circle.thickness)
         end
 
         for _, line in ipairs(visuals_line) do
-            local screen_x1, screen_y1 = this.TransformToScreen(line.x1, line.y1, center_x, center_y)
-            local screen_x2, screen_y2 = this.TransformToScreen(line.x2, line.y2, center_x, center_y)
-            this.Draw_Line(screen_x1, screen_y1, screen_x2, screen_y2, line.color, line.thickness)
+            local x1, y1 = this.TransformToScreen(line.x1, line.y1, center_x, center_y)
+            local x2, y2 = this.TransformToScreen(line.x2, line.y2, center_x, center_y)
+            this.Draw_Line(x1, y1, x2, y2, line.color, line.thickness)
+        end
+
+        for _, triangle in ipairs(visuals_triangle) do
+            local x1, y1 = this.TransformToScreen(triangle.x1, triangle.y1, center_x, center_y)
+            local x2, y2 = this.TransformToScreen(triangle.x2, triangle.y2, center_x, center_y)
+            local x3, y3 = this.TransformToScreen(triangle.x3, triangle.y3, center_x, center_y)
+            this.Draw_Triangle(x1, y1, x2, y2, x3, y3, triangle.color, nil, nil)
         end
     end
     ImGui.End()
