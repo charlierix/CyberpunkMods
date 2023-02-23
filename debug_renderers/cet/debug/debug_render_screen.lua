@@ -126,6 +126,11 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, s
         return nil
     end
 
+    -- The default line thickness is too thin for a circle.  Use a larger value if there is nothing specified
+    if not ((category and categories[category].size_mult) or size_mult) then
+        size_mult = 16
+    end
+
     -- Turn the circle into lines
     -- NOTE: if the player starts far away, then walks close the circle, then the num sides will be too small.  But it's not worth
     -- the expense of converting to lines every frame for that edge case
@@ -134,10 +139,10 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, s
     local points = this.GetCirclePoints(center, radius, normal, num_sides)
 
     for i = 1, #points - 1, 1 do
-        DebugRenderScreen.Add_Line(points[i], points[i + 1], categories, color, size_mult, const_size, lifespan_seconds)
+        DebugRenderScreen.Add_Line(points[i], points[i + 1], category, color, size_mult, const_size, lifespan_seconds)
     end
 
-    DebugRenderScreen.Add_Line(points[#points], points[1], categories, color, size_mult, const_size, lifespan_seconds)
+    DebugRenderScreen.Add_Line(points[#points], points[1], category, color, size_mult, const_size, lifespan_seconds)
 end
 
 ---@param item table This is an item that was returned by one of the add functions

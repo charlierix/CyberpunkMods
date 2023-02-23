@@ -5,7 +5,8 @@ local DOT_RADIUS = 18
 local LINE_THICKNESS = 1
 local THICKNESS_EPSILON = 0.5
 local LINE_DIST_EPSILON = 0.05      -- this is world distance, it tells when to stop trying smaller line splits
-local MAX_RECURSE = 8
+local MAX_RECURSE_VV = 4
+local MAX_RECURSE_VI = 8
 
 local this = {}
 
@@ -99,12 +100,12 @@ function this.Line(controller, item, visuals_line, pos, dir)
         this.Line_Valid_Invalid(item.point1, item.point2, point1, controller, item, visuals_line, pos, 0)
 
     else
-        this.Line_Valid_Valid(item.point1, item.point2, point1, point2, controller, item, visuals_line, pos)
+        this.Line_Valid_Valid(item.point1, item.point2, point1, point2, controller, item, visuals_line, pos, nil, nil, 0)
     end
 end
 
 -- thickness params are optional
-function this.Line_Valid_Valid(point3D_1, point3D_2, point2D_1, point2D_2, controller, item, visuals_line, pos, thickness1, thickness2)
+function this.Line_Valid_Valid(point3D_1, point3D_2, point2D_1, point2D_2, controller, item, visuals_line, pos, thickness1, thickness2, recurse_count)
     if not thickness1 then
         thickness1 = LINE_THICKNESS * this.GetSizeMult(item, pos, point3D_1)
     end
@@ -117,7 +118,7 @@ function this.Line_Valid_Valid(point3D_1, point3D_2, point2D_1, point2D_2, contr
         do return end
     end
 
-    if math.abs(thickness1 - thickness2) <= THICKNESS_EPSILON then
+    if math.abs(thickness1 - thickness2) <= THICKNESS_EPSILON or recurse_count > MAX_RECURSE_VV then
         this.Line_Commit(item, visuals_line, point2D_1, point2D_2, thickness1, thickness2)
         do return end
     end
@@ -126,13 +127,18 @@ function this.Line_Valid_Valid(point3D_1, point3D_2, point2D_1, point2D_2, contr
     local point2D_mid = controller:ProjectWorldToScreen(point3D_mid)
 
     -- Recurse
-    this.Line_Valid_Valid(point3D_1, point3D_mid, point2D_1, point2D_mid, controller, item, visuals_line, pos, thickness1, nil)
-    this.Line_Valid_Valid(point3D_2, point3D_mid, point2D_2, point2D_mid, controller, item, visuals_line, pos, thickness2, nil)
+    this.Line_Valid_Valid(point3D_1, point3D_mid, point2D_1, point2D_mid, controller, item, visuals_line, pos, thickness1, nil, recurse_count + 1)
+    this.Line_Valid_Valid(point3D_2, point3D_mid, point2D_2, point2D_mid, controller, item, visuals_line, pos, thickness2, nil, recurse_count + 1)
 end
 
 function this.Line_Valid_Invalid(point3D_valid, point3D_invalid, point2D_valid, controller, item, visuals_line, pos, recurse_count)
-    if recurse_count > MAX_RECURSE then
+    if recurse_count > MAX_RECURSE_VI then
         do return end
+    end
+
+    if not this.IsValidScreenPoint(point2D_valid) then
+        print("Line_Valid_Invalid: off screen")
+        do return end       -- no need to refine further, this line is starting off screen
     end
 
     local dist_sqr = GetVectorDiffLengthSqr(point3D_valid, point3D_invalid)
@@ -144,7 +150,7 @@ function this.Line_Valid_Invalid(point3D_valid, point3D_invalid, point2D_valid, 
     local point2D_mid = controller:ProjectWorldToScreen(point3D_mid)
 
     if this.IsValidScreenPoint(point2D_mid) then
-        this.Line_Valid_Valid(point3D_valid, point3D_mid, point2D_valid, point2D_mid, controller, item, visuals_line, pos)
+        this.Line_Valid_Valid(point3D_valid, point3D_mid, point2D_valid, point2D_mid, controller, item, visuals_line, pos, nil, nil, 0)
         this.Line_Valid_Invalid(point3D_mid, point3D_invalid, point2D_mid, controller, item, visuals_line, pos, recurse_count + 1)
     else
         this.Line_Valid_Invalid(point3D_valid, point3D_mid, point2D_valid, controller, item, visuals_line, pos, recurse_count + 1)
@@ -206,17 +212,24 @@ function this.GetPerspectiveMult(pos, test_point)
     return 1 / math.sqrt(dist_sqr)
 end
 
-function this.IsValidScreenPoint(point)
+function this.IsOnScreen(point2D)
+    if not this.IsValidScreenPoint(point2D) then
+        return false
+    else
+        return math.abs(point2D.X) <= 1 and math.abs(point2D.Y) <= 1
+    end
+end
+function this.IsValidScreenPoint(point2D)
     -- if not point or not point.X or not point.Y then      -- should never get nil
     --     return false
 
-    if math.abs(point.X) > 9 or math.abs(point.Y) > 9 then      -- 
+    if math.abs(point2D.X) > 9 or math.abs(point2D.Y) > 9 then
         -- Any value over 1 is off screen, but it's useful for lines that end off screen.  The number can get
         -- larger, but lines between on screen and way off screen were jerking around (probably some kind of
         -- fishbowl effect)
         return false
 
-    elseif (point.X == -1 or point.X == 1) and (point.Y == -1 or point.Y == 1) then
+    elseif (point2D.X == -1 or point2D.X == 1) and (point2D.Y == -1 or point2D.Y == 1) then
         return false
 
     else

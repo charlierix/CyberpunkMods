@@ -151,7 +151,7 @@ registerHotkey('DebugRenderers_Screen3', 'screen circle', function()
 
     local color = GetRandomColor_RGB1_ToHex(0.4, 0.8)
 
-    debug_render_screen.Add_Circle(forward, normal, radius, nil, color, 16, nil, 30)
+    debug_render_screen.Add_Circle(forward, normal, radius, nil, color, nil, nil, 30)
 end)
 
 registerForEvent("onDraw", function()
