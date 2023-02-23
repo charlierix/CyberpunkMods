@@ -182,6 +182,35 @@ registerHotkey('DebugRenderers_Screen4', 'screen triangle', function()
     debug_render_screen.Add_Triangle(point1, point2, point3, nil, color_back, color_fore, nil, nil, 30)
 end)
 
+registerHotkey('DebugRenderers_Screen5', 'screen square', function()
+    local player = Game.GetPlayer()
+    local targeting = Game.GetTargetingSystem()
+
+    local position, direction = targeting:GetDefaultCrosshairData(player)
+
+    local dist = 2 + math.random() * 16
+    local forward = Vector4.new(position.x + (direction.x * dist), position.y + (direction.y * dist), position.z + (direction.z * dist), 1)
+
+    local size_x = 0.05 + math.random() * 3
+    local size_y = 0.05 + math.random() * 3
+
+    local normal = GetRandomVector_Spherical_Shell(1)
+
+    local color_back = nil
+    if math.random(2) == 1 then
+        color_back = GetRandomColor_RGB1_ToHex(0.5, 1)
+    else
+        color_back = GetRandomColor_RGB1_ToHex(0.5, 1, 0.4, 0.8)
+    end
+
+    local color_fore = nil
+    if math.random(2) == 1 then
+        color_fore = GetRandomColor_RGB1_ToHex(0.25, 0.75)
+    end
+
+    debug_render_screen.Add_Square(forward, normal, size_x, size_y, nil, color_back, color_fore, nil, nil, 30)
+end)
+
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then
         do return end

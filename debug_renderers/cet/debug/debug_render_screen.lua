@@ -13,7 +13,7 @@ local this = {}
 
 local next_id = 0
 local timer = 0
-local item_types = CreateEnum("dot", "line", "circle", "triangle", "rectangle", "text")
+local item_types = CreateEnum("dot", "line", "triangle", "text")
 
 local controller = nil
 
@@ -143,18 +143,14 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, s
 
     for i = 1, #points - 1, 1 do
         local item = this.GetItemBase(item_types.line, category, color, size_mult, const_size, lifespan_seconds, id)
-
         item.point1 = points[i]
         item.point2 = points[i + 1]
-
         table.insert(items, item)
     end
 
     local item = this.GetItemBase(item_types.line, category, color, size_mult, const_size, lifespan_seconds, id)
-
     item.point1 = points[#points]
     item.point2 = points[1]
-
     table.insert(items, item)
 
     return id
@@ -169,16 +165,14 @@ function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_
 
     if color_back then
         local item = this.GetItemBase(item_types.triangle, category, color_back, nil, nil, lifespan_seconds, id)
-
         item.point1 = point1
         item.point2 = point2
         item.point3 = point3
-
         table.insert(items, item)
     end
 
     if color_fore then
-        if not ((category and categories[category].size_mult) or size_mult) then
+        if color_back and not ((category and categories[category].size_mult) or size_mult) then
             size_mult = 8
         end
 
@@ -195,6 +189,57 @@ function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_
         item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
         item.point1 = point3
         item.point2 = point1
+        table.insert(items, item)
+    end
+
+    return id
+end
+function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, color_back, color_fore, size_mult, const_size, lifespan_seconds)
+    if not is_enabled then
+        return nil
+    end
+
+    local id = this.GetNextID()
+
+    local p1, p2, p3, p4 = this.GetSquarePoints(center, normal, size_x, size_y)
+
+    if color_back then
+        local item = this.GetItemBase(item_types.triangle, category, color_back, nil, nil, lifespan_seconds, id)
+        item.point1 = p1
+        item.point2 = p2
+        item.point3 = p3
+        table.insert(items, item)
+
+        item = this.GetItemBase(item_types.triangle, category, color_back, nil, nil, lifespan_seconds, id)
+        item.point1 = p3
+        item.point2 = p4
+        item.point3 = p1
+        table.insert(items, item)
+    end
+
+    if color_fore then
+        if color_back and not ((category and categories[category].size_mult) or size_mult) then
+            size_mult = 8
+        end
+
+        local item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        item.point1 = p1
+        item.point2 = p2
+        table.insert(items, item)
+
+        item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        item.point1 = p2
+        item.point2 = p3
+        table.insert(items, item)
+
+        item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        item.point1 = p3
+        item.point2 = p4
+        table.insert(items, item)
+
+        item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        item.point1 = p4
+        item.point2 = p1
         table.insert(items, item)
     end
 
@@ -326,6 +371,32 @@ function this.GetCirclePoints(center, radius, normal, num_sides)
     end
 
     return retVal
+end
+function this.GetSquarePoints(center, normal, size_x, size_y)
+    if not up then
+        up = Vector4.new(0, 0, 1, 1)
+    end
+
+    local half_x = size_x / 2
+    local half_y = size_y / 2
+
+    local p1 = Vector4.new(-half_x, -half_y, 0, 1)
+    local p2 = Vector4.new(half_x, -half_y, 0, 1)
+    local p3 = Vector4.new(half_x, half_y, 0, 1)
+    local p4 = Vector4.new(-half_x, half_y, 0, 1)
+
+    local quat = GetRotation(up, ToUnit(normal))
+
+    p1 = RotateVector3D(p1, quat)
+    p2 = RotateVector3D(p2, quat)
+    p3 = RotateVector3D(p3, quat)
+    p4 = RotateVector3D(p4, quat)
+
+    return
+        AddVectors(center, p1),
+        AddVectors(center, p2),
+        AddVectors(center, p3),
+        AddVectors(center, p4)
 end
 
 return DebugRenderScreen
