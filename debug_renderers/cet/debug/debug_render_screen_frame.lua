@@ -11,8 +11,8 @@ local MAX_RECURSE_VI = 8
 local this = {}
 
 -- Looks at the high level 3D items, creates 2D circles/lines/triangles that will be shown in the draw event
-function DebugRenderScreen_Frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line, visuals_triangle)
-    this.ClearVisuals(visuals_circle, visuals_line, visuals_triangle)
+function DebugRenderScreen_Frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line, visuals_triangle, visuals_text)
+    this.ClearVisuals(visuals_circle, visuals_line, visuals_triangle, visuals_text)
 
     if not controller or #items == 0 then      -- controller should always be populated (unless there's a reload cet mods, then loading a prevous save is required)
         do return end
@@ -29,6 +29,9 @@ function DebugRenderScreen_Frame.RebuildVisuals(controller, items, item_types, v
 
         elseif item.item_type == item_types.triangle then
             this.Triangle(controller, item, visuals_triangle, pos, dir)
+
+        elseif item.item_type == item_types.text then
+            this.Text(controller, item, visuals_text)
         end
     end
 end
@@ -202,9 +205,35 @@ function this.Triangle(controller, item, visuals_triangle, pos, dir)
     end
 end
 
+-------------------------------- Private Methods (Text) -------------------------------
+
+function this.Text(controller, item, visuals_text)
+    local point = controller:ProjectWorldToScreen(item.center)
+
+    if not this.IsValidScreenPoint(point) then
+        do return end
+    end
+
+    local color_back = nil
+    if item.color_back then
+        color_back = this.GetColor_ABGR(item.color_back)
+    end
+
+    local visual =
+    {
+        center_x = point.X,
+        center_y = point.Y,
+        color = this.GetColor_ABGR(item.color),
+        color_back = color_back,
+        text = item.text,
+    }
+
+    table.insert(visuals_text, visual)
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
-function this.ClearVisuals(visuals_circle, visuals_line, visuals_triangle)
+function this.ClearVisuals(visuals_circle, visuals_line, visuals_triangle, visuals_text)
     while #visuals_circle > 0 do
         table.remove(visuals_circle, 1)
     end
@@ -216,7 +245,15 @@ function this.ClearVisuals(visuals_circle, visuals_line, visuals_triangle)
     while #visuals_triangle > 0 do
         table.remove(visuals_triangle, 1)
     end
+
+    while #visuals_text > 0 do
+        table.remove(visuals_text, 1)
+    end
 end
+
+
+
+--TODO: take in category's color
 
 function this.GetColor_ABGR(color)
     if not color then
@@ -227,6 +264,8 @@ function this.GetColor_ABGR(color)
     local _, color_abgr = ConvertHexStringToNumbers(color)
     return color_abgr
 end
+
+
 
 function this.GetSizeMult(item, pos, point)
     local size_mult = 1

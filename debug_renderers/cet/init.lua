@@ -211,6 +211,25 @@ registerHotkey('DebugRenderers_Screen5', 'screen square', function()
     debug_render_screen.Add_Square(forward, normal, size_x, size_y, nil, color_back, color_fore, nil, nil, 30)
 end)
 
+registerHotkey('DebugRenderers_Screen6', 'screen text', function()
+    local player = Game.GetPlayer()
+    local targeting = Game.GetTargetingSystem()
+
+    local position, direction = targeting:GetDefaultCrosshairData(player)
+
+    local dist = 2
+    local forward = Vector4.new(position.x + (direction.x * dist), position.y + (direction.y * dist), position.z + (direction.z * dist), 1)
+
+    local color_back = nil
+    local color_fore = nil
+    if math.random(2) == 1 then
+        color_back = "8000"
+        color_fore = "FFF"
+    end
+
+    debug_render_screen.Add_Text(forward, "hello there", nil, color_back, color_fore, 30)
+end)
+
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then
         do return end

@@ -22,6 +22,7 @@ local items = {}
 local visuals_circle = {}
 local visuals_line = {}
 local visuals_triangle = {}
+local visuals_text = {}
 
 local up = nil
 
@@ -54,18 +55,20 @@ function DebugRenderScreen.CallFrom_onUpdate(deltaTime)
 
     -- Go through items and populate visuals (only items that are in front of the camera).  Turns high level concepts
     -- like circle/square into line paths that match this frame's perspective
-    frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line, visuals_triangle)
+    frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line, visuals_triangle, visuals_text)
 end
 
 function DebugRenderScreen.CallFrom_onDraw()
-    if not is_enabled or (#visuals_circle == 0 and #visuals_line == 0 and #visuals_triangle == 0) then
+    if not is_enabled or (#visuals_circle == 0 and #visuals_line == 0 and #visuals_triangle == 0 and #visuals_text == 0) then
         do return end
     end
 
-    ui.DrawCanvas(visuals_circle, visuals_line, visuals_triangle)
+    ui.DrawCanvas(visuals_circle, visuals_line, visuals_triangle, visuals_text)
 end
 
 ----------------------------------- Public Methods ------------------------------------
+
+--TODO: category should have back color
 
 -- This can make it easier to group similar items into the same category.  All items will be shown with
 -- the color and size specified here
@@ -244,6 +247,21 @@ function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, 
     end
 
     return id
+end
+function DebugRenderScreen.Add_Text(center, text, category, color_back, color_fore, lifespan_seconds)
+    if not is_enabled then
+        return nil
+    end
+
+    local item = this.GetItemBase(item_types.text, category, color_fore, nil, nil, lifespan_seconds)
+
+    item.center = center
+    item.text = text
+    item.color_back = color_back
+
+    table.insert(items, item)
+
+    return item.id
 end
 
 ---@param id integer This is the id from one of the add functions
