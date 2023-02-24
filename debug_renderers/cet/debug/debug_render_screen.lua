@@ -77,11 +77,12 @@ end
 ---@param size_mult number
 ---@param const_size boolean False: size decreases when far from the camera.  True: size is the same regardless of distance from camera.  Useful if debuging things that are really far away
 ---@param lifespan_seconds number [Optional] If populated, a visual will be removed this long after adding it.  If nil, the visual will stay until manually removed
-function DebugRenderScreen.DefineCategory(name, color, size_mult, const_size, lifespan_seconds)
+function DebugRenderScreen.DefineCategory(name, color_back, color_fore, size_mult, const_size, lifespan_seconds)
     local category =
     {
         name = name,
-        color = color,
+        color_back = color_back,
+        color_fore = color_fore,
         size_mult = size_mult,
         const_size = const_size,
         lifespan_seconds = lifespan_seconds,
@@ -103,7 +104,9 @@ function DebugRenderScreen.Add_Dot(position, category, color, size_mult, const_s
         return nil
     end
 
-    local item = this.GetItemBase(item_types.dot, category, color, size_mult, const_size, lifespan_seconds)
+    local color_back_final, _, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, color, nil, size_mult, const_size, lifespan_seconds)
+
+    local item = this.GetItemBase(item_types.dot, color_back_final, nil, size_mult_final, const_size_final, lifespan_seconds_final)
 
     item.position = position
 
@@ -116,7 +119,9 @@ function DebugRenderScreen.Add_Line(point1, point2, category, color, size_mult, 
         return nil
     end
 
-    local item = this.GetItemBase(item_types.line, category, color, size_mult, const_size, lifespan_seconds)
+    local _, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, nil, color, size_mult, const_size, lifespan_seconds)
+
+    local item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final)
 
     item.point1 = point1
     item.point2 = point2
@@ -130,9 +135,11 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, s
         return nil
     end
 
+    local _, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, nil, color, size_mult, const_size, lifespan_seconds)
+
     -- The default line thickness is too thin for a circle.  Use a larger value if there is nothing specified
-    if not ((category and categories[category].size_mult) or size_mult) then
-        size_mult = 8
+    if not size_mult_final then
+        size_mult_final = 8
     end
 
     -- Turn the circle into lines
@@ -145,13 +152,13 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, s
     local id = this.GetNextID()
 
     for i = 1, #points - 1, 1 do
-        local item = this.GetItemBase(item_types.line, category, color, size_mult, const_size, lifespan_seconds, id)
+        local item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = points[i]
         item.point2 = points[i + 1]
         table.insert(items, item)
     end
 
-    local item = this.GetItemBase(item_types.line, category, color, size_mult, const_size, lifespan_seconds, id)
+    local item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
     item.point1 = points[#points]
     item.point2 = points[1]
     table.insert(items, item)
@@ -164,32 +171,34 @@ function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_
         return nil
     end
 
+    local color_back_final, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, color_back, color_fore, size_mult, const_size, lifespan_seconds)
+
     local id = this.GetNextID()
 
-    if color_back then
-        local item = this.GetItemBase(item_types.triangle, category, color_back, nil, nil, lifespan_seconds, id)
+    if color_back_final then
+        local item = this.GetItemBase(item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
         item.point1 = point1
         item.point2 = point2
         item.point3 = point3
         table.insert(items, item)
     end
 
-    if color_fore then
-        if color_back and not ((category and categories[category].size_mult) or size_mult) then
-            size_mult = 8
+    if color_fore_final then
+        if color_back_final and not size_mult_final then
+            size_mult_final = 8
         end
 
-        local item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        local item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = point1
         item.point2 = point2
         table.insert(items, item)
 
-        item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = point2
         item.point2 = point3
         table.insert(items, item)
 
-        item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = point3
         item.point2 = point1
         table.insert(items, item)
@@ -202,45 +211,47 @@ function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, 
         return nil
     end
 
+    local color_back_final, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, color_back, color_fore, size_mult, const_size, lifespan_seconds)
+
     local id = this.GetNextID()
 
     local p1, p2, p3, p4 = this.GetSquarePoints(center, normal, size_x, size_y)
 
-    if color_back then
-        local item = this.GetItemBase(item_types.triangle, category, color_back, nil, nil, lifespan_seconds, id)
+    if color_back_final then
+        local item = this.GetItemBase(item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
         item.point1 = p1
         item.point2 = p2
         item.point3 = p3
         table.insert(items, item)
 
-        item = this.GetItemBase(item_types.triangle, category, color_back, nil, nil, lifespan_seconds, id)
+        item = this.GetItemBase(item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
         item.point1 = p3
         item.point2 = p4
         item.point3 = p1
         table.insert(items, item)
     end
 
-    if color_fore then
-        if color_back and not ((category and categories[category].size_mult) or size_mult) then
-            size_mult = 8
+    if color_fore_final then
+        if color_back_final and not size_mult_final then
+            size_mult_final = 8
         end
 
-        local item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        local item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = p1
         item.point2 = p2
         table.insert(items, item)
 
-        item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = p2
         item.point2 = p3
         table.insert(items, item)
 
-        item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = p3
         item.point2 = p4
         table.insert(items, item)
 
-        item = this.GetItemBase(item_types.line, category, color_fore, size_mult, const_size, lifespan_seconds, id)
+        item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = p4
         item.point2 = p1
         table.insert(items, item)
@@ -253,11 +264,12 @@ function DebugRenderScreen.Add_Text(center, text, category, color_back, color_fo
         return nil
     end
 
-    local item = this.GetItemBase(item_types.text, category, color_fore, nil, nil, lifespan_seconds)
+    local color_back_final, color_fore_final, _, _, lifespan_seconds_final = this.GetFinalValues(category, color_back, color_fore, nil, nil, lifespan_seconds)
+
+    local item = this.GetItemBase(item_types.text, color_back_final, color_fore_final, nil, nil, lifespan_seconds_final)
 
     item.center = center
     item.text = text
-    item.color_back = color_back
 
     table.insert(items, item)
 
@@ -295,26 +307,7 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 -- id is optional.  Pass it in if multiple entries need to be tied to the same id
-function this.GetItemBase(item_type, category, color, size_mult, const_size, lifespan_seconds, id)
-    -- Populate from category if there is one.  If explicit values are passed in, they override category's definition
-    if category then
-        for i = 1, #categories, 1 do
-            if categories[i].name == category then
-                if not color then
-                    color = categories[i].color
-                end
-
-                if not size_mult then
-                    size_mult = categories[i].size_mult
-                end
-
-                if not lifespan_seconds then
-                    lifespan_seconds = categories[i].lifespan_seconds
-                end
-            end
-        end
-    end
-
+function this.GetItemBase(item_type, color_back, color_fore, size_mult, const_size, lifespan_seconds, id)
     if not id then
         id = this.GetNextID()
     end
@@ -325,12 +318,45 @@ function this.GetItemBase(item_type, category, color, size_mult, const_size, lif
         create_time = timer,
 
         item_type = item_type,
-        category = category,
-        color = color,
+        color_back = color_back,
+        color_fore = color_fore,
         size_mult = size_mult,
         const_size = const_size,
         lifespan_seconds = lifespan_seconds,
     }
+end
+
+-- Populate from category if there is one.  If explicit values are passed in, they override category's definition
+function this.GetFinalValues(category, color_back, color_fore, size_mult, const_size, lifespan_seconds)
+    if category then
+        for i = 1, #categories, 1 do
+            if categories[i].name == category then
+                if not color_back then
+                    color_back = categories[i].color_back
+                end
+
+                if not color_fore then
+                    color_fore = categories[i].color_fore
+                end
+
+                if not size_mult then
+                    size_mult = categories[i].size_mult
+                end
+
+                if not const_size then
+                    const_size = categories[i].const_size
+                end
+
+                if not lifespan_seconds then
+                    lifespan_seconds = categories[i].lifespan_seconds
+                end
+
+                break
+            end
+        end
+    end
+
+    return color_back, color_fore, size_mult, const_size, lifespan_seconds
 end
 
 function this.GetNextID()

@@ -57,7 +57,7 @@ function this.Dot(controller, item, visuals_circle, pos)
 
     local visual =
     {
-        color_background = this.GetColor_ABGR(item.color),
+        color_background = this.GetColor_ABGR(item.color_back),
         color_border = nil,
         thickness = nil,
         center_x = point.X,
@@ -135,7 +135,6 @@ function this.Line_Valid_Invalid(point3D_valid, point3D_invalid, point2D_valid, 
     end
 
     if not this.IsValidScreenPoint(point2D_valid) then
-        print("Line_Valid_Invalid: off screen")
         do return end       -- no need to refine further, this line is starting off screen
     end
 
@@ -167,7 +166,7 @@ function this.Line_Commit(item, visuals_line, point2D_1, point2D_2, thickness1, 
         y1 = point2D_1.Y,
         x2 = point2D_2.X,
         y2 = point2D_2.Y,
-        color = this.GetColor_ABGR(item.color),
+        color = this.GetColor_ABGR(item.color_fore),
         thickness = thickness,
     }
 
@@ -198,7 +197,7 @@ function this.Triangle(controller, item, visuals_triangle, pos, dir)
             y2 = point2.Y,
             x3 = point3.X,
             y3 = point3.Y,
-            color = this.GetColor_ABGR(item.color),
+            color = this.GetColor_ABGR(item.color_back),
         }
 
         table.insert(visuals_triangle, visual)
@@ -223,7 +222,7 @@ function this.Text(controller, item, visuals_text)
     {
         center_x = point.X,
         center_y = point.Y,
-        color = this.GetColor_ABGR(item.color),
+        color = this.GetColor_ABGR(item.color_fore),
         color_back = color_back,
         text = item.text,
     }
@@ -251,10 +250,6 @@ function this.ClearVisuals(visuals_circle, visuals_line, visuals_triangle, visua
     end
 end
 
-
-
---TODO: take in category's color
-
 function this.GetColor_ABGR(color)
     if not color then
         local magenta = ConvertHexStringToNumbers_Magenta()
@@ -264,8 +259,6 @@ function this.GetColor_ABGR(color)
     local _, color_abgr = ConvertHexStringToNumbers(color)
     return color_abgr
 end
-
-
 
 function this.GetSizeMult(item, pos, point)
     local size_mult = 1

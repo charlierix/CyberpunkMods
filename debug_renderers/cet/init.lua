@@ -33,6 +33,7 @@ registerForEvent("onInit", function()
     InitializeRandom()
 
     debug_render_screen.CallFrom_onInit(true)
+    debug_render_screen.DefineCategory("green", "40F0", "8F8", 3, false, 12)
 
     isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
 
@@ -116,7 +117,11 @@ registerHotkey('DebugRenderers_Screen1', 'screen dot', function()
     local dist = 2
     local forward = Vector4.new(position.x + (direction.x * dist), position.y + (direction.y * dist), position.z + (direction.z * dist), 1)
 
-    debug_render_screen.Add_Dot(forward, nil, nil, nil, nil, 30)
+    if math.random(2) == 1 then
+        debug_render_screen.Add_Dot(forward, nil, nil, nil, nil, 30)
+    else
+        debug_render_screen.Add_Dot(forward, "green")
+    end
 end)
 
 registerHotkey('DebugRenderers_Screen2', 'screen line', function()
@@ -131,7 +136,12 @@ registerHotkey('DebugRenderers_Screen2', 'screen line', function()
     local point1 = AddVectors(forward, GetRandomVector_Spherical(0.25, 6))
     local point2 = AddVectors(forward, GetRandomVector_Spherical(0.25, 6))
 
-    debug_render_screen.Add_Line(point1, point2, nil, "FFF", nil, nil, 30)
+    if math.random(2) == 1 then
+        debug_render_screen.Add_Line(point1, point2, nil, "FFF", nil, nil, 30)
+    else
+        debug_render_screen.Add_Line(point1, point2, "green")
+    end
+
     debug_render_screen.Add_Dot(point1, nil, "F00", nil, nil, 30)
     debug_render_screen.Add_Dot(point2, nil, "0F0", nil, nil, 30)
 end)
@@ -151,7 +161,11 @@ registerHotkey('DebugRenderers_Screen3', 'screen circle', function()
 
     local color = GetRandomColor_RGB1_ToHex(0.4, 0.8)
 
-    debug_render_screen.Add_Circle(forward, normal, radius, nil, color, nil, nil, 30)
+    if math.random(2) == 1 then
+        debug_render_screen.Add_Circle(forward, normal, radius, nil, color, nil, nil, 30)
+    else
+        debug_render_screen.Add_Circle(forward, normal, radius, "green")
+    end
 end)
 
 registerHotkey('DebugRenderers_Screen4', 'screen triangle', function()
@@ -179,7 +193,11 @@ registerHotkey('DebugRenderers_Screen4', 'screen triangle', function()
         color_fore = GetRandomColor_RGB1_ToHex(0.25, 0.75)
     end
 
-    debug_render_screen.Add_Triangle(point1, point2, point3, nil, color_back, color_fore, nil, nil, 30)
+    if math.random(2) == 1 then
+        debug_render_screen.Add_Triangle(point1, point2, point3, nil, color_back, color_fore, nil, nil, 30)
+    else
+        debug_render_screen.Add_Triangle(point1, point2, point3, "green")
+    end
 end)
 
 registerHotkey('DebugRenderers_Screen5', 'screen square', function()
@@ -208,7 +226,11 @@ registerHotkey('DebugRenderers_Screen5', 'screen square', function()
         color_fore = GetRandomColor_RGB1_ToHex(0.25, 0.75)
     end
 
-    debug_render_screen.Add_Square(forward, normal, size_x, size_y, nil, color_back, color_fore, nil, nil, 30)
+    if math.random(2) == 1 then
+        debug_render_screen.Add_Square(forward, normal, size_x, size_y, nil, color_back, color_fore, nil, nil, 30)
+    else
+        debug_render_screen.Add_Square(forward, normal, size_x, size_y, "green")
+    end
 end)
 
 registerHotkey('DebugRenderers_Screen6', 'screen text', function()
@@ -227,7 +249,11 @@ registerHotkey('DebugRenderers_Screen6', 'screen text', function()
         color_fore = "FFF"
     end
 
-    debug_render_screen.Add_Text(forward, "hello there", nil, color_back, color_fore, 30)
+    if math.random(2) == 1 then
+        debug_render_screen.Add_Text(forward, "hello there", nil, color_back, color_fore, 30)
+    else
+        debug_render_screen.Add_Text(forward, "that's green", "green")
+    end
 end)
 
 registerForEvent("onDraw", function()

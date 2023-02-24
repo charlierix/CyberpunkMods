@@ -74,13 +74,14 @@ function this.Draw_Text(center_x, center_y, text, color, color_back)
     if color_back then
         local roundCorners = this.Get_ImDrawFlags_RoundCornersAll()
 
-        local margin = 4
+        local margin_x = 10
+        local margin_y = 2
         local cornerRadius = 2
 
-        local left = center_x - halfWidth - margin
-        local top = center_y - halfHeight - margin
-        local right = center_x + halfWidth + margin
-        local bottom = center_y + halfHeight + margin
+        local left = center_x - halfWidth - margin_x
+        local top = center_y - halfHeight - margin_y
+        local right = center_x + halfWidth + margin_x
+        local bottom = center_y + halfHeight + margin_y
 
         ImGui.ImDrawListAddRectFilled(ImGui.GetWindowDrawList(), left, top, right, bottom, color_back, cornerRadius, roundCorners)
     end
