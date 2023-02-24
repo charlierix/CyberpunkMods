@@ -195,7 +195,7 @@ end
 
 -- This stores a new entry in self.hits or self.misses
 function LaserFinderWorker_StoreFiring(stickylist, key)
-    local _, item = stickylist:GetNewItem()
+    local item = stickylist:GetNewItem()
 
     item.key = key
     item.wasRequestedThisPeriod = true

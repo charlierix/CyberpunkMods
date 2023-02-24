@@ -106,7 +106,7 @@ function DebugRenderScreen.Add_Dot(position, category, color, size_mult, const_s
 
     local color_back_final, _, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, color, nil, size_mult, const_size, lifespan_seconds)
 
-    local _, item = items:GetNewItem()
+    local item = items:GetNewItem()
     this.SetItemBase(item, item_types.dot, color_back_final, nil, size_mult_final, const_size_final, lifespan_seconds_final)
     item.position = position
 
@@ -119,7 +119,7 @@ function DebugRenderScreen.Add_Line(point1, point2, category, color, size_mult, 
 
     local _, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, nil, color, size_mult, const_size, lifespan_seconds)
 
-    local _, item = items:GetNewItem()
+    local item = items:GetNewItem()
     this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final)
     item.point1 = point1
     item.point2 = point2
@@ -148,13 +148,13 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, s
     local id = this.GetNextID()
 
     for i = 1, #points - 1, 1 do
-        local _, item = items:GetNewItem()
+        local item = items:GetNewItem()
         this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = points[i]
         item.point2 = points[i + 1]
     end
 
-    local _, item = items:GetNewItem()
+    local item = items:GetNewItem()
     this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
     item.point1 = points[#points]
     item.point2 = points[1]
@@ -172,7 +172,7 @@ function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_
     local id = this.GetNextID()
 
     if color_back_final then
-        local _, item = items:GetNewItem()
+        local item = items:GetNewItem()
         this.SetItemBase(item, item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
         item.point1 = point1
         item.point2 = point2
@@ -184,17 +184,17 @@ function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_
             size_mult_final = 8
         end
 
-        local _, item = items:GetNewItem()
+        local item = items:GetNewItem()
         this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = point1
         item.point2 = point2
 
-        _, item = items:GetNewItem()
+        item = items:GetNewItem()
         this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = point2
         item.point2 = point3
 
-        _, item = items:GetNewItem()
+        item = items:GetNewItem()
         this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = point3
         item.point2 = point1
@@ -214,13 +214,13 @@ function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, 
     local p1, p2, p3, p4 = this.GetSquarePoints(center, normal, size_x, size_y)
 
     if color_back_final then
-        local _, item = items:GetNewItem()
+        local item = items:GetNewItem()
         this.SetItemBase(item, item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
         item.point1 = p1
         item.point2 = p2
         item.point3 = p3
 
-        _, item = items:GetNewItem()
+        item = items:GetNewItem()
         this.SetItemBase(item, item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
         item.point1 = p3
         item.point2 = p4
@@ -232,22 +232,22 @@ function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, 
             size_mult_final = 8
         end
 
-        local _, item = items:GetNewItem()
+        local item = items:GetNewItem()
         this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = p1
         item.point2 = p2
 
-        _, item = items:GetNewItem()
+        item = items:GetNewItem()
         this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = p2
         item.point2 = p3
 
-        _, item = items:GetNewItem()
+        item = items:GetNewItem()
         this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = p3
         item.point2 = p4
 
-        _, item = items:GetNewItem()
+        item = items:GetNewItem()
         this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = p4
         item.point2 = p1
@@ -262,7 +262,7 @@ function DebugRenderScreen.Add_Text(center, text, category, color_back, color_fo
 
     local color_back_final, color_fore_final, _, _, lifespan_seconds_final = this.GetFinalValues(category, color_back, color_fore, nil, nil, lifespan_seconds)
 
-    local _, item = items:GetNewItem()
+    local item = items:GetNewItem()
     this.SetItemBase(item, item_types.text, color_back_final, color_fore_final, nil, nil, lifespan_seconds_final)
     item.center = center
     item.text = text

@@ -51,8 +51,8 @@ end
 -- that they always overwrite
 --
 -- Returns:
---      index into list
 --      the table at that location
+--      index into list
 function StickyList:GetNewItem()
     if self.maxIndex < self.count then
         self.maxIndex = self.maxIndex + 1
@@ -63,7 +63,7 @@ function StickyList:GetNewItem()
         self.table[self.maxIndex] = { }
     end
 
-    return self.maxIndex, self.table[self.maxIndex]
+    return self.table[self.maxIndex], self.maxIndex
 end
 
 -- This pretends to remove the item from the list

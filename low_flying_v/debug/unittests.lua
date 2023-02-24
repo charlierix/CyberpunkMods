@@ -88,15 +88,15 @@ function UnitTest_StickyList()
     local a = StickyList:new()
 
     -- three clean adds
-    local _, entry = a:GetNewItem()
+    local entry = a:GetNewItem()
     entry.one = "a"
     entry.two = 8
 
-    _, entry = a:GetNewItem()
+    entry = a:GetNewItem()
     entry.one = "b"
     entry.two = 9
 
-    _, entry = a:GetNewItem()
+    entry = a:GetNewItem()
     entry.one = "c"
     entry.two = 10
 
@@ -114,7 +114,7 @@ function UnitTest_StickyList()
     entry = a:GetItem(3)     -- should print an error message
 
     -- add
-    _, entry = a:GetNewItem()       -- reuses the 3rd entry
+    entry = a:GetNewItem()       -- reuses the 3rd entry
 
     print("")
     print("after add")

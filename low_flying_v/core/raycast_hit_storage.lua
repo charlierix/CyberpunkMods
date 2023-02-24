@@ -56,7 +56,7 @@ function RaycastHitStorage:Add(point, source, key)
     end
 
     -- Add new
-    local _, entry = self.points:GetNewItem()
+    local entry = self.points:GetNewItem()
 
     entry.point = point
     entry.wasRequestedThisPeriod = true
@@ -90,7 +90,7 @@ function RaycastHitStorage:GetNearbyPoints(center, radius)
 
         if GetVectorDiffLengthSqr(point.point, center) <= radSqr then
             -- It's close enough, add to the return
-            local _, retItem = self.getnearby_return:GetNewItem()
+            local retItem = self.getnearby_return:GetNewItem()
             retItem.point = point
 
             point.wasRequestedThisPeriod = true
@@ -176,7 +176,7 @@ end
 
 ------- Helper methods for working with self.sources
 function RaycastHitStorage_StoreSource(sources, source, key)
-    local _, entry = sources:GetNewItem()
+    local entry = sources:GetNewItem()
 
     entry.source = source
     entry.key = key
