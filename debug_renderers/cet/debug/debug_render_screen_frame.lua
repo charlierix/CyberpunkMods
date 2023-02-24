@@ -12,7 +12,10 @@ local this = {}
 
 -- Looks at the high level 3D items, creates 2D circles/lines/triangles that will be shown in the draw event
 function DebugRenderScreen_Frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line, visuals_triangle, visuals_text)
-    this.ClearVisuals(visuals_circle, visuals_line, visuals_triangle, visuals_text)
+    visuals_circle:Clear()
+    visuals_line:Clear()
+    visuals_triangle:Clear()
+    visuals_text:Clear()
 
     if not controller or items:GetCount() == 0 then      -- controller should always be populated (unless there's a reload cet mods, then loading a prevous save is required)
         do return end
@@ -57,17 +60,14 @@ function this.Dot(controller, item, visuals_circle, pos)
         do return end
     end
 
-    local visual =
-    {
-        color_background = this.GetColor_ABGR(item.color_back),
-        color_border = nil,
-        thickness = nil,
-        center_x = point.X,
-        center_y = point.Y,
-        radius = DOT_RADIUS * size_mult,
-    }
+    local visual = visuals_circle:GetNewItem()
 
-    table.insert(visuals_circle, visual)
+    visual.color_background = this.GetColor_ABGR(item.color_back)
+    visual.color_border = nil
+    visual.thickness = nil
+    visual.center_x = point.X
+    visual.center_y = point.Y
+    visual.radius = DOT_RADIUS * size_mult
 end
 
 -------------------------------- Private Methods (Line) -------------------------------
@@ -162,17 +162,14 @@ function this.Line_Commit(item, visuals_line, point2D_1, point2D_2, thickness1, 
         do return end
     end
 
-    local visual =
-    {
-        x1 = point2D_1.X,
-        y1 = point2D_1.Y,
-        x2 = point2D_2.X,
-        y2 = point2D_2.Y,
-        color = this.GetColor_ABGR(item.color_fore),
-        thickness = thickness,
-    }
+    local visual = visuals_line:GetNewItem()
 
-    table.insert(visuals_line, visual)
+    visual.x1 = point2D_1.X
+    visual.y1 = point2D_1.Y
+    visual.x2 = point2D_2.X
+    visual.y2 = point2D_2.Y
+    visual.color = this.GetColor_ABGR(item.color_fore)
+    visual.thickness = thickness
 end
 
 ------------------------------ Private Methods (Triangle) -----------------------------
@@ -191,18 +188,15 @@ function this.Triangle(controller, item, visuals_triangle, pos, dir)
     --ImGui supports a polygon, but it takes an array of vector2 and I think cet handles that funny
 
     if isValid1 and isValid2 and isValid3 then
-        local visual =
-        {
-            x1 = point1.X,
-            y1 = point1.Y,
-            x2 = point2.X,
-            y2 = point2.Y,
-            x3 = point3.X,
-            y3 = point3.Y,
-            color = this.GetColor_ABGR(item.color_back),
-        }
+        local visual = visuals_triangle:GetNewItem()
 
-        table.insert(visuals_triangle, visual)
+        visual.x1 = point1.X
+        visual.y1 = point1.Y
+        visual.x2 = point2.X
+        visual.y2 = point2.Y
+        visual.x3 = point3.X
+        visual.y3 = point3.Y
+        visual.color = this.GetColor_ABGR(item.color_back)
     end
 end
 
@@ -220,37 +214,16 @@ function this.Text(controller, item, visuals_text)
         color_back = this.GetColor_ABGR(item.color_back)
     end
 
-    local visual =
-    {
-        center_x = point.X,
-        center_y = point.Y,
-        color = this.GetColor_ABGR(item.color_fore),
-        color_back = color_back,
-        text = item.text,
-    }
+    local visual = visuals_text:GetNewItem()
 
-    table.insert(visuals_text, visual)
+    visual.center_x = point.X
+    visual.center_y = point.Y
+    visual.color = this.GetColor_ABGR(item.color_fore)
+    visual.color_back = color_back
+    visual.text = item.text
 end
 
 ----------------------------------- Private Methods -----------------------------------
-
-function this.ClearVisuals(visuals_circle, visuals_line, visuals_triangle, visuals_text)
-    while #visuals_circle > 0 do
-        table.remove(visuals_circle, 1)
-    end
-
-    while #visuals_line > 0 do
-        table.remove(visuals_line, 1)
-    end
-
-    while #visuals_triangle > 0 do
-        table.remove(visuals_triangle, 1)
-    end
-
-    while #visuals_text > 0 do
-        table.remove(visuals_text, 1)
-    end
-end
 
 function this.GetColor_ABGR(color)
     if not color then

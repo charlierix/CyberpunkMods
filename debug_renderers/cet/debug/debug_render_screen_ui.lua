@@ -11,25 +11,33 @@ function DebugRenderScreen_UI.DrawCanvas(visuals_circle, visuals_line, visuals_t
     ImGui.SetNextWindowSize(width, height, ImGuiCond.Always)
 
     if (ImGui.Begin("debug_canvas", true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoBackground)) then
-        for _, triangle in ipairs(visuals_triangle) do
+        for i = 1, visuals_triangle:GetCount(), 1 do
+            local triangle = visuals_triangle:GetItem(i)
+
             local x1, y1 = this.TransformToScreen(triangle.x1, triangle.y1, center_x, center_y)
             local x2, y2 = this.TransformToScreen(triangle.x2, triangle.y2, center_x, center_y)
             local x3, y3 = this.TransformToScreen(triangle.x3, triangle.y3, center_x, center_y)
             this.Draw_Triangle(x1, y1, x2, y2, x3, y3, triangle.color, nil, nil)
         end
 
-        for _, circle in ipairs(visuals_circle) do
+        for i = 1, visuals_circle:GetCount(), 1 do
+            local circle = visuals_circle:GetItem(i)
+
             local x, y = this.TransformToScreen(circle.center_x, circle.center_y, center_x, center_y)
             this.Draw_Circle(x, y, circle.radius, circle.color_background, circle.color_border, circle.thickness)
         end
 
-        for _, line in ipairs(visuals_line) do
+        for i = 1, visuals_line:GetCount(), 1 do
+            local line = visuals_line:GetItem(i)
+
             local x1, y1 = this.TransformToScreen(line.x1, line.y1, center_x, center_y)
             local x2, y2 = this.TransformToScreen(line.x2, line.y2, center_x, center_y)
             this.Draw_Line(x1, y1, x2, y2, line.color, line.thickness)
         end
 
-        for _, text in ipairs(visuals_text) do
+        for i = 1, visuals_text:GetCount(), 1 do
+            local text = visuals_text:GetItem(i)
+
             local x, y = this.TransformToScreen(text.center_x, text.center_y, center_x, center_y)
             this.Draw_Text(x, y, text.text, text.color, text.color_back)
         end

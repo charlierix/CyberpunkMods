@@ -19,10 +19,10 @@ local controller = nil
 
 local categories = {}
 local items = StickyList:new()
-local visuals_circle = {}
-local visuals_line = {}
-local visuals_triangle = {}
-local visuals_text = {}
+local visuals_circle = StickyList:new()
+local visuals_line = StickyList:new()
+local visuals_triangle = StickyList:new()
+local visuals_text = StickyList:new()
 
 local up = nil
 
@@ -59,7 +59,7 @@ function DebugRenderScreen.CallFrom_onUpdate(deltaTime)
 end
 
 function DebugRenderScreen.CallFrom_onDraw()
-    if not is_enabled or (#visuals_circle == 0 and #visuals_line == 0 and #visuals_triangle == 0 and #visuals_text == 0) then
+    if not is_enabled or (visuals_circle:GetCount() == 0 and visuals_line:GetCount() == 0 and visuals_triangle:GetCount() == 0 and visuals_text:GetCount() == 0) then
         do return end
     end
 
