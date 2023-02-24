@@ -18,7 +18,7 @@ local item_types = CreateEnum("dot", "line", "triangle", "text")
 local controller = nil
 
 local categories = {}
-local items = {}
+local items = StickyList:new()
 local visuals_circle = {}
 local visuals_line = {}
 local visuals_triangle = {}
@@ -106,11 +106,9 @@ function DebugRenderScreen.Add_Dot(position, category, color, size_mult, const_s
 
     local color_back_final, _, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, color, nil, size_mult, const_size, lifespan_seconds)
 
-    local item = this.GetItemBase(item_types.dot, color_back_final, nil, size_mult_final, const_size_final, lifespan_seconds_final)
-
+    local _, item = items:GetNewItem()
+    this.SetItemBase(item, item_types.dot, color_back_final, nil, size_mult_final, const_size_final, lifespan_seconds_final)
     item.position = position
-
-    table.insert(items, item)
 
     return item.id
 end
@@ -121,12 +119,10 @@ function DebugRenderScreen.Add_Line(point1, point2, category, color, size_mult, 
 
     local _, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, nil, color, size_mult, const_size, lifespan_seconds)
 
-    local item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final)
-
+    local _, item = items:GetNewItem()
+    this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final)
     item.point1 = point1
     item.point2 = point2
-
-    table.insert(items, item)
 
     return item.id
 end
@@ -152,16 +148,16 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, s
     local id = this.GetNextID()
 
     for i = 1, #points - 1, 1 do
-        local item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        local _, item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = points[i]
         item.point2 = points[i + 1]
-        table.insert(items, item)
     end
 
-    local item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+    local _, item = items:GetNewItem()
+    this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
     item.point1 = points[#points]
     item.point2 = points[1]
-    table.insert(items, item)
 
     return id
 end
@@ -176,11 +172,11 @@ function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_
     local id = this.GetNextID()
 
     if color_back_final then
-        local item = this.GetItemBase(item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
+        local _, item = items:GetNewItem()
+        this.SetItemBase(item, item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
         item.point1 = point1
         item.point2 = point2
         item.point3 = point3
-        table.insert(items, item)
     end
 
     if color_fore_final then
@@ -188,20 +184,20 @@ function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_
             size_mult_final = 8
         end
 
-        local item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        local _, item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = point1
         item.point2 = point2
-        table.insert(items, item)
 
-        item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        _, item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = point2
         item.point2 = point3
-        table.insert(items, item)
 
-        item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        _, item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = point3
         item.point2 = point1
-        table.insert(items, item)
     end
 
     return id
@@ -218,17 +214,17 @@ function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, 
     local p1, p2, p3, p4 = this.GetSquarePoints(center, normal, size_x, size_y)
 
     if color_back_final then
-        local item = this.GetItemBase(item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
+        local _, item = items:GetNewItem()
+        this.SetItemBase(item, item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
         item.point1 = p1
         item.point2 = p2
         item.point3 = p3
-        table.insert(items, item)
 
-        item = this.GetItemBase(item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
+        _, item = items:GetNewItem()
+        this.SetItemBase(item, item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
         item.point1 = p3
         item.point2 = p4
         item.point3 = p1
-        table.insert(items, item)
     end
 
     if color_fore_final then
@@ -236,25 +232,25 @@ function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, 
             size_mult_final = 8
         end
 
-        local item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        local _, item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = p1
         item.point2 = p2
-        table.insert(items, item)
 
-        item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        _, item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = p2
         item.point2 = p3
-        table.insert(items, item)
 
-        item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        _, item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = p3
         item.point2 = p4
-        table.insert(items, item)
 
-        item = this.GetItemBase(item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        _, item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
         item.point1 = p4
         item.point2 = p1
-        table.insert(items, item)
     end
 
     return id
@@ -266,12 +262,10 @@ function DebugRenderScreen.Add_Text(center, text, category, color_back, color_fo
 
     local color_back_final, color_fore_final, _, _, lifespan_seconds_final = this.GetFinalValues(category, color_back, color_fore, nil, nil, lifespan_seconds)
 
-    local item = this.GetItemBase(item_types.text, color_back_final, color_fore_final, nil, nil, lifespan_seconds_final)
-
+    local _, item = items:GetNewItem()
+    this.SetItemBase(item, item_types.text, color_back_final, color_fore_final, nil, nil, lifespan_seconds_final)
     item.center = center
     item.text = text
-
-    table.insert(items, item)
 
     return item.id
 end
@@ -284,9 +278,11 @@ function DebugRenderScreen.Remove(id)
 
     local index = 1
 
-    while index <= #items do        -- there can be multiple items tied to the same id, so need to scan the whole list
-        if items[index].id == id then
-            table.remove(items, index)
+    while index <= items:GetCount() do        -- there can be multiple items tied to the same id, so need to scan the whole list
+        local item = items:GetItem(index)
+
+        if item.id == id then
+            items:RemoveItem(index)
         else
             index = index + 1
         end
@@ -299,31 +295,26 @@ function DebugRenderScreen.Clear()
         do return end
     end
 
-    while #items > 0 do
-        table.remove(items, 1)
-    end
+    items:Clear()
 end
 
 ----------------------------------- Private Methods -----------------------------------
 
 -- id is optional.  Pass it in if multiple entries need to be tied to the same id
-function this.GetItemBase(item_type, color_back, color_fore, size_mult, const_size, lifespan_seconds, id)
+function this.SetItemBase(item, item_type, color_back, color_fore, size_mult, const_size, lifespan_seconds, id)
     if not id then
         id = this.GetNextID()
     end
 
-    return
-    {
-        id = id,
-        create_time = timer,
+    item.id = id
+    item.create_time = timer
 
-        item_type = item_type,
-        color_back = color_back,
-        color_fore = color_fore,
-        size_mult = size_mult,
-        const_size = const_size,
-        lifespan_seconds = lifespan_seconds,
-    }
+    item.item_type = item_type
+    item.color_back = color_back
+    item.color_fore = color_fore
+    item.size_mult = size_mult
+    item.const_size = const_size
+    item.lifespan_seconds = lifespan_seconds
 end
 
 -- Populate from category if there is one.  If explicit values are passed in, they override category's definition
@@ -367,9 +358,11 @@ end
 function this.RemoveExpiredItems()
     local index = 1
 
-    while index <= #items do
-        if items[index].lifespan_seconds and timer > items[index].create_time + items[index].lifespan_seconds then
-            table.remove(items, index)
+    while index <= items:GetCount() do
+        local item = items:GetItem(index)
+
+        if item.lifespan_seconds and timer > item.create_time + item.lifespan_seconds then
+            items:RemoveItem(index)
         else
             index = index + 1
         end

@@ -15,6 +15,7 @@
 require "core/color"
 require "core/math_basic"
 require "core/math_vector"
+require "core/sticky_list"
 require "core/util"
 
 require "debug/debug_render_logger"

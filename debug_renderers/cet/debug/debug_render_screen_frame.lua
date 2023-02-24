@@ -14,13 +14,15 @@ local this = {}
 function DebugRenderScreen_Frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line, visuals_triangle, visuals_text)
     this.ClearVisuals(visuals_circle, visuals_line, visuals_triangle, visuals_text)
 
-    if not controller or #items == 0 then      -- controller should always be populated (unless there's a reload cet mods, then loading a prevous save is required)
+    if not controller or items:GetCount() == 0 then      -- controller should always be populated (unless there's a reload cet mods, then loading a prevous save is required)
         do return end
     end
 
     local pos, dir = Game.GetTargetingSystem():GetDefaultCrosshairData(Game.GetPlayer())
 
-    for _, item in ipairs(items) do
+    for i = 1, items:GetCount(), 1 do
+        local item = items:GetItem(i)
+
         if item.item_type == item_types.dot then
             this.Dot(controller, item, visuals_circle, pos)
 
