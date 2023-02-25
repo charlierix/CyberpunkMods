@@ -77,7 +77,7 @@ end
 ---@param size_mult number
 ---@param const_size boolean False: size decreases when far from the camera.  True: size is the same regardless of distance from camera.  Useful if debuging things that are really far away
 ---@param lifespan_seconds number [Optional] If populated, a visual will be removed this long after adding it.  If nil, the visual will stay until manually removed
-function DebugRenderScreen.DefineCategory(name, color_back, color_fore, size_mult, const_size, lifespan_seconds)
+function DebugRenderScreen.DefineCategory(name, color_back, color_fore, lifespan_seconds, size_mult, const_size)
     local category =
     {
         name = name,
@@ -99,7 +99,7 @@ end
 -- category's values, unless overridden in the add method call
 ---@param position Vector4
 ---@return integer id Pass this to the remove function
-function DebugRenderScreen.Add_Dot(position, category, color, size_mult, const_size, lifespan_seconds)
+function DebugRenderScreen.Add_Dot(position, category, color, lifespan_seconds, size_mult, const_size)
     if not is_enabled then
         return nil
     end
@@ -112,7 +112,7 @@ function DebugRenderScreen.Add_Dot(position, category, color, size_mult, const_s
 
     return item.id
 end
-function DebugRenderScreen.Add_Line(point1, point2, category, color, size_mult, const_size, lifespan_seconds)
+function DebugRenderScreen.Add_Line(point1, point2, category, color, lifespan_seconds, size_mult, const_size)
     if not is_enabled then
         return nil
     end
@@ -126,7 +126,7 @@ function DebugRenderScreen.Add_Line(point1, point2, category, color, size_mult, 
 
     return item.id
 end
-function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, size_mult, const_size, lifespan_seconds)
+function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, lifespan_seconds, size_mult, const_size)
     if not is_enabled then
         return nil
     end
@@ -162,7 +162,7 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, s
     return id
 end
 -- size_mult and const_size refer to line thickness, which is only used if color_fore is populated
-function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_back, color_fore, size_mult, const_size, lifespan_seconds)
+function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_back, color_fore, lifespan_seconds, size_mult, const_size)
     if not is_enabled then
         return nil
     end
@@ -202,7 +202,7 @@ function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_
 
     return id
 end
-function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, color_back, color_fore, size_mult, const_size, lifespan_seconds)
+function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, color_back, color_fore, lifespan_seconds, size_mult, const_size)
     if not is_enabled then
         return nil
     end

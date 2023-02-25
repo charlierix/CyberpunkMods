@@ -34,7 +34,7 @@ registerForEvent("onInit", function()
     InitializeRandom()
 
     debug_render_screen.CallFrom_onInit(true)
-    debug_render_screen.DefineCategory("green", "40F0", "8F8", 3, false, 12)
+    debug_render_screen.DefineCategory("green", "40F0", "8F8", 12, 3, false)
 
     isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
 
@@ -119,7 +119,7 @@ registerHotkey('DebugRenderers_Screen1', 'screen dot', function()
     local forward = Vector4.new(position.x + (direction.x * dist), position.y + (direction.y * dist), position.z + (direction.z * dist), 1)
 
     if math.random(2) == 1 then
-        debug_render_screen.Add_Dot(forward, nil, nil, nil, nil, 30)
+        debug_render_screen.Add_Dot(forward, nil, nil, 30, nil, nil)
     else
         debug_render_screen.Add_Dot(forward, "green")
     end
@@ -138,13 +138,12 @@ registerHotkey('DebugRenderers_Screen2', 'screen line', function()
     local point2 = AddVectors(forward, GetRandomVector_Spherical(0.25, 6))
 
     if math.random(2) == 1 then
-        debug_render_screen.Add_Line(point1, point2, nil, "FFF", nil, nil, 30)
+        debug_render_screen.Add_Line(point1, point2, nil, "FFF", 30)
+        debug_render_screen.Add_Dot(point1, nil, "F00", 30)
+        debug_render_screen.Add_Dot(point2, nil, "0F0", 30)
     else
         debug_render_screen.Add_Line(point1, point2, "green")
     end
-
-    debug_render_screen.Add_Dot(point1, nil, "F00", nil, nil, 30)
-    debug_render_screen.Add_Dot(point2, nil, "0F0", nil, nil, 30)
 end)
 
 registerHotkey('DebugRenderers_Screen3', 'screen circle', function()
@@ -163,7 +162,7 @@ registerHotkey('DebugRenderers_Screen3', 'screen circle', function()
     local color = GetRandomColor_RGB1_ToHex(0.4, 0.8)
 
     if math.random(2) == 1 then
-        debug_render_screen.Add_Circle(forward, normal, radius, nil, color, nil, nil, 30)
+        debug_render_screen.Add_Circle(forward, normal, radius, nil, color, 30)
     else
         debug_render_screen.Add_Circle(forward, normal, radius, "green")
     end
@@ -195,7 +194,7 @@ registerHotkey('DebugRenderers_Screen4', 'screen triangle', function()
     end
 
     if math.random(2) == 1 then
-        debug_render_screen.Add_Triangle(point1, point2, point3, nil, color_back, color_fore, nil, nil, 30)
+        debug_render_screen.Add_Triangle(point1, point2, point3, nil, color_back, color_fore, 30)
     else
         debug_render_screen.Add_Triangle(point1, point2, point3, "green")
     end
@@ -228,7 +227,7 @@ registerHotkey('DebugRenderers_Screen5', 'screen square', function()
     end
 
     if math.random(2) == 1 then
-        debug_render_screen.Add_Square(forward, normal, size_x, size_y, nil, color_back, color_fore, nil, nil, 30)
+        debug_render_screen.Add_Square(forward, normal, size_x, size_y, nil, color_back, color_fore, 30)
     else
         debug_render_screen.Add_Square(forward, normal, size_x, size_y, "green")
     end
