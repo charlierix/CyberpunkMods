@@ -47,6 +47,11 @@ function IsNearZero_vec4(value)
         IsNearValue(value.z, 0)
 end
 
+--https://stackoverflow.com/questions/37753694/lua-check-if-a-number-value-is-nan
+function IsNaN(number)
+    return number ~= number     -- if it's nan, then it's not equal to anything, even itself
+end
+
 --http://lua-users.org/wiki/SimpleRound
 function Round(num, numDecimalPlaces)
     local mult = 10^(numDecimalPlaces or 0)     -- why OR zero? (I'm guessing if they pass in nil?)

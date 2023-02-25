@@ -237,6 +237,38 @@ function ColorLERP_FromStyleSheet(style, key_from, key_to, percent)
     return a, r, g, b
 end
 
+-- Alpha params are optional.  If they aren't passed in, FF will be used
+-- Values are 0 to 1
+function GetRandomColor_RGB1_ToHex(min, max, a_min, a_max)
+    return GetRandomColor_RGB2_ToHex(min, max, min, max, min, max, a_min, a_max)
+end
+function GetRandomColor_RGB2_ToHex(r_min, r_max, g_min, g_max, b_min, b_max, a_min, a_max)
+    local a = 1
+    if a_min and a_max then
+        a = Clamp(0, 1, a_min + ((a_max - a_min) * math.random()))
+    end
+
+    local r = Clamp(0, 1, r_min + ((r_max - r_min) * math.random()))
+    local g = Clamp(0, 1, g_min + ((g_max - g_min) * math.random()))
+    local b = Clamp(0, 1, b_min + ((b_max - b_min) * math.random()))
+
+    return string.upper(this.ByteToHex(a * 255) .. this.ByteToHex(r * 255) .. this.ByteToHex(g * 255) .. this.ByteToHex(b * 255))
+end
+function GetRandomColor_HSV_ToHex(h_min, h_max, s_min, s_max, v_min, v_max, a_min, a_max)
+    local a = 1
+    if a_min and a_max then
+        a = Clamp(0, 1, a_min + ((a_max - a_min) * math.random()))
+    end
+
+    local h = Clamp(0, 360, h_min + ((h_max - h_min) * math.random()))
+    local s = Clamp(0, 1, s_min + ((s_max - s_min) * math.random()))
+    local v = Clamp(0, 1, v_min + ((v_max - v_min) * math.random()))
+
+    local r, g, b = HSV_RGB(h, s, v)
+
+    return string.upper(this.ByteToHex(a * 255) .. this.ByteToHex(r * 255) .. this.ByteToHex(g * 255) .. this.ByteToHex(b * 255))
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.GetHueCapped(hue)

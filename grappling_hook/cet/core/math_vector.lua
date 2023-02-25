@@ -1,5 +1,7 @@
 local this = {}
 
+local circlePoints_byCount = {}
+
 function vec_str(vector)
     if not vector then
         return "nil"
@@ -304,6 +306,8 @@ function GetProjectedVector_AlongPlane(vector, alongPlanes_normal)
     -- Get a line that is parallel to the plane, but along the direction of the vector
     local alongLine = GetProjectedVector_AlongPlane_Unit(vector, alongPlanes_normal)
 
+    Normalize(alongLine)
+
     -- Use the other overload to get the portion of the vector along this line
     return GetProjectedVector_AlongVector(vector, alongLine)
 end
@@ -315,6 +319,16 @@ function GetProjectedVector_AlongPlane_Unit(vector, alongPlanes_normal)
     Normalize(alongLine)
 
     return alongLine
+end
+
+function GetClosestPoint_Line_Point(pointOnLine, lineDirection, testPoint)
+    local dirToPoint = SubtractVectors(testPoint, pointOnLine)
+
+    local dot1 = DotProduct3D(dirToPoint, lineDirection)
+    local dot2 = DotProduct3D(lineDirection, lineDirection)
+    local ratio = dot1 / dot2
+
+    return AddVectors(pointOnLine, MultiplyVector(lineDirection, ratio))
 end
 
 -- Turns dot product into a user friendly angle in degrees
@@ -350,6 +364,18 @@ function AddAngle_0_360(current, delta)
 end
 function AddAngle_neg180_pos180(current, delta)
     return this.AddAngle(current, delta, -180, 180)
+end
+
+-- Returns an array of Vector2
+-- NOTE: Vector2 has X,Y capitalized.  Vector4 is lower case
+function GetCircle_Cached(num_sides)
+    local key = "sides" .. tostring(num_sides)
+
+    if not circlePoints_byCount[key] then
+        circlePoints_byCount[key] = this.GetCirclePoints(num_sides)
+    end
+
+    return circlePoints_byCount[key]
 end
 
 ------------------------------------ Intersection -------------------------------------
@@ -552,6 +578,14 @@ function To2DUnit(vector)
     return vector.x / len, vector.y / len
 end
 
+function GetMidPoint(point1, point2)
+    return Vector4.new(
+        point1.x + ((point2.x - point1.x) / 2),
+        point1.y + ((point2.y - point1.y) / 2),
+        point1.z + ((point2.z - point1.z) / 2),
+        1)
+end
+
 -------------------------------------- Operators --------------------------------------
 
 --TODO: See if some of these operators are already part of the Vector4
@@ -597,4 +631,19 @@ function this.AddAngle(current, delta, min, max)
     end
 
     return retVal
+end
+
+function this.GetCirclePoints(num_sides)
+    local delta_theta = 2 * math.pi / num_sides
+    local theta = 0
+
+    local points = {}       -- these define a unit circle
+
+    for i = 1, num_sides, 1 do
+        table.insert(points, Vector2.new({ X = math.cos(theta), Y = math.sin(theta)}))
+
+        theta = theta + delta_theta;
+    end
+
+    return points
 end

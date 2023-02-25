@@ -306,6 +306,8 @@ function GetProjectedVector_AlongPlane(vector, alongPlanes_normal)
     -- Get a line that is parallel to the plane, but along the direction of the vector
     local alongLine = GetProjectedVector_AlongPlane_Unit(vector, alongPlanes_normal)
 
+    Normalize(alongLine)
+
     -- Use the other overload to get the portion of the vector along this line
     return GetProjectedVector_AlongVector(vector, alongLine)
 end
@@ -317,6 +319,16 @@ function GetProjectedVector_AlongPlane_Unit(vector, alongPlanes_normal)
     Normalize(alongLine)
 
     return alongLine
+end
+
+function GetClosestPoint_Line_Point(pointOnLine, lineDirection, testPoint)
+    local dirToPoint = SubtractVectors(testPoint, pointOnLine)
+
+    local dot1 = DotProduct3D(dirToPoint, lineDirection)
+    local dot2 = DotProduct3D(lineDirection, lineDirection)
+    local ratio = dot1 / dot2
+
+    return AddVectors(pointOnLine, MultiplyVector(lineDirection, ratio))
 end
 
 -- Turns dot product into a user friendly angle in degrees
