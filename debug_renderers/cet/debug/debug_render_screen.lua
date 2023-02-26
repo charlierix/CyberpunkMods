@@ -4,6 +4,12 @@
 --  "FF8040" becomes "FFFF8040" (sort of a coral)
 --  "80FFFFFF" (50% transparent white)
 
+-- Figuring out the ink controller was made possible by reading discord conversations between anygoodname, keanuWheeze, psiberx, donk7413 (and likely others that I'm forgetting)
+-- Also analyzing "let there be flight" by jackhumbert and "nano drone" by keanuWheeze
+-- Another great resource is rtti dump (search for it on discord)
+-- and this site:
+-- https://nativedb.red4ext.com/
+
 local frame = require "debug/debug_render_screen_frame"
 local ui = require "debug/debug_render_screen_ui"
 
@@ -13,7 +19,7 @@ local this = {}
 
 local next_id = 0
 local timer = 0
-local item_types = CreateEnum("dot", "line", "triangle", "text")
+local item_types = CreateEnum("dot", "line", "triangle", "text", "text2D")
 
 local controller = nil
 
@@ -265,6 +271,24 @@ function DebugRenderScreen.Add_Text(center, text, category, color_back, color_fo
     local item = items:GetNewItem()
     this.SetItemBase(item, item_types.text, color_back_final, color_fore_final, nil, nil, lifespan_seconds_final)
     item.center = center
+    item.text = text
+
+    return item.id
+end
+-- Instead of writing text at a world 3D position, this shows it at a fixed 2D screen position
+---@param x_percent number 0 is left edge of screen, 1 is right edge of screen (0.5 is center)
+---@param y_percent number 0 is top edge of screen, 1 is bottom edge of screen (0.5 is center)
+function DebugRenderScreen.Add_Text2D(x_percent, y_percent, text, category, color_back, color_fore, lifespan_seconds)
+    if not is_enabled then
+        return nil
+    end
+
+    local color_back_final, color_fore_final, _, _, lifespan_seconds_final = this.GetFinalValues(category, color_back, color_fore, nil, nil, lifespan_seconds)
+
+    local item = items:GetNewItem()
+    this.SetItemBase(item, item_types.text2D, color_back_final, color_fore_final, nil, nil, lifespan_seconds_final)
+    item.x_percent = x_percent
+    item.y_percent = y_percent
     item.text = text
 
     return item.id
