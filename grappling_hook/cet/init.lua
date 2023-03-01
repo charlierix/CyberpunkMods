@@ -19,6 +19,7 @@ require "core/lists"
 require "core/math_basic"
 require "core/math_vector"
 require "core/math_yaw"
+require "core/sticky_list"
 require "core/strings"
 require "core/util"
 
@@ -32,6 +33,7 @@ require "data/util_data"
 
 require "debug/debug_code"
 require "debug/debug_render_logger"
+debug_render_screen = require "debug/debug_render_screen"
 require "debug/reporting"
 
 require "inventory/util_inventory"
@@ -151,6 +153,7 @@ local const =
 
     customKeyBase = "Grapple_Custom_",
 
+    shouldShowScreenDebug = true,
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 
@@ -175,28 +178,31 @@ local debug = {}
 local vars =
 {
     flightMode = const.flightModes.standard,
-    --grapple = nil,    -- an instance of models.Grapple    -- gets populated in Transition_ToAim (back to nil in Transition_ToStandard)
-    --airdash = nil,    -- an instance of models.AirDash    -- gets populated in Transition_ToAirDash (just a copy of grapple.aim_straight.air_dash)
-    --airanchor = nil,  -- an instance of models.AirAnchor  -- gets populated in Transition_ToFlight_Straight (back to nil in Transition_ToStandard)
+    --grapple = nil,        -- an instance of models.Grapple    -- gets populated in Transition_ToAim (back to nil in Transition_ToStandard)
+    --airdash = nil,        -- an instance of models.AirDash    -- gets populated in Transition_ToAirDash (just a copy of grapple.aim_straight.air_dash)
+    --airanchor = nil,      -- an instance of models.AirAnchor  -- gets populated in Transition_ToFlight_Straight (back to nil in Transition_ToStandard)
 
-    energy = 1000,      -- start with too much so the progress doesn't show during initial load
+    energy = 1000,          -- start with too much so the progress doesn't show during initial load
 
-    --startStopTracker  -- this gets instantiated in init (InitializeKeyTrackers)
+    --startStopTracker      -- this gets instantiated in init (InitializeKeyTrackers)
 
-    --xp_gain,          -- this is a class that gets told when grapple events occur, gains xp, periodically updates player and saves
+    --xp_gain,              -- this is a class that gets told when grapple events occur, gains xp, periodically updates player and saves
 
-    --startTime         -- gets populated when transitioning into a new flight mode (into aim, into flight, etc) ---- doesn't get set when transitioning to standard
+    --startTime             -- gets populated when transitioning into a new flight mode (into aim, into flight, etc) ---- doesn't get set when transitioning to standard
 
-    --rayFrom           -- gets populated when transitioning to airdash or flight
-    --rayHit            -- gets populated when transitioning to flight
-    --rayLength         -- gets populated when transitioning to airdash
-    --distToHit         -- len(rayHit-rayFrom)    populated when transitioning to flight
+    --rayFrom               -- gets populated when transitioning to airdash or flight
+    --rayHit                -- gets populated when transitioning to flight
+    --rayLength             -- gets populated when transitioning to airdash
+    --distToHit             -- len(rayHit-rayFrom)    populated when transitioning to flight
 
-    --hasBeenAirborne   -- set to false when transitioning to flight or air dash.  Used by air dash and flight (if flight has a desired length)
+    --stopplane_point       -- populated when transitioning to flight
+    --stopplane_normal
+
+    --hasBeenAirborne       -- set to false when transitioning to flight or air dash.  Used by air dash and flight (if flight has a desired length)
     --initialAirborneTime
 
-    --mappinID          -- this will be populated while the map pin is visible (managed in mappinutil.lua)
-    --mappinName        -- this is the name of the map pin that is currently visible (managed in mappinutil.lua)
+    --mappinID              -- this will be populated while the map pin is visible (managed in mappinutil.lua)
+    --mappinName            -- this is the name of the map pin that is currently visible (managed in mappinutil.lua)
 
     --NOTE: These sound props are only used for sounds that should be one at a time.  There can
     --      be other sounds that are managed elsewhere
@@ -274,6 +280,7 @@ registerForEvent("onInit", function()
     EnsureTablesCreated()
     Define_UI_Framework_Constants(const)
     InitializeUI(vars_ui, vars_ui_progressbar, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
+    debug_render_screen.CallFrom_onInit(const.shouldShowScreenDebug)
 
     local wrappers = {}
     function wrappers.GetPlayer() return Game.GetPlayer() end
@@ -355,7 +362,7 @@ registerForEvent("onUpdate", function(deltaTime)
     end
 
     shouldDraw = true       -- don't want a hung progress bar while in menu or driving
-
+    debug_render_screen.CallFrom_onUpdate(deltaTime)
     vars.startStopTracker:Tick()
 
     if const.shouldShowDebugWindow then
@@ -481,6 +488,11 @@ end)
 
 
 
+registerHotkey("GrapplingHook_ClearDebugVisuals", "Clear Debug Visuals", function()
+    debug_render_screen.Clear()
+end)
+
+
 -- registerHotkey("GrapplingHookConeCast_Points", "Cone Cast (points)", function()
 --     local log_build = DebugRenderLogger:new(true)
 --     local log_final = DebugRenderLogger:new(true)
@@ -565,6 +577,8 @@ registerForEvent("onDraw", function()
     if const.shouldShowDebugWindow then
         DrawDebugWindow(debug, vars_ui, const)
     end
+
+    debug_render_screen.CallFrom_onDraw()
 end)
 
 ----------------------------------- Private Methods -----------------------------------

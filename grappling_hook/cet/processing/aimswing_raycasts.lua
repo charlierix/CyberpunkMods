@@ -16,13 +16,13 @@ local LOOK_TO = 30
 local LOOK_FROM_RADIUS = 1
 local LOOK_TO_RADIUS = 6
 
+local debug_categories = CreateEnum("RAY_missline", "RAY_hitline", "RAY_hitpoint")
+
 -- This treats horizontal tunnel scan and look direction independently, doesn't take into account velocity
 function aimswing_raycasts.InitialCone1(o, const)
     o:GetCamera()
 
-    if not up then
-        this.InitRays()
-    end
+    this.InitRays()
 
     local log = DebugRenderLogger:new(true)
 
@@ -48,9 +48,7 @@ end
 function aimswing_raycasts.Scan_LookAndVelocity1(o, const)
     o:GetCamera()
 
-    if not up then
-        this.InitRays()
-    end
+    this.InitRays()
 
     local log = DebugRenderLogger:new(true)
 
@@ -106,9 +104,38 @@ function aimswing_raycasts.Scan_LookAndVelocity1(o, const)
     log:Save()
 end
 
+-- Chooses start points along a line, firing out rays at angles
+-- This would be used for short, low velocity hops
+function aimswing_raycasts.Cylinder(o, from, dir_unit, distance)
+    local DIST_ALONG = 3
+    local DIST_RADIAL = 5
+
+    this.InitRays()
+
+    local dir_right = CrossProduct3D(dir_unit, up)
+
+    local offset_along = MultiplyVector(dir_unit, DIST_ALONG)
+
+    local retVal = {}
+
+    -- Initial rays at from position
+    this.Cylinder_Burst(o, from, AddVectors(from, offset_along), dir_unit, dir_right, DIST_RADIAL, retVal)
+
+
+    -- Do a few more bursts down the line, based on how long the line is
+
+
+
+    return retVal
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.InitRays()
+    if up then
+        do return end
+    end
+
     up = Vector4.new(0, 0, 1, 1)
 
     -- coordinates of a pentagon
@@ -118,6 +145,10 @@ function this.InitRays()
     s2 = math.sqrt(10 - 2 * rad_5) / 4      -- x lower
     c1 = (rad_5 - 1) / 4                    -- y upper
     c2 = (rad_5 + 1) / 4                    -- y lower
+
+    debug_render_screen.DefineCategory(debug_categories.RAY_missline, nil, "A0C25A48")
+    debug_render_screen.DefineCategory(debug_categories.RAY_hitline, nil, "4ACF4A")
+    debug_render_screen.DefineCategory(debug_categories.RAY_hitpoint, "377538")
 end
 
 function this.GetPoint_Radial(from, dir_right, dir_up, dist_right, dist_up, ray_dist)
@@ -135,7 +166,17 @@ function this.FireRay(o, log, from, to)
     if hitPoint then
         log:Add_Line(from, hitPoint, nil, "2C2", 2)
     end
+end
+function this.FireRay2(o, from, to, hit_list)
+    local hitPoint = o:RayCast(from, to)
 
+    if hitPoint then
+        debug_render_screen.Add_Line(from, hitPoint, debug_categories.RAY_hitline)
+        debug_render_screen.Add_Dot(hitPoint, debug_categories.RAY_hitpoint)
+        table.insert(hit_list, hitPoint)
+    else
+        debug_render_screen.Add_Line(from, to, debug_categories.RAY_missline)
+    end
 end
 
 ------------------------------------- InitialCone1 ------------------------------------
@@ -275,6 +316,35 @@ function this.RaysCombined_Outward(o, log, from, direction, dir_up, dir_right)
         ray_out = this.GetPoint_Radial(ray_from, dir_right, dir_up, -s1, c1, HORZRADIAL_RADIUS)
         this.FireRay(o, log, ray_from, ray_out)
     end
+end
+
+--------------------------------------- Cylinder --------------------------------------
+
+-- Fires rays starting at from, ending at points radially away from to_line_point
+-- Logs to the screen visualizer
+-- Adds to list of hits (just hits, not normals)
+function this.Cylinder_Burst(o, from, to_line_point, direction, dir_right, radial_len, hit_list)
+    local dir_up = CrossProduct3D(dir_right, direction)
+
+    -- Up
+    local ray_out = this.GetPoint_Radial(to_line_point, dir_right, dir_up, 0, 1, radial_len)
+    this.FireRay2(o, from, ray_out, hit_list)
+
+    -- Up Right
+    ray_out = this.GetPoint_Radial(to_line_point, dir_right, dir_up, s1, c1, radial_len)
+    this.FireRay2(o, from, ray_out, hit_list)
+
+    -- Down Right
+    ray_out = this.GetPoint_Radial(to_line_point, dir_right, dir_up, s2, -c2, radial_len)
+    this.FireRay2(o, from, ray_out, hit_list)
+
+    -- Down Left
+    ray_out = this.GetPoint_Radial(to_line_point, dir_right, dir_up, -s2, -c2, radial_len)
+    this.FireRay2(o, from, ray_out, hit_list)
+
+    -- Up Left
+    ray_out = this.GetPoint_Radial(to_line_point, dir_right, dir_up, -s1, c1, radial_len)
+    this.FireRay2(o, from, ray_out, hit_list)
 end
 
 return aimswing_raycasts

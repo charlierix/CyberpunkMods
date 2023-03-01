@@ -42,6 +42,19 @@
         public double? stop_distance { get; init; }
 
         /// <summary>
+        /// If set, then a plane will be defined at the anchor point and the grapple will stop when the player
+        /// passes through the plane
+        /// </summary>
+        /// <remarks>
+        /// Made it a distance, so the plane could be placed some distance before or after the point (negative
+        /// value for after)
+        /// 
+        /// If placing after and accel_alongGrappleLine is populated, then the player will be slowed down, so
+        /// be careful
+        /// </remarks>
+        public double? stop_plane_distance { get; init; }
+
+        /// <summary>
         /// True: Grapple will exit if they touch a wall
         /// False: Grapple will ignore wall touching
         /// </summary>

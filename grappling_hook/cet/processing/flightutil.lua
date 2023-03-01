@@ -145,7 +145,7 @@ end
 
 -- These linearly drop percent to zero if close to desired (so acceleration doesn't cause wild oscillations)
 function GetDeadPercent_Speed(speed, maxSpeed, deadSpot, isVelAwayFromTarget)
-    if isVelAwayFromTarget then
+    if isVelAwayFromTarget or not deadSpot then
         return 1
     end
 
@@ -165,6 +165,10 @@ function GetDeadPercent_Speed(speed, maxSpeed, deadSpot, isVelAwayFromTarget)
     end
 end
 function GetDeadPercent_Distance(diffDist, deadSpot)
+    if not deadSpot then
+        return 1
+    end
+
     local absDiff = math.abs(diffDist)
 
     if absDiff < deadSpot then

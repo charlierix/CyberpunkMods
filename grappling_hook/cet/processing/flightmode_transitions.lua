@@ -50,10 +50,17 @@ function Transition_ToAim(grapple, vars, const, o, shouldConsumeEnergy)
     return true
 end
 
+
+
+
+
+--TODO: take in stop plane point and normal (both functions)
+
+
 -- This goes from aim into flight (or airdash to flight)
 -- There's no need to check for energy, that was done when trying to aim
 -- NOTE: airanchor should only be passed in when flight is using it (a solid wall hit doesn't use air anchor)
-function Transition_ToFlight_Straight(vars, const, o, rayFrom, rayHit, airanchor)
+function Transition_ToFlight_Straight(vars, const, o, rayFrom, rayHit, airanchor, stopplane_point, stopplane_normal)
     vars.flightMode = const.flightModes.flight_straight
 
     -- vars.grapple is already populated by aim
@@ -69,13 +76,16 @@ function Transition_ToFlight_Straight(vars, const, o, rayFrom, rayHit, airanchor
 
     vars.airanchor = airanchor
 
+    vars.stopplane_point = stopplane_point
+    vars.stopplane_normal = stopplane_normal
+
     vars.hasBeenAirborne = false
     vars.initialAirborneTime = nil
 end
 
 -- This goes from aim into flight
 -- There's no need to check for energy, that was done when trying to aim
-function Transition_ToFlight_Swing(grapple, vars, const, o, rayFrom, rayHit, airanchor)
+function Transition_ToFlight_Swing(grapple, vars, const, o, rayFrom, rayHit, airanchor, stopplane_point, stopplane_normal)
     vars.flightMode = const.flightModes.flight_swing
 
     vars.grapple = grapple      -- this was populated in Transition_ToAim, but aim swing redefines it based on the situation
@@ -85,21 +95,22 @@ function Transition_ToFlight_Swing(grapple, vars, const, o, rayFrom, rayHit, air
 
     vars.startTime = o.timer
 
-
-
-    --TODO: There could be more than one rope
     vars.rayFrom = rayFrom
     vars.rayHit = rayHit
     vars.distToHit = math.sqrt(GetVectorDiffLengthSqr(rayHit, rayFrom))
 
     vars.airanchor = airanchor
 
-
-
+    vars.stopplane_point = stopplane_point
+    vars.stopplane_normal = stopplane_normal
 
     vars.hasBeenAirborne = false
     vars.initialAirborneTime = nil
 end
+
+
+
+
 
 -- This gets called when they exit flight by looking too far away while still airborne
 function Transition_ToAntiGrav(vars, const, o)

@@ -58,6 +58,61 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos)
         fallDamageReduction_percent = 0,
     }
 end
+function aimswing_grapples.GetElasticStraight2(grapple, from_pos, to_pos, accel_mult, speed_mult)
+    if not up then
+        up = Vector4.new(0, 0, 1, 1)
+    end
+
+    local direction = SubtractVectors(to_pos, from_pos)
+    local length = GetVectorLength(direction)
+    local direction_unit = MultiplyVector(direction, 1 / length)
+
+    local antigrav_percent = this.GetStaightAntigravPercent(direction_unit)
+
+    if not accel_mult then
+        accel_mult = 1
+    end
+
+    if not speed_mult then
+        speed_mult = 1
+    end
+
+    --TODO: adjust accel, max speed, deadpot based on distance to travel
+
+    return
+    {
+        name = grapple.name,
+        description = grapple.description,
+
+        mappin_name = grapple.mappin_name,
+
+        stop_on_wallHit = true,
+        stop_plane_distance = 0.25,
+
+        anti_gravity =
+        {
+            antigrav_percent = antigrav_percent,     --TODO: antigrav % needs to depend on how much they are looking up (100% at horz, N% at vertical)
+            fade_duration = 1,
+        },
+
+        desired_length = 0,     -- pull all the way to the anchor
+
+        accel_alongGrappleLine =
+        {
+            accel = 50 * accel_mult,
+            speed = 36 * speed_mult,
+        },
+        accel_alongLook = nil,
+
+        springAccel_k = nil,
+
+        velocity_away = nil,
+
+        aim_swing = grapple.aim_swing,
+
+        fallDamageReduction_percent = 0,
+    }
+end
 
 function aimswing_grapples.GetPureRope(grapple)
 

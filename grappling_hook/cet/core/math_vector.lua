@@ -436,6 +436,24 @@ function GetClosestPoints_Line_Line(line1_point1, line1_point2, line2_point1, li
     end
 end
 
+function IsAbovePlane(point_on_plane, normal, test_point, trueIfOnPlane)
+    -- Compute D, using an arbitrary point P, that lies on the plane: D = - (Nx*Px + Ny*Py + Nz*Pz); Don't forget the inversion !
+    local d = -((normal.x * point_on_plane.x) + (normal.y * point_on_plane.y) + (normal.z * point_on_plane.z))
+
+    -- Test point (T) with respect to the plane using the plane equation: res = Nx*Tx + Ny*Ty + Nz*Tz + D
+    local res = (normal.x * test_point.x) + (normal.y * test_point.y) + (normal.z * test_point.z) + d
+
+    if res > 0 then
+        return true     -- above the plane
+
+    elseif trueIfOnPlane and IsNearZero(res) then
+        return true     -- on the plane
+
+    else
+        return false        -- below the plane
+    end
+end
+
 --------------------------------------- Random ----------------------------------------
 
 -- Returns a vector that is perpendicular to the vector passed in

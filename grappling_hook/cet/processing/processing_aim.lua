@@ -5,6 +5,9 @@ local this = {}
 
 local up = nil
 
+local set_debug_categories = false
+local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_up", "AIM_anchor", "AIM_stopplane")
+
 -- This is called when they've initiated a new grapple.  It looks at the environment and kicks
 -- off actual flight with final values (like anchor point)
 --
@@ -56,8 +59,8 @@ function this.Aim_Straight(aim, o, player, vars, const, debug)
     if hitPoint then
         -- Ensure pin is drawn and placed properly (flight pin, not aim pin)
         EnsureMapPinVisible(hitPoint, vars.grapple.mappin_name, vars, o)
-
-        Transition_ToFlight_Straight(vars, const, o, from, hitPoint, nil)
+        local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(hitPoint, o.lookdir_forward, vars.grapple.stop_plane_distance)
+        Transition_ToFlight_Straight(vars, const, o, from, hitPoint, nil, stopplane_point, stopplane_normal)
         do return end
     end
 
@@ -87,7 +90,8 @@ function this.Aim_Straight(aim, o, player, vars, const, debug)
 
                 hitPoint = Vector4.new(from.x + (o.lookdir_forward.x * aim.max_distance), from.y + (o.lookdir_forward.y * aim.max_distance), from.z + (o.lookdir_forward.z * aim.max_distance), 1)
                 EnsureMapPinVisible(hitPoint, vars.grapple.mappin_name, vars, o)
-                Transition_ToFlight_Straight(vars, const, o, from, hitPoint, aim.air_anchor)
+                local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(hitPoint, o.lookdir_forward, vars.grapple.stop_plane_distance)
+                Transition_ToFlight_Straight(vars, const, o, from, hitPoint, aim.air_anchor, stopplane_point, stopplane_normal)
 
                 switched = true
             end
@@ -177,9 +181,7 @@ function this.Aim_Swing_ATTEMPT2(aim, o, player, vars, const, debug)
 
     this.Aim_Swing_Slingshot(is_airborne, o, vars, const)
 end
-
---TODO: have a log, pass onto transition so process can continue to log points
-function this.Aim_Swing(aim, o, player, vars, const, debug)
+function this.Aim_Swing_ATTEMPT3(aim, o, player, vars, const, debug)
     local SPEED_STRAIGHT = 8
     local DOT_UNDERSWING_MIN = -0.8
     local DOT_UNDERSWING_MAX = -0.2
@@ -259,6 +261,118 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     this.Aim_Swing_Slingshot2(position, look_dir, speed_look, is_airborne, o, vars, const)
 end
 
+function this.Aim_Swing(aim, o, player, vars, const, debug)
+    local SPEED_STRAIGHT = 8
+    local DOT_UNDERSWING_MIN = -0.8
+    local DOT_UNDERSWING_MAX = -0.2
+    local DOT_TOSS_MAX = 0.4
+    local DOT_HORZ_MIN = -0.6
+
+    this.EnsureDebugCategoriesSet()
+    debug_render_screen.Clear()
+
+    if this.RecoverEnergy_Switch(o, player, vars, const) then
+        debug_render_screen.Add_Text2D(nil, nil, "exit early", debug_categories.AIM_action)
+        do return end
+    end
+
+    if not up then
+        up = Vector4.new(0, 0, 1, 1)
+    end
+
+    o:GetCamera()
+
+    local position, look_dir = o:GetCrosshairInfo()
+
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Dot(position, debug_categories.AIM_pos)
+        debug_render_screen.Add_Line(position, AddVectors(position, look_dir), debug_categories.AIM_look)
+    end
+
+    if not IsAirborne(o) then
+        debug_render_screen.Add_Text2D(nil, nil, "from ground", debug_categories.AIM_action)
+        this.Aim_Swing_FromGround(position, look_dir, o, vars, const)
+        do return end
+    end
+
+    local vel_look = GetProjectedVector_AlongVector(o.vel, look_dir, false)
+    local speed_look = GetVectorLength(vel_look)
+
+    local speed_sqr = GetVectorLengthSqr(o.vel)
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Text2D(nil, nil, "speed: " .. tostring(Round(math.sqrt(speed_sqr), 1)) .. "\r\nspeed look: " .. tostring(Round(speed_look, 1)), debug_categories.AIM_speed)
+    end
+
+    if speed_sqr <= SPEED_STRAIGHT * SPEED_STRAIGHT then
+        -- Moving too slow, just do a straight line grapple
+        debug_render_screen.Add_Text2D(nil, nil, "too slow", debug_categories.AIM_action)
+        this.Aim_Swing_Slingshot2(position, look_dir, speed_look, false, o, vars, const)
+        do return end
+    end
+
+    local speed = math.sqrt(speed_sqr)
+    local vel_unit = MultiplyVector(o.vel, 1 / speed)       -- safe to divide, because check for zero was done above
+
+    local dot_vertical = DotProduct3D(vel_unit, up)
+
+    local vel_horz_unit = GetProjectedVector_AlongPlane_Unit(o.vel, up)
+    local vel_horz = GetProjectedVector_AlongVector(o.vel, vel_horz_unit)       -- this is the same thing that GetProjectedVector_AlongPlane does
+
+    local look_horz_unit = GetProjectedVector_AlongPlane_Unit(look_dir, up)
+
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Line(position, AddVectors(position, up), debug_categories.AIM_up)
+        debug_render_screen.Add_Line(position, AddVectors(position, vel_unit), debug_categories.AIM_velunit)
+    end
+
+    local dot_horizontal = DotProduct3D(look_horz_unit, vel_horz_unit)
+    if dot_horizontal < DOT_HORZ_MIN then
+        -- They are trying to pull a 180
+        debug_render_screen.Add_Text2D(nil, nil, "pulling a 180", debug_categories.AIM_action)
+        this.Aim_Swing_Slingshot2(position, look_dir, speed_look, false, o, vars, const)
+        do return end
+
+    elseif dot_vertical < DOT_UNDERSWING_MIN then
+        -- Going nearly straight down
+        -- If there is enough velocity, do an underswing and toss them to the end point
+        if this.Aim_Swing_Toss_DownUp() then
+            debug_render_screen.Add_Text2D(nil, nil, "down - tossing up", debug_categories.AIM_action)
+        else
+            -- There's not enough velocity, revert to straight line
+            debug_render_screen.Add_Text2D(nil, nil, "down - couldn't toss up", debug_categories.AIM_action)
+            this.Aim_Swing_Slingshot2(position, look_dir, speed_look, false, o, vars, const)
+        end
+        do return end
+
+    elseif dot_vertical > DOT_TOSS_MAX then
+        -- Going above 45 degrees
+        -- An overswing might be able to be used, but that would feel unnatural.  Just do a straight line
+        debug_render_screen.Add_Text2D(nil, nil, "over 45 degrees", debug_categories.AIM_action)
+        this.Aim_Swing_Slingshot2(position, look_dir, speed_look, false, o, vars, const)
+        do return end
+
+    elseif dot_vertical < DOT_UNDERSWING_MAX then
+        -- Standard web swing, this should be most cases
+        if this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, vars, const) then
+            debug_render_screen.Add_Text2D(nil, nil, "underswing", debug_categories.AIM_action)
+        else
+            debug_render_screen.Add_Text2D(nil, nil, "couldn't underswing", debug_categories.AIM_action)
+            this.Aim_Swing_Slingshot2(position, look_dir, speed_look, false, o, vars, const)
+        end
+        do return end
+    end
+
+    -- If there's enough velocity, do a mini underswing and toss them to the end point
+    if this.Aim_Swing_Toss_Up() then
+        debug_render_screen.Add_Text2D(nil, nil, "toss up", debug_categories.AIM_action)
+        do return end
+    end
+
+    -- Nothing else worked, default to straight line
+    debug_render_screen.Add_Text2D(nil, nil, "default", debug_categories.AIM_action)
+    this.Aim_Swing_Slingshot2(position, look_dir, speed_look, false, o, vars, const)
+end
+
 function this.RecoverEnergy_Switch(o, player, vars, const)
     if vars.startStopTracker:GetRequestedAction() then
         -- Something different was requested, recover the energy that was used for this current grapple
@@ -276,6 +390,36 @@ function this.RecoverEnergy_Switch(o, player, vars, const)
     return false
 end
 
+function this.GetStopPlane_Straight(anchor_pos, direction, stop_plane_distance)
+    if not stop_plane_distance then
+        return nil, nil
+    end
+
+    local point_on_plane = AddVectors(anchor_pos, MultiplyVector(direction, -stop_plane_distance))
+
+    return point_on_plane, direction
+end
+
+function this.EnsureDebugCategoriesSet()
+    if set_debug_categories then
+        do return end
+    end
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_action, "BC105C80", "FFF", nil, nil, nil, 0.25, 0.67)
+    debug_render_screen.DefineCategory(debug_categories.AIM_speed, "BC2E6939", "FFF", nil, nil, nil, 0.25, 0.75)
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_pos, "CCC")
+    debug_render_screen.DefineCategory(debug_categories.AIM_look, nil, "EBEDA8")
+    debug_render_screen.DefineCategory(debug_categories.AIM_velunit, nil, "9370B5")
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_up, nil, "0AC70D")
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_anchor, "DED716", nil, nil, 1.5, true)
+    debug_render_screen.DefineCategory(debug_categories.AIM_stopplane, "40DED716", "80DED716")
+
+    set_debug_categories = true
+end
+
 ------------------------------------ Temp Hardcoded -----------------------------------
 
 -- This blindly sets the anchor point at 24 meters, 45 degrees above look direction
@@ -291,9 +435,10 @@ function this.Aim_Swing_45Only(o, vars, const)
     local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
     local to = AddVectors(from, MultiplyVector(look_direction, 24))
 
-    EnsureMapPinVisible(to, vars.grapple.mappin_name, vars, o)
+    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(to, look_direction, vars.grapple.stop_plane_distance)
 
-    Transition_ToFlight_Swing(vars.grapple, vars, const, o, from, to, nil)
+    EnsureMapPinVisible(to, vars.grapple.mappin_name, vars, o)
+    Transition_ToFlight_Swing(vars.grapple, vars, const, o, from, to, nil, stopplane_point, stopplane_normal)
 end
 
 -- This is similar to Aim_Swing_45Only, but changes the anchor length based on velocity along look direction
@@ -318,9 +463,10 @@ function this.Aim_Swing_45_AppropriateVelocity(speed, o, vars, const)
     local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
     local to = AddVectors(from, MultiplyVector(look_direction, anchor_dist))
 
-    EnsureMapPinVisible(to, vars.grapple.mappin_name, vars, o)
+    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(to, look_direction, vars.grapple.stop_plane_distance)
 
-    Transition_ToFlight_Swing(vars.grapple, vars, const, o, from, to, nil)
+    EnsureMapPinVisible(to, vars.grapple.mappin_name, vars, o)
+    Transition_ToFlight_Swing(vars.grapple, vars, const, o, from, to, nil, stopplane_point, stopplane_normal)
 end
 
 -- This uses the speed along look direction to figure out how far along look the end point of the swing should be
@@ -391,11 +537,16 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
 
     local anchor_point = Vector4.new((intersect1.x + intersect2.x) / 2, (intersect1.y + intersect2.y) / 2, (intersect1.z + intersect2.z) / 2, 1)
 
-    EnsureMapPinVisible(anchor_point, vars.grapple.mappin_name, vars, o)
 
-    --TODO: extra args for stop settings
-    --  define a plane that will cancel the swing once they pass to the other side
-    Transition_ToFlight_Swing(vars.grapple, vars, const, o, position, anchor_point, nil)
+    --TODO: get a rope style grapple
+
+
+    local quat = GetRotation(vel_unit, look_dir, 2)
+    local dest_dir = RotateVector3D(vel_unit, quat)
+    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(dest_pos, dest_dir, vars.grapple.stop_plane_distance)
+
+    EnsureMapPinVisible(anchor_point, vars.grapple.mappin_name, vars, o)
+    Transition_ToFlight_Swing(vars.grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
 
     return true
 end
@@ -426,14 +577,14 @@ function this.Aim_Swing_Slingshot(is_airborne, o, vars, const)
     --TODO: Distance should be based on current speed (also how cluttered the area is)
     local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
 
-    -- Ensure pin is drawn and placed properly (flight pin, not aim pin)
-    EnsureMapPinVisible(anchor_pos, vars.grapple.mappin_name, vars, o)
-
     local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos)
 
-    this.MaybePopUp(is_airborne, o, new_grapple.anti_gravity)
+    this.MaybePopUp(is_airborne, o, new_grapple.anti_gravity, look_dir)
 
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil)
+    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, look_dir, new_grapple.stop_plane_distance)
+
+    EnsureMapPinVisible(anchor_pos, new_grapple.mappin_name, vars, o)
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
 end
 function this.Aim_Swing_Slingshot2(position, look_dir, speed_look, is_airborne, o, vars, const)
     local MIN_DIST = 15
@@ -446,18 +597,78 @@ function this.Aim_Swing_Slingshot2(position, look_dir, speed_look, is_airborne, 
     --TODO: If looking down, and there is ground in the way, choose a point above the ground
     local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
 
-    -- Ensure pin is drawn and placed properly (flight pin, not aim pin)
-    EnsureMapPinVisible(anchor_pos, vars.grapple.mappin_name, vars, o)
-
     local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos)
 
-    this.MaybePopUp(is_airborne, o, new_grapple.anti_gravity)
+    this.MaybePopUp(is_airborne, o, new_grapple.anti_gravity, look_dir)
 
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil)
+    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, look_dir, new_grapple.stop_plane_distance)
+
+    EnsureMapPinVisible(anchor_pos, new_grapple.mappin_name, vars, o)
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
+end
+
+function this.Aim_Swing_FromGround(position, look_dir, o, vars, const)
+    local DIST_HORZ = 18
+    local DIST_VERT = 6
+
+    local DOT_MAX = 0.9
+    local DOT_MIN = 0
+
+    local dot_vert = DotProduct3D(look_dir, up)
+
+    -- Figure out max distance based on angle
+    local anchor_dist
+    if dot_vert >= DOT_MAX then
+        anchor_dist = DIST_VERT
+    elseif dot_vert <= DOT_MIN then
+        anchor_dist = DIST_HORZ
+    else
+        anchor_dist = GetScaledValue(DIST_HORZ, DIST_VERT, DOT_MIN, DOT_MAX, dot_vert)
+    end
+
+    local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
+
+    -- Fire a ray to see if the path is clear
+    local hit = o:RayCast(position, anchor_pos)
+    if hit then
+        -- Not clear, set anchor point at hit
+        this.Aim_Swing_FromGround_DoIt(position, hit, look_dir, o, vars, const)
+        do return end
+    end
+
+    -- Not going to run into something, fire some rays to see how cluttered the area is
+    local hits = swing_raycasts.Cylinder(o, position, look_dir, anchor_dist)
+
+    -- Reduce max if cluttered (hits along the path should apply a constricting pressure)
+    -- May also want to push the anchor point if too close to a hit
+
+
+
+    this.Aim_Swing_FromGround_DoIt(position, anchor_pos, look_dir, o, vars, const)
+end
+function this.Aim_Swing_FromGround_DoIt(position, anchor_pos, jumpdir_unit, o, vars, const)
+    local new_grapple = swing_grapples.GetElasticStraight2(vars.grapple, position, anchor_pos)
+
+    -- Flight pin, not aim
+    EnsureMapPinVisible(anchor_pos, new_grapple.mappin_name, vars, o)
+    debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_anchor)
+
+    this.MaybePopUp(false, o, new_grapple.anti_gravity, jumpdir_unit)
+
+    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, jumpdir_unit, new_grapple.stop_plane_distance)
+    if stopplane_point then
+        debug_render_screen.Add_Square(stopplane_point, stopplane_normal, 3, 3, debug_categories.AIM_stopplane)
+    end
+
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
 end
 
 -- If on the ground and angle is too low, apply an up impulse
-function this.MaybePopUp(is_airborne, o, anti_gravity)
+function this.MaybePopUp(is_airborne, o, anti_gravity, jumpdir_unit)
+    local STRENGTH_MAX = 4
+    local DOT_HORZ = 0.4
+    local DOT_VERT = 0.75
+
     if is_airborne then
         do return end
     end
@@ -465,5 +676,16 @@ function this.MaybePopUp(is_airborne, o, anti_gravity)
     --TODO: May want to add some kick in the horizontal portion of direction facing
     --TODO: Adjust upward strength based on antigrav
 
-    o:AddImpulse(0, 0, 4)
+    local dot = DotProduct3D(jumpdir_unit, up)
+
+    local strength = 0
+    if dot < DOT_HORZ then
+        strength = STRENGTH_MAX
+    elseif dot > DOT_VERT then
+        do return end
+    else
+        strength = GetScaledValue(0, STRENGTH_MAX, DOT_VERT, DOT_HORZ, dot)
+    end
+
+    o:AddImpulse(0, 0, strength)
 end
