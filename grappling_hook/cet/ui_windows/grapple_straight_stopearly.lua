@@ -3,6 +3,8 @@ local this = {}
 local isHovered_stopAngle_checkbox = false
 local isHovered_stopdistance_checkbox = false
 local isHovered_stopdistance_slider = false
+local isHovered_stopplane_checkbox = false
+local isHovered_stopplane_slider = false
 local isHovered_stopOnWallHit_checkbox = false
 
 function DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
@@ -26,11 +28,15 @@ function DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
     gst8_stop.stopAngle_value = this.Define_StopAngle_Value(const)
     gst8_stop.stopAngle_graphic = this.Define_StopAngle_Graphic(const)
 
-    --TODO: Reuse the deadspot graphic (always set percent to 1)
     -- Stop Distance (Grapple.stop_distance)
     gst8_stop.has_stopDistance = this.Define_HasStopDistance(const)
     gst8_stop.stopDistance_help = this.Define_StopDistance_Help(gst8_stop.has_stopDistance, const)
     gst8_stop.stopDistance_value = this.Define_StopDistance_Value(const)
+
+    -- Stop Plane (Grapple.stop_plane_distance)
+    gst8_stop.has_stopPlane = this.Define_HasStopPlane(const)
+    gst8_stop.stopPlane_help = this.Define_StopPlane_Help(gst8_stop.has_stopPlane, const)
+    gst8_stop.stopPlane_value = this.Define_StopPlane_Value(const)
 
     -- Stop on wall hit (Grapple.stop_on_wallHit)
     gst8_stop.should_stopOnWallHit = this.Define_ShouldStopOnWallHit(const)
@@ -50,6 +56,9 @@ function ActivateWindow_GrappleStraight_StopEarly(vars_ui, const)
 
     vars_ui.gst8_stop.has_stopDistance.isChecked = nil
     vars_ui.gst8_stop.stopDistance_value.value = nil
+
+    vars_ui.gst8_stop.has_stopPlane.isChecked = nil
+    vars_ui.gst8_stop.stopPlane_value.value = nil
 
     vars_ui.gst8_stop.should_stopOnWallHit.isChecked = nil
 
@@ -76,7 +85,7 @@ function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player,
     Refresh_StickFigure(gst8_stop.stickFigure, isHovered_stopAngle_checkbox or isHovered_stopOnWallHit_checkbox)
     Refresh_GrappleArrows(gst8_stop.arrows, grapple, false, false, false)
     Refresh_GrappleDesiredLength(gst8_stop.desired_line, grapple, nil, changes, false)
-    this.Refresh_GrappleAccelToDesired_Custom(gst8_stop.desired_extra, grapple, gst8_stop.has_stopDistance, gst8_stop.stopDistance_value, isHovered_stopdistance_checkbox or isHovered_stopdistance_slider)
+    this.Refresh_GrappleAccelToDesired_Custom(gst8_stop.desired_extra, grapple, gst8_stop.has_stopDistance, gst8_stop.stopDistance_value, gst8_stop.has_stopPlane, gst8_stop.stopPlane_value, isHovered_stopdistance_checkbox or isHovered_stopplane_checkbox or isHovered_stopdistance_slider or isHovered_stopplane_slider)
 
     this.Refresh_HasStopAngle(gst8_stop.has_stopAngle, grapple)
     this.Refresh_StopAngle_Value(gst8_stop.stopAngle_value, grapple)
@@ -84,6 +93,9 @@ function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player,
 
     this.Refresh_HasStopDistance(gst8_stop.has_stopDistance, grapple)
     this.Refresh_StopDistance_Value(gst8_stop.stopDistance_value, grapple)
+
+    this.Refresh_HasStopPlane(gst8_stop.has_stopPlane, grapple)
+    this.Refresh_StopPlane_Value(gst8_stop.stopPlane_value, grapple)
 
     this.Refresh_ShouldStopOnWallHit(gst8_stop.should_stopOnWallHit, grapple)
 
@@ -120,6 +132,15 @@ function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player,
         _, isHovered_stopdistance_slider = Draw_Slider(gst8_stop.stopDistance_value, vars_ui.style.slider, vars_ui.scale)
     else
         isHovered_stopdistance_slider = false
+    end
+
+    _, isHovered_stopplane_checkbox = Draw_CheckBox(gst8_stop.has_stopPlane, vars_ui.style.checkbox, vars_ui.style.colors)
+    Draw_HelpButton(gst8_stop.stopPlane_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+
+    if gst8_stop.has_stopPlane.isChecked then
+        _, isHovered_stopplane_slider = Draw_Slider(gst8_stop.stopPlane_value, vars_ui.style.slider, vars_ui.scale)
+    else
+        isHovered_stopplane_slider = false
     end
 
     _, isHovered_stopOnWallHit_checkbox = Draw_CheckBox(gst8_stop.should_stopOnWallHit, vars_ui.style.checkbox, vars_ui.style.colors)
@@ -171,8 +192,8 @@ function this.Define_GrappleAccelToDesired_Custom()
         y = -70,
     }
 end
-function this.Refresh_GrappleAccelToDesired_Custom(def, grapple, def_checkbox, def_slider, shouldHighlight)
-    if not def_checkbox.isChecked or not def_slider.value then
+function this.Refresh_GrappleAccelToDesired_Custom(def, grapple, def_checkbox_dist, def_slider_dist, def_checkbox_plane, def_slider_plane, shouldHighlight)
+    if (not def_checkbox_dist.isChecked or not def_slider_dist.value) and (not def_checkbox_plane.isChecked or not def_slider_plane.value) then
         def.show_dead = false
         do return end
     end
@@ -181,8 +202,18 @@ function this.Refresh_GrappleAccelToDesired_Custom(def, grapple, def_checkbox, d
     def.isStandardColor_dead = true
     def.isHighlight_dead = shouldHighlight
 
+    local dist_dist = 0
+    if def_checkbox_dist.isChecked and def_slider_dist.value then
+        dist_dist = GetSliderValue(def_slider_dist)
+    end
+
+    local dist_plane = 0
+    if def_checkbox_plane.isChecked and def_slider_plane.value then
+        dist_plane = GetSliderValue(def_slider_plane)
+    end
+
     -- Scale drawn deadspot relative to the aim distance
-    def.length_dead = GetScaledValue(0, def.to_x - def.from_x, 0, grapple.aim_straight.max_distance, GetSliderValue(def_slider))
+    def.length_dead = GetScaledValue(0, def.to_x - def.from_x, 0, grapple.aim_straight.max_distance, math.max(dist_dist, dist_plane))
 end
 
 -- StopAngle
@@ -309,7 +340,7 @@ function this.Define_HasStopDistance(const)
         position =
         {
             pos_x = 220,
-            pos_y = 40,
+            pos_y = 30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -362,7 +393,7 @@ function this.Define_StopDistance_Value(const)
         position =
         {
             pos_x = 220,
-            pos_y = 75,
+            pos_y = 65,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -376,6 +407,93 @@ function this.Refresh_StopDistance_Value(def, grapple)
     if not def.value then
         if grapple.stop_distance then
             def.value = grapple.stop_distance
+        else
+            def.value = 0
+        end
+    end
+end
+
+-- StopPlane
+function this.Define_HasStopPlane(const)
+    -- CheckBox
+    return
+    {
+        invisible_name = "GrappleStraight_StopEarly_HasStopPlane",
+
+        text = "Pass thru plane",
+
+        isEnabled = true,
+
+        position =
+        {
+            pos_x = 220,
+            pos_y = 110,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_CheckBox,
+    }
+end
+function this.Refresh_HasStopPlane(def, grapple)
+    --NOTE: TransitionWindows_Straight_StopEarly sets this to nil
+    if def.isChecked == nil then
+        def.isChecked = grapple.stop_plane_distance ~= nil
+    end
+end
+
+function this.Define_StopPlane_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        invisible_name = "GrappleStraight_StopEarly_StopPlane_Help",
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[This is useful for grapples meant to launch you into the air like a slingshot
+
+It defines a plane at the anchor point, and the grapple will end when you pass through that plane]]
+
+    return retVal
+end
+
+function this.Define_StopPlane_Value(const)
+    -- Slider
+    return
+    {
+        invisible_name = "GrappleStraight_StopEarly_StopPlane_Value",
+
+        min = 0,
+        max = 6,
+
+        decimal_places = 1,
+
+        width = 300,
+
+        ctrlclickhint_horizontal = const.alignment_horizontal.left,
+        ctrlclickhint_vertical = const.alignment_vertical.bottom,
+
+        position =
+        {
+            pos_x = 220,
+            pos_y = 145,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_Slider,
+    }
+end
+function this.Refresh_StopPlane_Value(def, grapple)
+    -- There is no need to store changes in the changes list.  Value is directly changed
+    --NOTE: TransitionWindows_Straight_StopEarly sets this to nil
+    if not def.value then
+        if grapple.stop_plane_distance then
+            def.value = grapple.stop_plane_distance
         else
             def.value = 0
         end
@@ -443,6 +561,19 @@ function this.Refresh_IsDirty(def, grapple, gst8_stop)
         isDirty_dist = grapple.stop_distance ~= nil
     end
 
+    -- Plane
+    local isDirty_plane = false
+
+    if gst8_stop.has_stopPlane.isChecked then
+        if grapple.stop_plane_distance then
+            isDirty_plane = not IsNearValue(gst8_stop.stopPlane_value.value, grapple.stop_plane_distance)
+        else
+            isDirty_plane = true
+        end
+    else
+        isDirty_plane = grapple.stop_plane_distance ~= nil
+    end
+
     -- Wall Hit
     local isDirty_wall = gst8_stop.should_stopOnWallHit.isChecked ~= grapple.stop_on_wallHit
 
@@ -461,6 +592,7 @@ function this.Refresh_IsDirty(def, grapple, gst8_stop)
 
     def.isDirty =
         isDirty_dist or
+        isDirty_plane or
         isDirty_wall or
         isDirty_angle
 end
@@ -471,6 +603,13 @@ function this.Save(player, grapple, gst8_stop)
         grapple.stop_distance = GetSliderValue(gst8_stop.stopDistance_value)
     else
         grapple.stop_distance = nil
+    end
+
+    -- Plane
+    if gst8_stop.has_stopPlane.isChecked then
+        grapple.stop_plane_distance = GetSliderValue(gst8_stop.stopPlane_value)
+    else
+        grapple.stop_plane_distance = nil
     end
 
     -- Wall Hit

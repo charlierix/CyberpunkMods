@@ -573,7 +573,8 @@ function this.Define_StopEarly(const)
             -- the content is presented as sorted by name
             a_minDot = { prompt = "look away angle" },
             b_distance = { prompt = "distance to desired" },
-            c_wall = { prompt = "touch wall" },
+            c_plane = { prompt = "pass thru plane" },
+            d_wall = { prompt = "touch wall" },
         },
 
         invisible_name = "Grapple_Straight_StopEarly",
@@ -594,10 +595,16 @@ function this.Refresh_StopEarly(def, grapple)
         def.content.b_distance.value = nil
     end
 
-    if grapple.stop_on_wallHit then
-        def.content.c_wall.value = " "      -- can't use "", because summary button looks for nil or empty string
+    if grapple.stop_plane_distance then
+        def.content.c_plane.value = tostring(Round(grapple.stop_plane_distance, 1))
     else
-        def.content.c_wall.value = nil
+        def.content.c_plane.value = nil
+    end
+
+    if grapple.stop_on_wallHit then
+        def.content.d_wall.value = " "      -- can't use "", because summary button looks for nil or empty string
+    else
+        def.content.d_wall.value = nil
     end
 end
 

@@ -50,13 +50,6 @@ function Transition_ToAim(grapple, vars, const, o, shouldConsumeEnergy)
     return true
 end
 
-
-
-
-
---TODO: take in stop plane point and normal (both functions)
-
-
 -- This goes from aim into flight (or airdash to flight)
 -- There's no need to check for energy, that was done when trying to aim
 -- NOTE: airanchor should only be passed in when flight is using it (a solid wall hit doesn't use air anchor)
@@ -107,10 +100,6 @@ function Transition_ToFlight_Swing(grapple, vars, const, o, rayFrom, rayHit, air
     vars.hasBeenAirborne = false
     vars.initialAirborneTime = nil
 end
-
-
-
-
 
 -- This gets called when they exit flight by looking too far away while still airborne
 function Transition_ToAntiGrav(vars, const, o)
