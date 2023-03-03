@@ -6,7 +6,7 @@ local this = {}
 local up = nil
 
 local set_debug_categories = false
-local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_up", "AIM_anchor", "AIM_stopplane")
+local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist")
 
 -- This is called when they've initiated a new grapple.  It looks at the environment and kicks
 -- off actual flight with final values (like anchor point)
@@ -227,6 +227,8 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
         do return end
     end
 
+    --TODO: option to limit anchor if there's not any ray hits nearby.  Either cost, or a reduced height
+
     local vel_look = GetProjectedVector_AlongVector(o.vel, look_dir, false)
     local speed_look = GetVectorLength(vel_look)
 
@@ -348,6 +350,7 @@ function this.EnsureDebugCategoriesSet()
 
     debug_render_screen.DefineCategory(debug_categories.AIM_anchor, "DED716", nil, nil, 1.5, true)
     debug_render_screen.DefineCategory(debug_categories.AIM_stopplane, "40DED716", "80DED716")
+    debug_render_screen.DefineCategory(debug_categories.AIM_anchordist, "94838150", "F8F36C")
 
     set_debug_categories = true
 end
@@ -478,22 +481,26 @@ function this.Aim_Swing_FromGround(position, look_dir, o, vars, const)
         do return end
     end
 
+    ---------------------------
+    -- After analyzing various launches and ray hits/misses, I don't think I would want to change behavior of the grapple.
+    -- The player knows where they're pointing and reducing grapple ability in tight spots will just be annoying
+    ---------------------------
     -- Not going to run into something, fire some rays to see how cluttered the area is
-    local hits = swing_raycasts.Cylinder(o, position, look_dir, anchor_dist)
+    --local hits = swing_raycasts.Cylinder(o, position, look_dir, anchor_dist)
 
     -- Reduce max if cluttered (hits along the path should apply a constricting pressure)
     -- May also want to push the anchor point if too close to a hit
+    ---------------------------
 
-
-
-    this.Aim_Swing_FromGround_DoIt(position, anchor_pos, look_dir, o, vars, const)
+    this.Aim_Swing_FromGround_DoIt(position, anchor_pos, look_dir, anchor_dist, o, vars, const)
 end
-function this.Aim_Swing_FromGround_DoIt(position, anchor_pos, jumpdir_unit, o, vars, const)
+function this.Aim_Swing_FromGround_DoIt(position, anchor_pos, jumpdir_unit, anchor_dist, o, vars, const)
     local new_grapple = swing_grapples.GetElasticStraight2(vars.grapple, position, anchor_pos)
 
     -- Flight pin, not aim
     EnsureMapPinVisible(anchor_pos, new_grapple.mappin_name, vars, o)
     debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_anchor)
+    debug_render_screen.Add_Text(AddVectors(anchor_pos, MultiplyVector(up, -0.2)), tostring(Round(anchor_dist, 1)), debug_categories.AIM_anchordist)
 
     this.MaybePopUp(false, o, new_grapple.anti_gravity, jumpdir_unit)
 

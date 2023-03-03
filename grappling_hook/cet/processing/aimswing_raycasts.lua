@@ -107,24 +107,49 @@ end
 -- Chooses start points along a line, firing out rays at angles
 -- This would be used for short, low velocity hops
 function aimswing_raycasts.Cylinder(o, from, dir_unit, distance)
-    local DIST_ALONG = 3
-    local DIST_RADIAL = 5
+    local DIST_ALONG_INITIAL = 3
+    local DIST_ALONG_REMAINING = 5
+    local DIST_RADIAL = 4.5
+    local MAX_BURSTS = 4
 
     this.InitRays()
 
     local dir_right = CrossProduct3D(dir_unit, up)
 
-    local offset_along = MultiplyVector(dir_unit, DIST_ALONG)
+    local offset_along = MultiplyVector(dir_unit, DIST_ALONG_INITIAL)
 
     local retVal = {}
 
     -- Initial rays at from position
     this.Cylinder_Burst(o, from, AddVectors(from, offset_along), dir_unit, dir_right, DIST_RADIAL, retVal)
 
-
     -- Do a few more bursts down the line, based on how long the line is
+    local remain_distance = distance - DIST_ALONG_INITIAL
+    local remain_count = math.floor(remain_distance / DIST_ALONG_REMAINING)
 
+    print("remain count: " .. tostring(remain_count) .. " (" .. tostring(remain_distance / DIST_ALONG_REMAINING) .. ")")
 
+    local remain_along_dist
+    if remain_count <= MAX_BURSTS - 1 then      -- subtract one because initial is one of the bursts
+        remain_along_dist = DIST_ALONG_REMAINING
+    else
+        remain_along_dist = remain_distance / (MAX_BURSTS - 1)      -- there would too many busts.  Spread them evenly along the remaining distance
+        remain_count = MAX_BURSTS - 1
+    end
+
+    print("remain_along_dist: " .. tostring(remain_along_dist))
+
+    for i = 1, remain_count, 1 do
+        local dist_along_from = DIST_ALONG_INITIAL + (remain_along_dist * (i - 1))
+        local dist_along_to = DIST_ALONG_INITIAL + (remain_along_dist * i)
+
+        print("burst from: " .. tostring(dist_along_from) .. " to: " .. tostring(dist_along_to))
+
+        local offset_along_from = MultiplyVector(dir_unit, dist_along_from)
+        local offset_along_to = MultiplyVector(dir_unit, dist_along_to)
+
+        this.Cylinder_Burst(o, AddVectors(from, offset_along_from), AddVectors(from, offset_along_to), dir_unit, dir_right, DIST_RADIAL, retVal)
+    end
 
     return retVal
 end

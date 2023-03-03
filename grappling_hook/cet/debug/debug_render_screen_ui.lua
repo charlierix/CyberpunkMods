@@ -84,7 +84,7 @@ function this.Draw_Text(center_x, center_y, text, color, color_back)
 
         local margin_x = 10
         local margin_y = 2
-        local cornerRadius = 2
+        local cornerRadius = 4
 
         local left = center_x - halfWidth - margin_x
         local top = center_y - halfHeight - margin_y
