@@ -100,7 +100,7 @@ function aimswing_grapples.GetElasticStraight2(grapple, from_pos, to_pos, accel_
         accel_alongGrappleLine =
         {
             accel = 50 * accel_mult,
-            speed = 36 * speed_mult,
+            speed = 72 * speed_mult,
         },
         accel_alongLook = nil,
 

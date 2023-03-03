@@ -6,7 +6,11 @@ local this = {}
 local up = nil
 
 local set_debug_categories = false
-local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist")
+local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_dots", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist")
+
+local slingshot_dist_by_dot = nil
+local slingshot_accelmult_by_dot = nil
+local slingshot_distmult_by_speed = nil
 
 -- This is called when they've initiated a new grapple.  It looks at the environment and kicks
 -- off actual flight with final values (like anchor point)
@@ -194,7 +198,7 @@ function this.Aim_Swing_ATTEMPT3(aim, o, player, vars, const, debug)
 end
 
 function this.Aim_Swing(aim, o, player, vars, const, debug)
-    local SPEED_STRAIGHT = 8
+    local SPEED_STRAIGHT = 3
     local DOT_UNDERSWING_MIN = -0.8
     local DOT_UNDERSWING_MAX = -0.2
     local DOT_TOSS_MAX = 0.4
@@ -240,7 +244,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     if speed_sqr <= SPEED_STRAIGHT * SPEED_STRAIGHT then
         -- Moving too slow, just do a straight line grapple
         debug_render_screen.Add_Text2D(nil, nil, "too slow", debug_categories.AIM_action)
-        this.Aim_Swing_Slingshot2(position, look_dir, speed_look, false, o, vars, const)
+        this.Aim_Swing_Slingshot3(position, look_dir, speed_look, false, o, vars, const)
         do return end
     end
 
@@ -254,16 +258,18 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
 
     local look_horz_unit = GetProjectedVector_AlongPlane_Unit(look_dir, up)
 
+    local dot_horizontal = DotProduct3D(look_horz_unit, vel_horz_unit)
+
     if debug_render_screen.IsEnabled() then
         debug_render_screen.Add_Line(position, AddVectors(position, up), debug_categories.AIM_up)
         debug_render_screen.Add_Line(position, AddVectors(position, vel_unit), debug_categories.AIM_velunit)
+        debug_render_screen.Add_Text2D(nil, nil, "dot vertical: " .. tostring(Round(dot_vertical, 2)) .. "\r\ndot horizontal: " .. tostring(Round(dot_horizontal, 2)), debug_categories.AIM_dots)
     end
 
-    local dot_horizontal = DotProduct3D(look_horz_unit, vel_horz_unit)
     if dot_horizontal < DOT_HORZ_MIN then
         -- They are trying to pull a 180
         debug_render_screen.Add_Text2D(nil, nil, "pulling a 180", debug_categories.AIM_action)
-        this.Aim_Swing_Slingshot2(position, look_dir, speed_look, false, o, vars, const)
+        this.Aim_Swing_Slingshot3(position, look_dir, speed_look, false, o, vars, const)
         do return end
 
     elseif dot_vertical < DOT_UNDERSWING_MIN then
@@ -274,7 +280,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
         else
             -- There's not enough velocity, revert to straight line
             debug_render_screen.Add_Text2D(nil, nil, "down - couldn't toss up", debug_categories.AIM_action)
-            this.Aim_Swing_Slingshot2(position, look_dir, speed_look, false, o, vars, const)
+            this.Aim_Swing_Slingshot3(position, look_dir, speed_look, false, o, vars, const)
         end
         do return end
 
@@ -282,7 +288,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
         -- Going above 45 degrees
         -- An overswing might be able to be used, but that would feel unnatural.  Just do a straight line
         debug_render_screen.Add_Text2D(nil, nil, "over 45 degrees", debug_categories.AIM_action)
-        this.Aim_Swing_Slingshot2(position, look_dir, speed_look, false, o, vars, const)
+        this.Aim_Swing_Slingshot3(position, look_dir, speed_look, false, o, vars, const)
         do return end
 
     elseif dot_vertical < DOT_UNDERSWING_MAX then
@@ -291,7 +297,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
             debug_render_screen.Add_Text2D(nil, nil, "underswing", debug_categories.AIM_action)
         else
             debug_render_screen.Add_Text2D(nil, nil, "couldn't underswing", debug_categories.AIM_action)
-            this.Aim_Swing_Slingshot2(position, look_dir, speed_look, false, o, vars, const)
+            this.Aim_Swing_Slingshot3(position, look_dir, speed_look, false, o, vars, const)
         end
         do return end
     end
@@ -304,7 +310,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
 
     -- Nothing else worked, default to straight line
     debug_render_screen.Add_Text2D(nil, nil, "default", debug_categories.AIM_action)
-    this.Aim_Swing_Slingshot2(position, look_dir, speed_look, false, o, vars, const)
+    this.Aim_Swing_Slingshot3(position, look_dir, speed_look, false, o, vars, const)
 end
 
 function this.RecoverEnergy_Switch(o, player, vars, const)
@@ -339,8 +345,9 @@ function this.EnsureDebugCategoriesSet()
         do return end
     end
 
-    debug_render_screen.DefineCategory(debug_categories.AIM_action, "BC105C80", "FFF", nil, nil, nil, 0.25, 0.67)
-    debug_render_screen.DefineCategory(debug_categories.AIM_speed, "BC2E6939", "FFF", nil, nil, nil, 0.25, 0.75)
+    debug_render_screen.DefineCategory(debug_categories.AIM_action, "BC105C80", "FFF", nil, nil, nil, 0.25, 0.6)
+    debug_render_screen.DefineCategory(debug_categories.AIM_speed, "BC2E6939", "FFF", nil, nil, nil, 0.25, 0.65)
+    debug_render_screen.DefineCategory(debug_categories.AIM_dots, "BC3D6E6C", "FFF", nil, nil, nil, 0.25, 0.7)
 
     debug_render_screen.DefineCategory(debug_categories.AIM_pos, "CCC")
     debug_render_screen.DefineCategory(debug_categories.AIM_look, nil, "EBEDA8")
@@ -353,6 +360,19 @@ function this.EnsureDebugCategoriesSet()
     debug_render_screen.DefineCategory(debug_categories.AIM_anchordist, "94838150", "F8F36C")
 
     set_debug_categories = true
+end
+
+function this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, grapple, vars, o)
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_anchor)
+        debug_render_screen.Add_Text(AddVectors(anchor_pos, MultiplyVector(up, -0.2)), tostring(Round(anchor_dist, 1)), debug_categories.AIM_anchordist)
+
+        if stopplane_point then
+            debug_render_screen.Add_Square(stopplane_point, stopplane_normal, 3, 3, debug_categories.AIM_stopplane)
+        end
+    else
+        EnsureMapPinVisible(anchor_pos, grapple.mappin_name, vars, o)       -- Flight pin, not aim
+    end
 end
 
 ------------------------------------ Temp Hardcoded -----------------------------------
@@ -451,6 +471,55 @@ function this.Aim_Swing_Slingshot2(position, look_dir, speed_look, is_airborne, 
     EnsureMapPinVisible(anchor_pos, new_grapple.mappin_name, vars, o)
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
 end
+function this.Aim_Swing_Slingshot3(position, look_dir, speed_look, is_airborne, o, vars, const)
+    if not slingshot_dist_by_dot then
+        slingshot_dist_by_dot = AnimationCurve:new()
+        slingshot_dist_by_dot:AddKeyValue(Angle_to_Dot(0), 4)
+        slingshot_dist_by_dot:AddKeyValue(Angle_to_Dot(45), 6)
+        slingshot_dist_by_dot:AddKeyValue(Angle_to_Dot(90), 12)
+        slingshot_dist_by_dot:AddKeyValue(Angle_to_Dot(135), 4)
+        slingshot_dist_by_dot:AddKeyValue(Angle_to_Dot(180), 3)
+
+        slingshot_accelmult_by_dot = AnimationCurve:new()
+        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(0), 1)
+        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(90), 1)
+        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(135), 1.5)
+        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(180), 2)
+
+        slingshot_distmult_by_speed = AnimationCurve:new()
+        slingshot_distmult_by_speed:AddKeyValue(0, 1)
+        slingshot_distmult_by_speed:AddKeyValue(12, 1)
+        slingshot_distmult_by_speed:AddKeyValue(24, 1.5)
+        slingshot_distmult_by_speed:AddKeyValue(36, 2)
+        slingshot_distmult_by_speed:AddKeyValue(48, 1)
+    end
+
+    local dot_vert = DotProduct3D(look_dir, up)
+
+    --TODO: Reduce distance if the area is cluttered
+
+    local anchor_dist = slingshot_dist_by_dot:Evaluate(dot_vert) * slingshot_distmult_by_speed:Evaluate(speed_look)
+
+    local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
+
+    local hit = o:RayCast(position, anchor_pos)
+    if hit then
+        -- Not clear, set anchor point at hit
+        anchor_pos = hit
+    end
+
+    local accel_mult = slingshot_accelmult_by_dot:Evaluate(dot_vert)
+
+    local new_grapple = swing_grapples.GetElasticStraight2(vars.grapple, position, anchor_pos, accel_mult)
+
+    this.MaybePopUp(is_airborne, o, new_grapple.anti_gravity, look_dir)
+
+    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, look_dir, new_grapple.stop_plane_distance)
+
+    this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
+
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
+end
 
 function this.Aim_Swing_FromGround(position, look_dir, o, vars, const)
     local DIST_HORZ = 18
@@ -497,17 +566,11 @@ end
 function this.Aim_Swing_FromGround_DoIt(position, anchor_pos, jumpdir_unit, anchor_dist, o, vars, const)
     local new_grapple = swing_grapples.GetElasticStraight2(vars.grapple, position, anchor_pos)
 
-    -- Flight pin, not aim
-    EnsureMapPinVisible(anchor_pos, new_grapple.mappin_name, vars, o)
-    debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_anchor)
-    debug_render_screen.Add_Text(AddVectors(anchor_pos, MultiplyVector(up, -0.2)), tostring(Round(anchor_dist, 1)), debug_categories.AIM_anchordist)
-
     this.MaybePopUp(false, o, new_grapple.anti_gravity, jumpdir_unit)
 
     local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, jumpdir_unit, new_grapple.stop_plane_distance)
-    if stopplane_point then
-        debug_render_screen.Add_Square(stopplane_point, stopplane_normal, 3, 3, debug_categories.AIM_stopplane)
-    end
+
+    this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
 
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
 end

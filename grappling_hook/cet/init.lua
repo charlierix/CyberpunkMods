@@ -12,6 +12,9 @@
 
 --https://github.com/jac3km4/redscript
 
+require "core/animation_curve"
+require "core/bezier"
+require "core/bezier_segment"
 require "core/color"
 require "core/even_dist_cone"
 require "core/gameobj_accessor"
