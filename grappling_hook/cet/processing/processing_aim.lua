@@ -6,7 +6,7 @@ local this = {}
 local up = nil
 
 local set_debug_categories = false
-local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_dots", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist", "AIM_arc")
+local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_dots", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist", "AIM_arc", "AIM_notvisualtext", "AIM_testcase")
 
 local slingshot_dist_by_dot = nil
 local slingshot_accelmult_by_dot = nil
@@ -117,7 +117,7 @@ function this.Aim_Straight(aim, o, player, vars, const, debug)
     end
 end
 
-function this.Aim_Swing(aim, o, player, vars, const, debug)
+function this.Aim_Swing_ATTEMPT4(aim, o, player, vars, const, debug)
     local SPEED_STRAIGHT = 3
     local DOT_UNDERSWING_MIN = -0.8
     local DOT_UNDERSWING_MAX = -0.2
@@ -233,6 +233,133 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
 end
 
+function this.Aim_Swing(aim, o, player, vars, const, debug)
+    local SPEED_STRAIGHT = 3
+    local DOT_UNDERSWING_MIN = -0.8
+    local DOT_UNDERSWING_MAX = -0.2
+    local DOT_TOSS_MAX = 0.4
+    local DOT_HORZ_MIN = -0.6
+
+    this.EnsureDebugCategoriesSet()
+    debug_render_screen.Clear()
+
+    if this.RecoverEnergy_Switch(o, player, vars, const) then
+        debug_render_screen.Add_Text2D(nil, nil, "exit early", debug_categories.AIM_action)
+        do return end
+    end
+
+    if not up then
+        up = Vector4.new(0, 0, 1, 1)
+    end
+
+    o:GetCamera()
+
+    local position, look_dir = o:GetCrosshairInfo()
+
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Dot(position, debug_categories.AIM_pos)
+        debug_render_screen.Add_Line(position, AddVectors(position, look_dir), debug_categories.AIM_look)
+    end
+
+    if not IsAirborne(o) then
+        debug_render_screen.Add_Text2D(nil, nil, "from ground", debug_categories.AIM_action)
+        this.Aim_Swing_FromGround(position, look_dir, o, vars, const)
+        do return end
+    end
+
+    --TODO: option to limit anchor if there's not any ray hits nearby.  Either cost, or a reduced height
+
+    local vel_look = GetProjectedVector_AlongVector(o.vel, look_dir, false)
+    local speed_look = GetVectorLength(vel_look)
+
+    local speed_sqr = GetVectorLengthSqr(o.vel)
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Text2D(nil, nil, "speed: " .. tostring(Round(math.sqrt(speed_sqr), 1)) .. "\r\nspeed look: " .. tostring(Round(speed_look, 1)), debug_categories.AIM_speed)
+    end
+
+    if speed_sqr <= SPEED_STRAIGHT * SPEED_STRAIGHT then
+        -- Moving too slow, just do a straight line grapple
+        debug_render_screen.Add_Text2D(nil, nil, "too slow", debug_categories.AIM_action)
+        this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
+        do return end
+    end
+
+    local speed = math.sqrt(speed_sqr)
+    local vel_unit = MultiplyVector(o.vel, 1 / speed)       -- safe to divide, because check for zero was done above
+
+    local dot_vertical = DotProduct3D(vel_unit, up)
+
+    local vel_horz_unit = GetProjectedVector_AlongPlane_Unit(o.vel, up)
+    local vel_horz = GetProjectedVector_AlongVector(o.vel, vel_horz_unit)       -- this is the same thing that GetProjectedVector_AlongPlane does
+
+    local look_horz_unit = GetProjectedVector_AlongPlane_Unit(look_dir, up)
+
+    local dot_horizontal = DotProduct3D(look_horz_unit, vel_horz_unit)
+
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Line(position, AddVectors(position, up), debug_categories.AIM_up)
+        debug_render_screen.Add_Line(position, AddVectors(position, vel_unit), debug_categories.AIM_velunit)
+        debug_render_screen.Add_Text2D(nil, nil, "dot vertical: " .. tostring(Round(dot_vertical, 2)) .. "\r\ndot horizontal: " .. tostring(Round(dot_horizontal, 2)), debug_categories.AIM_dots)
+    end
+
+    if dot_horizontal < DOT_HORZ_MIN then
+        -- They are trying to pull a 180
+        debug_render_screen.Add_Text2D(nil, nil, "pulling a 180", debug_categories.AIM_action)
+        this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
+        do return end
+    end
+
+    this.Draw_Not180(look_horz_unit, position, vel_horz_unit, DOT_HORZ_MIN, 0, -2.2, 0)
+
+    if dot_vertical < DOT_UNDERSWING_MIN then
+        -- Going nearly straight down
+        -- If there is enough velocity, do an underswing and toss them to the end point
+        if this.Aim_Swing_Toss_DownUp() then
+            debug_render_screen.Add_Text2D(nil, nil, "down - tossing up", debug_categories.AIM_action)
+        else
+            -- There's not enough velocity, revert to straight line
+            debug_render_screen.Add_Text2D(nil, nil, "down - couldn't toss up", debug_categories.AIM_action)
+            this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
+        end
+        do return end
+    end
+
+    this.Draw_CantTossUp(look_horz_unit, position, vel_unit, DOT_UNDERSWING_MIN, 2.2, -2.2, 0)
+
+    if dot_vertical > DOT_TOSS_MAX then
+        -- Going above 45 degrees
+        -- An overswing might be able to be used, but that would feel unnatural.  Just do a straight line
+        debug_render_screen.Add_Text2D(nil, nil, "over 45 degrees", debug_categories.AIM_action)
+        this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
+        do return end
+    end
+
+    this.Draw_CantOver45(look_horz_unit, position, vel_unit, DOT_TOSS_MAX, -2.2, -2.2, 0)
+
+    if dot_vertical < DOT_UNDERSWING_MAX then
+        -- Standard web swing, this should be most cases
+        if this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, vars, const) then
+            debug_render_screen.Add_Text2D(nil, nil, "underswing", debug_categories.AIM_action)
+        else
+            debug_render_screen.Add_Text2D(nil, nil, "couldn't underswing", debug_categories.AIM_action)
+            this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
+        end
+        do return end
+    end
+
+    this.Draw_CantUnderSwing(look_horz_unit, position, vel_unit, DOT_UNDERSWING_MAX, 0, -2.2, 2.2)
+
+    -- If there's enough velocity, do a mini underswing and toss them to the end point
+    if this.Aim_Swing_Toss_Up() then
+        debug_render_screen.Add_Text2D(nil, nil, "toss up", debug_categories.AIM_action)
+        do return end
+    end
+
+    -- Nothing else worked, default to straight line
+    debug_render_screen.Add_Text2D(nil, nil, "default", debug_categories.AIM_action)
+    this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
+end
+
 function this.RecoverEnergy_Switch(o, player, vars, const)
     if vars.startStopTracker:GetRequestedAction() then
         -- Something different was requested, recover the energy that was used for this current grapple
@@ -270,15 +397,18 @@ function this.EnsureDebugCategoriesSet()
     debug_render_screen.DefineCategory(debug_categories.AIM_dots, "BC3D6E6C", "FFF", nil, nil, nil, 0.25, 0.7)
 
     debug_render_screen.DefineCategory(debug_categories.AIM_pos, "CCC")
-    debug_render_screen.DefineCategory(debug_categories.AIM_look, nil, "EBEDA8")
-    debug_render_screen.DefineCategory(debug_categories.AIM_velunit, nil, "9370B5")
+    debug_render_screen.DefineCategory(debug_categories.AIM_look, nil, "FFEBEDA8")
+    debug_render_screen.DefineCategory(debug_categories.AIM_velunit, nil, "FF9370B5")
     debug_render_screen.DefineCategory(debug_categories.AIM_arc, nil, "80D69A19")
 
-    debug_render_screen.DefineCategory(debug_categories.AIM_up, nil, "0AC70D")
+    debug_render_screen.DefineCategory(debug_categories.AIM_up, nil, "FF0AC70D")
 
-    debug_render_screen.DefineCategory(debug_categories.AIM_anchor, "DED716", nil, nil, 1.5, true)
+    debug_render_screen.DefineCategory(debug_categories.AIM_anchor, "FFDED716", nil, nil, 1.5, true)
     debug_render_screen.DefineCategory(debug_categories.AIM_stopplane, "40DED716", "80DED716")
-    debug_render_screen.DefineCategory(debug_categories.AIM_anchordist, "94838150", "F8F36C")
+    debug_render_screen.DefineCategory(debug_categories.AIM_anchordist, "94838150", "FFF8F36C")
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_notvisualtext, "BCD4BEB6", "FF702305")
+    debug_render_screen.DefineCategory(debug_categories.AIM_testcase, "F00", "F00")
 
     set_debug_categories = true
 end
@@ -504,4 +634,97 @@ function this.MaybePopUp(is_airborne, o, anti_gravity, jumpdir_unit)
     end
 
     o:AddImpulse(0, 0, strength)
+end
+
+-------------------------------- Draw Swing Conditions --------------------------------
+
+function this.Draw_Not180(look_horz_unit, position, vel_horz_unit, DOT_HORZ_MIN, offset_x, offset_y, offset_z)
+    if not debug_render_screen.IsEnabled() then
+        do return end
+    end
+
+    local right_unit = CrossProduct3D(look_horz_unit, up)
+
+    position = AddVectors(position, MultiplyVector(right_unit, offset_x))
+    position = AddVectors(position, MultiplyVector(look_horz_unit, offset_y))
+    position = AddVectors(position, MultiplyVector(up, offset_z))
+
+    debug_render_screen.Add_Dot(position, debug_categories.AIM_pos)
+    debug_render_screen.Add_Line(position, AddVectors(position, look_horz_unit), debug_categories.AIM_look)
+    debug_render_screen.Add_Line(position, AddVectors(position, vel_horz_unit), debug_categories.AIM_velunit)
+
+    local radians = Dot_to_Radians(DOT_HORZ_MIN)
+    local dir_neg = RotateVector3D(vel_horz_unit, Quaternion_FromAxisRadians(up, -radians))
+    debug_render_screen.Add_Line(position, AddVectors(position, dir_neg), debug_categories.AIM_testcase)
+
+    local dir_pos = RotateVector3D(vel_horz_unit, Quaternion_FromAxisRadians(up, radians))
+    debug_render_screen.Add_Line(position, AddVectors(position, dir_pos), debug_categories.AIM_testcase)
+
+    debug_render_screen.Add_Text(Vector4.new(position.x, position.y, position.z - 0.25), "Not 180", debug_categories.AIM_notvisualtext)
+end
+
+function this.Draw_CantTossUp(look_horz_unit, position, vel_unit, DOT_UNDERSWING_MIN, offset_x, offset_y, offset_z)
+    if not debug_render_screen.IsEnabled() then
+        do return end
+    end
+
+    local right_unit = CrossProduct3D(look_horz_unit, up)
+
+    position = AddVectors(position, MultiplyVector(right_unit, offset_x))
+    position = AddVectors(position, MultiplyVector(look_horz_unit, offset_y))
+    position = AddVectors(position, MultiplyVector(up, offset_z))
+
+    debug_render_screen.Add_Dot(position, debug_categories.AIM_pos)
+    debug_render_screen.Add_Line(position, AddVectors(position, vel_unit), debug_categories.AIM_velunit)
+
+    local radians = Dot_to_Radians(DOT_UNDERSWING_MIN)
+    local orth = CrossProduct3D(up, vel_unit)
+    local direction = RotateVector3D(up, Quaternion_FromAxisRadians(orth, radians))
+    debug_render_screen.Add_Line(position, AddVectors(position, direction), debug_categories.AIM_testcase)
+
+    debug_render_screen.Add_Text(Vector4.new(position.x, position.y, position.z + 0.25), "Can't Toss Up", debug_categories.AIM_notvisualtext)
+end
+
+function this.Draw_CantOver45(look_horz_unit, position, vel_unit, DOT_TOSS_MAX, offset_x, offset_y, offset_z)
+    if not debug_render_screen.IsEnabled() then
+        do return end
+    end
+
+    local right_unit = CrossProduct3D(look_horz_unit, up)
+
+    position = AddVectors(position, MultiplyVector(right_unit, offset_x))
+    position = AddVectors(position, MultiplyVector(look_horz_unit, offset_y))
+    position = AddVectors(position, MultiplyVector(up, offset_z))
+
+    debug_render_screen.Add_Dot(position, debug_categories.AIM_pos)
+    debug_render_screen.Add_Line(position, AddVectors(position, vel_unit), debug_categories.AIM_velunit)
+
+    local radians = Dot_to_Radians(DOT_TOSS_MAX)
+    local orth = CrossProduct3D(up, vel_unit)
+    local direction = RotateVector3D(up, Quaternion_FromAxisRadians(orth, radians))
+    debug_render_screen.Add_Line(position, AddVectors(position, direction), debug_categories.AIM_testcase)
+
+    debug_render_screen.Add_Text(Vector4.new(position.x, position.y, position.z - 0.25), "Can't Over 45 Launch", debug_categories.AIM_notvisualtext)
+end
+
+function this.Draw_CantUnderSwing(look_horz_unit, position, vel_unit, DOT_UNDERSWING_MAX, offset_x, offset_y, offset_z)
+    if not debug_render_screen.IsEnabled() then
+        do return end
+    end
+
+    local right_unit = CrossProduct3D(look_horz_unit, up)
+
+    position = AddVectors(position, MultiplyVector(right_unit, offset_x))
+    position = AddVectors(position, MultiplyVector(look_horz_unit, offset_y))
+    position = AddVectors(position, MultiplyVector(up, offset_z))
+
+    debug_render_screen.Add_Dot(position, debug_categories.AIM_pos)
+    debug_render_screen.Add_Line(position, AddVectors(position, vel_unit), debug_categories.AIM_velunit)
+
+    local radians = Dot_to_Radians(DOT_UNDERSWING_MAX)
+    local orth = CrossProduct3D(up, vel_unit)
+    local direction = RotateVector3D(up, Quaternion_FromAxisRadians(orth, radians))
+    debug_render_screen.Add_Line(position, AddVectors(position, direction), debug_categories.AIM_testcase)
+
+    debug_render_screen.Add_Text(Vector4.new(position.x, position.y, position.z + 0.25), "Can't Under Swing", debug_categories.AIM_notvisualtext)
 end
