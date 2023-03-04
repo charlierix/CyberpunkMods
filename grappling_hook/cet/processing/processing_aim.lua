@@ -480,6 +480,11 @@ function this.Aim_Swing_Toss_DownUp()
 end
 
 function this.Aim_Swing_Toss_Up()
+
+    -- This will be an extreme underswing, where the velocity is nearly straight down
+    -- It will be relatively low radius, 135 degree swing
+
+
     return false
 end
 
@@ -522,7 +527,7 @@ function this.Aim_Swing_Slingshot(position, look_dir, speed_look, is_airborne, o
 
     local accel_mult = slingshot_accelmult_by_dot:Evaluate(dot_vert)
 
-    local new_grapple = swing_grapples.GetElasticStraight2(vars.grapple, position, anchor_pos, accel_mult)
+    local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos, accel_mult)
 
     this.MaybePopUp(is_airborne, o, new_grapple.anti_gravity, look_dir)
 
@@ -595,7 +600,7 @@ function this.Aim_Swing_FromGround_DoIt(position, anchor_pos, jumpdir_unit, anch
     --     ...tweaks\mods\grappling_hook\processing\processing_aim.lua:230: in function 'Aim_Swing'
     --     ...tweaks\mods\grappling_hook\processing\processing_aim.lua:39: in function 'Process_Aim'
     --     init.lua:387: in function <init.lua:338>
-    local new_grapple = swing_grapples.GetElasticStraight2(vars.grapple, position, anchor_pos)
+    local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos)
 
 
 
