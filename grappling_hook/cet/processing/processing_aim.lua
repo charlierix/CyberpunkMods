@@ -117,86 +117,6 @@ function this.Aim_Straight(aim, o, player, vars, const, debug)
     end
 end
 
-function this.Aim_Swing_ATTEMPT3(aim, o, player, vars, const, debug)
-    local SPEED_STRAIGHT = 8
-    local DOT_UNDERSWING_MIN = -0.8
-    local DOT_UNDERSWING_MAX = -0.2
-    local DOT_TOSS_MAX = 0.4
-    local DOT_HORZ_MIN = -0.6
-
-    if this.RecoverEnergy_Switch(o, player, vars, const) then
-        do return end
-    end
-
-    o:GetCamera()
-
-    local position, look_dir = o:GetCrosshairInfo()
-
-    local vel_look = GetProjectedVector_AlongVector(o.vel, look_dir, false)
-    local speed_look = GetVectorLength(vel_look)
-
-    local is_airborne = IsAirborne(o)
-
-    local speed_sqr = GetVectorLengthSqr(o.vel)
-
-    if not is_airborne or speed_sqr <= SPEED_STRAIGHT * SPEED_STRAIGHT then
-        -- On the ground or moving too slow, just do a straight line grapple
-        this.Aim_Swing_Slingshot2(position, look_dir, speed_look, is_airborne, o, vars, const)
-        do return end
-    end
-
-    local speed = math.sqrt(speed_sqr)
-    local vel_unit = MultiplyVector(o.vel, 1 / speed)       -- safe to divide, because check for zero was done above
-
-    if not up then
-        up = Vector4.new(0, 0, 1, 1)
-    end
-
-    local dot_vertical = DotProduct3D(vel_unit, up)
-
-    local vel_horz_unit = GetProjectedVector_AlongPlane_Unit(o.vel, up)
-    local vel_horz = GetProjectedVector_AlongVector(o.vel, vel_horz_unit)       -- this is the same thing that GetProjectedVector_AlongPlane does
-
-    local look_horz_unit = GetProjectedVector_AlongPlane_Unit(look_dir, up)
-
-    local dot_horizontal = DotProduct3D(look_horz_unit, vel_horz_unit)
-    if dot_horizontal < DOT_HORZ_MIN then
-        -- They are trying to pull a 180
-        this.Aim_Swing_Slingshot2(position, look_dir, speed_look, is_airborne, o, vars, const)
-        do return end
-
-    elseif dot_vertical < DOT_UNDERSWING_MIN then
-        -- Going nearly straight down
-        -- If there is enough velocity, do an underswing and toss them to the end point
-        if not this.Aim_Swing_Toss_DownUp() then
-            -- There's not enough velocity, revert to straight line
-            this.Aim_Swing_Slingshot2(position, look_dir, speed_look, is_airborne, o, vars, const)
-        end
-        do return end
-
-    elseif dot_vertical > DOT_TOSS_MAX then
-        -- Going above 45 degrees
-        -- An overswing might be able to be used, but that would feel unnatural.  Just do a straight line
-        this.Aim_Swing_Slingshot2(position, look_dir, speed_look, is_airborne, o, vars, const)
-        do return end
-
-    elseif dot_vertical < DOT_UNDERSWING_MAX then
-        -- Standard web swing, this should be most cases
-        if not this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, vars, const) then
-            this.Aim_Swing_Slingshot2(position, look_dir, speed_look, is_airborne, o, vars, const)
-        end
-        do return end
-    end
-
-    -- If there's enough velocity, do a mini underswing and toss them to the end point
-    if this.Aim_Swing_Toss_Up() then
-        do return end
-    end
-
-    -- Nothing else worked, default to straight line
-    this.Aim_Swing_Slingshot2(position, look_dir, speed_look, is_airborne, o, vars, const)
-end
-
 function this.Aim_Swing(aim, o, player, vars, const, debug)
     local SPEED_STRAIGHT = 3
     local DOT_UNDERSWING_MIN = -0.8
@@ -244,7 +164,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     if speed_sqr <= SPEED_STRAIGHT * SPEED_STRAIGHT then
         -- Moving too slow, just do a straight line grapple
         debug_render_screen.Add_Text2D(nil, nil, "too slow", debug_categories.AIM_action)
-        this.Aim_Swing_Slingshot3(position, look_dir, speed_look, false, o, vars, const)
+        this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
         do return end
     end
 
@@ -269,7 +189,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     if dot_horizontal < DOT_HORZ_MIN then
         -- They are trying to pull a 180
         debug_render_screen.Add_Text2D(nil, nil, "pulling a 180", debug_categories.AIM_action)
-        this.Aim_Swing_Slingshot3(position, look_dir, speed_look, false, o, vars, const)
+        this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
         do return end
 
     elseif dot_vertical < DOT_UNDERSWING_MIN then
@@ -280,7 +200,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
         else
             -- There's not enough velocity, revert to straight line
             debug_render_screen.Add_Text2D(nil, nil, "down - couldn't toss up", debug_categories.AIM_action)
-            this.Aim_Swing_Slingshot3(position, look_dir, speed_look, false, o, vars, const)
+            this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
         end
         do return end
 
@@ -288,7 +208,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
         -- Going above 45 degrees
         -- An overswing might be able to be used, but that would feel unnatural.  Just do a straight line
         debug_render_screen.Add_Text2D(nil, nil, "over 45 degrees", debug_categories.AIM_action)
-        this.Aim_Swing_Slingshot3(position, look_dir, speed_look, false, o, vars, const)
+        this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
         do return end
 
     elseif dot_vertical < DOT_UNDERSWING_MAX then
@@ -297,7 +217,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
             debug_render_screen.Add_Text2D(nil, nil, "underswing", debug_categories.AIM_action)
         else
             debug_render_screen.Add_Text2D(nil, nil, "couldn't underswing", debug_categories.AIM_action)
-            this.Aim_Swing_Slingshot3(position, look_dir, speed_look, false, o, vars, const)
+            this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
         end
         do return end
     end
@@ -310,7 +230,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
 
     -- Nothing else worked, default to straight line
     debug_render_screen.Add_Text2D(nil, nil, "default", debug_categories.AIM_action)
-    this.Aim_Swing_Slingshot3(position, look_dir, speed_look, false, o, vars, const)
+    this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
 end
 
 function this.RecoverEnergy_Switch(o, player, vars, const)
@@ -433,54 +353,7 @@ function this.Aim_Swing_Toss_Up()
     return false
 end
 
-function this.Aim_Swing_Slingshot(is_airborne, o, vars, const)
-    local MIN_DIST = 15
-    local MAX_DIST = 60
-    local SPEED_MAX = 24
-
-    o:GetCamera()
-
-    local position, look_dir = o:GetCrosshairInfo()
-
-    local vel_look = GetProjectedVector_AlongVector(o.vel, look_dir, false)
-    local speed_look = GetVectorLength(vel_look)
-
-    local anchor_dist = Clamp(0, MAX_DIST, GetScaledValue(MIN_DIST, MAX_DIST, 0, SPEED_MAX, speed_look))
-
-    --TODO: If looking down, and there is ground in the way, choose a point above the ground
-    --TODO: Distance should be based on current speed (also how cluttered the area is)
-    local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
-
-    local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos)
-
-    this.MaybePopUp(is_airborne, o, new_grapple.anti_gravity, look_dir)
-
-    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, look_dir, new_grapple.stop_plane_distance)
-
-    EnsureMapPinVisible(anchor_pos, new_grapple.mappin_name, vars, o)
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
-end
-function this.Aim_Swing_Slingshot2(position, look_dir, speed_look, is_airborne, o, vars, const)
-    local MIN_DIST = 15
-    local MAX_DIST = 60
-    local SPEED_MAX = 24
-
-    --TODO: Reduce distance if the area is cluttered
-    local anchor_dist = Clamp(0, MAX_DIST, GetScaledValue(MIN_DIST, MAX_DIST, 0, SPEED_MAX, speed_look))
-
-    --TODO: If looking down, and there is ground in the way, choose a point above the ground
-    local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
-
-    local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos)
-
-    this.MaybePopUp(is_airborne, o, new_grapple.anti_gravity, look_dir)
-
-    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, look_dir, new_grapple.stop_plane_distance)
-
-    EnsureMapPinVisible(anchor_pos, new_grapple.mappin_name, vars, o)
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
-end
-function this.Aim_Swing_Slingshot3(position, look_dir, speed_look, is_airborne, o, vars, const)
+function this.Aim_Swing_Slingshot(position, look_dir, speed_look, is_airborne, o, vars, const)
     if not slingshot_dist_by_dot then
         slingshot_dist_by_dot = AnimationCurve:new()
         slingshot_dist_by_dot:AddKeyValue(Angle_to_Dot(0), 4)

@@ -203,22 +203,28 @@ function DebugRenderScreen.Add_Arc(center, start_point, end_point, category, col
     local quat = GetRotation(arm_start_unit, arm_end_unit, 1 / num_sides)
 
     local unit1 = arm_start_unit
-    local point1 = MultiplyVector(unit1, radius_start)
+    local point1 = start_point
 
     local id = this.GetNextID()
 
-    for i = 1, num_sides, 1 do
+    for i = 1, num_sides - 1, 1 do
         local unit2 = RotateVector3D(unit1, quat)
         local point2 = MultiplyVector(unit2, GetScaledValue(radius_start, radius_end, 0, num_sides, i))
+        point2 = AddVectors(center, point2)
 
         local item = items:GetNewItem()
         this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
-        item.point1 = AddVectors(center, point1)
-        item.point2 = AddVectors(center, point2)
+        item.point1 = point1
+        item.point2 = point2
 
         unit1 = unit2
         point1 = point2
     end
+
+    local item = items:GetNewItem()
+    this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+    item.point1 = point1
+    item.point2 = end_point     -- there's a slight math drift when repeatedly applying rotations.  I've only seen it come under.  So just run the last line to the endpoint passed in
 
     return id
 end
@@ -504,15 +510,6 @@ function this.GetCirclePoints(center, radius, normal, num_sides)
     end
 
     return retVal
-end
-function this.GetArcPoints(center, radius, normal, start_pos, sweep_angle_degrees, num_sides)
-
-
-
-
-
-
-    
 end
 function this.GetSquarePoints(center, normal, size_x, size_y)
     if not up then
