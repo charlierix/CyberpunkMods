@@ -121,6 +121,7 @@ function DebugRenderScreen.Add_Dot(position, category, color, lifespan_seconds, 
 
     return item.id
 end
+
 function DebugRenderScreen.Add_Line(point1, point2, category, color, lifespan_seconds, size_mult, const_size)
     if not is_enabled then
         return nil
@@ -135,6 +136,7 @@ function DebugRenderScreen.Add_Line(point1, point2, category, color, lifespan_se
 
     return item.id
 end
+
 function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, lifespan_seconds, size_mult, const_size)
     if not is_enabled then
         return nil
@@ -170,6 +172,57 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, l
 
     return id
 end
+
+function DebugRenderScreen.Add_Arc(center, start_point, end_point, category, color, lifespan_seconds, size_mult, const_size)
+    if not is_enabled then
+        return nil
+    end
+
+    local _, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, nil, color, size_mult, const_size, lifespan_seconds)
+
+    -- The default line thickness is too thin for a circle.  Use a larger value if there is nothing specified
+    if not size_mult_final then
+        size_mult_final = 8
+    end
+
+    local radius_start = math.sqrt(GetVectorDiffLengthSqr(start_point, center))
+    local radius_end = math.sqrt(GetVectorDiffLengthSqr(end_point, center))
+
+    if IsNearZero(radius_start) or IsNearZero(radius_end) then
+        LogError("Add_Arc start point and/or end point are same as center.  start radius: " .. tostring(radius_start) .. ", end radius: " .. tostring(radius_end))
+        do return end
+    end
+
+    local arm_start_unit = DivideVector(SubtractVectors(start_point, center), radius_start)
+    local arm_end_unit = DivideVector(SubtractVectors(end_point, center), radius_end)
+
+    local degrees = Radians_to_Degrees(RadiansBetween3D(arm_start_unit, arm_end_unit))
+
+    local num_sides = this.GetCircleNumSides(center, (radius_start + radius_end) / 2, degrees)
+
+    local quat = GetRotation(arm_start_unit, arm_end_unit, 1 / num_sides)
+
+    local unit1 = arm_start_unit
+    local point1 = MultiplyVector(unit1, radius_start)
+
+    local id = this.GetNextID()
+
+    for i = 1, num_sides, 1 do
+        local unit2 = RotateVector3D(unit1, quat)
+        local point2 = MultiplyVector(unit2, GetScaledValue(radius_start, radius_end, 0, num_sides, i))
+
+        local item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        item.point1 = AddVectors(center, point1)
+        item.point2 = AddVectors(center, point2)
+
+        unit1 = unit2
+        point1 = point2
+    end
+
+    return id
+end
+
 -- size_mult and const_size refer to line thickness, which is only used if color_fore is populated
 function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_back, color_fore, lifespan_seconds, size_mult, const_size)
     if not is_enabled then
@@ -211,6 +264,7 @@ function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_
 
     return id
 end
+
 function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, color_back, color_fore, lifespan_seconds, size_mult, const_size)
     if not is_enabled then
         return nil
@@ -264,6 +318,7 @@ function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, 
 
     return id
 end
+
 function DebugRenderScreen.Add_Text(center, text, category, color_back, color_fore, lifespan_seconds)
     if not is_enabled then
         return nil
@@ -278,6 +333,7 @@ function DebugRenderScreen.Add_Text(center, text, category, color_back, color_fo
 
     return item.id
 end
+
 -- Instead of writing text at a world 3D position, this shows it at a fixed 2D screen position
 ---@param x_percent number? 0 is left edge of screen, 1 is right edge of screen (0.5 is center) -- nil allowed if category is passed in and specifies location
 ---@param y_percent number? 0 is top edge of screen, 1 is bottom edge of screen (0.5 is center)
@@ -404,7 +460,7 @@ function this.RemoveExpiredItems()
     end
 end
 
-function this.GetCircleNumSides(center, radius)
+function this.GetCircleNumSides(center, radius, degrees)
     local distance = math.sqrt(GetVectorDiffLengthSqr(Game.GetPlayer():GetWorldPosition(), center))
     if IsNearZero(distance) then
         distance = 0.01
@@ -414,6 +470,11 @@ function this.GetCircleNumSides(center, radius)
     local min_sides = 11
     local max_sides = 40
     local num_sides = Round(GetScaledValue(min_sides, max_sides, 0.01, 0.1, size), 0)
+
+    if degrees then
+        num_sides = num_sides * (degrees / 360)
+    end
+
     num_sides = Clamp(min_sides, max_sides, num_sides)
 
     -- print("radius: " .. tostring(radius))
@@ -443,6 +504,15 @@ function this.GetCirclePoints(center, radius, normal, num_sides)
     end
 
     return retVal
+end
+function this.GetArcPoints(center, radius, normal, start_pos, sweep_angle_degrees, num_sides)
+
+
+
+
+
+
+    
 end
 function this.GetSquarePoints(center, normal, size_x, size_y)
     if not up then

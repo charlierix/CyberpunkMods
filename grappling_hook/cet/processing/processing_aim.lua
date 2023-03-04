@@ -6,7 +6,7 @@ local this = {}
 local up = nil
 
 local set_debug_categories = false
-local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_dots", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist")
+local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_dots", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist", "AIM_arc")
 
 local slingshot_dist_by_dot = nil
 local slingshot_accelmult_by_dot = nil
@@ -352,6 +352,7 @@ function this.EnsureDebugCategoriesSet()
     debug_render_screen.DefineCategory(debug_categories.AIM_pos, "CCC")
     debug_render_screen.DefineCategory(debug_categories.AIM_look, nil, "EBEDA8")
     debug_render_screen.DefineCategory(debug_categories.AIM_velunit, nil, "9370B5")
+    debug_render_screen.DefineCategory(debug_categories.AIM_arc, nil, "80D69A19")
 
     debug_render_screen.DefineCategory(debug_categories.AIM_up, nil, "0AC70D")
 
@@ -377,8 +378,11 @@ end
 
 ------------------------------------ Temp Hardcoded -----------------------------------
 
---NOTE: if there is a horizontal component of initial velocity, the path will fall short of endpoint.  Probably need to compensate by rotating the anchor a bit higher
 function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, vars, const)
+
+    --TODO: the horizontal offset get way too much
+    --TODO: these lengths seem too large
+
     local MIN_DIST = 12
     local MAX_DIST = 48
     local SPEED_MAX = 36
@@ -391,7 +395,6 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
     local orth = CrossProduct3D(vel_unit, look_dir)
     local anchor_line = CrossProduct3D(orth, vel_unit)
 
-
     local mid_point = AddVectors(position, MultiplyVector(look_dir, dest_dist / 2))
     local up_to_anchor = CrossProduct3D(orth, look_dir)
 
@@ -402,16 +405,22 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
 
     local anchor_point = Vector4.new((intersect1.x + intersect2.x) / 2, (intersect1.y + intersect2.y) / 2, (intersect1.z + intersect2.z) / 2, 1)
 
+    local radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_point))
 
-    --TODO: get a rope style grapple
+    this.ShowEndPoint(anchor_point, radius, nil, nil, vars.grapple, vars, o)     -- reusing this function to show the anchor and distance
 
+    debug_render_screen.Add_Arc(anchor_point, position, dest_pos, debug_categories.AIM_arc)
+
+    local new_grapple = swing_grapples.GetPureRope(vars.grapple)
 
     local quat = GetRotation(vel_unit, look_dir, 2)
     local dest_dir = RotateVector3D(vel_unit, quat)
-    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(dest_pos, dest_dir, vars.grapple.stop_plane_distance)
 
-    EnsureMapPinVisible(anchor_point, vars.grapple.mappin_name, vars, o)
-    Transition_ToFlight_Swing(vars.grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
+    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(dest_pos, dest_dir, new_grapple.stop_plane_distance)
+
+    this.ShowEndPoint(dest_pos, dest_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
+
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
 
     return true
 end
@@ -564,7 +573,29 @@ function this.Aim_Swing_FromGround(position, look_dir, o, vars, const)
     this.Aim_Swing_FromGround_DoIt(position, anchor_pos, look_dir, anchor_dist, o, vars, const)
 end
 function this.Aim_Swing_FromGround_DoIt(position, anchor_pos, jumpdir_unit, anchor_dist, o, vars, const)
+
+
+
+    if vars == nil then
+        print("vars is nil")
+    elseif vars.grapple == nil then
+        print("vars.grapple is nill")
+    end
+
+
+    --TODO: grapple is sometimes nil
+    -- [2023-03-03 09:36:46 UTC-06:00] [20648] ...aks\mods\grappling_hook\processing\aimswing_grapples.lua:84: attempt to index local 'grapple' (a nil value)
+    -- stack traceback:
+    --     ...aks\mods\grappling_hook\processing\aimswing_grapples.lua:84: in function 'GetElasticStraight2'
+    --     ...tweaks\mods\grappling_hook\processing\processing_aim.lua:577: in function 'Aim_Swing_FromGround_DoIt'
+    --     ...tweaks\mods\grappling_hook\processing\processing_aim.lua:559: in function 'Aim_Swing_FromGround'
+    --     ...tweaks\mods\grappling_hook\processing\processing_aim.lua:230: in function 'Aim_Swing'
+    --     ...tweaks\mods\grappling_hook\processing\processing_aim.lua:39: in function 'Process_Aim'
+    --     init.lua:387: in function <init.lua:338>
     local new_grapple = swing_grapples.GetElasticStraight2(vars.grapple, position, anchor_pos)
+
+
+
 
     this.MaybePopUp(false, o, new_grapple.anti_gravity, jumpdir_unit)
 

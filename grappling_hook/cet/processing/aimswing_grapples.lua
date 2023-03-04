@@ -77,8 +77,6 @@ function aimswing_grapples.GetElasticStraight2(grapple, from_pos, to_pos, accel_
         speed_mult = 1
     end
 
-    --TODO: adjust accel, max speed, deadpot based on distance to travel
-
     return
     {
         name = grapple.name,
@@ -91,7 +89,7 @@ function aimswing_grapples.GetElasticStraight2(grapple, from_pos, to_pos, accel_
 
         anti_gravity =
         {
-            antigrav_percent = antigrav_percent,     --TODO: antigrav % needs to depend on how much they are looking up (100% at horz, N% at vertical)
+            antigrav_percent = antigrav_percent,
             fade_duration = 1,
         },
 
@@ -115,11 +113,40 @@ function aimswing_grapples.GetElasticStraight2(grapple, from_pos, to_pos, accel_
 end
 
 function aimswing_grapples.GetPureRope(grapple)
+    return
+    {
+        name = grapple.name,
+        description = grapple.description,
 
+        mappin_name = grapple.mappin_name,
 
+        stop_on_wallHit = true,
+        stop_plane_distance = 0.25,
 
+        anti_gravity = nil,
 
-    
+        desired_length = nil,
+
+        --accel_alongGrappleLine = nil,       --TODO: Some of the acceleration needs to be this.  Otherwise it gets jerky when only drag is applied
+        accel_alongGrappleLine =
+        {
+            accel = 24,
+            speed = 8,
+        },
+        accel_alongLook = nil,
+
+        springAccel_k = nil,        --TODO: Play with this
+
+        velocity_away = --GetDefault_VelocityAway(nil, 60, nil),      -- using a big tension so it feels like rope
+        {
+            accel_tension = 144,
+            deadSpot = 0.75
+        },
+
+        aim_swing = grapple.aim_swing,
+
+        fallDamageReduction_percent = 0,
+    }
 end
 
 function aimswing_grapples.GetElasticRope(grapple)

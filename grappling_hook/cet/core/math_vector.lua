@@ -321,16 +321,6 @@ function GetProjectedVector_AlongPlane_Unit(vector, alongPlanes_normal)
     return alongLine
 end
 
-function GetClosestPoint_Line_Point(pointOnLine, lineDirection, testPoint)
-    local dirToPoint = SubtractVectors(testPoint, pointOnLine)
-
-    local dot1 = DotProduct3D(dirToPoint, lineDirection)
-    local dot2 = DotProduct3D(lineDirection, lineDirection)
-    local ratio = dot1 / dot2
-
-    return AddVectors(pointOnLine, MultiplyVector(lineDirection, ratio))
-end
-
 -- Turns dot product into a user friendly angle in degrees
 --  dot     angle
 --   1       0
@@ -452,6 +442,16 @@ function IsAbovePlane(point_on_plane, normal, test_point, trueIfOnPlane)
     else
         return false        -- below the plane
     end
+end
+
+function GetClosestPoint_Line_Point(pointOnLine, lineDirection, testPoint)
+    local dirToPoint = SubtractVectors(testPoint, pointOnLine)
+
+    local dot1 = DotProduct3D(dirToPoint, lineDirection)
+    local dot2 = DotProduct3D(lineDirection, lineDirection)
+    local ratio = dot1 / dot2
+
+    return AddVectors(pointOnLine, MultiplyVector(lineDirection, ratio))
 end
 
 --------------------------------------- Random ----------------------------------------
