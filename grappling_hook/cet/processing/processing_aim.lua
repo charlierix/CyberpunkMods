@@ -6,11 +6,12 @@ local this = {}
 local up = nil
 
 local set_debug_categories = false
-local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_dots", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist", "AIM_arc", "AIM_notvisualtext", "AIM_testcase")
+local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_dots", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_velcomponent", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist", "AIM_arc", "AIM_notvisualtext", "AIM_testcase", "AIM_construction")
 
 local slingshot_dist_by_dot = nil
 local slingshot_accelmult_by_dot = nil
 local slingshot_distmult_by_speed = nil
+local underswingh_dist_by_speed = nil
 
 -- This is called when they've initiated a new grapple.  It looks at the environment and kicks
 -- off actual flight with final values (like anchor point)
@@ -398,7 +399,8 @@ function this.EnsureDebugCategoriesSet()
 
     debug_render_screen.DefineCategory(debug_categories.AIM_pos, "CCC")
     debug_render_screen.DefineCategory(debug_categories.AIM_look, nil, "FFEBEDA8")
-    debug_render_screen.DefineCategory(debug_categories.AIM_velunit, nil, "FF9370B5")
+    debug_render_screen.DefineCategory(debug_categories.AIM_velunit, nil, "FF9643E9")
+    debug_render_screen.DefineCategory(debug_categories.AIM_velcomponent, nil, "9E9160C2")
     debug_render_screen.DefineCategory(debug_categories.AIM_arc, nil, "80D69A19")
 
     debug_render_screen.DefineCategory(debug_categories.AIM_up, nil, "FF0AC70D")
@@ -409,6 +411,8 @@ function this.EnsureDebugCategoriesSet()
 
     debug_render_screen.DefineCategory(debug_categories.AIM_notvisualtext, "BCD4BEB6", "FF702305")
     debug_render_screen.DefineCategory(debug_categories.AIM_testcase, "F00", "F00")
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_construction, "80DB56A4", "FFDB56A4")       -- these are generic minor graphics that represent calculations used to get to final answers
 
     set_debug_categories = true
 end
@@ -428,7 +432,7 @@ end
 
 ------------------------------------ Temp Hardcoded -----------------------------------
 
-function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, vars, const)
+function this.Aim_Swing_UnderSwing_ATTEMPT1(position, look_dir, speed_look, vel_unit, vel_horz_unit, vel_horz, o, vars, const)
 
     --TODO: the horizontal offset get way too much
     --TODO: these lengths seem too large
@@ -470,6 +474,75 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
 
     this.ShowEndPoint(dest_pos, dest_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
 
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
+
+    return true
+end
+
+function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, vars, const)
+    local VELOCITY_OFFPLANE_MULT = -0.1
+
+    if not underswingh_dist_by_speed then
+        underswingh_dist_by_speed = AnimationCurve:new()
+        underswingh_dist_by_speed:AddKeyValue(0, 7)
+        underswingh_dist_by_speed:AddKeyValue(12, 9)
+        underswingh_dist_by_speed:AddKeyValue(18, 20)
+        underswingh_dist_by_speed:AddKeyValue(24, 30)
+        underswingh_dist_by_speed:AddKeyValue(36, 42)
+    end
+
+    --TODO: Reduce distance if the area is cluttered
+    local dest_dist = underswingh_dist_by_speed:Evaluate(speed_look)
+    local dest_pos = AddVectors(position, MultiplyVector(look_dir, dest_dist))
+
+    -- Get the vertical component of the velocity
+    local vert_plane_normal = CrossProduct3D(look_dir, up)
+    local vel_vert_unit = GetProjectedVector_AlongPlane_Unit(o.vel, vert_plane_normal)
+
+    -- Any point along this anchor line should make a smooth curve
+    local anchor_line = CrossProduct3D(vert_plane_normal, vel_vert_unit)
+
+    -- Take a line from midpoint of look to intersect and find an anchor point
+    local mid_point = AddVectors(position, MultiplyVector(look_dir, dest_dist / 2))
+    local up_to_anchor = CrossProduct3D(vert_plane_normal, look_dir)
+
+    debug_render_screen.Add_Line(position, AddVectors(position, vel_vert_unit), debug_categories.AIM_velcomponent)
+    debug_render_screen.Add_Line(position, AddVectors(position, MultiplyVector(anchor_line, 12)), debug_categories.AIM_construction)
+    debug_render_screen.Add_Line(mid_point, AddVectors(mid_point, MultiplyVector(up_to_anchor, 12)), debug_categories.AIM_construction)
+
+    local found_intersection, intersect1, intersect2 = GetClosestPoints_Line_Line(position, AddVectors(position, anchor_line), mid_point, AddVectors(mid_point, up_to_anchor))
+    if not found_intersection then
+        return false
+    end
+
+    local anchor_point = Vector4.new((intersect1.x + intersect2.x) / 2, (intersect1.y + intersect2.y) / 2, (intersect1.z + intersect2.z) / 2, 1)
+
+    -- Adjust the anchor point off vert plane based on horizontal velocity
+    local vel_plane_normal = GetProjectedVector_AlongVector(o.vel, vert_plane_normal)
+
+    debug_render_screen.Add_Dot(anchor_point, debug_categories.AIM_construction)
+    debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
+
+
+    --TODO: also multiply by radius
+
+    -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
+    anchor_point = AddVectors(anchor_point, MultiplyVector(vel_plane_normal, VELOCITY_OFFPLANE_MULT))
+
+
+    local radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_point))
+
+    this.ShowEndPoint(anchor_point, radius, nil, nil, vars.grapple, vars, o)     -- reusing this function to show the anchor and distance
+    debug_render_screen.Add_Arc(anchor_point, position, dest_pos, debug_categories.AIM_arc)
+
+    local new_grapple = swing_grapples.GetPureRope(vars.grapple)
+
+    local quat = GetRotation(vel_unit, look_dir, 2)
+    local dest_dir = RotateVector3D(vel_unit, quat)
+
+    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(dest_pos, dest_dir, new_grapple.stop_plane_distance)
+
+    this.ShowEndPoint(dest_pos, dest_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
 
     return true

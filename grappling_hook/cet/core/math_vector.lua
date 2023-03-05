@@ -5,6 +5,8 @@ local circlePoints_byCount = {}
 function vec_str(vector)
     if not vector then
         return "nil"
+    elseif not vector.x or not vector.y or not vector.z then
+        return tostring(vector)
     end
 
     return tostring(Round(vector.x, 2)) .. ", " .. tostring(Round(vector.y, 2)) .. ", " .. tostring(Round(vector.z, 2))
