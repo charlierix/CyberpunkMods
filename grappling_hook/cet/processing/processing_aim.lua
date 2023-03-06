@@ -6,13 +6,14 @@ local this = {}
 local up = nil
 
 local set_debug_categories = false
-local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_dots", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_velcomponent", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist", "AIM_arc", "AIM_notvisualtext", "AIM_testcase", "AIM_construction")
+local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_dots", "AIM_implementationtext", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_velcomponent", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist", "AIM_arc", "AIM_notvisualtext", "AIM_testcase", "AIM_construction")
 
 local slingshot_dist_by_dot = nil
 local slingshot_accelmult_by_dot = nil
 local slingshot_distmult_by_speed = nil
 local underswing_dist_by_speed = nil
 local tossdownup_radius_by_speed = nil
+local tossdownup_releaseangle_by_dot = nil
 
 -- This is called when they've initiated a new grapple.  It looks at the environment and kicks
 -- off actual flight with final values (like anchor point)
@@ -197,9 +198,6 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
 
     this.Draw_Not180(look_horz_unit, position, vel_horz_unit, DOT_HORZ_MIN, 0, -2.2, 0)
 
-
-    --TODO: also consider look direction
-
     if dot_vertical < DOT_UNDERSWING_MIN then
         -- Going nearly straight down
         -- If there is enough velocity, do an underswing and toss them to the end point
@@ -284,6 +282,7 @@ function this.EnsureDebugCategoriesSet()
     debug_render_screen.DefineCategory(debug_categories.AIM_action, "BC105C80", "FFF", nil, nil, nil, 0.25, 0.6)
     debug_render_screen.DefineCategory(debug_categories.AIM_speed, "BC2E6939", "FFF", nil, nil, nil, 0.25, 0.65)
     debug_render_screen.DefineCategory(debug_categories.AIM_dots, "BC3D6E6C", "FFF", nil, nil, nil, 0.25, 0.7)
+    debug_render_screen.DefineCategory(debug_categories.AIM_implementationtext, "BB596E3D", "FFF", nil, nil, nil, 0.25, 0.75)
 
     debug_render_screen.DefineCategory(debug_categories.AIM_pos, "CCC")
     debug_render_screen.DefineCategory(debug_categories.AIM_look, nil, "FFEBEDA8")
@@ -319,53 +318,6 @@ function this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_n
 end
 
 ------------------------------------ Temp Hardcoded -----------------------------------
-
-function this.Aim_Swing_UnderSwing_ATTEMPT1(position, look_dir, speed_look, vel_unit, vel_horz_unit, vel_horz, o, vars, const)
-
-    --TODO: the horizontal offset get way too much
-    --TODO: these lengths seem too large
-
-    local MIN_DIST = 12
-    local MAX_DIST = 48
-    local SPEED_MAX = 36
-
-    --TODO: Reduce distance if the area is cluttered
-    local dest_dist = Clamp(0, MAX_DIST, GetScaledValue(MIN_DIST, MAX_DIST, 0, SPEED_MAX, speed_look))
-
-    local dest_pos = AddVectors(position, MultiplyVector(look_dir, dest_dist))
-
-    local orth = CrossProduct3D(vel_unit, look_dir)
-    local anchor_line = CrossProduct3D(orth, vel_unit)
-
-    local mid_point = AddVectors(position, MultiplyVector(look_dir, dest_dist / 2))
-    local up_to_anchor = CrossProduct3D(orth, look_dir)
-
-    local found_intersection, intersect1, intersect2 = GetClosestPoints_Line_Line(position, AddVectors(position, anchor_line), mid_point, AddVectors(mid_point, up_to_anchor))
-    if not found_intersection then
-        return false
-    end
-
-    local anchor_point = Vector4.new((intersect1.x + intersect2.x) / 2, (intersect1.y + intersect2.y) / 2, (intersect1.z + intersect2.z) / 2, 1)
-
-    local radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_point))
-
-    this.ShowEndPoint(anchor_point, radius, nil, nil, vars.grapple, vars, o)     -- reusing this function to show the anchor and distance
-
-    debug_render_screen.Add_Arc(anchor_point, position, dest_pos, debug_categories.AIM_arc)
-
-    local new_grapple = swing_grapples.GetPureRope(vars.grapple)
-
-    local quat = GetRotation(vel_unit, look_dir, 2)
-    local dest_dir = RotateVector3D(vel_unit, quat)
-
-    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(dest_pos, dest_dir, new_grapple.stop_plane_distance)
-
-    this.ShowEndPoint(dest_pos, dest_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
-
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
-
-    return true
-end
 
 function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, vars, const)
     local VELOCITY_OFFPLANE_MULT = -0.1
@@ -411,12 +363,9 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
     debug_render_screen.Add_Dot(anchor_point, debug_categories.AIM_construction)
     debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
 
-
     --TODO: also multiply by radius
-
     -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
     anchor_point = AddVectors(anchor_point, MultiplyVector(vel_plane_normal, VELOCITY_OFFPLANE_MULT))
-
 
     local radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_point))
 
@@ -447,6 +396,11 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
         tossdownup_radius_by_speed:AddKeyValue(30, 7)
         tossdownup_radius_by_speed:AddKeyValue(40, 9)
         tossdownup_radius_by_speed:AddKeyValue(50, 10)
+
+        tossdownup_releaseangle_by_dot = AnimationCurve:new()
+        tossdownup_releaseangle_by_dot:AddKeyValue(Angle_to_Dot(0), 90)
+        tossdownup_releaseangle_by_dot:AddKeyValue(Angle_to_Dot(90), 45)
+        tossdownup_releaseangle_by_dot:AddKeyValue(Angle_to_Dot(180), 20)
     end
 
     -- Get the vertical component of the velocity
@@ -467,7 +421,10 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
     debug_render_screen.Add_Dot(anchor_point, debug_categories.AIM_construction)
 
     -- release at 45 degrees
-    local releasedir_unit = RotateVector3D_axis_angle(Vector4.new(0, 0, -1, 1), vert_plane_normal, 45)
+    local look_dot_up = DotProduct3D(look_dir, up)
+    local release_angle = tossdownup_releaseangle_by_dot:Evaluate(look_dot_up)
+
+    local releasedir_unit = RotateVector3D_axis_angle(Vector4.new(0, 0, -1, 1), vert_plane_normal, release_angle)
     local release_point = AddVectors(anchor_point, MultiplyVector(releasedir_unit, radius))
 
     local release_vel_unit = RotateVector3D_axis_angle(releasedir_unit, vert_plane_normal, 90)
@@ -480,21 +437,15 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
     debug_render_screen.Add_Dot(anchor_point, debug_categories.AIM_construction)
     debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
 
-
     --TODO: also multiply by radius
-
     -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
     anchor_point = AddVectors(anchor_point, MultiplyVector(vel_plane_normal, VELOCITY_OFFPLANE_MULT))
 
     this.ShowEndPoint(anchor_point, radius, nil, nil, vars.grapple, vars, o)
 
-    local dist_to_release = math.sqrt(GetVectorDiffLengthSqr(release_point, position))
-
-
-
     local new_grapple = swing_grapples.GetPureRope(vars.grapple)
 
-
+    local dist_to_release = math.sqrt(GetVectorDiffLengthSqr(release_point, position))
     this.ShowEndPoint(release_point, dist_to_release, stopplane_point, stopplane_normal, new_grapple, vars, o)
 
 
@@ -503,6 +454,7 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
 
 
 
+    debug_render_screen.Add_Text2D(nil, nil, "speed vert: " .. tostring(Round(speed_vert, 1)) .. "\r\nrelease angle: " .. tostring(Round(release_angle)), debug_categories.AIM_implementationtext)
 
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
 
