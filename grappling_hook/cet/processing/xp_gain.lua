@@ -67,9 +67,9 @@ function XPGain:Tick(deltaTime)
         self:SaveExperience()
     end
 
-    if self.const.shouldShowDebugWindow then
-        self:LogDebug()
-    end
+    -- if self.const.shouldShowDebugWindow then
+    --     self:LogDebug()
+    -- end
 end
 
 -- Call this when loading a new save

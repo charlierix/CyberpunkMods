@@ -19,6 +19,8 @@ function PopulateDebug(debug, o, keys, vars)
         debug.speed = tostring(Round(GetVectorLength(o.vel), 1))
     end
 
+    debug.is_airborne = IsAirborne(o)
+
     -- debug.key_forward = keys.forward
     -- debug.key_backward = keys.backward
     -- debug.key_left = keys.left
