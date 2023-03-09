@@ -14,8 +14,14 @@ local slingshot_distmult_by_speed = nil
 local underswing_dist_by_speed = nil
 local tossdownup_radius_by_speed = nil
 local tossdownup_releaseangle_by_dot = nil
-local tossup_radius_by_speed = nil
+
+--local tossup_radius_by_speed = nil
+--local tossup_releaseangle_by_dot = nil
+
+local tossup_dist_by_dot = nil
+local tossup_distmult_by_speed = nil
 local tossup_releaseangle_by_dot = nil
+
 
 -- This is called when they've initiated a new grapple.  It looks at the environment and kicks
 -- off actual flight with final values (like anchor point)
@@ -239,7 +245,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     this.Draw_CantUnderSwing(look_horz_unit, position, vel_unit, DOT_UNDERSWING_MAX, 0, -2.2, 2.2)
 
     -- If there's enough velocity, do a mini underswing and toss them to the end point
-    if this.Aim_Swing_Toss_Up(position, look_dir, o, vars, const) then
+    if this.Aim_Swing_Toss_Up(position, look_dir, speed_look, o, vars, const) then
         debug_render_screen.Add_Text2D(nil, nil, "toss up", debug_categories.AIM_action)
         do return end
     end
@@ -493,7 +499,7 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
 end
 
 --TODO: instead of a plain rope, make an elastic rope, and pull the anchor forward, so it accelerates and redirects up at an angle
-function this.Aim_Swing_Toss_Up(position, look_dir, o, vars, const)
+function this.Aim_Swing_Toss_Up_ATTEMPT1(position, look_dir, o, vars, const)
     local VELOCITY_OFFPLANE_MULT = -0.1
 
     if not tossup_radius_by_speed then
@@ -536,9 +542,9 @@ function this.Aim_Swing_Toss_Up(position, look_dir, o, vars, const)
     local releasedir_unit = RotateVector3D_axis_angle(Vector4.new(0, 0, -1, 1), vert_plane_normal, release_angle)
     local release_point = AddVectors(anchor_point, MultiplyVector(releasedir_unit, radius))
 
-    local release_vel_unit = RotateVector3D_axis_angle(releasedir_unit, vert_plane_normal, 90)
+    local release_dir_unit = RotateVector3D_axis_angle(releasedir_unit, vert_plane_normal, 90)
 
-    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(release_point, release_vel_unit, 0.25)
+    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(release_point, release_dir_unit, 0.25)
 
     -- Adjust the anchor point off vert plane based on horizontal velocity
     local vel_plane_normal = GetProjectedVector_AlongVector(o.vel, vert_plane_normal)
@@ -570,6 +576,76 @@ function this.Aim_Swing_Toss_Up(position, look_dir, o, vars, const)
     return true
 end
 
+function this.Aim_Swing_Toss_Up(position, look_dir, speed_look, o, vars, const)
+    local VELOCITY_OFFPLANE_MULT = -0.1
+
+    if not tossup_dist_by_dot then
+        tossup_dist_by_dot = AnimationCurve:new()
+        tossup_dist_by_dot:AddKeyValue(Angle_to_Dot(0), 4)      -- look dot up
+        tossup_dist_by_dot:AddKeyValue(Angle_to_Dot(45), 6)
+        tossup_dist_by_dot:AddKeyValue(Angle_to_Dot(90), 12)
+        tossup_dist_by_dot:AddKeyValue(Angle_to_Dot(135), 4)
+        tossup_dist_by_dot:AddKeyValue(Angle_to_Dot(180), 3)
+
+        tossup_distmult_by_speed = AnimationCurve:new()
+        tossup_distmult_by_speed:AddKeyValue(0, 0.95)
+        tossup_distmult_by_speed:AddKeyValue(12, 1)
+        tossup_distmult_by_speed:AddKeyValue(24, 1.5)
+        tossup_distmult_by_speed:AddKeyValue(36, 2)
+        tossup_distmult_by_speed:AddKeyValue(48, 1)
+
+        tossup_releaseangle_by_dot = AnimationCurve:new()
+        tossup_releaseangle_by_dot:AddKeyValue(Angle_to_Dot(0), 60)     -- look dot up, rotating vector (0,0,-1)
+        tossup_releaseangle_by_dot:AddKeyValue(Angle_to_Dot(90), 30)
+        tossup_releaseangle_by_dot:AddKeyValue(Angle_to_Dot(180), 24)
+    end
+
+    local look_dot_up = DotProduct3D(look_dir, up)
+
+    --TODO: Reduce distance if the area is cluttered
+
+    local release_dist = tossup_dist_by_dot:Evaluate(look_dot_up) * tossup_distmult_by_speed:Evaluate(speed_look)
+
+    local radius = release_dist * 0.25
+
+    local right = CrossProduct3D(look_dir, up)
+    local perp_toward_anchor = CrossProduct3D(right, look_dir)
+
+    local anchor_pos_base = AddVectors(position, MultiplyVector(look_dir, release_dist - radius))
+    local anchor_pos = AddVectors(anchor_pos_base, MultiplyVector(perp_toward_anchor, radius))
+
+    local swing_arm_unit = MultiplyVector(perp_toward_anchor, -1)
+
+    local release_angle = tossup_releaseangle_by_dot:Evaluate(look_dot_up)
+    local releasedir_unit = RotateVector3D_axis_angle(swing_arm_unit, right, release_angle)
+    local release_point = AddVectors(anchor_pos, MultiplyVector(releasedir_unit, radius))
+
+    local release_dir_unit = RotateVector3D_axis_angle(releasedir_unit, right, 90)
+
+    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(release_point, release_dir_unit, 0.25)
+
+    -- Adjust the anchor point off vert plane based on horizontal velocity
+    local vel_plane_normal = GetProjectedVector_AlongVector(o.vel, right)
+
+    debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
+    debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
+
+    --TODO: also multiply by radius
+    -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
+    anchor_pos = AddVectors(anchor_pos, MultiplyVector(vel_plane_normal, VELOCITY_OFFPLANE_MULT))
+
+    this.ShowEndPoint(anchor_pos, math.sqrt(GetVectorDiffLengthSqr(position, anchor_pos)), nil, nil, vars.grapple, vars, o)
+
+    local new_grapple = swing_grapples.GetElasticRope(vars.grapple, radius, 1, 1)
+
+    this.ShowEndPoint(release_point, math.sqrt(GetVectorDiffLengthSqr(position, release_point)), stopplane_point, stopplane_normal, new_grapple, vars, o)
+
+    debug_render_screen.Add_Text2D(nil, nil, "look_dot_up: " .. tostring(Round(look_dot_up, 1)) .. "\r\nspeed_look: " .. tostring(Round(speed_look, 1)), debug_categories.AIM_implementationtext)
+
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
+    return true
+end
+
 function this.Aim_Swing_Slingshot(position, look_dir, speed_look, is_airborne, o, vars, const)
     if not slingshot_dist_by_dot then
         slingshot_dist_by_dot = AnimationCurve:new()
@@ -586,18 +662,18 @@ function this.Aim_Swing_Slingshot(position, look_dir, speed_look, is_airborne, o
         slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(180), 2)
 
         slingshot_distmult_by_speed = AnimationCurve:new()
-        slingshot_distmult_by_speed:AddKeyValue(0, 1)
+        slingshot_distmult_by_speed:AddKeyValue(0, 0.95)
         slingshot_distmult_by_speed:AddKeyValue(12, 1)
         slingshot_distmult_by_speed:AddKeyValue(24, 1.5)
         slingshot_distmult_by_speed:AddKeyValue(36, 2)
         slingshot_distmult_by_speed:AddKeyValue(48, 1)
     end
 
-    local dot_vert = DotProduct3D(look_dir, up)
+    local look_dot_up = DotProduct3D(look_dir, up)
 
     --TODO: Reduce distance if the area is cluttered
 
-    local anchor_dist = slingshot_dist_by_dot:Evaluate(dot_vert) * slingshot_distmult_by_speed:Evaluate(speed_look)
+    local anchor_dist = slingshot_dist_by_dot:Evaluate(look_dot_up) * slingshot_distmult_by_speed:Evaluate(speed_look)
 
     local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
 
@@ -607,7 +683,7 @@ function this.Aim_Swing_Slingshot(position, look_dir, speed_look, is_airborne, o
         anchor_pos = hit
     end
 
-    local accel_mult = slingshot_accelmult_by_dot:Evaluate(dot_vert)
+    local accel_mult = slingshot_accelmult_by_dot:Evaluate(look_dot_up)
 
     local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos, accel_mult)
 

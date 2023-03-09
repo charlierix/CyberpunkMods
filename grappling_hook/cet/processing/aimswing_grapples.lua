@@ -73,19 +73,18 @@ function aimswing_grapples.GetPureRope(grapple)
 
         desired_length = nil,
 
-        --accel_alongGrappleLine = nil,       --TODO: Some of the acceleration needs to be this.  Otherwise it gets jerky when only drag is applied
-        accel_alongGrappleLine =
+        accel_alongGrappleLine =        -- Some of the acceleration needs to be this.  Otherwise it gets jerky when only drag is applied
         {
             accel = 24,
             speed = 8,
         },
         accel_alongLook = nil,
 
-        springAccel_k = nil,        --TODO: Play with this
+        springAccel_k = nil,
 
-        velocity_away = --GetDefault_VelocityAway(nil, 60, nil),      -- using a big tension so it feels like rope
+        velocity_away =
         {
-            accel_tension = 144,
+            accel_tension = 144,        -- using a big tension so it feels like rope
             deadSpot = 0.75
         },
 
@@ -95,9 +94,51 @@ function aimswing_grapples.GetPureRope(grapple)
     }
 end
 
-function aimswing_grapples.GetElasticRope(grapple)
+function aimswing_grapples.GetElasticRope(grapple, desired_length, accel_mult, speed_mult)
+    -- local point_on_line = GetClosestPoint_Line_Point(from_pos, SubtractVectors(to_pos, from_pos), anchor_pos)
+    -- local desired_length = math.sqrt(GetVectorDiffLengthSqr(anchor_pos, point_on_line))
+
+    return
+    {
+        name = grapple.name,
+        description = grapple.description,
+
+        mappin_name = grapple.mappin_name,
+
+        stop_on_wallHit = true,
+        stop_plane_distance = 0.25,
+
+        anti_gravity =
+        {
+            antigrav_percent = 0.33,
+            fade_duration = 1,
+        },
+
+        desired_length = desired_length,        -- pull until it hits this length, then be a rope
+
+        accel_alongGrappleLine =
+        {
+            accel = 30 * accel_mult,
+            speed = 60 * speed_mult,
+        },
+        accel_alongLook = nil,
+
+        springAccel_k = nil,
+
+        velocity_away =
+        {
+            accel_tension = 84,        -- using a fairly large tension so the rope part will act like a sling and not be too weak
+            deadSpot = 0.75
+        },
+
+        aim_swing = grapple.aim_swing,
+
+        fallDamageReduction_percent = 0,
+    }
 end
 
+---@param direction_unit Vector4 direction that the straight line grapple is travelling
+---@return number percent from 0 to 1 (1 would be 100% antigrav)
 function this.GetStaightAntigravPercent(direction_unit)
     local dot = DotProduct3D(direction_unit, up)
 
