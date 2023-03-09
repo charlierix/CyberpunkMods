@@ -41,7 +41,9 @@ function Process_Flight_Straight(o, player, vars, const, debug, deltaTime)
         do return end
     end
 
-    if vars.stopplane_point and IsAbovePlane(vars.stopplane_point, vars.stopplane_normal, o.pos, false) then
+    local eye_pos, look_dir = o:GetCrosshairInfo()
+
+    if vars.stopplane_point and IsAbovePlane(vars.stopplane_point, vars.stopplane_normal, eye_pos, false) then
         this.Transition_AntiGravOrStandard(vars, const, debug, o, grapple)
         do return end
     end
