@@ -340,6 +340,7 @@ end
 
 function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, vars, const)
     local VELOCITY_OFFPLANE_MULT = -0.1
+    local VELOCITY_OFFPLANE_RADIUSMULT = 0.15
     local MIN_OUTPUT_SPEED = 3
 
     if not underswing_dist_by_speed then
@@ -379,9 +380,6 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
 
     -- Any point along this anchor line should make a smooth curve
     local anchor_line = CrossProduct3D(vert_plane_normal, vel_vert_unit)
-    if DotProduct3D(anchor_line, up) < 0 then
-        return false        -- it's rare, but I had a case where it put the anchor below, so instead of an underswing, it was an overswing
-    end
 
     -- Take a line from midpoint of look to intersect and find an anchor point
     local mid_point = AddVectors(position, MultiplyVector(look_dir, dest_dist / 2))
@@ -399,17 +397,29 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
 
     local anchor_point = Vector4.new((intersect1.x + intersect2.x) / 2, (intersect1.y + intersect2.y) / 2, (intersect1.z + intersect2.z) / 2, 1)
 
+    if DotProduct3D(SubtractVectors(anchor_point, mid_point), up_to_anchor) < 0 then
+        -- They are looking down below the velocity line.  anchor_line and up_to_anchor converge below instead
+        -- of above
+        --
+        -- Just set the anchor a distance along up_to_anchor
+        local anchor_dist = math.sqrt(3 * dest_dist) / 2        -- height of an equilateral triangle
+        anchor_point = AddVectors(mid_point, MultiplyVector(up_to_anchor, anchor_dist))
+        debug_render_screen.Add_Text2D(nil, nil, "forced anchor above", debug_categories.AIM_implementationtext)
+    end
+
     -- Adjust the anchor point off vert plane based on horizontal velocity
     local vel_plane_normal = GetProjectedVector_AlongVector(o.vel, vert_plane_normal)
 
     debug_render_screen.Add_Dot(anchor_point, debug_categories.AIM_construction)
     debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
 
-    --TODO: also multiply by radius
-    -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
-    anchor_point = AddVectors(anchor_point, MultiplyVector(vel_plane_normal, VELOCITY_OFFPLANE_MULT))
-
     local radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_point))
+
+    -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
+    local offplane_mult = radius * VELOCITY_OFFPLANE_RADIUSMULT * VELOCITY_OFFPLANE_MULT
+    anchor_point = AddVectors(anchor_point, MultiplyVector(vel_plane_normal, offplane_mult))
+
+    radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_point))      -- previous radius calculation was to get the offplane_mult.  Two square roots, but it has to be done
 
     this.ShowEndPoint(anchor_point, radius, nil, nil, new_grapple, vars, o)     -- reusing this function to show the anchor and distance
     debug_render_screen.Add_Arc(anchor_point, position, dest_pos, debug_categories.AIM_arc)
