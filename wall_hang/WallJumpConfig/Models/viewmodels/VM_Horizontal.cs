@@ -11,6 +11,12 @@ namespace WallJumpConfig.Models.viewmodels
 {
     public class VM_Horizontal : DependencyObject
     {
+        public VM_Horizontal()
+        {
+            ExtraAngles = new ObservableCollection<VM_Slider>();
+            PropsAtAngles = new ObservableCollection<VM_PropsAtAngle>();
+        }
+
         // ------------- HasHorizontal -------------
 
         public bool HasHorizontal
@@ -43,12 +49,6 @@ namespace WallJumpConfig.Models.viewmodels
             set { SetValue(DescriptionProperty, value); }
         }
         public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(VM_Horizontal), new PropertyMetadata(""));
-
-        public VM_Horizontal()
-        {
-            ExtraAngles = new ObservableCollection<VM_Slider>();
-            PropsAtAngles = new ObservableCollection<VM_PropsAtAngle>();
-        }
 
         public ObservableCollection<VM_Slider> ExtraAngles { get; private set; }
 

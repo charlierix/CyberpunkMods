@@ -21,7 +21,7 @@ local tossdownup_releaseangle_by_dot = nil
 local tossup_dist_by_dot = nil
 local tossup_distmult_by_speed = nil
 local tossup_releaseangle_by_dot = nil
-
+local tossup_accelpercent_by_dot = nil
 
 -- This is called when they've initiated a new grapple.  It looks at the environment and kicks
 -- off actual flight with final values (like anchor point)
@@ -379,6 +379,9 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
 
     -- Any point along this anchor line should make a smooth curve
     local anchor_line = CrossProduct3D(vert_plane_normal, vel_vert_unit)
+    if DotProduct3D(anchor_line, up) < 0 then
+        return false        -- it's rare, but I had a case where it put the anchor below, so instead of an underswing, it was an overswing
+    end
 
     -- Take a line from midpoint of look to intersect and find an anchor point
     local mid_point = AddVectors(position, MultiplyVector(look_dir, dest_dist / 2))
@@ -484,6 +487,7 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
 
     local dist_to_release = math.sqrt(GetVectorDiffLengthSqr(release_point, position))
     this.ShowEndPoint(release_point, dist_to_release, stopplane_point, stopplane_normal, new_grapple, vars, o)
+    debug_render_screen.Add_Arc(anchor_point, position, release_point, debug_categories.AIM_arc)
 
 
     -- that will toss the player in a reasonable way
@@ -598,6 +602,12 @@ function this.Aim_Swing_Toss_Up(position, look_dir, speed_look, o, vars, const)
         tossup_releaseangle_by_dot:AddKeyValue(Angle_to_Dot(0), 60)     -- look dot up, rotating vector (0,0,-1)
         tossup_releaseangle_by_dot:AddKeyValue(Angle_to_Dot(90), 30)
         tossup_releaseangle_by_dot:AddKeyValue(Angle_to_Dot(180), 24)
+
+        tossup_accelpercent_by_dot = AnimationCurve:new()
+        tossup_accelpercent_by_dot:AddKeyValue(1, 1)
+        tossup_accelpercent_by_dot:AddKeyValue(0, 0.97)
+        tossup_accelpercent_by_dot:AddKeyValue(-0.5, 0.7)
+        tossup_accelpercent_by_dot:AddKeyValue(-1, 0.25)
     end
 
     local look_dot_up = DotProduct3D(look_dir, up)
@@ -636,11 +646,13 @@ function this.Aim_Swing_Toss_Up(position, look_dir, speed_look, o, vars, const)
 
     this.ShowEndPoint(anchor_pos, math.sqrt(GetVectorDiffLengthSqr(position, anchor_pos)), nil, nil, vars.grapple, vars, o)
 
-    local new_grapple = swing_grapples.GetElasticRope(vars.grapple, radius, 1, 1)
+    local accel_mult = tossup_accelpercent_by_dot:Evaluate(look_dot_up)
+    local new_grapple = swing_grapples.GetElasticRope(vars.grapple, radius, accel_mult, 1)
 
     this.ShowEndPoint(release_point, math.sqrt(GetVectorDiffLengthSqr(position, release_point)), stopplane_point, stopplane_normal, new_grapple, vars, o)
+    debug_render_screen.Add_Arc(anchor_pos, position, release_point, debug_categories.AIM_arc)
 
-    debug_render_screen.Add_Text2D(nil, nil, "look_dot_up: " .. tostring(Round(look_dot_up, 1)) .. "\r\nspeed_look: " .. tostring(Round(speed_look, 1)), debug_categories.AIM_implementationtext)
+    debug_render_screen.Add_Text2D(nil, nil, "look_dot_up: " .. tostring(Round(look_dot_up, 1)) .. "\r\nspeed_look: " .. tostring(Round(speed_look, 1)) .. "\r\naccel_mult: " .. tostring(Round(accel_mult, 2)), debug_categories.AIM_implementationtext)
 
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
     return true
