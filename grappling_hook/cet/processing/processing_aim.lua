@@ -430,8 +430,8 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
     local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(dest_pos, dest_dir, new_grapple.stop_plane_distance)
 
     this.ShowEndPoint(dest_pos, dest_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
 
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
     return true
 end
 
@@ -499,16 +499,11 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
     this.ShowEndPoint(release_point, dist_to_release, stopplane_point, stopplane_normal, new_grapple, vars, o)
     debug_render_screen.Add_Arc(anchor_point, position, release_point, debug_categories.AIM_arc)
 
-
-    -- that will toss the player in a reasonable way
-    --TODO: calculate parabola and draw
-
-
-
     debug_render_screen.Add_Text2D(nil, nil, "speed vert: " .. tostring(Round(speed_vert, 1)) .. "\r\nrelease angle: " .. tostring(Round(release_angle)), debug_categories.AIM_implementationtext)
 
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
+    debug_render_screen.PlayTone2()
 
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
     return true
 end
 
@@ -586,6 +581,8 @@ function this.Aim_Swing_Toss_Up(position, look_dir, speed_look, o, vars, const)
 
     debug_render_screen.Add_Text2D(nil, nil, "look_dot_up: " .. tostring(Round(look_dot_up, 1)) .. "\r\nspeed_look: " .. tostring(Round(speed_look, 1)) .. "\r\naccel_mult: " .. tostring(Round(accel_mult, 2)), debug_categories.AIM_implementationtext)
 
+    debug_render_screen.PlayTone3()
+
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
     return true
 end
@@ -636,6 +633,8 @@ function this.Aim_Swing_Slingshot(position, look_dir, speed_look, is_airborne, o
     local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, look_dir, new_grapple.stop_plane_distance)
 
     this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
+
+    debug_render_screen.PlayTone4()
 
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
 end
@@ -690,6 +689,7 @@ function this.Aim_Swing_FromGround_DoIt(position, anchor_pos, jumpdir_unit, anch
         print("vars is nil")
     elseif vars.grapple == nil then
         print("vars.grapple is nill")
+        debug_render_screen.PlayTone_TwoTones()
     end
 
 

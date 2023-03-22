@@ -30,6 +30,9 @@ local visuals_line = StickyList:new()
 local visuals_triangle = StickyList:new()
 local visuals_text = StickyList:new()
 
+local sound_name = nil
+local sound_time = nil
+
 local up = nil
 
 local is_enabled = false
@@ -58,6 +61,7 @@ function DebugRenderScreen.CallFrom_onUpdate(deltaTime)
 
     -- Remove items that have exceeded lifespan_seconds
     this.RemoveExpiredItems()
+    this.PossiblyStopSound(false)
 
     -- Go through items and populate visuals (only items that are in front of the camera).  Turns high level concepts
     -- like circle/square into line paths that match this frame's perspective
@@ -385,6 +389,42 @@ function DebugRenderScreen.Clear()
     end
 
     items:Clear()
+    this.PossiblyStopSound(true)        -- stopping this in case the want to stop calling update after calling clear
+end
+
+-- Though not a visual, this is a convinent class to add alert sounds to.  These can be used to make it more obvious when
+-- something happens
+--
+-- Be sure to call CallFrom_onUpdate regularly so the sound can be dequeued after a second
+function DebugRenderScreen.PlayTone1()
+    if is_enabled then
+        this.PlaySound("dev_alarm_02")
+    end
+end
+function DebugRenderScreen.PlayTone2()
+    if is_enabled then
+        this.PlaySound("dev_drone_griffin_default_sgn_idle_beep")
+    end
+end
+function DebugRenderScreen.PlayTone3()
+    if is_enabled then
+        this.PlaySound("dev_alarm_03")
+    end
+end
+function DebugRenderScreen.PlayTone4()
+    if is_enabled then
+        this.PlaySound("q014_sc_02a_alarm")
+    end
+end
+function DebugRenderScreen.PlayTone5()
+    if is_enabled then
+        this.PlaySound("dev_alarm_04")
+    end
+end
+function DebugRenderScreen.PlayTone_TwoTones()
+    if is_enabled then
+        this.PlaySound("q110_screen_advert_hack_alert")
+    end
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -536,6 +576,28 @@ function this.GetSquarePoints(center, normal, size_x, size_y)
         AddVectors(center, p2),
         AddVectors(center, p3),
         AddVectors(center, p4)
+end
+
+function this.PlaySound(name)
+    this.PossiblyStopSound(true)
+
+    sound_name = name
+    sound_time = timer
+
+    local audioEvent = SoundPlayEvent.new()
+    audioEvent.soundName = sound_name
+    Game.GetPlayer():QueueEvent(audioEvent)
+end
+function this.PossiblyStopSound(should_force)
+    if sound_name and (should_force or (timer - sound_time) > 1.5) then     -- the sounds are all quick
+
+        local audioEvent = SoundStopEvent.new()
+        audioEvent.soundName = sound_name
+        Game.GetPlayer():QueueEvent(audioEvent)
+
+        sound_name = nil
+        sound_time = nil
+    end
 end
 
 return DebugRenderScreen
