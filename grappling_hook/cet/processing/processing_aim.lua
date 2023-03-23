@@ -51,8 +51,6 @@ function Process_Aim(o, player, vars, const, debug, deltaTime)
     end
 end
 
------------------------------------ Private Methods -----------------------------------
-
 function this.Aim_Straight(aim, o, player, vars, const, debug)
     if this.RecoverEnergy_Switch(o, player, vars, const) then
         do return end
@@ -249,115 +247,6 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     -- Nothing else worked, default to straight line
     debug_render_screen.Add_Text2D(nil, nil, "default", debug_categories.AIM_action)
     this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
-end
-
-function this.RecoverEnergy_Switch(o, player, vars, const)
-    if vars.startStopTracker:GetRequestedAction() then
-        -- Something different was requested, recover the energy that was used for this current grapple
-        local existingEnergy = vars.energy
-        vars.energy = math.min(vars.energy + vars.grapple.energy_cost, player.energy_tank.max_energy)
-
-        if HasSwitchedFlightMode(o, player, vars, const, true) then        -- this function looks at the same bindings as above
-            return true
-        else
-            -- There was some reason why the switch didn't work.  Take the energy back
-            vars.energy = existingEnergy
-        end
-    end
-
-    return false
-end
-
-function this.GetStopPlane_Straight(anchor_pos, direction, stop_plane_distance)
-    if not stop_plane_distance then
-        return nil, nil
-    end
-
-    local point_on_plane = AddVectors(anchor_pos, MultiplyVector(direction, -stop_plane_distance))
-
-    return point_on_plane, direction
-end
--- Creates a plane slightly above the swing arc.  This is needed because sometimes the swing goes wrong, they miss the
--- end plane and the anchor just pulls them up (usually after hitting an obstacle)
-function this.GetStopPlane_SwingCeiling(anchor_pos, normal, from_pos, to_pos)
-    local CEILING_HEIGHT = 1.2
-
-
-    ------------------------------------ Unnecessary ------------------------------------
-    -- local planepoint_from = GetClosestPoint_Plane_Point(anchor_pos, normal, from_pos)
-    -- local planepoint_to = GetClosestPoint_Plane_Point(anchor_pos, normal, from_pos)
-
-    -- local distsqr_from = GetVectorDiffLengthSqr(from_pos, planepoint_from)
-    -- local distsqr_to = GetVectorDiffLengthSqr(to_pos, planepoint_to)
-
-    -- local point
-    -- if distsqr_from < distsqr_to then
-    --     point = AddVectors(from_pos, MultiplyVector(normal, CEILING_HEIGHT))
-    -- else
-    --     point = AddVectors(to_pos, MultiplyVector(normal, CEILING_HEIGHT))
-    -- end
-    -------------------------------------------------------------------------------------
-
-
-    -- Since normal is perpendicular to to-from line, froma and to should be the same distance from the plane, so
-    -- just use one of them
-    local point = AddVectors(from_pos, MultiplyVector(normal, CEILING_HEIGHT))
-
-    return point, normal
-end
-
-function this.EnsureDebugCategoriesSet()
-    if set_debug_categories then
-        do return end
-    end
-
-    debug_render_screen.DefineCategory(debug_categories.AIM_action, "BC105C80", "FFF", nil, nil, nil, 0.25, 0.6)
-    debug_render_screen.DefineCategory(debug_categories.AIM_speed, "BC2E6939", "FFF", nil, nil, nil, 0.25, 0.65)
-    debug_render_screen.DefineCategory(debug_categories.AIM_dots, "BC3D6E6C", "FFF", nil, nil, nil, 0.25, 0.7)
-    debug_render_screen.DefineCategory(debug_categories.AIM_implementationtext, "BB596E3D", "FFF", nil, nil, nil, 0.25, 0.75)
-
-    debug_render_screen.DefineCategory(debug_categories.AIM_pos, "CCC")
-    debug_render_screen.DefineCategory(debug_categories.AIM_look, nil, "FFEBEDA8")
-    debug_render_screen.DefineCategory(debug_categories.AIM_velunit, nil, "FF9643E9")
-    debug_render_screen.DefineCategory(debug_categories.AIM_velcomponent, nil, "9E9160C2")
-    debug_render_screen.DefineCategory(debug_categories.AIM_arc, nil, "80D69A19")
-
-    debug_render_screen.DefineCategory(debug_categories.AIM_up, nil, "FF0AC70D")
-
-    debug_render_screen.DefineCategory(debug_categories.AIM_anchor, "FFDED716", nil, nil, 1.5, true)
-    debug_render_screen.DefineCategory(debug_categories.AIM_stopplane, "40DED716", "80DED716")
-    debug_render_screen.DefineCategory(debug_categories.AIM_anchordist, "94838150", "FFF8F36C")
-
-    debug_render_screen.DefineCategory(debug_categories.AIM_notvisualtext, "BCD4BEB6", "FF702305")
-    debug_render_screen.DefineCategory(debug_categories.AIM_testcase, "F00", "F00")
-
-    debug_render_screen.DefineCategory(debug_categories.AIM_construction, "80DB56A4", "FFDB56A4")       -- these are generic minor graphics that represent calculations used to get to final answers
-
-    set_debug_categories = true
-end
-
-function this.ShowErrorText(func_name, message)
-    if not debug_render_screen.IsEnabled() then
-        do return end
-    end
-
-    local x = 0.05 + (math.random() * 0.15)     -- not perfect, but should be fine in most cases and there's no need for a list
-    local y = 0.2 + (math.random() * 0.6)
-
-    debug_render_screen.Add_Text2D(x, y, func_name .. "\r\n" .. message, debug_categories.AIM_notvisualtext)
-end
-
-function this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, grapple, vars, o)
-    if debug_render_screen.IsEnabled() then
-        debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_anchor)
-        debug_render_screen.Add_Text(AddVectors(anchor_pos, MultiplyVector(up, -0.2)), tostring(Round(anchor_dist, 1)), debug_categories.AIM_anchordist)
-
-        if stopplane_point then
-            debug_render_screen.Add_Square(stopplane_point, stopplane_normal, 3, 3, debug_categories.AIM_stopplane)
-        end
-    else
-        EnsureMapPinVisible(anchor_pos, grapple.mappin_name, vars, o)       -- Flight pin, not aim
-    end
 end
 
 ------------------------------------ Temp Hardcoded -----------------------------------
@@ -871,4 +760,115 @@ function this.Draw_CantUnderSwing(look_horz_unit, position, vel_unit, DOT_UNDERS
     debug_render_screen.Add_Line(position, AddVectors(position, direction), debug_categories.AIM_testcase)
 
     debug_render_screen.Add_Text(Vector4.new(position.x, position.y, position.z + 0.25), "Can't Under Swing", debug_categories.AIM_notvisualtext)
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.RecoverEnergy_Switch(o, player, vars, const)
+    if vars.startStopTracker:GetRequestedAction() then
+        -- Something different was requested, recover the energy that was used for this current grapple
+        local existingEnergy = vars.energy
+        vars.energy = math.min(vars.energy + vars.grapple.energy_cost, player.energy_tank.max_energy)
+
+        if HasSwitchedFlightMode(o, player, vars, const, true) then        -- this function looks at the same bindings as above
+            return true
+        else
+            -- There was some reason why the switch didn't work.  Take the energy back
+            vars.energy = existingEnergy
+        end
+    end
+
+    return false
+end
+
+function this.GetStopPlane_Straight(anchor_pos, direction, stop_plane_distance)
+    if not stop_plane_distance then
+        return nil, nil
+    end
+
+    local point_on_plane = AddVectors(anchor_pos, MultiplyVector(direction, -stop_plane_distance))
+
+    return point_on_plane, direction
+end
+-- Creates a plane slightly above the swing arc.  This is needed because sometimes the swing goes wrong, they miss the
+-- end plane and the anchor just pulls them up (usually after hitting an obstacle)
+function this.GetStopPlane_SwingCeiling(anchor_pos, normal, from_pos, to_pos)
+    local CEILING_HEIGHT = 1.2
+
+
+    ------------------------------------ Unnecessary ------------------------------------
+    -- local planepoint_from = GetClosestPoint_Plane_Point(anchor_pos, normal, from_pos)
+    -- local planepoint_to = GetClosestPoint_Plane_Point(anchor_pos, normal, from_pos)
+
+    -- local distsqr_from = GetVectorDiffLengthSqr(from_pos, planepoint_from)
+    -- local distsqr_to = GetVectorDiffLengthSqr(to_pos, planepoint_to)
+
+    -- local point
+    -- if distsqr_from < distsqr_to then
+    --     point = AddVectors(from_pos, MultiplyVector(normal, CEILING_HEIGHT))
+    -- else
+    --     point = AddVectors(to_pos, MultiplyVector(normal, CEILING_HEIGHT))
+    -- end
+    -------------------------------------------------------------------------------------
+
+
+    -- Since normal is perpendicular to to-from line, froma and to should be the same distance from the plane, so
+    -- just use one of them
+    local point = AddVectors(from_pos, MultiplyVector(normal, CEILING_HEIGHT))
+
+    return point, normal
+end
+
+function this.EnsureDebugCategoriesSet()
+    if set_debug_categories then
+        do return end
+    end
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_action, "BC105C80", "FFF", nil, nil, nil, 0.25, 0.6)
+    debug_render_screen.DefineCategory(debug_categories.AIM_speed, "BC2E6939", "FFF", nil, nil, nil, 0.25, 0.65)
+    debug_render_screen.DefineCategory(debug_categories.AIM_dots, "BC3D6E6C", "FFF", nil, nil, nil, 0.25, 0.7)
+    debug_render_screen.DefineCategory(debug_categories.AIM_implementationtext, "BB596E3D", "FFF", nil, nil, nil, 0.25, 0.75)
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_pos, "CCC")
+    debug_render_screen.DefineCategory(debug_categories.AIM_look, nil, "FFEBEDA8")
+    debug_render_screen.DefineCategory(debug_categories.AIM_velunit, nil, "FF9643E9")
+    debug_render_screen.DefineCategory(debug_categories.AIM_velcomponent, nil, "9E9160C2")
+    debug_render_screen.DefineCategory(debug_categories.AIM_arc, nil, "80D69A19")
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_up, nil, "FF0AC70D")
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_anchor, "FFDED716", nil, nil, 1.5, true)
+    debug_render_screen.DefineCategory(debug_categories.AIM_stopplane, "40DED716", "80DED716")
+    debug_render_screen.DefineCategory(debug_categories.AIM_anchordist, "94838150", "FFF8F36C")
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_notvisualtext, "BCD4BEB6", "FF702305")
+    debug_render_screen.DefineCategory(debug_categories.AIM_testcase, "F00", "F00")
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_construction, "80DB56A4", "FFDB56A4")       -- these are generic minor graphics that represent calculations used to get to final answers
+
+    set_debug_categories = true
+end
+
+function this.ShowErrorText(func_name, message)
+    if not debug_render_screen.IsEnabled() then
+        do return end
+    end
+
+    local x = 0.05 + (math.random() * 0.15)     -- not perfect, but should be fine in most cases and there's no need for a list
+    local y = 0.2 + (math.random() * 0.6)
+
+    debug_render_screen.Add_Text2D(x, y, func_name .. "\r\n" .. message, debug_categories.AIM_notvisualtext)
+end
+
+function this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, grapple, vars, o)
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_anchor)
+        debug_render_screen.Add_Text(AddVectors(anchor_pos, MultiplyVector(up, -0.2)), tostring(Round(anchor_dist, 1)), debug_categories.AIM_anchordist)
+
+        if stopplane_point then
+            debug_render_screen.Add_Square(stopplane_point, stopplane_normal, 3, 3, debug_categories.AIM_stopplane)
+        end
+    else
+        EnsureMapPinVisible(anchor_pos, grapple.mappin_name, vars, o)       -- Flight pin, not aim
+    end
 end
