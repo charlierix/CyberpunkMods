@@ -43,7 +43,10 @@ function Transition_ToAim(grapple, vars, const, o, shouldConsumeEnergy)
 
     -- Don't want this misreporting.  Force the user to let go of the keys before this sees any new
     -- action attempt
-    vars.startStopTracker:ResetKeyDowns()
+    --
+    -- Swing has a boost if they keep held down, so tell the tracker to remember the keys that triggered
+    -- this aim
+    vars.startStopTracker:ResetKeyDowns(true)
 
     vars.startTime = o.timer
 

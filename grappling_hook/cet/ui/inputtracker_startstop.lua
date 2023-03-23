@@ -40,6 +40,8 @@ function InputTracker_StartStop:new(o, keys, const)
     -- Each item is an array: { binding enum, array of action names }
     --obj.call_order
 
+    --obj.held_names
+
     -- This holds the keydown time of each action
     -- key=actionname, value=keydown_time (or nil)
     obj.downTimes = {}
@@ -48,6 +50,7 @@ function InputTracker_StartStop:new(o, keys, const)
 end
 
 function InputTracker_StartStop:Tick()
+    -- Standard key tracking
     for i=1, #self.keynames do
         local name = self.keynames[i]
 
@@ -58,6 +61,17 @@ function InputTracker_StartStop:Tick()
         elseif not self.keys.actions[name] then
             -- Key is no longer being pressed down
             self.downTimes[name] = nil
+        end
+    end
+
+    -- Special list that is the previous set that triggered an action.  Needs to keep reporting as held down
+    -- until the let go of one of the keys
+    if self.held_names then
+        for i = 1, #self.held_names, 1 do
+            if not self.keys.actions[self.held_names[i]] then
+                self.held_names = nil
+                do break end
+            end
         end
     end
 end
@@ -105,7 +119,11 @@ end
 
 -- This forgets that keys were pressed down.  Call this after an action is started so this class
 -- won't keep saying to start actions (forces the user to let go of the keys and repress them)
-function InputTracker_StartStop:ResetKeyDowns()
+function InputTracker_StartStop:ResetKeyDowns(remember_current)
+    if remember_current then
+        self:RememberCurrentForHeld()
+    end
+
     for key, _ in pairs(self.downTimes) do
         self.downTimes[key] = nil
     end
@@ -121,6 +139,10 @@ function InputTracker_StartStop:GetRequestedAction()
     end
 
     return nil
+end
+
+function InputTracker_StartStop:IsPrevActionHeldDown()
+    return self.held_names ~= nil
 end
 
 function InputTracker_StartStop:GetActionNames(binding)
@@ -168,6 +190,21 @@ function InputTracker_StartStop:IsDown(keynames)
 
     -- All buttons were pressed simultaneously (at least within the alloted window of time)
     return true
+end
+
+function InputTracker_StartStop:RememberCurrentForHeld()
+    self.held_names = nil       -- likely already nil, but just being safe
+
+    local action = self:GetRequestedAction()
+    if not action then
+        do return end
+    end
+
+    for i = 1, #self.call_order do
+        if self.call_order[i][1] == action then
+            self.held_names = self.call_order[i][2]
+        end
+    end
 end
 
 function this.GetDeduped(jagged)

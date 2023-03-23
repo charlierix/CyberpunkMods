@@ -41,12 +41,13 @@ function PopulateDebug(debug, o, keys, vars)
     --     debug["down_" .. key] = value
     -- end
 
-    -- local action = vars.startStopTracker:GetRequestedAction()
-    -- if action then
-    --     debug.action = action
-    -- else
-    --     debug.action = "-----"
-    -- end
+    local action = vars.startStopTracker:GetRequestedAction()
+    if action then
+        debug.action = action
+    else
+        debug.action = "-----"
+    end
+    debug.action_held = vars.startStopTracker:IsPrevActionHeldDown()
 
     debug.timer = Round(o.timer, 1)
 end
