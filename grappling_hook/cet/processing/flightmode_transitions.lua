@@ -69,6 +69,9 @@ function Transition_ToFlight_Straight(vars, const, o, rayFrom, rayHit, airanchor
 
     vars.airanchor = airanchor
 
+    vars.stop_planes:Clear()
+    this.AddStopPlane(vars.stop_planes, stopplane_point, stopplane_normal)
+
     vars.stopplane_point = stopplane_point
     vars.stopplane_normal = stopplane_normal
 
@@ -78,7 +81,7 @@ end
 
 -- This goes from aim into flight
 -- There's no need to check for energy, that was done when trying to aim
-function Transition_ToFlight_Swing(grapple, vars, const, o, rayFrom, rayHit, airanchor, stopplane_point, stopplane_normal)
+function Transition_ToFlight_Swing(grapple, vars, const, o, rayFrom, rayHit, airanchor, stopplane_point1, stopplane_normal1, stopplane_point2, stopplane_normal2, stopplane_point3, stopplane_normal3)
     vars.flightMode = const.flightModes.flight_swing
 
     vars.grapple = grapple      -- this was populated in Transition_ToAim, but aim swing redefines it based on the situation
@@ -94,8 +97,10 @@ function Transition_ToFlight_Swing(grapple, vars, const, o, rayFrom, rayHit, air
 
     vars.airanchor = airanchor
 
-    vars.stopplane_point = stopplane_point
-    vars.stopplane_normal = stopplane_normal
+    vars.stop_planes:Clear()
+    this.AddStopPlane(vars.stop_planes, stopplane_point1, stopplane_normal1)
+    this.AddStopPlane(vars.stop_planes, stopplane_point2, stopplane_normal2)
+    this.AddStopPlane(vars.stop_planes, stopplane_point3, stopplane_normal3)
 
     vars.hasBeenAirborne = false
     vars.initialAirborneTime = nil
@@ -144,4 +149,12 @@ end
 
 function this.GetRandomSound(list)
     return list[math.random(#list)]
+end
+
+function this.AddStopPlane(list, point, normal)
+    if point and normal then
+        local plane = list:GetNewItem()
+        plane.point = point
+        plane.normal = normal
+    end
 end

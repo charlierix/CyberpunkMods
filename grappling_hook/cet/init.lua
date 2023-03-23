@@ -198,8 +198,8 @@ local vars =
     --rayLength             -- gets populated when transitioning to airdash
     --distToHit             -- len(rayHit-rayFrom)    populated when transitioning to flight
 
-    --stopplane_point       -- populated when transitioning to flight
-    --stopplane_normal
+    stop_planes = StickyList:new(),     -- populated when transitioning to flight
+    --  { point, normal }               -- each element is one of these
 
     --hasBeenAirborne       -- set to false when transitioning to flight or air dash.  Used by air dash and flight (if flight has a desired length)
     --initialAirborneTime

@@ -14,10 +14,6 @@ local slingshot_distmult_by_speed = nil
 local underswing_dist_by_speed = nil
 local tossdownup_radius_by_speed = nil
 local tossdownup_releaseangle_by_dot = nil
-
---local tossup_radius_by_speed = nil
---local tossup_releaseangle_by_dot = nil
-
 local tossup_dist_by_dot = nil
 local tossup_distmult_by_speed = nil
 local tossup_releaseangle_by_dot = nil
@@ -158,7 +154,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
 
     if not IsAirborne(o) then
         debug_render_screen.Add_Text2D(nil, nil, "from ground", debug_categories.AIM_action)
-        this.Aim_Swing_FromGround(position, look_dir, o, vars, const)
+        this.Aim_Swing_FromGround(position, look_dir, o, vars, const, debug)
         do return end
     end
 
@@ -281,6 +277,34 @@ function this.GetStopPlane_Straight(anchor_pos, direction, stop_plane_distance)
 
     return point_on_plane, direction
 end
+-- Creates a plane slightly above the swing arc.  This is needed because sometimes the swing goes wrong, they miss the
+-- end plane and the anchor just pulls them up (usually after hitting an obstacle)
+function this.GetStopPlane_SwingCeiling(anchor_pos, normal, from_pos, to_pos)
+    local CEILING_HEIGHT = 1.2
+
+
+    ------------------------------------ Unnecessary ------------------------------------
+    -- local planepoint_from = GetClosestPoint_Plane_Point(anchor_pos, normal, from_pos)
+    -- local planepoint_to = GetClosestPoint_Plane_Point(anchor_pos, normal, from_pos)
+
+    -- local distsqr_from = GetVectorDiffLengthSqr(from_pos, planepoint_from)
+    -- local distsqr_to = GetVectorDiffLengthSqr(to_pos, planepoint_to)
+
+    -- local point
+    -- if distsqr_from < distsqr_to then
+    --     point = AddVectors(from_pos, MultiplyVector(normal, CEILING_HEIGHT))
+    -- else
+    --     point = AddVectors(to_pos, MultiplyVector(normal, CEILING_HEIGHT))
+    -- end
+    -------------------------------------------------------------------------------------
+
+
+    -- Since normal is perpendicular to to-from line, froma and to should be the same distance from the plane, so
+    -- just use one of them
+    local point = AddVectors(from_pos, MultiplyVector(normal, CEILING_HEIGHT))
+
+    return point, normal
+end
 
 function this.EnsureDebugCategoriesSet()
     if set_debug_categories then
@@ -395,43 +419,45 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
         return false
     end
 
-    local anchor_point = Vector4.new((intersect1.x + intersect2.x) / 2, (intersect1.y + intersect2.y) / 2, (intersect1.z + intersect2.z) / 2, 1)
+    local anchor_pos = Vector4.new((intersect1.x + intersect2.x) / 2, (intersect1.y + intersect2.y) / 2, (intersect1.z + intersect2.z) / 2, 1)
 
-    if DotProduct3D(SubtractVectors(anchor_point, mid_point), up_to_anchor) < 0 then
+    if DotProduct3D(SubtractVectors(anchor_pos, mid_point), up_to_anchor) < 0 then
         -- They are looking down below the velocity line.  anchor_line and up_to_anchor converge below instead
         -- of above
         --
         -- Just set the anchor a distance along up_to_anchor
         local anchor_dist = math.sqrt(3 * dest_dist) / 2        -- height of an equilateral triangle
-        anchor_point = AddVectors(mid_point, MultiplyVector(up_to_anchor, anchor_dist))
+        anchor_pos = AddVectors(mid_point, MultiplyVector(up_to_anchor, anchor_dist))
         debug_render_screen.Add_Text2D(nil, nil, "forced anchor above", debug_categories.AIM_implementationtext)
     end
 
     -- Adjust the anchor point off vert plane based on horizontal velocity
     local vel_plane_normal = GetProjectedVector_AlongVector(o.vel, vert_plane_normal)
 
-    debug_render_screen.Add_Dot(anchor_point, debug_categories.AIM_construction)
+    debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
     debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
 
-    local radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_point))
+    local radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_pos))
 
     -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
     local offplane_mult = radius * VELOCITY_OFFPLANE_RADIUSMULT * VELOCITY_OFFPLANE_MULT
-    anchor_point = AddVectors(anchor_point, MultiplyVector(vel_plane_normal, offplane_mult))
+    anchor_pos = AddVectors(anchor_pos, MultiplyVector(vel_plane_normal, offplane_mult))
 
-    radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_point))      -- previous radius calculation was to get the offplane_mult.  Two square roots, but it has to be done
+    radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_pos))      -- previous radius calculation was to get the offplane_mult.  Two square roots, but it has to be done
 
-    this.ShowEndPoint(anchor_point, radius, nil, nil, new_grapple, vars, o)     -- reusing this function to show the anchor and distance
-    debug_render_screen.Add_Arc(anchor_point, position, dest_pos, debug_categories.AIM_arc)
+    this.ShowEndPoint(anchor_pos, radius, nil, nil, new_grapple, vars, o)     -- reusing this function to show the anchor and distance
+    debug_render_screen.Add_Arc(anchor_pos, position, dest_pos, debug_categories.AIM_arc)
 
     local quat = GetRotation(vel_unit, look_dir, 2)
     local dest_dir = RotateVector3D(vel_unit, quat)
 
     local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(dest_pos, dest_dir, new_grapple.stop_plane_distance)
+    local stopplane_point2, stopplane_normal2 = this.GetStopPlane_SwingCeiling(anchor_pos, up_to_anchor, position, dest_pos)
 
     this.ShowEndPoint(dest_pos, dest_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
+    debug_render_screen.Add_Square(stopplane_point2, stopplane_normal2, 8, 8, debug_categories.AIM_stopplane)
 
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal, stopplane_point2, stopplane_normal2)
     return true
 end
 
@@ -465,17 +491,17 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
     -- Any point along this anchor line should make a smooth curve
     local anchor_line_unit = CrossProduct3D(vert_plane_normal, vel_vert_unit)
 
-    local anchor_point = AddVectors(position, MultiplyVector(anchor_line_unit, radius))
+    local anchor_pos = AddVectors(position, MultiplyVector(anchor_line_unit, radius))
 
     debug_render_screen.Add_Line(position, AddVectors(position, vel_vert_unit), debug_categories.AIM_velcomponent)
-    debug_render_screen.Add_Dot(anchor_point, debug_categories.AIM_construction)
+    debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
 
     -- release at 45 degrees
     local look_dot_up = DotProduct3D(look_dir, up)
     local release_angle = tossdownup_releaseangle_by_dot:Evaluate(look_dot_up)
 
     local releasedir_unit = RotateVector3D_axis_angle(Vector4.new(0, 0, -1, 1), vert_plane_normal, release_angle)
-    local release_point = AddVectors(anchor_point, MultiplyVector(releasedir_unit, radius))
+    local release_point = AddVectors(anchor_pos, MultiplyVector(releasedir_unit, radius))
 
     local release_vel_unit = RotateVector3D_axis_angle(releasedir_unit, vert_plane_normal, 90)
 
@@ -484,26 +510,30 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
     -- Adjust the anchor point off vert plane based on horizontal velocity
     local vel_plane_normal = GetProjectedVector_AlongVector(o.vel, vert_plane_normal)
 
-    debug_render_screen.Add_Dot(anchor_point, debug_categories.AIM_construction)
+    debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
     debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
 
     --TODO: also multiply by radius
     -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
-    anchor_point = AddVectors(anchor_point, MultiplyVector(vel_plane_normal, VELOCITY_OFFPLANE_MULT))
+    anchor_pos = AddVectors(anchor_pos, MultiplyVector(vel_plane_normal, VELOCITY_OFFPLANE_MULT))
 
-    this.ShowEndPoint(anchor_point, radius, nil, nil, vars.grapple, vars, o)
+    this.ShowEndPoint(anchor_pos, radius, nil, nil, vars.grapple, vars, o)
+
+    -- Ceiling plane
+    local point_on_line = GetClosestPoint_Line_Point(position, SubtractVectors(release_point, position), anchor_pos)
+    local ceiling_normal = ToUnit(SubtractVectors(anchor_pos, point_on_line))
+    local stopplane_point2, stopplane_normal2 = this.GetStopPlane_SwingCeiling(anchor_pos, ceiling_normal, position, release_point)
+    debug_render_screen.Add_Square(stopplane_point2, stopplane_normal2, 8, 8, debug_categories.AIM_stopplane)
 
     local new_grapple = swing_grapples.GetPureRope(vars.grapple)
 
     local dist_to_release = math.sqrt(GetVectorDiffLengthSqr(release_point, position))
     this.ShowEndPoint(release_point, dist_to_release, stopplane_point, stopplane_normal, new_grapple, vars, o)
-    debug_render_screen.Add_Arc(anchor_point, position, release_point, debug_categories.AIM_arc)
+    debug_render_screen.Add_Arc(anchor_pos, position, release_point, debug_categories.AIM_arc)
 
     debug_render_screen.Add_Text2D(nil, nil, "speed vert: " .. tostring(Round(speed_vert, 1)) .. "\r\nrelease angle: " .. tostring(Round(release_angle)), debug_categories.AIM_implementationtext)
 
-    debug_render_screen.PlayTone2()
-
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_point, nil, stopplane_point, stopplane_normal)
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
     return true
 end
 
@@ -573,6 +603,12 @@ function this.Aim_Swing_Toss_Up(position, look_dir, speed_look, o, vars, const)
 
     this.ShowEndPoint(anchor_pos, math.sqrt(GetVectorDiffLengthSqr(position, anchor_pos)), nil, nil, vars.grapple, vars, o)
 
+    -- Ceiling plane
+    local point_on_line = GetClosestPoint_Line_Point(position, SubtractVectors(release_point, position), anchor_pos)
+    local ceiling_normal = ToUnit(SubtractVectors(anchor_pos, point_on_line))
+    local stopplane_point2, stopplane_normal2 = this.GetStopPlane_SwingCeiling(anchor_pos, ceiling_normal, position, release_point)
+    debug_render_screen.Add_Square(stopplane_point2, stopplane_normal2, 8, 8, debug_categories.AIM_stopplane)
+
     local accel_mult = tossup_accelpercent_by_dot:Evaluate(look_dot_up)
     local new_grapple = swing_grapples.GetElasticRope(vars.grapple, radius, accel_mult, 1)
 
@@ -580,8 +616,6 @@ function this.Aim_Swing_Toss_Up(position, look_dir, speed_look, o, vars, const)
     debug_render_screen.Add_Arc(anchor_pos, position, release_point, debug_categories.AIM_arc)
 
     debug_render_screen.Add_Text2D(nil, nil, "look_dot_up: " .. tostring(Round(look_dot_up, 1)) .. "\r\nspeed_look: " .. tostring(Round(speed_look, 1)) .. "\r\naccel_mult: " .. tostring(Round(accel_mult, 2)), debug_categories.AIM_implementationtext)
-
-    debug_render_screen.PlayTone3()
 
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
     return true
@@ -634,12 +668,10 @@ function this.Aim_Swing_Slingshot(position, look_dir, speed_look, is_airborne, o
 
     this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
 
-    debug_render_screen.PlayTone4()
-
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
 end
 
-function this.Aim_Swing_FromGround(position, look_dir, o, vars, const)
+function this.Aim_Swing_FromGround(position, look_dir, o, vars, const, debug)
     local DIST_HORZ = 18
     local DIST_VERT = 6
 
@@ -664,7 +696,7 @@ function this.Aim_Swing_FromGround(position, look_dir, o, vars, const)
     local hit = o:RayCast(position, anchor_pos)
     if hit then
         -- Not clear, set anchor point at hit
-        this.Aim_Swing_FromGround_DoIt(position, hit, look_dir, o, vars, const)
+        this.Aim_Swing_FromGround_DoIt(position, hit, look_dir, o, vars, const, debug)
         do return end
     end
 
@@ -681,16 +713,21 @@ function this.Aim_Swing_FromGround(position, look_dir, o, vars, const)
 
     this.Aim_Swing_FromGround_DoIt(position, anchor_pos, look_dir, anchor_dist, o, vars, const)
 end
-function this.Aim_Swing_FromGround_DoIt(position, anchor_pos, jumpdir_unit, anchor_dist, o, vars, const)
+function this.Aim_Swing_FromGround_DoIt(position, anchor_pos, jumpdir_unit, anchor_dist, o, vars, const, debug)
 
 
 
     if vars == nil then
         print("vars is nil")
     elseif vars.grapple == nil then
-        print("vars.grapple is nill")
-        debug_render_screen.PlayTone_TwoTones()
+        print("vars.grapple is nil")
+        debug_render_screen.PlayTone1()
+        Transition_ToStandard(vars, const, debug, o)
+        do return end
     end
+
+
+    -- This seems to happen when standing in invalid areas
 
 
     --TODO: grapple is sometimes nil
