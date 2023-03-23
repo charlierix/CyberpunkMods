@@ -585,7 +585,7 @@ function this.Aim_Swing_FromGround(position, look_dir, o, vars, const, debug)
     local hit = o:RayCast(position, anchor_pos)
     if hit then
         -- Not clear, set anchor point at hit
-        this.Aim_Swing_FromGround_DoIt(position, hit, look_dir, o, vars, const, debug)
+        this.Aim_Swing_FromGround_DoIt(position, hit, look_dir, anchor_dist, o, vars, const, debug)
         do return end
     end
 
@@ -600,38 +600,10 @@ function this.Aim_Swing_FromGround(position, look_dir, o, vars, const, debug)
     -- May also want to push the anchor point if too close to a hit
     ---------------------------
 
-    this.Aim_Swing_FromGround_DoIt(position, anchor_pos, look_dir, anchor_dist, o, vars, const)
+    this.Aim_Swing_FromGround_DoIt(position, anchor_pos, look_dir, anchor_dist, o, vars, const, debug)
 end
 function this.Aim_Swing_FromGround_DoIt(position, anchor_pos, jumpdir_unit, anchor_dist, o, vars, const, debug)
-
-
-
-    if vars == nil then
-        print("vars is nil")
-    elseif vars.grapple == nil then
-        print("vars.grapple is nil")
-        debug_render_screen.PlayTone1()
-        Transition_ToStandard(vars, const, debug, o)
-        do return end
-    end
-
-
-    -- This seems to happen when standing in invalid areas
-
-
-    --TODO: grapple is sometimes nil
-    -- [2023-03-03 09:36:46 UTC-06:00] [20648] ...aks\mods\grappling_hook\processing\aimswing_grapples.lua:84: attempt to index local 'grapple' (a nil value)
-    -- stack traceback:
-    --     ...aks\mods\grappling_hook\processing\aimswing_grapples.lua:84: in function 'GetElasticStraight2'
-    --     ...tweaks\mods\grappling_hook\processing\processing_aim.lua:577: in function 'Aim_Swing_FromGround_DoIt'
-    --     ...tweaks\mods\grappling_hook\processing\processing_aim.lua:559: in function 'Aim_Swing_FromGround'
-    --     ...tweaks\mods\grappling_hook\processing\processing_aim.lua:230: in function 'Aim_Swing'
-    --     ...tweaks\mods\grappling_hook\processing\processing_aim.lua:39: in function 'Process_Aim'
-    --     init.lua:387: in function <init.lua:338>
     local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos)
-
-
-
 
     this.MaybePopUp(false, o, new_grapple.anti_gravity, jumpdir_unit)
 
