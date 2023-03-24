@@ -88,7 +88,7 @@ end
 ---@param const_size boolean? False/nil: size decreases when far from the camera.  True: size is the same regardless of distance from camera.  Useful if debuging things that are really far away
 ---@param x_percent2D number? Only used by 2D graphics (0 is left side of screen, 1 is right, 0.5 is center)
 ---@param y_percent2D number? Only used by 2D graphics (0 is top of screen, 1 is bottom, 0.5 is center)
-function DebugRenderScreen.DefineCategory(name, color_back, color_fore, lifespan_seconds, size_mult, const_size, x_percent2D, y_percent2D)
+function DebugRenderScreen.DefineCategory(name, color_back, color_fore, lifespan_seconds, is_single_frame, size_mult, const_size, x_percent2D, y_percent2D)
     local category =
     {
         name = name,
@@ -97,6 +97,7 @@ function DebugRenderScreen.DefineCategory(name, color_back, color_fore, lifespan
         size_mult = size_mult,
         const_size = const_size,
         lifespan_seconds = lifespan_seconds,
+        is_single_frame = is_single_frame,
         x_percent2D = x_percent2D,
         y_percent2D = y_percent2D,
     }
@@ -112,41 +113,41 @@ end
 -- category's values, unless overridden in the add method call
 ---@param position Vector4
 ---@return integer id Pass this to the remove function
-function DebugRenderScreen.Add_Dot(position, category, color, lifespan_seconds, size_mult, const_size)
+function DebugRenderScreen.Add_Dot(position, category, color, lifespan_seconds, is_single_frame, size_mult, const_size)
     if not is_enabled then
         return nil
     end
 
-    local color_back_final, _, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, color, nil, size_mult, const_size, lifespan_seconds)
+    local color_back_final, _, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final = this.GetFinalValues(category, color, nil, size_mult, const_size, lifespan_seconds, is_single_frame)
 
     local item = items:GetNewItem()
-    this.SetItemBase(item, item_types.dot, color_back_final, nil, size_mult_final, const_size_final, lifespan_seconds_final)
+    this.SetItemBase(item, item_types.dot, color_back_final, nil, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final)
     item.position = position
 
     return item.id
 end
 
-function DebugRenderScreen.Add_Line(point1, point2, category, color, lifespan_seconds, size_mult, const_size)
+function DebugRenderScreen.Add_Line(point1, point2, category, color, lifespan_seconds, is_single_frame, size_mult, const_size)
     if not is_enabled then
         return nil
     end
 
-    local _, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, nil, color, size_mult, const_size, lifespan_seconds)
+    local _, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final = this.GetFinalValues(category, nil, color, size_mult, const_size, lifespan_seconds, is_single_frame)
 
     local item = items:GetNewItem()
-    this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final)
+    this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final)
     item.point1 = point1
     item.point2 = point2
 
     return item.id
 end
 
-function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, lifespan_seconds, size_mult, const_size)
+function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, lifespan_seconds, is_single_frame, size_mult, const_size)
     if not is_enabled then
         return nil
     end
 
-    local _, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, nil, color, size_mult, const_size, lifespan_seconds)
+    local _, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final = this.GetFinalValues(category, nil, color, size_mult, const_size, lifespan_seconds, is_single_frame)
 
     -- The default line thickness is too thin for a circle.  Use a larger value if there is nothing specified
     if not size_mult_final then
@@ -164,25 +165,25 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, l
 
     for i = 1, #points - 1, 1 do
         local item = items:GetNewItem()
-        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final, id)
         item.point1 = points[i]
         item.point2 = points[i + 1]
     end
 
     local item = items:GetNewItem()
-    this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+    this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final, id)
     item.point1 = points[#points]
     item.point2 = points[1]
 
     return id
 end
 
-function DebugRenderScreen.Add_Arc(center, start_point, end_point, category, color, lifespan_seconds, size_mult, const_size)
+function DebugRenderScreen.Add_Arc(center, start_point, end_point, category, color, lifespan_seconds, is_single_frame, size_mult, const_size)
     if not is_enabled then
         return nil
     end
 
-    local _, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, nil, color, size_mult, const_size, lifespan_seconds)
+    local _, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final = this.GetFinalValues(category, nil, color, size_mult, const_size, lifespan_seconds, is_single_frame)
 
     -- The default line thickness is too thin for a circle.  Use a larger value if there is nothing specified
     if not size_mult_final then
@@ -217,7 +218,7 @@ function DebugRenderScreen.Add_Arc(center, start_point, end_point, category, col
         point2 = AddVectors(center, point2)
 
         local item = items:GetNewItem()
-        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final, id)
         item.point1 = point1
         item.point2 = point2
 
@@ -226,7 +227,7 @@ function DebugRenderScreen.Add_Arc(center, start_point, end_point, category, col
     end
 
     local item = items:GetNewItem()
-    this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+    this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final, id)
     item.point1 = point1
     item.point2 = end_point     -- there's a slight math drift when repeatedly applying rotations.  I've only seen it come under.  So just run the last line to the endpoint passed in
 
@@ -234,18 +235,18 @@ function DebugRenderScreen.Add_Arc(center, start_point, end_point, category, col
 end
 
 -- size_mult and const_size refer to line thickness, which is only used if color_fore is populated
-function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_back, color_fore, lifespan_seconds, size_mult, const_size)
+function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_back, color_fore, lifespan_seconds, is_single_frame, size_mult, const_size)
     if not is_enabled then
         return nil
     end
 
-    local color_back_final, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, color_back, color_fore, size_mult, const_size, lifespan_seconds)
+    local color_back_final, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final = this.GetFinalValues(category, color_back, color_fore, size_mult, const_size, lifespan_seconds, is_single_frame)
 
     local id = this.GetNextID()
 
     if color_back_final then
         local item = items:GetNewItem()
-        this.SetItemBase(item, item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
+        this.SetItemBase(item, item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, is_single_frame_final, id)
         item.point1 = point1
         item.point2 = point2
         item.point3 = point3
@@ -257,17 +258,17 @@ function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_
         end
 
         local item = items:GetNewItem()
-        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final, id)
         item.point1 = point1
         item.point2 = point2
 
         item = items:GetNewItem()
-        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final, id)
         item.point1 = point2
         item.point2 = point3
 
         item = items:GetNewItem()
-        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final, id)
         item.point1 = point3
         item.point2 = point1
     end
@@ -275,12 +276,12 @@ function DebugRenderScreen.Add_Triangle(point1, point2, point3, category, color_
     return id
 end
 
-function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, color_back, color_fore, lifespan_seconds, size_mult, const_size)
+function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, color_back, color_fore, lifespan_seconds, is_single_frame, size_mult, const_size)
     if not is_enabled then
         return nil
     end
 
-    local color_back_final, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final = this.GetFinalValues(category, color_back, color_fore, size_mult, const_size, lifespan_seconds)
+    local color_back_final, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final = this.GetFinalValues(category, color_back, color_fore, size_mult, const_size, lifespan_seconds, is_single_frame)
 
     local id = this.GetNextID()
 
@@ -288,13 +289,13 @@ function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, 
 
     if color_back_final then
         local item = items:GetNewItem()
-        this.SetItemBase(item, item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
+        this.SetItemBase(item, item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, is_single_frame_final, id)
         item.point1 = p1
         item.point2 = p2
         item.point3 = p3
 
         item = items:GetNewItem()
-        this.SetItemBase(item, item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, id)
+        this.SetItemBase(item, item_types.triangle, color_back_final, nil, nil, nil, lifespan_seconds_final, is_single_frame_final, id)
         item.point1 = p3
         item.point2 = p4
         item.point3 = p1
@@ -306,22 +307,22 @@ function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, 
         end
 
         local item = items:GetNewItem()
-        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final, id)
         item.point1 = p1
         item.point2 = p2
 
         item = items:GetNewItem()
-        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final, id)
         item.point1 = p2
         item.point2 = p3
 
         item = items:GetNewItem()
-        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final, id)
         item.point1 = p3
         item.point2 = p4
 
         item = items:GetNewItem()
-        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, id)
+        this.SetItemBase(item, item_types.line, nil, color_fore_final, size_mult_final, const_size_final, lifespan_seconds_final, is_single_frame_final, id)
         item.point1 = p4
         item.point2 = p1
     end
@@ -329,15 +330,15 @@ function DebugRenderScreen.Add_Square(center, normal, size_x, size_y, category, 
     return id
 end
 
-function DebugRenderScreen.Add_Text(center, text, category, color_back, color_fore, lifespan_seconds)
+function DebugRenderScreen.Add_Text(center, text, category, color_back, color_fore, lifespan_seconds, is_single_frame)
     if not is_enabled then
         return nil
     end
 
-    local color_back_final, color_fore_final, _, _, lifespan_seconds_final = this.GetFinalValues(category, color_back, color_fore, nil, nil, lifespan_seconds)
+    local color_back_final, color_fore_final, _, _, lifespan_seconds_final, is_single_frame_final = this.GetFinalValues(category, color_back, color_fore, nil, nil, lifespan_seconds, is_single_frame)
 
     local item = items:GetNewItem()
-    this.SetItemBase(item, item_types.text, color_back_final, color_fore_final, nil, nil, lifespan_seconds_final)
+    this.SetItemBase(item, item_types.text, color_back_final, color_fore_final, nil, nil, lifespan_seconds_final, is_single_frame_final)
     item.center = center
     item.text = text
 
@@ -347,15 +348,15 @@ end
 -- Instead of writing text at a world 3D position, this shows it at a fixed 2D screen position
 ---@param x_percent number? 0 is left edge of screen, 1 is right edge of screen (0.5 is center) -- nil allowed if category is passed in and specifies location
 ---@param y_percent number? 0 is top edge of screen, 1 is bottom edge of screen (0.5 is center)
-function DebugRenderScreen.Add_Text2D(x_percent, y_percent, text, category, color_back, color_fore, lifespan_seconds)
+function DebugRenderScreen.Add_Text2D(x_percent, y_percent, text, category, color_back, color_fore, lifespan_seconds, is_single_frame)
     if not is_enabled then
         return nil
     end
 
-    local color_back_final, color_fore_final, _, _, lifespan_seconds_final, x_percent_final, y_percent_final = this.GetFinalValues(category, color_back, color_fore, nil, nil, lifespan_seconds, x_percent, y_percent)
+    local color_back_final, color_fore_final, _, _, lifespan_seconds_final, is_single_frame_final, x_percent_final, y_percent_final = this.GetFinalValues(category, color_back, color_fore, nil, nil, lifespan_seconds, is_single_frame, x_percent, y_percent)
 
     local item = items:GetNewItem()
-    this.SetItemBase(item, item_types.text2D, color_back_final, color_fore_final, nil, nil, lifespan_seconds_final)
+    this.SetItemBase(item, item_types.text2D, color_back_final, color_fore_final, nil, nil, lifespan_seconds_final, is_single_frame_final)
     item.x_percent = x_percent_final
     item.y_percent = y_percent_final
     item.text = text
@@ -430,7 +431,7 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 -- id is optional.  Pass it in if multiple entries need to be tied to the same id
-function this.SetItemBase(item, item_type, color_back, color_fore, size_mult, const_size, lifespan_seconds, id)
+function this.SetItemBase(item, item_type, color_back, color_fore, size_mult, const_size, lifespan_seconds, is_single_frame, id)
     if not id then
         id = this.GetNextID()
     end
@@ -444,10 +445,16 @@ function this.SetItemBase(item, item_type, color_back, color_fore, size_mult, co
     item.size_mult = size_mult
     item.const_size = const_size
     item.lifespan_seconds = lifespan_seconds
+
+    if is_single_frame then
+        item.remaining_frames = 1
+    else
+        item.remaining_frames = nil     -- this needs to be set because it's stored in a stickylist, which reuses entries
+    end
 end
 
 -- Populate from category if there is one.  If explicit values are passed in, they override category's definition
-function this.GetFinalValues(category, color_back, color_fore, size_mult, const_size, lifespan_seconds, x_percent, y_percent)
+function this.GetFinalValues(category, color_back, color_fore, size_mult, const_size, lifespan_seconds, is_single_frame, x_percent, y_percent)
     if category then
         for i = 1, #categories, 1 do
             if categories[i].name == category then
@@ -471,6 +478,10 @@ function this.GetFinalValues(category, color_back, color_fore, size_mult, const_
                     lifespan_seconds = categories[i].lifespan_seconds
                 end
 
+                if is_single_frame == nil then
+                    is_single_frame = categories[i].is_single_frame
+                end
+
                 if not x_percent then
                     x_percent = categories[i].x_percent2D
                 end
@@ -484,7 +495,7 @@ function this.GetFinalValues(category, color_back, color_fore, size_mult, const_
         end
     end
 
-    return color_back, color_fore, size_mult, const_size, lifespan_seconds, x_percent, y_percent
+    return color_back, color_fore, size_mult, const_size, lifespan_seconds, is_single_frame, x_percent, y_percent
 end
 
 function this.GetNextID()
@@ -500,8 +511,14 @@ function this.RemoveExpiredItems()
 
         if item.lifespan_seconds and timer > item.create_time + item.lifespan_seconds then
             items:RemoveItem(index)
+        elseif item.remaining_frames == 0 then
+            items:RemoveItem(index)
         else
             index = index + 1
+        end
+
+        if item.remaining_frames and item.remaining_frames > 0 then
+            item.remaining_frames = item.remaining_frames - 1
         end
     end
 end
@@ -579,6 +596,10 @@ function this.GetSquarePoints(center, normal, size_x, size_y)
 end
 
 function this.PlaySound(name)
+    if sound_name == name then
+        do return end       -- already playing, let it play out
+    end
+
     this.PossiblyStopSound(true)
 
     sound_name = name

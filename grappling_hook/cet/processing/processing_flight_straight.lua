@@ -14,7 +14,7 @@ local this = {}
 -- There are a lot of different ways that a grapple could be set up.  Any actual
 -- grapple config probably won't use all the acceleration types, but it's easier
 -- to have a single worker method that can handle lots of possible config scenarios
-function Process_Flight_Straight(o, player, vars, const, debug, deltaTime)
+function Process_Flight_Straight(o, player, vars, const, debug, deltaTime, extraaccel_x, extraaccel_y, extraaccel_z)
     -- Gain/Reduce energy.  Exit if there wasn't enough energy left
     if not this.AdjustEnergy(o, player, vars, const, deltaTime) then
         do return end
@@ -79,6 +79,16 @@ function Process_Flight_Straight(o, player, vars, const, debug, deltaTime)
     -- Figure out the delta between actual and desired speed
     local speed = math.sqrt(GetVectorLengthSqr(vel_along))
 
+    if not extraaccel_x then
+        extraaccel_x = 0
+    end
+    if not extraaccel_y then
+        extraaccel_y = 0
+    end
+    if not extraaccel_z then
+        extraaccel_z = 0
+    end
+
     ---------------------------- CALCULATE ACCELERATIONS ----------------------------
 
     -- Constant accel toward desired distance
@@ -101,9 +111,9 @@ function Process_Flight_Straight(o, player, vars, const, debug, deltaTime)
 
     ------------------------------- APPLY ACCELERATION -------------------------------
 
-    local accel_x = (const_x + spring_x + drag_x + look_x) * deltaTime
-    local accel_y = (const_y + spring_y + drag_y + look_y) * deltaTime
-    local accel_z = (const_z + spring_z + drag_z + look_z + antigrav_z) * deltaTime
+    local accel_x = (const_x + spring_x + drag_x + look_x + extraaccel_x) * deltaTime
+    local accel_y = (const_y + spring_y + drag_y + look_y + extraaccel_y) * deltaTime
+    local accel_z = (const_z + spring_z + drag_z + look_z + extraaccel_z + antigrav_z) * deltaTime
 
     -- debug.accel_x = Round(accel_x / deltaTime, 1)
     -- debug.accel_y = Round(accel_y / deltaTime, 1)

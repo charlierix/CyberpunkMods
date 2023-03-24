@@ -796,10 +796,10 @@ function this.EnsureDebugCategoriesSet()
         do return end
     end
 
-    debug_render_screen.DefineCategory(debug_categories.AIM_action, "BC105C80", "FFF", nil, nil, nil, 0.25, 0.6)
-    debug_render_screen.DefineCategory(debug_categories.AIM_speed, "BC2E6939", "FFF", nil, nil, nil, 0.25, 0.65)
-    debug_render_screen.DefineCategory(debug_categories.AIM_dots, "BC3D6E6C", "FFF", nil, nil, nil, 0.25, 0.7)
-    debug_render_screen.DefineCategory(debug_categories.AIM_implementationtext, "BB596E3D", "FFF", nil, nil, nil, 0.25, 0.75)
+    debug_render_screen.DefineCategory(debug_categories.AIM_action, "BC105C80", "FFF", nil, nil, nil, nil, 0.25, 0.6)
+    debug_render_screen.DefineCategory(debug_categories.AIM_speed, "BC2E6939", "FFF", nil, nil, nil, nil, 0.25, 0.65)
+    debug_render_screen.DefineCategory(debug_categories.AIM_dots, "BC3D6E6C", "FFF", nil, nil, nil, nil, 0.25, 0.7)
+    debug_render_screen.DefineCategory(debug_categories.AIM_implementationtext, "BB596E3D", "FFF", nil, nil, nil, nil, 0.25, 0.75)
 
     debug_render_screen.DefineCategory(debug_categories.AIM_pos, "CCC")
     debug_render_screen.DefineCategory(debug_categories.AIM_look, nil, "FFEBEDA8")
@@ -809,7 +809,7 @@ function this.EnsureDebugCategoriesSet()
 
     debug_render_screen.DefineCategory(debug_categories.AIM_up, nil, "FF0AC70D")
 
-    debug_render_screen.DefineCategory(debug_categories.AIM_anchor, "FFDED716", nil, nil, 1.5, true)
+    debug_render_screen.DefineCategory(debug_categories.AIM_anchor, "FFDED716", nil, nil, nil, 1.5, true)
     debug_render_screen.DefineCategory(debug_categories.AIM_stopplane, "40DED716", "80DED716")
     debug_render_screen.DefineCategory(debug_categories.AIM_anchordist, "94838150", "FFF8F36C")
 
