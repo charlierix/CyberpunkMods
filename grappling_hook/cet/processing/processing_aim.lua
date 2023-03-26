@@ -425,6 +425,10 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
     return true
 end
 
+--TODO: this works fine at low speeds, but not at high speeds
+--the release angle should have an extra adjustment that pulls down based on speed
+--my also need to adjust radius/elastic based on speed
+
 function this.Aim_Swing_Toss_Up(position, look_dir, speed_look, o, vars, const)
     local VELOCITY_OFFPLANE_MULT = -0.1
 

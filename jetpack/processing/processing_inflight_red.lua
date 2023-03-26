@@ -94,6 +94,5 @@ function this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
     accelY = accelY * deltaTime
     accelZ = accelZ * deltaTime
 
-    local actual = o:AddImpulse(accelX, accelY, accelZ)
-    debug.red_actual = vec_str(actual)
+    o:AddImpulse(accelX, accelY, accelZ)
 end

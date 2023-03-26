@@ -1,13 +1,17 @@
 -- This can come from any state back to standard
-function Transition_ToStandard(vars, const, debug, o, relatch)
+function Transition_ToStandard(vars, const, debug, o, relatch, force_nolatch)
     -- This gets called every frame when they are in the menu, driving, etc.  So it needs to be
     -- safe and cheap
     if vars.flightMode == const.flightModes.standard then
         do return end
     end
 
-    if relatch then
+    if force_nolatch then
+        vars.startStopTracker:ResetHangLatch()
+    elseif relatch then
         vars.startStopTracker:SetRelatchTime(relatch)
+    else
+        vars.startStopTracker:ClearRelatchTime()
     end
 
     vars.relatch = nil

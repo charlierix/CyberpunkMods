@@ -63,6 +63,10 @@ function InputTracker_StartStop:SetRelatchTime(relatch)
     self.relatch_time = self.o.timer + relatch.time_seconds
     self.relatch = relatch
 end
+function InputTracker_StartStop:ClearRelatchTime()
+    self.relatch_time = nil
+    self.relatch = nil
+end
 
 -- Returns
 --  isHangDown, isJumpDown, isShiftDown, wallattract

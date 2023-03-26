@@ -8,6 +8,13 @@ local log = nil
 --  attract to wall if hang desired, but too far away
 --  slow down if hang desired, but going too fast
 function Process_Standard(o, player, vars, const, debug, startStopTracker, deltaTime)
+    local flightowner_changed, flightowner_empty, flightowner_wallhang = o:Custom_CurrentlyFlying_HasControlSwitched()
+    if flightowner_changed and not flightowner_empty and not flightowner_wallhang then
+        -- Another mode started flying, need to force a no latch state
+        startStopTracker:ResetHangLatch()
+        do return end
+    end
+
     PossiblySafetyFire(o, player, vars, const, debug, deltaTime)
 
     -- Cheapest check is looking at keys

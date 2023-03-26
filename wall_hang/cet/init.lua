@@ -368,7 +368,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     elseif not o:Custom_CurrentlyFlying_Update() then       -- velocity is considered to be zero
         -- Was hanging/jumping, but another mod took over
-        Transition_ToStandard(vars, const, debug, o, nil)
+        Transition_ToStandard(vars, const, debug, o, nil, true)
 
     elseif vars.flightMode == const.flightModes.hang then
         -- Hanging from a wall
