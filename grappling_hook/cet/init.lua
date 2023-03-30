@@ -48,6 +48,7 @@ require "processing/processing_airdash"
 require "processing/processing_antigrav"
 require "processing/processing_flight_straight"
 require "processing/processing_flight_swing"
+require "processing/processing_freefall"
 require "processing/processing_standard"
 require "processing/safetyfire"
 require "processing/xp_gain"
@@ -119,7 +120,12 @@ local this = {}
 
 local const =
 {
-    flightModes = CreateEnum("standard", "aim", "airdash", "flight_straight", "flight_swing", "antigrav"),
+    flightModes = CreateEnum
+    (
+        "standard", "aim",                              -- pre flight
+        "airdash", "flight_straight", "antigrav",       -- impulse based flight
+        "flight_swing", "freefall"                      -- teleport based flight
+    ),
 
     grappleFrom_Z = 1.85,
 
@@ -155,6 +161,8 @@ local const =
     unlockType = CreateEnum("shotgun", "knife", "silencer", "grenade", "clothes", "money"),
 
     customKeyBase = "Grapple_Custom_",
+
+    maxSpeed = 432,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
 
     shouldShowScreenDebug = true,
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
@@ -203,6 +211,10 @@ local vars =
 
     --hasBeenAirborne       -- set to false when transitioning to flight or air dash.  Used by air dash and flight (if flight has a desired length)
     --initialAirborneTime
+
+    --popping_up             -- set when transitioning to swing.  Teleport doesn't work until airborne (just ignored), so there's an initial impulse, and a small amount of time needs to elapse before doing teleports
+
+    --vel                   -- used by swing, which uses teleport instead of impulse based flight
 
     --mappinID              -- this will be populated while the map pin is visible (managed in mappinutil.lua)
     --mappinName            -- this is the name of the map pin that is currently visible (managed in mappinutil.lua)
@@ -396,11 +408,16 @@ registerForEvent("onUpdate", function(deltaTime)
 
     elseif vars.flightMode == const.flightModes.flight_swing then
         -- Web Swinging
-        Process_Flight_Swing(o, player, vars, const, debug, deltaTime)
+        --Process_Flight_Swing_OLD(o, player, vars, const, debug, deltaTime)
+        Process_Flight_Swing(o, player, vars, const, keys, debug, deltaTime)
 
     elseif vars.flightMode == const.flightModes.antigrav then
-        -- Powered flight has ended, transitioning from lower gravity to standard gravity
+        -- Grapple Straight has ended, transitioning from lower gravity to standard gravity
         Process_AntiGrav(o, player, vars, const, debug, deltaTime)
+
+    elseif vars.flightMode == const.flightModes.freefall then
+        -- Web Swing has ended, need to stay in teleport based flight until there is a collision or another grapple (or other mod flying)
+        Process_FreeFall(o, player, vars, const, keys, debug, deltaTime)
 
     else
         LogError("Unknown flightMode: " .. tostring(vars.flightMode))

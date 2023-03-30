@@ -19,7 +19,7 @@ local LOOK_TO_RADIUS = 6
 local debug_categories = CreateEnum("RAY_missline", "RAY_hitline", "RAY_hitpoint")
 
 -- This treats horizontal tunnel scan and look direction independently, doesn't take into account velocity
-function aimswing_raycasts.InitialCone1(o, const)
+function aimswing_raycasts.InitialCone1(o, const, vel)
     o:GetCamera()
 
     this.InitRays()
@@ -30,7 +30,7 @@ function aimswing_raycasts.InitialCone1(o, const)
 
     log:DefineCategory("player", "2F95CC")
     log:Add_Dot(o.pos, "player")
-    log:Add_Line(o.pos, AddVectors(o.pos, o.vel), "player")
+    log:Add_Line(o.pos, AddVectors(o.pos, vel), "player")
 
     log:Add_Dot(from)
 
@@ -45,7 +45,7 @@ function aimswing_raycasts.InitialCone1(o, const)
     log:Save()
 end
 
-function aimswing_raycasts.Scan_LookAndVelocity1(o, const)
+function aimswing_raycasts.Scan_LookAndVelocity1(o, const, vel)
     o:GetCamera()
 
     this.InitRays()
@@ -54,10 +54,10 @@ function aimswing_raycasts.Scan_LookAndVelocity1(o, const)
 
     local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + 1, 1)
 
-    local vel_len = GetVectorLength(o.vel)
+    local vel_len = GetVectorLength(vel)
 
     log:Add_Dot(o.pos, nil, "2F95CC")
-    log:Add_Line(o.pos, AddVectors(o.pos, o.vel), nil, "115980", nil, "velocity: " .. tostring(Round(vel_len, 1)))
+    log:Add_Line(o.pos, AddVectors(o.pos, vel), nil, "115980", nil, "velocity: " .. tostring(Round(vel_len, 1)))
     log:Add_Line(o.pos, AddVectors(o.pos, o.lookdir_forward), nil, "CCC71B", nil, "look direction")
 
 
@@ -87,7 +87,7 @@ function aimswing_raycasts.Scan_LookAndVelocity1(o, const)
 
     else
         -- Also consider velocity
-        local vel_unit = MultiplyVector(o.vel, 1 / vel_len)
+        local vel_unit = MultiplyVector(vel, 1 / vel_len)
 
 
         --TODO: If the angle is small between look and velocity, then choose the vector avg

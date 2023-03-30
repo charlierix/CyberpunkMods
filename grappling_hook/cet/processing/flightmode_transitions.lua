@@ -8,6 +8,8 @@ function Transition_ToStandard(vars, const, debug, o)
         do return end
     end
 
+    this.TransferVelocity_Teleport_Standard(vars, o)
+
     vars.flightMode = const.flightModes.standard
     o:Custom_CurrentlyFlying_Clear()
 
@@ -33,7 +35,14 @@ function Transition_ToAim(grapple, vars, const, o, shouldConsumeEnergy)
         end
     end
 
-    if not o:Custom_CurrentlyFlying_TryStartFlight(true, o.vel) then
+    local vel
+    if vars.vel then
+        vel = vars.vel
+    else
+        vel = o.vel
+    end
+
+    if not o:Custom_CurrentlyFlying_TryStartFlight(true, vel) then
         return false
     end
 
@@ -53,11 +62,35 @@ function Transition_ToAim(grapple, vars, const, o, shouldConsumeEnergy)
     return true
 end
 
+-- This happens when they aimed too long without a hit, moving into airdash flight
+function Transition_ToAirDash(airdash, vars, const, o, rayFrom, lookDist)
+    vars.flightMode = const.flightModes.airdash
+
+    this.TransferVelocity_Teleport_Standard(vars, o)
+
+    vars.airdash = airdash
+
+    vars.startTime = o.timer
+
+    vars.rayFrom = rayFrom
+    vars.rayLength = lookDist
+
+    vars.hasBeenAirborne = false
+    vars.initialAirborneTime = nil
+
+
+    --TODO: Play a sound
+
+
+end
+
 -- This goes from aim into flight (or airdash to flight)
 -- There's no need to check for energy, that was done when trying to aim
 -- NOTE: airanchor should only be passed in when flight is using it (a solid wall hit doesn't use air anchor)
 function Transition_ToFlight_Straight(vars, const, o, rayFrom, rayHit, airanchor, stopplane_point, stopplane_normal)
     vars.flightMode = const.flightModes.flight_straight
+
+    this.TransferVelocity_Teleport_Standard(vars, o)
 
     -- vars.grapple is already populated by aim
 
@@ -84,8 +117,10 @@ end
 
 -- This goes from aim into flight
 -- There's no need to check for energy, that was done when trying to aim
-function Transition_ToFlight_Swing(grapple, vars, const, o, rayFrom, rayHit, airanchor, stopplane_point1, stopplane_normal1, stopplane_point2, stopplane_normal2, stopplane_point3, stopplane_normal3)
+function Transition_ToFlight_Swing(grapple, vars, const, o, rayFrom, rayHit, airanchor, popping_up, stopplane_point1, stopplane_normal1, stopplane_point2, stopplane_normal2, stopplane_point3, stopplane_normal3)
     vars.flightMode = const.flightModes.flight_swing
+
+    this.TransferVelocity_Standard_Teleport(vars, o)
 
     vars.grapple = grapple      -- this was populated in Transition_ToAim, but aim swing redefines it based on the situation
 
@@ -100,6 +135,8 @@ function Transition_ToFlight_Swing(grapple, vars, const, o, rayFrom, rayHit, air
 
     vars.airanchor = airanchor
 
+    vars.popping_up = popping_up
+
     vars.stop_planes:Clear()
     this.AddStopPlane(vars.stop_planes, stopplane_point1, stopplane_normal1)
     this.AddStopPlane(vars.stop_planes, stopplane_point2, stopplane_normal2)
@@ -107,6 +144,8 @@ function Transition_ToFlight_Swing(grapple, vars, const, o, rayFrom, rayHit, air
 
     vars.hasBeenAirborne = false
     vars.initialAirborneTime = nil
+
+    vars.swing_freefall_starttime = nil
 end
 
 -- This gets called when they exit flight by looking too far away while still airborne
@@ -116,24 +155,13 @@ function Transition_ToAntiGrav(vars, const, o)
     vars.startTime = o.timer
 end
 
--- This happens when they aimed too long without a hit, moving into airdash flight
-function Transition_ToAirDash(airdash, vars, const, o, rayFrom, lookDist)
-    vars.flightMode = const.flightModes.airdash
-
-    vars.airdash = airdash
+-- When swing is done, it goes into freefall mode until they collide with the ground or a wall (or kick off another grapple)
+function Transition_ToFreeFall(vars, const, o)
+    vars.flightMode = const.flightModes.freefall
 
     vars.startTime = o.timer
 
-    vars.rayFrom = rayFrom
-    vars.rayLength = lookDist
-
-    vars.hasBeenAirborne = false
-    vars.initialAirborneTime = nil
-
-
-    --TODO: Play a sound
-
-
+    --vars.vel is already populated, so there's nothing more to set up
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -159,5 +187,18 @@ function this.AddStopPlane(list, point, normal)
         local plane = list:GetNewItem()
         plane.point = point
         plane.normal = normal
+    end
+end
+
+function this.TransferVelocity_Teleport_Standard(vars, o)
+    if vars.vel then
+        -- transistion from teleport based flight to standard (o.vel should be zero when vars.vel is set)
+        o:AddImpulse(vars.vel.x - o.vel.x, vars.vel.y - o.vel.y, vars.vel.z - o.vel.z)
+        vars.vel = nil
+    end
+end
+function this.TransferVelocity_Standard_Teleport(vars, o)
+    if not vars.vel then
+        vars.vel = Vector4.new(o.vel.x, o.vel.y, o.vel.z, 1)
     end
 end

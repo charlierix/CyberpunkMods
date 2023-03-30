@@ -14,20 +14,18 @@ local this = {}
 -- There are a lot of different ways that a grapple could be set up.  Any actual
 -- grapple config probably won't use all the acceleration types, but it's easier
 -- to have a single worker method that can handle lots of possible config scenarios
-function Process_Flight_Straight(o, player, vars, const, debug, deltaTime, extraaccel_x, extraaccel_y, extraaccel_z)
+function Process_Flight_Straight(o, player, vars, const, debug, deltaTime)
     -- Gain/Reduce energy.  Exit if there wasn't enough energy left
     if not this.AdjustEnergy(o, player, vars, const, deltaTime) then
         do return end
     end
-
-    ---------------------------------- VALIDATIONS ----------------------------------
 
     if HasSwitchedFlightMode(o, player, vars, const, true) then
         do return end
     end
 
     -- If they are on the ground after being airborne, then exit flight
-    local shouldStop, isAirborne = ShouldStopFlyingBecauseGrounded(o, vars)
+    local shouldStop, isAirborne = ShouldStopFlyingBecauseGrounded(o, vars, true)
     if shouldStop then
         Transition_ToStandard(vars, const, debug, o)
         do return end
@@ -36,14 +34,14 @@ function Process_Flight_Straight(o, player, vars, const, debug, deltaTime, extra
     local grapple = vars.grapple       -- this will be used a lot, save a dot reference
 
     -- If about to hit a wall, then cancel, but only if the settings say to
-    if vars.hasBeenAirborne and grapple.stop_on_wallHit and IsWallCollisionImminent(o, deltaTime) then
+    if vars.hasBeenAirborne and grapple.stop_on_wallHit and IsWallCollisionImminent(o, o.vel, deltaTime) then
         this.Transition_AntiGravOrStandard(vars, const, debug, o, grapple)
         do return end
     end
 
     local eye_pos, look_dir = o:GetCrosshairInfo()
 
-    if this.IsAbovePlane(vars.stop_planes, eye_pos) then
+    if IsAboveAnyPlane(vars.stop_planes, eye_pos) then
         this.Transition_AntiGravOrStandard(vars, const, debug, o, grapple)
         do return end
     end
@@ -63,57 +61,14 @@ function Process_Flight_Straight(o, player, vars, const, debug, deltaTime, extra
         do return end
     end
 
-    ----------------------------------- PREP WORK -----------------------------------
+    -- Calculate accelerations
+    local accel_x, accel_y, accel_z = GetAccel_GrappleStraight(o, vars, grapple, grappleLen, grappleDirUnit, o.vel)
 
-    -- How far from desired distance they are (can be negative)
-    local diffDist
-    if grapple.desired_length then
-        diffDist = grappleLen - grapple.desired_length
-    else
-        diffDist = grappleLen - vars.distToHit     -- no defined desired length, use the length at the time of initiating the grapple
-    end
+    local antigrav_z = GetAntiGravity(grapple.anti_gravity, isAirborne)     -- cancel gravity
 
-    -- Get the component of the velocity along the request line
-    local vel_along, isSameDir = GetProjectedVector_AlongVector(o.vel, grappleDirUnit, true)
-
-    -- Figure out the delta between actual and desired speed
-    local speed = math.sqrt(GetVectorLengthSqr(vel_along))
-
-    if not extraaccel_x then
-        extraaccel_x = 0
-    end
-    if not extraaccel_y then
-        extraaccel_y = 0
-    end
-    if not extraaccel_z then
-        extraaccel_z = 0
-    end
-
-    ---------------------------- CALCULATE ACCELERATIONS ----------------------------
-
-    -- Constant accel toward desired distance
-    local const_x, const_y, const_z = GetPullAccel_Constant(grapple.accel_alongGrappleLine, grappleDirUnit, diffDist, speed, not isSameDir)
-
-    -- spring accel toward desired distance
-    --TODO: Finish this
-    local spring_x = 0
-    local spring_y = 0
-    local spring_z = 0
-
-    -- Add extra acceleration if flying away from desired distance (extra drag)
-    local drag_x, drag_y, drag_z = this.GetVelocityDrag(grappleDirUnit, diffDist, isSameDir, grapple.velocity_away)
-
-    -- Accelerate along look direction
-    local look_x, look_y, look_z = this.GetLook(o, vars, grapple, grappleLen)
-
-    -- Cancel gravity
-    local antigrav_z = GetAntiGravity(grapple.anti_gravity, isAirborne)
-
-    ------------------------------- APPLY ACCELERATION -------------------------------
-
-    local accel_x = (const_x + spring_x + drag_x + look_x + extraaccel_x) * deltaTime
-    local accel_y = (const_y + spring_y + drag_y + look_y + extraaccel_y) * deltaTime
-    local accel_z = (const_z + spring_z + drag_z + look_z + extraaccel_z + antigrav_z) * deltaTime
+    accel_x = accel_x * deltaTime
+    accel_y = accel_y * deltaTime
+    accel_z = (accel_z + antigrav_z) * deltaTime
 
     -- debug.accel_x = Round(accel_x / deltaTime, 1)
     -- debug.accel_y = Round(accel_y / deltaTime, 1)
@@ -145,78 +100,10 @@ function this.AdjustEnergy(o, player, vars, const, deltaTime)
     return true
 end
 
-function this.GetVelocityDrag(dirUnit, diffDist, isSameDir, args)
-    if not args then
-        return 0, 0, 0
-    end
-
-    -- diff = actual - desired
-    if ((diffDist < 0) and (not isSameDir)) or    -- Compressed and moving away from point
-       ((diffDist > 0) and isSameDir) then     -- Stretched and moving toward the point
-        return 0, 0, 0
-    end
-
-    local accel = 0
-    if diffDist < 0 and args.accel_compression then     -- the acceleration could be nil
-        -- It's being compressed
-        local percent = GetDeadPercent_Distance(diffDist, args.deadSpot)
-
-        accel = args.accel_compression * -percent       -- negating so that acceleration is away from the grapple direction
-
-    elseif diffDist > 0 and args.accel_tension then
-        -- It's being stretched
-        local percent = GetDeadPercent_Distance(diffDist, args.deadSpot)
-
-        accel = args.accel_tension * percent
-    end
-
-    return
-        dirUnit.x * accel,
-        dirUnit.y * accel,
-        dirUnit.z * accel
-end
-
-function this.GetLook(o, vars, grapple, grappleLen)
-    if not grapple.accel_alongLook then
-        return 0, 0, 0
-    end
-
-    -- Project velocity along look
-    local vel_along, isSameDir = GetProjectedVector_AlongVector(o.vel, o.lookdir_forward, true)
-
-    -- Figure out the delta between actual and desired speed
-    local speed = math.sqrt(GetVectorLengthSqr(vel_along))
-
-    -- Distance difference is used to see if dead spot applies.  So if there is no desired length, just
-    -- use a large value so there is never a dead spot
-    local diffDist = 1000
-    if grapple.desired_length then
-        -- How from desired distance they are (can be negative)
-        diffDist = grappleLen - vars.distToHit
-    end
-
-    -- Get the acceleration
-    return GetPullAccel_Constant(grapple.accel_alongLook, o.lookdir_forward, diffDist, speed, not isSameDir)
-end
-
 function this.Transition_AntiGravOrStandard(vars, const, debug, o, grapple)
     if grapple.anti_gravity then
         Transition_ToAntiGrav(vars, const, o)
     else
         Transition_ToStandard(vars, const, debug, o)
     end
-end
-
-function this.IsAbovePlane(planes, pos)
-    local count = planes:GetCount()
-
-    for i = 1, count, 1 do
-        local plane = planes:GetItem(i)
-
-        if IsAbovePlane(plane.point, plane.normal, pos, false) then
-            return true
-        end
-    end
-
-    return false
 end

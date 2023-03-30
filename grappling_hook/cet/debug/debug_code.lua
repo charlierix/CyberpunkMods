@@ -13,10 +13,15 @@ function PopulateDebug(debug, o, keys, vars)
 
     debug.pos = vec_str(o.pos)
     debug.vel = vec_str(o.vel)
+    debug.vel_vars = vec_str(vars.vel)
     --debug.yaw = Round(o.yaw, 0)
 
     if o.vel then
         debug.speed = tostring(Round(GetVectorLength(o.vel), 1))
+    end
+
+    if vars.vel then
+        debug.speed_vars = tostring(Round(GetVectorLength(vars.vel), 1))
     end
 
     debug.is_airborne = IsAirborne(o)

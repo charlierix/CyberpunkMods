@@ -32,7 +32,7 @@ function Process_AirDash(o, player, vars, const, debug, deltaTime)
     end
 
     -- If they are on the ground after being airborne, then exit flight
-    local shouldStop, _ = ShouldStopFlyingBecauseGrounded(o, vars)
+    local shouldStop, _ = ShouldStopFlyingBecauseGrounded(o, vars, true)
     if shouldStop then
         Transition_ToStandard(vars, const, debug, o)
         do return end
@@ -85,6 +85,8 @@ function Process_AirDash(o, player, vars, const, debug, deltaTime)
 end
 
 
+-- I think the reason why this was acting funny is because impulse doesn't seem to push beyond a speed of 20 or so
+-- just a theory, haven't tested much
 
 
 -- This was an attempt to limit vertical speed.  It sort of works, but horizontal accel is pretty much ignored below 26.

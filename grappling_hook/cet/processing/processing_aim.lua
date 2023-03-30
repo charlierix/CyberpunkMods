@@ -158,10 +158,17 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
 
     --TODO: option to limit anchor if there's not any ray hits nearby.  Either cost, or a reduced height
 
-    local vel_look = GetProjectedVector_AlongVector(o.vel, look_dir, false)
+    local vel
+    if vars.vel then
+        vel = vars.vel
+    else
+        vel = o.vel
+    end
+
+    local vel_look = GetProjectedVector_AlongVector(vel, look_dir, false)
     local speed_look = GetVectorLength(vel_look)
 
-    local speed_sqr = GetVectorLengthSqr(o.vel)
+    local speed_sqr = GetVectorLengthSqr(vel)
     if debug_render_screen.IsEnabled() then
         debug_render_screen.Add_Text2D(nil, nil, "speed: " .. tostring(Round(math.sqrt(speed_sqr), 1)) .. "\r\nspeed look: " .. tostring(Round(speed_look, 1)), debug_categories.AIM_speed)
     end
@@ -169,17 +176,17 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     if speed_sqr <= SPEED_STRAIGHT * SPEED_STRAIGHT then
         -- Moving too slow, just do a straight line grapple
         debug_render_screen.Add_Text2D(nil, nil, "too slow", debug_categories.AIM_action)
-        this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
+        this.Aim_Swing_Slingshot(position, look_dir, speed_look, true, o, vars, const)
         do return end
     end
 
     local speed = math.sqrt(speed_sqr)
-    local vel_unit = MultiplyVector(o.vel, 1 / speed)       -- safe to divide, because check for zero was done above
+    local vel_unit = MultiplyVector(vel, 1 / speed)       -- safe to divide, because check for zero was done above
 
     local dot_vertical = DotProduct3D(vel_unit, up)
 
-    local vel_horz_unit = GetProjectedVector_AlongPlane_Unit(o.vel, up)
-    local vel_horz = GetProjectedVector_AlongVector(o.vel, vel_horz_unit)       -- this is the same thing that GetProjectedVector_AlongPlane does
+    local vel_horz_unit = GetProjectedVector_AlongPlane_Unit(vel, up)
+    local vel_horz = GetProjectedVector_AlongVector(vel, vel_horz_unit)       -- this is the same thing that GetProjectedVector_AlongPlane does
 
     local look_horz_unit = GetProjectedVector_AlongPlane_Unit(look_dir, up)
 
@@ -194,7 +201,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     if dot_horizontal < DOT_HORZ_MIN then
         -- They are trying to pull a 180
         debug_render_screen.Add_Text2D(nil, nil, "pulling a 180", debug_categories.AIM_action)
-        this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
+        this.Aim_Swing_Slingshot(position, look_dir, speed_look, true, o, vars, const)
         do return end
     end
 
@@ -203,12 +210,12 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     if dot_vertical < DOT_UNDERSWING_MIN then
         -- Going nearly straight down
         -- If there is enough velocity, do an underswing and toss them to the end point
-        if this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const) then
+        if this.Aim_Swing_Toss_DownUp(position, vel, look_dir, o, vars, const) then
             debug_render_screen.Add_Text2D(nil, nil, "down - tossing up", debug_categories.AIM_action)
         else
             -- There's not enough velocity, revert to straight line
             debug_render_screen.Add_Text2D(nil, nil, "down - couldn't toss up", debug_categories.AIM_action)
-            this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
+            this.Aim_Swing_Slingshot(position, look_dir, speed_look, true, o, vars, const)
         end
         do return end
     end
@@ -219,7 +226,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
         -- Going above 45 degrees
         -- An overswing might be able to be used, but that would feel unnatural.  Just do a straight line
         debug_render_screen.Add_Text2D(nil, nil, "over 45 degrees", debug_categories.AIM_action)
-        this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
+        this.Aim_Swing_Slingshot(position, look_dir, speed_look, true, o, vars, const)
         do return end
     end
 
@@ -227,11 +234,11 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
 
     if dot_vertical < DOT_UNDERSWING_MAX then
         -- Standard web swing, this should be most cases
-        if this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, vars, const) then
+        if this.Aim_Swing_UnderSwing(position, vel, look_dir, speed_look, vel_unit, o, vars, const) then
             debug_render_screen.Add_Text2D(nil, nil, "underswing", debug_categories.AIM_action)
         else
             debug_render_screen.Add_Text2D(nil, nil, "couldn't underswing", debug_categories.AIM_action)
-            this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
+            this.Aim_Swing_Slingshot(position, look_dir, speed_look, true, o, vars, const)
         end
         do return end
     end
@@ -239,19 +246,19 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     this.Draw_CantUnderSwing(look_horz_unit, position, vel_unit, DOT_UNDERSWING_MAX, 0, -2.2, 2.2)
 
     -- If there's enough velocity, do a mini underswing and toss them to the end point
-    if this.Aim_Swing_Toss_Up(position, look_dir, speed_look, o, vars, const) then
+    if this.Aim_Swing_Toss_Up(position, vel, look_dir, speed_look, o, vars, const) then
         debug_render_screen.Add_Text2D(nil, nil, "toss up", debug_categories.AIM_action)
         do return end
     end
 
     -- Nothing else worked, default to straight line
     debug_render_screen.Add_Text2D(nil, nil, "default", debug_categories.AIM_action)
-    this.Aim_Swing_Slingshot(position, look_dir, speed_look, false, o, vars, const)
+    this.Aim_Swing_Slingshot(position, look_dir, speed_look, true, o, vars, const)
 end
 
 ------------------------------------ Temp Hardcoded -----------------------------------
 
-function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, vars, const)
+function this.Aim_Swing_UnderSwing(position, vel, look_dir, speed_look, vel_unit, o, vars, const)
     local VELOCITY_OFFPLANE_MULT = -0.1
     local VELOCITY_OFFPLANE_RADIUSMULT = 0.15
     local MIN_OUTPUT_SPEED = 3
@@ -289,7 +296,7 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
 
     -- Get the vertical component of the velocity
     local vert_plane_normal = CrossProduct3D(look_dir, up)
-    local vel_vert_unit = GetProjectedVector_AlongPlane_Unit(o.vel, vert_plane_normal)
+    local vel_vert_unit = GetProjectedVector_AlongPlane_Unit(vel, vert_plane_normal)
 
     -- Any point along this anchor line should make a smooth curve
     local anchor_line = CrossProduct3D(vert_plane_normal, vel_vert_unit)
@@ -321,7 +328,7 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
     end
 
     -- Adjust the anchor point off vert plane based on horizontal velocity
-    local vel_plane_normal = GetProjectedVector_AlongVector(o.vel, vert_plane_normal)
+    local vel_plane_normal = GetProjectedVector_AlongVector(vel, vert_plane_normal)
 
     debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
     debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
@@ -346,11 +353,11 @@ function this.Aim_Swing_UnderSwing(position, look_dir, speed_look, vel_unit, o, 
     this.ShowEndPoint(dest_pos, dest_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
     debug_render_screen.Add_Square(stopplane_point2, stopplane_normal2, 8, 8, debug_categories.AIM_stopplane)
 
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal, stopplane_point2, stopplane_normal2)
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, false, stopplane_point, stopplane_normal, stopplane_point2, stopplane_normal2)
     return true
 end
 
-function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
+function this.Aim_Swing_Toss_DownUp(position, vel, look_dir, o, vars, const)
     local VELOCITY_OFFPLANE_MULT = -0.1
 
     if not tossdownup_radius_by_speed then
@@ -369,7 +376,7 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
 
     -- Get the vertical component of the velocity
     local vert_plane_normal = CrossProduct3D(look_dir, up)
-    local vel_vert = GetProjectedVector_AlongPlane(o.vel, vert_plane_normal)
+    local vel_vert = GetProjectedVector_AlongPlane(vel, vert_plane_normal)
     local speed_vert = GetVectorLength(vel_vert)
     local vel_vert_unit = DivideVector(vel_vert, speed_vert)
 
@@ -396,7 +403,7 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
     local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(release_point, release_vel_unit, 0.25)
 
     -- Adjust the anchor point off vert plane based on horizontal velocity
-    local vel_plane_normal = GetProjectedVector_AlongVector(o.vel, vert_plane_normal)
+    local vel_plane_normal = GetProjectedVector_AlongVector(vel, vert_plane_normal)
 
     debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
     debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
@@ -421,7 +428,7 @@ function this.Aim_Swing_Toss_DownUp(position, look_dir, o, vars, const)
 
     debug_render_screen.Add_Text2D(nil, nil, "speed vert: " .. tostring(Round(speed_vert, 1)) .. "\r\nrelease angle: " .. tostring(Round(release_angle)), debug_categories.AIM_implementationtext)
 
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, false, stopplane_point, stopplane_normal)
     return true
 end
 
@@ -429,7 +436,7 @@ end
 --the release angle should have an extra adjustment that pulls down based on speed
 --my also need to adjust radius/elastic based on speed
 
-function this.Aim_Swing_Toss_Up(position, look_dir, speed_look, o, vars, const)
+function this.Aim_Swing_Toss_Up(position, vel, look_dir, speed_look, o, vars, const)
     local VELOCITY_OFFPLANE_MULT = -0.1
 
     if not tossup_dist_by_dot then
@@ -485,7 +492,7 @@ function this.Aim_Swing_Toss_Up(position, look_dir, speed_look, o, vars, const)
     local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(release_point, release_dir_unit, 0.25)
 
     -- Adjust the anchor point off vert plane based on horizontal velocity
-    local vel_plane_normal = GetProjectedVector_AlongVector(o.vel, right)
+    local vel_plane_normal = GetProjectedVector_AlongVector(vel, right)
 
     debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
     debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
@@ -510,7 +517,7 @@ function this.Aim_Swing_Toss_Up(position, look_dir, speed_look, o, vars, const)
 
     debug_render_screen.Add_Text2D(nil, nil, "look_dot_up: " .. tostring(Round(look_dot_up, 1)) .. "\r\nspeed_look: " .. tostring(Round(speed_look, 1)) .. "\r\naccel_mult: " .. tostring(Round(accel_mult, 2)), debug_categories.AIM_implementationtext)
 
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, false, stopplane_point, stopplane_normal)
     return true
 end
 
@@ -555,13 +562,15 @@ function this.Aim_Swing_Slingshot(position, look_dir, speed_look, is_airborne, o
 
     local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos, accel_mult)
 
-    this.MaybePopUp(is_airborne, o, new_grapple.anti_gravity, look_dir)
+    local popping_up = this.MaybePopUp(is_airborne, o, new_grapple.anti_gravity, look_dir)
 
     local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, look_dir, new_grapple.stop_plane_distance)
 
     this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
 
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
+    debug_render_screen.Add_Text2D(nil, nil, "popping_up: " .. tostring(popping_up), debug_categories.AIM_implementationtext)
+
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, popping_up, stopplane_point, stopplane_normal)
 end
 
 function this.Aim_Swing_FromGround(position, look_dir, o, vars, const, debug)
@@ -609,40 +618,59 @@ end
 function this.Aim_Swing_FromGround_DoIt(position, anchor_pos, jumpdir_unit, anchor_dist, o, vars, const, debug)
     local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos)
 
-    this.MaybePopUp(false, o, new_grapple.anti_gravity, jumpdir_unit)
+    local popping_up = this.MaybePopUp(false, o, new_grapple.anti_gravity, jumpdir_unit)
 
     local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, jumpdir_unit, new_grapple.stop_plane_distance)
 
     this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
 
-    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, stopplane_point, stopplane_normal)
+    Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, popping_up, stopplane_point, stopplane_normal)
 end
 
 -- If on the ground and angle is too low, apply an up impulse
 function this.MaybePopUp(is_airborne, o, anti_gravity, jumpdir_unit)
-    local STRENGTH_MAX = 4
-    local DOT_HORZ = 0.4
-    local DOT_VERT = 0.75
+    local DOT_VERT_MIN = 0.4
+    local DOT_VERT_MAX = 0.75
+    local STRENGTH_VERT_MIN = 3
+    local STRENGTH_VERT_MAX = 4
+
+    local DOT_HORZ_MIN = 0
+    local DOT_HORZ_MAX = 0.8
+    local STRENGTH_HORZ_MIN = 2
+    local STRENGTH_HORZ_MAX = 0
 
     if is_airborne then
-        do return end
+        return false
     end
-
-    --TODO: May want to add some kick in the horizontal portion of direction facing
-    --TODO: Adjust upward strength based on antigrav
 
     local dot = DotProduct3D(jumpdir_unit, up)
 
-    local strength = 0
-    if dot < DOT_HORZ then
-        strength = STRENGTH_MAX
-    elseif dot > DOT_VERT then
-        do return end
+    local x = 0
+    local y = 0
+    if dot > DOT_HORZ_MAX then
+        x = jumpdir_unit.x * STRENGTH_HORZ_MAX
+        y = jumpdir_unit.y * STRENGTH_HORZ_MAX
+    elseif dot < DOT_HORZ_MIN then
+        x = jumpdir_unit.x * STRENGTH_HORZ_MIN
+        y = jumpdir_unit.y * STRENGTH_HORZ_MIN
     else
-        strength = GetScaledValue(0, STRENGTH_MAX, DOT_VERT, DOT_HORZ, dot)
+        local percent = GetScaledValue(STRENGTH_HORZ_MIN, STRENGTH_HORZ_MAX, DOT_HORZ_MIN, DOT_HORZ_MAX, dot)
+        x = jumpdir_unit.x * percent
+        y = jumpdir_unit.y * percent
     end
 
-    o:AddImpulse(0, 0, strength)
+    local z = 0
+    if dot < DOT_VERT_MIN then
+        z = STRENGTH_VERT_MAX
+    elseif dot > DOT_VERT_MAX then
+        z = STRENGTH_VERT_MIN
+    else
+        z = GetScaledValue(STRENGTH_VERT_MIN, STRENGTH_VERT_MAX, DOT_VERT_MAX, DOT_VERT_MIN, dot)
+    end
+
+    o:AddImpulse(x, y, z)
+
+    return true
 end
 
 -------------------------------- Draw Swing Conditions --------------------------------

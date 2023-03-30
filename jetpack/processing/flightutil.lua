@@ -156,7 +156,7 @@ function ClampVelocity_Drag(vel, maxSpeed)
     local speed = math.sqrt(speedSqr)
 
     local percent = 1
-    if speedSqr < (maxSpeed * maxSpeed) then
+    if speed < maxSpeed then
         percent = GetScaledValue(0, 1, maxSpeed_min, maxSpeed, speed)
     end
 
