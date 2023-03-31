@@ -1,5 +1,8 @@
 local this = {}
 
+--TODO: need some drag
+--TODO: let the player stear a little.  better yet, emulate a wing suit
+
 function Process_FreeFall(o, player, vars, const, keys, debug, deltaTime)
     if debug_render_screen.IsEnabled() then
         local position, look_dir = o:GetCrosshairInfo()

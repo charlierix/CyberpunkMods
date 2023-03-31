@@ -390,7 +390,7 @@ registerForEvent("onUpdate", function(deltaTime)
         -- Standard (walking around)
         Process_Standard(o, player, vars, const, debug, deltaTime)
 
-    elseif not o:Custom_CurrentlyFlying_Update(o.vel) then     -- there is not teleport in grappling hook, so standard velocity is correct
+    elseif not o:Custom_CurrentlyFlying_Update(this.GetVelocity(o, vars)) then     -- there is not teleport in grappling hook, so standard velocity is correct
         -- Was flying, but another mod took over
         Transition_ToStandard(vars, const, debug, o)
 
@@ -408,7 +408,6 @@ registerForEvent("onUpdate", function(deltaTime)
 
     elseif vars.flightMode == const.flightModes.flight_swing then
         -- Web Swinging
-        --Process_Flight_Swing_OLD(o, player, vars, const, debug, deltaTime)
         Process_Flight_Swing(o, player, vars, const, keys, debug, deltaTime)
 
     elseif vars.flightMode == const.flightModes.antigrav then
@@ -616,6 +615,14 @@ function this.ClearObjects()
 
     if xp_gain then
         xp_gain:Clear()
+    end
+end
+
+function this.GetVelocity(o, vars)
+    if vars.vel then
+        return vars.vel
+    else
+        return o.vel
     end
 end
 
