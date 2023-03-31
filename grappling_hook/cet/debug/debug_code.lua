@@ -9,9 +9,9 @@ function PopulateDebug(debug, o, keys, vars)
     debug.mutlmod_IsOwnerOrNone = o:Custom_CurrentlyFlying_IsOwnerOrNone()
     debug.mutlmod_CanStartFlight = o:Custom_CurrentlyFlying_CanStartFlight()
 
-    debug.isSafetyFireCandidate = vars.isSafetyFireCandidate
+    --debug.isSafetyFireCandidate = vars.isSafetyFireCandidate
 
-    debug.pos = vec_str(o.pos)
+    --debug.pos = vec_str(o.pos)
     debug.vel = vec_str(o.vel)
     debug.vel_vars = vec_str(vars.vel)
     --debug.yaw = Round(o.yaw, 0)
@@ -46,13 +46,13 @@ function PopulateDebug(debug, o, keys, vars)
     --     debug["down_" .. key] = value
     -- end
 
-    local action = vars.startStopTracker:GetRequestedAction()
-    if action then
-        debug.action = action
-    else
-        debug.action = "-----"
-    end
-    debug.action_held = vars.startStopTracker:IsPrevActionHeldDown()
+    -- local action = vars.startStopTracker:GetRequestedAction()
+    -- if action then
+    --     debug.action = action
+    -- else
+    --     debug.action = "-----"
+    -- end
+    -- debug.action_held = vars.startStopTracker:IsPrevActionHeldDown()
 
     debug.timer = Round(o.timer, 1)
 end

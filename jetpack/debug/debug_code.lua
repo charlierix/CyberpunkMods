@@ -9,7 +9,7 @@ function PopulateDebug(debug, o, keys, vars)
     debug.mutlmod_IsOwnerOrNone = o:Custom_CurrentlyFlying_IsOwnerOrNone()
     debug.mutlmod_CanStartFlight = o:Custom_CurrentlyFlying_CanStartFlight()
 
-    debug.pos = vec_str(o.pos)
+    --debug.pos = vec_str(o.pos)
     debug.vel = vec_str(o.vel)
     --debug.yaw = Round(o.yaw, 0)
 

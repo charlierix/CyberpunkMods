@@ -203,7 +203,7 @@ function GetAccel_Boosting(o, vars)
     end
 
     --TODO: get accel from swing props
-    local ACCEL = 42
+    local ACCEL = 24
 
     debug_render_screen.Add_Text2D(0.667, 0.67, "BOOSTING", nil, "C44", "FFF", nil, true)
 
@@ -259,9 +259,9 @@ function GetAccel_AirFriction(vel, airbrake_percent)
 end
 
 function ApplyAccel_Teleporting(o, vars, const, keys, debug, accel_x, accel_y, accel_z, deltaTime)
-    debug.accel_x = accel_x
-    debug.accel_y = accel_y
-    debug.accel_z = accel_z
+    -- debug.accel_x = accel_x
+    -- debug.accel_y = accel_y
+    -- debug.accel_z = accel_z
 
     if debug_render_screen.IsEnabled() then
         debug_render_screen.Add_Text2D(0.75, 0.5, "vel: " .. vec_str(vars.vel) .. "\r\naccel: " .. tostring(Round(accel_x, 2)) .. ", " .. tostring(Round(accel_y, 2)) .. ", " .. tostring(Round(accel_z, 2)), nil, "444", "CCC", nil, true)

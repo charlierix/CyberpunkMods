@@ -390,7 +390,7 @@ registerForEvent("onUpdate", function(deltaTime)
         -- Standard (walking around)
         Process_Standard(o, player, vars, const, debug, deltaTime)
 
-    elseif not o:Custom_CurrentlyFlying_Update(this.GetVelocity(o, vars)) then     -- there is not teleport in grappling hook, so standard velocity is correct
+    elseif not o:Custom_CurrentlyFlying_Update(this.GetVelocity(o, vars)) then
         -- Was flying, but another mod took over
         Transition_ToStandard(vars, const, debug, o)
 

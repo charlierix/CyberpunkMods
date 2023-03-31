@@ -42,9 +42,17 @@ function Transition_ToAim(grapple, vars, const, o, shouldConsumeEnergy)
         vel = o.vel
     end
 
-    if not o:Custom_CurrentlyFlying_TryStartFlight(true, vel) then
+    local started, final_vel = o:Custom_CurrentlyFlying_TryStartFlight(true, vel)
+    if not started then
         return false
     end
+
+    -- Custom_CurrentlyFlying_TryStartFlight is applying an impulse, but web swing is switching to vars.vel before the impulse
+    -- has time to take affect, so o.vel is still zero (that's my theory at least)
+    --
+    -- Explicitly setting this will guarantee the other mod's velocity is remembered.  If it's a straight grapple that uses
+    -- impulse based flight, this.TransferVelocity_Teleport_Standard will apply an impulse
+    vars.vel = final_vel
 
     vars.flightMode = const.flightModes.aim
 
