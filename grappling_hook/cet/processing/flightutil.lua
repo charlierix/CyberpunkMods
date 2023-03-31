@@ -203,7 +203,7 @@ function GetAccel_Boosting(o, vars)
     end
 
     --TODO: get accel from swing props
-    local ACCEL = 24
+    local ACCEL = 12
 
     debug_render_screen.Add_Text2D(0.667, 0.67, "BOOSTING", nil, "C44", "FFF", nil, true)
 
