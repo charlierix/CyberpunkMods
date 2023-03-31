@@ -24,12 +24,13 @@ function Process_FreeFall(o, player, vars, const, keys, debug, deltaTime)
     end
 
     local boost_x, boost_y, boost_z = GetAccel_Boosting(o, vars)
-    local drag_x, drag_y, drag_z = ClampVelocity_Drag(vars.vel, const.maxSpeed)
+    local drag1_x, drag1_y, drag1_z = ClampVelocity_Drag(vars.vel, const.maxSpeed)
+    local drag2_x, drag2_y, drag2_z = GetAccel_AirFriction(vars.vel, Clamp(0, 1, -keys.analog_y))       -- pressing back is 100% break
     local antigrav_z = this.GetAntiGravity(o, vars, vars.grapple.anti_gravity, isAirborne)
 
-    local accel_x = boost_x + drag_x
-    local accel_y = boost_y + drag_y
-    local accel_z = boost_z + drag_z + antigrav_z
+    local accel_x = boost_x + drag1_x + drag2_x
+    local accel_y = boost_y + drag1_y + drag2_y
+    local accel_z = boost_z + drag1_z + drag2_z + antigrav_z
 
     ApplyAccel_Teleporting(o, vars, const, keys, debug, accel_x, accel_y, accel_z, deltaTime)
 end

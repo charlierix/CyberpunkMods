@@ -219,10 +219,53 @@ function GetAccel_Boosting(o, vars)
         o.lookdir_forward.z * ACCEL
 end
 
+function GetAccel_AirFriction(vel, airbrake_percent)
+    -- https://www.engineeringtoolbox.com/drag-coefficient-d_627.html
+    local AIR_DENSITY = 1.25
+    local DRAG_COEFFICIENT = 1.1
+    local AREA = 1
+    local AIRBRAKE_AREA = 6
+    local MASS = 100
+
+    local area = AREA
+    if airbrake_percent then
+        area = GetScaledValue(AREA, AIRBRAKE_AREA, 0, 1, airbrake_percent)
+    end
+
+    -- F = -0.5 * fluid_density * drag_coefficient * area * velocity^2
+    local mult = 0.5 * AIR_DENSITY * DRAG_COEFFICIENT * area / MASS
+
+    local accel_x = vel.x * vel.x * mult
+    local accel_y = vel.y * vel.y * mult
+    local accel_z = vel.z * vel.z * mult
+
+    -- All values above are kept positive.  Now negate if necessary
+    -- Otherwise, the calculations do this:
+    --  -3 * -3 * -1 = -9
+    --   3 *  3 * -1 = -9
+    if vel.x > 0 then
+        accel_x = -accel_x
+    end
+
+    if vel.y > 0 then
+        accel_y = -accel_y
+    end
+
+    if vel.z > 0 then
+        accel_z = -accel_z
+    end
+
+    return accel_x, accel_y, accel_z
+end
+
 function ApplyAccel_Teleporting(o, vars, const, keys, debug, accel_x, accel_y, accel_z, deltaTime)
     debug.accel_x = accel_x
     debug.accel_y = accel_y
     debug.accel_z = accel_z
+
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Text2D(0.75, 0.5, "vel: " .. vec_str(vars.vel) .. "\r\naccel: " .. tostring(Round(accel_x, 2)) .. ", " .. tostring(Round(accel_y, 2)) .. ", " .. tostring(Round(accel_z, 2)), nil, "444", "CCC", nil, true)
+    end
 
     accel_x = accel_x * deltaTime
     accel_y = accel_y * deltaTime
@@ -234,6 +277,10 @@ function ApplyAccel_Teleporting(o, vars, const, keys, debug, accel_x, accel_y, a
     vars.vel.z = vars.vel.z + accel_z
 
     vars.vel = ClampVelocity(vars.vel, const.maxSpeed)      -- the game gets unstable and crashes at high speed.  Probably trying to load scenes too fast, probably machine dependent
+
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Text2D(0.667, 0.5, "speed: " .. tostring(Round(GetVectorLength(vars.vel), 1)), nil, "666", "CCC", nil, true)
+    end
 
     local deltaYaw = keys.mouse_x * -0.08
 
