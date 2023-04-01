@@ -9,12 +9,6 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos, accel_m
         up = Vector4.new(0, 0, 1, 1)
     end
 
-    local direction = SubtractVectors(to_pos, from_pos)
-    local length = GetVectorLength(direction)
-    local direction_unit = MultiplyVector(direction, 1 / length)
-
-    local antigrav_percent = this.GetStaightAntigravPercent(direction_unit)
-
     if not accel_mult then
         accel_mult = 1
     end
@@ -22,6 +16,12 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos, accel_m
     if not speed_mult then
         speed_mult = 1
     end
+
+    local direction = SubtractVectors(to_pos, from_pos)
+    local length = GetVectorLength(direction)
+    local direction_unit = MultiplyVector(direction, 1 / length)
+
+    local antigrav_percent = this.GetStaightAntigravPercent(direction_unit, accel_mult)
 
     local desired_length = nil
     local velocity_away = nil
@@ -160,15 +160,20 @@ end
 
 ---@param direction_unit Vector4 direction that the straight line grapple is travelling
 ---@return number percent from 0 to 1 (1 would be 100% antigrav)
-function this.GetStaightAntigravPercent(direction_unit)
+function this.GetStaightAntigravPercent(direction_unit, accel_mult)
     local dot = DotProduct3D(direction_unit, up)
+
+    local min_antigrav = 0
+    if accel_mult < 1 then
+        min_antigrav = GetScaledValue(1, 0, 0, 1, accel_mult)
+    end
 
     if dot < 0 then
         return 1
     elseif dot > 0.45 then
-        return 0
+        return min_antigrav
     else
-        return GetScaledValue(1, 0, 0, 0.45, dot)
+        return GetScaledValue(1, min_antigrav, 0, 0.45, dot)
     end
 end
 

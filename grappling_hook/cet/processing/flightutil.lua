@@ -299,6 +299,7 @@ function ApplyAccel_Teleporting(o, vars, const, keys, debug, accel_x, accel_y, a
         if vars.grapple.stop_on_wallHit then
             Transition_ToStandard(vars, const, debug, o)
         else
+            --vars.grapple = create a custom rope only, very high anti_gravity
             Transition_ToFlight_Straight(vars, const, o, vars.rayFrom, vars.rayHit, nil, nil, nil)
         end
     end

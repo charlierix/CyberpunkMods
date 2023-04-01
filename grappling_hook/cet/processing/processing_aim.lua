@@ -18,6 +18,8 @@ local tossup_dist_by_dot = nil
 local tossup_distmult_by_speed = nil
 local tossup_releaseangle_by_dot = nil
 local tossup_accelpercent_by_dot = nil
+local ground_dist_by_dot = nil
+local ground_accelmult_by_dot = nil
 
 -- This is called when they've initiated a new grapple.  It looks at the environment and kicks
 -- off actual flight with final values (like anchor point)
@@ -572,29 +574,30 @@ function this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, is_airbor
 end
 
 function this.Aim_Swing_FromGround(position, look_dir, o, vars, const, debug)
-    local DIST_HORZ = 18
-    local DIST_VERT = 6
+    if not ground_dist_by_dot then
+        ground_dist_by_dot = AnimationCurve:new()
+        ground_dist_by_dot:AddKeyValue(-1, 9)
+        ground_dist_by_dot:AddKeyValue(0, 9)
+        ground_dist_by_dot:AddKeyValue(0.9, 6)
+        ground_dist_by_dot:AddKeyValue(1, 6)
 
-    local DOT_MAX = 0.9
-    local DOT_MIN = 0
+        ground_accelmult_by_dot = AnimationCurve:new()
+        ground_accelmult_by_dot:AddKeyValue(Angle_to_Dot(0), 0.85)
+        ground_accelmult_by_dot:AddKeyValue(Angle_to_Dot(45), 0.7)
+        ground_accelmult_by_dot:AddKeyValue(Angle_to_Dot(90), 0.42)
+        ground_accelmult_by_dot:AddKeyValue(Angle_to_Dot(135), 0.38)
+        ground_accelmult_by_dot:AddKeyValue(Angle_to_Dot(180), 0.37)
+    end
 
     local dot_vert = DotProduct3D(look_dir, up)
-
-    -- Figure out max distance based on angle
-    local anchor_dist
-    if dot_vert >= DOT_MAX then
-        anchor_dist = DIST_VERT
-    elseif dot_vert <= DOT_MIN then
-        anchor_dist = DIST_HORZ
-    else
-        anchor_dist = GetScaledValue(DIST_HORZ, DIST_VERT, DOT_MIN, DOT_MAX, dot_vert)
-    end
+    local anchor_dist = ground_dist_by_dot:Evaluate(dot_vert)
+    local accel_mult1 = ground_accelmult_by_dot:Evaluate(dot_vert)
 
     local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
 
-    local anchor_pos, accel_mult, should_latch = swing_analyze_scenes.FromGround(position, look_dir, anchor_pos, anchor_dist, o)
+    local anchor_pos, accel_mult2, should_latch = swing_analyze_scenes.FromGround(position, look_dir, anchor_pos, anchor_dist, o)
 
-    local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos, accel_mult, nil, should_latch)
+    local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos, accel_mult1 * accel_mult2, nil, should_latch)
 
     local popping_up = this.MaybePopUp(false, o, new_grapple.anti_gravity, look_dir)
 
