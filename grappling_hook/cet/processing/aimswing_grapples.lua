@@ -23,23 +23,12 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos, accel_m
 
     local antigrav_percent = this.GetStaightAntigravPercent(direction_unit, accel_mult)
 
-    local desired_length = nil
-    local velocity_away = nil
     local stop_on_wallHit = nil
     local stop_plane_distance = nil
-    local deadSpot_distance = nil
     if should_latch then
         stop_on_wallHit = false
-        desired_length = 0    -- stick in the wall and hang
-        deadSpot_distance = 3
-        velocity_away =
-        {
-            accel_tension = 12,
-            deadSpot = 0.75,
-        }
     else
         stop_on_wallHit = true
-        desired_length = 0      -- pull all the way to the anchor
         stop_plane_distance = 0.25
     end
 
@@ -59,19 +48,18 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos, accel_m
             fade_duration = 1,
         },
 
-        desired_length = desired_length,
+        desired_length = 0,
 
         accel_alongGrappleLine =
         {
             accel = 50 * accel_mult,
             speed = 72 * speed_mult,
-            deadSpot_distance = deadSpot_distance,
         },
         accel_alongLook = nil,
 
         springAccel_k = nil,
 
-        velocity_away = velocity_away,
+        velocity_away = nil,
 
         aim_swing = grapple.aim_swing,
 
@@ -150,6 +138,47 @@ function aimswing_grapples.GetElasticRope(grapple, desired_length, accel_mult, s
         {
             accel_tension = 84,        -- using a fairly large tension so the rope part will act like a sling and not be too weak
             deadSpot = 0.75
+        },
+
+        aim_swing = grapple.aim_swing,
+
+        fallDamageReduction_percent = 0,
+    }
+end
+
+-- This replaces the grapple with a small rope when they hit a wall
+function aimswing_grapples.GetLatchRope(grapple)
+    return
+    {
+        name = grapple.name,
+        description = grapple.description,
+
+        mappin_name = grapple.mappin_name,
+
+        stop_on_wallHit = false,
+
+        anti_gravity =
+        {
+            antigrav_percent = 0.9,
+        },
+
+        desired_length = 0.8,
+
+        accel_alongGrappleLine =        -- Some of the acceleration needs to be this.  Otherwise it gets jerky when only drag is applied
+        {
+            accel = 3,
+            speed = 0.5,
+            deadSpot_distance = 1,
+        },
+        accel_alongLook = nil,
+
+        springAccel_k = nil,
+
+        velocity_away =
+        {
+            accel_compression = 36,
+            accel_tension = 72,
+            deadSpot = 0.5,
         },
 
         aim_swing = grapple.aim_swing,
