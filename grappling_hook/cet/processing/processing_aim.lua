@@ -1,5 +1,5 @@
+local swing_analyze_scenes = require("processing/aimswing_analyze_scenes")
 local swing_grapples = require("processing/aimswing_grapples")
-local swing_raycasts = require("processing/aimswing_raycasts")
 
 local this = {}
 
@@ -176,7 +176,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     if speed_sqr <= SPEED_STRAIGHT * SPEED_STRAIGHT then
         -- Moving too slow, just do a straight line grapple
         debug_render_screen.Add_Text2D(nil, nil, "too slow", debug_categories.AIM_action)
-        this.Aim_Swing_Slingshot(position, look_dir, speed_look, true, o, vars, const)
+        this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, true, o, vars, const)
         do return end
     end
 
@@ -201,7 +201,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     if dot_horizontal < DOT_HORZ_MIN then
         -- They are trying to pull a 180
         debug_render_screen.Add_Text2D(nil, nil, "pulling a 180", debug_categories.AIM_action)
-        this.Aim_Swing_Slingshot(position, look_dir, speed_look, true, o, vars, const)
+        this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, true, o, vars, const)
         do return end
     end
 
@@ -215,7 +215,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
         else
             -- There's not enough velocity, revert to straight line
             debug_render_screen.Add_Text2D(nil, nil, "down - couldn't toss up", debug_categories.AIM_action)
-            this.Aim_Swing_Slingshot(position, look_dir, speed_look, true, o, vars, const)
+            this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, true, o, vars, const)
         end
         do return end
     end
@@ -226,7 +226,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
         -- Going above 45 degrees
         -- An overswing might be able to be used, but that would feel unnatural.  Just do a straight line
         debug_render_screen.Add_Text2D(nil, nil, "over 45 degrees", debug_categories.AIM_action)
-        this.Aim_Swing_Slingshot(position, look_dir, speed_look, true, o, vars, const)
+        this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, true, o, vars, const)
         do return end
     end
 
@@ -238,7 +238,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
             debug_render_screen.Add_Text2D(nil, nil, "underswing", debug_categories.AIM_action)
         else
             debug_render_screen.Add_Text2D(nil, nil, "couldn't underswing", debug_categories.AIM_action)
-            this.Aim_Swing_Slingshot(position, look_dir, speed_look, true, o, vars, const)
+            this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, true, o, vars, const)
         end
         do return end
     end
@@ -253,7 +253,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
 
     -- Nothing else worked, default to straight line
     debug_render_screen.Add_Text2D(nil, nil, "default", debug_categories.AIM_action)
-    this.Aim_Swing_Slingshot(position, look_dir, speed_look, true, o, vars, const)
+    this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, true, o, vars, const)
 end
 
 ------------------------------------ Temp Hardcoded -----------------------------------
@@ -521,7 +521,7 @@ function this.Aim_Swing_Toss_Up(position, vel, look_dir, speed_look, o, vars, co
     return true
 end
 
-function this.Aim_Swing_Slingshot(position, look_dir, speed_look, is_airborne, o, vars, const)
+function this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, is_airborne, o, vars, const)
     if not slingshot_dist_by_dot then
         slingshot_dist_by_dot = AnimationCurve:new()
         slingshot_dist_by_dot:AddKeyValue(Angle_to_Dot(0), 4)
@@ -546,25 +546,23 @@ function this.Aim_Swing_Slingshot(position, look_dir, speed_look, is_airborne, o
 
     local look_dot_up = DotProduct3D(look_dir, up)
 
-    --TODO: Reduce distance if the area is cluttered
-
     local anchor_dist = slingshot_dist_by_dot:Evaluate(look_dot_up) * slingshot_distmult_by_speed:Evaluate(speed_look)
 
     local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
 
-    local hit = o:RayCast(position, anchor_pos)
-    if hit then
-        -- Not clear, set anchor point at hit
-        anchor_pos = hit
-    end
+    local anchor_pos, accel_mult1, should_latch = swing_analyze_scenes.Slingshot(position, look_dir, vel, anchor_pos, anchor_dist, o)
 
-    local accel_mult = slingshot_accelmult_by_dot:Evaluate(look_dot_up)
+    local accel_mult2 = slingshot_accelmult_by_dot:Evaluate(look_dot_up)
 
-    local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos, accel_mult)
+    local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos, accel_mult1 * accel_mult2, nil, should_latch)
 
     local popping_up = this.MaybePopUp(is_airborne, o, new_grapple.anti_gravity, look_dir)
 
-    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, look_dir, new_grapple.stop_plane_distance)
+    local stopplane_point = nil
+    local stopplane_normal = nil
+    if not should_latch then
+        stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, look_dir, new_grapple.stop_plane_distance)
+    end
 
     this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
 
@@ -594,33 +592,17 @@ function this.Aim_Swing_FromGround(position, look_dir, o, vars, const, debug)
 
     local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
 
-    -- Fire a ray to see if the path is clear
-    local hit = o:RayCast(position, anchor_pos)
-    if hit then
-        -- Not clear, set anchor point at hit
-        this.Aim_Swing_FromGround_DoIt(position, hit, look_dir, anchor_dist, o, vars, const, debug)
-        do return end
+    local anchor_pos, accel_mult, should_latch = swing_analyze_scenes.FromGround(position, look_dir, anchor_pos, anchor_dist, o)
+
+    local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos, accel_mult, nil, should_latch)
+
+    local popping_up = this.MaybePopUp(false, o, new_grapple.anti_gravity, look_dir)
+
+    local stopplane_point = nil
+    local stopplane_normal = nil
+    if not should_latch then
+        stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, look_dir, new_grapple.stop_plane_distance)
     end
-
-    ---------------------------
-    -- After analyzing various launches and ray hits/misses, I don't think I would want to change behavior of the grapple.
-    -- The player knows where they're pointing and reducing grapple ability in tight spots will just be annoying
-    ---------------------------
-    -- Not going to run into something, fire some rays to see how cluttered the area is
-    --local hits = swing_raycasts.Cylinder(o, position, look_dir, anchor_dist)
-
-    -- Reduce max if cluttered (hits along the path should apply a constricting pressure)
-    -- May also want to push the anchor point if too close to a hit
-    ---------------------------
-
-    this.Aim_Swing_FromGround_DoIt(position, anchor_pos, look_dir, anchor_dist, o, vars, const, debug)
-end
-function this.Aim_Swing_FromGround_DoIt(position, anchor_pos, jumpdir_unit, anchor_dist, o, vars, const, debug)
-    local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos)
-
-    local popping_up = this.MaybePopUp(false, o, new_grapple.anti_gravity, jumpdir_unit)
-
-    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, jumpdir_unit, new_grapple.stop_plane_distance)
 
     this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
 

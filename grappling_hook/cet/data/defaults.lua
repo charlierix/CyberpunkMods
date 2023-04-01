@@ -234,6 +234,7 @@ function GetDefault_Grapple_PoleVault()
     return retVal
 end
 
+-- doesn't work, impulse based flight caps at a speed of 20
 function GetDefault_Grapple_AngryBird()
     local retVal =
     {
@@ -264,24 +265,6 @@ function GetDefault_Grapple_AngryBird()
     retVal.energy_cost = GetEnergyCost_GrappleStraight(retVal.experience)
 
     return retVal
-end
-
-function GetDefault_Grapple_HeliumFrog()
-    -- "Hi Ho! Kermit the parade balloon here!"
-
-    -- This turns the player into a blimp/balloon
-
-
-    -- Very high antigravity/fade
-
-    -- Long aim distance
-
-    -- Very weak acceleration, low max speed
-
-
-    -- The current min speeds and accel are too high for this to work.  Fun idea, but jetpack
-    -- is better suited for this type of flight
-
 end
 
 --TODO: Swing won't rely on such fixed defaults.  The aim will need to do a few ray casts to see if it's a big open

@@ -4,7 +4,7 @@ local this = {}
 
 local up = nil
 
-function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos, accel_mult, speed_mult)
+function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos, accel_mult, speed_mult, should_latch)
     if not up then
         up = Vector4.new(0, 0, 1, 1)
     end
@@ -23,6 +23,26 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos, accel_m
         speed_mult = 1
     end
 
+    local desired_length = nil
+    local velocity_away = nil
+    local stop_on_wallHit = nil
+    local stop_plane_distance = nil
+    local deadSpot_distance = nil
+    if should_latch then
+        stop_on_wallHit = false
+        desired_length = 0    -- stick in the wall and hang
+        deadSpot_distance = 3
+        velocity_away =
+        {
+            accel_tension = 12,
+            deadSpot = 0.75,
+        }
+    else
+        stop_on_wallHit = true
+        desired_length = 0      -- pull all the way to the anchor
+        stop_plane_distance = 0.25
+    end
+
     return
     {
         name = grapple.name,
@@ -30,8 +50,8 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos, accel_m
 
         mappin_name = grapple.mappin_name,
 
-        stop_on_wallHit = true,
-        stop_plane_distance = 0.25,
+        stop_on_wallHit = stop_on_wallHit,
+        stop_plane_distance = stop_plane_distance,
 
         anti_gravity =
         {
@@ -39,18 +59,19 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos, accel_m
             fade_duration = 1,
         },
 
-        desired_length = 0,     -- pull all the way to the anchor
+        desired_length = desired_length,
 
         accel_alongGrappleLine =
         {
             accel = 50 * accel_mult,
             speed = 72 * speed_mult,
+            deadSpot_distance = deadSpot_distance,
         },
         accel_alongLook = nil,
 
         springAccel_k = nil,
 
-        velocity_away = nil,
+        velocity_away = velocity_away,
 
         aim_swing = grapple.aim_swing,
 
