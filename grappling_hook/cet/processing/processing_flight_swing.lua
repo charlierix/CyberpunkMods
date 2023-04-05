@@ -40,7 +40,7 @@ function Process_Flight_Swing(o, player, vars, const, keys, debug, deltaTime)
     end
 
     if vars.popping_up then
-        if o.timer - vars.startTime < 0.2 then
+        if o.timer - vars.startTime < 0.22 then
             do return end
         else
             vars.vel = o.vel

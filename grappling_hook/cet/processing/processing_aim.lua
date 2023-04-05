@@ -276,7 +276,7 @@ function this.Aim_Swing_UnderSwing(position, vel, look_dir, speed_look, vel_unit
     local dest_pos = AddVectors(position, MultiplyVector(look_dir, dest_dist))
 
 
-    local dest_pos, should_latch = swing_analyze_scenes.UnderSwing(position, look_dir, vel, dest_pos, dest_dist, speed_look, o, debug_categories.AIM_analyze1, debug_categories.AIM_analyze2)
+    local dest_pos, dest_dist, should_latch = swing_analyze_scenes.UnderSwing(position, look_dir, vel, dest_pos, dest_dist, speed_look, o, debug_categories.AIM_analyze1, debug_categories.AIM_analyze2)
 
 
     local new_grapple = swing_grapples.GetPureRope(vars.grapple, should_latch)
@@ -556,7 +556,7 @@ function this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, is_airbor
 
     local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
 
-    local anchor_pos, accel_mult1, should_latch = swing_analyze_scenes.Slingshot(position, look_dir, vel, anchor_pos, anchor_dist, speed_look, o, debug_categories.AIM_analyze1, debug_categories.AIM_analyze2)
+    local anchor_pos, anchor_dist, accel_mult1, should_latch = swing_analyze_scenes.Slingshot(position, look_dir, vel, anchor_pos, anchor_dist, speed_look, o, debug_categories.AIM_analyze1, debug_categories.AIM_analyze2)
 
     local accel_mult2 = slingshot_accelmult_by_dot:Evaluate(look_dot_up)
 
@@ -599,7 +599,7 @@ function this.Aim_Swing_FromGround(position, look_dir, o, vars, const, debug)
 
     local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
 
-    local anchor_pos, accel_mult2, should_latch = swing_analyze_scenes.FromGround(position, look_dir, anchor_pos, anchor_dist, o, debug_categories.AIM_analyze1, debug_categories.AIM_analyze2)
+    local anchor_pos, anchor_dist, accel_mult2, should_latch = swing_analyze_scenes.FromGround(position, look_dir, anchor_pos, anchor_dist, o, debug_categories.AIM_analyze1, debug_categories.AIM_analyze2)
 
     local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos, accel_mult1 * accel_mult2, nil, should_latch)
 
@@ -620,13 +620,13 @@ end
 function this.MaybePopUp(is_airborne, o, anti_gravity, jumpdir_unit)
     local DOT_VERT_MIN = 0.4
     local DOT_VERT_MAX = 0.75
-    local STRENGTH_VERT_MIN = 3
-    local STRENGTH_VERT_MAX = 4
+    local STRENGTH_VERT_MIN = 4
+    local STRENGTH_VERT_MAX = 8
 
     local DOT_HORZ_MIN = 0
     local DOT_HORZ_MAX = 0.8
-    local STRENGTH_HORZ_MIN = 2
-    local STRENGTH_HORZ_MAX = 0
+    local STRENGTH_HORZ_MIN = 8
+    local STRENGTH_HORZ_MAX = 4
 
     if is_airborne then
         return false
