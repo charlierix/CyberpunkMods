@@ -28,6 +28,13 @@ function TransitionWindows_Grapple(vars_ui, const, player, grappleIndex)
 
         elseif grapple.aim_swing then
             LogError("TransitionWindows_Grapple: TODO: Implement web swing")
+
+            -- Air Density % (from 0.1 to 3)
+            -- Gravity % (from 0.1 to 2)
+
+            -- Should Latch
+            -- Max Latch Angle
+
             TransitionWindows_Main(vars_ui, const)
 
         else

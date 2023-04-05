@@ -16,6 +16,8 @@ local LOOK_TO = 30
 local LOOK_FROM_RADIUS = 1
 local LOOK_TO_RADIUS = 6
 
+local cylinder_distradial_by_speed = nil
+
 local debug_categories = CreateEnum("RAY_missline", "RAY_hitline", "RAY_hitpoint")
 
 -- This treats horizontal tunnel scan and look direction independently, doesn't take into account velocity
@@ -121,13 +123,11 @@ function aimswing_raycasts.Cylinder(o, from, dir_unit, distance)
     local retVal = {}
 
     -- Initial rays at from position
-    this.Cylinder_Burst(o, from, AddVectors(from, offset_along), dir_unit, dir_right, DIST_RADIAL, retVal)
+    this.Cylinder_Burst(o, from, AddVectors(from, offset_along), dir_unit, dir_right, DIST_RADIAL, 1, retVal)
 
     -- Do a few more bursts down the line, based on how long the line is
     local remain_distance = distance - DIST_ALONG_INITIAL
     local remain_count = math.floor(remain_distance / DIST_ALONG_REMAINING)
-
-    print("remain count: " .. tostring(remain_count) .. " (" .. tostring(remain_distance / DIST_ALONG_REMAINING) .. ")")
 
     local remain_along_dist
     if remain_count <= MAX_BURSTS - 1 then      -- subtract one because initial is one of the bursts
@@ -137,21 +137,70 @@ function aimswing_raycasts.Cylinder(o, from, dir_unit, distance)
         remain_count = MAX_BURSTS - 1
     end
 
-    print("remain_along_dist: " .. tostring(remain_along_dist))
+    for i = 1, remain_count, 1 do
+        local dist_along_from = DIST_ALONG_INITIAL + (remain_along_dist * (i - 1))
+        local dist_along_to = DIST_ALONG_INITIAL + (remain_along_dist * i)
+
+        local offset_along_from = MultiplyVector(dir_unit, dist_along_from)
+        local offset_along_to = MultiplyVector(dir_unit, dist_along_to)
+
+        this.Cylinder_Burst(o, AddVectors(from, offset_along_from), AddVectors(from, offset_along_to), dir_unit, dir_right, DIST_RADIAL, 1, retVal)
+    end
+
+    return retVal
+end
+
+function aimswing_raycasts.Cylinder2(o, from, dir_unit, distance, speed_look, down_extra_percent)
+    local DIST_ALONG_INITIAL = 3
+    local DIST_ALONG_REMAINING = 5
+    local MAX_BURSTS = 4
+
+    if not cylinder_distradial_by_speed then
+        cylinder_distradial_by_speed = AnimationCurve:new()
+        cylinder_distradial_by_speed:AddKeyValue(0, 4.5)
+        cylinder_distradial_by_speed:AddKeyValue(8, 5)
+        cylinder_distradial_by_speed:AddKeyValue(20, 7)
+        cylinder_distradial_by_speed:AddKeyValue(30, 10)
+        cylinder_distradial_by_speed:AddKeyValue(60, 14)
+    end
+
+    local dist_radial = cylinder_distradial_by_speed:Evaluate(speed_look)
+
+    this.InitRays()
+
+    local dir_right = CrossProduct3D(dir_unit, up)
+
+    local offset_along = MultiplyVector(dir_unit, DIST_ALONG_INITIAL)
+
+    local num_calls = 0
+    local hits = {}
+
+    -- Initial rays at from position
+    num_calls = num_calls + this.Cylinder_Burst(o, from, AddVectors(from, offset_along), dir_unit, dir_right, dist_radial, down_extra_percent, hits)
+
+    -- Do a few more bursts down the line, based on how long the line is
+    local remain_distance = distance - DIST_ALONG_INITIAL
+    local remain_count = math.floor(remain_distance / DIST_ALONG_REMAINING)
+
+    local remain_along_dist
+    if remain_count <= MAX_BURSTS - 1 then      -- subtract one because initial is one of the bursts
+        remain_along_dist = DIST_ALONG_REMAINING
+    else
+        remain_along_dist = remain_distance / (MAX_BURSTS - 1)      -- there would too many busts.  Spread them evenly along the remaining distance
+        remain_count = MAX_BURSTS - 1
+    end
 
     for i = 1, remain_count, 1 do
         local dist_along_from = DIST_ALONG_INITIAL + (remain_along_dist * (i - 1))
         local dist_along_to = DIST_ALONG_INITIAL + (remain_along_dist * i)
 
-        print("burst from: " .. tostring(dist_along_from) .. " to: " .. tostring(dist_along_to))
-
         local offset_along_from = MultiplyVector(dir_unit, dist_along_from)
         local offset_along_to = MultiplyVector(dir_unit, dist_along_to)
 
-        this.Cylinder_Burst(o, AddVectors(from, offset_along_from), AddVectors(from, offset_along_to), dir_unit, dir_right, DIST_RADIAL, retVal)
+        num_calls = num_calls + this.Cylinder_Burst(o, AddVectors(from, offset_along_from), AddVectors(from, offset_along_to), dir_unit, dir_right, dist_radial, down_extra_percent, hits)
     end
 
-    return retVal
+    return hits, num_calls
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -348,7 +397,7 @@ end
 -- Fires rays starting at from, ending at points radially away from to_line_point
 -- Logs to the screen visualizer
 -- Adds to list of hits (just hits, not normals)
-function this.Cylinder_Burst(o, from, to_line_point, direction, dir_right, radial_len, hit_list)
+function this.Cylinder_Burst(o, from, to_line_point, direction, dir_right, radial_len, down_extra_percent, hit_list)
     local dir_up = CrossProduct3D(dir_right, direction)
 
     -- Up
@@ -360,16 +409,18 @@ function this.Cylinder_Burst(o, from, to_line_point, direction, dir_right, radia
     this.FireRay2(o, from, ray_out, hit_list)
 
     -- Down Right
-    ray_out = this.GetPoint_Radial(to_line_point, dir_right, dir_up, s2, -c2, radial_len)
+    ray_out = this.GetPoint_Radial(to_line_point, dir_right, dir_up, s2, -c2 * down_extra_percent, radial_len)
     this.FireRay2(o, from, ray_out, hit_list)
 
     -- Down Left
-    ray_out = this.GetPoint_Radial(to_line_point, dir_right, dir_up, -s2, -c2, radial_len)
+    ray_out = this.GetPoint_Radial(to_line_point, dir_right, dir_up, -s2, -c2 * down_extra_percent, radial_len)
     this.FireRay2(o, from, ray_out, hit_list)
 
     -- Up Left
     ray_out = this.GetPoint_Radial(to_line_point, dir_right, dir_up, -s1, c1, radial_len)
     this.FireRay2(o, from, ray_out, hit_list)
+
+    return 5
 end
 
 return aimswing_raycasts

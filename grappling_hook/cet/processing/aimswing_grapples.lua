@@ -67,7 +67,7 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos, accel_m
     }
 end
 
-function aimswing_grapples.GetPureRope(grapple)
+function aimswing_grapples.GetPureRope(grapple, should_latch)
     return
     {
         name = grapple.name,
@@ -75,8 +75,8 @@ function aimswing_grapples.GetPureRope(grapple)
 
         mappin_name = grapple.mappin_name,
 
-        stop_on_wallHit = true,
-        stop_plane_distance = 0.25,
+        stop_on_wallHit = not should_latch,
+        stop_plane_distance = 0.25,     -- if latch is true, there's a good chance they'll hit a wall before the stop plane, but set a stop plane just in case
 
         anti_gravity = nil,
 

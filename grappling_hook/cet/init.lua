@@ -112,6 +112,10 @@ require "ui_windows/main"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
+
+local swing_raycasts = require("processing/aimswing_raycasts")
+
+
 local this = {}
 
 --------------------------------------------------------------------
@@ -510,6 +514,45 @@ end)
 registerHotkey("GrapplingHook_ClearDebugVisuals", "Clear Debug Visuals", function()
     debug_render_screen.Clear()
 end)
+
+
+
+registerHotkey("GrapplingHook_RayCasts_Cylinder", "Cylinder", function()
+    local PRESSURE_ZERO = 4
+    local PRESSURE_RADIUS = 1
+    local RADIUS = 8
+
+    debug_render_screen.Clear()
+
+    local position, look_dir = o:GetCrosshairInfo()
+
+    local dest_dist = 18
+
+
+    local hits, num_calls = swing_raycasts.Cylinder2(o, position, look_dir, dest_dist, 0, 1)
+
+    debug_render_screen.Add_Line(position, AddVectors(position, MultiplyVector(look_dir, dest_dist)), nil, "DDD")
+
+    local sum_pressure = 0
+
+    for _, hit in ipairs(hits) do
+        local line_point = GetClosestPoint_Line_Point(position, look_dir, hit)
+        local hit_dist = math.sqrt(GetVectorDiffLengthSqr(hit, line_point))
+        local pressure = Clamp(0, PRESSURE_ZERO, GetScaledValue(PRESSURE_ZERO, PRESSURE_RADIUS, 0, RADIUS, hit_dist))
+        sum_pressure = sum_pressure + pressure
+
+        debug_render_screen.Add_Line(hit, line_point, nil, "555")
+        debug_render_screen.Add_Text(line_point, "dist: " .. tostring(Round(hit_dist, 2)) .. "\r\npressure: " .. tostring(Round(pressure, 2)), nil, "666", "4F4")
+    end
+
+    local pressure_avg = sum_pressure / num_calls
+
+    debug_render_screen.Add_Text2D(0.4, 0.5, "hits: " .. tostring(#hits) .. "\r\ncount: " .. tostring(num_calls) .. "\r\nratio: " .. tostring(Round(#hits / num_calls, 2)) .. "\r\navg pressure: " .. tostring(Round(pressure_avg, 3)), nil, "000", "FFF")
+
+
+end)
+
+
 
 
 -- registerHotkey("GrapplingHookConeCast_Points", "Cone Cast (points)", function()

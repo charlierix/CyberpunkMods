@@ -6,7 +6,7 @@ local this = {}
 local up = nil
 
 local set_debug_categories = false
-local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_dots", "AIM_implementationtext", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_velcomponent", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist", "AIM_arc", "AIM_notvisualtext", "AIM_testcase", "AIM_construction")
+local debug_categories = CreateEnum("AIM_action", "AIM_speed", "AIM_dots", "AIM_implementationtext", "AIM_analyze1", "AIM_analyze2", "AIM_pos", "AIM_look", "AIM_velunit", "AIM_velcomponent", "AIM_up", "AIM_anchor", "AIM_stopplane", "AIM_anchordist", "AIM_arc", "AIM_notvisualtext", "AIM_testcase", "AIM_construction")
 
 local slingshot_dist_by_dot = nil
 local slingshot_accelmult_by_dot = nil
@@ -158,8 +158,6 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
         do return end
     end
 
-    --TODO: option to limit anchor if there's not any ray hits nearby.  Either cost, or a reduced height
-
     local vel
     if vars.vel then
         vel = vars.vel
@@ -274,11 +272,14 @@ function this.Aim_Swing_UnderSwing(position, vel, look_dir, speed_look, vel_unit
         underswing_dist_by_speed:AddKeyValue(36, 42)
     end
 
-    --TODO: Reduce distance if the area is cluttered
     local dest_dist = underswing_dist_by_speed:Evaluate(speed_look)
     local dest_pos = AddVectors(position, MultiplyVector(look_dir, dest_dist))
 
-    local new_grapple = swing_grapples.GetPureRope(vars.grapple)
+
+    local dest_pos, should_latch = swing_analyze_scenes.UnderSwing(position, look_dir, vel, dest_pos, dest_dist, speed_look, o, debug_categories.AIM_analyze1, debug_categories.AIM_analyze2)
+
+
+    local new_grapple = swing_grapples.GetPureRope(vars.grapple, should_latch)
 
     -- If destination position is higher than current position, make sure there's enough velocity to get there
     if dest_pos.z > position.z then
@@ -346,8 +347,7 @@ function this.Aim_Swing_UnderSwing(position, vel, look_dir, speed_look, vel_unit
     this.ShowEndPoint(anchor_pos, radius, nil, nil, new_grapple, vars, o)     -- reusing this function to show the anchor and distance
     debug_render_screen.Add_Arc(anchor_pos, position, dest_pos, debug_categories.AIM_arc)
 
-    local quat = GetRotation(vel_unit, look_dir, 2)
-    local dest_dir = RotateVector3D(vel_unit, quat)
+    local dest_dir = this.GetSwingDestinationDirection(anchor_pos, position, dest_pos)
 
     local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(dest_pos, dest_dir, new_grapple.stop_plane_distance)
     local stopplane_point2, stopplane_normal2 = this.GetStopPlane_SwingCeiling(anchor_pos, up_to_anchor, position, dest_pos)
@@ -400,9 +400,9 @@ function this.Aim_Swing_Toss_DownUp(position, vel, look_dir, o, vars, const)
     local releasedir_unit = RotateVector3D_axis_angle(Vector4.new(0, 0, -1, 1), vert_plane_normal, release_angle)
     local release_point = AddVectors(anchor_pos, MultiplyVector(releasedir_unit, radius))
 
-    local release_vel_unit = RotateVector3D_axis_angle(releasedir_unit, vert_plane_normal, 90)
+    local release_dir = this.GetSwingDestinationDirection(anchor_pos, position, release_point)
 
-    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(release_point, release_vel_unit, 0.25)
+    local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(release_point, release_dir, 0.25)
 
     -- Adjust the anchor point off vert plane based on horizontal velocity
     local vel_plane_normal = GetProjectedVector_AlongVector(vel, vert_plane_normal)
@@ -489,7 +489,11 @@ function this.Aim_Swing_Toss_Up(position, vel, look_dir, speed_look, o, vars, co
     local releasedir_unit = RotateVector3D_axis_angle(swing_arm_unit, right, release_angle)
     local release_point = AddVectors(anchor_pos, MultiplyVector(releasedir_unit, radius))
 
-    local release_dir_unit = RotateVector3D_axis_angle(releasedir_unit, right, 90)
+
+    anchor_pos, release_point = swing_analyze_scenes.TossUp(position, anchor_pos, release_point, speed_look, o, debug_categories.AIM_analyze1, debug_categories.AIM_analyze2)
+
+
+    local release_dir_unit = this.GetSwingDestinationDirection(anchor_pos, position, release_point)
 
     local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(release_point, release_dir_unit, 0.25)
 
@@ -552,7 +556,7 @@ function this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, is_airbor
 
     local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
 
-    local anchor_pos, accel_mult1, should_latch = swing_analyze_scenes.Slingshot(position, look_dir, vel, anchor_pos, anchor_dist, o)
+    local anchor_pos, accel_mult1, should_latch = swing_analyze_scenes.Slingshot(position, look_dir, vel, anchor_pos, anchor_dist, speed_look, o, debug_categories.AIM_analyze1, debug_categories.AIM_analyze2)
 
     local accel_mult2 = slingshot_accelmult_by_dot:Evaluate(look_dot_up)
 
@@ -595,7 +599,7 @@ function this.Aim_Swing_FromGround(position, look_dir, o, vars, const, debug)
 
     local anchor_pos = AddVectors(position, MultiplyVector(look_dir, anchor_dist))
 
-    local anchor_pos, accel_mult2, should_latch = swing_analyze_scenes.FromGround(position, look_dir, anchor_pos, anchor_dist, o)
+    local anchor_pos, accel_mult2, should_latch = swing_analyze_scenes.FromGround(position, look_dir, anchor_pos, anchor_dist, o, debug_categories.AIM_analyze1, debug_categories.AIM_analyze2)
 
     local new_grapple = swing_grapples.GetElasticStraight(vars.grapple, position, anchor_pos, accel_mult1 * accel_mult2, nil, should_latch)
 
@@ -770,6 +774,17 @@ function this.RecoverEnergy_Switch(o, player, vars, const)
     return false
 end
 
+function this.GetSwingDestinationDirection(anchor_pos, from_pos, to_pos)
+    local from_to = SubtractVectors(to_pos, from_pos)
+    local from_anchor = SubtractVectors(anchor_pos, from_pos)
+    local perpendicular = CrossProduct3D(from_to, from_anchor)
+
+    local to_anchor = SubtractVectors(anchor_pos, to_pos)
+    local exit_vector = CrossProduct3D(to_anchor, perpendicular)
+
+    return ToUnit(exit_vector)
+end
+
 function this.GetStopPlane_Straight(anchor_pos, direction, stop_plane_distance)
     if not stop_plane_distance then
         return nil, nil
@@ -817,6 +832,9 @@ function this.EnsureDebugCategoriesSet()
     debug_render_screen.DefineCategory(debug_categories.AIM_speed, "BC2E6939", "FFF", nil, nil, nil, nil, 0.25, 0.65)
     debug_render_screen.DefineCategory(debug_categories.AIM_dots, "BC3D6E6C", "FFF", nil, nil, nil, nil, 0.25, 0.7)
     debug_render_screen.DefineCategory(debug_categories.AIM_implementationtext, "BB596E3D", "FFF", nil, nil, nil, nil, 0.25, 0.75)
+
+    debug_render_screen.DefineCategory(debug_categories.AIM_analyze1, "BA1B3485", "FFF", nil, nil, nil, nil, 0.25, 0.45)
+    debug_render_screen.DefineCategory(debug_categories.AIM_analyze2, "BA382494", "FFF", nil, nil, nil, nil, 0.25, 0.4)
 
     debug_render_screen.DefineCategory(debug_categories.AIM_pos, "CCC")
     debug_render_screen.DefineCategory(debug_categories.AIM_look, nil, "FFEBEDA8")
