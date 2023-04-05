@@ -30,11 +30,13 @@ local isShutdown = true
 local isLoaded = false
 local shouldDraw = false
 
+local show_stats = false
+
 registerForEvent("onInit", function()
     InitializeRandom()
 
     debug_render_screen.CallFrom_onInit(true)
-    debug_render_screen.DefineCategory("green", "40F0", "8F8", 12, 3, false)
+    debug_render_screen.DefineCategory("green", "40F0", "8F8", 12, false, 3, false)
 
     isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
 
@@ -66,6 +68,14 @@ registerForEvent("onUpdate", function(deltaTime)
     end
 
     shouldDraw = true
+
+    if show_stats then
+        local player = Game.GetPlayer()
+        local velocity = player:GetVelocity()
+        local speed = GetVectorLength(velocity)
+        local yaw = player:GetWorldYaw()
+        debug_render_screen.Add_Text2D(0.667, 0.5, "speed: " .. tostring(Round(speed, 1)) .. "\r\nyaw: " .. tostring(Round(yaw, 0)), nil, "666", "FFF", nil, true)
+    end
 
     debug_render_screen.CallFrom_onUpdate(deltaTime)
 end)
@@ -119,7 +129,7 @@ registerHotkey('DebugRenderers_Screen1', 'screen dot', function()
     local forward = Vector4.new(position.x + (direction.x * dist), position.y + (direction.y * dist), position.z + (direction.z * dist), 1)
 
     if math.random(2) == 1 then
-        debug_render_screen.Add_Dot(forward, nil, nil, 30, nil, nil)
+        debug_render_screen.Add_Dot(forward, nil, nil, 30, false, nil, nil)
     else
         debug_render_screen.Add_Dot(forward, "green")
     end
@@ -254,6 +264,36 @@ registerHotkey('DebugRenderers_Screen6', 'screen text', function()
     else
         debug_render_screen.Add_Text(forward, "that's green", "green")
     end
+end)
+
+registerHotkey('DebugRenderers_Screen7', 'screen arc', function()
+    local player = Game.GetPlayer()
+    local targeting = Game.GetTargetingSystem()
+
+    local position, direction = targeting:GetDefaultCrosshairData(player)
+
+    local dist = 2 + math.random() * 16
+    local forward = Vector4.new(position.x + (direction.x * dist), position.y + (direction.y * dist), position.z + (direction.z * dist), 1)
+
+    local point1 = AddVectors(forward, GetRandomVector_Spherical(0.25, 4))
+    local point2 = AddVectors(forward, GetRandomVector_Spherical(0.25, 4))
+    local point3 = AddVectors(forward, GetRandomVector_Spherical(0.25, 4))
+
+    local color = GetRandomColor_RGB1_ToHex(0.4, 0.8)
+
+    if math.random(2) == 1 then
+        debug_render_screen.Add_Arc(point1, point2, point3, nil, color, 30)
+    else
+        debug_render_screen.Add_Arc(point1, point2, point3, "green")
+    end
+end)
+
+registerHotkey('DebugRenderers_Screen8', 'toggle stats display', function()
+    show_stats = not show_stats
+end)
+
+registerHotkey('DebugRenderers_Screen9', 'playe sound', function()
+    debug_render_screen["PlayTone" .. tostring(math.random(5))]()
 end)
 
 registerForEvent("onDraw", function()

@@ -11,12 +11,11 @@ local MAX_RECURSE_VI = 8
 local this = {}
 
 -- Looks at the high level 3D items, creates 2D circles/lines/triangles that will be shown in the draw event
-function DebugRenderScreen_Frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line, visuals_triangle, visuals_text, visuals_text2D)
+function DebugRenderScreen_Frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line, visuals_triangle, visuals_text)
     visuals_circle:Clear()
     visuals_line:Clear()
     visuals_triangle:Clear()
     visuals_text:Clear()
-    visuals_text2D:Clear()
 
     if not controller or items:GetCount() == 0 then      -- controller should always be populated (unless there's a reload cet mods, then loading a prevous save is required)
         do return end
@@ -38,8 +37,9 @@ function DebugRenderScreen_Frame.RebuildVisuals(controller, items, item_types, v
 
         elseif item.item_type == item_types.text then
             this.Text(controller, item, visuals_text)
+
         elseif item.item_type == item_types.text2D then
-            this.Text2D(item, visuals_text2D)
+            this.Text2D(item, visuals_text)
         end
     end
 end
@@ -220,7 +220,7 @@ function this.Text(controller, item, visuals_text)
     local visual = visuals_text:GetNewItem()
 
     visual.center_x = point.X
-    visual.center_y = point.Y
+    visual.center_y = point.Y       -- I think positive y is up
     visual.color = this.GetColor_ABGR(item.color_fore)
     visual.color_back = color_back
     visual.text = item.text
@@ -235,7 +235,7 @@ function this.Text2D(item, visuals_text)
     local visual = visuals_text:GetNewItem()
 
     visual.center_x = (item.x_percent - 0.5) * 2        -- the value passed in is 0 to 1.  ProjectWorldToScreen -1 to 1 (0 is center)
-    visual.center_y = (item.y_percent - 0.5) * 2
+    visual.center_y = (item.y_percent - 0.5) * -2       -- -2 to flip it (value passed in is 0=top, 1=bottom.  Final is 1=top, -1=bottom)
     visual.color = this.GetColor_ABGR(item.color_fore)
     visual.color_back = color_back
     visual.text = item.text
