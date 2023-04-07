@@ -204,10 +204,12 @@ function GetAccel_Boosting(o, vars)
         return 0, 0, 0
     end
 
+    vars.swingprops_override:BoostApplied()
+
     --TODO: get accel from swing props
     local ACCEL = 12
 
-    debug_render_screen.Add_Text2D(0.667, 0.67, "BOOSTING", nil, "C44", "FFF", nil, true)
+    debug_render_screen.Add_Text2D(0.667, 0.65, "BOOSTING", nil, "C44", "FFF", nil, true)
 
     --TODO: play a sound
 
@@ -221,13 +223,20 @@ function GetAccel_Boosting(o, vars)
         o.lookdir_forward.z * ACCEL
 end
 
-function GetAccel_AirFriction(vel, airbrake_percent)
+function GetAccel_AirFriction(vel, airbrake_percent, swingprops_override)
     -- https://www.engineeringtoolbox.com/drag-coefficient-d_627.html
     local AIR_DENSITY = 1.25
+    local AIR_DENSITY_MAXBOOST = 0.2
     local DRAG_COEFFICIENT = 1.1
     local AREA = 1
     local AIRBRAKE_AREA = 6
     local MASS = 100
+
+    local air_density = GetScaledValue(AIR_DENSITY, AIR_DENSITY_MAXBOOST, 0, 1, swingprops_override.charge)
+
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Text2D(0.667, 0.55, "charge: " .. tostring(Round(swingprops_override.charge, 2)) .. "\r\nair density: " .. tostring(Round(air_density, 2)), nil, "FF68684F", "FFF", nil, true)
+    end
 
     local area = AREA
     if airbrake_percent then
@@ -235,7 +244,7 @@ function GetAccel_AirFriction(vel, airbrake_percent)
     end
 
     -- F = -0.5 * fluid_density * drag_coefficient * area * velocity^2
-    local mult = 0.5 * AIR_DENSITY * DRAG_COEFFICIENT * area / MASS
+    local mult = 0.5 * air_density * DRAG_COEFFICIENT * area / MASS
 
     local accel_x = vel.x * vel.x * mult
     local accel_y = vel.y * vel.y * mult

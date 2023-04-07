@@ -19,6 +19,8 @@ function Transition_ToStandard(vars, const, debug, o)
 
     vars.startStopTracker:ResetKeyDowns()
 
+    vars.swingprops_override:Clear()
+
     EnsureMapPinRemoved(vars, o)
 end
 

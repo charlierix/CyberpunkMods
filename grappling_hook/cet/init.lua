@@ -22,6 +22,7 @@ require "core/lists"
 require "core/math_basic"
 require "core/math_vector"
 require "core/math_yaw"
+require "core/rollingbuffer"
 require "core/sticky_list"
 require "core/strings"
 require "core/util"
@@ -51,6 +52,7 @@ require "processing/processing_flight_swing"
 require "processing/processing_freefall"
 require "processing/processing_standard"
 require "processing/safetyfire"
+require "processing/swingprops_override"
 require "processing/xp_gain"
 
 require "ui/animation_lowEnergy"
@@ -220,6 +222,8 @@ local vars =
 
     --vel                   -- used by swing, which uses teleport instead of impulse based flight
 
+    --swingprops_override   -- used by swing
+
     --mappinID              -- this will be populated while the map pin is visible (managed in mappinutil.lua)
     --mappinName            -- this is the name of the map pin that is currently visible (managed in mappinutil.lua)
 
@@ -341,6 +345,8 @@ registerForEvent("onInit", function()
     xp_gain = XPGain:new(o, vars, debug, const)
 
     vars.animation_lowEnergy = Animation_LowEnergy:new(o)
+
+    vars.swingprops_override = SwingPropsOverride:new(o)
 
     TransitionWindows_Main(vars_ui, const)
 end)
@@ -517,44 +523,40 @@ end)
 
 
 
-registerHotkey("GrapplingHook_RayCasts_Cylinder", "Cylinder", function()
-    local PRESSURE_ZERO = 4
-    local PRESSURE_RADIUS = 1
-    local RADIUS = 8
+-- registerHotkey("GrapplingHook_RayCasts_Cylinder", "Cylinder", function()
+--     local PRESSURE_ZERO = 4
+--     local PRESSURE_RADIUS = 1
+--     local RADIUS = 8
 
-    debug_render_screen.Clear()
+--     debug_render_screen.Clear()
 
-    local position, look_dir = o:GetCrosshairInfo()
+--     local position, look_dir = o:GetCrosshairInfo()
 
-    local dest_dist = 18
-
-
-    local hits, num_calls = swing_raycasts.Cylinder2(o, position, look_dir, dest_dist, 0, 1)
-
-    debug_render_screen.Add_Line(position, AddVectors(position, MultiplyVector(look_dir, dest_dist)), nil, "DDD")
-
-    local sum_pressure = 0
-
-    for _, hit in ipairs(hits) do
-        local line_point = GetClosestPoint_Line_Point(position, look_dir, hit)
-        local hit_dist = math.sqrt(GetVectorDiffLengthSqr(hit, line_point))
-        local pressure = Clamp(0, PRESSURE_ZERO, GetScaledValue(PRESSURE_ZERO, PRESSURE_RADIUS, 0, RADIUS, hit_dist))
-        sum_pressure = sum_pressure + pressure
-
-        debug_render_screen.Add_Line(hit, line_point, nil, "555")
-        debug_render_screen.Add_Text(line_point, "dist: " .. tostring(Round(hit_dist, 2)) .. "\r\npressure: " .. tostring(Round(pressure, 2)), nil, "666", "4F4")
-    end
-
-    local pressure_avg = sum_pressure / num_calls
-
-    debug_render_screen.Add_Text2D(0.4, 0.5, "hits: " .. tostring(#hits) .. "\r\ncount: " .. tostring(num_calls) .. "\r\nratio: " .. tostring(Round(#hits / num_calls, 2)) .. "\r\navg pressure: " .. tostring(Round(pressure_avg, 3)), nil, "000", "FFF")
+--     local dest_dist = 18
 
 
-end)
+--     local hits, num_calls = swing_raycasts.Cylinder2(o, position, look_dir, dest_dist, 0, 1)
+
+--     debug_render_screen.Add_Line(position, AddVectors(position, MultiplyVector(look_dir, dest_dist)), nil, "DDD")
+
+--     local sum_pressure = 0
+
+--     for _, hit in ipairs(hits) do
+--         local line_point = GetClosestPoint_Line_Point(position, look_dir, hit)
+--         local hit_dist = math.sqrt(GetVectorDiffLengthSqr(hit, line_point))
+--         local pressure = Clamp(0, PRESSURE_ZERO, GetScaledValue(PRESSURE_ZERO, PRESSURE_RADIUS, 0, RADIUS, hit_dist))
+--         sum_pressure = sum_pressure + pressure
+
+--         debug_render_screen.Add_Line(hit, line_point, nil, "555")
+--         debug_render_screen.Add_Text(line_point, "dist: " .. tostring(Round(hit_dist, 2)) .. "\r\npressure: " .. tostring(Round(pressure, 2)), nil, "666", "4F4")
+--     end
+
+--     local pressure_avg = sum_pressure / num_calls
+
+--     debug_render_screen.Add_Text2D(0.4, 0.5, "hits: " .. tostring(#hits) .. "\r\ncount: " .. tostring(num_calls) .. "\r\nratio: " .. tostring(Round(#hits / num_calls, 2)) .. "\r\navg pressure: " .. tostring(Round(pressure_avg, 3)), nil, "000", "FFF")
 
 
-
-
+-- end)
 -- registerHotkey("GrapplingHookConeCast_Points", "Cone Cast (points)", function()
 --     local log_build = DebugRenderLogger:new(true)
 --     local log_final = DebugRenderLogger:new(true)
