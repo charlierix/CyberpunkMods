@@ -256,7 +256,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, true, o, vars, const)
 end
 
------------------------------------- Temp Hardcoded -----------------------------------
+----------------------------------- Swing Components ----------------------------------
 
 function this.Aim_Swing_UnderSwing(position, vel, look_dir, speed_look, vel_unit, o, vars, const)
     local VELOCITY_OFFPLANE_MULT = -0.1
@@ -616,52 +616,6 @@ function this.Aim_Swing_FromGround(position, look_dir, o, vars, const, debug)
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, popping_up, stopplane_point, stopplane_normal)
 end
 
--- If on the ground and angle is too low, apply an up impulse
-function this.MaybePopUp(is_airborne, o, anti_gravity, jumpdir_unit)
-    local DOT_VERT_MIN = 0.4
-    local DOT_VERT_MAX = 0.75
-    local STRENGTH_VERT_MIN = 4
-    local STRENGTH_VERT_MAX = 8
-
-    local DOT_HORZ_MIN = 0
-    local DOT_HORZ_MAX = 0.8
-    local STRENGTH_HORZ_MIN = 8
-    local STRENGTH_HORZ_MAX = 4
-
-    if is_airborne then
-        return false
-    end
-
-    local dot = DotProduct3D(jumpdir_unit, up)
-
-    local x = 0
-    local y = 0
-    if dot > DOT_HORZ_MAX then
-        x = jumpdir_unit.x * STRENGTH_HORZ_MAX
-        y = jumpdir_unit.y * STRENGTH_HORZ_MAX
-    elseif dot < DOT_HORZ_MIN then
-        x = jumpdir_unit.x * STRENGTH_HORZ_MIN
-        y = jumpdir_unit.y * STRENGTH_HORZ_MIN
-    else
-        local percent = GetScaledValue(STRENGTH_HORZ_MIN, STRENGTH_HORZ_MAX, DOT_HORZ_MIN, DOT_HORZ_MAX, dot)
-        x = jumpdir_unit.x * percent
-        y = jumpdir_unit.y * percent
-    end
-
-    local z = 0
-    if dot < DOT_VERT_MIN then
-        z = STRENGTH_VERT_MAX
-    elseif dot > DOT_VERT_MAX then
-        z = STRENGTH_VERT_MIN
-    else
-        z = GetScaledValue(STRENGTH_VERT_MIN, STRENGTH_VERT_MAX, DOT_VERT_MAX, DOT_VERT_MIN, dot)
-    end
-
-    o:AddImpulse(x, y, z)
-
-    return true
-end
-
 -------------------------------- Draw Swing Conditions --------------------------------
 
 function this.Draw_Not180(look_horz_unit, position, vel_horz_unit, DOT_HORZ_MIN, offset_x, offset_y, offset_z)
@@ -821,6 +775,52 @@ function this.GetStopPlane_SwingCeiling(anchor_pos, normal, from_pos, to_pos)
     local point = AddVectors(from_pos, MultiplyVector(normal, CEILING_HEIGHT))
 
     return point, normal
+end
+
+-- If on the ground and angle is too low, apply an up impulse
+function this.MaybePopUp(is_airborne, o, anti_gravity, jumpdir_unit)
+    local DOT_VERT_MIN = 0.4
+    local DOT_VERT_MAX = 0.75
+    local STRENGTH_VERT_MIN = 4
+    local STRENGTH_VERT_MAX = 8
+
+    local DOT_HORZ_MIN = 0
+    local DOT_HORZ_MAX = 0.8
+    local STRENGTH_HORZ_MIN = 8
+    local STRENGTH_HORZ_MAX = 4
+
+    if is_airborne then
+        return false
+    end
+
+    local dot = DotProduct3D(jumpdir_unit, up)
+
+    local x = 0
+    local y = 0
+    if dot > DOT_HORZ_MAX then
+        x = jumpdir_unit.x * STRENGTH_HORZ_MAX
+        y = jumpdir_unit.y * STRENGTH_HORZ_MAX
+    elseif dot < DOT_HORZ_MIN then
+        x = jumpdir_unit.x * STRENGTH_HORZ_MIN
+        y = jumpdir_unit.y * STRENGTH_HORZ_MIN
+    else
+        local percent = GetScaledValue(STRENGTH_HORZ_MIN, STRENGTH_HORZ_MAX, DOT_HORZ_MIN, DOT_HORZ_MAX, dot)
+        x = jumpdir_unit.x * percent
+        y = jumpdir_unit.y * percent
+    end
+
+    local z = 0
+    if dot < DOT_VERT_MIN then
+        z = STRENGTH_VERT_MAX
+    elseif dot > DOT_VERT_MAX then
+        z = STRENGTH_VERT_MIN
+    else
+        z = GetScaledValue(STRENGTH_VERT_MIN, STRENGTH_VERT_MAX, DOT_VERT_MAX, DOT_VERT_MIN, dot)
+    end
+
+    o:AddImpulse(x, y, z)
+
+    return true
 end
 
 function this.EnsureDebugCategoriesSet()

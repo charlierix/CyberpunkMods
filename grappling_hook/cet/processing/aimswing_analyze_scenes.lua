@@ -22,7 +22,7 @@ function aimswing_analyze_scenes.FromGround(position, look_dir, anchor_pos, anch
     local hit, normal = o:RayCast(position, anchor_pos)
     if hit then
         -- Not clear, set anchor point at hit
-        return hit, 1, this.ShouldLatch(position, look_dir, nil, hit, normal)
+        return hit, math.sqrt(GetVectorDiffLengthSqr(position, hit)), 1, this.ShouldLatch(position, look_dir, hit, normal)
     end
 
     -- Adjust anchor based on raycasts of surrounding area
@@ -67,7 +67,7 @@ function aimswing_analyze_scenes.Slingshot(position, look_dir, vel, anchor_pos, 
     local hit, normal = o:RayCast(position, anchor_pos)
     if hit then
         -- Not clear, set anchor point at hit
-        return hit, 1, this.ShouldLatch(position, look_dir, hit, normal)
+        return hit, math.sqrt(GetVectorDiffLengthSqr(position, hit)), 1, this.ShouldLatch(position, look_dir, hit, normal)
     end
 
     -- Adjust anchor based on raycasts of surrounding area
@@ -87,7 +87,9 @@ function aimswing_analyze_scenes.Slingshot(position, look_dir, vel, anchor_pos, 
     return anchor_pos, anchor_dist, 1, false
 end
 
--- returns: destination position, should latch
+---@return Vector4 dest_pos
+---@return number dest_dist
+---@return boolean should_latch
 function aimswing_analyze_scenes.UnderSwing(position, look_dir, vel, dest_pos, dest_dist, speed_look, o, debug_cat1, debug_cat2)
 
     -- ************** scene rays **************
@@ -144,7 +146,9 @@ function aimswing_analyze_scenes.UnderSwing(position, look_dir, vel, dest_pos, d
     return dest_pos, dest_dist, false
 end
 
--- returns anchor position, release point, should latch
+---@return Vector4 anchor_pos
+---@return Vector4 release_point
+---@return boolean should_latch
 function aimswing_analyze_scenes.TossUp(position, anchor_pos, release_point, speed_look, o, debug_cat1, debug_cat2)
     -- Adjust points based on raycasts of surrounding area
     local cast_dir = SubtractVectors(release_point, position)

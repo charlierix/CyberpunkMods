@@ -87,7 +87,7 @@ function this.IncreaseCharge(charge, deltaTime)
     local current = 1     -- current slows it down, but I think it also caps the max
     local capacitance = 1
 
-    local mult = 0.4      -- the easiest way to change how fast or slow it charges is to play with time
+    local mult = 0.35      -- the easiest way to change how fast or slow it charges is to play with time
 
     local exp = 2.7182818 ^ (-(deltaTime * mult) / (resistance * capacitance))
 
@@ -104,7 +104,7 @@ function this.DecreaseCharge(charge, deltaTime)
         return charge * 0.999 * deltaTime        -- sqrt of 1 is 1, so just reduce is linearly a bit
     end
 
-    local power = 1.5     -- needs to be greater than 1, since between 0 and 1, squared is a smaller number
+    local power = 1.3     -- needs to be greater than 1, since between 0 and 1, squared is a smaller number
     local mult = 1
 
     local retain_percent = 1 - ((1 - charge) ^ power)
