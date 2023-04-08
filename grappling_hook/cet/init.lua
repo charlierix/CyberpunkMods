@@ -96,6 +96,8 @@ require "ui_framework/util_layout"
 require "ui_framework/util_misc"
 require "ui_framework/util_setup"
 
+grapple_render = require "ui_ingame/grapple_render"
+
 require "ui_windows/energytank"
 require "ui_windows/grapple_choose"
 require "ui_windows/grapple_straight"
@@ -303,6 +305,7 @@ registerForEvent("onInit", function()
     EnsureTablesCreated()
     Define_UI_Framework_Constants(const)
     InitializeUI(vars_ui, vars_ui_progressbar, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
+    grapple_render.CallFrom_onInit()
     debug_render_screen.CallFrom_onInit(const.shouldShowScreenDebug)
 
     local wrappers = {}
@@ -387,7 +390,6 @@ registerForEvent("onUpdate", function(deltaTime)
     end
 
     shouldDraw = true       -- don't want a hung progress bar while in menu or driving
-    debug_render_screen.CallFrom_onUpdate(deltaTime)
     vars.startStopTracker:Tick()
 
     if const.shouldShowDebugWindow then
@@ -437,6 +439,9 @@ registerForEvent("onUpdate", function(deltaTime)
     debug.xp = Round(xp_gain.experience, 4)
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
+
+    grapple_render.CallFrom_onUpdate(deltaTime)         -- putting at end of tick so added items from this tick get flushed to draw lists (otherwise an extra tick is needed before they're drawn)
+    debug_render_screen.CallFrom_onUpdate(deltaTime)
 end)
 
 -- registerHotkey("GrapplingHookTesterButton", "tester hotkey", function()
@@ -642,6 +647,7 @@ registerForEvent("onDraw", function()
         DrawDebugWindow(debug, vars_ui, const)
     end
 
+    grapple_render.CallFrom_onDraw()
     debug_render_screen.CallFrom_onDraw()
 end)
 

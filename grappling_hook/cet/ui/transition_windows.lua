@@ -32,8 +32,13 @@ function TransitionWindows_Grapple(vars_ui, const, player, grappleIndex)
             -- Air Density % (from 0.1 to 3)
             -- Gravity % (from 0.1 to 2)
 
+            -- Accel Mult % (from 0.5 to 2)
+            -- Distance Mult % (from 0.5 to 2)
+
             -- Should Latch
             -- Max Latch Angle
+
+            -- Show extra graphics
 
             TransitionWindows_Main(vars_ui, const)
 
