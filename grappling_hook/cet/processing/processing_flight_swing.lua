@@ -1,7 +1,8 @@
 function Process_Flight_Swing(o, player, vars, const, keys, debug, deltaTime)
     if debug_render_screen.IsEnabled() then
         local position, look_dir = o:GetCrosshairInfo()
-        debug_render_screen.Add_Dot(position, nil, "BBB", nil, nil, 2, nil)
+        debug_render_screen.Add_Dot(o.pos, nil, "BBB", nil, nil, 2, nil)
+        debug_render_screen.Add_Dot(AddVectors(position, MultiplyVector(look_dir, -0.02)), nil, "BBB", nil, nil, 2, nil)        -- needs to go slightly behind the player, or the screen will only be this dot while swinging
     end
 
     vars.energy = RecoverEnergy(vars.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate * player.energy_tank.flying_percent, deltaTime)
