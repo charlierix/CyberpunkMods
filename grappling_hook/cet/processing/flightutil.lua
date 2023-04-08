@@ -225,7 +225,8 @@ end
 
 function GetAccel_AirFriction(vel, airbrake_percent, swingprops_override)
     -- https://www.engineeringtoolbox.com/drag-coefficient-d_627.html
-    local AIR_DENSITY = 1.25
+    --local AIR_DENSITY = 1.25
+    local AIR_DENSITY = 2       -- actual air density is 1.25.  Using a larger value to slow things down and give more control when not boosted
     local AIR_DENSITY_MAXBOOST = 0.2
     local DRAG_COEFFICIENT = 1.1
     local AREA = 1
