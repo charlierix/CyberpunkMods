@@ -1,7 +1,5 @@
 local this = {}
 
-local up = nil
-
 -- This is the primary worker method for grappling.  Conditions were set up while
 -- aiming
 --
@@ -63,7 +61,7 @@ function Process_Flight_Straight(o, player, vars, const, debug, deltaTime)
         do return end
     end
 
-    this.DrawRope(o, eye_pos, look_dir, vars.rayHit)
+    this.DrawRope(eye_pos, look_dir, vars.rayHit)
 
     -- Calculate accelerations
     local accel_x, accel_y, accel_z = GetAccel_GrappleStraight(o, vars, grapple, grappleLen, grappleDirUnit, o.vel)
@@ -112,19 +110,7 @@ function this.Transition_AntiGravOrStandard(vars, const, debug, o, grapple)
     end
 end
 
-function this.DrawRope(o, eye_pos, look_dir, anchor_pos)
-    local OFFSET_HORZ = 0.075
-    local OFFSET_VERT = -0.2
-
-    if not up then
-        up = Vector4.new(0, 0, 1, 1)
-    end
-
-    local right = CrossProduct3D(look_dir, up)
-    local forward = CrossProduct3D(up, right)
-
-    --local from = Vector4.new(o.pos.x + forward.x * OFFSET_HORZ, o.pos.y + forward.y * OFFSET_HORZ, o.pos.z + OFFSET_VERT, 1)
-    local from = Vector4.new(eye_pos.x + forward.x * OFFSET_HORZ, eye_pos.y + forward.y * OFFSET_HORZ, eye_pos.z + OFFSET_VERT, 1)
-
+function this.DrawRope(eye_pos, look_dir, anchor_pos)
+    local from = grapple_render.GetGrappleFrom(eye_pos, look_dir)
     grapple_render.StraightLine(from, anchor_pos)
 end

@@ -55,14 +55,36 @@ end
 
 function GrappleRender.StraightLine(from, to)
     local item = items:GetNewItem()
-    this.SetItemBase(item, item_types.line, nil, "60AAAAAA", 6, nil, nil, true)
+    this.SetItemBase(item, item_types.line, nil, "AAAAAAAA", 4, nil, nil, true)
     item.point1 = from
     item.point2 = to
+end
+
+function GrappleRender.EndPlane(pos, normal)
+    
+end
+
+function GrappleRender.AnchorPoint(pos)
+    
 end
 
 -- Removes all visual items (doesn't remove categories)
 function GrappleRender.Clear()
     items:Clear()
+end
+
+function GrappleRender.GetGrappleFrom(eye_pos, look_dir)
+    local OFFSET_HORZ = 0.075
+    local OFFSET_VERT = -0.2
+
+    if not up then
+        up = Vector4.new(0, 0, 1, 1)
+    end
+
+    local right = CrossProduct3D(look_dir, up)
+    local forward = CrossProduct3D(up, right)
+
+    return Vector4.new(eye_pos.x + forward.x * OFFSET_HORZ, eye_pos.y + forward.y * OFFSET_HORZ, eye_pos.z + OFFSET_VERT, 1)
 end
 
 ----------------------------------- Private Methods -----------------------------------

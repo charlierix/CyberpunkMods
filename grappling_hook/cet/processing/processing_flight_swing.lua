@@ -1,3 +1,5 @@
+local this = {}
+
 function Process_Flight_Swing(o, player, vars, const, keys, debug, deltaTime)
     if debug_render_screen.IsEnabled() then
         local position, look_dir = o:GetCrosshairInfo()
@@ -51,6 +53,8 @@ function Process_Flight_Swing(o, player, vars, const, keys, debug, deltaTime)
         end
     end
 
+    this.DrawRope(eye_pos, look_dir, vars.rayHit)
+
     local straight_x, straight_y, straight_z = GetAccel_GrappleStraight(o, vars, grapple, grappleLen, grappleDirUnit, vars.vel)
     local boost_x, boost_y, boost_z = GetAccel_Boosting(o, vars)
     local drag1_x, drag1_y, drag1_z = ClampVelocity_Drag(vars.vel, const.maxSpeed)
@@ -62,4 +66,11 @@ function Process_Flight_Swing(o, player, vars, const, keys, debug, deltaTime)
     local accel_z = straight_z + boost_z + drag1_z + drag2_z + antigrav_z
 
     ApplyAccel_Teleporting(o, vars, const, keys, debug, accel_x, accel_y, accel_z, deltaTime)
+end
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.DrawRope(eye_pos, look_dir, anchor_pos)
+    local from = grapple_render.GetGrappleFrom(eye_pos, look_dir)
+    grapple_render.StraightLine(from, anchor_pos)
 end

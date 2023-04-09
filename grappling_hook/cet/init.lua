@@ -172,7 +172,7 @@ local const =
 
     maxSpeed = 432,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
 
-    shouldShowScreenDebug = true,
+    shouldShowScreenDebug = false,
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 

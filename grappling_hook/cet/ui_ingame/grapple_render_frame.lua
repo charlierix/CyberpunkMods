@@ -265,6 +265,10 @@ function this.GetSizeMult(item, pos, point)
         if not perspective_mult then
             return nil
         end
+
+        if perspective_mult > 3 then        -- when objects are really close to the camera, they can blow up in size
+            perspective_mult = 3
+        end
     end
 
     return size_mult * perspective_mult
