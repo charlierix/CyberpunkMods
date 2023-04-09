@@ -22,6 +22,7 @@ function Transition_ToStandard(vars, const, debug, o)
     vars.swingprops_override:Clear()
 
     EnsureMapPinRemoved(vars, o)
+    grapple_render.Clear()
 end
 
 -- This can come from any state into aiming
@@ -68,6 +69,8 @@ function Transition_ToAim(grapple, vars, const, o, shouldConsumeEnergy)
     vars.startStopTracker:ResetKeyDowns(true)
 
     vars.startTime = o.timer
+
+    grapple_render.Clear()
 
     return true
 end
@@ -163,6 +166,8 @@ function Transition_ToAntiGrav(vars, const, o)
     vars.flightMode = const.flightModes.antigrav
 
     vars.startTime = o.timer
+
+    grapple_render.Clear()
 end
 
 -- When swing is done, it goes into freefall mode until they collide with the ground or a wall (or kick off another grapple)
@@ -172,6 +177,8 @@ function Transition_ToFreeFall(vars, const, o)
     vars.startTime = o.timer
 
     --vars.vel is already populated, so there's nothing more to set up
+
+    grapple_render.Clear()
 end
 
 ----------------------------------- Private Methods -----------------------------------

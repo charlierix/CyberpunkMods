@@ -440,7 +440,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 
-    grapple_render.CallFrom_onUpdate(deltaTime)         -- putting at end of tick so added items from this tick get flushed to draw lists (otherwise an extra tick is needed before they're drawn)
+    grapple_render.CallFrom_onUpdate(o, deltaTime)         -- putting at end of tick so added items from this tick get flushed to draw lists (otherwise an extra tick is needed before they're drawn)
     debug_render_screen.CallFrom_onUpdate(deltaTime)
 end)
 

@@ -1,3 +1,6 @@
+-- This is a copy of debug_render_screen.lua, but with different external functions that are hardcoded for drawing
+-- stuff for grapple
+
 local frame = require "ui_ingame/grapple_render_frame"
 local ui = require "ui_ingame/grapple_render_ui"
 
@@ -11,12 +14,16 @@ local item_types = CreateEnum("dot", "line", "triangle", "text")
 
 local controller = nil
 
-local categories = {}
 local items = StickyList:new()
 local visuals_circle = StickyList:new()
 local visuals_line = StickyList:new()
 local visuals_triangle = StickyList:new()
 local visuals_text = StickyList:new()
+
+local endplane_id = nil
+local endplane_recalc_distsqr = nil
+local endplane_pos = nil
+local endplane_normal = nil
 
 local up = nil
 
@@ -32,11 +39,19 @@ end
 
 -- It's up to the caller to only call update/draw in valid conditions (not in menus or workspots, not shutdown)
 
-function GrappleRender.CallFrom_onUpdate(deltaTime)
+function GrappleRender.CallFrom_onUpdate(o, deltaTime)
     timer = timer + deltaTime
 
     -- Remove items that have exceeded lifespan_seconds
     this.RemoveExpiredItems()
+
+    if endplane_recalc_distsqr then
+        local dist_sqr = GetVectorDiffLengthSqr(o.pos, endplane_pos)
+        if dist_sqr < endplane_recalc_distsqr then
+            print("recalculating end plane circle")
+            GrappleRender.EndPlane(endplane_pos, endplane_normal)
+        end
+    end
 
     -- Go through items and populate visuals (only items that are in front of the camera).  Turns high level concepts
     -- like circle/square into line paths that match this frame's perspective
@@ -61,7 +76,27 @@ function GrappleRender.StraightLine(from, to)
 end
 
 function GrappleRender.EndPlane(pos, normal)
-    
+    if endplane_id then
+        this.Remove(endplane_id)
+        endplane_id = nil
+    end
+
+    local id, distance = this.Add_Circle(pos, normal, 0.333, "80A1C2A4")
+
+    local recalc_dist = distance * 0.5
+    if recalc_dist < 1 then
+        recalc_dist = nil
+    end
+
+    endplane_id = id
+    if recalc_dist then
+        endplane_recalc_distsqr = recalc_dist * recalc_dist
+    else
+        endplane_recalc_distsqr = nil
+    end
+
+    endplane_pos = pos
+    endplane_normal = normal
 end
 
 function GrappleRender.AnchorPoint(pos)
@@ -71,6 +106,11 @@ end
 -- Removes all visual items (doesn't remove categories)
 function GrappleRender.Clear()
     items:Clear()
+
+    endplane_id = nil
+    endplane_recalc_distsqr = nil
+    endplane_pos = nil
+    endplane_normal = nil
 end
 
 function GrappleRender.GetGrappleFrom(eye_pos, look_dir)
@@ -88,6 +128,99 @@ function GrappleRender.GetGrappleFrom(eye_pos, look_dir)
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.Add_Square(center, normal, size_x, size_y, color_back, color_fore, lifespan_seconds, is_single_frame, size_mult, const_size)
+    local id = this.GetNextID()
+
+    local p1, p2, p3, p4 = this.GetSquarePoints(center, normal, size_x, size_y)
+
+    if color_back then
+        local item = items:GetNewItem()
+        this.SetItemBase(item, item_types.triangle, color_back, nil, nil, nil, lifespan_seconds, is_single_frame, id)
+        item.point1 = p1
+        item.point2 = p2
+        item.point3 = p3
+
+        item = items:GetNewItem()
+        this.SetItemBase(item, item_types.triangle, color_back, nil, nil, nil, lifespan_seconds, is_single_frame, id)
+        item.point1 = p3
+        item.point2 = p4
+        item.point3 = p1
+    end
+
+    if color_fore then
+        if color_back and not size_mult then
+            size_mult = 8
+        end
+
+        local item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore, size_mult, const_size, lifespan_seconds, is_single_frame, id)
+        item.point1 = p1
+        item.point2 = p2
+
+        item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore, size_mult, const_size, lifespan_seconds, is_single_frame, id)
+        item.point1 = p2
+        item.point2 = p3
+
+        item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore, size_mult, const_size, lifespan_seconds, is_single_frame, id)
+        item.point1 = p3
+        item.point2 = p4
+
+        item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color_fore, size_mult, const_size, lifespan_seconds, is_single_frame, id)
+        item.point1 = p4
+        item.point2 = p1
+    end
+
+    return id
+end
+
+function this.Add_Circle(center, normal, radius, color, lifespan_seconds, is_single_frame, size_mult, const_size)
+    -- The default line thickness is too thin for a circle.  Use a larger value if there is nothing specified
+    if not size_mult then
+        size_mult = 8
+    end
+
+    -- Turn the circle into lines
+    -- NOTE: if the player starts far away, then walks close the circle, then the num sides will be too small.  But it's not worth
+    -- the expense of converting to lines every frame for that edge case
+    local num_sides, distance = this.GetCircleNumSides(center, radius)
+
+    local points = this.GetCirclePoints(center, radius, normal, num_sides)
+
+    local id = this.GetNextID()
+
+    for i = 1, #points - 1, 1 do
+        local item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, color, size_mult, const_size, lifespan_seconds, is_single_frame, id)
+        item.point1 = points[i]
+        item.point2 = points[i + 1]
+    end
+
+    local item = items:GetNewItem()
+    this.SetItemBase(item, item_types.line, nil, color, size_mult, const_size, lifespan_seconds, is_single_frame, id)
+    item.point1 = points[#points]
+    item.point2 = points[1]
+
+    return id, distance
+end
+
+---@param id integer This is the id from one of the add functions
+function this.Remove(id)
+    local index = 1
+
+    while index <= items:GetCount() do        -- there can be multiple items tied to the same id, so need to scan the whole list
+        local item = items:GetItem(index)
+
+        if item.id == id then
+            items:RemoveItem(index)
+        else
+            index = index + 1
+        end
+    end
+end
 
 -- id is optional.  Pass it in if multiple entries need to be tied to the same id
 function this.SetItemBase(item, item_type, color_back, color_fore, size_mult, const_size, lifespan_seconds, is_single_frame, id)
@@ -159,7 +292,7 @@ function this.GetCircleNumSides(center, radius, degrees)
     -- print("size: " .. tostring(size))
     -- print("num sides: " .. tostring(num_sides))
 
-    return num_sides
+    return num_sides, distance
 end
 
 function this.GetCirclePoints(center, radius, normal, num_sides)

@@ -876,6 +876,10 @@ function this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_n
             debug_render_screen.Add_Square(stopplane_point, stopplane_normal, 3, 3, debug_categories.AIM_stopplane)
         end
     else
-        EnsureMapPinVisible(anchor_pos, grapple.mappin_name, vars, o)       -- Flight pin, not aim
+        if stopplane_point then
+            grapple_render.EndPlane(stopplane_point, stopplane_normal)
+        else
+            EnsureMapPinVisible(anchor_pos, grapple.mappin_name, vars, o)       -- Flight pin, not aim
+        end
     end
 end
