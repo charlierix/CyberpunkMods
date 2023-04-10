@@ -106,7 +106,7 @@ function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, player, o, co
         Refresh_WindowPos(window, vars_ui, const)
 
         if vars_ui.currentWindow == const.windows.main then
-            continueShowing = DrawWindow_Main(isCloseRequested, vars_ui, player, window, o, const)
+            continueShowing = DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, const)
 
         elseif vars_ui.currentWindow == const.windows.input_bindings then
             continueShowing = DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, window, const)

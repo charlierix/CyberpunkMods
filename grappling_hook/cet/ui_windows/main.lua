@@ -66,7 +66,7 @@ function ActivateWindow_Main(vars_ui, const)
 end
 
 -- This gets called each frame from DrawConfig()
-function DrawWindow_Main(isCloseRequested, vars_ui, player, window, o, const)
+function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, const)
     local main = vars_ui.main
 
     ------------------------- Finalize models for this frame -------------------------
@@ -130,8 +130,12 @@ function DrawWindow_Main(isCloseRequested, vars_ui, player, window, o, const)
         end
 
         for i = 1, 6 do
-            if Draw_SummaryButton(main["grapple" .. tostring(i)], vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
+            local grapple_binding = "grapple" .. tostring(i)
+            local summary_click, summary_hover = Draw_SummaryButton(main[grapple_binding], vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale)
+            if summary_click then
                 TransitionWindows_Grapple(vars_ui, const, player, i)
+            elseif summary_hover then
+                this.Draw_GrappleSlot_Tooltip(grapple_binding, main[grapple_binding], vars.startStopTracker, vars_ui, window)
             end
         end
 
@@ -364,6 +368,29 @@ function this.Define_GrappleSlots_Remove(x, y, suffix, const)
 
         CalcSize = CalcSize_RemoveButton,
     }
+end
+function this.Draw_GrappleSlot_Tooltip(binding, summary_button, startStopTracker, vars_ui, window)
+    -- Copied from input_bindings.lua this.Draw_Summary_Tooltips()
+
+    local actionList = startStopTracker:GetActionNames(binding)
+
+    if actionList then
+        local actionSummary = String_Join("\n", actionList)
+
+        local sum_width = summary_button.render_pos.width
+        local sum_height = summary_button.render_pos.height
+
+        local gap = 24
+
+        Draw_Tooltip(
+            actionSummary,
+            vars_ui.style.tooltip,
+            window.left + summary_button.render_pos.left + (sum_width / 2),
+            window.top + summary_button.render_pos.top + (sum_height / 2),
+            (sum_width / 2) + gap,
+            (sum_height / 2) + gap,
+            vars_ui)
+    end
 end
 
 function this.Refresh_GrappleSlot(def, grapple)

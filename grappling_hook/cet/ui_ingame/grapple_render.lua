@@ -48,7 +48,6 @@ function GrappleRender.CallFrom_onUpdate(o, deltaTime)
     if endplane_recalc_distsqr then
         local dist_sqr = GetVectorDiffLengthSqr(o.pos, endplane_pos)
         if dist_sqr < endplane_recalc_distsqr then
-            print("recalculating end plane circle")
             GrappleRender.EndPlane(endplane_pos, endplane_normal)
         end
     end
