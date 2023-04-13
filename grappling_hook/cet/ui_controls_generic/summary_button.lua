@@ -223,7 +223,8 @@ function this.Calculate_UsedHeight_AddIt(def, line_heights, style_summary, scale
             end
 
             if hasHeader and def.suffix then
-                suffixGap = math.max(style_summary.header_gap * scale, style_summary.suffix_gap * scale)        -- it's not the sum of the gaps, just the larger one
+                --suffixGap = math.max(style_summary.header_gap * scale, style_summary.suffix_gap * scale)        -- it's not the sum of the gaps, just the larger one
+                suffixGap = style_summary.suffix_gap * scale        -- no need for header_gap, because this is for suffix.  Otherwise, header only buttons mixed with unused_text buttons are different height
                 total = total + suffixGap
             end
         end

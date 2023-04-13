@@ -22,8 +22,8 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function this.Define_ConfigWindow(screen)
-    local width = 1000
-    local height = 800
+    local width = 775       --NOTE: this is essentially ignored.  See util_misc.lua Refresh_WindowPos()
+    local height = 620
 
     return
     {

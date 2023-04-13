@@ -328,7 +328,7 @@ function this.Define_WatchedActions(const)
         sets = {},
 
         width = 288,
-        height = 600,
+        height = 440,
 
         position =
         {
@@ -366,14 +366,14 @@ function this.Refresh_WatchedActions(def, keys)
 end
 
 function this.Define_BindButtons(const)
-    local base_x = 280
-    local base_y = -60
+    local base_x = 160
+    local base_y = -30
 
-    local offset_x_small = 90
-    local offset_x_large = 190
-    local offset_y = 110
+    local offset_x_small = 70
+    local offset_x_large = 120
+    local offset_y = 100
 
-    local offset_y_stop = 280
+    local offset_y_stop = 200
 
     local retVal = {}
 
@@ -396,7 +396,7 @@ function this.Define_BindButtons_Set(binding, x, y, const)
     {
         binding = binding,
         summary = this.Define_BindButtons_Summary(x, y, binding, const),
-        remove = this.Define_BindButtons_Remove(x - 9, y + 30, binding, const),
+        remove = this.Define_BindButtons_Remove(x - 11, y + 22, binding, const),
         summary_hover_label = this.Define_BindButtons_SummaryHoverLabel(x - 22, y + 54, const),
         remove_hover_label = this.Define_BindButtons_RemoveHoverLabel(x + 16, y + 58, const),
 

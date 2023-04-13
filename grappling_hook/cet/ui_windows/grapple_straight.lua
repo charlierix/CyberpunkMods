@@ -225,7 +225,7 @@ function this.Define_Description(relative_to, const)
     {
         invisible_name = "Grapple_Straight_GrappleDescription",
 
-        max_width = 360,
+        max_width = 320,
 
         position =
         {
@@ -257,8 +257,8 @@ function this.Define_Distances(const)
         -- In the middle of the window
         position =
         {
-            pos_x = 310,
-            pos_y = -150,
+            pos_x = 290,
+            pos_y = -105,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -295,8 +295,8 @@ function this.Define_AccelAlong(const)
         {
             -- pos_x = -100,
             -- pos_y = 10,
-            pos_x = 70,
-            pos_y = -150,
+            pos_x = 120,
+            pos_y = -105,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -332,8 +332,8 @@ function this.Define_AccelLook(const)
     {
         position =
         {
-            pos_x = -240,
-            pos_y = -240,
+            pos_x = -100,
+            pos_y = -200,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -369,10 +369,8 @@ function this.Define_VelocityAway(const)
     {
         position =
         {
-            -- pos_x = 80,
-            -- pos_y = 10,
             pos_x = 0,
-            pos_y = 10,
+            pos_y = 60,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -420,7 +418,7 @@ function this.Define_AimDuration(const)
         position =
         {
             pos_x = -250,
-            pos_y = 140,
+            pos_y = 60,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -443,7 +441,7 @@ function this.Define_AirAnchor(const)
         position =
         {
             pos_x = -250,
-            pos_y = 240,
+            pos_y = 160,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -523,7 +521,7 @@ function this.Define_AntiGrav(const)
         position =
         {
             pos_x = 0,
-            pos_y = 190,
+            pos_y = 200,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -560,8 +558,8 @@ function this.Define_StopEarly(const)
     {
         position =
         {
-            pos_x = 250,
-            pos_y = 190,
+            pos_x = 255,
+            pos_y = 130,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },

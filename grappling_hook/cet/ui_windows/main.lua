@@ -244,8 +244,8 @@ function this.Define_InputBindings(const)
 
         position =
         {
-            pos_x = 48,
-            pos_y = 72,
+            pos_x = 36,
+            pos_y = 60,
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.top,
         },
@@ -293,9 +293,9 @@ end
 
 function this.Define_GrappleSlots(parent, const)
     -- Figure out the positions (they are in a hex pattern around the center)
-    local offset_x_small = 160
-    local offset_x_large = 280
-    local offset_y = 180
+    local offset_x_small = 120
+    local offset_x_large = 210
+    local offset_y = 135
 
     local grapple, remove
 
@@ -324,9 +324,10 @@ function this.Define_GrappleSlots(parent, const)
     parent.remove6 = remove
 end
 function this.Define_GrappleSlots_DoIt(x, y, suffix, const)
-    return
-        this.Define_GrappleSlots_Summary(x, y, suffix, const),
-        this.Define_GrappleSlots_Remove(x - 92, y + 47, suffix, const)
+    local summary = this.Define_GrappleSlots_Summary(x, y, suffix, const)
+    local remove = this.Define_GrappleSlots_Remove(summary, x, y, suffix, const)
+
+    return summary, remove
 end
 function this.Define_GrappleSlots_Summary(x, y, suffix, const)
     -- SummaryButton
@@ -340,10 +341,10 @@ function this.Define_GrappleSlots_Summary(x, y, suffix, const)
             vertical = const.alignment_vertical.center,
         },
 
-        min_width = 160,
-        min_height = 70,
+        min_width = 120,
+        min_height = 40,
 
-        border_cornerRadius_override = 24,
+        border_cornerRadius_override = 12,
 
         suffix = suffix,
 
@@ -352,15 +353,21 @@ function this.Define_GrappleSlots_Summary(x, y, suffix, const)
         CalcSize = CalcSize_SummaryButton,
     }
 end
-function this.Define_GrappleSlots_Remove(x, y, suffix, const)
+function this.Define_GrappleSlots_Remove(relative_to, x, y, suffix, const)
     -- RemoveButton
     return
     {
         position =
         {
-            pos_x = x,
-            pos_y = y,
+            relative_to = relative_to,
+
+            pos_x = 4,
+            pos_y = -4,
+
+            relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.center,
+
+            relative_vert = const.alignment_vertical.bottom,
             vertical = const.alignment_vertical.center,
         },
 

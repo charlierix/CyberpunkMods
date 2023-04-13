@@ -1,7 +1,6 @@
 local this = {}
 
 -- Places an invisible button so that mouse events can be detected
--- TODO: CET is currently suppressing ImGui's LeftMouseDown.  When that changes, add that as a return (if it's absolutely needed, maybe get it from Observe("PlayerPuppet", "OnAction"))
 -- NOTE: Each InvisibleButton within a window needs a unique name
 -- Returns:
 --  isClicked

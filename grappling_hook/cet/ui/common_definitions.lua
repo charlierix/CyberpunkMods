@@ -41,13 +41,13 @@ function Define_StickFigure(isStandardColor, const)
         isStandardColor = isStandardColor,
         isHighlight = false,
 
-        width = 48,
-        height = 86,
+        width = 36,
+        height = 64,
 
         position =
         {
-            pos_x = -345,
-            pos_y = -70,
+            pos_x = -325,
+            pos_y = -105,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -73,15 +73,15 @@ function Define_GrappleArrows(isStandardColor_primary, isStandardColor_look)
         --NOTE: These positions are relative to center
 
         --NOTE: If these values change, the values need to be copied to other controls (desired length)
-        primary_from_x = -300,
-        primary_to_x = 360,
-        primary_y = -70,
+        primary_from_x = -280,
+        primary_to_x = -10,
+        primary_y = -105,
 
-        look_from_x = -310,
-        look_from_y = -110,
+        look_from_x = -290,
+        look_from_y = -145,
 
-        look_to_x = 40,
-        look_to_y = -240,
+        look_to_x = -200,
+        look_to_y = -215,
     }
 end
 function Refresh_GrappleArrows(def, grapple, forceShowLook, highlight_primary, highlight_look)
@@ -106,9 +106,9 @@ function Define_GrappleDesiredLength(isStandardColor)
         height = 36,
 
         --NOTE: These values are copied from Define_GrappleArrows
-        from_x = -300,
-        to_x = 360,
-        y = -70,
+        from_x = -280,
+        to_x = -10,
+        y = -105,
     }
 end
 function Refresh_GrappleDesiredLength(def, grapple, changed_length, changes, shouldHighlight)
@@ -156,9 +156,9 @@ function Define_GrappleAccelToDesired(isStandardColor_accel, isStandardColor_dea
         deadHeight = 9,
 
         --NOTE: These values are copied from Define_GrappleArrows
-        from_x = -300,
-        to_x = 360,
-        y = -70,
+        from_x = -280,
+        to_x = -10,
+        y = -105,
     }
 end
 function Refresh_GrappleAccelToDesired(def, grapple, accel, changed_deadspot, shouldHighlight_accel, shouldHighlight_dead)
