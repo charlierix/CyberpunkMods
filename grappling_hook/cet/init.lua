@@ -111,6 +111,7 @@ require "ui_windows/grapple_straight_description"
 require "ui_windows/grapple_straight_distances"
 require "ui_windows/grapple_straight_stopearly"
 require "ui_windows/grapple_straight_velaway"
+require "ui_windows/grapple_straight_visuals"
 require "ui_windows/input_bindings"
 require "ui_windows/main"
 
@@ -159,6 +160,7 @@ local const =
                 "grapple_straight_distances",
                 "grapple_straight_stopearly",
                 "grapple_straight_velaway",
+                "grapple_straight_visuals",
             "grapple_swing"
     ),
 

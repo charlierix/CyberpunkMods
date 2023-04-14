@@ -35,6 +35,8 @@ function DefineWindow_Grapple_Straight(vars_ui, const)
 
     grapple_straight.velocity_away = this.Define_VelocityAway(const)
 
+    grapple_straight.visuals = this.Define_Visuals(const)
+
     grapple_straight.aim_duration = this.Define_AimDuration(const)
 
     grapple_straight.air_anchor = this.Define_AirAnchor(const)
@@ -144,6 +146,10 @@ function DrawWindow_Grapple_Straight(isCloseRequested, vars_ui, player, window, 
     isClicked, isHovered_drag = Draw_SummaryButton(grapple_straight.velocity_away, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale)
     if isClicked then
         TransitionWindows_Straight_VelocityAway(vars_ui, const)
+    end
+
+    if Draw_SummaryButton(grapple_straight.visuals, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
+        TransitionWindows_Straight_Visuals(vars_ui, const)
     end
 
     if Draw_SummaryButton(grapple_straight.aim_duration, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
@@ -411,6 +417,26 @@ function this.Refresh_VelocityAway(def, grapple)
     end
 end
 
+function this.Define_Visuals(const)
+    -- SummaryButton
+    return
+    {
+        header_prompt = "Visuals / Color",
+
+        position =
+        {
+            pos_x = -250,
+            pos_y = -15,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        invisible_name = "Grapple_Straight_Visuals",
+
+        CalcSize = CalcSize_SummaryButton,
+    }
+end
+
 function this.Define_AimDuration(const)
     -- SummaryButton
     return
@@ -418,7 +444,7 @@ function this.Define_AimDuration(const)
         position =
         {
             pos_x = -250,
-            pos_y = 60,
+            pos_y = 70,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -441,7 +467,7 @@ function this.Define_AirAnchor(const)
         position =
         {
             pos_x = -250,
-            pos_y = 160,
+            pos_y = 155,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
