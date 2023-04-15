@@ -37,6 +37,8 @@ function aimswing_grapples.GetElasticStraight(grapple, from_pos, to_pos, accel_m
         name = grapple.name,
         description = grapple.description,
 
+        visuals = grapple.visuals,
+
         mappin_name = grapple.mappin_name,
 
         stop_on_wallHit = stop_on_wallHit,
@@ -72,6 +74,8 @@ function aimswing_grapples.GetPureRope(grapple, should_latch)
     {
         name = grapple.name,
         description = grapple.description,
+
+        visuals = grapple.visuals,
 
         mappin_name = grapple.mappin_name,
 
@@ -111,6 +115,8 @@ function aimswing_grapples.GetElasticRope(grapple, desired_length, accel_mult, s
     {
         name = grapple.name,
         description = grapple.description,
+
+        visuals = grapple.visuals,
 
         mappin_name = grapple.mappin_name,
 
@@ -153,6 +159,8 @@ function aimswing_grapples.GetLatchRope(grapple)
         name = grapple.name,
         description = grapple.description,
 
+        visuals = grapple.visuals,
+
         mappin_name = grapple.mappin_name,
 
         stop_on_wallHit = false,
@@ -186,6 +194,8 @@ function aimswing_grapples.GetLatchRope(grapple)
         fallDamageReduction_percent = 0,
     }
 end
+
+----------------------------------- Private Methods -----------------------------------
 
 ---@param direction_unit Vector4 direction that the straight line grapple is travelling
 ---@return number percent from 0 to 1 (1 would be 100% antigrav)

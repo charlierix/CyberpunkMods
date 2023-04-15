@@ -170,6 +170,8 @@ local const =
 
     unlockType = CreateEnum("shotgun", "knife", "silencer", "grenade", "clothes", "money"),
 
+    Visuals_GrappleLine_Type = CreateEnum("SolidLine"),
+
     customKeyBase = "Grapple_Custom_",
 
     maxSpeed = 432,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400

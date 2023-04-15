@@ -16,6 +16,8 @@
         public string name { get; init; }
         public string description { get; init; }      // it would be nice to have a place to describe the intention of various templates.  Or have the option to serialize grapples to file and share with others
 
+        public Visuals visuals { get; init; }
+
         public string mappin_name { get; init; }
 
         /// <summary>
@@ -40,6 +42,19 @@
         /// If set, then the grapple will exit if they get closer than this to the anchor point
         /// </summary>
         public double? stop_distance { get; init; }
+
+        /// <summary>
+        /// If set, then a plane will be defined at the anchor point and the grapple will stop when the player
+        /// passes through the plane
+        /// </summary>
+        /// <remarks>
+        /// Made it a distance, so the plane could be placed some distance before or after the point (negative
+        /// value for after)
+        /// 
+        /// If placing after and accel_alongGrappleLine is populated, then the player will be slowed down, so
+        /// be careful
+        /// </remarks>
+        public double? stop_plane_distance { get; init; }
 
         /// <summary>
         /// True: Grapple will exit if they touch a wall
@@ -102,9 +117,6 @@
         public double experience { get; init; }
 
 
-
-        //TODO: Energy regen boost
-        //  Something like a wall hanger should allow standard energy regen
 
         //TODO: Pivot constraints
         //  SideToSide: This would make it a hinge joint

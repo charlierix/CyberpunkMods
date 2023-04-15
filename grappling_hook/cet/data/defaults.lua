@@ -30,7 +30,7 @@ function GetEnergyCost_GrappleStraight(experience)
     -- med=24 (6)
     -- high=48 (9)
 
-    local retVal = 12 + -12/(1 + (experience/24)^1.584963)
+    local retVal = 12 + -12 / (1 + (experience / 24) ^ 1.584963)
 
     return math.max(retVal, 0)
 end
@@ -40,7 +40,7 @@ end
 -- This returns an array that is used by the grapple choose window
 -- Returns
 --  { { name, experience, description }, {...}, {...}, }
-function GetDefault_Grapple_Choices()
+function GetDefault_Grapple_Choices(const)
     local comparer = function (a, b)
         return Comparer(a.experience, b.experience)
     end
@@ -49,52 +49,47 @@ function GetDefault_Grapple_Choices()
 
     InsertSorted(
         retVal,
-        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Blank()),
+        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Blank(const)),
         comparer)
 
     InsertSorted(
         retVal,
-        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Pull()),
+        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Pull(const)),
         comparer)
 
     InsertSorted(
         retVal,
-        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Rope()),
+        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Rope(const)),
         comparer)
 
     InsertSorted(
         retVal,
-        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_PoleVault()),
+        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_PoleVault(const)),
         comparer)
 
     InsertSorted(
         retVal,
-        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_AngryBird()),
-        comparer)
-
-    InsertSorted(
-        retVal,
-        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Swing()),
+        this.GetDefault_Grapple_Choices_SubArray(GetDefault_Grapple_Swing(const)),
         comparer)
 
     return retVal
 end
 
-function GetDefault_Grapple_ByName(name)
+function GetDefault_Grapple_ByName(name, const)
     if name == "blank" then
-        return GetDefault_Grapple_Blank()
+        return GetDefault_Grapple_Blank(const)
 
     elseif name == "pull" then
-        return GetDefault_Grapple_Pull()
+        return GetDefault_Grapple_Pull(const)
 
     elseif name == "rope" then
-        return GetDefault_Grapple_Rope()
+        return GetDefault_Grapple_Rope(const)
 
     elseif name == "pole vault" then
-        return GetDefault_Grapple_PoleVault()
+        return GetDefault_Grapple_PoleVault(const)
 
     elseif name == "swing" then
-        return GetDefault_Grapple_Swing()
+        return GetDefault_Grapple_Swing(const)
 
     else
         LogError("GetDefault_Grapple_ByName: Unknown name: " .. tostring(name))
@@ -102,11 +97,13 @@ function GetDefault_Grapple_ByName(name)
     end
 end
 
-function GetDefault_Grapple_Blank()
+function GetDefault_Grapple_Blank(const)
     local retVal =
     {
         name = "blank",
         description = "Just a scaffolding to build from.  Some assembly required",
+
+        visuals = GetDefault_Visuals(const),
 
         mappin_name = "DistractVariant",
         minDot = nil,
@@ -136,11 +133,13 @@ function GetDefault_Grapple_Blank()
     return retVal
 end
 
-function GetDefault_Grapple_Pull()
+function GetDefault_Grapple_Pull(const)
     local retVal =
     {
         name = "pull",
         description = "Pulls toward anchor point, also pulls in the look direction (modeled after titanfall2)",
+
+        visuals = GetDefault_Visuals(const),
 
         mappin_name = "AimVariant",
         minDot = 0,
@@ -168,11 +167,13 @@ function GetDefault_Grapple_Pull()
     return retVal
 end
 
-function GetDefault_Grapple_Rope()
+function GetDefault_Grapple_Rope(const)
     local retVal =
     {
         name = "rope",
         description = "This allows you to swing from overhangs or hang from walls",
+
+        visuals = GetDefault_Visuals(const),
 
         mappin_name = "TakeControlVariant",
         minDot = -0.71,     -- give this extra freedom so they can look around more while hanging/swinging
@@ -201,11 +202,13 @@ function GetDefault_Grapple_Rope()
     return retVal
 end
 
-function GetDefault_Grapple_PoleVault()
+function GetDefault_Grapple_PoleVault(const)
     local retVal =
     {
         name = "pole vault",
         description = "Meant to be pointed at the ground mid jump to help traverse gaps between buildings",
+
+        visuals = GetDefault_Visuals(const),
 
         mappin_name = "TakeControlVariant",
         minDot = -0.87,
@@ -234,46 +237,15 @@ function GetDefault_Grapple_PoleVault()
     return retVal
 end
 
--- doesn't work, impulse based flight caps at a speed of 20
-function GetDefault_Grapple_AngryBird()
-    local retVal =
-    {
-        name = "angry bird",
-        description = "Launch yourself at the pigs - with guns blazing",
-
-        mappin_name = "OffVariant",
-
-        minDot = -0.13,
-        stop_on_wallHit = true,
-        stop_distance = 0.8,
-
-        anti_gravity = GetDefault_AntiGravity(0.4, 4),
-
-        desired_length = 0,     -- pull all the way to the anchor
-
-        accel_alongGrappleLine = GetDefault_ConstantAccel(40, 14, 2.4),
-        accel_alongLook = nil,
-
-        aim_straight = GetDefault_AimStraight(14),
-
-        fallDamageReduction_percent = 0,
-    }
-
-    retVal.aim_straight.air_anchor = GetDefault_AirAnchor()
-
-    retVal.experience = this.CalculateExperience_GrappleStraight(retVal)
-    retVal.energy_cost = GetEnergyCost_GrappleStraight(retVal.experience)
-
-    return retVal
-end
-
 --TODO: Swing won't rely on such fixed defaults.  The aim will need to do a few ray casts to see if it's a big open
 --space, too tight, speed, look, etc.  If in a long narrow gap and slow and looking along the gap, fire two lines
-function GetDefault_Grapple_Swing()
+function GetDefault_Grapple_Swing(const)
     local retVal =
     {
         name = "swing",
         description = "Open air swinging",
+
+        visuals = GetDefault_Visuals(const),
 
         mappin_name = "AimVariant",
         minDot = nil,
@@ -560,6 +532,20 @@ function GetDefault_VelocityAway(compress_override, tension_override, deadspot_o
     end
 
     return retVal
+end
+
+function GetDefault_Visuals(const)
+    return
+    {
+        grappleline_type = const.Visuals_GrappleLine_Type.SolidLine,
+        grappleline_color_primary = "AAAAAAAA",
+
+        show_anchorpoint = false,
+        anchorpoint_color_primary = "",
+
+        show_stopplane = true,
+        stopplane_color = "80A1C2A4",
+    }
 end
 
 --------------------------------------------- Other Functions --------------------------------------------

@@ -114,7 +114,7 @@ function Player:Load()
     end
 
     -- Retrieve entry from db
-    local playerEntry, primKey, errMsg = GetPlayerEntry(playerID)
+    local playerEntry, primKey, errMsg = GetPlayerEntry(playerID, self.const)
     if playerEntry then
         playerEntry.isUnlocked = this.IsPlayerUnlocked(playerEntry)
     else

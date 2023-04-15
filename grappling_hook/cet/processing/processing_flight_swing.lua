@@ -53,7 +53,7 @@ function Process_Flight_Swing(o, player, vars, const, keys, debug, deltaTime)
         end
     end
 
-    this.DrawRope(eye_pos, look_dir, vars.rayHit)
+    this.DrawRope(eye_pos, look_dir, vars.rayHit, grapple.visuals, const)
 
     local straight_x, straight_y, straight_z = GetAccel_GrappleStraight(o, vars, grapple, grappleLen, grappleDirUnit, vars.vel)
     local boost_x, boost_y, boost_z = GetAccel_Boosting(o, vars)
@@ -70,7 +70,7 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.DrawRope(eye_pos, look_dir, anchor_pos)
+function this.DrawRope(eye_pos, look_dir, anchor_pos, visuals, const)
     local from = grapple_render.GetGrappleFrom(eye_pos, look_dir)
-    grapple_render.StraightLine(from, anchor_pos)
+    grapple_render.StraightLine(from, anchor_pos, visuals, const)
 end

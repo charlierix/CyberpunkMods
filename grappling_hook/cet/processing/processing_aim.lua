@@ -877,7 +877,7 @@ function this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_n
         end
     else
         if stopplane_point then
-            grapple_render.EndPlane(stopplane_point, stopplane_normal)
+            grapple_render.EndPlane(stopplane_point, stopplane_normal, grapple.visuals)
         else
             EnsureMapPinVisible(anchor_pos, grapple.mappin_name, vars, o)       -- Flight pin, not aim
         end

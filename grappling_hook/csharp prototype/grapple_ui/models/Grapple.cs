@@ -16,6 +16,8 @@
         public string name { get; init; }
         public string description { get; init; }      // it would be nice to have a place to describe the intention of various templates.  Or have the option to serialize grapples to file and share with others
 
+        public Visuals visuals { get; init; }
+
         public string mappin_name { get; init; }
 
         /// <summary>
@@ -115,9 +117,6 @@
         public double experience { get; init; }
 
 
-
-        //TODO: Energy regen boost
-        //  Something like a wall hanger should allow standard energy regen
 
         //TODO: Pivot constraints
         //  SideToSide: This would make it a hinge joint

@@ -24,6 +24,7 @@ local endplane_id = nil
 local endplane_recalc_distsqr = nil
 local endplane_pos = nil
 local endplane_normal = nil
+local endplane_visuals = nil
 
 local up = nil
 
@@ -48,7 +49,7 @@ function GrappleRender.CallFrom_onUpdate(o, deltaTime)
     if endplane_recalc_distsqr then
         local dist_sqr = GetVectorDiffLengthSqr(o.pos, endplane_pos)
         if dist_sqr < endplane_recalc_distsqr then
-            GrappleRender.EndPlane(endplane_pos, endplane_normal)
+            GrappleRender.EndPlane(endplane_pos, endplane_normal, endplane_visuals)
         end
     end
 
@@ -67,20 +68,29 @@ end
 
 ----------------------------------- Public Methods ------------------------------------
 
-function GrappleRender.StraightLine(from, to)
-    local item = items:GetNewItem()
-    this.SetItemBase(item, item_types.line, nil, "AAAAAAAA", 4, nil, nil, true)
-    item.point1 = from
-    item.point2 = to
+function GrappleRender.StraightLine(from, to, visuals, const)
+    if visuals.grappleline_type == const.Visuals_GrappleLine_Type.SolidLine then
+        local item = items:GetNewItem()
+        this.SetItemBase(item, item_types.line, nil, visuals.grappleline_color_primary, 4, nil, nil, true)
+        item.point1 = from
+        item.point2 = to
+
+    else
+        LogError("Unknown Visuals_GrappleLine_Type: " .. tostring(visuals.grappleline_type))
+    end
 end
 
-function GrappleRender.EndPlane(pos, normal)
+function GrappleRender.EndPlane(pos, normal, visuals)
     if endplane_id then
         this.Remove(endplane_id)
         endplane_id = nil
     end
 
-    local id, distance = this.Add_Circle(pos, normal, 0.333, "80A1C2A4")
+    if not visuals.show_stopplane then
+        do return end
+    end
+
+    local id, distance = this.Add_Circle(pos, normal, 0.333, visuals.stopplane_color)
 
     local recalc_dist = distance * 0.5
     if recalc_dist < 1 then
@@ -96,6 +106,7 @@ function GrappleRender.EndPlane(pos, normal)
 
     endplane_pos = pos
     endplane_normal = normal
+    endplane_visuals = visuals
 end
 
 function GrappleRender.AnchorPoint(pos)
@@ -110,6 +121,7 @@ function GrappleRender.Clear()
     endplane_recalc_distsqr = nil
     endplane_pos = nil
     endplane_normal = nil
+    endplane_visuals = nil
 end
 
 function GrappleRender.GetGrappleFrom(eye_pos, look_dir)

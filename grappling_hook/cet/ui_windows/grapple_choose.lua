@@ -34,7 +34,7 @@ function ActivateWindow_Grapple_Choose(vars_ui, const, player)
     local grapple_choose = vars_ui.grapple_choose
 
     -- Query existing grapples (also gets hardcoded defaults)
-    local info, items, selectable = this.GetAvailable(player.experience)
+    local info, items, selectable = this.GetAvailable(player.experience, const)
 
     available_info = info
 
@@ -82,7 +82,7 @@ function DrawWindow_Grapple_Choose(isCloseRequested, vars_ui, player, window, co
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_choose.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        this.Save(player, vars_ui.transition_info.grappleIndex, available_info[grapple_choose.available.selected_index])
+        this.Save(player, vars_ui.transition_info.grappleIndex, available_info[grapple_choose.available.selected_index], const)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
@@ -94,8 +94,8 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.GetAvailable(experience)
-    local defaults = GetDefault_Grapple_Choices()
+function this.GetAvailable(experience, const)
+    local defaults = GetDefault_Grapple_Choices(const)
     local fromDB = GetAvailableGrapples()
 
     local info = {}
@@ -310,10 +310,10 @@ function this.Refresh_IsDirty(def, selected_index)
     def.isDirty = selected_index > 0
 end
 
-function this.Save(player, grappleIndex, info)
+function this.Save(player, grappleIndex, info, const)
     local grapple
     if info.isDefault then
-        grapple = GetDefault_Grapple_ByName(info.name)      -- it's one of the default templates
+        grapple = GetDefault_Grapple_ByName(info.name, const)      -- it's one of the default templates
     else
         grapple = GetGrapple_ByKey(info.grappleKey)
     end

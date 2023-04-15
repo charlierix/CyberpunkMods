@@ -61,7 +61,7 @@ function Process_Flight_Straight(o, player, vars, const, debug, deltaTime)
         do return end
     end
 
-    this.DrawRope(eye_pos, look_dir, vars.rayHit)
+    this.DrawRope(eye_pos, look_dir, vars.rayHit, grapple.visuals, const)
 
     -- Calculate accelerations
     local accel_x, accel_y, accel_z = GetAccel_GrappleStraight(o, vars, grapple, grappleLen, grappleDirUnit, o.vel)
@@ -110,7 +110,7 @@ function this.Transition_AntiGravOrStandard(vars, const, debug, o, grapple)
     end
 end
 
-function this.DrawRope(eye_pos, look_dir, anchor_pos)
+function this.DrawRope(eye_pos, look_dir, anchor_pos, visuals, const)
     local from = grapple_render.GetGrappleFrom(eye_pos, look_dir)
-    grapple_render.StraightLine(from, anchor_pos)
+    grapple_render.StraightLine(from, anchor_pos, visuals, const)
 end

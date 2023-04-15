@@ -5,7 +5,7 @@ local this = {}
 --    PlayerEntry (the type returned is defined in models\Player)
 --    PrimaryKey of player
 --    Error Message (only populated if the first two are nil)
-function GetPlayerEntry(playerID)
+function GetPlayerEntry(playerID, const)
     local row, errMsg = GetLatestPlayer(playerID)
     if not row then
         return nil, nil, errMsg
@@ -29,7 +29,7 @@ function GetPlayerEntry(playerID)
         experience = row.Experience,
     }
 
-    this.RepairPlayer(player)       -- don't bother saving a repaired player.  The next time they hit save, the changes will get stored
+    this.RepairPlayer(player, const)       -- don't bother saving a repaired player.  The next time they hit save, the changes will get stored
 
     return player, row.PlayerKey, nil
 end
@@ -59,9 +59,6 @@ function SavePlayer(playerEntry)
 end
 
 ----------------------------------- Private Methods -----------------------------------
-
-function this.GetPlayerEntry(playerID)
-end
 
 -- Returns an array of primary keys or nil if there was an error
 -- Second return is error message if the array returned is nil
@@ -120,10 +117,13 @@ function this.GetGrapples(playerRow)
 end
 
 -- If the player has old versions of data, this will bring it up to new versions
-function this.RepairPlayer(player)
+function this.RepairPlayer(player, const)
     -- Refund airdash
     for i = 1, 6 do
-        this.RefundAirDash(player, player["grapple" .. tostring(i)])
+        local grapple = player["grapple" .. tostring(i)]
+
+        this.RefundAirDash(player, grapple)
+        this.RepairVisuals(grapple, const)
     end
 
     -- The original update wasn't as generous.  Just swap out with the new
@@ -142,6 +142,16 @@ function this.RefundAirDash(player, grapple)
 
     -- Now get rid of it
     grapple.aim_straight.air_dash = nil
+end
+
+function this.RepairVisuals(grapple, const)
+    if not grapple then
+        do return end
+    end
+
+    if not grapple.visuals then
+        grapple.visuals = GetDefault_Visuals(const)
+    end
 end
 
 function this.ReduceGrappleRows()
