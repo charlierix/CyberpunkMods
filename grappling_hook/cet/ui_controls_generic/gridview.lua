@@ -1,5 +1,8 @@
 local this = {}
 
+-- def is models\viewmodels\GridView
+-- style is models\stylesheet\Stylesheet
+-- line_heights is models\misc\LineHeights
 function CalcSize_GridView(def, style, const, line_heights, scale)
 	if not def.sizes then
         def.sizes =

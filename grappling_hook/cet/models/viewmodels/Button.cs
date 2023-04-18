@@ -3,13 +3,13 @@ using System;
 
 namespace models.viewmodels
 {
-    public record Button : IControl
+    public class Button : IControl
     {
-        public string text { get; init; }
+        public string text { get; set; }
 
-        public bool isEnabled { get; init; }
+        public bool isEnabled { get; set; }
 
-        public double? width_override { get; init; }
+        public double? width_override { get; set; }
 
         /// <summary>
         /// Tells where on the parent to place the buttons

@@ -11,6 +11,10 @@ function DefineWindow_GrappleStraight_Visuals(vars_ui, const)
     gst8_visuals.name = Define_Name(const)
 
 
+    gst8_visuals.colorprim_value = this.Define_ColorPrimary_Value(const)
+    gst8_visuals.colorprim_help = this.Define_ColorPrimary_Help(gst8_visuals.colorprim_value, const)
+    gst8_visuals.colorprim_label = this.Define_ColorPrimary_Label(gst8_visuals.colorprim_help, const)
+    gst8_visuals.colorprim_sample = this.Define_ColorPrimary_Sample(gst8_visuals.colorprim_value, const)
 
 
     gst8_visuals.okcancel = Define_OkCancelButtons(false, vars_ui, const)
@@ -60,6 +64,10 @@ function DrawWindow_GrappleStraight_Visuals(isCloseRequested, vars_ui, player, w
 
 
 
+    Draw_Label(gst8_visuals.colorprim_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(gst8_visuals.colorprim_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_TextBox(gst8_visuals.colorprim_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
+    Draw_ColorSample(gst8_visuals.colorprim_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
 
 
@@ -76,6 +84,109 @@ function DrawWindow_GrappleStraight_Visuals(isCloseRequested, vars_ui, player, w
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.Define_ColorPrimary_Value(const)
+    -- TextBox
+    return
+    {
+        invisible_name = "GrappleStraight_Visuals_ColorPrimary_Value",
+
+        maxChars = 8,
+        width = 120,
+
+        isMultiLine = false,
+
+        foreground_override = "edit_value",
+
+        position =
+        {
+            pos_x = 0,
+            pos_y = 0,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_TextBox,
+    }
+end
+function this.Define_ColorPrimary_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "GrappleStraight_Visuals_ColorPrimary_Help",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[]]
+
+    return retVal
+end
+function this.Define_ColorPrimary_Label(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Color",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_ColorPrimary_Sample(relative_to, const)
+    -- ColorSample
+    return
+    {
+        invisible_name = "GrappleStraight_Visuals_ColorPrimary_Sample",
+
+        color_hex = "8F00",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.right,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_ColorSample,
+    }
+end
 
 function this.Refresh_IsDirty(def, changes)
     def.isDirty = changes:IsDirty()

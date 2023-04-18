@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using grapple_ui.models.stylesheet;
+using System.Collections.Generic;
 
 namespace models.stylesheet
 {
@@ -81,6 +82,8 @@ namespace models.stylesheet
         public MinDotGraphic mindotGraphic { get; init; }
 
         public Graphics graphics { get; init; }
+
+        public ColorSample colorSample { get; init; }
 
         /// <summary>
         /// For now, it's just a place to define named colors.  If more is needed later, change this to

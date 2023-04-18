@@ -12,15 +12,15 @@ namespace models.viewmodels
     /// 
     /// Each column has an alignment (left,center,right).  Vertical alignment is always center
     /// </remarks>
-    public record GridView : IControl
+    public class GridView : IControl
     {
-        public GridView_Header[] headers { get; init; }
+        public GridView_Header[] headers { get; set; }
 
         /// <summary>
         /// This is all the cells
         /// cells[row][col]
         /// </summary>
-        public GridView_Cell[][] cells { get; init; }
+        public GridView_Cell[][] cells { get; set; }
 
         /// <summary>
         /// Tells where on the parent to place the text
@@ -31,23 +31,23 @@ namespace models.viewmodels
         public Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
     }
 
-    public record GridView_Header
+    public class GridView_Header
     {
-        public string text { get; init; }
+        public string text { get; set; }
 
-        public double? min_width { get; init; }
-        public double? max_width { get; init; }
+        public double? min_width { get; set; }
+        public double? max_width { get; set; }
 
         //NOTE: This is only for the cells.  The header's text is always centered
-        public AlignmentHorizontal horizontal { get; init; }
+        public AlignmentHorizontal horizontal { get; set; }
     }
-    public record GridView_Cell
+    public class GridView_Cell
     {
-        public string text { get; init; }
+        public string text { get; set; }
 
         /// <summary>
         /// Optional named color (in stylesheet.colors)
         /// </summary>
-        public string foreground_override { get; init; }
+        public string foreground_override { get; set; }
     }
 }

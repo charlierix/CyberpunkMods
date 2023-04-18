@@ -3,15 +3,15 @@ using System;
 
 namespace models.viewmodels
 {
-    public record MinDotGraphic : IControl
+    public class MinDotGraphic : IControl
     {
-        public double radians { get; init; }
+        public double radians { get; set; }
 
         /// <summary>
         /// Width is radius
         /// Height is radius * 2
         /// </summary>
-        public double radius { get; init; }
+        public double radius { get; set; }
 
         /// <summary>
         /// Tells where on the parent to place the text

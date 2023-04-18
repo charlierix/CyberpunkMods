@@ -3,7 +3,7 @@ using System;
 
 namespace models.viewmodels
 {
-    public record OkCancelButtons : IControl
+    public class OkCancelButtons : IControl
     {
         /// <summary>
         /// Controls the text of the single button (only used when not isDirty)
@@ -15,7 +15,7 @@ namespace models.viewmodels
         /// True: There will be two buttons: OK, Cancel
         /// False: There will be one button: Close or Back
         /// </summary>
-        public bool isDirty { get; init; }
+        public bool isDirty { get; set; }
 
         /// <summary>
         /// Tells where on the parent to place the buttons

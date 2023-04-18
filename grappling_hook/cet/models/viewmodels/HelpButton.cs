@@ -7,7 +7,7 @@ namespace models.viewmodels
     /// This is a ? with a circle around it.  Used to show extra information, probably just while the
     /// mouse is hovering over the button
     /// </summary>
-    public record HelpButton : IControl
+    public class HelpButton : IControl
     {
         /// <summary>
         /// This is an optional property.  If set, then a tooltip will show while the mouse is over
@@ -17,7 +17,7 @@ namespace models.viewmodels
         /// Draw_HelpButton returns whether the button is clicked and hovered, so the caller can do
         /// more elaborate things if they don't want to use this built in tooltip functionality
         /// </remarks>
-        public string tooltip { get; init; }
+        public string tooltip { get; set; }
 
         /// <summary>
         /// Tells where on the parent to place the text

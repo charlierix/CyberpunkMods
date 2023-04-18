@@ -293,6 +293,20 @@
         "line_color_highlight": "DAE889"
     },
 
+    "colorSample":
+    {
+        "width": 60,
+        "height": 30,
+
+        "border_thickness": 2,
+        "border_color": "444",
+
+        "checker_size": 8,
+
+        "checker_color_dark": "666",
+        "checker_color_light": "999"
+    },
+
     "colors":
     {
         "title": { "the_color": "F0F0F0" },

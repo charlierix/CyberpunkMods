@@ -3,7 +3,7 @@ using System;
 
 namespace models.viewmodels
 {
-    public record RemoveButton : IControl
+    public class RemoveButton : IControl
     {
         //TODO: May want a tooltip
 

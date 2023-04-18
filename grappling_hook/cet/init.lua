@@ -68,6 +68,7 @@ require "ui/util_vm_binding"
 
 require "ui_controls_generic/button"
 require "ui_controls_generic/checkbox"
+require "ui_controls_generic/colorsample"
 require "ui_controls_generic/gridview"
 require "ui_controls_generic/help_button"
 require "ui_controls_generic/label"
