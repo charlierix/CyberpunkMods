@@ -10,12 +10,12 @@ function DefineWindow_GrappleStraight_Visuals(vars_ui, const)
 
     gst8_visuals.name = Define_Name(const)
 
-
     gst8_visuals.colorprim_value = this.Define_ColorPrimary_Value(const)
     gst8_visuals.colorprim_help = this.Define_ColorPrimary_Help(gst8_visuals.colorprim_value, const)
     gst8_visuals.colorprim_label = this.Define_ColorPrimary_Label(gst8_visuals.colorprim_help, const)
     gst8_visuals.colorprim_sample = this.Define_ColorPrimary_Sample(gst8_visuals.colorprim_value, const)
 
+    gst8_visuals.colorurl = this.Define_ColorURL_TextBox(vars_ui, const)
 
     gst8_visuals.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 
@@ -68,6 +68,8 @@ function DrawWindow_GrappleStraight_Visuals(isCloseRequested, vars_ui, player, w
     Draw_HelpButton(gst8_visuals.colorprim_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_TextBox(gst8_visuals.colorprim_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
     Draw_ColorSample(gst8_visuals.colorprim_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
+
+    Draw_TextBox(gst8_visuals.colorurl, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_visuals.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
@@ -138,7 +140,13 @@ function this.Define_ColorPrimary_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[ARBG as hex (alpha is optional)
+
+Values go from 00 to FF (hex for 0 to 255)
+
+FF0000 would be red, 00FF00 green, 0000FF blue
+
+80FF0000 would be 50% transparent red]]
 
     return retVal
 end
@@ -194,6 +202,33 @@ function this.Define_ColorPrimary_Sample(relative_to, const)
 end
 function this.Refresh_ColorPrimary_Sample(def, def_value)
     def.color_hex = def_value.text
+end
+
+function this.Define_ColorURL_TextBox(vars_ui, const)
+    -- TextBox
+    return
+    {
+        invisible_name = "GrappleStraight_Visuals_ColorURL_TextBox",
+
+        text ="https://color.adobe.com/create/color-wheel",
+
+        maxChars = 80,
+        width = 400,
+
+        isMultiLine = false,
+
+        foreground_override = "edit_prompt",
+
+        position =
+        {
+            pos_x = vars_ui.style.okcancelButtons.pos_x,
+            pos_y = vars_ui.style.okcancelButtons.pos_y,
+            horizontal = const.alignment_horizontal.left,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        CalcSize = CalcSize_TextBox,
+    }
 end
 
 function this.Refresh_IsDirty(def, changes, def_colorprim, grapple)
