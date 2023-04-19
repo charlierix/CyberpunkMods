@@ -30,18 +30,23 @@ function Draw_TextBox(def, style_text, style_colors, scale)
 
     ImGui.SetCursorPos(def.render_pos.left, def.render_pos.top)
 
+    local max_chars = def.maxChars
+    if max_chars then       -- not sure if nil is allowed, but might as well check for it
+        max_chars = max_chars + 1       -- for some reason, they limit it to one less
+    end
+
     if def.isMultiLine then
         --TODO: Figure out scrollbars
 
         -- This doesn't work for textbox
         --ImGui.PushTextWrapPos(left + def.sizes.width - style_text.padding)
 
-        def.text = ImGui.InputTextMultiline("##" .. def.invisible_name, def.text, def.maxChars, def.sizes.width, def.sizes.height)
+        def.text = ImGui.InputTextMultiline("##" .. def.invisible_name, def.text, max_chars, def.sizes.width, def.sizes.height)
 
         --ImGui.PopTextWrapPos()
     else
         ImGui.PushItemWidth(def.sizes.width)
-        def.text = ImGui.InputText("##" .. def.invisible_name, def.text, def.maxChars)
+        def.text = ImGui.InputText("##" .. def.invisible_name, def.text, max_chars)
         ImGui.PopItemWidth()
     end
 

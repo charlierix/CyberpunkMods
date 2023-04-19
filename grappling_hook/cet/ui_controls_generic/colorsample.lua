@@ -33,16 +33,13 @@ function Draw_ColorSample(def, style_colorsample, screenOffset_x, screenOffset_y
     local left = def.render_pos.left
     local top = def.render_pos.top
 
-    local _, color_abgr, alpha = ConvertHexStringToNumbers(def.color_hex)
+    local _, color_abgr = ConvertHexStringToNumbers(def.color_hex)
 
-    if alpha < 1 then
-        Draw_Border(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width, def.sizes.height, 0, false, style_colorsample.checker_color_dark_argb, nil, nil, nil, 0, style_colorsample.border_thickness)
+    Draw_Border(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width, def.sizes.height, 0, false, style_colorsample.checker_color_dark_argb, nil, nil, nil, 0, style_colorsample.border_thickness)
+    this.DrawLightSquares(screenOffset_x, screenOffset_y, left, top, style_colorsample.checker_size * scale, def, style_colorsample.checker_color_light_argb)
 
-        this.DrawLightSquares(screenOffset_x, screenOffset_y, left, top, style_colorsample.checker_size * scale, def, style_colorsample.checker_color_light_argb)
-    end
-
-    local padding = math.min(def.sizes.width * 0.2, def.sizes.height * 0.2)
-    Draw_Border(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width - padding, def.sizes.height - padding, 0, false, color_abgr, nil, nil, nil, 0, nil)
+    local padding = math.min(def.sizes.width * 0.33, def.sizes.height * 0.33)
+    Draw_Border(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width - padding, def.sizes.height - padding, 0, false, color_abgr, nil, style_colorsample.border_color_argb, nil, 0, 1)
 
     Draw_Border(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width, def.sizes.height, 0, false, nil, nil, style_colorsample.border_color_argb, nil, 0, style_colorsample.border_thickness)
 end

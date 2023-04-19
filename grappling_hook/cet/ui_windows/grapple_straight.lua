@@ -78,6 +78,7 @@ function DrawWindow_Grapple_Straight(isCloseRequested, vars_ui, player, window, 
     local changes = grapple_straight.changes
 
     ------------------------- Finalize models for this frame -------------------------
+
     this.Refresh_Name(grapple_straight.name, grapple)
 
     this.Refresh_Description(grapple_straight.description, grapple)
@@ -219,7 +220,7 @@ function this.Define_Name(const)
 end
 function this.Refresh_Name(def, grapple)
     -- There is no need to store changes in the changes list.  Text is directly changed as they type
-    --NOTE: TransitionWindows_Grapple sets this to nil
+    --NOTE: ActivateWindow_Grapple_Straight sets this to nil
     if not def.text then
         def.text = grapple.name
     end

@@ -62,7 +62,7 @@ function ConvertHexStringToNumbers(hex)
 
     else
         -- Invalid color, use magenta
-        return ConvertHexStringToNumbers_Magenta()
+        return ConvertHexStringToNumbers_Magenta2()
     end
 
     local num_a = tonumber("0x" .. a)
@@ -72,7 +72,7 @@ function ConvertHexStringToNumbers(hex)
 
     if not (num_a and num_r and num_g and num_b) then
         -- At least one of them didn't convert to a byte
-        return ConvertHexStringToNumbers_Magenta()
+        return ConvertHexStringToNumbers_Magenta2()
     end
 
     return
@@ -85,6 +85,9 @@ function ConvertHexStringToNumbers(hex)
 end
 function ConvertHexStringToNumbers_Magenta()
     return 0xFFFF00FF, 1, 1, 0, 1
+end
+function ConvertHexStringToNumbers_Magenta2()
+    return 0xFFFF00FF, 0xFFFF00FF, 1, 1, 0, 1
 end
 
 -- This takes in floating point values between 0 and 1, returns a single integer representing abgr

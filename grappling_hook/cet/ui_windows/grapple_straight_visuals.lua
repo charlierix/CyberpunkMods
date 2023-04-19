@@ -28,6 +28,8 @@ function ActivateWindow_GrappleStraight_Visuals(vars_ui, const)
     end
 
     vars_ui.gst8_visuals.changes:Clear()
+
+    vars_ui.gst8_visuals.colorprim_value.text = nil
 end
 
 function DrawWindow_GrappleStraight_Visuals(isCloseRequested, vars_ui, player, window, const)
@@ -46,10 +48,10 @@ function DrawWindow_GrappleStraight_Visuals(isCloseRequested, vars_ui, player, w
 
     Refresh_Name(gst8_visuals.name, grapple.name)
 
+    this.Refresh_ColorPrimary_Value(gst8_visuals.colorprim_value, grapple)
+    this.Refresh_ColorPrimary_Sample(gst8_visuals.colorprim_sample, gst8_visuals.colorprim_value)
 
-
-
-    this.Refresh_IsDirty(gst8_visuals.okcancel, changes)
+    this.Refresh_IsDirty(gst8_visuals.okcancel, changes, gst8_visuals.colorprim_value, grapple)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -62,18 +64,14 @@ function DrawWindow_GrappleStraight_Visuals(isCloseRequested, vars_ui, player, w
 
     Draw_Label(gst8_visuals.name, vars_ui.style.colors, vars_ui.scale)
 
-
-
     Draw_Label(gst8_visuals.colorprim_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(gst8_visuals.colorprim_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_TextBox(gst8_visuals.colorprim_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
     Draw_ColorSample(gst8_visuals.colorprim_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
-
-
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_visuals.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        this.Save(player, grapple, changes)
+        this.Save(player, grapple, changes, gst8_visuals.colorprim_value)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
 
     elseif isCancelClicked then
@@ -101,13 +99,20 @@ function this.Define_ColorPrimary_Value(const)
         position =
         {
             pos_x = 0,
-            pos_y = 0,
+            pos_y = -100,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
 
         CalcSize = CalcSize_TextBox,
     }
+end
+function this.Refresh_ColorPrimary_Value(def, grapple)
+    -- There is no need to store changes in the changes list.  Text is directly changed as they type
+    --NOTE: ActivateWindow_GrappleStraight_Visuals sets this to nil
+    if not def.text then
+        def.text = grapple.visuals.grappleline_color_primary
+    end
 end
 function this.Define_ColorPrimary_Help(relative_to, const)
     -- HelpButton
@@ -187,13 +192,28 @@ function this.Define_ColorPrimary_Sample(relative_to, const)
         CalcSize = CalcSize_ColorSample,
     }
 end
-
-function this.Refresh_IsDirty(def, changes)
-    def.isDirty = changes:IsDirty()
+function this.Refresh_ColorPrimary_Sample(def, def_value)
+    def.color_hex = def_value.text
 end
 
-function this.Save(player, grapple, changes)
+function this.Refresh_IsDirty(def, changes, def_colorprim, grapple)
+    local isDirty = false
+
+    if changes:IsDirty() then
+        isDirty = true
+    end
+
+    if def_colorprim.text and def_colorprim.text ~= grapple.visuals.grappleline_color_primary then
+        isDirty = true
+    end
+
+    def.isDirty = isDirty
+end
+
+function this.Save(player, grapple, changes, def_colorprim)
     --grapple.aim_straight.aim_duration = grapple.aim_straight.aim_duration + changes:Get("aim_duration")
+
+    grapple.visuals.grappleline_color_primary = def_colorprim.text
 
     player:Save()
 end
