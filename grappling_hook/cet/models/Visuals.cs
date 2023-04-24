@@ -9,9 +9,7 @@
         public string grappleline_color_primary { get; init; }
 
         // --------- anchor point ---------
-        public bool show_anchorpoint { get; init; }
-
-        //TODO: anchorpoint type
+        public Visuals_AnchorPoint_Type anchorpoint_type { get; init; }
 
         public string anchorpoint_color_primary { get; init; }
 
@@ -23,6 +21,13 @@
 
     public enum Visuals_GrappleLine_Type
     {
-        SolidLine,
+        solid_line,
+    }
+
+    public enum Visuals_AnchorPoint_Type
+    {
+        none,
+        diamond,
+        circle,
     }
 }

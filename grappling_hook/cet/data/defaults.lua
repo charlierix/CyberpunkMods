@@ -537,11 +537,11 @@ end
 function GetDefault_Visuals(const)
     return
     {
-        grappleline_type = const.Visuals_GrappleLine_Type.SolidLine,
+        grappleline_type = const.Visuals_GrappleLine_Type.solid_line,
         grappleline_color_primary = "AAAAAAAA",
 
-        show_anchorpoint = false,
-        anchorpoint_color_primary = "",
+        anchorpoint_type = const.Visuals_AnchorPoint_Type.none,
+        anchorpoint_color_primary = "FF0",
 
         show_stopplane = true,
         stopplane_color = "80A1C2A4",

@@ -40,6 +40,33 @@
         "disabled_checkmark_color": "9C9CBA"
     },
 
+    "combobox":
+    {
+        "padding": 6,
+
+        "border_cornerRadius": 3,
+        "border_thickness": 1,
+
+        "border_color": "40686868",
+
+        "background_color_standard": "12707070",
+
+        "background_color_dropdown_standard": "0A0C0A",
+        "background_color_selected": "40B5BF7C",
+        "background_color_hover": "44777977",
+        "background_color_click": "70E2F283",
+
+        "foreground_color": "909090",
+
+        "button_color_standard": "282828",
+        "button_color_hover": "444",
+
+        "scrollbar_background_color": "2444",
+        "scrollbar_grab_color_standard": "4555",
+        "scrollbar_grab_color_hover": "6777",
+        "scrollbar_grab_color_click": "7888"
+    },
+
     "slider":
     {
         "border_cornerRadius": 2,

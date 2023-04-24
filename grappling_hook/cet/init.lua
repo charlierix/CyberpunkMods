@@ -68,6 +68,7 @@ require "ui/util_vm_binding"
 
 require "ui_controls_generic/button"
 require "ui_controls_generic/checkbox"
+require "ui_controls_generic/combobox"
 require "ui_controls_generic/colorsample"
 require "ui_controls_generic/gridview"
 require "ui_controls_generic/help_button"
@@ -171,7 +172,9 @@ local const =
 
     unlockType = CreateEnum("shotgun", "knife", "silencer", "grenade", "clothes", "money"),
 
-    Visuals_GrappleLine_Type = CreateEnum("SolidLine"),
+    Visuals_GrappleLine_Type = CreateEnum("solid_line"),
+
+    Visuals_AnchorPoint_Type = CreateEnum("none", "diamond", "circle"),
 
     customKeyBase = "Grapple_Custom_",
 

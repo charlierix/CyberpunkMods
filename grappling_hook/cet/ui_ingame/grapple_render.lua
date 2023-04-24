@@ -69,7 +69,7 @@ end
 ----------------------------------- Public Methods ------------------------------------
 
 function GrappleRender.StraightLine(from, to, visuals, const)
-    if visuals.grappleline_type == const.Visuals_GrappleLine_Type.SolidLine then
+    if visuals.grappleline_type == const.Visuals_GrappleLine_Type.solid_line then
         local item = items:GetNewItem()
         this.SetItemBase(item, item_types.line, nil, visuals.grappleline_color_primary, 4, nil, nil, true)
         item.point1 = from
