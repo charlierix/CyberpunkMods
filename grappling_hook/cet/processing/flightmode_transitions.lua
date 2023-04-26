@@ -185,7 +185,7 @@ end
 
 this.sounds_grapple =
 {
-    "w_cyb_monowire_whip_grapple",		-- that's just kind of obvious :)
+    "w_cyb_monowire_whip_grapple",      -- that's just kind of obvious :)
     "q003_sc_08_whip_whoosh",
     "w_cyb_whip_wire_throw",
 }

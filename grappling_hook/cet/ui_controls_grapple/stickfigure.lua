@@ -17,7 +17,7 @@ function Draw_StickFigure(def, style_graphics, screenOffset_x, screenOffset_y, s
     -- <Line X1="133" Y1="288" X2="22" Y2="475"/>       -- left leg
     -- <Line X1="133" Y1="288" X2="244" Y2="475"/>      -- right leg
 
-	local left = def.render_pos.left
+    local left = def.render_pos.left
     local top = def.render_pos.top
     local right = left + (def.width * scale)
     local bottom = top + (def.height * scale)

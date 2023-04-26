@@ -4,7 +4,7 @@ local this = {}
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
 function CalcSize_OkCancelButtons(def, style, const, line_heights, scale)
-	if not def.sizes then
+    if not def.sizes then
         def.sizes = {}
     end
 
@@ -25,7 +25,7 @@ end
 function Draw_OkCancelButtons(def, style_okcancel, scale)
     local text_ok, text_cancel = this.GetText(def)
 
-	-- Common properties
+    -- Common properties
     ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_okcancel.border_cornerRadius * scale)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_okcancel.border_thickness)
 
@@ -56,7 +56,7 @@ function Draw_OkCancelButtons(def, style_okcancel, scale)
 
     ImGui.PopStyleVar(1)
 
-	-- /Common properties
+    -- /Common properties
     ImGui.PopStyleColor(5)
     ImGui.PopStyleVar(2)
 
@@ -112,16 +112,16 @@ function this.Calculate_Sizes(def, style_okcancel, text_ok, text_cancel, scale)
     end
 
     -- Store values
-	def.sizes.width = width_final
-	def.sizes.height = height_final
+    def.sizes.width = width_final
+    def.sizes.height = height_final
 
-	def.sizes.ok_left = ok_left
-	def.sizes.ok_top = ok_top
-	def.sizes.cancel_left = cancel_left
-	def.sizes.cancel_top = cancel_top
+    def.sizes.ok_left = ok_left
+    def.sizes.ok_top = ok_top
+    def.sizes.cancel_left = cancel_left
+    def.sizes.cancel_top = cancel_top
 
     def.sizes.ok_pad_h = ((style_okcancel.width * scale) + 1 - ok_width) / 2
-	def.sizes.ok_pad_v = ((style_okcancel.height * scale) - ok_height) / 2
+    def.sizes.ok_pad_v = ((style_okcancel.height * scale) - ok_height) / 2
     def.sizes.cancel_pad_h = ((style_okcancel.width * scale) + 1 - cancel_width) / 2
-	def.sizes.cancel_pad_v = ((style_okcancel.height * scale) - cancel_height) / 2
+    def.sizes.cancel_pad_v = ((style_okcancel.height * scale) - cancel_height) / 2
 end

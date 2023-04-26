@@ -4,7 +4,7 @@ local this = {}
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
 function CalcSize_OrderedList(def, style, const, line_heights, scale)
-	if not def.sizes then
+    if not def.sizes then
         def.sizes = {}
     end
 

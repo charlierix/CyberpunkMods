@@ -33,9 +33,9 @@ local up = nil
 function GrappleRender.CallFrom_onInit()
     --NOTE: There may be a better controller to use.  Chose this because it seems to run every time
     --If you reload all mods from cet console, you will need to load a save for this event to fire again
-	Observe("CrosshairGameController_NoWeapon", "OnInitialize", function(obj)
+    Observe("CrosshairGameController_NoWeapon", "OnInitialize", function(obj)
         controller = obj        -- this is an instance of CrosshairGameController_NoWeapon which extends worlduiIWidgetGameController, which has ProjectWorldToScreen()
-	end)
+    end)
 end
 
 -- It's up to the caller to only call update/draw in valid conditions (not in menus or workspots, not shutdown)

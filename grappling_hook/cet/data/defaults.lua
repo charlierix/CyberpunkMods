@@ -554,8 +554,8 @@ end
 -- WARNING: This assumes that it's always an increase.  If there's a property that upgrades
 -- from high to low, this function needs to be more robust
 -- Params:
--- 	valueUpdates: models\ValueUpdates
---	currentValue: this is the current value of the property that the up/down buttons will modify
+--  valueUpdates: models\ValueUpdates
+--  currentValue: this is the current value of the property that the up/down buttons will modify
 function CalculateExperienceCost_Value(currentValue, valueUpdates)
     if not valueUpdates.min then
         -- should never be nil.  If it is, just give up and don't calculate xp

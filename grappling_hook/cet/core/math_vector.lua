@@ -567,9 +567,9 @@ end
 -- of -1 to 1.  So I have to shift the random statement to go between -1 to 1, run it through the curve, then shift the result
 -- to go between 0 and pi
 function GetPhiForRandom(num_negone_posone)
-    --double phi = rand.NextDouble(-1, 1);		// value from -1 to 1
-    --phi = -Math.Asin(phi) / (Math.PI * .5d);		// another value from -1 to 1
-    --phi = (1d + phi) * Math.PI * .5d;		// from 0 to pi
+    --double phi = rand.NextDouble(-1, 1);      // value from -1 to 1
+    --phi = -Math.Asin(phi) / (Math.PI * .5d);      // another value from -1 to 1
+    --phi = (1d + phi) * Math.PI * .5d;     // from 0 to pi
 
     return math.pi / 2 - math.asin(num_negone_posone)
 end

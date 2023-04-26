@@ -23,7 +23,7 @@ function Draw_TextBox(def, style_text, style_colors, scale)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_text.border_thickness)
     ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, style_text.padding * scale, style_text.padding * scale)
 
-	ImGui.PushStyleColor(ImGuiCol.NavHighlight, 0x00000000)
+    ImGui.PushStyleColor(ImGuiCol.NavHighlight, 0x00000000)
     ImGui.PushStyleColor(ImGuiCol.Border, style_text.border_color_abgr)
     ImGui.PushStyleColor(ImGuiCol.Text, this.GetForeground_int(def, style_text, style_colors))
     ImGui.PushStyleColor(ImGuiCol.FrameBg, style_text.background_color_abgr)
@@ -89,8 +89,8 @@ function this.Calculate_Sizes(def, style_text, line_heights, const, scale)
     end
 
     -- Store values
-	def.sizes.width = width + ((style_text.padding * 2) * scale)
-	def.sizes.height = height + ((style_text.padding * 2) * scale)
+    def.sizes.width = width + ((style_text.padding * 2) * scale)
+    def.sizes.height = height + ((style_text.padding * 2) * scale)
 end
 
 function this.GetForeground_int(def, style_text, style_colors)

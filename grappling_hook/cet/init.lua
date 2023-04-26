@@ -695,12 +695,12 @@ function TODO()
     -- Aim Allows Death:
     --  I hit the ground hard while aiming, and grappling hook had stolen flight, which prevented jetpack from doing a safe landing
 
-	-- Angry Bird:
-	--	Figure out why it loses speed
+    -- Angry Bird:
+    --  Figure out why it loses speed
 
-	-- Controller:
-	--	Listen to MoveX, MoveY
-	--	Do a length chcek + dot product and populate:  Forward, Back, Left, Right
+    -- Controller:
+    --  Listen to MoveX, MoveY
+    --  Do a length chcek + dot product and populate:  Forward, Back, Left, Right
 
     -- Aim:
     --  Add an option to slow down time while aiming
@@ -758,7 +758,7 @@ function TODO()
 
     -- UI:
     --  All numbers should be presented as dozenal :)
-	--	(see wall hang)
+    --  (see wall hang)
 
     -- ViewModels:
     --  The properties that change should have set instead of init
@@ -780,32 +780,31 @@ function TODO()
     -- Test and add a link to no sepia mod
     --  https://www.nexusmods.com/cyberpunk2077/mods/3161/
 
-	-- Raycast Alternate (looks like this worked in 1.3.1, but not 1.5):
-	--	keanuWheeze — Yesterday at 3:24 PM
-	--	Is there any way of raycasting for every type of collision in one go, without having to do seperate ones for all the collision groups (Static, Terrain)? (https://nativedb.red4ext.com/gameSpatialQueriesSystem)
-	--	SyncRaycastByCollisionPreset would sound promising, but i have no clue what the preset names are (Except for the few ones found in the dump)	
-	--	
-	--	psiberx — Today at 3:50 AM
-	--	there is a more powerful function RayCastWithCollisionFilter but in the StateGameScriptInterface 
-	--	https://nativedb.red4ext.com/gamestateMachineGameScriptInterface
-	--	idk if you can grab and store script interface from state machine for a later use, but if you gonna try then better use weak reference
-	--	and you can find all collision groups and presets in engine\physics\*.json
-	--
-	--	
-	--	keanuWheeze — Yesterday at 4:17 PM
-	--	It works:luvit:
-	--	Observe("LocomotionEventsTransition", "OnUpdate", function(_, _, _, interface)
-	--	        result = interface:RayCastWithCollisionFilter(GetPlayer():GetWorldPosition(), multVector(GetPlayer():GetWorldForward(), 20), QueryFilter.ALL())
-	--	        print(result.position)
-	--	end)
-	--	 
-	--	This checks for raycast collision with everything in one go:sogood:
-	--	Havent tried storing the scriptInterface reference yet, but this observed function runs every frame anyways:risitas: Edit: Storing it works:PeepoMeLikey: 
-	--
-	--	keanuWheeze — Yesterday at 4:33 PM
-	--	Havent managed to get a custom filter to work tho, as doing f = QueryFilter.new() and then a f:AddGroup("Static") tells me Function 'AddGroup' requires 1 parameter(s). Doing it the other way like this: QueryFilter:AddGroup(f, CName.new("Terrain")) executes fine, but does not collide with anything:BigThonk2:	
-	--		
-	--	psiberx — Yesterday at 4:57 PM
-	--	can't use this function with cet currently because they have marked first param as out (they don't do this with other structs)	
-	
+    -- Raycast Alternate (looks like this worked in 1.3.1, but not 1.5):
+    --  keanuWheeze — Yesterday at 3:24 PM
+    --  Is there any way of raycasting for every type of collision in one go, without having to do seperate ones for all the collision groups (Static, Terrain)? (https://nativedb.red4ext.com/gameSpatialQueriesSystem)
+    --  SyncRaycastByCollisionPreset would sound promising, but i have no clue what the preset names are (Except for the few ones found in the dump)
+    --  
+    --  psiberx — Today at 3:50 AM
+    --  there is a more powerful function RayCastWithCollisionFilter but in the StateGameScriptInterface 
+    --  https://nativedb.red4ext.com/gamestateMachineGameScriptInterface
+    --  idk if you can grab and store script interface from state machine for a later use, but if you gonna try then better use weak reference
+    --  and you can find all collision groups and presets in engine\physics\*.json
+    --
+    --  
+    --  keanuWheeze — Yesterday at 4:17 PM
+    --  It works:luvit:
+    --  Observe("LocomotionEventsTransition", "OnUpdate", function(_, _, _, interface)
+    --          result = interface:RayCastWithCollisionFilter(GetPlayer():GetWorldPosition(), multVector(GetPlayer():GetWorldForward(), 20), QueryFilter.ALL())
+    --          print(result.position)
+    --  end)
+    --   
+    --  This checks for raycast collision with everything in one go:sogood:
+    --  Havent tried storing the scriptInterface reference yet, but this observed function runs every frame anyways:risitas: Edit: Storing it works:PeepoMeLikey: 
+    --
+    --  keanuWheeze — Yesterday at 4:33 PM
+    --  Havent managed to get a custom filter to work tho, as doing f = QueryFilter.new() and then a f:AddGroup("Static") tells me Function 'AddGroup' requires 1 parameter(s). Doing it the other way like this: QueryFilter:AddGroup(f, CName.new("Terrain")) executes fine, but does not collide with anything:BigThonk2:
+    --
+    --  psiberx — Yesterday at 4:57 PM
+    --  can't use this function with cet currently because they have marked first param as out (they don't do this with other structs)
 end

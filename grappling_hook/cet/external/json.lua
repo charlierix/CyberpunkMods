@@ -121,7 +121,7 @@ local function encode_table(val, stack)
 
     table.sort(keys)
 
-    for _, k in ipairs(keys) do		-- iterate over the sorted list
+    for _, k in ipairs(keys) do   -- iterate over the sorted list
       table.insert(res, encode(k, stack) .. ":" .. encode(val[k], stack))
     end
 

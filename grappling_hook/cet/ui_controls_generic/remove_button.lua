@@ -4,7 +4,7 @@ local this = {}
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
 function CalcSize_RemoveButton(def, style, const, line_heights, scale)
-	if not def.sizes then
+    if not def.sizes then
         def.sizes = {}
     end
 
@@ -19,9 +19,9 @@ end
 -- def is models\viewmodels\RemoveButton
 -- style_remove is models\stylesheet\RemoveButton
 -- Returns:
---	isClicked, isHovered
+--  isClicked, isHovered
 function Draw_RemoveButton(def, style_remove, screenOffset_x, screenOffset_y, scale)
-	local left = def.render_pos.left
+    local left = def.render_pos.left
     local top = def.render_pos.top
 
     -- Invisible Button

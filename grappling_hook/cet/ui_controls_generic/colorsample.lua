@@ -18,8 +18,8 @@ function CalcSize_ColorSample(def, style, const, line_heights, scale)
         height = def.height_override
     end
 
-	def.sizes.width = width * scale
-	def.sizes.height = height * scale
+    def.sizes.width = width * scale
+    def.sizes.height = height * scale
     def.sizes.center_x = def.sizes.width / 2
     def.sizes.center_y = def.sizes.height / 2
 
