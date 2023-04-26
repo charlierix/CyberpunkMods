@@ -10,28 +10,24 @@ function DefineWindow_GrappleStraight_Visuals(vars_ui, const)
 
     gst8_visuals.name = Define_Name(const)
 
-    -- line style
-    --  solid
-    --  energy
+    --TODO: line style { solid, energy }
 
-    gst8_visuals.colorprim_value = this.Define_ColorPrimary_Value(const)
-    gst8_visuals.colorprim_help = this.Define_ColorPrimary_Help(gst8_visuals.colorprim_value, const)
-    gst8_visuals.colorprim_label = this.Define_ColorPrimary_Label(gst8_visuals.colorprim_help, const)
-    gst8_visuals.colorprim_sample = this.Define_ColorPrimary_Sample(gst8_visuals.colorprim_value, const)
+    gst8_visuals.line_colorprim_value = this.Define_Line_ColorPrimary_Value(const)
+    gst8_visuals.line_colorprim_help = this.Define_Line_ColorPrimary_Help(gst8_visuals.line_colorprim_value, const)
+    gst8_visuals.line_colorprim_label = this.Define_Line_ColorPrimary_Label(gst8_visuals.line_colorprim_help, const)
+    gst8_visuals.line_colorprim_sample = this.Define_Line_ColorPrimary_Sample(gst8_visuals.line_colorprim_value, const)
 
 
 
-    -- anchor style
-    --  none
-    --  diamond
-    --  circle
-    gst8_visuals.anchorstyle_combo = this.Define_AnchorStyle_Combo(gst8_visuals.colorprim_value, const)
+    -- anchor style { none, diamond, circle }
+    gst8_visuals.anchorstyle_combo = this.Define_AnchorStyle_Combo(gst8_visuals.line_colorprim_value, const)
     gst8_visuals.anchorstyle_help = this.Define_AnchorStyle_Help(gst8_visuals.anchorstyle_combo, const)
     gst8_visuals.anchorstyle_label = this.Define_AnchorStyle_Label(gst8_visuals.anchorstyle_help, const)
 
-
-    -- primary color
-    -- secondary color
+    gst8_visuals.anchor_colorprim_value = this.Define_Anchor_ColorPrimary_Value(gst8_visuals.anchorstyle_combo, const)
+    gst8_visuals.anchor_colorprim_help = this.Define_Anchor_ColorPrimary_Help(gst8_visuals.anchor_colorprim_value, const)
+    gst8_visuals.anchor_colorprim_label = this.Define_Anchor_ColorPrimary_Label(gst8_visuals.anchor_colorprim_help, const)
+    gst8_visuals.anchor_colorprim_sample = this.Define_Anchor_ColorPrimary_Sample(gst8_visuals.anchor_colorprim_value, const)
 
 
 
@@ -49,8 +45,9 @@ function ActivateWindow_GrappleStraight_Visuals(vars_ui, const)
 
     vars_ui.gst8_visuals.changes:Clear()
 
-    vars_ui.gst8_visuals.colorprim_value.text = nil
+    vars_ui.gst8_visuals.line_colorprim_value.text = nil
     vars_ui.gst8_visuals.anchorstyle_combo.selected_item = nil
+    vars_ui.gst8_visuals.anchor_colorprim_value.text = nil
 end
 
 function DrawWindow_GrappleStraight_Visuals(isCloseRequested, vars_ui, player, window, const)
@@ -69,12 +66,15 @@ function DrawWindow_GrappleStraight_Visuals(isCloseRequested, vars_ui, player, w
 
     Refresh_Name(gst8_visuals.name, grapple.name)
 
-    this.Refresh_ColorPrimary_Value(gst8_visuals.colorprim_value, grapple)
-    this.Refresh_ColorPrimary_Sample(gst8_visuals.colorprim_sample, gst8_visuals.colorprim_value)
+    this.Refresh_Line_ColorPrimary_Value(gst8_visuals.line_colorprim_value, grapple)
+    this.Refresh_Line_ColorPrimary_Sample(gst8_visuals.line_colorprim_sample, gst8_visuals.line_colorprim_value)
 
     this.Refresh_AnchorStyle_Combo(gst8_visuals.anchorstyle_combo, grapple)
 
-    this.Refresh_IsDirty(gst8_visuals.okcancel, changes, gst8_visuals.colorprim_value, gst8_visuals.anchorstyle_combo, grapple)
+    this.Refresh_Anchor_ColorPrimary_Value(gst8_visuals.anchor_colorprim_value, grapple)
+    this.Refresh_Anchor_ColorPrimary_Sample(gst8_visuals.anchor_colorprim_sample, gst8_visuals.anchor_colorprim_value)
+
+    this.Refresh_IsDirty(gst8_visuals.okcancel, changes, gst8_visuals.line_colorprim_value, gst8_visuals.anchorstyle_combo, gst8_visuals.anchor_colorprim_value, grapple)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -87,22 +87,25 @@ function DrawWindow_GrappleStraight_Visuals(isCloseRequested, vars_ui, player, w
 
     Draw_Label(gst8_visuals.name, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_Label(gst8_visuals.colorprim_label, vars_ui.style.colors, vars_ui.scale)
-    Draw_HelpButton(gst8_visuals.colorprim_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
-    Draw_TextBox(gst8_visuals.colorprim_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
-    Draw_ColorSample(gst8_visuals.colorprim_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
-
+    Draw_Label(gst8_visuals.line_colorprim_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(gst8_visuals.line_colorprim_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_TextBox(gst8_visuals.line_colorprim_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
+    Draw_ColorSample(gst8_visuals.line_colorprim_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
     Draw_ComboBox(gst8_visuals.anchorstyle_combo, vars_ui.style.combobox, vars_ui.scale)
     Draw_HelpButton(gst8_visuals.anchorstyle_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_Label(gst8_visuals.anchorstyle_label, vars_ui.style.colors, vars_ui.scale)
 
+    Draw_Label(gst8_visuals.anchor_colorprim_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(gst8_visuals.anchor_colorprim_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_TextBox(gst8_visuals.anchor_colorprim_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
+    Draw_ColorSample(gst8_visuals.anchor_colorprim_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
     Draw_TextBox(gst8_visuals.colorurl, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gst8_visuals.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        this.Save(player, grapple, changes, gst8_visuals.colorprim_value, gst8_visuals.anchorstyle_combo)
+        this.Save(player, grapple, changes, gst8_visuals.line_colorprim_value, gst8_visuals.anchorstyle_combo, gst8_visuals.anchor_colorprim_value)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
 
     elseif isCancelClicked then
@@ -114,11 +117,11 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.Define_ColorPrimary_Value(const)
+function this.Define_Line_ColorPrimary_Value(const)
     -- TextBox
     return
     {
-        invisible_name = "GrappleStraight_Visuals_ColorPrimary_Value",
+        invisible_name = "GrappleStraight_Visuals_Line_ColorPrimary_Value",
 
         maxChars = 8,
         width = 120,
@@ -138,18 +141,18 @@ function this.Define_ColorPrimary_Value(const)
         CalcSize = CalcSize_TextBox,
     }
 end
-function this.Refresh_ColorPrimary_Value(def, grapple)
+function this.Refresh_Line_ColorPrimary_Value(def, grapple)
     -- There is no need to store changes in the changes list.  Text is directly changed as they type
     --NOTE: ActivateWindow_GrappleStraight_Visuals sets this to nil
     if not def.text then
         def.text = grapple.visuals.grappleline_color_primary
     end
 end
-function this.Define_ColorPrimary_Help(relative_to, const)
+function this.Define_Line_ColorPrimary_Help(relative_to, const)
     -- HelpButton
     return
     {
-        invisible_name = "GrappleStraight_Visuals_ColorPrimary_Help",
+        invisible_name = "GrappleStraight_Visuals_Line_ColorPrimary_Help",
 
         tooltip = this.GetColorTooltipText(),
 
@@ -170,7 +173,7 @@ function this.Define_ColorPrimary_Help(relative_to, const)
         CalcSize = CalcSize_HelpButton,
     }
 end
-function this.Define_ColorPrimary_Label(relative_to, const)
+function this.Define_Line_ColorPrimary_Label(relative_to, const)
     -- Label
     return
     {
@@ -195,11 +198,11 @@ function this.Define_ColorPrimary_Label(relative_to, const)
         CalcSize = CalcSize_Label,
     }
 end
-function this.Define_ColorPrimary_Sample(relative_to, const)
+function this.Define_Line_ColorPrimary_Sample(relative_to, const)
     -- ColorSample
     return
     {
-        invisible_name = "GrappleStraight_Visuals_ColorPrimary_Sample",
+        invisible_name = "GrappleStraight_Visuals_Line_ColorPrimary_Sample",
 
         color_hex = "8F00",
 
@@ -220,7 +223,7 @@ function this.Define_ColorPrimary_Sample(relative_to, const)
         CalcSize = CalcSize_ColorSample,
     }
 end
-function this.Refresh_ColorPrimary_Sample(def, def_value)
+function this.Refresh_Line_ColorPrimary_Sample(def, def_value)
     def.color_hex = def_value.text
 end
 
@@ -317,6 +320,122 @@ function this.Define_AnchorStyle_Label(relative_to, const)
     }
 end
 
+function this.Define_Anchor_ColorPrimary_Value(relative_to, const)
+    -- TextBox
+    return
+    {
+        invisible_name = "GrappleStraight_Visuals_Anchor_ColorPrimary_Value",
+
+        maxChars = 8,
+        width = 120,
+
+        isMultiLine = false,
+
+        foreground_override = "edit_value",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 12,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        CalcSize = CalcSize_TextBox,
+    }
+end
+function this.Refresh_Anchor_ColorPrimary_Value(def, grapple)
+    -- There is no need to store changes in the changes list.  Text is directly changed as they type
+    --NOTE: ActivateWindow_GrappleStraight_Visuals sets this to nil
+    if not def.text then
+        def.text = grapple.visuals.anchorpoint_color_primary
+    end
+end
+function this.Define_Anchor_ColorPrimary_Help(relative_to, const)
+    -- HelpButton
+    return
+    {
+        invisible_name = "GrappleStraight_Visuals_Anchor_ColorPrimary_Help",
+
+        tooltip = this.GetColorTooltipText(),
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_HelpButton,
+    }
+end
+function this.Define_Anchor_ColorPrimary_Label(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Color",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_Anchor_ColorPrimary_Sample(relative_to, const)
+    -- ColorSample
+    return
+    {
+        invisible_name = "GrappleStraight_Visuals_Anchor_ColorPrimary_Sample",
+
+        color_hex = "8F00",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.right,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_ColorSample,
+    }
+end
+function this.Refresh_Anchor_ColorPrimary_Sample(def, def_value)
+    def.color_hex = def_value.text
+end
+
 function this.Define_ColorURL_TextBox(vars_ui, const)
     -- TextBox
     return
@@ -355,28 +474,32 @@ function this.GetColorTooltipText()
     80FF0000 would be 50% transparent red]]
 end
 
-function this.Refresh_IsDirty(def, changes, def_colorprim, def_anchorstyle, grapple)
+function this.Refresh_IsDirty(def, changes, def_line_colorprim, def_anchorstyle, def_anchor_colorprim, grapple)
     local isDirty = false
 
     if changes:IsDirty() then
         isDirty = true
     end
 
-    if def_colorprim.text and def_colorprim.text ~= grapple.visuals.grappleline_color_primary then
+    if def_line_colorprim.text and def_line_colorprim.text ~= grapple.visuals.grappleline_color_primary then
         isDirty = true
 
     elseif def_anchorstyle.selected_item ~= grapple.visuals.anchorpoint_type then
+        isDirty = true
+
+    elseif def_anchor_colorprim.text and def_anchor_colorprim.text ~= grapple.visuals.anchorpoint_color_primary then
         isDirty = true
     end
 
     def.isDirty = isDirty
 end
 
-function this.Save(player, grapple, changes, def_colorprim, def_anchorstyle)
+function this.Save(player, grapple, changes, def_line_colorprim, def_anchorstyle, def_anchor_colorprim)
     --grapple.aim_straight.aim_duration = grapple.aim_straight.aim_duration + changes:Get("aim_duration")
 
-    grapple.visuals.grappleline_color_primary = def_colorprim.text
+    grapple.visuals.grappleline_color_primary = def_line_colorprim.text
     grapple.visuals.anchorpoint_type = def_anchorstyle.selected_item
+    grapple.visuals.anchorpoint_color_primary = def_anchor_colorprim.text
 
     player:Save()
 end
