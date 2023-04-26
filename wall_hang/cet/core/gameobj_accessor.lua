@@ -158,13 +158,13 @@ function GameObjectAccessor:GetCrosshairInfo()
         return self.targeting:GetDefaultCrosshairData(self.player)
     end
 
-    --	local player = Game.GetPlayer()
-    --	local targetting = Game.GetTargetingSystem()
-    --	local crosshairPosition, crosshairForward = targetting:GetDefaultCrosshairData(player)
-    --	local pos = player:GetWorldPosition()
-    --	print("diff: " .. vec_str(SubtractVectors(crosshairPosition, pos)))
-    --		the z changes based on looking up or not (1.59 looking down, 1.8 looking up)
-    --		x and y also have a small offset (about 0.25)
+    -- local player = Game.GetPlayer()
+    -- local targetting = Game.GetTargetingSystem()
+    -- local crosshairPosition, crosshairForward = targetting:GetDefaultCrosshairData(player)
+    -- local pos = player:GetWorldPosition()
+    -- print("diff: " .. vec_str(SubtractVectors(crosshairPosition, pos)))
+    --  the z changes based on looking up or not (1.59 looking down, 1.8 looking up)
+    --  x and y also have a small offset (about 0.25)
 end
 
 -- Teleports to a point, look dir

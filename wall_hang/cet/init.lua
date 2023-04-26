@@ -484,22 +484,22 @@ function TODO()
 
     -- Double tap jump
     --  If they quickly double tap jump, then enter bullet time for a few seconds
-	--	(suggested by "Let's Go! Video Games!" from youtube)
+    --  (suggested by "Let's Go! Video Games!" from youtube)
 
     -- Wall Run
     --  Hold in shift to enter and stay in wall run
 
-	-- Wall Run Force
-	--	Apply a force toward the wall (opposite of wall's normal)
-	--	This should help the player stick to the surface of the wall
-	--	The same should be done when jumping straight up the wall
+    -- Wall Run Force
+    --  Apply a force toward the wall (opposite of wall's normal)
+    --  This should help the player stick to the surface of the wall
+    --  The same should be done when jumping straight up the wall
 
     -- Jump Calculation
     --  Instead of a simple hardcoded angle adjustment and constant power...
     --  Determine what they are looking at (if they are looking away from the wall)
     --  Find a trajectory that will place them where they are looking
 
-	-- Purchase
-	--	For bare hand, require them to purchase this before it starts working
-	--	Another option is to start with jump unlocked, gain experience from that before they can unlock wall hang
+    -- Purchase
+    --  For bare hand, require them to purchase this before it starts working
+    --  Another option is to start with jump unlocked, gain experience from that before they can unlock wall hang
 end

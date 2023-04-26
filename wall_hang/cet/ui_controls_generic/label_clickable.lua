@@ -4,7 +4,7 @@ local this = {}
 -- style is models\stylesheet\Stylesheet
 -- line_heights is models\misc\LineHeights
 function CalcSize_LabelClickable(def, style, const, line_heights, scale)
-	if not def.sizes then
+    if not def.sizes then
         def.sizes = {}
     end
 
@@ -51,8 +51,8 @@ function this.Calculate_Sizes(def, style_text, scale)
     local width_text, height_text = ImGui.CalcTextSize(def.text, false, def.max_width)
 
     -- Store values
-	def.sizes.width = width_text + ((style_text.padding * 2) * scale)
-	def.sizes.height = height_text + ((style_text.padding * 2) * scale)
+    def.sizes.width = width_text + ((style_text.padding * 2) * scale)
+    def.sizes.height = height_text + ((style_text.padding * 2) * scale)
 
     def.sizes.center_x = def.sizes.width / 2
     def.sizes.center_y = def.sizes.height / 2

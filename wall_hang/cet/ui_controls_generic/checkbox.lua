@@ -25,7 +25,7 @@ function Draw_CheckBox(def, style_checkbox, style_colors)
 
     -- Draw the checkbox
     --ImGui.PushStyleColor(ImGuiCol.Border, 0xFF80FF40)     -- border is ignored
-	ImGui.PushStyleColor(ImGuiCol.NavHighlight, 0x00000000)
+    ImGui.PushStyleColor(ImGuiCol.NavHighlight, 0x00000000)
 
     if def.isEnabled then
         local fore_color = style_checkbox.foreground_color_abgr
