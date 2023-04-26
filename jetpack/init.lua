@@ -197,7 +197,7 @@ end)
 
 registerForEvent("onShutdown", function()
     isShutdown = true
-	--db:close()      -- cet fixed this in 1.12.2
+    --db:close()      -- cet fixed this in 1.12.2
     this.ClearObjects()
 end)
 

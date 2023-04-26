@@ -180,7 +180,7 @@ this.hover_sounds =
 
 ---------- Other thruster candidates ----------
 -- "w_tail_shotgun_power_testera_ext_narrow",
--- "amb_g_fx_fire_flames_stream_start_loop",		-- there are only two sounds, and it regularly switches between them
+-- "amb_g_fx_fire_flames_stream_start_loop",        -- there are only two sounds, and it regularly switches between them
 -- "w_tail_shotgun_power_testera_ext_enclosed",
 
 -- "w_tail_shotgun_power_testera_ext_street",
@@ -194,65 +194,65 @@ this.hover_sounds =
 -- "amb_g_fx_fire_gas_big_01_far_loop",
 -- "amb_g_fx_fire_gas_big_01_loop",
 -- "amb_g_fx_fire_flames_stream_loop",
--- "amb_bl_ext_oilfield_barracks_fire",		-- close, a bit too much spark popping
+-- "amb_bl_ext_oilfield_barracks_fire",     -- close, a bit too much spark popping
 -- "sq028_sc_06_boat_fire_big",
 
 
 
 ---------- Other hover candidates ----------
--- "amb_bl_ext_ghost_town_power_station_structure_02",			-- good, maybe too busy
+-- "amb_bl_ext_ghost_town_power_station_structure_02",      -- good, maybe too busy
 
--- "amb_bl_ext_ghost_town_power_station_structure_01",		-- a bit too much
+-- "amb_bl_ext_ghost_town_power_station_structure_01",      -- a bit too much
 
 -- "amb_g_fx_flare_loop",
 -- "q101_sc_07_surgery_lamp_hum_loop",
 -- "q001_sc_00c_trauma_arrives_intro_av_engines_loop",
 
--- "amb_g_fx_steam_small_02_loop",		-- too similar to the others
+-- "amb_g_fx_steam_small_02_loop",      -- too similar to the others
 
--- "amb_bl_ext_border_crossing_neon_light_02",		-- you can tell it's a light
+-- "amb_bl_ext_border_crossing_neon_light_02",      -- you can tell it's a light
 -- "amb_bl_ext_border_crossing_neon_light_03",
 
--- "amb_bl_int_raffen_shiv_camp_neon_light_01",		-- too weak
+-- "amb_bl_int_raffen_shiv_camp_neon_light_01",     -- too weak
 --"amb_bl_loc_sts_bla_ina_04_neon_light_01",        -- too weak
 
 
 
 ----------- some other potential sounds:
 -- -- jetpack
--- --"gre_impact_solid",					-- a bit too recongnisable
+-- --"gre_impact_solid",                    -- a bit too recongnisable
 -- --"gre_impact_solid_ozob",
 -- "grenade_charge_start",
--- "grenade_laser_stop",					-- a good acknowledgement sound
--- "grenade_stick",						    -- probably not
--- --"lcm_player_double_jump",				-- too recognisable
+-- "grenade_laser_stop",                    -- a good acknowledgement sound
+-- "grenade_stick",                         -- probably not
+-- --"lcm_player_double_jump",              -- too recognisable
 
 -- "lcm_wallrun_in",
 
 -- "q115_thruster_start",
--- "q115_thruster_stop",					-- good for jetpack, but kind of obnoxious
+-- "q115_thruster_stop",                    -- good for jetpack, but kind of obnoxious
 
 
 -- -- soft, subtle
--- "dev_doors_v_room_secret_close",		    -- nice and quiet, mechanical
--- "lcm_wallrun_out",						-- this is really nice and subtle
+-- "dev_doors_v_room_secret_close",         -- nice and quiet, mechanical
+-- "lcm_wallrun_out",                       -- this is really nice and subtle
 -- "ui_generic_set_14_positive",
 -- "ui_menu_hover",
 -- "ui_menu_tutorial_close",
 
 
 -- -- stronger
--- --"dev_doors_v_room_secret_open",		-- pretty long
--- "dev_vending_machine_can_falls",		    -- another short mechanical sound
--- "enm_mech_minotaur_loco_fs_heavy",		-- good heavy landing
+-- --"dev_doors_v_room_secret_open",        -- pretty long
+-- "dev_vending_machine_can_falls",         -- another short mechanical sound
+-- "enm_mech_minotaur_loco_fs_heavy",       -- good heavy landing
 
 
 -- -- ui
--- "g_sc_bd_rewind_pause",					-- almost sounds like an error
+-- "g_sc_bd_rewind_pause",                  -- almost sounds like an error
 -- "g_sc_bd_rewind_pause_forced",
--- "g_sc_bd_rewind_play",					-- also sounds like an error
--- --"g_sc_bd_rewind_restart",				-- this is a good grapple extend sound
--- --"test_ad_emitter_2_1",					-- good confirm tone
+-- "g_sc_bd_rewind_play",                   -- also sounds like an error
+-- --"g_sc_bd_rewind_restart",              -- this is a good grapple extend sound
+-- --"test_ad_emitter_2_1",                 -- good confirm tone
 
 -- "ui_focus_mode_scanning_qh",
 -- "ui_focus_mode_zooming_in_enter",

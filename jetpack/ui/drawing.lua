@@ -39,8 +39,8 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime)
 end
 
 function DrawConfigName(mode)
-    ImGui.PushStyleColor(ImGuiCol.WindowBg, 0x5454542E)		--542E5454
-    ImGui.PushStyleColor(ImGuiCol.Border, 0x806E6E3D)		--803D6E6E
+    ImGui.PushStyleColor(ImGuiCol.WindowBg, 0x5454542E)     --542E5454
+    ImGui.PushStyleColor(ImGuiCol.Border, 0x806E6E3D)       --803D6E6E
 
     ImGui.SetNextWindowPos(20, 300, ImGuiCond.Always)
     ImGui.SetNextWindowSize(240, 160, ImGuiCond.Appearing)
@@ -51,12 +51,12 @@ function DrawConfigName(mode)
         ImGui.SetWindowFontScale(1.2)
 
         ImGui.Spacing()
-		ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)		--FFFF4C
-		ImGui.Text(mode.name)
-		ImGui.PopStyleColor(1)
+        ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)     --FFFF4C
+        ImGui.Text(mode.name)
+        ImGui.PopStyleColor(1)
 
         ImGui.Spacing()
-        ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)		--75FFFF
+        ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)     --75FFFF
 
         --Only reporting settings out of ordinary (low gravity, high gravity, etc)
 
@@ -97,8 +97,8 @@ function DrawConfigName(mode)
 end
 
 function DrawEnabledDisabled(isEnabled)
-    ImGui.PushStyleColor(ImGuiCol.WindowBg, 0x5454542E)		--542E5454
-    ImGui.PushStyleColor(ImGuiCol.Border, 0x806E6E3D)		--803D6E6E
+    ImGui.PushStyleColor(ImGuiCol.WindowBg, 0x5454542E)     --542E5454
+    ImGui.PushStyleColor(ImGuiCol.Border, 0x806E6E3D)       --803D6E6E
 
     ImGui.SetNextWindowPos(20, 250, ImGuiCond.Always)
     ImGui.SetNextWindowSize(240, 50, ImGuiCond.Appearing)
@@ -107,7 +107,7 @@ function DrawEnabledDisabled(isEnabled)
         ImGui.SetWindowFontScale(1.8)
 
         ImGui.Spacing()
-		ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)		--FFFF4C
+        ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)     --FFFF4C
 
         if isEnabled then
             ImGui.Text("Jetpack Enabled")
@@ -115,10 +115,10 @@ function DrawEnabledDisabled(isEnabled)
             ImGui.Text("Jetpack Disabled")
         end
 
-		ImGui.PopStyleColor(1)
+        ImGui.PopStyleColor(1)
 
         -- ImGui.Spacing()
-        -- ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)		--75FFFF
+        -- ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)      --75FFFF
 
         -- if not isEnabled then
         --     ImGui.Spacing()
