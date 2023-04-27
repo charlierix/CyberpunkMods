@@ -10,10 +10,6 @@ local isHovered_antigrav = false
 local isHovered_stopEarly = false
 
 function DefineWindow_Grapple_Straight(vars_ui, const)
-
-    --TODO: Tooltip panel on hover over buttons
-    --TODO: mappin chooser
-
     local grapple_straight = {}
     vars_ui.grapple_straight = grapple_straight
 

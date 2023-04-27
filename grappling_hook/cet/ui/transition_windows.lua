@@ -27,20 +27,8 @@ function TransitionWindows_Grapple(vars_ui, const, player, grappleIndex)
             ActivateWindow_Grapple_Straight(vars_ui, const)
 
         elseif grapple.aim_swing then
-            LogError("TransitionWindows_Grapple: TODO: Implement web swing")
-
-            -- Air Density % (from 0.1 to 3)
-            -- Gravity % (from 0.1 to 2)
-
-            -- Accel Mult % (from 0.5 to 2)
-            -- Distance Mult % (from 0.5 to 2)
-
-            -- Should Latch
-            -- Max Latch Angle
-
-            -- Show extra graphics
-
-            TransitionWindows_Main(vars_ui, const)
+            vars_ui.currentWindow = const.windows.grapple_swing
+            ActivateWindow_Grapple_Swing(vars_ui, const)
 
         else
             LogError("TransitionWindows_Grapple: Unknown type of grapple")

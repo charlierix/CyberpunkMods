@@ -114,6 +114,7 @@ require "ui_windows/grapple_straight_distances"
 require "ui_windows/grapple_straight_stopearly"
 require "ui_windows/grapple_straight_velaway"
 require "ui_windows/grapple_straight_visuals"
+require "ui_windows/grapple_swing"
 require "ui_windows/input_bindings"
 require "ui_windows/main"
 
