@@ -2,7 +2,7 @@ local DebugRenderScreen_UI = {}
 
 local this = {}
 
-function DebugRenderScreen_UI.DrawCanvas(visuals_circle, visuals_line, visuals_triangle, visuals_text)
+function DebugRenderScreen_UI.DrawCanvas(visuals_circle, visuals_diamond, visuals_line, visuals_triangle, visuals_text)
     local width, height = this.GetScreenInfo()
     local center_x = width / 2
     local center_y = height / 2
@@ -25,6 +25,13 @@ function DebugRenderScreen_UI.DrawCanvas(visuals_circle, visuals_line, visuals_t
 
             local x, y = this.TransformToScreen(circle.center_x, circle.center_y, center_x, center_y)
             this.Draw_Circle(x, y, circle.radius, circle.color_background, circle.color_border, circle.thickness)
+        end
+
+        for i = 1, visuals_diamond:GetCount(), 1 do
+            local diamond = visuals_diamond:GetItem(i)
+
+            local x, y = this.TransformToScreen(diamond.center_x, diamond.center_y, center_x, center_y)
+            this.Draw_Diamond(x, y, diamond.radius, diamond.color, diamond.thickness)
         end
 
         for i = 1, visuals_line:GetCount(), 1 do
@@ -58,6 +65,20 @@ function this.Draw_Circle(center_x, center_y, radius, color_background, color_bo
     if color_border then
         ImGui.ImDrawListAddCircle(ImGui.GetWindowDrawList(), center_x, center_y, radius, color_border, numSegments, thickness)
     end
+end
+
+function this.Draw_Diamond(center_x, center_y, radius, color, thickness)
+    -- up -> right
+    ImGui.ImDrawListAddLine(ImGui.GetWindowDrawList(), center_x, center_y - radius, center_x + radius, center_y, color, thickness)
+
+    -- right -> down
+    ImGui.ImDrawListAddLine(ImGui.GetWindowDrawList(), center_x + radius, center_y, center_x, center_y + radius, color, thickness)
+
+    -- down -> left
+    ImGui.ImDrawListAddLine(ImGui.GetWindowDrawList(), center_x, center_y + radius, center_x - radius, center_y, color, thickness)
+
+    -- left -> up
+    ImGui.ImDrawListAddLine(ImGui.GetWindowDrawList(), center_x - radius, center_y, center_x, center_y - radius, color, thickness)
 end
 
 function this.Draw_Line(x1, y1, x2, y2, color, thickness)

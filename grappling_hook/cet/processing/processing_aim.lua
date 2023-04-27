@@ -69,7 +69,10 @@ function this.Aim_Straight(aim, o, player, vars, const, debug)
     -- See if the ray hit something
     if hitPoint then
         -- Ensure pin is drawn and placed properly (flight pin, not aim pin)
-        EnsureMapPinVisible(hitPoint, vars.grapple.mappin_name, vars, o)
+        --EnsureMapPinVisible(hitPoint, vars.grapple.mappin_name, vars, o)
+        EnsureMapPinRemoved(vars, o)
+        grapple_render.AnchorPoint(hitPoint, vars.grapple.visuals, const)
+
         local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(hitPoint, o.lookdir_forward, vars.grapple.stop_plane_distance)
         Transition_ToFlight_Straight(vars, const, o, from, hitPoint, nil, stopplane_point, stopplane_normal)
         do return end
@@ -100,7 +103,11 @@ function this.Aim_Straight(aim, o, player, vars, const, debug)
                 vars.energy = vars.energy - cost
 
                 hitPoint = Vector4.new(from.x + (o.lookdir_forward.x * aim.max_distance), from.y + (o.lookdir_forward.y * aim.max_distance), from.z + (o.lookdir_forward.z * aim.max_distance), 1)
-                EnsureMapPinVisible(hitPoint, vars.grapple.mappin_name, vars, o)
+
+                --EnsureMapPinVisible(hitPoint, vars.grapple.mappin_name, vars, o)
+                EnsureMapPinRemoved(vars, o)
+                grapple_render.AnchorPoint(hitPoint, vars.grapple.visuals, const)
+
                 local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(hitPoint, o.lookdir_forward, vars.grapple.stop_plane_distance)
                 Transition_ToFlight_Straight(vars, const, o, from, hitPoint, aim.air_anchor, stopplane_point, stopplane_normal)
 
@@ -344,7 +351,7 @@ function this.Aim_Swing_UnderSwing(position, vel, look_dir, speed_look, vel_unit
 
     radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_pos))      -- previous radius calculation was to get the offplane_mult.  Two square roots, but it has to be done
 
-    this.ShowEndPoint(anchor_pos, radius, nil, nil, new_grapple, vars, o)     -- reusing this function to show the anchor and distance
+    this.ShowEndPoint(anchor_pos, radius, nil, nil, new_grapple, vars, o, const)     -- reusing this function to show the anchor and distance
     debug_render_screen.Add_Arc(anchor_pos, position, dest_pos, debug_categories.AIM_arc)
 
     local dest_dir = this.GetSwingDestinationDirection(anchor_pos, position, dest_pos)
@@ -352,7 +359,7 @@ function this.Aim_Swing_UnderSwing(position, vel, look_dir, speed_look, vel_unit
     local stopplane_point, stopplane_normal = this.GetStopPlane_Straight(dest_pos, dest_dir, new_grapple.stop_plane_distance)
     local stopplane_point2, stopplane_normal2 = this.GetStopPlane_SwingCeiling(anchor_pos, up_to_anchor, position, dest_pos)
 
-    this.ShowEndPoint(dest_pos, dest_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
+    this.ShowEndPoint(dest_pos, dest_dist, stopplane_point, stopplane_normal, new_grapple, vars, o, const)
     debug_render_screen.Add_Square(stopplane_point2, stopplane_normal2, 8, 8, debug_categories.AIM_stopplane)
 
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, false, stopplane_point, stopplane_normal, stopplane_point2, stopplane_normal2)
@@ -414,7 +421,7 @@ function this.Aim_Swing_Toss_DownUp(position, vel, look_dir, o, vars, const)
     -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
     anchor_pos = AddVectors(anchor_pos, MultiplyVector(vel_plane_normal, VELOCITY_OFFPLANE_MULT))
 
-    this.ShowEndPoint(anchor_pos, radius, nil, nil, vars.grapple, vars, o)
+    this.ShowEndPoint(anchor_pos, radius, nil, nil, vars.grapple, vars, o, const)
 
     -- Ceiling plane
     local point_on_line = GetClosestPoint_Line_Point(position, SubtractVectors(release_point, position), anchor_pos)
@@ -425,7 +432,7 @@ function this.Aim_Swing_Toss_DownUp(position, vel, look_dir, o, vars, const)
     local new_grapple = swing_grapples.GetPureRope(vars.grapple)
 
     local dist_to_release = math.sqrt(GetVectorDiffLengthSqr(release_point, position))
-    this.ShowEndPoint(release_point, dist_to_release, stopplane_point, stopplane_normal, new_grapple, vars, o)
+    this.ShowEndPoint(release_point, dist_to_release, stopplane_point, stopplane_normal, new_grapple, vars, o, const)
     debug_render_screen.Add_Arc(anchor_pos, position, release_point, debug_categories.AIM_arc)
 
     debug_render_screen.Add_Text2D(nil, nil, "speed vert: " .. tostring(Round(speed_vert, 1)) .. "\r\nrelease angle: " .. tostring(Round(release_angle)), debug_categories.AIM_implementationtext)
@@ -507,7 +514,7 @@ function this.Aim_Swing_Toss_Up(position, vel, look_dir, speed_look, o, vars, co
     -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
     anchor_pos = AddVectors(anchor_pos, MultiplyVector(vel_plane_normal, VELOCITY_OFFPLANE_MULT))
 
-    this.ShowEndPoint(anchor_pos, math.sqrt(GetVectorDiffLengthSqr(position, anchor_pos)), nil, nil, vars.grapple, vars, o)
+    this.ShowEndPoint(anchor_pos, math.sqrt(GetVectorDiffLengthSqr(position, anchor_pos)), nil, nil, vars.grapple, vars, o, const)
 
     -- Ceiling plane
     local point_on_line = GetClosestPoint_Line_Point(position, SubtractVectors(release_point, position), anchor_pos)
@@ -518,7 +525,7 @@ function this.Aim_Swing_Toss_Up(position, vel, look_dir, speed_look, o, vars, co
     local accel_mult = tossup_accelpercent_by_dot:Evaluate(look_dot_up)
     local new_grapple = swing_grapples.GetElasticRope(vars.grapple, radius, accel_mult, 1)
 
-    this.ShowEndPoint(release_point, math.sqrt(GetVectorDiffLengthSqr(position, release_point)), stopplane_point, stopplane_normal, new_grapple, vars, o)
+    this.ShowEndPoint(release_point, math.sqrt(GetVectorDiffLengthSqr(position, release_point)), stopplane_point, stopplane_normal, new_grapple, vars, o, const)
     debug_render_screen.Add_Arc(anchor_pos, position, release_point, debug_categories.AIM_arc)
 
     debug_render_screen.Add_Text2D(nil, nil, "look_dot_up: " .. tostring(Round(look_dot_up, 1)) .. "\r\nspeed_look: " .. tostring(Round(speed_look, 1)) .. "\r\naccel_mult: " .. tostring(Round(accel_mult, 2)), debug_categories.AIM_implementationtext)
@@ -570,7 +577,7 @@ function this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, is_airbor
         stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, look_dir, new_grapple.stop_plane_distance)
     end
 
-    this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
+    this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, new_grapple, vars, o, const)
 
     debug_render_screen.Add_Text2D(nil, nil, "popping_up: " .. tostring(popping_up), debug_categories.AIM_implementationtext)
 
@@ -611,7 +618,7 @@ function this.Aim_Swing_FromGround(position, look_dir, o, vars, const, debug)
         stopplane_point, stopplane_normal = this.GetStopPlane_Straight(anchor_pos, look_dir, new_grapple.stop_plane_distance)
     end
 
-    this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, new_grapple, vars, o)
+    this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, new_grapple, vars, o, const)
 
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, popping_up, stopplane_point, stopplane_normal)
 end
@@ -867,7 +874,7 @@ function this.ShowErrorText(func_name, message)
     debug_render_screen.Add_Text2D(x, y, func_name .. "\r\n" .. message, debug_categories.AIM_notvisualtext)
 end
 
-function this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, grapple, vars, o)
+function this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_normal, grapple, vars, o, const)
     if debug_render_screen.IsEnabled() then
         debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_anchor)
         debug_render_screen.Add_Text(AddVectors(anchor_pos, MultiplyVector(up, -0.2)), tostring(Round(anchor_dist, 1)), debug_categories.AIM_anchordist)
@@ -879,7 +886,9 @@ function this.ShowEndPoint(anchor_pos, anchor_dist, stopplane_point, stopplane_n
         if stopplane_point then
             grapple_render.EndPlane(stopplane_point, stopplane_normal, grapple.visuals)
         else
-            EnsureMapPinVisible(anchor_pos, grapple.mappin_name, vars, o)       -- Flight pin, not aim
+            --EnsureMapPinVisible(anchor_pos, grapple.mappin_name, vars, o)       -- Flight pin, not aim
+            EnsureMapPinRemoved(vars, o)
+            grapple_render.AnchorPoint(anchor_pos, vars.grapple.visuals, const)
         end
     end
 end

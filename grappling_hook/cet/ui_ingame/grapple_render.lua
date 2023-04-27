@@ -10,12 +10,13 @@ local this = {}
 
 local next_id = 0
 local timer = 0
-local item_types = CreateEnum("dot", "line", "triangle", "text")
+local item_types = CreateEnum("dot", "diamond", "line", "triangle", "text")
 
 local controller = nil
 
 local items = StickyList:new()
 local visuals_circle = StickyList:new()
+local visuals_diamond = StickyList:new()
 local visuals_line = StickyList:new()
 local visuals_triangle = StickyList:new()
 local visuals_text = StickyList:new()
@@ -25,6 +26,8 @@ local endplane_recalc_distsqr = nil
 local endplane_pos = nil
 local endplane_normal = nil
 local endplane_visuals = nil
+
+local anchor_id = nil
 
 local up = nil
 
@@ -55,15 +58,15 @@ function GrappleRender.CallFrom_onUpdate(o, deltaTime)
 
     -- Go through items and populate visuals (only items that are in front of the camera).  Turns high level concepts
     -- like circle/square into line paths that match this frame's perspective
-    frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line, visuals_triangle, visuals_text)
+    frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_diamond, visuals_line, visuals_triangle, visuals_text)
 end
 
 function GrappleRender.CallFrom_onDraw()
-    if visuals_circle:GetCount() == 0 and visuals_line:GetCount() == 0 and visuals_triangle:GetCount() == 0 and visuals_text:GetCount() == 0 then
+    if visuals_circle:GetCount() == 0 and visuals_diamond:GetCount() == 0 and visuals_line:GetCount() == 0 and visuals_triangle:GetCount() == 0 and visuals_text:GetCount() == 0 then
         do return end
     end
 
-    ui.DrawCanvas(visuals_circle, visuals_line, visuals_triangle, visuals_text)
+    ui.DrawCanvas(visuals_circle, visuals_diamond, visuals_line, visuals_triangle, visuals_text)
 end
 
 ----------------------------------- Public Methods ------------------------------------
@@ -109,8 +112,30 @@ function GrappleRender.EndPlane(pos, normal, visuals)
     endplane_visuals = visuals
 end
 
-function GrappleRender.AnchorPoint(pos)
-    
+function GrappleRender.AnchorPoint(pos, visuals, const)
+    if anchor_id then
+        this.Remove(anchor_id)
+        anchor_id = nil
+    end
+
+    if visuals.anchorpoint_type == const.Visuals_AnchorPoint_Type.none then
+        do return end
+    end
+
+    anchor_id = this.GetNextID()
+
+    this.Add_Dot(pos, visuals.anchorpoint_color_primary, nil, nil, false, 0.25, nil, true, anchor_id)
+
+    if visuals.anchorpoint_type == const.Visuals_AnchorPoint_Type.diamond then
+        this.Add_Diamond(pos, visuals.anchorpoint_color_primary, nil, false, 1.5, 0.08, true, anchor_id)
+
+    elseif visuals.anchorpoint_type == const.Visuals_AnchorPoint_Type.circle then
+        this.Add_Dot(pos, nil, visuals.anchorpoint_color_primary, nil, false, 1.5, 0.08, true, anchor_id)
+
+    else
+        LogError("Unknown visuals.anchorpoint_type: " .. tostring(visuals.anchorpoint_type))
+        do return end
+    end
 end
 
 -- Removes all visual items (doesn't remove categories)
@@ -139,6 +164,24 @@ function GrappleRender.GetGrappleFrom(eye_pos, look_dir)
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.Add_Dot(position, color_back, color_fore, lifespan_seconds, is_single_frame, size_mult, thickness, const_size, id)
+    local item = items:GetNewItem()
+    this.SetItemBase(item, item_types.dot, color_back, color_fore, size_mult, const_size, lifespan_seconds, is_single_frame, id)
+    item.position = position
+    item.thickness = thickness
+
+    return item.id
+end
+
+function this.Add_Diamond(position, color, lifespan_seconds, is_single_frame, size_mult, thickness, const_size, id)
+    local item = items:GetNewItem()
+    this.SetItemBase(item, item_types.diamond, nil, color, size_mult, const_size, lifespan_seconds, is_single_frame, id)
+    item.position = position
+    item.thickness = thickness
+
+    return item.id
+end
 
 function this.Add_Square(center, normal, size_x, size_y, color_back, color_fore, lifespan_seconds, is_single_frame, size_mult, const_size)
     local id = this.GetNextID()

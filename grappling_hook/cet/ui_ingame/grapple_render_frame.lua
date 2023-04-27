@@ -2,6 +2,7 @@ local GrappleRender_Frame = {}
 
 local MIN_SIZE = 0.05                -- don't bother drawing items smaller than this
 local DOT_RADIUS = 18
+local DIAMOND_RADIUS = 18
 local LINE_THICKNESS = 2
 local THICKNESS_EPSILON = 0.5
 local LINE_DIST_EPSILON = 0.05      -- this is world distance, it tells when to stop trying smaller line splits
@@ -11,8 +12,9 @@ local MAX_RECURSE_VI = 8
 local this = {}
 
 -- Looks at the high level 3D items, creates 2D circles/lines/triangles that will be shown in the draw event
-function GrappleRender_Frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_line, visuals_triangle, visuals_text)
+function GrappleRender_Frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_diamond, visuals_line, visuals_triangle, visuals_text)
     visuals_circle:Clear()
+    visuals_diamond:Clear()
     visuals_line:Clear()
     visuals_triangle:Clear()
     visuals_text:Clear()
@@ -28,6 +30,9 @@ function GrappleRender_Frame.RebuildVisuals(controller, items, item_types, visua
 
         if item.item_type == item_types.dot then
             this.Dot(controller, item, visuals_circle, pos)
+
+        elseif item.item_type == item_types.diamond then
+            this.Diamond(controller, item, visuals_diamond, pos)
 
         elseif item.item_type == item_types.line then
             this.Line(controller, item, visuals_line, pos, dir)
@@ -63,14 +68,52 @@ function this.Dot(controller, item, visuals_circle, pos)
         do return end
     end
 
+    local color_back = nil
+    if item.color_back then
+        color_back = this.GetColor_ABGR(item.color_back)
+    end
+
+    local color_fore = nil
+    if item.color_fore then
+        color_fore = this.GetColor_ABGR(item.color_fore)
+    end
+
     local visual = visuals_circle:GetNewItem()
 
-    visual.color_background = this.GetColor_ABGR(item.color_back)
-    visual.color_border = nil
-    visual.thickness = nil
+    visual.color_background = color_back
+    visual.color_border = color_fore
+    visual.thickness = item.thickness
     visual.center_x = point.X
     visual.center_y = point.Y
-    visual.radius = DOT_RADIUS * size_mult
+    visual.radius = radius
+end
+
+------------------------------ Private Methods (Diamond) ------------------------------
+
+function this.Diamond(controller, item, visuals_diamond, pos)
+    local point = controller:ProjectWorldToScreen(item.position)
+
+    if not this.IsValidScreenPoint(point) then
+        do return end
+    end
+
+    local size_mult = this.GetSizeMult(item, pos, item.position)
+    if not size_mult then
+        do return end
+    end
+
+    local radius = DIAMOND_RADIUS * size_mult
+    if radius * 2 < MIN_SIZE then
+        do return end
+    end
+
+    local visual = visuals_diamond:GetNewItem()
+
+    visual.color = this.GetColor_ABGR(item.color_fore)
+    visual.thickness = item.thickness
+    visual.center_x = point.X
+    visual.center_y = point.Y
+    visual.radius = radius
 end
 
 -------------------------------- Private Methods (Line) -------------------------------
