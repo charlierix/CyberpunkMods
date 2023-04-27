@@ -124,13 +124,13 @@ function GrappleRender.AnchorPoint(pos, visuals, const)
 
     anchor_id = this.GetNextID()
 
-    this.Add_Dot(pos, visuals.anchorpoint_color_primary, nil, nil, false, 0.25, nil, true, anchor_id)
+    this.Add_Dot(pos, visuals.anchorpoint_color_1, nil, nil, false, 0.25, nil, true, anchor_id)
 
     if visuals.anchorpoint_type == const.Visuals_AnchorPoint_Type.diamond then
-        this.Add_Diamond(pos, visuals.anchorpoint_color_primary, nil, false, 1.5, 0.08, true, anchor_id)
+        this.Add_Diamond(pos, visuals.anchorpoint_color_2, nil, false, 1.5, 0.08, true, anchor_id)
 
     elseif visuals.anchorpoint_type == const.Visuals_AnchorPoint_Type.circle then
-        this.Add_Dot(pos, nil, visuals.anchorpoint_color_primary, nil, false, 1.5, 0.08, true, anchor_id)
+        this.Add_Dot(pos, nil, visuals.anchorpoint_color_2, nil, false, 1.5, 0.08, true, anchor_id)
 
     else
         LogError("Unknown visuals.anchorpoint_type: " .. tostring(visuals.anchorpoint_type))

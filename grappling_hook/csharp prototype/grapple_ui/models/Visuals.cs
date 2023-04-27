@@ -11,7 +11,8 @@
         // --------- anchor point ---------
         public Visuals_AnchorPoint_Type anchorpoint_type { get; init; }
 
-        public string anchorpoint_color_primary { get; init; }
+        public string anchorpoint_color_1 { get; init; }
+        public string anchorpoint_color_2 { get; init; }
 
         // --------- stop plane ---------
         public bool show_stopplane { get; init; }

@@ -541,7 +541,8 @@ function GetDefault_Visuals(const)
         grappleline_color_primary = "AAAAAAAA",
 
         anchorpoint_type = const.Visuals_AnchorPoint_Type.none,
-        anchorpoint_color_primary = "FF0",
+        anchorpoint_color_1 = "FF0",
+        anchorpoint_color_2 = "FF0",
 
         show_stopplane = true,
         stopplane_color = "80A1C2A4",
