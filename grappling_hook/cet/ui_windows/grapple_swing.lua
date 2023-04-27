@@ -12,7 +12,7 @@ function DefineWindow_Grapple_Swing(vars_ui, const)
     grapple_swing.description = this.Define_Description(grapple_swing.name, const)
 
 
-    --grapple_swing.visuals = this.Define_Visuals(const)
+    grapple_swing.visuals = this.Define_Visuals(const)
 
 
     -- Air Density % (from 0.1 to 3)
@@ -41,8 +41,8 @@ function ActivateWindow_Grapple_Swing(vars_ui, const)
 
     vars_ui.grapple_swing.changes:Clear()
 
-    vars_ui.grapple_straight.name.text = nil
-    vars_ui.grapple_straight.description.text = nil
+    vars_ui.grapple_swing.name.text = nil
+    vars_ui.grapple_swing.description.text = nil
 end
 
 function DrawWindow_Grapple_Swing(isCloseRequested, vars_ui, player, window, const)
@@ -79,11 +79,9 @@ function DrawWindow_Grapple_Swing(isCloseRequested, vars_ui, player, window, con
     Draw_TextBox(grapple_swing.name, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
     Draw_Label(grapple_swing.description, vars_ui.style.colors, vars_ui.scale)
 
-
-    -- if Draw_SummaryButton(grapple_swing.visuals, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-    --     TransitionWindows_Swing_Visuals(vars_ui, const)
-    -- end
-
+    if Draw_SummaryButton(grapple_swing.visuals, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
+        TransitionWindows_Swing_Visuals(vars_ui, const)
+    end
 
     Draw_OrderedList(grapple_swing.experience, vars_ui.style.colors)
 
@@ -128,7 +126,7 @@ function this.Define_Name(const)
 end
 function this.Refresh_Name(def, grapple)
     -- There is no need to store changes in the changes list.  Text is directly changed as they type
-    --NOTE: ActivateWindow_Swing_Straight sets this to nil
+    --NOTE: ActivateWindow_Grapple_Swing sets this to nil
     if not def.text then
         def.text = grapple.name
     end
@@ -163,6 +161,26 @@ function this.Refresh_Description(def, grapple)
     if not def.text then
         def.text = grapple.description
     end
+end
+
+function this.Define_Visuals(const)
+    -- SummaryButton
+    return
+    {
+        header_prompt = "Visuals / Color",
+
+        position =
+        {
+            pos_x = -250,
+            pos_y = -15,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        invisible_name = "Grapple_Swing_Visuals",
+
+        CalcSize = CalcSize_SummaryButton,
+    }
 end
 
 function this.Refresh_Experience(def, player, grapple)
