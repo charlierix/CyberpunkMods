@@ -17,6 +17,8 @@ function DefineWindow_GrappleSwing_Visuals(vars_ui, const)
     gswing_visuals.line_colorprim_label = this.Define_Line_ColorPrimary_Label(gswing_visuals.line_colorprim_help, const)
     gswing_visuals.line_colorprim_sample = this.Define_Line_ColorPrimary_Sample(gswing_visuals.line_colorprim_value, const)
 
+    gswing_visuals.line_default = this.Define_Line_Default(gswing_visuals.line_colorprim_value, const)
+
     -- anchor style { none, diamond, circle }
     gswing_visuals.anchorstyle_combo = this.Define_AnchorStyle_Combo(gswing_visuals.line_colorprim_value, const)
     gswing_visuals.anchorstyle_help = this.Define_AnchorStyle_Help(gswing_visuals.anchorstyle_combo, const)
@@ -32,6 +34,8 @@ function DefineWindow_GrappleSwing_Visuals(vars_ui, const)
     gswing_visuals.anchor_color2_label = this.Define_Anchor_Color2_Label(gswing_visuals.anchor_color2_help, const)
     gswing_visuals.anchor_color2_sample = this.Define_Anchor_Color2_Sample(gswing_visuals.anchor_color2_value, const)
 
+    gswing_visuals.anchor_default = this.Define_Anchor_Default(gswing_visuals.anchorstyle_combo, const)
+
     -- stop plane
     gswing_visuals.stopplane_checkbox = this.Define_StopPlane_Checkbox(gswing_visuals.anchor_color2_value, const)
     gswing_visuals.stopplane_help = this.Define_StopPlane_Help(gswing_visuals.stopplane_checkbox, const)
@@ -40,6 +44,8 @@ function DefineWindow_GrappleSwing_Visuals(vars_ui, const)
     gswing_visuals.stopplane_color_help = this.Define_StopPlane_Color_Help(gswing_visuals.stopplane_color_value, const)
     gswing_visuals.stopplane_color_label = this.Define_StopPlane_Color_Label(gswing_visuals.stopplane_color_help, const)
     gswing_visuals.stopplane_color_sample = this.Define_StopPlane_Color_Sample(gswing_visuals.stopplane_color_value, const)
+
+    gswing_visuals.stopplane_default = this.Define_StopPlane_Default(gswing_visuals.stopplane_checkbox, const)
 
     gswing_visuals.colorurl = this.Define_ColorURL_TextBox(vars_ui, const)
 
@@ -110,11 +116,17 @@ function DrawWindow_GrappleSwing_Visuals(isCloseRequested, vars_ui, player, wind
 
     Draw_Label(gswing_visuals.name, vars_ui.style.colors, vars_ui.scale)
 
+    -- Line
     Draw_Label(gswing_visuals.line_colorprim_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(gswing_visuals.line_colorprim_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_TextBox(gswing_visuals.line_colorprim_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
     Draw_ColorSample(gswing_visuals.line_colorprim_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
+    if Draw_Button(gswing_visuals.line_default, vars_ui.style.button, vars_ui.scale) then
+        this.Restore_Line_Default(gswing_visuals.line_colorprim_value, const)
+    end
+
+    -- Anchor
     Draw_ComboBox(gswing_visuals.anchorstyle_combo, vars_ui.style.combobox, vars_ui.scale)
     Draw_HelpButton(gswing_visuals.anchorstyle_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_Label(gswing_visuals.anchorstyle_label, vars_ui.style.colors, vars_ui.scale)
@@ -129,6 +141,11 @@ function DrawWindow_GrappleSwing_Visuals(isCloseRequested, vars_ui, player, wind
     Draw_TextBox(gswing_visuals.anchor_color2_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
     Draw_ColorSample(gswing_visuals.anchor_color2_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
+    if Draw_Button(gswing_visuals.anchor_default, vars_ui.style.button, vars_ui.scale) then
+        this.Restore_Anchor_Default(gswing_visuals.anchorstyle_combo, gswing_visuals.anchor_color1_value, gswing_visuals.anchor_color2_value, const)
+    end
+
+    -- Stop Plane
     Draw_CheckBox(gswing_visuals.stopplane_checkbox, vars_ui.style.checkbox, vars_ui.style.colors)
     Draw_HelpButton(gswing_visuals.stopplane_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
@@ -136,6 +153,10 @@ function DrawWindow_GrappleSwing_Visuals(isCloseRequested, vars_ui, player, wind
     Draw_HelpButton(gswing_visuals.stopplane_color_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_TextBox(gswing_visuals.stopplane_color_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
     Draw_ColorSample(gswing_visuals.stopplane_color_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
+
+    if Draw_Button(gswing_visuals.stopplane_default, vars_ui.style.button, vars_ui.scale) then
+        this.Restore_StopPlane_Default(gswing_visuals.stopplane_checkbox, gswing_visuals.stopplane_color_value, const)
+    end
 
     Draw_TextBox(gswing_visuals.colorurl, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
 
@@ -168,7 +189,7 @@ function this.Define_Line_ColorPrimary_Value(const)
 
         position =
         {
-            pos_x = 0,
+            pos_x = 60,
             pos_y = -150,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
@@ -266,6 +287,39 @@ function this.Define_Line_ColorPrimary_Sample(relative_to, const)
 end
 function this.Refresh_Line_ColorPrimary_Sample(def, def_value)
     def.color_hex = def_value.text
+end
+
+function this.Define_Line_Default(relative_to, const)
+    -- Button
+    return
+    {
+        text = "Default Line",
+
+        width_override = 140,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 220,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "hint",
+
+        isEnabled = true,
+
+        CalcSize = CalcSize_Button,
+    }
+end
+function this.Restore_Line_Default(def_line_colorprim, const)
+    def_line_colorprim.text = "AAAAAAAA"
 end
 
 function this.Define_AnchorStyle_Combo(relative_to, const)
@@ -593,6 +647,41 @@ function this.Refresh_Anchor_Color2_Sample(def, def_value)
     def.color_hex = def_value.text
 end
 
+function this.Define_Anchor_Default(relative_to, const)
+    -- Button
+    return
+    {
+        text = "Default Anchor",        -- can't just name it Default, because the button text needs to be unique
+
+        width_override = 140,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 220,
+            pos_y = 40,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "hint",
+
+        isEnabled = true,
+
+        CalcSize = CalcSize_Button,
+    }
+end
+function this.Restore_Anchor_Default(def_anchorstyle, def_anchor_color1, def_anchor_color2, const)
+    def_anchorstyle.selected_item = const.Visuals_AnchorPoint_Type.none
+    def_anchor_color1.text = "FF0"
+    def_anchor_color2.text = "FF0"
+end
+
 function this.Define_StopPlane_Checkbox(relative_to, const)
     -- CheckBox
     return
@@ -773,6 +862,40 @@ function this.Define_StopPlane_Color_Sample(relative_to, const)
 end
 function this.Refresh_StopPlane_Color_Sample(def, def_value)
     def.color_hex = def_value.text
+end
+
+function this.Define_StopPlane_Default(relative_to, const)
+    -- Button
+    return
+    {
+        text = "Default StopPlane",
+
+        width_override = 140,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 220,
+            pos_y = 20,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "hint",
+
+        isEnabled = true,
+
+        CalcSize = CalcSize_Button,
+    }
+end
+function this.Restore_StopPlane_Default(def_stopplane_checkbox, def_stopplane_color, const)
+    def_stopplane_checkbox.isChecked = true
+    def_stopplane_color.text = "80A1C2A4"
 end
 
 function this.Define_ColorURL_TextBox(vars_ui, const)
