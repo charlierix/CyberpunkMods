@@ -301,7 +301,7 @@ function this.Define_Line_Default(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 220,
+            pos_x = 200,
             pos_y = 0,
 
             relative_horz = const.alignment_horizontal.left,
@@ -659,7 +659,7 @@ function this.Define_Anchor_Default(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 220,
+            pos_x = 200,
             pos_y = 40,
 
             relative_horz = const.alignment_horizontal.left,
@@ -876,7 +876,7 @@ function this.Define_StopPlane_Default(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 220,
+            pos_x = 200,
             pos_y = 20,
 
             relative_horz = const.alignment_horizontal.left,

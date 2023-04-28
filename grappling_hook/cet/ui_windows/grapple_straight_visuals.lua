@@ -17,6 +17,8 @@ function DefineWindow_GrappleStraight_Visuals(vars_ui, const)
     gst8_visuals.line_colorprim_label = this.Define_Line_ColorPrimary_Label(gst8_visuals.line_colorprim_help, const)
     gst8_visuals.line_colorprim_sample = this.Define_Line_ColorPrimary_Sample(gst8_visuals.line_colorprim_value, const)
 
+    gst8_visuals.line_default = this.Define_Line_Default(gst8_visuals.line_colorprim_value, const)
+
     -- anchor style { none, diamond, circle }
     gst8_visuals.anchorstyle_combo = this.Define_AnchorStyle_Combo(gst8_visuals.line_colorprim_value, const)
     gst8_visuals.anchorstyle_help = this.Define_AnchorStyle_Help(gst8_visuals.anchorstyle_combo, const)
@@ -31,6 +33,8 @@ function DefineWindow_GrappleStraight_Visuals(vars_ui, const)
     gst8_visuals.anchor_color2_help = this.Define_Anchor_Color2_Help(gst8_visuals.anchor_color2_value, const)
     gst8_visuals.anchor_color2_label = this.Define_Anchor_Color2_Label(gst8_visuals.anchor_color2_help, const)
     gst8_visuals.anchor_color2_sample = this.Define_Anchor_Color2_Sample(gst8_visuals.anchor_color2_value, const)
+
+    gst8_visuals.anchor_default = this.Define_Anchor_Default(gst8_visuals.anchorstyle_combo, const)
 
     gst8_visuals.colorurl = this.Define_ColorURL_TextBox(vars_ui, const)
 
@@ -92,11 +96,17 @@ function DrawWindow_GrappleStraight_Visuals(isCloseRequested, vars_ui, player, w
 
     Draw_Label(gst8_visuals.name, vars_ui.style.colors, vars_ui.scale)
 
+    -- Line
     Draw_Label(gst8_visuals.line_colorprim_label, vars_ui.style.colors, vars_ui.scale)
     Draw_HelpButton(gst8_visuals.line_colorprim_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_TextBox(gst8_visuals.line_colorprim_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
     Draw_ColorSample(gst8_visuals.line_colorprim_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
+    if Draw_Button(gst8_visuals.line_default, vars_ui.style.button, vars_ui.scale) then
+        this.Restore_Line_Default(gst8_visuals.line_colorprim_value, const)
+    end
+
+    -- Anchor
     Draw_ComboBox(gst8_visuals.anchorstyle_combo, vars_ui.style.combobox, vars_ui.scale)
     Draw_HelpButton(gst8_visuals.anchorstyle_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_Label(gst8_visuals.anchorstyle_label, vars_ui.style.colors, vars_ui.scale)
@@ -110,6 +120,10 @@ function DrawWindow_GrappleStraight_Visuals(isCloseRequested, vars_ui, player, w
     Draw_HelpButton(gst8_visuals.anchor_color2_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
     Draw_TextBox(gst8_visuals.anchor_color2_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
     Draw_ColorSample(gst8_visuals.anchor_color2_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
+
+    if Draw_Button(gst8_visuals.anchor_default, vars_ui.style.button, vars_ui.scale) then
+        this.Restore_Anchor_Default(gst8_visuals.anchorstyle_combo, gst8_visuals.anchor_color1_value, gst8_visuals.anchor_color2_value, const)
+    end
 
     Draw_TextBox(gst8_visuals.colorurl, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
 
@@ -142,7 +156,7 @@ function this.Define_Line_ColorPrimary_Value(const)
 
         position =
         {
-            pos_x = 0,
+            pos_x = 60,
             pos_y = -100,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
@@ -240,6 +254,39 @@ function this.Define_Line_ColorPrimary_Sample(relative_to, const)
 end
 function this.Refresh_Line_ColorPrimary_Sample(def, def_value)
     def.color_hex = def_value.text
+end
+
+function this.Define_Line_Default(relative_to, const)
+    -- Button
+    return
+    {
+        text = "Default Line",
+
+        width_override = 140,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 200,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "hint",
+
+        isEnabled = true,
+
+        CalcSize = CalcSize_Button,
+    }
+end
+function this.Restore_Line_Default(def_line_colorprim, const)
+    def_line_colorprim.text = "AAAAAAAA"
 end
 
 function this.Define_AnchorStyle_Combo(relative_to, const)
@@ -565,6 +612,41 @@ function this.Define_Anchor_Color2_Sample(relative_to, const)
 end
 function this.Refresh_Anchor_Color2_Sample(def, def_value)
     def.color_hex = def_value.text
+end
+
+function this.Define_Anchor_Default(relative_to, const)
+    -- Button
+    return
+    {
+        text = "Default Anchor",        -- can't just name it Default, because the button text needs to be unique
+
+        width_override = 140,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 200,
+            pos_y = 40,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "hint",
+
+        isEnabled = true,
+
+        CalcSize = CalcSize_Button,
+    }
+end
+function this.Restore_Anchor_Default(def_anchorstyle, def_anchor_color1, def_anchor_color2, const)
+    def_anchorstyle.selected_item = const.Visuals_AnchorPoint_Type.none
+    def_anchor_color1.text = "FF0"
+    def_anchor_color2.text = "FF0"
 end
 
 function this.Define_ColorURL_TextBox(vars_ui, const)
