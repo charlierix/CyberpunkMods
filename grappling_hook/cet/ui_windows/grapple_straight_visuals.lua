@@ -160,11 +160,9 @@ function this.Refresh_Line_ColorPrimary_Value(def, grapple)
 end
 function this.Define_Line_ColorPrimary_Help(relative_to, const)
     -- HelpButton
-    return
+    local retVal =
     {
         invisible_name = "GrappleStraight_Visuals_Line_ColorPrimary_Help",
-
-        tooltip = this.GetColorTooltipText(),
 
         position =
         {
@@ -182,12 +180,19 @@ function this.Define_Line_ColorPrimary_Help(relative_to, const)
 
         CalcSize = CalcSize_HelpButton,
     }
+
+    retVal.tooltip =
+[[The grapple rope's color
+
+]] .. this.GetColorTooltipText()
+
+    return retVal
 end
 function this.Define_Line_ColorPrimary_Label(relative_to, const)
     -- Label
     return
     {
-        text = "Color",
+        text = "Grapple Line Color",
 
         position =
         {

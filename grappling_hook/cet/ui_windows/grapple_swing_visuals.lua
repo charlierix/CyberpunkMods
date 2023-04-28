@@ -32,6 +32,15 @@ function DefineWindow_GrappleSwing_Visuals(vars_ui, const)
     gswing_visuals.anchor_color2_label = this.Define_Anchor_Color2_Label(gswing_visuals.anchor_color2_help, const)
     gswing_visuals.anchor_color2_sample = this.Define_Anchor_Color2_Sample(gswing_visuals.anchor_color2_value, const)
 
+    -- stop plane
+    gswing_visuals.stopplane_checkbox = this.Define_StopPlane_Checkbox(gswing_visuals.anchor_color2_value, const)
+    gswing_visuals.stopplane_help = this.Define_StopPlane_Help(gswing_visuals.stopplane_checkbox, const)
+
+    gswing_visuals.stopplane_color_value = this.Define_StopPlane_Color_Value(gswing_visuals.stopplane_checkbox, const)
+    gswing_visuals.stopplane_color_help = this.Define_StopPlane_Color_Help(gswing_visuals.stopplane_color_value, const)
+    gswing_visuals.stopplane_color_label = this.Define_StopPlane_Color_Label(gswing_visuals.stopplane_color_help, const)
+    gswing_visuals.stopplane_color_sample = this.Define_StopPlane_Color_Sample(gswing_visuals.stopplane_color_value, const)
+
     gswing_visuals.colorurl = this.Define_ColorURL_TextBox(vars_ui, const)
 
     gswing_visuals.okcancel = Define_OkCancelButtons(false, vars_ui, const)
@@ -47,9 +56,13 @@ function ActivateWindow_GrappleSwing_Visuals(vars_ui, const)
     vars_ui.gswing_visuals.changes:Clear()
 
     vars_ui.gswing_visuals.line_colorprim_value.text = nil
+
     vars_ui.gswing_visuals.anchorstyle_combo.selected_item = nil
     vars_ui.gswing_visuals.anchor_color1_value.text = nil
     vars_ui.gswing_visuals.anchor_color2_value.text = nil
+
+    vars_ui.gswing_visuals.stopplane_checkbox.isChecked = nil
+    vars_ui.gswing_visuals.stopplane_color_value.text = nil
 end
 
 function DrawWindow_GrappleSwing_Visuals(isCloseRequested, vars_ui, player, window, const)
@@ -79,7 +92,12 @@ function DrawWindow_GrappleSwing_Visuals(isCloseRequested, vars_ui, player, wind
     this.Refresh_Anchor_Color2_Value(gswing_visuals.anchor_color2_value, grapple)
     this.Refresh_Anchor_Color2_Sample(gswing_visuals.anchor_color2_sample, gswing_visuals.anchor_color2_value)
 
-    this.Refresh_IsDirty(gswing_visuals.okcancel, changes, gswing_visuals.line_colorprim_value, gswing_visuals.anchorstyle_combo, gswing_visuals.anchor_color1_value, gswing_visuals.anchor_color2_value, grapple)
+    this.Refresh_StopPlane_Checkbox(gswing_visuals.stopplane_checkbox, grapple)
+
+    this.Refresh_StopPlane_Color_Value(gswing_visuals.stopplane_color_value, grapple)
+    this.Refresh_StopPlane_Color_Sample(gswing_visuals.stopplane_color_sample, gswing_visuals.stopplane_color_value)
+
+    this.Refresh_IsDirty(gswing_visuals.okcancel, changes, gswing_visuals.line_colorprim_value, gswing_visuals.anchorstyle_combo, gswing_visuals.anchor_color1_value, gswing_visuals.anchor_color2_value, gswing_visuals.stopplane_checkbox, gswing_visuals.stopplane_color_value, grapple)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -111,11 +129,19 @@ function DrawWindow_GrappleSwing_Visuals(isCloseRequested, vars_ui, player, wind
     Draw_TextBox(gswing_visuals.anchor_color2_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
     Draw_ColorSample(gswing_visuals.anchor_color2_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
+    Draw_CheckBox(gswing_visuals.stopplane_checkbox, vars_ui.style.checkbox, vars_ui.style.colors)
+    Draw_HelpButton(gswing_visuals.stopplane_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+
+    Draw_Label(gswing_visuals.stopplane_color_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(gswing_visuals.stopplane_color_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_TextBox(gswing_visuals.stopplane_color_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
+    Draw_ColorSample(gswing_visuals.stopplane_color_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
+
     Draw_TextBox(gswing_visuals.colorurl, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gswing_visuals.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        this.Save(player, grapple, changes, gswing_visuals.line_colorprim_value, gswing_visuals.anchorstyle_combo, gswing_visuals.anchor_color1_value, gswing_visuals.anchor_color2_value)
+        this.Save(player, grapple, changes, gswing_visuals.line_colorprim_value, gswing_visuals.anchorstyle_combo, gswing_visuals.anchor_color1_value, gswing_visuals.anchor_color2_value, gswing_visuals.stopplane_checkbox, gswing_visuals.stopplane_color_value)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
 
     elseif isCancelClicked then
@@ -143,7 +169,7 @@ function this.Define_Line_ColorPrimary_Value(const)
         position =
         {
             pos_x = 0,
-            pos_y = -100,
+            pos_y = -150,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -160,11 +186,9 @@ function this.Refresh_Line_ColorPrimary_Value(def, grapple)
 end
 function this.Define_Line_ColorPrimary_Help(relative_to, const)
     -- HelpButton
-    return
+    local retVal =
     {
         invisible_name = "GrappleSwing_Visuals_Line_ColorPrimary_Help",
-
-        tooltip = this.GetColorTooltipText(),
 
         position =
         {
@@ -182,6 +206,13 @@ function this.Define_Line_ColorPrimary_Help(relative_to, const)
 
         CalcSize = CalcSize_HelpButton,
     }
+
+    retVal.tooltip =
+[[The grapple rope's color
+
+]] .. this.GetColorTooltipText()
+
+    return retVal
 end
 function this.Define_Line_ColorPrimary_Label(relative_to, const)
     -- Label
@@ -562,6 +593,188 @@ function this.Refresh_Anchor_Color2_Sample(def, def_value)
     def.color_hex = def_value.text
 end
 
+function this.Define_StopPlane_Checkbox(relative_to, const)
+    -- CheckBox
+    return
+    {
+        invisible_name = "GrappleSwing_Visuals_StopPlane_Checkbox",
+
+        text = "Show Stop Plane",
+
+        isEnabled = true,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 48,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        CalcSize = CalcSize_CheckBox,
+    }
+end
+function this.Refresh_StopPlane_Checkbox(def, grapple)
+    --NOTE: ActivateWindow_GrappleSwing_Visuals sets this to nil
+    if def.isChecked == nil then
+        def.isChecked = grapple.visuals.show_stopplane
+    end
+end
+function this.Define_StopPlane_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "GrappleSwing_Visuals_StopPlane_Help",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[When starting a swing, a stop plane will be calculated.  The swing will continue while the player is behind that plane, but will end once going through that plane
+
+Even though it's an infinite plane, it is visualized as a circle
+
+If you want realism, disable drawing it, but if you want the extra visual to help see the mechanics of the swing, then leave it on]]
+
+    return retVal
+end
+
+function this.Define_StopPlane_Color_Value(relative_to, const)
+    -- TextBox
+    return
+    {
+        invisible_name = "GrappleSwing_Visuals_StopPlane_Color_Value",
+
+        maxChars = 8,
+        width = 120,
+
+        isMultiLine = false,
+
+        foreground_override = "edit_value",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 12,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        CalcSize = CalcSize_TextBox,
+    }
+end
+function this.Refresh_StopPlane_Color_Value(def, grapple)
+    -- There is no need to store changes in the changes list.  Text is directly changed as they type
+    --NOTE: ActivateWindow_GrappleSwing_Visuals sets this to nil
+    if not def.text then
+        def.text = grapple.visuals.stopplane_color
+    end
+end
+function this.Define_StopPlane_Color_Help(relative_to, const)
+    -- HelpButton
+    return
+    {
+        invisible_name = "GrappleSwing_Visuals_StopPlane_Color_Help",
+
+        tooltip = this.GetColorTooltipText(),
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_HelpButton,
+    }
+end
+function this.Define_StopPlane_Color_Label(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Color (dot)",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_StopPlane_Color_Sample(relative_to, const)
+    -- ColorSample
+    return
+    {
+        invisible_name = "GrappleSwing_Visuals_StopPlane_Color_Sample",
+
+        color_hex = "8F00",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.right,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_ColorSample,
+    }
+end
+function this.Refresh_StopPlane_Color_Sample(def, def_value)
+    def.color_hex = def_value.text
+end
+
 function this.Define_ColorURL_TextBox(vars_ui, const)
     -- TextBox
     return
@@ -600,7 +813,7 @@ function this.GetColorTooltipText()
     80FF0000 would be 50% transparent red]]
 end
 
-function this.Refresh_IsDirty(def, changes, def_line_colorprim, def_anchorstyle, def_anchor_color1, def_anchor_color2, grapple)
+function this.Refresh_IsDirty(def, changes, def_line_colorprim, def_anchorstyle, def_anchor_color1, def_anchor_color2, def_stopplane_checkbox, def_stopplane_color, grapple)
     local isDirty = false
 
     if changes:IsDirty() then
@@ -618,18 +831,26 @@ function this.Refresh_IsDirty(def, changes, def_line_colorprim, def_anchorstyle,
 
     elseif def_anchor_color2.text and def_anchor_color2.text ~= grapple.visuals.anchorpoint_color_2 then
         isDirty = true
+
+    elseif def_stopplane_checkbox.isChecked ~= grapple.visuals.show_stopplane then
+        isDirty = true
+
+    elseif def_stopplane_color.text and def_stopplane_color.text ~= grapple.visuals.stopplane_color then
+        isDirty = true
     end
 
     def.isDirty = isDirty
 end
 
-function this.Save(player, grapple, changes, def_line_colorprim, def_anchorstyle, def_anchor_color1, def_anchor_color2)
+function this.Save(player, grapple, changes, def_line_colorprim, def_anchorstyle, def_anchor_color1, def_anchor_color2, def_stopplane_checkbox, def_stopplane_color)
     --grapple.aim_straight.aim_duration = grapple.aim_straight.aim_duration + changes:Get("aim_duration")
 
     grapple.visuals.grappleline_color_primary = def_line_colorprim.text
     grapple.visuals.anchorpoint_type = def_anchorstyle.selected_item
     grapple.visuals.anchorpoint_color_1 = def_anchor_color1.text
     grapple.visuals.anchorpoint_color_2 = def_anchor_color2.text
+    grapple.visuals.show_stopplane = def_stopplane_checkbox.isChecked
+    grapple.visuals.stopplane_color = def_stopplane_color.text
 
     player:Save()
 end
