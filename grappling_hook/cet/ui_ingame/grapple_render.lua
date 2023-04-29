@@ -21,6 +21,29 @@ local visuals_line = StickyList:new()
 local visuals_triangle = StickyList:new()
 local visuals_text = StickyList:new()
 
+local line_starttime = nil
+local line_duration = nil
+-- Each item in this list has these props.  These points control a bezier.  Using functions like this instead of positions and
+-- velocities because it's easy to calculate as time marches on.  Not as realistic, but the whole animation will run very fast
+-- while moving away from the player, so good enough
+--
+-- time goes from 0 to 1
+-- radius = (1 - time) * decay^time * height * cos(pi/2 * time * speed)
+-- along = (1 - time) * decay^time * height * sin(pi/2 * time * speed)
+
+-- radius_decay
+-- radius_height
+-- radius_speed
+-- radius_radians
+-- along_decay
+-- along_height
+-- along_speed
+-- along_percent    percent along the spread
+local line_controlpoints = StickyList:new()
+local line_points_spread = nil
+local line_controlpoints_forbezier = nil
+--local line_log = nil
+
 local endplane_id = nil
 local endplane_recalc_distsqr = nil
 local endplane_pos = nil
@@ -71,7 +94,7 @@ end
 
 ----------------------------------- Public Methods ------------------------------------
 
-function GrappleRender.StraightLine(from, to, visuals, const)
+function GrappleRender.StraightLine_INSTANT(from, to, visuals, const)
     if visuals.grappleline_type == const.Visuals_GrappleLine_Type.solid_line then
         local item = items:GetNewItem()
         this.SetItemBase(item, item_types.line, nil, visuals.grappleline_color_primary, 4, nil, nil, true)
@@ -82,6 +105,15 @@ function GrappleRender.StraightLine(from, to, visuals, const)
         LogError("Unknown Visuals_GrappleLine_Type: " .. tostring(visuals.grappleline_type))
     end
 end
+
+function GrappleRender.StraightLine(from, to, visuals, const)
+    if visuals.grappleline_type == const.Visuals_GrappleLine_Type.solid_line then
+        this.SolidLine(from, to, visuals, const)
+    else
+        LogError("Unknown Visuals_GrappleLine_Type: " .. tostring(visuals.grappleline_type))
+    end
+end
+
 
 function GrappleRender.EndPlane(pos, normal, visuals)
     if endplane_id then
@@ -142,11 +174,17 @@ end
 function GrappleRender.Clear()
     items:Clear()
 
+    line_starttime = nil
+    line_controlpoints:Clear()
+    line_controlpoints_forbezier = nil
+
     endplane_id = nil
     endplane_recalc_distsqr = nil
     endplane_pos = nil
     endplane_normal = nil
     endplane_visuals = nil
+
+    anchor_id = nil
 end
 
 function GrappleRender.GetGrappleFrom(eye_pos, look_dir)
@@ -161,6 +199,164 @@ function GrappleRender.GetGrappleFrom(eye_pos, look_dir)
     local forward = CrossProduct3D(up, right)
 
     return Vector4.new(eye_pos.x + forward.x * OFFSET_HORZ, eye_pos.y + forward.y * OFFSET_HORZ, eye_pos.z + OFFSET_VERT, 1)
+end
+
+----------------------------- Private Methods (solid line) ----------------------------
+
+function this.SolidLine(from, to, visuals, const)
+    if not line_starttime then
+        this.Initialize_SolidLine_Bezier(from, to)
+        --this.Initialize_SolidLine_Log()
+    end
+
+    local elapsed = timer - line_starttime
+
+    if elapsed < line_duration then
+        this.SolidLine_Bezier(from, to, visuals, elapsed / line_duration, const)
+    else
+        -- The bezier has travelled, just draw a straight line
+        -- if line_log then
+        --     line_log:Save("line animation")
+        --     line_log = nil
+        -- end
+
+        this.SolidLine_Add(from, to, visuals)
+    end
+end
+
+function this.Initialize_SolidLine_Bezier(from, to)
+    local SPEED = 60
+    local MAX_MID = 3
+    local MIN_SPREAD = 0.2
+    local MAX_SPREAD = 0.5
+    local MIN_DECAY = 0.2
+    local MAX_DECAY = 0.8
+    local MIN_SPEED = 0.2
+    local MAX_SPEED = 3.5
+    local MIN_RAD_HEIGHT = 0.2
+    local MAX_RAD_HEIGHT = 1.3
+    --local MIN_ALONG_HEIGHT = 0        -- along doesn't affect the outcome enough to justify the cost of the extra call to math.sin
+    --local MAX_ALONG_HEIGHT = 0.2
+
+    -- Figure out how long it will take to travel this initial distance
+    local distance = math.sqrt(GetVectorDiffLengthSqr(from, to))
+    line_duration = distance / SPEED
+
+    -- Pick a size (in percent of total line length) that the line_controlpoints will be (from tip back to player)
+    line_points_spread = GetScaledValue(MIN_SPREAD, MAX_SPREAD, 0, 1, math.random())
+
+    line_controlpoints:Clear()      -- should already be cleared, but it's cheap to do again
+
+    local mid_count = math.random(1, MAX_MID)
+    local count = mid_count + 2
+
+    for i = 0, count - 1, 1 do
+        local point = line_controlpoints:GetNewItem()
+
+        -- Radius
+        point.radius_decay = GetScaledValue(MIN_DECAY, MAX_DECAY, 0, 1, math.random())
+        point.radius_height = GetScaledValue(MIN_RAD_HEIGHT, MAX_RAD_HEIGHT, 0, 1, math.random())
+        point.radius_speed = GetScaledValue(MIN_SPEED, MAX_SPEED, 0, 1, math.random())
+        point.radius_radians = math.random() * math.pi * 2
+
+        -- Along
+        -- point.along_decay = GetScaledValue(MIN_DECAY, MAX_DECAY, 0, 1, math.random())
+        -- point.along_height = GetScaledValue(MIN_ALONG_HEIGHT, MAX_ALONG_HEIGHT, 0, 1, math.random())
+        -- point.along_speed = GetScaledValue(MIN_SPEED, MAX_SPEED, 0, 1, math.random())
+
+        point.along_percent = i / (count - 1)
+    end
+
+    line_controlpoints_forbezier = {}
+
+    line_starttime = timer
+end
+
+-- function this.Initialize_SolidLine_Log()
+--     line_log = DebugRenderLogger:new(true)
+
+--     line_log:DefineCategory("control", "888", 0.33)
+--     line_log:DefineCategory("from", "FF19A30D", 3)
+--     line_log:DefineCategory("to", "FFC71717", 3)
+--     line_log:DefineCategory("line", "FFF")
+-- end
+
+function this.SolidLine_Bezier(from, to, visuals, time, const)
+    local COUNT_PRE = 8     -- use fewer points from 0 to first line_controlpoints_forbezier (it will be mostly a straight line in this region)
+    local COUNT_POST = 18
+
+    this.SolidLine_Bezier_PrepControls(from, to, time)
+
+    -- line_log:NewFrame()
+    -- line_log:Add_Dot(from, "from")
+    -- line_log:Add_Dot(to, "to")
+
+    -- for i = 1, #line_controlpoints_forbezier, 1 do
+    --     line_log:Add_Dot(line_controlpoints_forbezier[i], "control")
+    -- end
+
+    local mid_percent = 1 - line_points_spread
+
+    local prev_pos = from
+
+    for i = 1, COUNT_PRE - 1, 1 do
+        local percent_pre = GetScaledValue(0, 1, 0, COUNT_PRE - 1, i)
+        local percent = GetScaledValue(0, mid_percent, 0, 1, percent_pre)
+        local pos = GetBezierPoint_ControlPoints(percent, line_controlpoints_forbezier)
+
+        this.SolidLine_Add(prev_pos, pos, visuals)
+        --line_log:Add_Line(prev_pos, pos, "line")
+
+        prev_pos = pos
+    end
+
+    for i = 1, COUNT_POST - 1, 1 do
+        local percent_post = GetScaledValue(0, 1, 0, COUNT_POST - 1, i)
+        local percent = GetScaledValue(mid_percent, 1, 0, 1, percent_post)
+        local pos = GetBezierPoint_ControlPoints(percent, line_controlpoints_forbezier)
+
+        this.SolidLine_Add(prev_pos, pos, visuals)
+        --line_log:Add_Line(prev_pos, pos, "line")
+
+        prev_pos = pos
+    end
+end
+function this.SolidLine_Bezier_PrepControls(from, to, time)
+    if not up then
+        up = Vector4.new(0, 0, 1, 1)
+    end
+
+    local from_to = MultiplyVector(SubtractVectors(to, from), time)     -- at time 0, line is zero length, at time 1, line is full length
+    local from_to_unit = ToUnit(from_to)
+
+    line_controlpoints_forbezier[1] = from
+
+    for i = 1, line_controlpoints:GetCount(), 1 do
+        local point = line_controlpoints:GetItem(i)
+
+        -- starting with (1-time) to make sure it's zero at time one
+        -- (decay^time) gives an exponential decay
+        -- height * cos() gives some oscillation over time
+        local radius_dist = (1 - time) * (point.radius_decay ^ time) * point.radius_height * math.cos(math.pi / 2 * time * point.radius_speed)
+        --local along_dist = (1 - time) * (point.along_decay ^ time) * point.along_height * math.sin(math.pi / 2 * time * point.along_speed)
+
+        local radius_vec_unit = RotateVector3D_axis_radian(CrossProduct3D(from_to_unit, up), from_to_unit, point.radius_radians)
+
+        local percent_along = 1 - line_points_spread + (line_points_spread * point.along_percent)
+
+        local line_point = AddVectors(from, MultiplyVector(from_to, percent_along))
+        --line_point = AddVectors(line_point, MultiplyVector(from_to_unit, along_dist))
+        line_point = AddVectors(line_point, MultiplyVector(radius_vec_unit, radius_dist))
+
+        line_controlpoints_forbezier[i + 1] = line_point
+    end
+end
+
+function this.SolidLine_Add(from, to, visuals)
+    local item = items:GetNewItem()
+    this.SetItemBase(item, item_types.line, nil, visuals.grappleline_color_primary, 4, nil, nil, true)
+    item.point1 = from
+    item.point2 = to
 end
 
 ----------------------------------- Private Methods -----------------------------------
