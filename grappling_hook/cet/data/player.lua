@@ -61,20 +61,29 @@ function Player:SetGrappleByIndex(index, grapple)
     self["grapple" .. tostring(index)] = grapple
 end
 
-function Player:TransferExperience_GrappleStraight(grapple, purchaseXP)
+function Player:TransferExperience_Grapple(grapple, purchaseXP)
     if self.experience - purchaseXP < 0 then
-        LogError("TransferExperience_GrappleStraight: Not enough player xp: " .. tostring(self.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
+        LogError("TransferExperience_Grapple: Not enough player xp: " .. tostring(self.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
         return false
 
     elseif grapple.experience + purchaseXP < 0 then
-        LogError("TransferExperience_GrappleStraight: Not enough grapple xp: " .. tostring(grapple.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
+        LogError("TransferExperience_Grapple: Not enough grapple xp: " .. tostring(grapple.experience) .. ", purchaseXP: " .. tostring(purchaseXP))
         return false
     end
 
     grapple.experience = grapple.experience + purchaseXP
     self.experience = self.experience - purchaseXP
 
-    grapple.energy_cost = GetEnergyCost_GrappleStraight(grapple.experience)
+    if grapple.aim_straight then
+        grapple.energy_cost = GetEnergyCost_GrappleStraight(grapple.experience)
+
+    elseif grapple.aim_swing then
+        grapple.energy_cost = GetEnergyCost_GrappleSwing(grapple)
+
+    else
+        LogError("TransferExperience_Grapple: Unknown type of grapple")
+        return false
+    end
 
     return true
 end

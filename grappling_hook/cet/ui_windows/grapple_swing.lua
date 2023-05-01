@@ -11,20 +11,36 @@ function DefineWindow_Grapple_Swing(vars_ui, const)
     grapple_swing.name = this.Define_Name(const)
     grapple_swing.description = this.Define_Description(grapple_swing.name, const)
 
-
     grapple_swing.visuals = this.Define_Visuals(const)
 
+    local prompt, value, updown, help = Define_PropertyPack_Vertical("Energy Cost Reduction", -120, -100, const, false, "Grapple_Swing_EnergyCostReduction", this.Tooltip_EnergyCostReduction())
+    grapple_swing.energyreduce_prompt = prompt
+    grapple_swing.energyreduce_value = value
+    grapple_swing.energyreduce_updown = updown
+    grapple_swing.energyreduce_help = help
 
-    -- Air Density % (from 0.1 to 3)
-    -- Gravity % (from 0.1 to 2)
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Boost Cost Reduction", 120, -100, const, false, "Grapple_Swing_BoostCostReduction", this.Tooltip_BoostCostReduction())
+    grapple_swing.boostreduce_prompt = prompt
+    grapple_swing.boostreduce_value = value
+    grapple_swing.boostreduce_updown = updown
+    grapple_swing.boostreduce_help = help
 
-    -- Accel Mult % (from 0.5 to 2)
-    -- Distance Mult % (from 0.5 to 2)
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Boost Accel", -120, 100, const, false, "Grapple_Swing_BoostAccel", this.Tooltip_BoostAccel())
+    grapple_swing.boostaccel_prompt = prompt
+    grapple_swing.boostaccel_value = value
+    grapple_swing.boostaccel_updown = updown
+    grapple_swing.boostaccel_help = help
+
+    prompt, value, updown, help = Define_PropertyPack_Vertical("Boosting Air Friction Reduction", 120, 100, const, false, "Grapple_Swing_AirFrictionReduction", this.Tooltip_AirFrictionReduction())
+    grapple_swing.airfrictionreduce_prompt = prompt
+    grapple_swing.airfrictionreduce_value = value
+    grapple_swing.airfrictionreduce_updown = updown
+    grapple_swing.airfrictionreduce_help = help
+
 
     -- Should Latch
     -- Max Latch Angle
-
-    -- Show extra graphics
+    -- Max Latch Relative Speed
 
 
     grapple_swing.experience = Define_Experience(const, "grapple")
@@ -63,9 +79,21 @@ function DrawWindow_Grapple_Swing(isCloseRequested, vars_ui, player, window, con
 
     this.Refresh_Description(grapple_swing.description, grapple)
 
-    this.Refresh_Experience(grapple_swing.experience, player, grapple)
+    this.Refresh_EnergyCostReduction_Value(grapple_swing.energyreduce_value, grapple, changes)
+    this.Refresh_EnergyCostReduction_UpDown(grapple_swing.energyreduce_updown, grapple, player, changes)
 
-    this.Refresh_IsDirty(grapple_swing.okcancel, grapple_swing.name, grapple)
+    this.Refresh_BoostCostReduction_Value(grapple_swing.boostreduce_value, grapple, changes)
+    this.Refresh_BoostCostReduction_UpDown(grapple_swing.boostreduce_updown, grapple, player, changes)
+
+    this.Refresh_BoostAccel_Value(grapple_swing.boostaccel_value, grapple, changes)
+    this.Refresh_BoostAccel_UpDown(grapple_swing.boostaccel_updown, grapple, player, changes)
+
+    this.Refresh_AirFrictionReduction_Value(grapple_swing.airfrictionreduce_value, grapple, changes)
+    this.Refresh_AirFrictionReduction_UpDown(grapple_swing.airfrictionreduce_updown, grapple, player, changes)
+
+    this.Refresh_Experience(grapple_swing.experience, player, grapple, changes)
+
+    this.Refresh_IsDirty(grapple_swing.okcancel, grapple_swing.name, changes, grapple)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -79,6 +107,42 @@ function DrawWindow_Grapple_Swing(isCloseRequested, vars_ui, player, window, con
     Draw_TextBox(grapple_swing.name, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
     Draw_Label(grapple_swing.description, vars_ui.style.colors, vars_ui.scale)
 
+    -- Energy Cost Reduction
+    Draw_Label(grapple_swing.energyreduce_prompt, vars_ui.style.colors, vars_ui.scale)
+    Draw_Label(grapple_swing.energyreduce_value, vars_ui.style.colors, vars_ui.scale)
+
+    local isDownClicked, isUpClicked = Draw_UpDownButtons(grapple_swing.energyreduce_updown, vars_ui.style.updownButtons, vars_ui.scale)
+    this.Update_EnergyCostReduction(grapple_swing.energyreduce_updown, changes, isDownClicked, isUpClicked)
+
+    Draw_HelpButton(grapple_swing.energyreduce_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+
+    -- Boost Cost Reduction
+    Draw_Label(grapple_swing.boostreduce_prompt, vars_ui.style.colors, vars_ui.scale)
+    Draw_Label(grapple_swing.boostreduce_value, vars_ui.style.colors, vars_ui.scale)
+
+    isDownClicked, isUpClicked = Draw_UpDownButtons(grapple_swing.boostreduce_updown, vars_ui.style.updownButtons, vars_ui.scale)
+    this.Update_BoostCostReduction(grapple_swing.boostreduce_updown, changes, isDownClicked, isUpClicked)
+
+    Draw_HelpButton(grapple_swing.boostreduce_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+
+    -- Boost Accel
+    Draw_Label(grapple_swing.boostaccel_prompt, vars_ui.style.colors, vars_ui.scale)
+    Draw_Label(grapple_swing.boostaccel_value, vars_ui.style.colors, vars_ui.scale)
+
+    isDownClicked, isUpClicked = Draw_UpDownButtons(grapple_swing.boostaccel_updown, vars_ui.style.updownButtons, vars_ui.scale)
+    this.Update_BoostAccel(grapple_swing.boostaccel_updown, changes, isDownClicked, isUpClicked)
+
+    Draw_HelpButton(grapple_swing.boostaccel_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+
+    -- Air Friction Reduction
+    Draw_Label(grapple_swing.airfrictionreduce_prompt, vars_ui.style.colors, vars_ui.scale)
+    Draw_Label(grapple_swing.airfrictionreduce_value, vars_ui.style.colors, vars_ui.scale)
+
+    isDownClicked, isUpClicked = Draw_UpDownButtons(grapple_swing.airfrictionreduce_updown, vars_ui.style.updownButtons, vars_ui.scale)
+    this.Update_AirFrictionReduction(grapple_swing.airfrictionreduce_updown, changes, isDownClicked, isUpClicked)
+
+    Draw_HelpButton(grapple_swing.airfrictionreduce_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+
     if Draw_SummaryButton(grapple_swing.visuals, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
         TransitionWindows_Swing_Visuals(vars_ui, const)
     end
@@ -87,7 +151,7 @@ function DrawWindow_Grapple_Swing(isCloseRequested, vars_ui, player, window, con
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_swing.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        this.Save(player, grapple, grapple_swing.name)
+        this.Save(player, grapple, grapple_swing.name, changes)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
@@ -171,10 +235,10 @@ function this.Define_Visuals(const)
 
         position =
         {
-            pos_x = -250,
-            pos_y = -15,
+            pos_x = 0,
+            pos_y = 60,
             horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.top,
         },
 
         invisible_name = "Grapple_Swing_Visuals",
@@ -183,23 +247,99 @@ function this.Define_Visuals(const)
     }
 end
 
-function this.Refresh_Experience(def, player, grapple)
-    def.content.available.value = tostring(math.floor(player.experience))
-    def.content.used.value = tostring(Round(grapple.experience))
+function this.Tooltip_EnergyCostReduction()
+    return
+[[]]
 end
 
-function this.Refresh_IsDirty(def, def_name, grapple)
+function this.Tooltip_BoostCostReduction()
+    return
+[[]]
+end
+
+function this.Tooltip_BoostAccel()
+    return
+[[]]
+end
+
+function this.Tooltip_AirFrictionReduction()
+    return
+[[]]
+end
+
+function this.Refresh_EnergyCostReduction_Value(def, grapple, changes)
+    def.text = tostring(Round((grapple.aim_swing.cost_reduction_percent + changes:Get("cost_reduction_percent")) * 100)) .. "%"
+end
+function this.Refresh_EnergyCostReduction_UpDown(def, grapple, player, changes)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(grapple.aim_swing.cost_reduction_percent_update, grapple.aim_swing.cost_reduction_percent + changes:Get("cost_reduction_percent"), player.experience + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0, 100)
+end
+function this.Update_EnergyCostReduction(def, changes, isDownClicked, isUpClicked)
+    Update_UpDownButton("cost_reduction_percent", "experience", isDownClicked, isUpClicked, def, changes)
+end
+
+function this.Refresh_BoostCostReduction_Value(def, grapple, changes)
+    def.text = tostring(Round((grapple.aim_swing.boost_cost_reduction_percent + changes:Get("boost_cost_reduction_percent")) * 100)) .. "%"
+end
+function this.Refresh_BoostCostReduction_UpDown(def, grapple, player, changes)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(grapple.aim_swing.boost_cost_reduction_percent_update, grapple.aim_swing.boost_cost_reduction_percent + changes:Get("boost_cost_reduction_percent"), player.experience + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0, 100)
+end
+function this.Update_BoostCostReduction(def, changes, isDownClicked, isUpClicked)
+    Update_UpDownButton("boost_cost_reduction_percent", "experience", isDownClicked, isUpClicked, def, changes)
+end
+
+function this.Refresh_BoostAccel_Value(def, grapple, changes)
+    def.text = tostring(Round(grapple.aim_swing.boost_accel + changes:Get("boost_accel")))
+end
+function this.Refresh_BoostAccel_UpDown(def, grapple, player, changes)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(grapple.aim_swing.boost_accel_update, grapple.aim_swing.boost_accel + changes:Get("boost_accel"), player.experience + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0, 1)
+end
+function this.Update_BoostAccel(def, changes, isDownClicked, isUpClicked)
+    Update_UpDownButton("boost_accel", "experience", isDownClicked, isUpClicked, def, changes)
+end
+
+function this.Refresh_AirFrictionReduction_Value(def, grapple, changes)
+    def.text = tostring(Round((grapple.aim_swing.boostedairfriction_reduction_percent + changes:Get("boostedairfriction_reduction_percent")) * 100)) .. "%"
+end
+function this.Refresh_AirFrictionReduction_UpDown(def, grapple, player, changes)
+    local down, up, isFree_down, isFree_up = GetDecrementIncrement(grapple.aim_swing.boostedairfriction_reduction_percent_update, grapple.aim_swing.boostedairfriction_reduction_percent + changes:Get("boostedairfriction_reduction_percent"), player.experience + changes:Get("experience"))
+    Refresh_UpDownButton(def, down, up, isFree_down, isFree_up, 0, 100)
+end
+function this.Update_AirFrictionReduction(def, changes, isDownClicked, isUpClicked)
+    Update_UpDownButton("boostedairfriction_reduction_percent", "experience", isDownClicked, isUpClicked, def, changes)
+end
+
+function this.Refresh_Experience(def, player, grapple, changes)
+    def.content.available.value = tostring(math.floor(player.experience + changes:Get("experience")))
+    def.content.used.value = tostring(Round(grapple.experience - changes:Get("experience")))
+end
+
+function this.Refresh_IsDirty(def, def_name, changes, grapple)
     local isDirty = false
 
     if def_name.text and def_name.text ~= grapple.name then
+        isDirty = true
+
+    elseif changes:IsDirty() then
         isDirty = true
     end
 
     def.isDirty = isDirty
 end
 
-function this.Save(player, grapple, def_name)
+function this.Save(player, grapple, def_name, changes)
+    if not player:TransferExperience_Grapple(grapple, -changes:Get("experience")) then
+        do return end
+    end
+
     grapple.name = def_name.text
+
+    grapple.aim_swing.cost_reduction_percent = grapple.aim_swing.cost_reduction_percent + changes:Get("cost_reduction_percent")
+    grapple.aim_swing.boost_cost_reduction_percent = grapple.aim_swing.boost_cost_reduction_percent + changes:Get("boost_cost_reduction_percent")
+    grapple.aim_swing.boost_accel = grapple.aim_swing.boost_accel + changes:Get("boost_accel")
+    grapple.aim_swing.boostedairfriction_reduction_percent = grapple.aim_swing.boostedairfriction_reduction_percent + changes:Get("boostedairfriction_reduction_percent")
 
     player:Save()
 end

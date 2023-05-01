@@ -287,7 +287,7 @@ function this.Define_AvailableGrapples(const)
         selected_index = 0,
 
         width = 400,
-        height = 650,
+        height = 490,
 
         position =
         {

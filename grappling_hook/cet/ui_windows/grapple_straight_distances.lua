@@ -281,7 +281,7 @@ function this.Refresh_IsDirty(def, changes, def_checkbox, def_slider, grapple)
 end
 
 function this.Save(player, grapple, changes, def_checkbox, def_slider)
-    if not player:TransferExperience_GrappleStraight(grapple, -changes:Get("experience")) then
+    if not player:TransferExperience_Grapple(grapple, -changes:Get("experience")) then
         do return end
     end
 

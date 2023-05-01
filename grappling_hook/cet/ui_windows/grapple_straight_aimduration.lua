@@ -124,7 +124,7 @@ function this.Refresh_IsDirty(def, changes)
 end
 
 function this.Save(player, grapple, changes)
-    if not player:TransferExperience_GrappleStraight(grapple, -changes:Get("experience")) then
+    if not player:TransferExperience_Grapple(grapple, -changes:Get("experience")) then
         do return end
     end
 

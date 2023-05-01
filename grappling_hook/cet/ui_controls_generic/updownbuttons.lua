@@ -22,6 +22,10 @@ end
 -- Returns:
 --  isDownClicked, isUpClicked, isHovered
 function Draw_UpDownButtons(def, style_updown, scale)
+    -- Invisible Buttons (needed because text must be unique across the window for click to register)
+    local isDownClicked, isDownHovered = Draw_InvisibleButton(def.invisible_name .. "Down", def.render_pos.left + def.sizes.down_left + (def.sizes.down_width / 2), def.render_pos.top + def.sizes.down_top + (def.sizes.down_height / 2), def.sizes.down_width, def.sizes.down_height, 0)
+    local isUpClicked, isUpHovered = Draw_InvisibleButton(def.invisible_name .. "Up", def.render_pos.left + def.sizes.up_left + (def.sizes.up_width / 2), def.render_pos.top + def.sizes.up_top + (def.sizes.up_height / 2), def.sizes.up_width, def.sizes.up_height, 0)
+
     -- Concatenate +- with model's text
     local text_down, text_up = this.FinalText(def)
 
@@ -36,11 +40,15 @@ function Draw_UpDownButtons(def, style_updown, scale)
 
     if def.isEnabled_down then
         if def.isFree_down then
-            ImGui.PushStyleColor(ImGuiCol.Button, style_updown.free_color_standard_abgr)
-            ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.free_color_hover_abgr)
+            local color = this.GetButtonColor(isDownClicked, isDownHovered, style_updown.free_color_standard_abgr, style_updown.free_color_hover_abgr, style_updown.free_color_click_abgr)
+            ImGui.PushStyleColor(ImGuiCol.Button, color)
+            --ImGui.PushStyleColor(ImGuiCol.Button, style_updown.free_color_standard_abgr)
+            ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.free_color_hover_abgr)        -- this will never get used (because invisible is covering), but there's no harm in setting it
             ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.free_color_click_abgr)
         else
-            ImGui.PushStyleColor(ImGuiCol.Button, style_updown.down_color_standard_abgr)
+            local color = this.GetButtonColor(isDownClicked, isDownHovered, style_updown.down_color_standard_abgr, style_updown.down_color_hover_abgr, style_updown.down_color_click_abgr)
+            ImGui.PushStyleColor(ImGuiCol.Button, color)
+            --ImGui.PushStyleColor(ImGuiCol.Button, style_updown.down_color_standard_abgr)
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.down_color_hover_abgr)
             ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.down_color_click_abgr)
         end
@@ -57,7 +65,8 @@ function Draw_UpDownButtons(def, style_updown, scale)
 
     ImGui.SetCursorPos(def.render_pos.left + def.sizes.down_left, def.render_pos.top + def.sizes.down_top)
 
-    local isDownClicked = ImGui.Button(text_down)       -- this bool is ANDed with isEnabled at the bottom of this function
+    --NOTE: can't rely on this button's click, because text must be unique across the entire window
+    ImGui.Button(text_down)       -- this bool is ANDed with isEnabled at the bottom of this function
 
     ImGui.PopStyleColor(5)
     ImGui.PopStyleVar(1)
@@ -67,11 +76,15 @@ function Draw_UpDownButtons(def, style_updown, scale)
 
     if def.isEnabled_up then
         if def.isFree_up then
-            ImGui.PushStyleColor(ImGuiCol.Button, style_updown.free_color_standard_abgr)
+            local color = this.GetButtonColor(isUpClicked, isUpHovered, style_updown.free_color_standard_abgr, style_updown.free_color_hover_abgr, style_updown.free_color_click_abgr)
+            ImGui.PushStyleColor(ImGuiCol.Button, color)
+            --ImGui.PushStyleColor(ImGuiCol.Button, style_updown.free_color_standard_abgr)
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.free_color_hover_abgr)
             ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.free_color_click_abgr)
         else
-            ImGui.PushStyleColor(ImGuiCol.Button, style_updown.up_color_standard_abgr)
+            local color = this.GetButtonColor(isUpClicked, isUpHovered, style_updown.up_color_standard_abgr, style_updown.up_color_hover_abgr, style_updown.up_color_click_abgr)
+            ImGui.PushStyleColor(ImGuiCol.Button, color)
+            --ImGui.PushStyleColor(ImGuiCol.Button, style_updown.up_color_standard_abgr)
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, style_updown.up_color_hover_abgr)
             ImGui.PushStyleColor(ImGuiCol.ButtonActive, style_updown.up_color_click_abgr)
         end
@@ -88,7 +101,7 @@ function Draw_UpDownButtons(def, style_updown, scale)
 
     ImGui.SetCursorPos(def.render_pos.left + def.sizes.up_left, def.render_pos.top + def.sizes.up_top)
 
-    local isUpClicked = ImGui.Button(text_up)
+    ImGui.Button(text_up)
 
     ImGui.PopStyleColor(5)
     ImGui.PopStyleVar(1)
@@ -97,13 +110,10 @@ function Draw_UpDownButtons(def, style_updown, scale)
     ImGui.PopStyleColor(1)
     ImGui.PopStyleVar(2)
 
-    -- Invisible Button
-    local _, isHovered = Draw_InvisibleButton(def.invisible_name .. "Hidden", def.render_pos.left + (def.sizes.width / 2), def.render_pos.top + (def.sizes.height / 2), def.sizes.width, def.sizes.height, 0)
-
     return
         isDownClicked and def.isEnabled_down,
         isUpClicked and def.isEnabled_up,
-        isHovered
+        isDownHovered or isUpHovered
 end
 
 -- This tells what values should go in the decrement and increment (called each frame)
@@ -183,6 +193,17 @@ function this.FinalText(def)
     return text_down, text_up
 end
 
+-- Since the invisible buttons cover the regular buttons, the standard color is the only style that's looked at
+function this.GetButtonColor(isClicked, isHovered, color_standard_abgr, color_hover_abgr, color_click_abgr)
+    if isClicked then
+        return color_click_abgr
+    elseif isHovered then
+        return color_hover_abgr
+    else
+        return color_standard_abgr
+    end
+end
+
 function this.Calculate_Sizes(def, style_updown, text_down, text_up, scale)
     -- Individual Sizes
     local down_width, down_height = this.Calculate_Sizes_Single(text_down, style_updown, scale)
@@ -220,8 +241,12 @@ function this.Calculate_Sizes(def, style_updown, text_down, text_up, scale)
 
     def.sizes.down_left = down_left
     def.sizes.down_top = down_top
+    def.sizes.down_width = down_width
+    def.sizes.down_height = down_height
     def.sizes.up_left = up_left
     def.sizes.up_top = up_top
+    def.sizes.up_width = up_width
+    def.sizes.up_height = up_height
 
     def.sizes.down_pad_h = (style_updown.padding_horizontal * scale) + (down_width_extra / 2)
     def.sizes.down_pad_v = (style_updown.padding_vertical * scale) + (down_height_extra / 2)

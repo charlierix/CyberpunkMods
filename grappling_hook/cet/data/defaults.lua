@@ -34,6 +34,12 @@ function GetEnergyCost_GrappleStraight(experience)
 
     return math.max(retVal, 0)
 end
+function GetEnergyCost_GrappleSwing(grapple)
+    local COST_MIN = 1
+    local COST_MAX = 5
+
+    return GetScaledValue(COST_MAX, COST_MIN, 0, 1, grapple.aim_swing.cost_reduction_percent)       -- it's a reduction, so 0 reduction is full cost, 1 is min cost
+end
 
 ------------------------------------------------ Grapples ------------------------------------------------
 
@@ -385,10 +391,33 @@ function GetDefault_AimStraight(max_override)
 end
 
 function GetDefault_AimSwing()
+    local cost_reduction_percent_update, cost_reduction_percent = this.GetUpdateAndValue(nil, 0, 1, 0.1, nil, false)
+
+    local boost_cost_reduction_percent_update, boost_cost_reduction_percent = this.GetUpdateAndValue(nil, 0, 1, 0.1, nil, false)
+
+    local boost_accel = boost_accels[3]     -- 6
+
+    local airfriction_update, airfriction = this.GetUpdateAndValue(nil, 0, 1, 0.1, nil, false)
+
     return
     {
-        SwingLength = 24,
-        MinAngle = -45,
+        cost_reduction_percent = cost_reduction_percent,
+        cost_reduction_percent_update = cost_reduction_percent_update,
+
+        boost_cost_reduction_percent = boost_cost_reduction_percent,
+        boost_cost_reduction_percent_update = boost_cost_reduction_percent_update,
+
+        boost_accel = boost_accel,
+        boost_accel_update =
+        {
+            min_abs = boost_accels[1],
+            min = boost_accel,
+            max = boost_accels[#boost_accels],
+            getDecrementIncrement = "BoostAccel_IncDec",
+        },
+
+        boostedairfriction_reduction_percent = airfriction,
+        boostedairfriction_reduction_percent_update = airfriction_update,
     }
 end
 

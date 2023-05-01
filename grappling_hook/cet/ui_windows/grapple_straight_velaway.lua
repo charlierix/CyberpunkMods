@@ -549,7 +549,7 @@ end
 
 function this.Save(player, grapple, velaway, changes, def_slider, startedWith_velaway, startedWith_compress, startedWith_tension, has_velaway, has_compress, has_tension)
     local cost = this.GetXPGainLoss(changes, startedWith_velaway, startedWith_compress, startedWith_tension, has_velaway, has_compress, has_tension)
-    if not player:TransferExperience_GrappleStraight(grapple, -cost) then
+    if not player:TransferExperience_Grapple(grapple, -cost) then
         do return end
     end
 
