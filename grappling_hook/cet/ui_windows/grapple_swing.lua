@@ -249,22 +249,34 @@ end
 
 function this.Tooltip_EnergyCostReduction()
     return
-[[]]
+[[Every time you kick off a web swing, there is a fixed energy cost.  If the energy tank doesn't have enough, then the attempt to swing fails
+
+This property makes the swing cheaper to initiate]]
 end
 
 function this.Tooltip_BoostCostReduction()
     return
-[[]]
+[[When starting a web swing, if you keep those keys held in, a boost acceleration is applied
+
+While under boost, there is a continuous energy drain
+
+This reduces that energy cost]]
 end
 
 function this.Tooltip_BoostAccel()
     return
-[[]]
+[[When starting a web swing, if you keep those keys held in, a boost acceleration is applied
+
+This is how much acceleration to apply while boosting]]
 end
 
 function this.Tooltip_AirFrictionReduction()
     return
-[[]]
+[[If you're boosting a lot each swing, a capacitor fills up.  This causes air friction to be reduced.  The capacitor will slowly discharge when not boosting
+
+Without this air friction reduction, the terminal velocity is too low, so you could be boosting like crazy, but never get going very fast
+
+This allows swings to be nice and controllable in most cases, then have a high top speed when repeatedly boosting]]
 end
 
 function this.Refresh_EnergyCostReduction_Value(def, grapple, changes)

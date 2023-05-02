@@ -385,7 +385,12 @@ function this.Define_AnchorStyle_Help(relative_to, const)
         CalcSize = CalcSize_HelpButton,
     }
 
-    retVal.tooltip = ""
+    retVal.tooltip =
+[[Shows where the grapple is anchored to
+
+If a straight grapple has a stop plane defined, the stop plane will be shown instead of the anchorpoint
+
+Swing will sometimes use rope style and sometimes straight style grapple.  The rope style shows the anchor that it's swinging from as well as the stop plane]]
 
     return retVal
 end
@@ -739,11 +744,11 @@ function this.Define_StopPlane_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[When starting a grapple/swing, a stop plane will be calculated.  It will continue while the player is behind that plane, but will end once going through that plane
+[[When starting a grapple/swing, a stop plane may be calculated.  It will continue while the player is behind that plane, but will end once going through that plane
 
 Even though it's an infinite plane, it is visualized as a circle
 
-If you want realism, disable drawing it, but if you want the extra visual to help see the mechanics of the grapple/swing, then leave it on]]
+If you want realism, disable drawing it.  If you want the extra visual to help see the mechanics of the grapple/swing, then show it]]
 
     return retVal
 end
@@ -894,7 +899,7 @@ function this.Define_StopPlane_Default(relative_to, const)
     }
 end
 function this.Restore_StopPlane_Default(def_stopplane_checkbox, def_stopplane_color, const)
-    def_stopplane_checkbox.isChecked = true
+    def_stopplane_checkbox.isChecked = false
     def_stopplane_color.text = "80A1C2A4"
 end
 
