@@ -544,10 +544,17 @@ function this.Aim_Swing_Slingshot(position, look_dir, vel, speed_look, is_airbor
         slingshot_dist_by_dot:AddKeyValue(Angle_to_Dot(180), 3)
 
         slingshot_accelmult_by_dot = AnimationCurve:new()
-        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(0), 0.95)
-        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(90), 1)
-        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(135), 1.5)
-        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(180), 2)
+        -- slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(0), 0.95)
+        -- slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(90), 1)      -- this is noticably too strong
+        -- slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(135), 1.5)
+        -- slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(180), 2)
+
+        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(0), 0.85)
+        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(45), 0.55)
+        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(90), 0.5)
+        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(110), 0.62)
+        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(135), 0.89)
+        slingshot_accelmult_by_dot:AddKeyValue(Angle_to_Dot(180), 1.5)
 
         slingshot_distmult_by_speed = AnimationCurve:new()
         slingshot_distmult_by_speed:AddKeyValue(0, 0.95)

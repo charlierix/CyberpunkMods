@@ -3,7 +3,7 @@ local pool_refill_rate = pool_max / (9 * 60)   -- refill in 9 minutes
 local minPoolRequestPercent = 1 / 12            -- even when the pool is empty, they can still get a tiny amount of xp from performing actions
 
 local gain_straight_start = 12
-local gain_swing_start = 12
+local gain_swing_start = 5
 local gain_airdash_continuous = 1 / 24          -- gain per second
 
 local gain_achievement_straight_180 = 48        -- when the dot product between the start of the grapple and current is nearly -1 (they use grapple to reverse their direction)
