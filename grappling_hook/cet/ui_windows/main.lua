@@ -387,7 +387,7 @@ function this.Draw_GrappleSlot_Tooltip(binding, summary_button, startStopTracker
         local sum_width = summary_button.render_pos.width
         local sum_height = summary_button.render_pos.height
 
-        local gap = 24
+        local gap = 24 * vars_ui.scale
 
         Draw_Tooltip(
             actionSummary,

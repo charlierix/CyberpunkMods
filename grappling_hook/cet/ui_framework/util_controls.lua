@@ -110,14 +110,15 @@ function Draw_Triangle(screenOffset_x, screenOffset_y, x1, y1, x2, y2, x3, y3, c
     end
 end
 
--- This shows a tooltip next to, but not touching x,y (based on no touch size)
+-- Shows a tooltip next to, but not touching x,y (based on no touch size)
+-- NOTE: notouch_halfwidth, notouch_halfheight need to already have scale applied
 -- style_tooltip is models\stylesheet\Tooltip
 function Draw_Tooltip(text, style_tooltip, screen_x, screen_y, notouch_halfwidth, notouch_halfheight, vars_ui)
     -- This tells the parent window to use the standard titlebar color, even though it's not focused (because this
     -- tooltip steals focus).  The bool will get set to false each following frame
     vars_ui.isTooltipShowing = true
 
-    local width, height = this.GetTooltip_Size(text, style_tooltip.max_width, style_tooltip.padding)
+    local width, height = this.GetTooltip_Size(text, style_tooltip.max_width * vars_ui.scale, style_tooltip.padding * vars_ui.scale)
 
     local screen_left, screen_top = this.GetTooltip_Position(width, height, screen_x, screen_y, notouch_halfwidth, notouch_halfheight, vars_ui.screen)
 
