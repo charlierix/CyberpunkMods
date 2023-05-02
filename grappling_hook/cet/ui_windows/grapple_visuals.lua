@@ -1,175 +1,175 @@
 local this = {}
 
-function DefineWindow_GrappleSwing_Visuals(vars_ui, const)
-    local gswing_visuals = {}
-    vars_ui.gswing_visuals = gswing_visuals
+function DefineWindow_Grapple_Visuals(vars_ui, const)
+    local grapple_visuals = {}
+    vars_ui.grapple_visuals = grapple_visuals
 
-    gswing_visuals.changes = Changes:new()
+    grapple_visuals.changes = Changes:new()
 
-    gswing_visuals.title = Define_Title("Grapple Swing - Visuals / Color", const)
+    grapple_visuals.title = Define_Title("Grapple - Visuals / Color", const)
 
-    gswing_visuals.name = Define_Name(const)
+    grapple_visuals.name = Define_Name(const)
 
     --TODO: line style { solid, energy }
 
-    gswing_visuals.line_colorprim_value = this.Define_Line_ColorPrimary_Value(const)
-    gswing_visuals.line_colorprim_help = this.Define_Line_ColorPrimary_Help(gswing_visuals.line_colorprim_value, const)
-    gswing_visuals.line_colorprim_label = this.Define_Line_ColorPrimary_Label(gswing_visuals.line_colorprim_help, const)
-    gswing_visuals.line_colorprim_sample = this.Define_Line_ColorPrimary_Sample(gswing_visuals.line_colorprim_value, const)
+    grapple_visuals.line_colorprim_value = this.Define_Line_ColorPrimary_Value(const)
+    grapple_visuals.line_colorprim_help = this.Define_Line_ColorPrimary_Help(grapple_visuals.line_colorprim_value, const)
+    grapple_visuals.line_colorprim_label = this.Define_Line_ColorPrimary_Label(grapple_visuals.line_colorprim_help, const)
+    grapple_visuals.line_colorprim_sample = this.Define_Line_ColorPrimary_Sample(grapple_visuals.line_colorprim_value, const)
 
-    gswing_visuals.line_default = this.Define_Line_Default(gswing_visuals.line_colorprim_value, const)
+    grapple_visuals.line_default = this.Define_Line_Default(grapple_visuals.line_colorprim_value, const)
 
     -- anchor style { none, diamond, circle }
-    gswing_visuals.anchorstyle_combo = this.Define_AnchorStyle_Combo(gswing_visuals.line_colorprim_value, const)
-    gswing_visuals.anchorstyle_help = this.Define_AnchorStyle_Help(gswing_visuals.anchorstyle_combo, const)
-    gswing_visuals.anchorstyle_label = this.Define_AnchorStyle_Label(gswing_visuals.anchorstyle_help, const)
+    grapple_visuals.anchorstyle_combo = this.Define_AnchorStyle_Combo(grapple_visuals.line_colorprim_value, const)
+    grapple_visuals.anchorstyle_help = this.Define_AnchorStyle_Help(grapple_visuals.anchorstyle_combo, const)
+    grapple_visuals.anchorstyle_label = this.Define_AnchorStyle_Label(grapple_visuals.anchorstyle_help, const)
 
-    gswing_visuals.anchor_color1_value = this.Define_Anchor_Color1_Value(gswing_visuals.anchorstyle_combo, const)
-    gswing_visuals.anchor_color1_help = this.Define_Anchor_Color1_Help(gswing_visuals.anchor_color1_value, const)
-    gswing_visuals.anchor_color1_label = this.Define_Anchor_Color1_Label(gswing_visuals.anchor_color1_help, const)
-    gswing_visuals.anchor_color1_sample = this.Define_Anchor_Color1_Sample(gswing_visuals.anchor_color1_value, const)
+    grapple_visuals.anchor_color1_value = this.Define_Anchor_Color1_Value(grapple_visuals.anchorstyle_combo, const)
+    grapple_visuals.anchor_color1_help = this.Define_Anchor_Color1_Help(grapple_visuals.anchor_color1_value, const)
+    grapple_visuals.anchor_color1_label = this.Define_Anchor_Color1_Label(grapple_visuals.anchor_color1_help, const)
+    grapple_visuals.anchor_color1_sample = this.Define_Anchor_Color1_Sample(grapple_visuals.anchor_color1_value, const)
 
-    gswing_visuals.anchor_color2_value = this.Define_Anchor_Color2_Value(gswing_visuals.anchor_color1_value, const)
-    gswing_visuals.anchor_color2_help = this.Define_Anchor_Color2_Help(gswing_visuals.anchor_color2_value, const)
-    gswing_visuals.anchor_color2_label = this.Define_Anchor_Color2_Label(gswing_visuals.anchor_color2_help, const)
-    gswing_visuals.anchor_color2_sample = this.Define_Anchor_Color2_Sample(gswing_visuals.anchor_color2_value, const)
+    grapple_visuals.anchor_color2_value = this.Define_Anchor_Color2_Value(grapple_visuals.anchor_color1_value, const)
+    grapple_visuals.anchor_color2_help = this.Define_Anchor_Color2_Help(grapple_visuals.anchor_color2_value, const)
+    grapple_visuals.anchor_color2_label = this.Define_Anchor_Color2_Label(grapple_visuals.anchor_color2_help, const)
+    grapple_visuals.anchor_color2_sample = this.Define_Anchor_Color2_Sample(grapple_visuals.anchor_color2_value, const)
 
-    gswing_visuals.anchor_default = this.Define_Anchor_Default(gswing_visuals.anchorstyle_combo, const)
+    grapple_visuals.anchor_default = this.Define_Anchor_Default(grapple_visuals.anchorstyle_combo, const)
 
     -- stop plane
-    gswing_visuals.stopplane_checkbox = this.Define_StopPlane_Checkbox(gswing_visuals.anchor_color2_value, const)
-    gswing_visuals.stopplane_help = this.Define_StopPlane_Help(gswing_visuals.stopplane_checkbox, const)
+    grapple_visuals.stopplane_checkbox = this.Define_StopPlane_Checkbox(grapple_visuals.anchor_color2_value, const)
+    grapple_visuals.stopplane_help = this.Define_StopPlane_Help(grapple_visuals.stopplane_checkbox, const)
 
-    gswing_visuals.stopplane_color_value = this.Define_StopPlane_Color_Value(gswing_visuals.stopplane_checkbox, const)
-    gswing_visuals.stopplane_color_help = this.Define_StopPlane_Color_Help(gswing_visuals.stopplane_color_value, const)
-    gswing_visuals.stopplane_color_label = this.Define_StopPlane_Color_Label(gswing_visuals.stopplane_color_help, const)
-    gswing_visuals.stopplane_color_sample = this.Define_StopPlane_Color_Sample(gswing_visuals.stopplane_color_value, const)
+    grapple_visuals.stopplane_color_value = this.Define_StopPlane_Color_Value(grapple_visuals.stopplane_checkbox, const)
+    grapple_visuals.stopplane_color_help = this.Define_StopPlane_Color_Help(grapple_visuals.stopplane_color_value, const)
+    grapple_visuals.stopplane_color_label = this.Define_StopPlane_Color_Label(grapple_visuals.stopplane_color_help, const)
+    grapple_visuals.stopplane_color_sample = this.Define_StopPlane_Color_Sample(grapple_visuals.stopplane_color_value, const)
 
-    gswing_visuals.stopplane_default = this.Define_StopPlane_Default(gswing_visuals.stopplane_checkbox, const)
+    grapple_visuals.stopplane_default = this.Define_StopPlane_Default(grapple_visuals.stopplane_checkbox, const)
 
-    gswing_visuals.colorurl = this.Define_ColorURL_TextBox(vars_ui, const)
+    grapple_visuals.colorurl = this.Define_ColorURL_TextBox(vars_ui, const)
 
-    gswing_visuals.okcancel = Define_OkCancelButtons(false, vars_ui, const)
+    grapple_visuals.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 
-    FinishDefiningWindow(gswing_visuals)
+    FinishDefiningWindow(grapple_visuals)
 end
 
-function ActivateWindow_GrappleSwing_Visuals(vars_ui, const)
-    if not vars_ui.gswing_visuals then
-        DefineWindow_GrappleSwing_Visuals(vars_ui, const)
+function ActivateWindow_Grapple_Visuals(vars_ui, const)
+    if not vars_ui.grapple_visuals then
+        DefineWindow_Grapple_Visuals(vars_ui, const)
     end
 
-    vars_ui.gswing_visuals.changes:Clear()
+    vars_ui.grapple_visuals.changes:Clear()
 
-    vars_ui.gswing_visuals.line_colorprim_value.text = nil
+    vars_ui.grapple_visuals.line_colorprim_value.text = nil
 
-    vars_ui.gswing_visuals.anchorstyle_combo.selected_item = nil
-    vars_ui.gswing_visuals.anchor_color1_value.text = nil
-    vars_ui.gswing_visuals.anchor_color2_value.text = nil
+    vars_ui.grapple_visuals.anchorstyle_combo.selected_item = nil
+    vars_ui.grapple_visuals.anchor_color1_value.text = nil
+    vars_ui.grapple_visuals.anchor_color2_value.text = nil
 
-    vars_ui.gswing_visuals.stopplane_checkbox.isChecked = nil
-    vars_ui.gswing_visuals.stopplane_color_value.text = nil
+    vars_ui.grapple_visuals.stopplane_checkbox.isChecked = nil
+    vars_ui.grapple_visuals.stopplane_color_value.text = nil
 end
 
-function DrawWindow_GrappleSwing_Visuals(isCloseRequested, vars_ui, player, window, const)
+function DrawWindow_Grapple_Visuals(isCloseRequested, vars_ui, player, window, const)
     local grapple = player:GetGrappleByIndex(vars_ui.transition_info.grappleIndex)
     if not grapple then
-        LogError("DrawWindow_GrappleSwing_Visuals: grapple is nil")
+        LogError("DrawWindow_GrappleVisuals: grapple is nil")
         TransitionWindows_Main(vars_ui, const)
         do return end
     end
 
-    local gswing_visuals = vars_ui.gswing_visuals
+    local grapple_visuals = vars_ui.grapple_visuals
 
-    local changes = gswing_visuals.changes
+    local changes = grapple_visuals.changes
 
     ------------------------- Finalize models for this frame -------------------------
 
-    Refresh_Name(gswing_visuals.name, grapple.name)
+    Refresh_Name(grapple_visuals.name, grapple.name)
 
-    this.Refresh_Line_ColorPrimary_Value(gswing_visuals.line_colorprim_value, grapple)
-    this.Refresh_Line_ColorPrimary_Sample(gswing_visuals.line_colorprim_sample, gswing_visuals.line_colorprim_value)
+    this.Refresh_Line_ColorPrimary_Value(grapple_visuals.line_colorprim_value, grapple)
+    this.Refresh_Line_ColorPrimary_Sample(grapple_visuals.line_colorprim_sample, grapple_visuals.line_colorprim_value)
 
-    this.Refresh_AnchorStyle_Combo(gswing_visuals.anchorstyle_combo, grapple)
+    this.Refresh_AnchorStyle_Combo(grapple_visuals.anchorstyle_combo, grapple)
 
-    this.Refresh_Anchor_Color1_Value(gswing_visuals.anchor_color1_value, grapple)
-    this.Refresh_Anchor_Color1_Sample(gswing_visuals.anchor_color1_sample, gswing_visuals.anchor_color1_value)
+    this.Refresh_Anchor_Color1_Value(grapple_visuals.anchor_color1_value, grapple)
+    this.Refresh_Anchor_Color1_Sample(grapple_visuals.anchor_color1_sample, grapple_visuals.anchor_color1_value)
 
-    this.Refresh_Anchor_Color2_Value(gswing_visuals.anchor_color2_value, grapple)
-    this.Refresh_Anchor_Color2_Sample(gswing_visuals.anchor_color2_sample, gswing_visuals.anchor_color2_value)
+    this.Refresh_Anchor_Color2_Value(grapple_visuals.anchor_color2_value, grapple)
+    this.Refresh_Anchor_Color2_Sample(grapple_visuals.anchor_color2_sample, grapple_visuals.anchor_color2_value)
 
-    this.Refresh_StopPlane_Checkbox(gswing_visuals.stopplane_checkbox, grapple)
+    this.Refresh_StopPlane_Checkbox(grapple_visuals.stopplane_checkbox, grapple)
 
-    this.Refresh_StopPlane_Color_Value(gswing_visuals.stopplane_color_value, grapple)
-    this.Refresh_StopPlane_Color_Sample(gswing_visuals.stopplane_color_sample, gswing_visuals.stopplane_color_value)
+    this.Refresh_StopPlane_Color_Value(grapple_visuals.stopplane_color_value, grapple)
+    this.Refresh_StopPlane_Color_Sample(grapple_visuals.stopplane_color_sample, grapple_visuals.stopplane_color_value)
 
-    this.Refresh_IsDirty(gswing_visuals.okcancel, changes, gswing_visuals.line_colorprim_value, gswing_visuals.anchorstyle_combo, gswing_visuals.anchor_color1_value, gswing_visuals.anchor_color2_value, gswing_visuals.stopplane_checkbox, gswing_visuals.stopplane_color_value, grapple)
+    this.Refresh_IsDirty(grapple_visuals.okcancel, changes, grapple_visuals.line_colorprim_value, grapple_visuals.anchorstyle_combo, grapple_visuals.anchor_color1_value, grapple_visuals.anchor_color2_value, grapple_visuals.stopplane_checkbox, grapple_visuals.stopplane_color_value, grapple)
 
     ------------------------------ Calculate Positions -------------------------------
 
-    CalculateSizes(gswing_visuals.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
-    CalculatePositions(gswing_visuals.render_nodes, window.width, window.height, const, vars_ui.scale)
+    CalculateSizes(grapple_visuals.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
+    CalculatePositions(grapple_visuals.render_nodes, window.width, window.height, const, vars_ui.scale)
 
     -------------------------------- Show ui elements --------------------------------
 
-    Draw_Label(gswing_visuals.title, vars_ui.style.colors, vars_ui.scale)
+    Draw_Label(grapple_visuals.title, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_Label(gswing_visuals.name, vars_ui.style.colors, vars_ui.scale)
+    Draw_Label(grapple_visuals.name, vars_ui.style.colors, vars_ui.scale)
 
     -- Line
-    Draw_Label(gswing_visuals.line_colorprim_label, vars_ui.style.colors, vars_ui.scale)
-    Draw_HelpButton(gswing_visuals.line_colorprim_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
-    Draw_TextBox(gswing_visuals.line_colorprim_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
-    Draw_ColorSample(gswing_visuals.line_colorprim_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
+    Draw_Label(grapple_visuals.line_colorprim_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(grapple_visuals.line_colorprim_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_TextBox(grapple_visuals.line_colorprim_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
+    Draw_ColorSample(grapple_visuals.line_colorprim_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
-    if Draw_Button(gswing_visuals.line_default, vars_ui.style.button, vars_ui.scale) then
-        this.Restore_Line_Default(gswing_visuals.line_colorprim_value, const)
+    if Draw_Button(grapple_visuals.line_default, vars_ui.style.button, vars_ui.scale) then
+        this.Restore_Line_Default(grapple_visuals.line_colorprim_value, const)
     end
 
     -- Anchor
-    Draw_ComboBox(gswing_visuals.anchorstyle_combo, vars_ui.style.combobox, vars_ui.scale)
-    Draw_HelpButton(gswing_visuals.anchorstyle_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
-    Draw_Label(gswing_visuals.anchorstyle_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_ComboBox(grapple_visuals.anchorstyle_combo, vars_ui.style.combobox, vars_ui.scale)
+    Draw_HelpButton(grapple_visuals.anchorstyle_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Label(grapple_visuals.anchorstyle_label, vars_ui.style.colors, vars_ui.scale)
 
-    Draw_Label(gswing_visuals.anchor_color1_label, vars_ui.style.colors, vars_ui.scale)
-    Draw_HelpButton(gswing_visuals.anchor_color1_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
-    Draw_TextBox(gswing_visuals.anchor_color1_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
-    Draw_ColorSample(gswing_visuals.anchor_color1_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
+    Draw_Label(grapple_visuals.anchor_color1_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(grapple_visuals.anchor_color1_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_TextBox(grapple_visuals.anchor_color1_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
+    Draw_ColorSample(grapple_visuals.anchor_color1_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
-    Draw_Label(gswing_visuals.anchor_color2_label, vars_ui.style.colors, vars_ui.scale)
-    Draw_HelpButton(gswing_visuals.anchor_color2_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
-    Draw_TextBox(gswing_visuals.anchor_color2_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
-    Draw_ColorSample(gswing_visuals.anchor_color2_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
+    Draw_Label(grapple_visuals.anchor_color2_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(grapple_visuals.anchor_color2_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_TextBox(grapple_visuals.anchor_color2_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
+    Draw_ColorSample(grapple_visuals.anchor_color2_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
-    if Draw_Button(gswing_visuals.anchor_default, vars_ui.style.button, vars_ui.scale) then
-        this.Restore_Anchor_Default(gswing_visuals.anchorstyle_combo, gswing_visuals.anchor_color1_value, gswing_visuals.anchor_color2_value, const)
+    if Draw_Button(grapple_visuals.anchor_default, vars_ui.style.button, vars_ui.scale) then
+        this.Restore_Anchor_Default(grapple_visuals.anchorstyle_combo, grapple_visuals.anchor_color1_value, grapple_visuals.anchor_color2_value, const)
     end
 
     -- Stop Plane
-    Draw_CheckBox(gswing_visuals.stopplane_checkbox, vars_ui.style.checkbox, vars_ui.style.colors)
-    Draw_HelpButton(gswing_visuals.stopplane_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_CheckBox(grapple_visuals.stopplane_checkbox, vars_ui.style.checkbox, vars_ui.style.colors)
+    Draw_HelpButton(grapple_visuals.stopplane_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
-    Draw_Label(gswing_visuals.stopplane_color_label, vars_ui.style.colors, vars_ui.scale)
-    Draw_HelpButton(gswing_visuals.stopplane_color_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
-    Draw_TextBox(gswing_visuals.stopplane_color_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
-    Draw_ColorSample(gswing_visuals.stopplane_color_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
+    Draw_Label(grapple_visuals.stopplane_color_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(grapple_visuals.stopplane_color_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_TextBox(grapple_visuals.stopplane_color_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
+    Draw_ColorSample(grapple_visuals.stopplane_color_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
-    if Draw_Button(gswing_visuals.stopplane_default, vars_ui.style.button, vars_ui.scale) then
-        this.Restore_StopPlane_Default(gswing_visuals.stopplane_checkbox, gswing_visuals.stopplane_color_value, const)
+    if Draw_Button(grapple_visuals.stopplane_default, vars_ui.style.button, vars_ui.scale) then
+        this.Restore_StopPlane_Default(grapple_visuals.stopplane_checkbox, grapple_visuals.stopplane_color_value, const)
     end
 
-    Draw_TextBox(gswing_visuals.colorurl, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
+    Draw_TextBox(grapple_visuals.colorurl, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
 
-    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(gswing_visuals.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
+    local isOKClicked, isCancelClicked = Draw_OkCancelButtons(grapple_visuals.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        this.Save(player, grapple, changes, gswing_visuals.line_colorprim_value, gswing_visuals.anchorstyle_combo, gswing_visuals.anchor_color1_value, gswing_visuals.anchor_color2_value, gswing_visuals.stopplane_checkbox, gswing_visuals.stopplane_color_value)
+        this.Save(player, grapple, changes, grapple_visuals.line_colorprim_value, grapple_visuals.anchorstyle_combo, grapple_visuals.anchor_color1_value, grapple_visuals.anchor_color2_value, grapple_visuals.stopplane_checkbox, grapple_visuals.stopplane_color_value)
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
 
     elseif isCancelClicked then
         TransitionWindows_Grapple(vars_ui, const, player, vars_ui.transition_info.grappleIndex)
     end
 
-    return not (isCloseRequested and not gswing_visuals.okcancel.isDirty)     -- returns if it should continue showing
+    return not (isCloseRequested and not grapple_visuals.okcancel.isDirty)     -- returns if it should continue showing
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -178,7 +178,7 @@ function this.Define_Line_ColorPrimary_Value(const)
     -- TextBox
     return
     {
-        invisible_name = "GrappleSwing_Visuals_Line_ColorPrimary_Value",
+        invisible_name = "Grapple_Visuals_Line_ColorPrimary_Value",
 
         maxChars = 8,
         width = 120,
@@ -200,7 +200,7 @@ function this.Define_Line_ColorPrimary_Value(const)
 end
 function this.Refresh_Line_ColorPrimary_Value(def, grapple)
     -- There is no need to store changes in the changes list.  Text is directly changed as they type
-    --NOTE: ActivateWindow_GrappleSwing_Visuals sets this to nil
+    --NOTE: ActivateWindow_Grapple_Visuals sets this to nil
     if not def.text then
         def.text = grapple.visuals.grappleline_color_primary
     end
@@ -209,7 +209,7 @@ function this.Define_Line_ColorPrimary_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        invisible_name = "GrappleSwing_Visuals_Line_ColorPrimary_Help",
+        invisible_name = "Grapple_Visuals_Line_ColorPrimary_Help",
 
         position =
         {
@@ -264,7 +264,7 @@ function this.Define_Line_ColorPrimary_Sample(relative_to, const)
     -- ColorSample
     return
     {
-        invisible_name = "GrappleSwing_Visuals_Line_ColorPrimary_Sample",
+        invisible_name = "Grapple_Visuals_Line_ColorPrimary_Sample",
 
         color_hex = "8F00",
 
@@ -352,7 +352,7 @@ function this.Define_AnchorStyle_Combo(relative_to, const)
             vertical = const.alignment_vertical.top,
         },
 
-        invisible_name = "GrappleSwing_Visuals_AnchorStyle_Combo",
+        invisible_name = "Grapple_Visuals_AnchorStyle_Combo",
 
         CalcSize = CalcSize_ComboBox,
     }
@@ -366,7 +366,7 @@ function this.Define_AnchorStyle_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        invisible_name = "GrappleSwing_Visuals_AnchorStyle_Help",
+        invisible_name = "Grapple_Visuals_AnchorStyle_Help",
 
         position =
         {
@@ -419,7 +419,7 @@ function this.Define_Anchor_Color1_Value(relative_to, const)
     -- TextBox
     return
     {
-        invisible_name = "GrappleSwing_Visuals_Anchor_Color1_Value",
+        invisible_name = "Grapple_Visuals_Anchor_Color1_Value",
 
         maxChars = 8,
         width = 120,
@@ -447,7 +447,7 @@ function this.Define_Anchor_Color1_Value(relative_to, const)
 end
 function this.Refresh_Anchor_Color1_Value(def, grapple)
     -- There is no need to store changes in the changes list.  Text is directly changed as they type
-    --NOTE: ActivateWindow_GrappleSwing_Visuals sets this to nil
+    --NOTE: ActivateWindow_Grapple_Visuals sets this to nil
     if not def.text then
         def.text = grapple.visuals.anchorpoint_color_1
     end
@@ -456,7 +456,7 @@ function this.Define_Anchor_Color1_Help(relative_to, const)
     -- HelpButton
     return
     {
-        invisible_name = "GrappleSwing_Visuals_Anchor_Color1_Help",
+        invisible_name = "Grapple_Visuals_Anchor_Color1_Help",
 
         tooltip = this.GetColorTooltipText(),
 
@@ -506,7 +506,7 @@ function this.Define_Anchor_Color1_Sample(relative_to, const)
     -- ColorSample
     return
     {
-        invisible_name = "GrappleSwing_Visuals_Anchor_Color1_Sample",
+        invisible_name = "Grapple_Visuals_Anchor_Color1_Sample",
 
         color_hex = "8F00",
 
@@ -535,7 +535,7 @@ function this.Define_Anchor_Color2_Value(relative_to, const)
     -- TextBox
     return
     {
-        invisible_name = "GrappleSwing_Visuals_Anchor_Color2_Value",
+        invisible_name = "Grapple_Visuals_Anchor_Color2_Value",
 
         maxChars = 8,
         width = 120,
@@ -563,7 +563,7 @@ function this.Define_Anchor_Color2_Value(relative_to, const)
 end
 function this.Refresh_Anchor_Color2_Value(def, grapple)
     -- There is no need to store changes in the changes list.  Text is directly changed as they type
-    --NOTE: ActivateWindow_GrappleSwing_Visuals sets this to nil
+    --NOTE: ActivateWindow_Grapple_Visuals sets this to nil
     if not def.text then
         def.text = grapple.visuals.anchorpoint_color_2
     end
@@ -572,7 +572,7 @@ function this.Define_Anchor_Color2_Help(relative_to, const)
     -- HelpButton
     return
     {
-        invisible_name = "GrappleSwing_Visuals_Anchor_Color2_Help",
+        invisible_name = "Grapple_Visuals_Anchor_Color2_Help",
 
         tooltip = this.GetColorTooltipText(),
 
@@ -622,7 +622,7 @@ function this.Define_Anchor_Color2_Sample(relative_to, const)
     -- ColorSample
     return
     {
-        invisible_name = "GrappleSwing_Visuals_Anchor_Color2_Sample",
+        invisible_name = "Grapple_Visuals_Anchor_Color2_Sample",
 
         color_hex = "8F00",
 
@@ -686,7 +686,7 @@ function this.Define_StopPlane_Checkbox(relative_to, const)
     -- CheckBox
     return
     {
-        invisible_name = "GrappleSwing_Visuals_StopPlane_Checkbox",
+        invisible_name = "Grapple_Visuals_StopPlane_Checkbox",
 
         text = "Show Stop Plane",
 
@@ -710,7 +710,7 @@ function this.Define_StopPlane_Checkbox(relative_to, const)
     }
 end
 function this.Refresh_StopPlane_Checkbox(def, grapple)
-    --NOTE: ActivateWindow_GrappleSwing_Visuals sets this to nil
+    --NOTE: ActivateWindow_Grapple_Visuals sets this to nil
     if def.isChecked == nil then
         def.isChecked = grapple.visuals.show_stopplane
     end
@@ -719,7 +719,7 @@ function this.Define_StopPlane_Help(relative_to, const)
     -- HelpButton
     local retVal =
     {
-        invisible_name = "GrappleSwing_Visuals_StopPlane_Help",
+        invisible_name = "Grapple_Visuals_StopPlane_Help",
 
         position =
         {
@@ -739,11 +739,11 @@ function this.Define_StopPlane_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[When starting a swing, a stop plane will be calculated.  The swing will continue while the player is behind that plane, but will end once going through that plane
+[[When starting a grapple/swing, a stop plane will be calculated.  It will continue while the player is behind that plane, but will end once going through that plane
 
 Even though it's an infinite plane, it is visualized as a circle
 
-If you want realism, disable drawing it, but if you want the extra visual to help see the mechanics of the swing, then leave it on]]
+If you want realism, disable drawing it, but if you want the extra visual to help see the mechanics of the grapple/swing, then leave it on]]
 
     return retVal
 end
@@ -752,7 +752,7 @@ function this.Define_StopPlane_Color_Value(relative_to, const)
     -- TextBox
     return
     {
-        invisible_name = "GrappleSwing_Visuals_StopPlane_Color_Value",
+        invisible_name = "Grapple_Visuals_StopPlane_Color_Value",
 
         maxChars = 8,
         width = 120,
@@ -780,7 +780,7 @@ function this.Define_StopPlane_Color_Value(relative_to, const)
 end
 function this.Refresh_StopPlane_Color_Value(def, grapple)
     -- There is no need to store changes in the changes list.  Text is directly changed as they type
-    --NOTE: ActivateWindow_GrappleSwing_Visuals sets this to nil
+    --NOTE: ActivateWindow_Grapple_Visuals sets this to nil
     if not def.text then
         def.text = grapple.visuals.stopplane_color
     end
@@ -789,7 +789,7 @@ function this.Define_StopPlane_Color_Help(relative_to, const)
     -- HelpButton
     return
     {
-        invisible_name = "GrappleSwing_Visuals_StopPlane_Color_Help",
+        invisible_name = "Grapple_Visuals_StopPlane_Color_Help",
 
         tooltip = this.GetColorTooltipText(),
 
@@ -839,7 +839,7 @@ function this.Define_StopPlane_Color_Sample(relative_to, const)
     -- ColorSample
     return
     {
-        invisible_name = "GrappleSwing_Visuals_StopPlane_Color_Sample",
+        invisible_name = "Grapple_Visuals_StopPlane_Color_Sample",
 
         color_hex = "8F00",
 
@@ -902,7 +902,7 @@ function this.Define_ColorURL_TextBox(vars_ui, const)
     -- TextBox
     return
     {
-        invisible_name = "GrappleSwing_Visuals_ColorURL_TextBox",
+        invisible_name = "Grapple_Visuals_ColorURL_TextBox",
 
         text ="https://color.adobe.com/create/color-wheel",
 

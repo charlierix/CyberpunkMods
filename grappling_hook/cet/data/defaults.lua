@@ -278,7 +278,7 @@ function GetDefault_Grapple_Swing(const)
         fallDamageReduction_percent = 0,
     }
 
-    retVal.experience = 36
+    retVal.experience = 32
     retVal.energy_cost = GetEnergyCost_GrappleSwing(retVal)
 
     return retVal

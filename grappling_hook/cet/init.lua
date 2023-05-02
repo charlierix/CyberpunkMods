@@ -113,9 +113,8 @@ require "ui_windows/grapple_straight_description"
 require "ui_windows/grapple_straight_distances"
 require "ui_windows/grapple_straight_stopearly"
 require "ui_windows/grapple_straight_velaway"
-require "ui_windows/grapple_straight_visuals"
 require "ui_windows/grapple_swing"
-require "ui_windows/grapple_swing_visuals"
+require "ui_windows/grapple_visuals"
 require "ui_windows/input_bindings"
 require "ui_windows/main"
 
@@ -153,6 +152,7 @@ local const =
             "input_bindings",
             "energy_tank",
             "grapple_choose",
+            "grapple_visuals",
             "grapple_straight",
                 "grapple_straight_accelalong",
                 "grapple_straight_accellook",
@@ -164,9 +164,7 @@ local const =
                 "grapple_straight_distances",
                 "grapple_straight_stopearly",
                 "grapple_straight_velaway",
-                "grapple_straight_visuals",
-            "grapple_swing",
-                "grapple_swing_visuals"
+            "grapple_swing"
         ),
 
     bindings = CreateEnum("grapple1", "grapple2", "grapple3", "grapple4", "grapple5", "grapple6", "stop"),

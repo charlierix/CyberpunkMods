@@ -128,20 +128,11 @@ function TransitionWindows_Straight_VelocityAway(vars_ui, const)
     ActivateWindow_GrappleStraight_VelocityAway(vars_ui, const)
 end
 
-function TransitionWindows_Straight_Visuals(vars_ui, const)
-    -- NOTE: This should only be called from Grapple_Straight, so everything is already stored
-    -- in vars_ui.transition_info
-
-    vars_ui.currentWindow = const.windows.grapple_straight_visuals
-
-    ActivateWindow_GrappleStraight_Visuals(vars_ui, const)
-end
-
-function TransitionWindows_Swing_Visuals(vars_ui, const)
+function TransitionWindows_Visuals(vars_ui, const)
     -- NOTE: This should only be called from Grapple_Swing, so everything is already stored
     -- in vars_ui.transition_info
 
-    vars_ui.currentWindow = const.windows.grapple_swing_visuals
+    vars_ui.currentWindow = const.windows.grapple_visuals
 
-    ActivateWindow_GrappleSwing_Visuals(vars_ui, const)
+    ActivateWindow_Grapple_Visuals(vars_ui, const)
 end

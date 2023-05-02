@@ -150,14 +150,11 @@ function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, player, o, co
         elseif vars_ui.currentWindow == const.windows.grapple_straight_velaway then
             continueShowing = DrawWindow_GrappleStraight_VelocityAway(isCloseRequested, vars_ui, player, window, const)
 
-        elseif vars_ui.currentWindow == const.windows.grapple_straight_visuals then
-            continueShowing = DrawWindow_GrappleStraight_Visuals(isCloseRequested, vars_ui, player, window, const)
-
         elseif vars_ui.currentWindow == const.windows.grapple_swing then
             continueShowing = DrawWindow_Grapple_Swing(isCloseRequested, vars_ui, player, window, const)
 
-        elseif vars_ui.currentWindow == const.windows.grapple_swing_visuals then
-            continueShowing = DrawWindow_GrappleSwing_Visuals(isCloseRequested, vars_ui, player, window, const)
+        elseif vars_ui.currentWindow == const.windows.grapple_visuals then
+            continueShowing = DrawWindow_Grapple_Visuals(isCloseRequested, vars_ui, player, window, const)
         end
 
         is_minimized = false

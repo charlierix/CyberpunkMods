@@ -144,7 +144,7 @@ function DrawWindow_Grapple_Swing(isCloseRequested, vars_ui, player, window, con
     Draw_HelpButton(grapple_swing.airfrictionreduce_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
 
     if Draw_SummaryButton(grapple_swing.visuals, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        TransitionWindows_Swing_Visuals(vars_ui, const)
+        TransitionWindows_Visuals(vars_ui, const)
     end
 
     Draw_OrderedList(grapple_swing.experience, vars_ui.style.colors)

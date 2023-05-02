@@ -146,7 +146,7 @@ function DrawWindow_Grapple_Straight(isCloseRequested, vars_ui, player, window, 
     end
 
     if Draw_SummaryButton(grapple_straight.visuals, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        TransitionWindows_Straight_Visuals(vars_ui, const)
+        TransitionWindows_Visuals(vars_ui, const)
     end
 
     if Draw_SummaryButton(grapple_straight.aim_duration, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
