@@ -678,8 +678,8 @@ function this.Define_Anchor_Default(relative_to, const)
 end
 function this.Restore_Anchor_Default(def_anchorstyle, def_anchor_color1, def_anchor_color2, const)
     def_anchorstyle.selected_item = const.Visuals_AnchorPoint_Type.none
-    def_anchor_color1.text = "FF0"
-    def_anchor_color2.text = "FF0"
+    def_anchor_color1.text = "90E6E18E"
+    def_anchor_color2.text = "D0E2EB7F"
 end
 
 function this.Define_StopPlane_Checkbox(relative_to, const)
