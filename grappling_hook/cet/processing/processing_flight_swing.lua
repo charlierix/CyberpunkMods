@@ -56,9 +56,9 @@ function Process_Flight_Swing(o, player, vars, const, keys, debug, deltaTime)
     this.DrawRope(eye_pos, look_dir, vars.rayHit, grapple.visuals, const)
 
     local straight_x, straight_y, straight_z = GetAccel_GrappleStraight(o, vars, grapple, grappleLen, grappleDirUnit, vars.vel)
-    local boost_x, boost_y, boost_z = GetAccel_Boosting(o, vars)
+    local boost_x, boost_y, boost_z = GetAccel_Boosting(o, vars, const, deltaTime)
     local drag1_x, drag1_y, drag1_z = ClampVelocity_Drag(vars.vel, const.maxSpeed)
-    local drag2_x, drag2_y, drag2_z = GetAccel_AirFriction(vars.vel, Clamp(0, 1, -keys.analog_y), vars.swingprops_override)       -- pressing back is 100% break
+    local drag2_x, drag2_y, drag2_z = GetAccel_AirFriction(vars.vel, Clamp(0, 1, -keys.analog_y), vars.swingprops_override, grapple.aim_swing.boostedairfriction_reduction_percent)       -- pressing back is 100% break
     local antigrav_z = GetAntiGravity(grapple.anti_gravity, isAirborne)     -- cancel gravity
 
     local accel_x = straight_x + boost_x + drag1_x + drag2_x

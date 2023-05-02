@@ -15,7 +15,7 @@ function DefineWindow_Grapple_Choose(vars_ui, const)
     grapple_choose.low_xp2 = this.Define_LowXP2(const)
 
     grapple_choose.name = this.Define_Name(const)
-    grapple_choose.description = this.Define_Description(const)
+    grapple_choose.description = this.Define_Description(grapple_choose.name, const)
 
     grapple_choose.available = this.Define_AvailableGrapples(const)
 
@@ -228,7 +228,7 @@ function this.Define_Name(const)
 
         position =
         {
-            pos_x = 100,
+            pos_x = 36,
             pos_y = -120,
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.center,
@@ -247,20 +247,26 @@ function this.Refresh_Name(def, selected_index)
     end
 end
 
-function this.Define_Description(const)
+function this.Define_Description(relative_to, const)
     -- Label
     return
     {
         text = "",
 
-        max_width = 400,
+        max_width = 320,
 
         position =
         {
-            pos_x = 100,
-            pos_y = -80,
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 12,
+
+            relative_horz = const.alignment_horizontal.left,
             horizontal = const.alignment_horizontal.left,
-            vertical = const.alignment_vertical.center,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
         },
 
         color = "edit_prompt",      -- Grapple_Straight has description in a LabelClickable, which defaults to textbox's foreground if it's not overriden.  TextBox's color happens to be the same as this (if the stylesheet ever changes, may want a dedicated color name for this)
@@ -286,12 +292,12 @@ function this.Define_AvailableGrapples(const)
         items = {},
         selected_index = 0,
 
-        width = 400,
+        width = 340,
         height = 490,
 
         position =
         {
-            pos_x = 48,
+            pos_x = 36,
             pos_y = 48,
             horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.top,

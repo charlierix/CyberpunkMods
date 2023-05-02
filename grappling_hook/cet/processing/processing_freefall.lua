@@ -25,9 +25,9 @@ function Process_FreeFall(o, player, vars, const, keys, debug, deltaTime)
         do return end
     end
 
-    local boost_x, boost_y, boost_z = GetAccel_Boosting(o, vars)
+    local boost_x, boost_y, boost_z = GetAccel_Boosting(o, vars, const, deltaTime)
     local drag1_x, drag1_y, drag1_z = ClampVelocity_Drag(vars.vel, const.maxSpeed)
-    local drag2_x, drag2_y, drag2_z = GetAccel_AirFriction(vars.vel, Clamp(0, 1, -keys.analog_y), vars.swingprops_override)       -- pressing back is 100% break
+    local drag2_x, drag2_y, drag2_z = GetAccel_AirFriction(vars.vel, Clamp(0, 1, -keys.analog_y), vars.swingprops_override, vars.grapple.aim_swing.boostedairfriction_reduction_percent)       -- pressing back is 100% brake
     local antigrav_z = this.GetAntiGravity(o, vars, vars.grapple.anti_gravity, isAirborne)
 
     local accel_x = boost_x + drag1_x + drag2_x

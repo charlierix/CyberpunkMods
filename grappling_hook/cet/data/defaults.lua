@@ -212,7 +212,6 @@ function GetDefault_Grapple_PoleVault(const)
     local retVal =
     {
         name = "pole vault",
-        description = "Meant to be pointed at the ground mid jump to help traverse gaps between buildings",
 
         visuals = GetDefault_Visuals(const),
 
@@ -236,6 +235,11 @@ function GetDefault_Grapple_PoleVault(const)
 
         fallDamageReduction_percent = 0,
     }
+
+    retVal.description =
+[[Meant to be pointed at the ground mid jump to help traverse gaps between buildings
+
+Not very good, sounded better in my head]]
 
     retVal.experience = this.CalculateExperience_GrappleStraight(retVal)
     retVal.energy_cost = GetEnergyCost_GrappleStraight(retVal.experience)
@@ -274,8 +278,8 @@ function GetDefault_Grapple_Swing(const)
         fallDamageReduction_percent = 0,
     }
 
-    retVal.experience = 12
-    retVal.energy_cost = 1
+    retVal.experience = 36
+    retVal.energy_cost = GetEnergyCost_GrappleSwing(retVal)
 
     return retVal
 end

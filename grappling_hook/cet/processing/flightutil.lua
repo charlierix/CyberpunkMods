@@ -199,33 +199,33 @@ function GetAccel_GrappleStraight(o, vars, grapple, grappleLen, grappleDirUnit, 
         const_z + spring_z + drag_z + look_z
 end
 
-function GetAccel_Boosting(o, vars)
+function GetAccel_Boosting(o, vars, const, deltaTime)
     if not vars.startStopTracker:IsPrevActionHeldDown() then
+        return 0, 0, 0
+    end
+
+    if not this.TakeEnergyByBoosting(o, vars, const, deltaTime) then
         return 0, 0, 0
     end
 
     vars.swingprops_override:BoostApplied()
 
-    --TODO: get accel from swing props
-    local ACCEL = 12
+    local accel = vars.grapple.aim_swing.boost_accel
 
     debug_render_screen.Add_Text2D(0.667, 0.65, "BOOSTING", nil, "C44", "FFF", nil, true)
-
-    --TODO: play a sound
 
     -- Apply boost along look
     --local eye_pos, look_dir = o:GetCrosshairInfo()
     o:GetCamera()
 
     return
-        o.lookdir_forward.x * ACCEL,
-        o.lookdir_forward.y * ACCEL,
-        o.lookdir_forward.z * ACCEL
+        o.lookdir_forward.x * accel,
+        o.lookdir_forward.y * accel,
+        o.lookdir_forward.z * accel
 end
 
-function GetAccel_AirFriction(vel, airbrake_percent, swingprops_override)
+function GetAccel_AirFriction(vel, airbrake_percent, swingprops_override, airfriction_reduction_percent)
     -- https://www.engineeringtoolbox.com/drag-coefficient-d_627.html
-    --local AIR_DENSITY = 1.25
     local AIR_DENSITY = 2       -- actual air density is 1.25.  Using a larger value to slow things down and give more control when not boosted
     local AIR_DENSITY_MAXBOOST = 0.2
     local DRAG_COEFFICIENT = 1.1
@@ -233,7 +233,7 @@ function GetAccel_AirFriction(vel, airbrake_percent, swingprops_override)
     local AIRBRAKE_AREA = 6
     local MASS = 100
 
-    local air_density = GetScaledValue(AIR_DENSITY, AIR_DENSITY_MAXBOOST, 0, 1, swingprops_override.charge)
+    local air_density = GetScaledValue(AIR_DENSITY, AIR_DENSITY_MAXBOOST, 0, 1, swingprops_override.charge * airfriction_reduction_percent)
 
     if debug_render_screen.IsEnabled() then
         debug_render_screen.Add_Text2D(0.667, 0.55, "charge: " .. tostring(Round(swingprops_override.charge, 2)) .. "\r\nair density: " .. tostring(Round(air_density, 2)), nil, "FF68684F", "FFF", nil, true)
@@ -521,4 +521,19 @@ function this.GetLook(o, vars, grapple, grappleLen, vel)
 
     -- Get the acceleration
     return GetPullAccel_Constant(grapple.accel_alongLook, o.lookdir_forward, diffDist, speed, not isSameDir)
+end
+
+function this.TakeEnergyByBoosting(o, vars, const, deltaTime)
+    local burn_rate = 3 * (1 - vars.grapple.aim_swing.boost_cost_reduction_percent)
+
+    local newEnergy, isEnergyEmpty = ConsumeEnergy(vars.energy, burn_rate, deltaTime)
+
+    if isEnergyEmpty then
+        vars.animation_lowEnergy:ActivateAnimation()
+        Transition_ToStandard(vars, const, debug, o)
+        return false
+    else
+        vars.energy = newEnergy
+        return true
+    end
 end
