@@ -25,18 +25,18 @@ function DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
     -- Stop Angle (Grapple.minDot)
     gst8_stop.has_stopAngle = this.Define_HasStopAngle(const)
     gst8_stop.stopAngle_help = this.Define_StopAngle_Help(gst8_stop.has_stopAngle, const)
-    gst8_stop.stopAngle_value = this.Define_StopAngle_Value(const)
-    gst8_stop.stopAngle_graphic = this.Define_StopAngle_Graphic(const)
+    gst8_stop.stopAngle_value = this.Define_StopAngle_Value(gst8_stop.has_stopAngle, const)
+    gst8_stop.stopAngle_graphic = this.Define_StopAngle_Graphic(gst8_stop.stopAngle_value, const)
 
     -- Stop Distance (Grapple.stop_distance)
     gst8_stop.has_stopDistance = this.Define_HasStopDistance(const)
     gst8_stop.stopDistance_help = this.Define_StopDistance_Help(gst8_stop.has_stopDistance, const)
-    gst8_stop.stopDistance_value = this.Define_StopDistance_Value(const)
+    gst8_stop.stopDistance_value = this.Define_StopDistance_Value(gst8_stop.has_stopDistance, const)
 
     -- Stop Plane (Grapple.stop_plane_distance)
-    gst8_stop.has_stopPlane = this.Define_HasStopPlane(const)
+    gst8_stop.has_stopPlane = this.Define_HasStopPlane(gst8_stop.stopDistance_value, const)
     gst8_stop.stopPlane_help = this.Define_StopPlane_Help(gst8_stop.has_stopPlane, const)
-    gst8_stop.stopPlane_value = this.Define_StopPlane_Value(const)
+    gst8_stop.stopPlane_value = this.Define_StopPlane_Value(gst8_stop.has_stopPlane, const)
 
     -- Stop on wall hit (Grapple.stop_on_wallHit)
     gst8_stop.should_stopOnWallHit = this.Define_ShouldStopOnWallHit(const)
@@ -187,9 +187,9 @@ function this.Define_GrappleAccelToDesired_Custom()
         percent = 0,        -- it's always far right, since this is distance from anchor
 
         --NOTE: These values are copied from Define_GrappleArrows
-        from_x = -300,
-        to_x = 360,
-        y = -70,
+        from_x = -280,
+        to_x = -10,
+        y = -105,
     }
 end
 function this.Refresh_GrappleAccelToDesired_Custom(def, grapple, def_checkbox_dist, def_slider_dist, def_checkbox_plane, def_slider_plane, shouldHighlight)
@@ -229,8 +229,8 @@ function this.Define_HasStopAngle(const)
 
         position =
         {
-            pos_x = -220,
-            pos_y = 40,
+            pos_x = -180,
+            pos_y = -10,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -266,7 +266,7 @@ For wall hanging, either unchecked or a very large angle would be best, giving t
     return retVal
 end
 
-function this.Define_StopAngle_Value(const)
+function this.Define_StopAngle_Value(relative_to, const)
     -- Slider
     return
     {
@@ -284,10 +284,16 @@ function this.Define_StopAngle_Value(const)
 
         position =
         {
-            pos_x = -220,
-            pos_y = 75,
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 16,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
         },
 
         CalcSize = CalcSize_Slider,
@@ -305,7 +311,7 @@ function this.Refresh_StopAngle_Value(def, grapple)
     end
 end
 
-function this.Define_StopAngle_Graphic(const)
+function this.Define_StopAngle_Graphic(relative_to, const)
     -- MinDotGraphic
     return
     {
@@ -313,10 +319,16 @@ function this.Define_StopAngle_Graphic(const)
 
         position =
         {
-            pos_x = -220,
-            pos_y = 220,
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 18,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
         },
 
         CalcSize = CalcSize_MinDotGraphic,
@@ -339,8 +351,8 @@ function this.Define_HasStopDistance(const)
 
         position =
         {
-            pos_x = 220,
-            pos_y = 30,
+            pos_x = 180,
+            pos_y = -20,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -374,7 +386,7 @@ Or to have no deadspot and a cutoff instead?]]
     return retVal
 end
 
-function this.Define_StopDistance_Value(const)
+function this.Define_StopDistance_Value(relative_to, const)
     -- Slider
     return
     {
@@ -392,10 +404,16 @@ function this.Define_StopDistance_Value(const)
 
         position =
         {
-            pos_x = 220,
-            pos_y = 65,
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 16,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
         },
 
         CalcSize = CalcSize_Slider,
@@ -414,7 +432,7 @@ function this.Refresh_StopDistance_Value(def, grapple)
 end
 
 -- StopPlane
-function this.Define_HasStopPlane(const)
+function this.Define_HasStopPlane(relative_to, const)
     -- CheckBox
     return
     {
@@ -426,10 +444,16 @@ function this.Define_HasStopPlane(const)
 
         position =
         {
-            pos_x = 220,
-            pos_y = 110,
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 24,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
         },
 
         CalcSize = CalcSize_CheckBox,
@@ -461,7 +485,7 @@ It defines a plane at the anchor point, and the grapple will end when you pass t
     return retVal
 end
 
-function this.Define_StopPlane_Value(const)
+function this.Define_StopPlane_Value(relative_to, const)
     -- Slider
     return
     {
@@ -479,10 +503,16 @@ function this.Define_StopPlane_Value(const)
 
         position =
         {
-            pos_x = 220,
-            pos_y = 145,
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 16,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
         },
 
         CalcSize = CalcSize_Slider,
@@ -514,7 +544,7 @@ function this.Define_ShouldStopOnWallHit(const)
         position =
         {
             pos_x = 0,
-            pos_y = 240,
+            pos_y = 190,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
