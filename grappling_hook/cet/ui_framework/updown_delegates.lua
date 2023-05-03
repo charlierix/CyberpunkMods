@@ -10,14 +10,9 @@ end
 
 --NOTE: These need to be global so defaults.lua can reference min/max
 antigrav_percents = { 0.15, 0.3, 0.4, 0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.825, 0.85, 0.875, 0.9, 0.925, 0.95 }
-boost_accels = { 2, 4, 6, 8, 10, 12, 15, 18, 21, 24, 28, 32, 36 }
 
 function this.AntiGrav_Percent_IncDec(current)
     return this.Get_IncDec(current, antigrav_percents, 0.015)
-end
-
-function this.BoostAccel_IncDec(current)
-    return this.Get_IncDec(current, boost_accels, 0.2)
 end
 
 function this.Get_IncDec(current, list, epsilon)

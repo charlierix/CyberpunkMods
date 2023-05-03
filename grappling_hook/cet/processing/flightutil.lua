@@ -529,8 +529,7 @@ function this.TakeEnergyByBoosting(o, vars, const, deltaTime)
     local newEnergy, isEnergyEmpty = ConsumeEnergy(vars.energy, burn_rate, deltaTime)
 
     if isEnergyEmpty then
-        vars.animation_lowEnergy:ActivateAnimation()
-        Transition_ToStandard(vars, const, debug, o)
+        vars.animation_lowEnergy:ActivateAnimation()        -- the swing should continue, they just can't boost anymore
         return false
     else
         vars.energy = newEnergy

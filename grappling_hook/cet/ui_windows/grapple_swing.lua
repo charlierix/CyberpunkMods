@@ -353,5 +353,7 @@ function this.Save(player, grapple, def_name, changes)
     grapple.aim_swing.boost_accel = grapple.aim_swing.boost_accel + changes:Get("boost_accel")
     grapple.aim_swing.boostedairfriction_reduction_percent = grapple.aim_swing.boostedairfriction_reduction_percent + changes:Get("boostedairfriction_reduction_percent")
 
+    grapple.energy_cost = GetEnergyCost_GrappleSwing(grapple)
+
     player:Save()
 end

@@ -399,7 +399,7 @@ function GetDefault_AimSwing()
 
     local boost_cost_reduction_percent_update, boost_cost_reduction_percent = this.GetUpdateAndValue(nil, 0, 1, 0.1, nil, false)
 
-    local boost_accel = boost_accels[3]     -- 6
+    local boost_accel_update, boost_accel = this.GetUpdateAndValue(2, 6, 20, 2, nil, false)
 
     local airfriction_update, airfriction = this.GetUpdateAndValue(nil, 0, 1, 0.1, nil, false)
 
@@ -412,13 +412,7 @@ function GetDefault_AimSwing()
         boost_cost_reduction_percent_update = boost_cost_reduction_percent_update,
 
         boost_accel = boost_accel,
-        boost_accel_update =
-        {
-            min_abs = boost_accels[1],
-            min = boost_accel,
-            max = boost_accels[#boost_accels],
-            getDecrementIncrement = "BoostAccel_IncDec",
-        },
+        boost_accel_update = boost_accel_update,
 
         boostedairfriction_reduction_percent = airfriction,
         boostedairfriction_reduction_percent_update = airfriction_update,
