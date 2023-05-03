@@ -315,9 +315,11 @@ function this.Aim_Swing_UnderSwing(position, vel, look_dir, speed_look, vel_unit
     local mid_point = AddVectors(position, MultiplyVector(look_dir, dest_dist / 2))
     local up_to_anchor = CrossProduct3D(vert_plane_normal, look_dir)
 
-    debug_render_screen.Add_Line(position, AddVectors(position, vel_vert_unit), debug_categories.AIM_velcomponent)
-    debug_render_screen.Add_Line(position, AddVectors(position, MultiplyVector(anchor_line, 12)), debug_categories.AIM_construction)
-    debug_render_screen.Add_Line(mid_point, AddVectors(mid_point, MultiplyVector(up_to_anchor, 12)), debug_categories.AIM_construction)
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Line(position, AddVectors(position, vel_vert_unit), debug_categories.AIM_velcomponent)
+        debug_render_screen.Add_Line(position, AddVectors(position, MultiplyVector(anchor_line, 12)), debug_categories.AIM_construction)
+        debug_render_screen.Add_Line(mid_point, AddVectors(mid_point, MultiplyVector(up_to_anchor, 12)), debug_categories.AIM_construction)
+    end
 
     local found_intersection, intersect1, intersect2 = GetClosestPoints_Line_Line(position, AddVectors(position, anchor_line), mid_point, AddVectors(mid_point, up_to_anchor))
     if not found_intersection then
@@ -340,9 +342,6 @@ function this.Aim_Swing_UnderSwing(position, vel, look_dir, speed_look, vel_unit
     -- Adjust the anchor point off vert plane based on horizontal velocity
     local vel_plane_normal = GetProjectedVector_AlongVector(vel, vert_plane_normal)
 
-    debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
-    debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
-
     local radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_pos))
 
     -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
@@ -352,7 +351,6 @@ function this.Aim_Swing_UnderSwing(position, vel, look_dir, speed_look, vel_unit
     radius = math.sqrt(GetVectorDiffLengthSqr(position, anchor_pos))      -- previous radius calculation was to get the offplane_mult.  Two square roots, but it has to be done
 
     this.ShowEndPoint(anchor_pos, radius, nil, nil, new_grapple, vars, o, const)     -- reusing this function to show the anchor and distance
-    debug_render_screen.Add_Arc(anchor_pos, position, dest_pos, debug_categories.AIM_arc)
 
     local dest_dir = this.GetSwingDestinationDirection(anchor_pos, position, dest_pos)
 
@@ -360,7 +358,13 @@ function this.Aim_Swing_UnderSwing(position, vel, look_dir, speed_look, vel_unit
     local stopplane_point2, stopplane_normal2 = this.GetStopPlane_SwingCeiling(anchor_pos, up_to_anchor, position, dest_pos)
 
     this.ShowEndPoint(dest_pos, dest_dist, stopplane_point, stopplane_normal, new_grapple, vars, o, const)
-    debug_render_screen.Add_Square(stopplane_point2, stopplane_normal2, 8, 8, debug_categories.AIM_stopplane)
+
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
+        debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
+        debug_render_screen.Add_Arc(anchor_pos, position, dest_pos, debug_categories.AIM_arc)
+        debug_render_screen.Add_Square(stopplane_point2, stopplane_normal2, 8, 8, debug_categories.AIM_stopplane)
+    end
 
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, false, stopplane_point, stopplane_normal, stopplane_point2, stopplane_normal2)
     return true
@@ -397,9 +401,6 @@ function this.Aim_Swing_Toss_DownUp(position, vel, look_dir, o, vars, const)
 
     local anchor_pos = AddVectors(position, MultiplyVector(anchor_line_unit, radius))
 
-    debug_render_screen.Add_Line(position, AddVectors(position, vel_vert_unit), debug_categories.AIM_velcomponent)
-    debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
-
     -- release at 45 degrees
     local look_dot_up = DotProduct3D(look_dir, up)
     local release_angle = tossdownup_releaseangle_by_dot:Evaluate(look_dot_up)
@@ -414,9 +415,6 @@ function this.Aim_Swing_Toss_DownUp(position, vel, look_dir, o, vars, const)
     -- Adjust the anchor point off vert plane based on horizontal velocity
     local vel_plane_normal = GetProjectedVector_AlongVector(vel, vert_plane_normal)
 
-    debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
-    debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
-
     --TODO: also multiply by radius
     -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
     anchor_pos = AddVectors(anchor_pos, MultiplyVector(vel_plane_normal, VELOCITY_OFFPLANE_MULT))
@@ -427,15 +425,20 @@ function this.Aim_Swing_Toss_DownUp(position, vel, look_dir, o, vars, const)
     local point_on_line = GetClosestPoint_Line_Point(position, SubtractVectors(release_point, position), anchor_pos)
     local ceiling_normal = ToUnit(SubtractVectors(anchor_pos, point_on_line))
     local stopplane_point2, stopplane_normal2 = this.GetStopPlane_SwingCeiling(anchor_pos, ceiling_normal, position, release_point)
-    debug_render_screen.Add_Square(stopplane_point2, stopplane_normal2, 8, 8, debug_categories.AIM_stopplane)
 
     local new_grapple = swing_grapples.GetPureRope(vars.grapple)
 
     local dist_to_release = math.sqrt(GetVectorDiffLengthSqr(release_point, position))
     this.ShowEndPoint(release_point, dist_to_release, stopplane_point, stopplane_normal, new_grapple, vars, o, const)
-    debug_render_screen.Add_Arc(anchor_pos, position, release_point, debug_categories.AIM_arc)
 
-    debug_render_screen.Add_Text2D(nil, nil, "speed vert: " .. tostring(Round(speed_vert, 1)) .. "\r\nrelease angle: " .. tostring(Round(release_angle)), debug_categories.AIM_implementationtext)
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
+        debug_render_screen.Add_Line(position, AddVectors(position, vel_vert_unit), debug_categories.AIM_velcomponent)
+        debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
+        debug_render_screen.Add_Arc(anchor_pos, position, release_point, debug_categories.AIM_arc)
+        debug_render_screen.Add_Text2D(nil, nil, "speed vert: " .. tostring(Round(speed_vert, 1)) .. "\r\nrelease angle: " .. tostring(Round(release_angle)), debug_categories.AIM_implementationtext)
+        debug_render_screen.Add_Square(stopplane_point2, stopplane_normal2, 8, 8, debug_categories.AIM_stopplane)
+    end
 
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, false, stopplane_point, stopplane_normal)
     return true
@@ -496,9 +499,7 @@ function this.Aim_Swing_Toss_Up(position, vel, look_dir, speed_look, o, vars, co
     local releasedir_unit = RotateVector3D_axis_angle(swing_arm_unit, right, release_angle)
     local release_point = AddVectors(anchor_pos, MultiplyVector(releasedir_unit, radius))
 
-
     anchor_pos, release_point = swing_analyze_scenes.TossUp(position, anchor_pos, release_point, speed_look, o, debug_categories.AIM_analyze1, debug_categories.AIM_analyze2)
-
 
     local release_dir_unit = this.GetSwingDestinationDirection(anchor_pos, position, release_point)
 
@@ -506,9 +507,6 @@ function this.Aim_Swing_Toss_Up(position, vel, look_dir, speed_look, o, vars, co
 
     -- Adjust the anchor point off vert plane based on horizontal velocity
     local vel_plane_normal = GetProjectedVector_AlongVector(vel, right)
-
-    debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
-    debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
 
     --TODO: also multiply by radius
     -- Technically, this should be a rotation about mid_point, but the offset should be small enough that linear should be fine
@@ -520,15 +518,19 @@ function this.Aim_Swing_Toss_Up(position, vel, look_dir, speed_look, o, vars, co
     local point_on_line = GetClosestPoint_Line_Point(position, SubtractVectors(release_point, position), anchor_pos)
     local ceiling_normal = ToUnit(SubtractVectors(anchor_pos, point_on_line))
     local stopplane_point2, stopplane_normal2 = this.GetStopPlane_SwingCeiling(anchor_pos, ceiling_normal, position, release_point)
-    debug_render_screen.Add_Square(stopplane_point2, stopplane_normal2, 8, 8, debug_categories.AIM_stopplane)
 
     local accel_mult = tossup_accelpercent_by_dot:Evaluate(look_dot_up)
     local new_grapple = swing_grapples.GetElasticRope(vars.grapple, radius, accel_mult, 1)
 
     this.ShowEndPoint(release_point, math.sqrt(GetVectorDiffLengthSqr(position, release_point)), stopplane_point, stopplane_normal, new_grapple, vars, o, const)
-    debug_render_screen.Add_Arc(anchor_pos, position, release_point, debug_categories.AIM_arc)
 
-    debug_render_screen.Add_Text2D(nil, nil, "look_dot_up: " .. tostring(Round(look_dot_up, 1)) .. "\r\nspeed_look: " .. tostring(Round(speed_look, 1)) .. "\r\naccel_mult: " .. tostring(Round(accel_mult, 2)), debug_categories.AIM_implementationtext)
+    if debug_render_screen.IsEnabled() then
+        debug_render_screen.Add_Dot(anchor_pos, debug_categories.AIM_construction)
+        debug_render_screen.Add_Line(position, AddVectors(position, vel_plane_normal), debug_categories.AIM_velcomponent)
+        debug_render_screen.Add_Square(stopplane_point2, stopplane_normal2, 8, 8, debug_categories.AIM_stopplane)
+        debug_render_screen.Add_Arc(anchor_pos, position, release_point, debug_categories.AIM_arc)
+        debug_render_screen.Add_Text2D(nil, nil, "look_dot_up: " .. tostring(Round(look_dot_up, 1)) .. "\r\nspeed_look: " .. tostring(Round(speed_look, 1)) .. "\r\naccel_mult: " .. tostring(Round(accel_mult, 2)), debug_categories.AIM_implementationtext)
+    end
 
     Transition_ToFlight_Swing(new_grapple, vars, const, o, position, anchor_pos, nil, false, stopplane_point, stopplane_normal)
     return true
