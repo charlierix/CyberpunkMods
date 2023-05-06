@@ -1,17 +1,15 @@
-﻿using grapple_ui.models.misc;
+﻿using models.misc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace grapple_ui.models.viewmodels
+namespace models.viewmodels
 {
-    public record Button : IControl
+    public class Button : IControl
     {
-        public string text { get; init; }
+        public string text { get; set; }
 
-        public double? width_override { get; init; }
+        public bool isEnabled { get; set; }
+
+        public double? width_override { get; set; }
 
         /// <summary>
         /// Tells where on the parent to place the buttons

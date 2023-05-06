@@ -1,38 +1,34 @@
-﻿using grapple_ui.models.misc;
+﻿using models.misc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace grapple_ui.models.viewmodels
+namespace models.viewmodels
 {
     /// <summary>
     /// This is a list of items, one of them can be selected
     /// </summary>
-    public record ListBox : IControl
+    public class ListBox : IControl
     {
         /// <summary>
         /// This isn't shown, it just needs to be a unique string
         /// </summary>
         public string invisible_name { get; init; }
 
-        public string[] items { get; init; }
+        public string[] items { get; set; }
 
         /// <summary>
         /// Optional array, same size as items.  If present, this will determine which items can be selected
         /// </summary>
-        public bool[] selectable { get; init; }
+        public bool[] selectable { get; set; }
 
         /// <summary>
         /// Use zero for nothing selected
         /// </summary>
-        public int selected_index { get; init; }
+        public int selected_index { get; set; }
 
-        public double width { get; init; }
+        public double width { get; set; }
 
         //NOTE: height isn't exact, it's a multiple of a line's height
-        public double height { get; init; }
+        public double height { get; set; }
 
         /// <summary>
         /// Tells where on the parent to place the text

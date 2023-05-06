@@ -1,36 +1,32 @@
-﻿using grapple_ui.models.misc;
+﻿using models.misc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace grapple_ui.models.viewmodels
+namespace models.viewmodels
 {
-    public record TextBox : IControl
+    public class TextBox : IControl
     {
         /// <summary>
         /// This isn't shown, it just needs to be a unique string
         /// </summary>
         public string invisible_name { get; init; }
 
-        public string text { get; init; }
+        public string text { get; set; }
 
-        public int maxChars { get; init; }
+        public int maxChars { get; set; }
 
-        public bool isMultiLine { get; init; }
+        public bool isMultiLine { get; set; }
 
         // Only populate one of these
-        public double? min_width { get; init; }
-        public double? width { get; init; }
+        public double? min_width { get; set; }
+        public double? width { get; set; }
 
         // Only looked at if min_width is used
-        public double? max_width { get; init; }
+        public double? max_width { get; set; }
 
         /// <summary>
         /// Height is only used if multi line
         /// </summary>
-        public double? height { get; init; }
+        public double? height { get; set; }
 
         /// <summary>
         /// Tells where on the parent to place the text
@@ -41,7 +37,7 @@ namespace grapple_ui.models.viewmodels
         /// <summary>
         /// Optional named color (in stylesheet.colors)
         /// </summary>
-        public string foreground_override { get; init; }
+        public string foreground_override { get; set; }
 
         public Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
     }

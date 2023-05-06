@@ -1,10 +1,7 @@
-﻿namespace models.stylesheet
+﻿namespace grapple_ui.models.stylesheet
 {
-    public record ListBox
+    public record ComboBox
     {
-        /// <summary>
-        /// The gap between the border and the content
-        /// </summary>
         public double padding { get; init; }
 
         public double border_cornerRadius { get; init; }
@@ -14,18 +11,17 @@
 
         public string background_color_standard { get; init; }
 
-        // These are for the selected item
+        // dropdown items being interacted with
         public string background_color_selected { get; init; }
-
         public string background_color_hover { get; init; }
         public string background_color_click { get; init; }
 
-        /// <summary>
-        /// Color of the text
-        /// </summary>
-        public string foreground_color_standard { get; init; }
-        public string foreground_color_selected { get; init; }
-        public string foreground_color_disabled { get; init; }
+        // color of the text
+        public string foreground_color { get; init; }
+
+        // the button with the down arrow
+        public string button_color_standard { get; init; }
+        public string button_color_hover { get; init; }
 
         /// <summary>
         /// NOTE: The scrollbar's background color is applied over top of the listbox's background color.  So an opacity of

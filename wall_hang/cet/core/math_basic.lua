@@ -91,9 +91,9 @@ function LERP_vec4(min, max, percent)
 end
 
 function Clamp(min, max, value)
-    if value < min then
+    if min and value < min then
         return min
-    elseif value > max then
+    elseif max and value > max then
         return max
     else
         return value

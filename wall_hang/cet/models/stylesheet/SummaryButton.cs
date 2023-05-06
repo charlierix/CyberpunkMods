@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace grapple_ui.models.stylesheet
+﻿namespace models.stylesheet
 {
     /// <summary>
     /// This is a custom control that has a border, a list of text inside, acts like a button

@@ -1,22 +1,19 @@
-﻿using grapple_ui.models.misc;
+﻿using models.misc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace grapple_ui.models.viewmodels
+namespace models.viewmodels
 {
-    public record MultiItemDisplayList : IControl
+    public class MultiItemDisplayList : IControl
     {
         /// <summary>
         /// The outer sets list is sorted by key
         /// Each set is then a list of strings (that will be sorted when displaying)
         /// </summary>
-        public SortedDictionary<string, List<string>> sets { get; init; }
+        public SortedDictionary<string, List<string>> sets { get; set; }
 
-        public double width { get; init; }
-        public double height { get; init; }
+        public double width { get; set; }
+        public double height { get; set; }
 
         /// <summary>
         /// Tells where on the parent to place the text
@@ -28,7 +25,7 @@ namespace grapple_ui.models.viewmodels
         /// <summary>
         /// Index of the outer list
         /// </summary>
-        private string[] sets_keys { get; init; }
+        private string[] sets_keys { get; set; }
         /// <summary>
         /// Index of each inner set (dict's key is the set)
         /// </summary>

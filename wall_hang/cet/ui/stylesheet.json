@@ -140,7 +140,7 @@
         "background_color_standard": "10606060",
         "background_color_hover": "20A0A0A0",
     
-        "padding": 19,
+        "padding": 12,
     
         "unused_color": "555",
         
@@ -153,7 +153,7 @@
         "content_color_value": "AAE",
 
         "suffix_color": "882",
-        "suffix_gap": 8,
+        "suffix_gap": 4,
 
         "prompt_value_gap": 16
     },
@@ -230,6 +230,15 @@
 
         "foreground_color": "DBCAA7",
         "background_color": "18787668"
+    },
+
+    "gridview":
+    {
+        "foreground_color_header": "525249",
+        "foreground_color_cell": "909090",
+
+        "gap_horizontal": 12,
+        "gap_vertical": 12
     },
 
     "progressbar_slim":

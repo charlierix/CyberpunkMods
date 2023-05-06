@@ -1,5 +1,5 @@
 -- def is models\viewmodels\CheckBox
--- style is models\stylesheet\Stylesheet
+-- style is models\stylesheet\CheckBox
 -- line_heights is models\misc\LineHeights
 function CalcSize_CheckBox(def, style, const, line_heights, scale)
     local width, height = ImGui.CalcTextSize(def.text)

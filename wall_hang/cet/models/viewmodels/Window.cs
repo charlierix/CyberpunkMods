@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using models.misc;
 
-namespace grapple_ui.models.viewmodels
+namespace models.viewmodels
 {
     /// <remarks>
     /// There is no property to hold a list of controls.  They are just added directly to this (key is the control

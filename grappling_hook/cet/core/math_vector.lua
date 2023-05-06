@@ -323,6 +323,16 @@ function GetProjectedVector_AlongPlane_Unit(vector, alongPlanes_normal)
     return alongLine
 end
 
+function GetClosestPoint_Line_Point(pointOnLine, lineDirection, testPoint)
+    local dirToPoint = SubtractVectors(testPoint, pointOnLine)
+
+    local dot1 = DotProduct3D(dirToPoint, lineDirection)
+    local dot2 = DotProduct3D(lineDirection, lineDirection)
+    local ratio = dot1 / dot2
+
+    return AddVectors(pointOnLine, MultiplyVector(lineDirection, ratio))
+end
+
 -- Turns dot product into a user friendly angle in degrees
 --  dot     angle
 --   1       0
@@ -368,100 +378,6 @@ function GetCircle_Cached(num_sides)
     end
 
     return circlePoints_byCount[key]
-end
-
------------------------------------- Intersection -------------------------------------
-
--- Calculates the intersection line segment between 2 lines (not segments).
--- Returns false if no solution can be found.
---
--- Got this here:
--- http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/calclineline.cs
--- 
--- Which was ported from the C algorithm of Paul Bourke:
--- http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
---
--- Returns
---  success
---  point1
---  point2
-function GetClosestPoints_Line_Line(line1_point1, line1_point2, line2_point1, line2_point2)
-    local p1 = line1_point1
-    local p2 = line1_point2
-    local p3 = line2_point1
-    local p4 = line2_point2
-    local p13 = SubtractVectors(p1, p3)
-    local p43 = SubtractVectors(p4, p3)
-
-    --if (IsNearZero(p43.LengthSquared))
-    --    return false;
-
-    local p21 = SubtractVectors(p2, p1)
-    --if (IsNearZero(p21.LengthSquared))
-    --    return false;
-
-    local d1343 = (p13.x * p43.x) + (p13.y * p43.y) + (p13.z * p43.z)
-    local d4321 = (p43.x * p21.x) + (p43.y * p21.y) + (p43.z * p21.z)
-    local d1321 = (p13.x * p21.x) + (p13.y * p21.y) + (p13.z * p21.z)
-    local d4343 = (p43.x * p43.x) + (p43.y * p43.y) + (p43.z * p43.z)
-    local d2121 = (p21.x * p21.x) + (p21.y * p21.y) + (p21.z * p21.z)
-
-    local denom = (d2121 * d4343) - (d4321 * d4321)
-    --if (IsNearZero(denom))
-    --    return false;
-    local numer = (d1343 * d4321) - (d1321 * d4343)
-
-    local mua = numer / denom
-    if IsNaN(mua) then
-        return false, nil, nil
-    end
-
-    local mub = (d1343 + d4321 * (mua)) / d4343
-
-    local point1 = Vector4.new(p1.x + mua * p21.x, p1.y + mua * p21.y, p1.z + mua * p21.z, 1)
-    local point2 = Vector4.new(p3.x + mub * p43.x, p3.y + mub * p43.y, p3.z + mub * p43.z, 1)
-
-    if IsNaN(point1.x) or IsNaN(point1.y) or IsNaN(point1.z) or IsNaN(point2.x) or IsNaN(point2.y) or IsNaN(point2.z) then
-        return false, nil, nil
-    else
-        return true, point1, point2
-    end
-end
-
-function IsAbovePlane(point_on_plane, normal, test_point, trueIfOnPlane)
-    -- Compute D, using an arbitrary point P, that lies on the plane: D = - (Nx*Px + Ny*Py + Nz*Pz); Don't forget the inversion !
-    local d = -((normal.x * point_on_plane.x) + (normal.y * point_on_plane.y) + (normal.z * point_on_plane.z))
-
-    -- Test point (T) with respect to the plane using the plane equation: res = Nx*Tx + Ny*Ty + Nz*Tz + D
-    local res = (normal.x * test_point.x) + (normal.y * test_point.y) + (normal.z * test_point.z) + d
-
-    if res > 0 then
-        return true     -- above the plane
-
-    elseif trueIfOnPlane and IsNearZero(res) then
-        return true     -- on the plane
-
-    else
-        return false        -- below the plane
-    end
-end
-
-function GetClosestPoint_Line_Point(pointOnLine, lineDirection, testPoint)
-    local dirToPoint = SubtractVectors(testPoint, pointOnLine)
-
-    local dot1 = DotProduct3D(dirToPoint, lineDirection)
-    local dot2 = DotProduct3D(lineDirection, lineDirection)
-    local ratio = dot1 / dot2
-
-    return AddVectors(pointOnLine, MultiplyVector(lineDirection, ratio))
-end
-
-function GetClosestPoint_Plane_Point(point_on_plane, normal, test_point)
-    local origin_distance = this.GetPlaneOriginDistance(normal, point_on_plane)
-
-    -- This should never return nil, since the plane's normal is the test line (normal isn't perpendicular to itself) and
-    -- bools say infinite line
-    return this.GetIntersection_Plane_Line(normal, test_point, AddVectors(test_point, normal), origin_distance, true, true)
 end
 
 --------------------------------------- Random ----------------------------------------
@@ -674,86 +590,4 @@ function this.GetCirclePoints(num_sides)
     end
 
     return points
-end
-
--- This returns the distance between a plane and the origin
--- WARNING: Make sure you actually want this instead of DistanceFromPlane
--- NOTE: Normal must be a unit vector
-function this.GetPlaneOriginDistance(normalUnit, pointOnPlane)
-    local distance = 0      -- This variable holds the distance from the plane to the origin
-
-    -- Use the plane equation to find the distance (Ax + By + Cz + D = 0)  We want to find D.
-    -- So, we come up with D = -(Ax + By + Cz)
-    -- Basically, the negated dot product of the normal of the plane and the point. (More about the dot product in another tutorial)
-    distance = -((normalUnit.x * pointOnPlane.x) + (normalUnit.y * pointOnPlane.y) + (normalUnit.z * pointOnPlane.z))
-
-    return distance     -- Return the distance
-end
-
----This returns the intersection point of the line that intersects the plane
----@param normal Vector4 unit vector
----@param linePoint1 Vector4 a point on the line
----@param linePoint2 Vector4 another point on the line
----@param originDistance number result of this.GetPlaneOriginDistance
----@param allowBefore1 boolean false if the line is a ray or segment.  True if it's an infinite line
----@param allowAfter2 boolean false if the line is a segment.  True if it's a ray or infinite line
----@return Vector4? point nil if parallel to plane or outside the line segment or ray if allow bools are false
-function this.GetIntersection_Plane_Line(normal, linePoint1, linePoint2, originDistance, allowBefore1, allowAfter2)
-    -- Here comes the confusing part.  We need to find the 3D point that is actually
-    -- on the plane.  Here are some steps to do that:
-
-    -- 1)  First we need to get the vector of our line, Then normalize it so it's a length of 1
-    local lineDir = SubtractVectors(linePoint2, linePoint1)     -- Get the Vector of the line
-
-    --NO!!!!  I don't know why this was done, but it messes up the segment length constraint
-    --lineDir.Normalize();                -- Normalize the lines vector
-
-    -- 2) Use the plane equation (distance = Ax + By + Cz + D) to find the distance from one of our points to the plane.
-    --    Here I just chose a arbitrary point as the point to find that distance.  You notice we negate that
-    --    distance.  We negate the distance because we want to eventually go BACKWARDS from our point to the plane.
-    --    By doing this is will basically bring us back to the plane to find our intersection point.
-    local numerator = -(normal.x * linePoint1.x +       -- Use the plane equation with the normal and the line
-                        normal.y * linePoint1.y +
-                        normal.z * linePoint1.z + originDistance)
-
-    -- 3) If we take the dot product between our line vector and the normal of the polygon,
-    --    this will give us the cosine of the angle between the 2 (since they are both normalized - length 1).
-    --    We will then divide our Numerator by this value to find the offset towards the plane from our arbitrary point.
-    local denominator = DotProduct3D(normal, lineDir)       -- Get the dot product of the line's vector and the normal of the plane
-
-    -- Since we are using division, we need to make sure we don't get a divide by zero error
-    -- If we do get a 0, that means that there are INFINATE points because the the line is
-    -- on the plane (the normal is perpendicular to the line - (Normal.Vector = 0)).  
-    -- In this case, we should just return any point on the line.
-
-    if denominator == 0.0 then                     -- Check so we don't divide by zero
-        return nil      -- line is parallel to plane
-    end
-
-    -- We divide the (distance from the point to the plane) by (the dot product)
-    -- to get the distance (dist) that we need to move from our arbitrary point.  We need
-    -- to then times this distance (dist) by our line's vector (direction).  When you times
-    -- a scalar (single number) by a vector you move along that vector.  That is what we are
-    -- doing.  We are moving from our arbitrary point we chose from the line BACK to the plane
-    -- along the lines vector.  It seems logical to just get the numerator, which is the distance
-    -- from the point to the line, and then just move back that much along the line's vector.
-    -- Well, the distance from the plane means the SHORTEST distance.  What about in the case that
-    -- the line is almost parallel with the polygon, but doesn't actually intersect it until half
-    -- way down the line's length.  The distance from the plane is short, but the distance from
-    -- the actual intersection point is pretty long.  If we divide the distance by the dot product
-    -- of our line vector and the normal of the plane, we get the correct length.  Cool huh?
-
-    local dist = numerator / denominator        -- Divide to get the multiplying (percentage) factor
-
-    -- Constrain to the endpoints
-    if not allowBefore1 and dist < 0 then
-        return nil
-    elseif not allowAfter2 and dist > 1 then
-        return nil
-    end
-
-    -- Now, like we said above, we times the dist by the vector, then add our arbitrary point.
-    -- This essentially moves the point along the vector to a certain distance.  This now gives
-    -- us the intersection point.  Yay!
-    return Vector4.new(linePoint1.x + (lineDir.x * dist), linePoint1.y + (lineDir.y * dist), linePoint1.z + (lineDir.z * dist), 1)
 end

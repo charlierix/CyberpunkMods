@@ -54,7 +54,7 @@ function Draw_TextBox(def, style_text, style_colors, scale)
     ImGui.PopStyleVar(3)
 end
 
-------------------------------------------- Private Methods -------------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.Calculate_Sizes(def, style_text, line_heights, const, scale)
     -- Width

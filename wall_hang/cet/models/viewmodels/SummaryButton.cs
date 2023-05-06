@@ -1,11 +1,8 @@
-﻿using grapple_ui.models.misc;
+﻿using models.misc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace grapple_ui.models.viewmodels
+namespace models.viewmodels
 {
     /// <summary>
     /// This gets handed to a method that builds a control that looks like some text surrounded by
@@ -15,7 +12,7 @@ namespace grapple_ui.models.viewmodels
     /// This will get mostly filled out with static data during init, then a few values get update
     /// each frame
     /// </remarks>
-    public record SummaryButton : IControl
+    public class SummaryButton : IControl
     {
         /// <summary>
         /// Tells where on the parent to place the text
@@ -24,10 +21,10 @@ namespace grapple_ui.models.viewmodels
         public RenderPosition render_pos { get; init; }
 
         // This defines the min size of the inner portion.  It doesn't include the border's padding around the inner portion
-        public int? min_width { get; init; }
-        public int? min_height { get; init; }
+        public int? min_width { get; set; }
+        public int? min_height { get; set; }
 
-        public double? border_cornerRadius_override { get; init; }
+        public double? border_cornerRadius_override { get; set; }
 
         // ************************* Use either this *************************
 
@@ -37,17 +34,17 @@ namespace grapple_ui.models.viewmodels
         // **************************** Or these *****************************
 
         // Horizontally centered along the top, needs a strong color
-        public string header_prompt { get; init; }
-        public string header_value { get; init; }
+        public string header_prompt { get; set; }
+        public string header_value { get; set; }
 
         // Info text, each is accessed by a key (the key isn't displayed, but the content is displayed based on alphabetical order of the keys)
         // It's actually dictionary content and sortedlist content_keys
-        public SortedDictionary<string, SummaryButton_Content> content { get; init; }
+        public SortedDictionary<string, SummaryButton_Content> content { get; set; }
 
         // *******************************************************************
 
         // Small bit of text in the bottom right corner
-        public string suffix { get; init; }
+        public string suffix { get; set; }
 
         /// <summary>
         /// Name given to the invisible button (needs to be unique)
@@ -57,9 +54,9 @@ namespace grapple_ui.models.viewmodels
         public Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
     }
 
-    public record SummaryButton_Content
+    public class SummaryButton_Content
     {
-        public string prompt { get; init; }
-        public string value { get; init; }
+        public string prompt { get; set; }
+        public string value { get; set; }
     }
 }

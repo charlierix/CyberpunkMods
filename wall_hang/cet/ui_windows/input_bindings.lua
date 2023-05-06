@@ -584,7 +584,7 @@ function this.Draw_Summary_Tooltips(current, vars_ui, window)
         local sum_width = current.summary.render_pos.width
         local sum_height = current.summary.render_pos.height
 
-        local gap = 24
+        local gap = 24 * vars_ui.scale
 
         Draw_Tooltip(
             actionSummary,

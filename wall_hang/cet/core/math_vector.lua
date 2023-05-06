@@ -5,6 +5,8 @@ local circlePoints_byCount = {}
 function vec_str(vector)
     if not vector then
         return "nil"
+    elseif not vector.x or not vector.y or not vector.z then
+        return tostring(vector)
     end
 
     return tostring(Round(vector.x, 2)) .. ", " .. tostring(Round(vector.y, 2)) .. ", " .. tostring(Round(vector.z, 2))
@@ -376,64 +378,6 @@ function GetCircle_Cached(num_sides)
     end
 
     return circlePoints_byCount[key]
-end
-
------------------------------------- Intersection -------------------------------------
-
--- Calculates the intersection line segment between 2 lines (not segments).
--- Returns false if no solution can be found.
---
--- Got this here:
--- http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/calclineline.cs
--- 
--- Which was ported from the C algorithm of Paul Bourke:
--- http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
---
--- Returns
---  success
---  point1
---  point2
-function GetClosestPoints_Line_Line(line1_point1, line1_point2, line2_point1, line2_point2)
-    local p1 = line1_point1
-    local p2 = line1_point2
-    local p3 = line2_point1
-    local p4 = line2_point2
-    local p13 = SubtractVectors(p1, p3)
-    local p43 = SubtractVectors(p4, p3)
-
-    --if (IsNearZero(p43.LengthSquared))
-    --    return false;
-
-    local p21 = SubtractVectors(p2, p1)
-    --if (IsNearZero(p21.LengthSquared))
-    --    return false;
-
-    local d1343 = (p13.x * p43.x) + (p13.y * p43.y) + (p13.z * p43.z)
-    local d4321 = (p43.x * p21.x) + (p43.y * p21.y) + (p43.z * p21.z)
-    local d1321 = (p13.x * p21.x) + (p13.y * p21.y) + (p13.z * p21.z)
-    local d4343 = (p43.x * p43.x) + (p43.y * p43.y) + (p43.z * p43.z)
-    local d2121 = (p21.x * p21.x) + (p21.y * p21.y) + (p21.z * p21.z)
-
-    local denom = (d2121 * d4343) - (d4321 * d4321)
-    --if (IsNearZero(denom))
-    --    return false;
-    local numer = (d1343 * d4321) - (d1321 * d4343)
-
-    local mua = numer / denom
-    if IsNaN(mua) then
-        return false, nil, nil
-    end
-
-    local mub = (d1343 + d4321 * (mua)) / d4343
-
-    local point1 = Vector4.new(p1.x + mua * p21.x, p1.y + mua * p21.y, p1.z + mua * p21.z, 1)
-    local point2 = Vector4.new(p3.x + mub * p43.x, p3.y + mub * p43.y, p3.z + mub * p43.z, 1)
-
-    if IsNaN(point1.x) or IsNaN(point1.y) or IsNaN(point1.z) or IsNaN(point2.x) or IsNaN(point2.y) or IsNaN(point2.z) then
-        return false, nil, nil
-    else
-        return true, point1, point2
-    end
 end
 
 --------------------------------------- Random ----------------------------------------

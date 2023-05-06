@@ -1,27 +1,23 @@
-﻿using grapple_ui.models.misc;
+﻿using models.misc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace grapple_ui.models.viewmodels
+namespace models.viewmodels
 {
-    public record StickFigure : IControl
+    public class StickFigure : IControl
     {
         /// <summary>
         /// True: Use the standard color
         /// False: Use the gray color
         /// </summary>
-        public bool isStandardColor { get; init; }
+        public bool isStandardColor { get; set; }
 
         /// <summary>
         /// Set to true when they hover over options that will modify these lines
         /// </summary>
-        public bool isHighlight { get; init; }
+        public bool isHighlight { get; set; }
 
-        public double width { get; init; }
-        public double height { get; init; }
+        public double width { get; set; }
+        public double height { get; set; }
 
         /// <summary>
         /// Tells where on the parent to place the graphic

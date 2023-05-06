@@ -1,15 +1,11 @@
-﻿using grapple_ui.models.misc;
+﻿using models.misc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace grapple_ui.models.viewmodels
+namespace models.viewmodels
 {
-    public record Label : IControl
+    public class Label : IControl
     {
-        public string text { get; init; }
+        public string text { get; set; }
 
         /// <summary>
         /// Tells where on the parent to place the text
@@ -20,12 +16,12 @@ namespace grapple_ui.models.viewmodels
         /// <summary>
         /// If this is set, then the text will be wordwrapped if it exceeds the length
         /// </summary>
-        public int? max_width { get; init; }
+        public int? max_width { get; set; }
 
         /// <summary>
         /// This is a named color from the stylesheet's colors list
         /// </summary>
-        public string color { get; init; }
+        public string color { get; set; }
 
         public Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
     }

@@ -1,11 +1,7 @@
-﻿using grapple_ui.models.misc;
+﻿using models.misc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace grapple_ui.models.viewmodels
+namespace models.viewmodels
 {
     public interface IControl
     {
@@ -24,5 +20,7 @@ namespace grapple_ui.models.viewmodels
         /// This will set render_pos.width and height
         /// </summary>
         Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
+
+        //TODO: Add a class that handles refresh interval.  That way some controls can be refreshed every frame, but others only half second or so
     }
 }

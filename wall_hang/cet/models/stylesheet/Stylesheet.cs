@@ -1,10 +1,7 @@
-﻿using System;
+﻿using grapple_ui.models.stylesheet;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace grapple_ui.models.stylesheet
+namespace models.stylesheet
 {
     /// <summary>
     /// These are properties used by the UI
@@ -72,6 +69,8 @@ namespace grapple_ui.models.stylesheet
 
         public MultiItemDisplayList multiitem_displaylist { get; init; }
 
+        public GridView gridview { get; init; }
+
         public ProgressBar_Slim progressbar_slim { get; init; }
 
         public HelpButton helpButton { get; init; }
@@ -80,7 +79,11 @@ namespace grapple_ui.models.stylesheet
 
         public Tooltip tooltip { get; init; }
 
+        public MinDotGraphic mindotGraphic { get; init; }
+
         public Graphics graphics { get; init; }
+
+        public ColorSample colorSample { get; init; }
 
         /// <summary>
         /// For now, it's just a place to define named colors.  If more is needed later, change this to

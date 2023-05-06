@@ -1,17 +1,13 @@
-﻿using grapple_ui.models.misc;
+﻿using models.misc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace grapple_ui.models.viewmodels
+namespace models.viewmodels
 {
-    public record ProgressBar_Slim : IControl
+    public class ProgressBar_Slim : IControl
     {
-        public double percent { get; init; }
+        public double percent { get; set; }
 
-        public double width { get; init; }
+        public double width { get; set; }
 
         /// <summary>
         /// Tells where on the parent to place the text
@@ -23,9 +19,9 @@ namespace grapple_ui.models.viewmodels
         //name is defined in the viewmodel, then it's an override
 
         // These are in named colors
-        public string border_color { get; init; }
-        public string background_color { get; init; }
-        public string foreground_color { get; init; }
+        public string border_color { get; set; }
+        public string background_color { get; set; }
+        public string foreground_color { get; set; }
 
         public Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
     }

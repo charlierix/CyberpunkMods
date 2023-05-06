@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace grapple_ui.models.stylesheet
+﻿namespace models.stylesheet
 {
     //NOTE: These should probably be the same values OkCancelButtons, so that everything looks the same
     public record Button
@@ -26,5 +20,9 @@ namespace grapple_ui.models.stylesheet
         public string back_color_standard { get; init; }
         public string back_color_hover { get; init; }
         public string back_color_click { get; init; }
+
+        public string disabled_back_color { get; init; }
+        public string disabled_fore_color { get; init; }
+        public string disabled_border_color { get; init; }
     }
 }

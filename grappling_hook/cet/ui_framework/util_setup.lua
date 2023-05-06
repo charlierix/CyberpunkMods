@@ -67,7 +67,7 @@ end
 ------------------------ Private Methods (FinishDefiningWindow) -----------------------
 
 -- This looks for controls that have a position property and stores them in render_nodes
--- NOTE: This is is recursive, because controls may be stored in structures
+-- NOTE: This is recursive, because controls may be stored in structures
 function this.BuildRenderTree(window)
     local controls = this.FindAllControlsWithPosition(window)
     local nodes = this.Convert_Control_To_RenderPosition(controls)
@@ -117,7 +117,7 @@ function this.IsControlWithPosition(item)
         return false
     end
 
-    local vert = pos.horizontal
+    local vert = pos.vertical
     if not vert or type(vert) ~= "string" then
         return false
     end
@@ -141,6 +141,10 @@ function this.Convert_Control_To_RenderPosition(controls)
 end
 
 -- This moves nodes under the node they are relative to
+--
+-- Controls are defined as a 1D list with optional parent property.  This function turns that 1D list into a
+-- list of trees
+--
 -- NOTE: nodes passed in needs to be a 1D list
 function this.GroupRelativeTo(nodes)
     local index = 1

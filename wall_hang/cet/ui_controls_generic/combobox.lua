@@ -19,7 +19,6 @@ end
 -- Returns
 --  selected_item, selection_changed
 function Draw_ComboBox(def, style_combo, scale)
-
     ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, style_combo.padding * scale, style_combo.padding * scale)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, style_combo.border_cornerRadius * scale)
     ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, style_combo.border_thickness)

@@ -1,11 +1,6 @@
-﻿using grapple_ui.models.viewmodels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using models.viewmodels;
 
-namespace grapple_ui.models.misc
+namespace models.misc
 {
     /// <summary>
     /// This can be added to a control to tells how to place it
