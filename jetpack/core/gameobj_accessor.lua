@@ -83,6 +83,13 @@ function GameObjectAccessor:Custom_CurrentlyFlying_IsOwnerOrNone()
         return self.multimod_flight.IsOwnerOrNone(self.quest, self.wrappers)
     end
 end
+function GameObjectAccessor:Custom_CurrentlyFlying_HasControlSwitched()
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        return self.multimod_flight.HasControlSwitched(self.quest, self.wrappers)
+    end
+end
 function GameObjectAccessor:Custom_CurrentlyFlying_CanStartFlight()
     self:EnsureLoaded_Quest()
 

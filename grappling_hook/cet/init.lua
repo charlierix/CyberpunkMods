@@ -606,9 +606,6 @@ function TODO()
     -- Aim Allows Death:
     --  I hit the ground hard while aiming, and grappling hook had stolen flight, which prevented jetpack from doing a safe landing
 
-    -- Angry Bird:
-    --  Figure out why it loses speed
-
     -- Controller:
     --  Listen to MoveX, MoveY
     --  Do a length chcek + dot product and populate:  Forward, Back, Left, Right
@@ -619,13 +616,6 @@ function TODO()
     -- Grapple Straight:
     --  Add a repulsion to walls when > some distance from desired distance
     --  This would be helpful with going straight up walls
-
-    -- Grapple Straight:
-    --  Add an ability to jump straight away from a wall when at the desired distance (and close to a wall)
-    --  This will help with scaling tall walls.  You grapple straight up, reach the anchor, recover energy,
-    --  jump and aquire a new grapple point, repeat
-    --
-    --  Also give an option to slow time while jumping.  This will be useful for ambushing enemies
 
     -- All:
     --  Fall damage should be a percent, not a bool
@@ -661,22 +651,12 @@ function TODO()
     --  Add achievments
 
     -- UI:
-    --  Add invisible buttons to several controls, highlight graphics based on hover
-
-    -- UI:
     --  The props in viewmodels that override style are currently suffixed with _override
     --  Need to make most style properties overridable by the viewmodel, and it should just be the same name
 
     -- UI:
     --  All numbers should be presented as dozenal :)
     --  (see wall hang)
-
-    -- ViewModels:
-    --  The properties that change should have set instead of init
-
-    -- Crouch:
-    --  Reenter crouch if grapple started from crouch
-    --      (I think it already does.  The person that reported this may have walked forward after grappling.  Test a bit more)
 
     -- Adjust Pitch:
     --  While grappling, adjust the pitch if there is a strong enough yaw change accel

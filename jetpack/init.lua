@@ -1,15 +1,21 @@
 --https://www.lua.org/pil/contents.html
---https://wiki.cybermods.net/cyber-engine-tweaks/console/functions
---https://github.com/yamashi/CyberEngineTweaks/blob/eb0f7daf2971ed480abf04355458cbe326a0e922/src/sol_imgui/README.md
-
 --https://docs.swift.org/swift-book/LanguageGuide/TheBasics.html
---https://github.com/jac3km4/redscript
---https://codeberg.org/adamsmasher/cyberpunk/src/branch/master
+--http://lua.sqlite.org/index.cgi/doc/tip/doc/lsqlite3.wiki#numerical_error_and_result_codes
+
+--https://github.com/yamashi/CyberEngineTweaks/blob/eb0f7daf2971ed480abf04355458cbe326a0e922/src/sol_imgui/README.md
+--https://github.com/ocornut/imgui/blob/b493cae8c971843886d760bb816dcab661779d69/imgui.h
+--https://github.com/ocornut/imgui/blob/25fbff2156640cc79e9a79db00522019b4a0420f/imgui_draw.cpp
+
+--https://wiki.cybermods.net/cyber-engine-tweaks/console/functions
 --https://redscript.redmodding.org/
+--https://codeberg.org/adamsmasher/cyberpunk/src/branch/master
+
+--https://github.com/jac3km4/redscript
 
 require "core/gameobj_accessor"
 require "core/lists"
 require "core/math_basic"
+require "core/math_shapes"
 require "core/math_vector"
 require "core/math_yaw"
 require "core/util"
@@ -42,7 +48,7 @@ require "ui/sounds_wallhit"
 local this = {}
 
 --------------------------------------------------------------------
----                  User Preference Constants                   ---
+---                          Constants                           ---
 --------------------------------------------------------------------
 
 local const =

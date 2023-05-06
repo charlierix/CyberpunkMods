@@ -9,7 +9,7 @@ local this = {}
 
 local custom_flight_offset = 1234567
 local m_flight_key = nil
-
+local controlswitched_current_key = nil
 
 -- This returns true if this mod is owner of flight, or the setting is blank (returns false if another mod is flying)
 -- It is readonly (doesn't set anything)
@@ -28,6 +28,24 @@ function multimod_flight.IsOwnerOrNone(quest, wrappers)
     else
         return false
     end
+end
+
+-- This is meant to be called on a regular basis from a function that isn't currently flying (is_owner was thrown in just because)
+-- Treat it like an event
+function multimod_flight.HasControlSwitched(quest, wrappers)
+    local current = wrappers.GetQuestFactStr(quest, "custom_currentlyFlying_current")
+
+    local changed = current ~= controlswitched_current_key
+    controlswitched_current_key = current
+
+    local is_empty = current == nil or type(current) ~= "number" or current == 0
+
+    local is_owner = not is_empty and m_flight_key and current == m_flight_key
+
+    return
+        changed,
+        is_empty,
+        is_owner
 end
 
 -- This just returns whether it's possible to start flight.  It is readonly (doesn't set anything)

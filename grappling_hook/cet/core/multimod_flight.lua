@@ -11,7 +11,6 @@ local custom_flight_offset = 1234567
 local m_flight_key = nil
 local controlswitched_current_key = nil
 
-
 -- This returns true if this mod is owner of flight, or the setting is blank (returns false if another mod is flying)
 -- It is readonly (doesn't set anything)
 function multimod_flight.IsOwnerOrNone(quest, wrappers)
