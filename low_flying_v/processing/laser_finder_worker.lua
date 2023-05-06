@@ -138,7 +138,6 @@ function LaserFinderWorker:FireRay(x, y, z)
 
     -- Fire ray
     local fromPos = Vector4.new(x, y, z, 1);
-    --local hit, _ = RayCast_HitPoint(fromPos, self.directionUnit, self.rayLength, self.accuracyThreshold, self.o);
     local hit = self.o:RayCast(fromPos, GetPoint(fromPos, self.directionUnit, self.rayLength))
 
     -- the new raycast now sees water

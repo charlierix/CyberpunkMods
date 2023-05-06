@@ -69,11 +69,11 @@ end
 -- This pretends to remove the item from the list
 -- It shifts the item into the garbage zone and decrements the public max
 function StickyList:RemoveItem(index)
-    if (index < 1) or (index > self.maxIndex) then
+    if index < 1 or index > self.maxIndex then
         LogError("StickyList.RemoveItem: index out of range (index=" .. tostring(index) .. ") (max=" .. tostring(self.maxIndex) .. ")")
         return nil
     end
-    
+
     local temp = self.table[index]
 
     self.table[index] = self.table[self.maxIndex]

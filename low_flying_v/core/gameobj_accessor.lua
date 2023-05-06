@@ -33,6 +33,8 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_spacialQueries = -(pullInterval_spacialQueries * 2)
     obj.lastPulled_targeting = -(pullInterval_targeting * 2)
 
+    obj.lastGot_lookDir = -1
+
     return obj
 end
 
@@ -52,7 +54,7 @@ end
 
 -- Populates this.player, position, velocity, yaw
 function GameObjectAccessor:GetPlayerInfo()
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player then
         self.pos = self.wrappers.Player_GetPos(self.player)
@@ -67,6 +69,13 @@ function GameObjectAccessor:Custom_CurrentlyFlying_IsOwnerOrNone()
 
     if self.quest then
         return self.multimod_flight.IsOwnerOrNone(self.quest, self.wrappers)
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying_HasControlSwitched()
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        return self.multimod_flight.HasControlSwitched(self.quest, self.wrappers)
     end
 end
 function GameObjectAccessor:Custom_CurrentlyFlying_CanStartFlight()
@@ -108,7 +117,7 @@ end
 -- Populates isInWorkspot
 --WARNING: If this is called while load is first kicked off, it will crash the game.  So probably want to wait until the player is moving or something
 function GameObjectAccessor:GetInWorkspot()
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if not self.workspot or (self.timer - self.lastPulled_workspot) >= pullInterval_workspot then
         self.lastPulled_workspot = self.timer
@@ -131,8 +140,10 @@ function GameObjectAccessor:GetCamera()
         self.camera = self.wrappers.GetCameraSystem()
     end
 
-    if self.camera then
+    --This is getting called multiple times per tick, so only get the values once per tick
+    if self.camera and (self.lastGot_lookDir ~= self.timer) then
         self.lookdir_forward, self.lookdir_right = self.wrappers.Camera_GetForwardRight(self.camera)
+        self.lastGot_lookDir = self.timer
     end
 end
 
@@ -156,7 +167,7 @@ end
 
 -- Teleports to a point, look dir
 function GameObjectAccessor:Teleport(pos, yaw)
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if not self.teleport or (self.timer - self.lastPulled_teleport) >= pullInterval_teleport then
         self.lastPulled_teleport = self.timer
@@ -202,7 +213,7 @@ function GameObjectAccessor:RayCast(fromPos, toPos)
 end
 
 function GameObjectAccessor:HasHeadUnderwater()
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player then
         return self.wrappers.HasHeadUnderwater(self.player)
@@ -216,7 +227,7 @@ end
 -- only have one sound playing at a time.  If nil, then the caller is responsible for stopping
 -- the sound
 function GameObjectAccessor:PlaySound(soundName, vars)
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player then
         if vars then
@@ -232,7 +243,7 @@ function GameObjectAccessor:PlaySound(soundName, vars)
     end
 end
 function GameObjectAccessor:StopSound(soundName)
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player then
         this.StopSound(self.player, soundName)
@@ -241,7 +252,7 @@ end
 
 -- This hits the player with an acceleration
 function GameObjectAccessor:AddImpulse(x, y, z)
-    self:EnsurePlayerLoaded()
+    self:EnsureLoaded_Player()
 
     if self.player and not (IsNearZero(x) and IsNearZero(y) and IsNearZero(z)) then
         local impulseEvent = PSMImpulse.new()
@@ -253,7 +264,7 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function GameObjectAccessor:EnsurePlayerLoaded()
+function GameObjectAccessor:EnsureLoaded_Player()
     if not self.player or (self.timer - self.lastPulled_player) >= pullInterval_player then
         self.lastPulled_player = self.timer
 

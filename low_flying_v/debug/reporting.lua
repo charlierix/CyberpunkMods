@@ -59,7 +59,24 @@ function ReportTable_lite(val, indent, overrideChildReport)
         --#val is only non zero if the keys are integers
         --print("count: " .. #val)      -- this returns the max index of the array (1 based)  NOTE: This is reporting zero when the keys are strings
 
-        for key, value in pairs(val) do
+        -- Sort it
+        local keys = {}
+
+        for k in pairs(val) do
+          if type(k) ~= "string" then
+            error("invalid table: mixed or invalid key types: " .. type(k))
+          end
+
+          table.insert(keys, k)
+        end
+
+        table.sort(keys)
+
+        --for key, value in pairs(val) do
+        for _, k in ipairs(keys) do     -- iterate over the sorted list
+            local key = k
+            local value = val[k]
+
             if not value then
                 print(indent .. key .. " | " .. tostring(value))        -- either nil or false
             elseif type(value) == "table" then
