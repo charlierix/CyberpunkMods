@@ -17,15 +17,19 @@ require "ui/init_ui"
 
 require "ui_framework/util_misc"
 
+local this = {}
+
 --------------------------------------------------------------------
 ---                          Constants                           ---
 --------------------------------------------------------------------
 
 local const =
 {
-    shouldShowScreenDebug = false,      -- draws debug info in game
+    shouldShowScreenDebug = true,      -- draws debug info in game
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
+
+local debug_categories = CreateEnum("text2D_2sec")
 
 --------------------------------------------------------------------
 ---                        Current State                         ---
@@ -69,6 +73,8 @@ registerForEvent("onInit", function()
     InitializeRandom()
     InitializeUI(vars_ui, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
     debug_render_screen.CallFrom_onInit(const.shouldShowScreenDebug)
+
+    this.SetupDebugCategories()
 end)
 
 registerForEvent("onShutdown", function()
@@ -108,8 +114,17 @@ registerForEvent("onUpdate", function(deltaTime)
 end)
 
 
-registerHotkey("NekhraosFaerieOrbis_", "Clear Debug Visuals", function()
+registerHotkey("NekhraosFaeries_IsCrouching", "Is Crouching", function()
     debug_render_screen.Clear()
+
+    local text = nil
+    if Game.GetPlayer().inCrouch then
+        text = "crouching"
+    else
+        text = "standing up"
+    end
+
+    debug_render_screen.Add_Text2D(nil, nil, text, debug_categories.text2D_2sec)
 end)
 
 
@@ -124,3 +139,9 @@ registerForEvent("onDraw", function()
 
     debug_render_screen.CallFrom_onDraw()
 end)
+
+----------------------------------- Private Methods -----------------------------------
+
+function this.SetupDebugCategories()
+    debug_render_screen.DefineCategory(debug_categories.text2D_2sec, "BA50534A", "FFF", 2, nil, nil, nil, 0.25, 0.5)
+end
