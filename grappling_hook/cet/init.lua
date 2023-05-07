@@ -41,6 +41,8 @@ require "debug/debug_render_logger"
 debug_render_screen = require "debug/debug_render_screen"
 require "debug/reporting"
 
+extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
+
 require "inventory/util_inventory"
 
 require "processing/flightmode_transitions"
@@ -118,12 +120,6 @@ require "ui_windows/grapple_swing"
 require "ui_windows/grapple_visuals"
 require "ui_windows/input_bindings"
 require "ui_windows/main"
-
-extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
-
-
-local swing_raycasts = require("processing/aimswing_raycasts")
-
 
 local this = {}
 

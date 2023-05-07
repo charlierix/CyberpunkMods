@@ -1,11 +1,16 @@
 require "core/color"
 require "core/math_basic"
+require "core/math_shapes"
+require "core/math_vector"
+require "core/sticky_list"
 require "core/util"
 
 require "debug/debug_code"
 require "debug/debug_render_logger"
 debug_render_screen = require "debug/debug_render_screen"
 require "debug/reporting"
+
+extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 require "ui/drawing"
 require "ui/init_ui"
@@ -55,7 +60,7 @@ registerForEvent("onInit", function()
     Observe('QuestTrackerGameController', 'OnUninitialize', function()
         if Game.GetPlayer() == nil then
             isLoaded = false
-            this.ClearObjects()
+            --this.ClearObjects()
         end
     end)
 
