@@ -1,9 +1,12 @@
 require "core/color"
+require "core/gameobj_accessor"
 require "core/math_basic"
 require "core/math_shapes"
 require "core/math_vector"
 require "core/sticky_list"
 require "core/util"
+
+require "data/map"
 
 require "debug/debug_code"
 require "debug/debug_render_logger"
@@ -42,7 +45,9 @@ local isShutdown = true
 local isLoaded = false
 local shouldDraw = false
 
+local o = nil                           -- This is a class that wraps access to Game.xxx
 local keys = nil -- = Keys:new()        -- moved to init
+local map = nil
 
 local vars_ui =
 {
@@ -79,7 +84,9 @@ registerForEvent("onInit", function()
     InitializeUI(vars_ui, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
     debug_render_screen.CallFrom_onInit(const.shouldShowScreenDebug)
 
+    o = GameObjectAccessor:new()
     keys = Keys:new()
+    map = Map:new(o)
 
     this.SetupDebugCategories()
 end)
@@ -96,7 +103,8 @@ registerForEvent("onUpdate", function(deltaTime)
         do return end
     end
 
-    -- o:Tick(deltaTime)
+    o:Tick(deltaTime)
+    map:Tick()
 
     -- o:GetInWorkspot()
     -- if o.isInWorkspot then      -- in a vehicle
