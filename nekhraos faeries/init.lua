@@ -7,6 +7,8 @@ require "core/sticky_list"
 require "core/util"
 
 require "data/map"
+require "data/scanner_orbs"
+require "data/scanner_player"
 
 require "debug/debug_code"
 require "debug/debug_render_logger"
@@ -48,6 +50,8 @@ local shouldDraw = false
 local o = nil                           -- This is a class that wraps access to Game.xxx
 local keys = nil -- = Keys:new()        -- moved to init
 local map = nil
+local scanner_player = nil
+local scanner_orbs = nil
 
 local vars_ui =
 {
@@ -87,6 +91,8 @@ registerForEvent("onInit", function()
     o = GameObjectAccessor:new()
     keys = Keys:new()
     map = Map:new(o)
+    scanner_player = Scanner_Player:new(o, map)
+    scanner_orbs = Scanner_Orbs:new(o, map)
 
     this.SetupDebugCategories()
 end)
@@ -120,7 +126,10 @@ registerForEvent("onUpdate", function(deltaTime)
 
 
 
-
+    -- Probably want to make a dedicated harvester class
+    -- Watch for crouching, f held longer than quarter second, then start looking around for bodies
+    --  botch the job if they aren't looking lower than horizontal the whole time
+    --  botch the job if they get more than halfway and stop prematurely
 
 
 
