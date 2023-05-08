@@ -16,6 +16,7 @@ prototype_scanning = require "prototype/scanning"
 
 require "ui/drawing"
 require "ui/init_ui"
+require "ui/keys"
 
 require "ui_framework/util_misc"
 
@@ -41,6 +42,8 @@ local isShutdown = true
 local isLoaded = false
 local shouldDraw = false
 
+local keys = nil -- = Keys:new()        -- moved to init
+
 local vars_ui =
 {
     scale = 1,      -- control and window sizes are defined in pixels, then get multiplied by scale at runtime.  CET may adjust scale on non 1920x1080 monitors to give a consistent relative size, but higher resolution
@@ -51,9 +54,9 @@ registerForEvent("onInit", function()
         obj:RegisterInputListener(obj)
     end)
 
-    -- Observe("PlayerPuppet", "OnAction", function(_, action)        -- observe must be inside init and before other code
-    --     keys:MapAction(action)
-    -- end)
+    Observe("PlayerPuppet", "OnAction", function(_, action)        -- observe must be inside init and before other code
+        keys:MapAction(action)
+    end)
 
     isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
 
@@ -75,6 +78,8 @@ registerForEvent("onInit", function()
     InitializeRandom()
     InitializeUI(vars_ui, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
     debug_render_screen.CallFrom_onInit(const.shouldShowScreenDebug)
+
+    keys = Keys:new()
 
     this.SetupDebugCategories()
 end)
@@ -102,7 +107,7 @@ registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = true       -- don't want a hung progress bar while in menu or driving
 
     if const.shouldShowDebugWindow then
-        PopulateDebug(debug)
+        PopulateDebug(debug, keys)
     end
 
 
@@ -111,6 +116,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
 
 
+    keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 
     debug_render_screen.CallFrom_onUpdate(deltaTime)
 end)
@@ -131,8 +137,6 @@ end)
 
 registerHotkey("NekhraosFaeries_ScanAllObjecs", "Scan All Objects", function()
     local found, entities = prototype_scanning.GetAllObjects()
-
-    -- the list is coming back with a lot of dupes (8 for some bodies)
 
     if found and entities then
         print("found: " .. tostring(#entities))

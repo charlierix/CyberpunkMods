@@ -1,5 +1,5 @@
 local this = {}
 
-function PopulateDebug(debug)
-    debug.a = "b"
+function PopulateDebug(debug, keys)
+    debug.proceed = keys.proceed
 end

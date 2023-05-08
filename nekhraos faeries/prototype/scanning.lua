@@ -11,6 +11,39 @@ function PrototypeScanning.GetAllObjects(radius)
     --searchQuery.searchFilter = TSF_NPC()       -- this is the contents of TSF_NPC: TSF_And(TSF_All(TSFMV.Obj_Puppet | TSFMV.St_Alive), TSF_Not(TSFMV.Obj_Player))
     --searchQuery.searchFilter = TSF_And(TSF_All(TSFMV.Obj_Puppet), TSF_Not(TSFMV.Obj_Player), TSF_Not(TSFMV.Att_Friendly))       -- allow dead, not sure if friendly is the same as companion
 
+
+
+
+    -- public static func TSF_NPC() -> TargetSearchFilter {
+    -- let tsf: TargetSearchFilter = TSF_And(TSF_All(TSFMV.Obj_Puppet | TSFMV.St_Alive), TSF_Not(TSFMV.Obj_Player));
+    -- return tsf; }
+
+    -- public static func TSF_EnemyNPC() -> TargetSearchFilter {
+    -- let tsf: TargetSearchFilter = TSF_And(TSF_All(TSFMV.Obj_Puppet | TSFMV.Att_Hostile | TSFMV.St_Alive), TSF_Not(TSFMV.Obj_Player));
+    -- return tsf; }
+
+    -- public static func TSF_Quickhackable() -> TargetSearchFilter {
+    -- let tsf: TargetSearchFilter = TSF_And(TSF_All(TSFMV.St_QuickHackable), TSF_Not(TSFMV.Obj_Player), TSF_Not(TSFMV.Att_Friendly), TSF_Any(TSFMV.Sp_Aggressive | TSFMV.Obj_Device));
+    -- return tsf; }
+
+    -- public static func TSQ_ALL() -> TargetSearchQuery {
+    -- let tsq: TargetSearchQuery;
+    -- return tsq; }
+
+    -- public static func TSQ_NPC() -> TargetSearchQuery {
+    -- let tsq: TargetSearchQuery;
+    -- tsq.searchFilter = TSF_NPC();
+    -- return tsq; }
+
+    -- public static func TSQ_EnemyNPC() -> TargetSearchQuery {
+    -- let tsq: TargetSearchQuery;
+    -- tsq.searchFilter = TSF_EnemyNPC();
+    -- return tsq; }
+
+
+
+    --TODO: This only sees what's in front of the player.  Test creating a game object and move it to various orb's locations
+    --Or the center of a few objects
     local found, targetParts = Game.GetTargetingSystem():GetTargetParts(Game.GetPlayer(), searchQuery)
     if not found or #targetParts == 0 then
         return false, nil
@@ -20,36 +53,6 @@ function PrototypeScanning.GetAllObjects(radius)
     -- Might as well convert to entity here
     return true, this.GetDedupedEntities(targetParts)
 end
-
-
--- public static func TSF_NPC() -> TargetSearchFilter {
--- let tsf: TargetSearchFilter = TSF_And(TSF_All(TSFMV.Obj_Puppet | TSFMV.St_Alive), TSF_Not(TSFMV.Obj_Player));
--- return tsf; }
-
--- public static func TSF_EnemyNPC() -> TargetSearchFilter {
--- let tsf: TargetSearchFilter = TSF_And(TSF_All(TSFMV.Obj_Puppet | TSFMV.Att_Hostile | TSFMV.St_Alive), TSF_Not(TSFMV.Obj_Player));
--- return tsf; }
-
--- public static func TSF_Quickhackable() -> TargetSearchFilter {
--- let tsf: TargetSearchFilter = TSF_And(TSF_All(TSFMV.St_QuickHackable), TSF_Not(TSFMV.Obj_Player), TSF_Not(TSFMV.Att_Friendly), TSF_Any(TSFMV.Sp_Aggressive | TSFMV.Obj_Device));
--- return tsf; }
-
--- public static func TSQ_ALL() -> TargetSearchQuery {
--- let tsq: TargetSearchQuery;
--- return tsq; }
-
--- public static func TSQ_NPC() -> TargetSearchQuery {
--- let tsq: TargetSearchQuery;
--- tsq.searchFilter = TSF_NPC();
--- return tsq; }
-
--- public static func TSQ_EnemyNPC() -> TargetSearchQuery {
--- let tsq: TargetSearchQuery;
--- tsq.searchFilter = TSF_EnemyNPC();
--- return tsq; }
-  
-
-
 
 function PrototypeScanning.DebugVisual_Entity(entity)
     local pos = entity:GetWorldPosition()
