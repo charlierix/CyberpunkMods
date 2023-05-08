@@ -12,6 +12,8 @@ require "debug/reporting"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
+prototype_scanning = require "prototype/scanning"
+
 require "ui/drawing"
 require "ui/init_ui"
 
@@ -127,6 +129,27 @@ registerHotkey("NekhraosFaeries_IsCrouching", "Is Crouching", function()
     debug_render_screen.Add_Text2D(nil, nil, text, debug_categories.text2D_2sec)
 end)
 
+registerHotkey("NekhraosFaeries_ScanAllObjecs", "Scan All Objects", function()
+    local found, entities = prototype_scanning.GetAllObjects()
+
+    -- the list is coming back with a lot of dupes (8 for some bodies)
+
+    if found and entities then
+        print("found: " .. tostring(#entities))
+
+        for _, entity in ipairs(entities) do
+            prototype_scanning.DebugVisual_Entity(entity)
+        end
+
+    else
+        print("nothing found")
+    end
+end)
+
+
+registerHotkey("NekhraosFaeries_ClearVisuals", "Clear Visuals", function()
+    debug_render_screen.Clear()
+end)
 
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then

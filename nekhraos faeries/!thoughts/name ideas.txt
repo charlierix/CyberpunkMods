@@ -1,3 +1,10 @@
+nekhraos faeries (necro chaos fairies)
+
+Convert dead bodies into spirits that fly around and mostly help the player
+
+------------------------
+
+
 Soulstorm: Unleash a storm of souls from the dead and wreak havoc on the living.
 Necroball: Turn corpses into balls of necrotic energy that can buff or debuff anyone nearby.
 Orbital: Use the power of orbital mechanics to manipulate the dead and the living with gravity and force.
@@ -95,7 +102,6 @@ nekhraos faerieqi
 nekhraos bollr
 nekhraos faerie orbs
 nekhraos faerie orbis
-
 
 
 ------------------------
