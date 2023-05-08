@@ -19,6 +19,8 @@ extern_json = require "external/json"       -- storing this in a global variable
 
 prototype_scanning = require "prototype/scanning"
 
+harvester = require "processing/harvester"
+
 require "ui/drawing"
 require "ui/init_ui"
 require "ui/keys"
@@ -88,7 +90,17 @@ registerForEvent("onInit", function()
     InitializeUI(vars_ui, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
     debug_render_screen.CallFrom_onInit(const.shouldShowScreenDebug)
 
-    o = GameObjectAccessor:new()
+    local wrappers = {}
+    function wrappers.GetPlayer() return Game.GetPlayer() end
+    function wrappers.Player_GetPos(player) return player:GetWorldPosition() end
+    function wrappers.Player_GetVel(player) return player:GetVelocity() end
+    function wrappers.Player_GetYaw(player) return player:GetWorldYaw() end
+    function wrappers.GetWorkspotSystem() return Game.GetWorkspotSystem() end
+    function wrappers.Workspot_InWorkspot(workspot, player) return workspot:IsActorInWorkspot(player) end
+    function wrappers.GetCameraSystem() return Game.GetCameraSystem() end
+    function wrappers.Camera_GetForwardRight(camera) return camera:GetActiveCameraForward(), camera:GetActiveCameraRight() end
+
+    o = GameObjectAccessor:new(wrappers)
     keys = Keys:new()
     map = Map:new(o)
     scanner_player = Scanner_Player:new(o, map)
@@ -112,11 +124,11 @@ registerForEvent("onUpdate", function(deltaTime)
     o:Tick(deltaTime)
     map:Tick()
 
-    -- o:GetInWorkspot()
-    -- if o.isInWorkspot then      -- in a vehicle
-    --     --Transition_ToStandard(vars, const, debug, o)
-    --     do return end
-    -- end
+    local in_vehicle = false
+    o:GetInWorkspot()
+    if o.isInWorkspot then
+        in_vehicle = true
+    end
 
     shouldDraw = true       -- don't want a hung progress bar while in menu or driving
 

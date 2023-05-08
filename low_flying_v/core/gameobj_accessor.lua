@@ -46,6 +46,9 @@ function GameObjectAccessor:Clear()
     self.camera = nil
     self.teleport = nil
     self.sensor = nil
+    self.quest = nil
+    self.spacialQueries = nil
+    self.targeting = nil
 end
 
 function GameObjectAccessor:Tick(deltaTime)

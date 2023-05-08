@@ -52,6 +52,10 @@ function GameObjectAccessor:Clear()
     self.camera = nil
     self.teleport = nil
     self.sensor = nil
+    self.quest = nil
+    self.spacialQueries = nil
+    self.targeting = nil
+    self.stats = nil
 end
 
 -- Populates this.player, position, velocity, yaw

@@ -62,6 +62,9 @@ function GameObjectAccessor:Clear()
     self.quest = nil
     self.transaction = nil
     self.equipment = nil
+    self.lastPulled_rpgManager = nil
+    self.lastPulled_spacialQueries = nil
+    self.lastPulled_targeting = nil
 end
 
 -- Populates this.player, position, velocity, yaw

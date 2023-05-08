@@ -58,6 +58,14 @@ function GameObjectAccessor:Clear()
     self.camera = nil
     self.teleport = nil
     self.sensor = nil
+    self.timeSys = nil
+    self.quest = nil
+    self.spacialQueries = nil
+    self.targeting = nil
+    self.delay = nil
+    self.timesystem = nil
+    self.transaction = nil
+    self.stats = nil
 end
 
 function GameObjectAccessor:Tick(deltaTime)
