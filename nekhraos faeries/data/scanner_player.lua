@@ -18,3 +18,18 @@ end
 
 
 -- Since this is only used when harvesting bodies, only look for dead bodies
+
+function Scanner_Player:EnsureScanned()
+    local searchQuery = TSQ_ALL()
+    searchQuery.maxDistance = 4
+    searchQuery.searchFilter = TSF_And(TSF_All(TSFMV.Obj_Puppet), TSF_Not(TSFMV.Obj_Player), TSF_Not(TSFMV.St_Alive))       -- only dead
+
+    local found, entities = self.o:GetTargetEntities(searchQuery)
+    if found then
+        for _, entity in ipairs(entities) do
+            if entity:IsNPC() and entity:IsDead() then      -- the query filter should have handled this, just making sure
+                self.map:Add_NPC_Dead(entity:GetEntityID(), entity:GetWorldPosition(), entity:GetAffiliation(), entity:GetTotalFrameWoundsDamage())
+            end
+        end
+    end
+end

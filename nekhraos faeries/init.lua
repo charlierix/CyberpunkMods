@@ -6,6 +6,7 @@ require "core/math_vector"
 require "core/sticky_list"
 require "core/util"
 
+entity_helper = require "data/entity_helper"
 require "data/map"
 require "data/scanner_orbs"
 require "data/scanner_player"
@@ -47,7 +48,8 @@ local debug_categories = CreateEnum("text2D_2sec")
 
 local isShutdown = true
 local isLoaded = false
-local shouldDraw = false
+local shouldDraw_graphics = false
+local shouldDraw_config = false
 
 local o = nil                           -- This is a class that wraps access to Game.xxx
 local keys = nil -- = Keys:new()        -- moved to init
@@ -99,9 +101,11 @@ registerForEvent("onInit", function()
     function wrappers.Workspot_InWorkspot(workspot, player) return workspot:IsActorInWorkspot(player) end
     function wrappers.GetCameraSystem() return Game.GetCameraSystem() end
     function wrappers.Camera_GetForwardRight(camera) return camera:GetActiveCameraForward(), camera:GetActiveCameraRight() end
+    function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end     -- gametargetingTargetingSystem
+    function wrappers.GetTargetParts(targetting, player, searchQuery) return targetting:GetTargetParts(player, searchQuery) end
 
     o = GameObjectAccessor:new(wrappers)
-    keys = Keys:new()
+    keys = Keys:new(o)
     map = Map:new(o)
     scanner_player = Scanner_Player:new(o, map)
     scanner_orbs = Scanner_Orbs:new(o, map)
@@ -115,37 +119,35 @@ registerForEvent("onShutdown", function()
 end)
 
 registerForEvent("onUpdate", function(deltaTime)
-    shouldDraw = false
+    shouldDraw_graphics = false
+    shouldDraw_config = false
     if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
         --Transition_ToStandard(vars, const, debug, o)
         do return end
     end
 
+    shouldDraw_graphics = true
+
     o:Tick(deltaTime)
     map:Tick()
 
-    local in_vehicle = false
     o:GetInWorkspot()
-    if o.isInWorkspot then
-        in_vehicle = true
+    if not o.isInWorkspot then      -- returns true if in a vehicle (or menu?)
+        shouldDraw_config = true      -- don't want a hung progress bar while in menu or driving
+
+        if shouldDraw_config and const.shouldShowDebugWindow then
+            PopulateDebug(debug, keys)
+        end
+
+        -- Probably want to make a dedicated harvester class
+        -- Watch for crouching, f held longer than quarter second, then start looking around for bodies
+        --  botch the job if they aren't looking lower than horizontal the whole time
+        --  botch the job if they get more than halfway and stop prematurely
+
+        harvester.Tick(o, keys, map, scanner_player)
+
+        keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
     end
-
-    shouldDraw = true       -- don't want a hung progress bar while in menu or driving
-
-    if const.shouldShowDebugWindow then
-        PopulateDebug(debug, keys)
-    end
-
-
-
-    -- Probably want to make a dedicated harvester class
-    -- Watch for crouching, f held longer than quarter second, then start looking around for bodies
-    --  botch the job if they aren't looking lower than horizontal the whole time
-    --  botch the job if they get more than halfway and stop prematurely
-
-
-
-    keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
 
     debug_render_screen.CallFrom_onUpdate(deltaTime)
 end)
@@ -179,21 +181,25 @@ registerHotkey("NekhraosFaeries_ScanAllObjecs", "Scan All Objects", function()
     end
 end)
 
+-- test to spawn an object, then call targeting sytem from its perspective
+
 
 registerHotkey("NekhraosFaeries_ClearVisuals", "Clear Visuals", function()
     debug_render_screen.Clear()
 end)
 
 registerForEvent("onDraw", function()
-    if isShutdown or not isLoaded or not shouldDraw then
+    if isShutdown or not isLoaded then
         do return end
     end
 
-    if const.shouldShowDebugWindow then
-        DrawDebugWindow(debug, vars_ui, const)
+    if shouldDraw_config and const.shouldShowDebugWindow then
+        DrawDebugWindow(debug, vars_ui)
     end
 
-    debug_render_screen.CallFrom_onDraw()
+    if shouldDraw_graphics then
+        debug_render_screen.CallFrom_onDraw()
+    end
 end)
 
 ----------------------------------- Private Methods -----------------------------------

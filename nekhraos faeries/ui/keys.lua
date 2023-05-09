@@ -1,12 +1,15 @@
 Keys = {}
 
-function Keys:new()
+function Keys:new(o)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
+    obj.o = o
+
     obj.proceed = false
     obj.prev_proceed = false
+    obj.proceed_downtime = 0
 
     return obj
 end
@@ -22,6 +25,7 @@ function Keys:MapAction(action)
 
         if pressed then
             self.proceed = true
+            self.proceed_downtime = self.o.timer
         elseif released then
             self.proceed = false
         end

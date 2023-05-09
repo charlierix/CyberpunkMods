@@ -43,28 +43,28 @@ function Map:Tick()
     end
 end
 
-function Map:Add_NPC_Dead(id, pos, affiliation, limb_damage)
-    local item = this.RefreshOrCreateItem(self.npcs_dead, self.o.timer, id, pos)
+function Map:Add_NPC_Dead(entityID, pos, affiliation, limb_damage)
+    local item = this.RefreshOrCreateItem(self.npcs_dead, self.o.timer, entityID, pos)
     item.affiliation = affiliation
     item.limb_damage = limb_damage
 end
-function Map:Add_NPC_Defeated(id, pos, affiliation)
-    local item = this.RefreshOrCreateItem(self.npcs_defeated, self.o.timer, id, pos)
+function Map:Add_NPC_Defeated(entityID, pos, affiliation)
+    local item = this.RefreshOrCreateItem(self.npcs_defeated, self.o.timer, entityID, pos)
     item.affiliation = affiliation
 end
-function Map:Add_NPC_Alive(id, pos, affiliation)
-    local item = this.RefreshOrCreateItem(self.npcs_alive, self.o.timer, id, pos)
+function Map:Add_NPC_Alive(entityID, pos, affiliation)
+    local item = this.RefreshOrCreateItem(self.npcs_alive, self.o.timer, entityID, pos)
     item.affiliation = affiliation
 end
 
-function Map:Remove_NPC_Dead(id)
-    this.Remove_ByID(self.npcs_dead, id)
+function Map:Remove_NPC_Dead(id_hash)
+    this.Remove_ByID(self.npcs_dead, id_hash)
 end
-function Map:Remove_NPC_Defeated(id)
-    this.Remove_ByID(self.npcs_defeated, id)
+function Map:Remove_NPC_Defeated(id_hash)
+    this.Remove_ByID(self.npcs_defeated, id_hash)
 end
-function Map:Remove_NPC_Alive(id)
-    this.Remove_ByID(self.npcs_alive, id)
+function Map:Remove_NPC_Alive(id_hash)
+    this.Remove_ByID(self.npcs_alive, id_hash)
 end
 
 function Map:GetNearby(pos, radius, include_dead, include_defeated, include_alive)
@@ -89,11 +89,14 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.RefreshOrCreateItem(list, timer, id, pos)
-    local item = this.Find_ByID(list, id)
+function this.RefreshOrCreateItem(list, timer, entityID, pos)
+    local hash = entity_helper.GetIDHash_ID(entityID)
+
+    local item = this.Find_ByIDHash(list, hash)
     if not item then
         item = list:GetNewItem()
-        item.id = id
+        item.entityID = entityID
+        item.id_hash = hash
     end
 
     item.timer = timer
@@ -102,18 +105,18 @@ function this.RefreshOrCreateItem(list, timer, id, pos)
     return item
 end
 
-function this.Remove_ByID(list, id)
-    local item, index = this.Find_ByID(list, id)
+function this.Remove_ByIDHash(list, hash)
+    local item, index = this.Find_ByIDHash(list, hash)
     if item then
         list:RemoveItem(index)
     end
 end
 
-function this.Find_ByID(list, id)
+function this.Find_ByIDHash(list, hash)
     for i = 1, list:GetCount(), 1 do
         local item = list:GetItem(i)
 
-        if item.id == id then
+        if item.id_hash == hash then
             return item, i
         end
     end

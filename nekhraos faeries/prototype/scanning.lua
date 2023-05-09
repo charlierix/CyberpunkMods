@@ -6,6 +6,8 @@ function PrototypeScanning.GetAllObjects(radius)
     local searchQuery = TSQ_ALL()
     searchQuery.maxDistance = radius
 
+    --searchQuery.maxDistance = Game["SNameplateRangesData::GetDisplayRange;"]() -- Set search radius
+
     --searchQuery.searchFilter = TSF_And(TSF_All(TSFMV.Obj_Puppet), TSF_Not(TSFMV.Obj_Player))        -- allow dead
 
     --searchQuery.searchFilter = TSF_NPC()       -- this is the contents of TSF_NPC: TSF_And(TSF_All(TSFMV.Obj_Puppet | TSFMV.St_Alive), TSF_Not(TSFMV.Obj_Player))

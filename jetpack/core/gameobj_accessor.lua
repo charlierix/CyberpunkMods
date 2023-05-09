@@ -189,13 +189,20 @@ end
 --  searchQuery: see TSQ_ALL
 -- Returns
 --  found: bool
---  targetParts: indexed array of matches (call targetParts[i]:GetComponent():GetEntity() to get the entity)
-function GameObjectAccessor:GetTargetParts(searchQuery)
+--  entities: indexed array of matches
+function GameObjectAccessor:GetTargetEntities(searchQuery)
     self:EnsureLoaded_Player()
     self:EnsureLoaded_Targeting()
 
     if self.player and self.targeting then
-        return self.wrappers.GetTargetParts(self.targeting, self.player, searchQuery)
+        local found, targetParts = self.wrappers.GetTargetParts(self.targeting, self.player, searchQuery)
+        if not found or #targetParts == 0 then
+            return false, nil
+        end
+
+        -- For some reason, the same dead body will be in the parts list 8 times
+        -- Might as well convert to entity here
+        return true, this.GetDedupedEntities(targetParts)
     end
 end
 

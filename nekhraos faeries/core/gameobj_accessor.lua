@@ -6,6 +6,7 @@ end
 local pullInterval_player = this.GetRandom_Variance(12, 1)
 local pullInterval_workspot = this.GetRandom_Variance(12, 1)
 local pullInterval_camera = this.GetRandom_Variance(12, 1)
+local pullInterval_targeting = this.GetRandom_Variance(12, 1)
 
 GameObjectAccessor = {}
 
@@ -20,6 +21,7 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_player = -(pullInterval_player * 2)      -- timer starts at zero.  So zero - -max = max   (multiplying by two to be sure there is no math drift error)
     obj.lastPulled_workspot = -(pullInterval_workspot * 2)
     obj.lastPulled_camera = -(pullInterval_camera * 2)
+    obj.lastPulled_targeting = -(pullInterval_targeting * 2)
 
     obj.lastGot_lookDir = -1
 
@@ -36,6 +38,7 @@ function GameObjectAccessor:Clear()
     self.player = nil
     self.workspot = nil
     self.camera = nil
+    self.targeting = nil
 end
 
 -- Populates player, position (vel, yaw are commented out)
@@ -82,6 +85,37 @@ function GameObjectAccessor:GetCamera()
     end
 end
 
+function GameObjectAccessor:IsCrouching()
+    self:EnsureLoaded_Player()
+
+    if self.player then
+        return self.player.inCrouch
+    else
+        return false
+    end
+end
+
+-- Finds things near the player
+--  searchQuery: see TSQ_ALL
+-- Returns
+--  found: bool
+--  entities: indexed array of matches
+function GameObjectAccessor:GetTargetEntities(searchQuery)
+    self:EnsureLoaded_Player()
+    self:EnsureLoaded_Targeting()
+
+    if self.player and self.targeting then
+        local found, targetParts = self.wrappers.GetTargetParts(self.targeting, self.player, searchQuery)
+        if not found or #targetParts == 0 then
+            return false, nil
+        end
+
+        -- For some reason, the same dead body will be in the parts list 8 times
+        -- Might as well convert to entity here
+        return true, this.GetDedupedEntities(targetParts)
+    end
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function GameObjectAccessor:EnsureLoaded_Player()
@@ -98,4 +132,40 @@ function GameObjectAccessor:EnsureLoaded_Quest()
 
         self.quest = self.wrappers.GetQuestsSystem()
     end
+end
+
+function GameObjectAccessor:EnsureLoaded_Targeting()
+    if not self.targeting or (self.timer - self.lastPulled_targeting) >= pullInterval_targeting then
+        self.lastPulled_targeting = self.timer
+
+        self.targeting = self.wrappers.GetTargetingSystem()
+    end
+end
+
+-- Turns target parts into entities, deduped on hash
+function this.GetDedupedEntities(targetParts)
+    local entities = {}
+    local ids = {}
+
+    for _, part in ipairs(targetParts) do
+        local entity = part:GetComponent():GetEntity()
+        local id_hash = entity_helper.GetIDHash_Entity(entity)
+
+        if not this.Contains(ids, id_hash) then
+            table.insert(ids, id_hash)
+            table.insert(entities, entity)
+        end
+    end
+
+    return entities
+end
+
+function this.Contains(list, item)
+    for _, value in ipairs(list) do
+        if value == item then
+            return true
+        end
+    end
+
+    return false
 end

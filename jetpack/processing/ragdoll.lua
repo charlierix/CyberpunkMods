@@ -5,11 +5,11 @@ local pos_offset = nil      -- this is an offset vector, but can't be populated 
 function RagdollNPCs_StraightUp(radius, force, randHorz, randVert, o)
     local searchQuery = this.GetSearchQuery(radius)
 
-    local found, targetParts = o:GetTargetParts(searchQuery)
+    local found, entities = o:GetTargetEntities(searchQuery)
 
-    if found and targetParts then
-        for i = 1, #targetParts do
-            this.LaunchUp(targetParts[i], force, randHorz, randVert, o)
+    if found and entities then
+        for i = 1, #entities do
+            this.LaunchUp(entities[i], force, randHorz, randVert, o)
         end
     end
 end
@@ -18,11 +18,11 @@ end
 function RagdollNPCs_ExplodeOut(radius, force, upForce, o, is_implode)
     local searchQuery = this.GetSearchQuery(radius)
 
-    local found, targetParts = o:GetTargetParts(searchQuery)
+    local found, entities = o:GetTargetEntities(searchQuery)
 
-    if found and targetParts then
-        for i = 1, #targetParts do
-            this.ExplodeOut(targetParts[i], o.pos, radius, force, upForce, o, is_implode)
+    if found and entities then
+        for i = 1, #entities do
+            this.ExplodeOut(entities[i], o.pos, radius, force, upForce, o, is_implode)
         end
     end
 end
@@ -40,8 +40,8 @@ function this.GetSearchQuery(radius)
     return searchQuery
 end
 
-function this.LaunchUp(targetPart, force, randHorz, randVert, o)
-    local npc = this.GetRagdollableNPC(targetPart)
+function this.LaunchUp(entity, force, randHorz, randVert, o)
+    local npc = this.GetRagdollableNPC(entity)
     if not npc then
         do return end
     end
@@ -60,8 +60,8 @@ function this.LaunchUp(targetPart, force, randHorz, randVert, o)
     o:DelayEventNextFrame(npc, CreateRagdollApplyImpulseEvent(npc_pos, direction, 5))       -- the impulse must wait a frame for the previous ragdoll to take affect
 end
 
-function this.ExplodeOut(targetPart, player_pos, radius, force, upForce, o, is_implode)
-    local npc = this.GetRagdollableNPC(targetPart)
+function this.ExplodeOut(entity, player_pos, radius, force, upForce, o, is_implode)
+    local npc = this.GetRagdollableNPC(entity)
     if not npc then
         do return end
     end
@@ -104,31 +104,26 @@ function this.ExplodeOut(targetPart, player_pos, radius, force, upForce, o, is_i
     o:DelayEventNextFrame(npc, CreateRagdollApplyImpulseEvent(npc_pos, finalDirection, 5))       -- the impulse must wait a frame for the previous ragdoll to take affect
 end
 
-function this.GetRagdollableNPC(targetPart)
-    local npc = targetPart:GetComponent():GetEntity()
-    if not npc then
-        return nil      -- never saw this
-    end
-
+function this.GetRagdollableNPC(entity)
     -- This is coming back false for kids, possibly others
-    if not ScriptedPuppet.CanRagdoll(npc) then
+    if not ScriptedPuppet.CanRagdoll(entity) then
         return nil
     end
 
-    if not npc:CanEnableRagdollComponent() then
+    if not entity:CanEnableRagdollComponent() then
         return nil      -- never saw this
     end
 
     -- This doesn't seem to have an effect.  That function is probably just meant to disable an existing ragdoll event
-    -- if not npc:IsRagdollEnabled() then
-    --     npc:SetDisableRagdoll(false)        -- double negative :(
+    -- if not entity:IsRagdollEnabled() then
+    --     entity:SetDisableRagdoll(false)        -- double negative :(
 
-    --     if not npc:IsRagdollEnabled() then
-    --         print("GetRagdollableNPC: STILL not npc:IsRagdollEnabled()")
+    --     if not entity:IsRagdollEnabled() then
+    --         print("GetRagdollableNPC: STILL not entity:IsRagdollEnabled()")
     --     end
     -- end
 
-    return npc
+    return entity
 end
 
 function this.GetNPCPosition(npc)
