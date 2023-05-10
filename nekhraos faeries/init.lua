@@ -21,6 +21,11 @@ extern_json = require "external/json"       -- storing this in a global variable
 prototype_scanning = require "prototype/scanning"
 
 harvester = require "processing/harvester"
+require "processing/orb"
+require "processing/orb_ai"
+require "processing/orb_audiovisual"
+orb_pool = require "processing/orb_pool"
+require "processing/orb_swarm"
 
 require "ui/drawing"
 require "ui/init_ui"
@@ -52,6 +57,7 @@ local shouldDraw_graphics = false
 local shouldDraw_config = false
 
 local o = nil                           -- This is a class that wraps access to Game.xxx
+local debug = {}
 local keys = nil -- = Keys:new()        -- moved to init
 local map = nil
 local scanner_player = nil
@@ -136,18 +142,17 @@ registerForEvent("onUpdate", function(deltaTime)
         shouldDraw_config = true      -- don't want a hung progress bar while in menu or driving
 
         if shouldDraw_config and const.shouldShowDebugWindow then
-            PopulateDebug(debug, keys)
+            PopulateDebug(debug, o, keys)
         end
-
-        -- Probably want to make a dedicated harvester class
-        -- Watch for crouching, f held longer than quarter second, then start looking around for bodies
-        --  botch the job if they aren't looking lower than horizontal the whole time
-        --  botch the job if they get more than halfway and stop prematurely
 
         harvester.Tick(o, keys, map, scanner_player)
 
+        orb_pool.Tick(deltaTime)
+
         keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
     end
+
+    orb_pool.Tick(deltaTime)
 
     debug_render_screen.CallFrom_onUpdate(deltaTime)
 end)

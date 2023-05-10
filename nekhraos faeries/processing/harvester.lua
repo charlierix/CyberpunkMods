@@ -24,7 +24,7 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function this.TryStartHarvesting(o, keys, map, scanner_player)
-    if not keys.proceed or o.timer - keys.proceed_downtime < ELAPSED_START then        -- F key.  Don't even start considering it until it's been held in a while (F is used a lot and don't want to do extra work until they're actually holding it in)
+    if not (keys.proceed and o.timer - keys.proceed_downtime > ELAPSED_START) then        -- F key.  Don't even start considering it until it's been held in a while (F is used a lot and don't want to do extra work until they're actually holding it in)
         do return end
     end
 
@@ -118,9 +118,12 @@ function this.FinishHarvest(o, map, scanner_player)
             entity:Dispose()
 
 
-            this.SpawnOrb(body)
+            orb_pool.Add(body, o)
             count = count + 1
         end
+
+        -- either way, remove from the map
+        map:Remove_NPC_Dead(body.id_hash)
     end
 
     is_harvesting = false
@@ -134,10 +137,6 @@ function this.FinishHarvest(o, map, scanner_player)
     else
         debug_render_screen.Add_Text2D(0.5, 0.6, "harvested " .. tostring(count), nil, "A0324121", "FFF", 2)
     end
-end
-
-function this.SpawnOrb(body)
-
 end
 
 return Harvester

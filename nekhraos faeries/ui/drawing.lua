@@ -3,7 +3,7 @@ function DrawDebugWindow(debugInfo, vars_ui)
     ImGui.SetNextWindowPos(20 * vars_ui.scale, 300 * vars_ui.scale, ImGuiCond.FirstUseEver)
     ImGui.SetNextWindowSize(300 * vars_ui.scale, 400 * vars_ui.scale, ImGuiCond.FirstUseEver)
 
-    if (ImGui.Begin("Grappling Hook Debug")) then
+    if (ImGui.Begin("Nekhraos Faeries Debug")) then
         local keys = {}
 
         -- populate the table that holds the keys

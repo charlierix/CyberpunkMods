@@ -51,22 +51,30 @@ end
 function Map:Add_NPC_Defeated(entityID, pos, affiliation)
     local item = this.RefreshOrCreateItem(self.npcs_defeated, self.o.timer, entityID, pos)
     item.affiliation = affiliation
+    item.limb_damage = 0
 end
 function Map:Add_NPC_Alive(entityID, pos, affiliation)
     local item = this.RefreshOrCreateItem(self.npcs_alive, self.o.timer, entityID, pos)
     item.affiliation = affiliation
+    item.limb_damage = 0
 end
 
 function Map:Remove_NPC_Dead(id_hash)
-    this.Remove_ByID(self.npcs_dead, id_hash)
+    this.Remove_ByIDHash(self.npcs_dead, id_hash)
 end
 function Map:Remove_NPC_Defeated(id_hash)
-    this.Remove_ByID(self.npcs_defeated, id_hash)
+    this.Remove_ByIDHash(self.npcs_defeated, id_hash)
 end
 function Map:Remove_NPC_Alive(id_hash)
-    this.Remove_ByID(self.npcs_alive, id_hash)
+    this.Remove_ByIDHash(self.npcs_alive, id_hash)
 end
 
+-- Returns list of body definitions:
+--  entityID        -- can be passed to Game.FindEntityByID()
+--  id_hash         -- a string of the entityID.hash
+--  pos
+--  affiliation     -- string (can't find a list of values, probably just have to wander around and log distinct values)
+--  limb_damage     -- only non zero for dead.  Not sure what the max is (100 per limb?)
 function Map:GetNearby(pos, radius, include_dead, include_defeated, include_alive)
     local retVal = {}
 
