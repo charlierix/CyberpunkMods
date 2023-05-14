@@ -58,6 +58,15 @@ function Round(num, numDecimalPlaces)
     return math.floor(num * mult + 0.5) / mult
 end
 
+-- math.tointeger is 5.2, but cet uses 5.1
+function ToInteger(num)
+    if num < 0 then
+        return math.ceil(num)
+    else
+        return math.floor(num)      -- math.floor will return -4 if -3.14 is passed in (3 if 3.14 is passed in)
+    end
+end
+
 -- This is good for converting one number into another
 --
 -- minReturn    This is the value that will be returned when valueRange == minRange

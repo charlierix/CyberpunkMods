@@ -3,6 +3,7 @@ require "core/gameobj_accessor"
 require "core/math_basic"
 require "core/math_shapes"
 require "core/math_vector"
+require "core/perlin"
 require "core/sticky_list"
 require "core/util"
 
@@ -185,6 +186,33 @@ registerHotkey("NekhraosFaeries_ScanAllObjecs", "Scan All Objects", function()
         print("nothing found")
     end
 end)
+
+registerHotkey("NekhraosFaeries_Perlin", "Perlin", function()
+    local max_time = 3
+    local count = 144
+
+    local log = DebugRenderLogger:new(true)
+
+    for i = 1, 12, 1 do
+        log:NewFrame()
+
+        local start = GetRandomVector_Spherical(0, 12)
+        local dir = GetRandomVector_Spherical(0, 3)
+
+        for t = 1, count, 1 do
+            local time = max_time * ((t-1) / count)
+
+            local perlin = Perlin(start.x + dir.x * time, start.y + dir.y * time, start.z + dir.z * time)
+
+            log:Add_Dot(Vector4.new(time, perlin, 0, 1))
+
+            --print(tostring(time) .. " | " .. tostring(start.x + dir.x * time) .. ", " .. tostring(start.y + dir.y * time) .. ", " .. tostring(start.z + dir.z * time) .. " | " .. tostring(perlin))
+        end
+    end
+
+    log:Save("perlin")
+end)
+
 
 -- test to spawn an object, then call targeting sytem from its perspective
 

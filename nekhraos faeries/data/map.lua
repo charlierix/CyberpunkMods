@@ -69,12 +69,8 @@ function Map:Remove_NPC_Alive(id_hash)
     this.Remove_ByIDHash(self.npcs_alive, id_hash)
 end
 
--- Returns list of body definitions:
---  entityID        -- can be passed to Game.FindEntityByID()
---  id_hash         -- a string of the entityID.hash
---  pos
---  affiliation     -- string (can't find a list of values, probably just have to wander around and log distinct values)
---  limb_damage     -- only non zero for dead.  Not sure what the max is (100 per limb?)
+-- Returns list of body definitions
+--  models/map_body.cs
 function Map:GetNearby(pos, radius, include_dead, include_defeated, include_alive)
     local retVal = {}
 
