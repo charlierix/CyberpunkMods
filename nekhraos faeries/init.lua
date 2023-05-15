@@ -138,6 +138,8 @@ registerForEvent("onUpdate", function(deltaTime)
     o:Tick(deltaTime)
     map:Tick()
 
+    o:GetPlayerInfo()       -- this populates o.pos, which is expected to be populated by other functions
+
     o:GetInWorkspot()
     if not o.isInWorkspot then      -- returns true if in a vehicle (or menu?)
         shouldDraw_config = true      -- don't want a hung progress bar while in menu or driving
@@ -147,8 +149,6 @@ registerForEvent("onUpdate", function(deltaTime)
         end
 
         harvester.Tick(o, keys, map, scanner_player)
-
-        orb_pool.Tick(deltaTime)
 
         keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
     end

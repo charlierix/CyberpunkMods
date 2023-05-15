@@ -12,9 +12,18 @@ function Orb:new(o, pos)
         vel = Vector4.new(0, 0, 0, 1),
     }
 
+    obj.limits =
+    {
+        min_speed = 0.5,
+        max_speed = 4,
+        --max_dist_player = 18,
+        max_dist_player = 3,        -- keeping it close while debugging
+        max_accel = 1.5,
+    }
+
     obj.ai = Orb_AI:new(obj.props)
     obj.audiovisual = Orb_AudioVisual:new(obj.props)
-    obj.swarm = Orb_Swarm:new(obj.props)
+    obj.swarm = Orb_Swarm:new(obj.props, obj.limits)
 
     obj.create_time = o.timer
 
@@ -28,5 +37,6 @@ function Orb:Tick(deltaTime)
 end
 
 function Orb:ShouldRemove()
-    return self.props.o.timer - self.create_time > 60
+    --return self.props.o.timer - self.create_time > 6 * 60
+    return false
 end
