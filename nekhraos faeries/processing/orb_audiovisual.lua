@@ -11,5 +11,5 @@ function Orb_AudioVisual:new(props)
 end
 
 function Orb_AudioVisual:Tick(deltaTime)
-    debug_render_screen.Add_Dot(self.props.pos, nil, "8FFF", nil, true, 4)
+    debug_render_screen.Add_Dot(self.props.pos, nil, "8FFF", nil, true, 6)
 end

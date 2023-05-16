@@ -47,7 +47,7 @@ function GameObjectAccessor:GetPlayerInfo()
 
     if self.player then
         self.pos = self.wrappers.Player_GetPos(self.player)
-        --self.vel = self.wrappers.Player_GetVel(self.player)
+        self.vel = self.wrappers.Player_GetVel(self.player)
         --self.yaw = self.wrappers.Player_GetYaw(self.player)
     end
 end
