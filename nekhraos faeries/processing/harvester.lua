@@ -3,7 +3,7 @@ local Harvester = {}
 local this = {}
 
 local MAX_MOVE_RADIUS = 0.1
-local RADIUS = 0.8      -- TODO: this should come from config
+local RADIUS = 1      -- TODO: this should come from config
 local ELAPSED_START = 0.25
 local ELAPSED_FINISH = 2
 

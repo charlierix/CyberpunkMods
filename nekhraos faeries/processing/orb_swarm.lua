@@ -58,7 +58,7 @@ function Orb_Swarm:Tick(deltaTime)
     local accelX_wander, accelY_wander, accelZ_wander = this.GetAccelWander(self, log)
 
     -- Adjust multipliers based on certain conditions
-    local mult_boundary, mult_maxspeed, mult_misc, mult_wander = this.GetCombineMults(boundary_percent, maxspeed_percent, rel_speed_sqr, rel_speed)
+    local mult_boundary, mult_maxspeed, mult_misc, mult_wander = this.GetCombineMults(boundary_percent, maxspeed_percent, rel_vel, rel_speed_sqr, rel_speed)
 
     local accelX =
         (accelX_boundary * mult_boundary) +
@@ -125,6 +125,7 @@ function this.GetAccelBoundary(self, log)
 
     -- 0 at 0.75, 1 at 1, 3 at 1.5
     local accel = 4 * dist - 3
+    accel = Clamp(0, 2, accel)
     accel = accel * self.limits.max_accel
 
     if log then
@@ -159,7 +160,9 @@ function this.GetAccelMaxSpeed(self, rel_vel, rel_speed_sqr, log)
 
     local rel_speed = math.sqrt(rel_speed_sqr)
 
-    local accel = GetScaledValue(0, self.limits.max_accel, MIN_SPEED, self.limits.max_speed, rel_speed)
+    local accel = GetScaledValue(0, 1, MIN_SPEED, self.limits.max_speed, rel_speed)
+    accel = Clamp(0, 2, accel)
+    accel = accel * self.limits.max_accel
 
     if log then
         log:Add_Line(self.props.pos, AddVectors(self.props.pos, Vector4.new((rel_vel.x / rel_speed) * -accel, (rel_vel.y / rel_speed) * -accel, (rel_vel.z / rel_speed) * -accel, 1)), "orb", nil, 2)
@@ -210,14 +213,22 @@ function this.GetAccelWander(self, log)
         GetScaledValue(-self.limits.max_accel, self.limits.max_accel, 0, 1, z)
 end
 
-function this.GetCombineMults(boundary_percent, maxspeed_percent, rel_speed_sqr, rel_speed)
+function this.GetCombineMults(boundary_percent, maxspeed_percent, rel_vel, rel_speed_sqr, rel_speed)
+    if boundary_percent then
+        local suppress_percent = GetScaledValue(0.9, 0.05, 1, 2, boundary_percent)
+        suppress_percent = Clamp(0.05, 1, suppress_percent)
 
-    --TODO: when out of bounds and traveling toward player, don't accelerate beyond relative max speed
+        return 1, suppress_percent, suppress_percent, suppress_percent
 
+    elseif maxspeed_percent then
+        local suppress_percent = GetScaledValue(1, 0.1, 1, 3, maxspeed_percent)
+        suppress_percent = Clamp(0.1, 1, suppress_percent)
 
+        return 1, 1, suppress_percent, suppress_percent
 
-
-    return 1, 1, 1, 1
+    else
+        return 1, 1, 1, 1
+    end
 end
 
 function this.AccelConstraints(self, accelX, accelY, accelZ, log)
