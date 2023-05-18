@@ -44,10 +44,7 @@ function Orb_Swarm:Tick(deltaTime)
     local rel_speed_sqr = GetVectorLengthSqr(rel_vel)
 
     -- Get component accelerations
-
-    local accelX_boundary, accelY_boundary, accelZ_boundary, boundary_percent = this.GetAccelBoundary(self, log)
-
-    local accelX_maxspeed, accelY_maxspeed, accelZ_maxspeed, rel_speed, maxspeed_percent = this.GetAccelMaxSpeed(self, rel_vel, rel_speed_sqr, log)
+    local accelX_limits, accelY_limits, accelZ_limits, limits_percent, should_cap_accel = this.GetAccelLimits(self, rel_vel, rel_speed_sqr, log)
 
     local accelX_neighbors, accelY_neighbors, accelZ_neighbors, had_neighbors = this.GetAccelNeighbors(self.neighbors)
 
@@ -58,80 +55,111 @@ function Orb_Swarm:Tick(deltaTime)
     local accelX_wander, accelY_wander, accelZ_wander = this.GetAccelWander(self, log)
 
     -- Adjust multipliers based on certain conditions
-    local mult_boundary, mult_maxspeed, mult_misc, mult_wander = this.GetCombineMults(boundary_percent, maxspeed_percent, rel_vel, rel_speed_sqr, rel_speed)
+    local mult_limits, mult_misc, mult_wander = this.GetCombineMults(limits_percent)
 
     local accelX =
-        (accelX_boundary * mult_boundary) +
-        (accelX_maxspeed * mult_maxspeed) +
+        (accelX_limits * mult_limits) +
         (accelX_neighbors * mult_misc) +
         (accelX_goals * mult_misc) +
         (accelX_obstacles * mult_misc) +
         (accelX_wander * mult_wander)
 
     local accelY =
-        (accelY_boundary * mult_boundary) +
-        (accelY_maxspeed * mult_maxspeed) +
+        (accelY_limits * mult_limits) +
         (accelY_neighbors * mult_misc) +
         (accelY_goals * mult_misc) +
         (accelY_obstacles * mult_misc) +
         (accelY_wander * mult_wander)
 
     local accelZ =
-        (accelZ_boundary * mult_boundary) +
-        (accelZ_maxspeed * mult_maxspeed) +
+        (accelZ_limits * mult_limits) +
         (accelZ_neighbors * mult_misc) +
         (accelZ_goals * mult_misc) +
         (accelZ_obstacles * mult_misc) +
         (accelZ_wander * mult_wander)
 
     -- Possibly cap acceleration
-    accelX, accelY, accelZ = this.AccelConstraints(self, accelX, accelY, accelZ, log)
+    if should_cap_accel then
+        accelX, accelY, accelZ = this.AccelConstraints(self, accelX, accelY, accelZ, log)
+    end
 
     -- Apply Acceleration
     self.props.vel = Vector4.new(self.props.vel.x + accelX * deltaTime, self.props.vel.y + accelY * deltaTime, self.props.vel.z + accelZ * deltaTime, 1)
     self.props.pos = Vector4.new(self.props.pos.x + self.props.vel.x * deltaTime, self.props.pos.y + self.props.vel.y * deltaTime, self.props.pos.z + self.props.vel.z * deltaTime, 1)
 
-    if log and (boundary_percent or maxspeed_percent) then
+    if log and limits_percent then
         log:Save("swarm snapshot")
     end
 end
 
 ---------------------------------- Get Accelerations ----------------------------------
 
-function this.GetAccelBoundary(self, log)
+function this.GetAccelLimits(self, rel_vel, rel_speed_sqr, log)
     local MIN_DIST = self.limits.max_dist_player * 0.75
+    local MIN_SPEED = self.limits.max_speed * 0.8
 
     local to_player = SubtractVectors(self.props.o.pos, self.props.pos)
     local dist_sqr = GetVectorLengthSqr(to_player)
 
-    if log then
-        log:NewFrame("boundary")
-        log:Add_Dot(self.props.o.pos, "player")
-        log:Add_Dot(self.props.pos, "orb")
-        log:Add_Line(self.props.o.pos, self.props.pos)
+    if dist_sqr > MIN_DIST * MIN_DIST then
+        local dist = math.sqrt(dist_sqr)
 
-        log:WriteLine_Frame("distance: " .. tostring(math.sqrt(dist_sqr)))
-    end
+        if rel_speed_sqr > MIN_SPEED * MIN_SPEED then
+            local rel_speed = math.sqrt(rel_speed_sqr)
 
-    if dist_sqr < MIN_DIST * MIN_DIST then
-        if log then
-            log:WriteLine_Frame("less than min distance")
+            if DotProduct3D(rel_vel, to_player) < 0 then
+                -- Velocity is away from player while out of bounds.  Need to apply extra drag.  Without this, the orb accelerates toward
+                -- the player to get back in bounds, but then overshoots, ending up in an oscillation
+                local accelX_limit, accelY_limit, accelZ_limit, limit_percent = this.GetAccelLimits_BoundsSpeedingAway(self, rel_vel, MIN_SPEED, rel_speed, to_player, MIN_DIST, dist)
+                return accelX_limit, accelY_limit, accelZ_limit, limit_percent, false       -- the accel is capped inside the above function, don't cap it later
+
+            else
+                local accelX_boundary, accelY_boundary, accelZ_boundary, boundary_percent = this.GetAccelLimits_Bounds(self, to_player, dist)
+                local accelX_maxspeed, accelY_maxspeed, accelZ_maxspeed, maxspeed_percent = this.GetAccelLimits_Speed(self, rel_vel, MIN_SPEED, rel_speed)
+
+                return
+                    accelX_boundary + accelX_maxspeed,
+                    accelY_boundary + accelY_maxspeed,
+                    accelZ_boundary + accelZ_maxspeed,
+                    math.max(boundary_percent, maxspeed_percent),
+                    true
+            end
+
+        else
+            local accelX_boundary, accelY_boundary, accelZ_boundary, boundary_percent = this.GetAccelLimits_Bounds(self, to_player, dist)
+            return accelX_boundary, accelY_boundary, accelZ_boundary, boundary_percent, true
         end
 
-        return 0, 0, 0, nil
+    elseif rel_speed_sqr > MIN_SPEED * MIN_SPEED then
+        local rel_speed = math.sqrt(rel_speed_sqr)
+        local accelX_maxspeed, accelY_maxspeed, accelZ_maxspeed, maxspeed_percent = this.GetAccelLimits_Speed(self, rel_vel, MIN_SPEED, rel_speed)
+        return accelX_maxspeed, accelY_maxspeed, accelZ_maxspeed, maxspeed_percent, true
+
+    else
+        return 0, 0, 0, nil, true
     end
+end
+function this.GetAccelLimits_BoundsSpeedingAway(self, rel_vel, MIN_SPEED, rel_speed, to_player, MIN_DIST, dist)
+    local accel_speed = GetScaledValue(0, 1, MIN_SPEED, self.limits.max_speed, rel_speed)
+    accel_speed = Clamp(0, 12, accel_speed)     -- really letting it get big so the orb can turn around quickly
+    accel_speed = accel_speed * self.limits.max_accel
 
-    local dist = math.sqrt(dist_sqr)
+    local accel_bounds = GetScaledValue(0, 1, MIN_DIST, self.limits.max_dist_player, dist)
+    accel_bounds = Clamp(0, 1, accel_bounds)        -- this isn't as important as reversing speed
+    accel_bounds = accel_bounds * self.limits.max_accel
 
+    return
+        ((rel_vel.x / rel_speed) * -accel_speed) + ((to_player.x / dist) * accel_bounds),
+        ((rel_vel.y / rel_speed) * -accel_speed) + ((to_player.y / dist) * accel_bounds),
+        ((rel_vel.z / rel_speed) * -accel_speed) + ((to_player.z / dist) * accel_bounds),
+        math.max(rel_speed / self.limits.max_speed, dist / self.limits.max_dist_player)
+end
+function this.GetAccelLimits_Bounds(self, to_player, dist)
     -- 0 at 0.75, 1 at 1, 3 at 1.5
     local accel = 4 * dist - 3
     accel = Clamp(0, 2, accel)
     accel = accel * self.limits.max_accel
 
-    if log then
-        log:Add_Line(self.props.pos, AddVectors(self.props.pos, Vector4.new((to_player.x / dist) * accel, (to_player.y / dist) * accel, (to_player.z / dist) * accel, 1)), "orb", nil, 2)
-        log:WriteLine_Frame("accel: " .. tostring(accel))
-    end
 
     return
         (to_player.x / dist) * accel,
@@ -139,41 +167,15 @@ function this.GetAccelBoundary(self, log)
         (to_player.z / dist) * accel,
         dist / self.limits.max_dist_player
 end
-
-function this.GetAccelMaxSpeed(self, rel_vel, rel_speed_sqr, log)
-    local MIN_SPEED = self.limits.max_speed * 0.8
-
-    if log then
-        log:NewFrame("max speed")
-        log:Add_Dot(self.props.pos, "orb")
-        log:Add_Line(self.props.pos, AddVectors(self.props.pos, rel_vel))
-        log:WriteLine_Frame("speed: " .. tostring(math.sqrt(rel_speed_sqr)))
-    end
-
-    if rel_speed_sqr < MIN_SPEED * MIN_SPEED then
-        if log then
-            log:WriteLine_Frame("less than min speed")
-        end
-
-        return 0, 0, 0, nil, nil
-    end
-
-    local rel_speed = math.sqrt(rel_speed_sqr)
-
+function this.GetAccelLimits_Speed(self, rel_vel, MIN_SPEED, rel_speed)
     local accel = GetScaledValue(0, 1, MIN_SPEED, self.limits.max_speed, rel_speed)
     accel = Clamp(0, 2, accel)
     accel = accel * self.limits.max_accel
-
-    if log then
-        log:Add_Line(self.props.pos, AddVectors(self.props.pos, Vector4.new((rel_vel.x / rel_speed) * -accel, (rel_vel.y / rel_speed) * -accel, (rel_vel.z / rel_speed) * -accel, 1)), "orb", nil, 2)
-        log:WriteLine_Frame("accel: " .. tostring(accel))
-    end
 
     return
         (rel_vel.x / rel_speed) * -accel,
         (rel_vel.y / rel_speed) * -accel,
         (rel_vel.z / rel_speed) * -accel,
-        rel_speed,
         rel_speed / self.limits.max_speed
 end
 
@@ -213,21 +215,14 @@ function this.GetAccelWander(self, log)
         GetScaledValue(-self.limits.max_accel, self.limits.max_accel, 0, 1, z)
 end
 
-function this.GetCombineMults(boundary_percent, maxspeed_percent, rel_vel, rel_speed_sqr, rel_speed)
-    if boundary_percent then
-        local suppress_percent = GetScaledValue(0.9, 0.05, 1, 2, boundary_percent)
-        suppress_percent = Clamp(0.05, 1, suppress_percent)
+function this.GetCombineMults(limits_percent)
+    if limits_percent then
+        local suppress_percent = GetScaledValue(0.9, 0.075, 1, 2.5, limits_percent)
+        suppress_percent = Clamp(0.075, 1, suppress_percent)
 
-        return 1, suppress_percent, suppress_percent, suppress_percent
-
-    elseif maxspeed_percent then
-        local suppress_percent = GetScaledValue(1, 0.1, 1, 3, maxspeed_percent)
-        suppress_percent = Clamp(0.1, 1, suppress_percent)
-
-        return 1, 1, suppress_percent, suppress_percent
-
+        return 1, suppress_percent, suppress_percent
     else
-        return 1, 1, 1, 1
+        return 1, 1, 1
     end
 end
 

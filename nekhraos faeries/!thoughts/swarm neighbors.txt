@@ -1,0 +1,18 @@
+possible spacial breakdowns (probably not):
+	k-d tree
+	r-tree
+
+
+
+Clustering:
+	K-Means
+
+
+If a group is tasked for something specific, put them in a pod - all bots in that pod see each other
+
+
+
+
+
+
+
