@@ -16,8 +16,7 @@ function Orb:new(o, pos)
     {
         min_speed = 0.5,
         max_speed = 4,
-        --max_dist_player = 18,
-        max_dist_player = 3,        -- keeping it close while debugging
+        max_dist_player = 12,
         max_accel = 1.5,
     }
 
