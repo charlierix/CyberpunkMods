@@ -101,7 +101,8 @@ end
 function this.GetMaxes_BySpeed(self)
     local SPEED_THRESHOLD = 7
 
-    local speed_sqr = GetVectorLengthSqr(self.props.o.vel)
+    local vel = self.props.o:Custom_CurrentlyFlying_GetVelocity(self.props.o.vel)       -- a mod could be flying, so use that velocity else the velocity known by the game
+    local speed_sqr = GetVectorLengthSqr(vel)
 
     if speed_sqr < SPEED_THRESHOLD * SPEED_THRESHOLD then
         return self.limits.max_speed, self.limits.max_dist_player

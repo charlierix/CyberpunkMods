@@ -6,6 +6,7 @@ end
 local pullInterval_player = this.GetRandom_Variance(12, 1)
 local pullInterval_workspot = this.GetRandom_Variance(12, 1)
 local pullInterval_camera = this.GetRandom_Variance(12, 1)
+local pullInterval_quest = this.GetRandom_Variance(12, 1)
 local pullInterval_targeting = this.GetRandom_Variance(12, 1)
 
 GameObjectAccessor = {}
@@ -15,12 +16,15 @@ function GameObjectAccessor:new(wrappers)
     setmetatable(obj, self)
     self.__index = self
 
+    obj.multimod_flight = require("core/multimod_flight")
+
     obj.timer = 0
 
     obj.wrappers = wrappers
     obj.lastPulled_player = -(pullInterval_player * 2)      -- timer starts at zero.  So zero - -max = max   (multiplying by two to be sure there is no math drift error)
     obj.lastPulled_workspot = -(pullInterval_workspot * 2)
     obj.lastPulled_camera = -(pullInterval_camera * 2)
+    obj.lastPulled_quest = -(pullInterval_quest * 2)
     obj.lastPulled_targeting = -(pullInterval_targeting * 2)
 
     obj.lastGot_lookDir = -1
@@ -49,6 +53,64 @@ function GameObjectAccessor:GetPlayerInfo()
         self.pos = self.wrappers.Player_GetPos(self.player)
         self.vel = self.wrappers.Player_GetVel(self.player)
         --self.yaw = self.wrappers.Player_GetYaw(self.player)
+    end
+end
+
+-- Allows mods to talk to each other, so only one at a time will fly
+function GameObjectAccessor:Custom_CurrentlyFlying_IsOwnerOrNone()
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        return self.multimod_flight.IsOwnerOrNone(self.quest, self.wrappers)
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying_HasControlSwitched()
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        return self.multimod_flight.HasControlSwitched(self.quest, self.wrappers)
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying_CanStartFlight()
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        return self.multimod_flight.CanStartFlight(self.quest, self.wrappers)
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying_TryStartFlight(allow_interruption, velocity)
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        local started, final_vel = self.multimod_flight.TryStartFlight(self.quest, self.wrappers, allow_interruption, velocity)
+
+        if started and final_vel and velocity and not IsNearValue_vec4(velocity, final_vel) then
+            -- Likely coming from teleport based flight (zero).  Add a kick to match the reported velocity
+            self:AddImpulse(final_vel.x - velocity.x, final_vel.y - velocity.y, final_vel.z - velocity.z)
+        end
+
+        return started, final_vel
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying_GetVelocity(velocity)
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        return self.multimod_flight.GetVelocity(self.quest, self.wrappers, velocity)
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying_Update(velocity)
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        return self.multimod_flight.Update(self.quest, self.wrappers, velocity)
+    end
+end
+function GameObjectAccessor:Custom_CurrentlyFlying_Clear()
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        self.multimod_flight.Clear(self.quest, self.wrappers)
     end
 end
 

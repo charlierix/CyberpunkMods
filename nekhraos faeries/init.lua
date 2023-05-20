@@ -43,7 +43,7 @@ local this = {}
 local const =
 {
     shouldShowScreenDebug = true,      -- draws debug info in game
-    shouldShowDebugWindow = false,      -- shows a window with extra debug info
+    shouldShowDebugWindow = true,      -- shows a window with extra debug info
 }
 
 local debug_categories = CreateEnum("text2D_2sec")
@@ -108,6 +108,9 @@ registerForEvent("onInit", function()
     function wrappers.Workspot_InWorkspot(workspot, player) return workspot:IsActorInWorkspot(player) end
     function wrappers.GetCameraSystem() return Game.GetCameraSystem() end
     function wrappers.Camera_GetForwardRight(camera) return camera:GetActiveCameraForward(), camera:GetActiveCameraRight() end
+    function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
+    function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
+    function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
     function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end     -- gametargetingTargetingSystem
     function wrappers.GetTargetParts(targetting, player, searchQuery) return targetting:GetTargetParts(player, searchQuery) end
 
