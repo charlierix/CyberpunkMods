@@ -29,6 +29,9 @@ function DebugRenderScreen_Frame.RebuildVisuals(controller, items, item_types, v
         if item.item_type == item_types.dot then
             this.Dot(controller, item, visuals_circle, pos)
 
+        elseif item.item_type == item_types.circle2D then
+            this.Circle2D(controller, item, visuals_circle)
+
         elseif item.item_type == item_types.line then
             this.Line(controller, item, visuals_line, pos, dir)
 
@@ -71,6 +74,30 @@ function this.Dot(controller, item, visuals_circle, pos)
     visual.center_x = point.X
     visual.center_y = point.Y
     visual.radius = DOT_RADIUS * size_mult
+end
+
+------------------------------ Private Methods (Circle2D) -----------------------------
+
+function this.Circle2D(controller, item, visuals_circle)
+    local point = controller:ProjectWorldToScreen(item.position)
+
+    if not this.IsValidScreenPoint(point) then
+        do return end
+    end
+
+    local size_mult = 1
+    if item.size_mult then
+        size_mult = item.size_mult
+    end
+
+    local visual = visuals_circle:GetNewItem()
+
+    visual.color_background = nil
+    visual.color_border = this.GetColor_ABGR(item.color_fore)
+    visual.thickness = LINE_THICKNESS * size_mult
+    visual.center_x = point.X
+    visual.center_y = point.Y
+    visual.radius = item.radius
 end
 
 -------------------------------- Private Methods (Line) -------------------------------

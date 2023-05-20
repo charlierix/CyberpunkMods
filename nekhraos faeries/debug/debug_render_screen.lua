@@ -19,7 +19,7 @@ local this = {}
 
 local next_id = 0
 local timer = 0
-local item_types = CreateEnum("dot", "line", "triangle", "text", "text2D")
+local item_types = CreateEnum("dot", "line", "triangle", "text", "text2D", "circle2D")
 
 local controller = nil
 
@@ -176,6 +176,25 @@ function DebugRenderScreen.Add_Circle(center, normal, radius, category, color, l
     item.point2 = points[1]
 
     return id
+end
+
+-- This projects where to draw the circle based on the 3D position, but the circle itself is drawn as 2D (not projected into 3D and
+-- chopped into lines, like the standard Add_Circle function)
+--
+-- size_mult is used to modify thickness
+function DebugRenderScreen.Add_Circle2D(center, radius, category, color, lifespan_seconds, is_single_frame, size_mult)
+    if not is_enabled then
+        return nil
+    end
+
+    local _, color_fore_final, size_mult_final, _, lifespan_seconds_final, is_single_frame_final, x_percent_final, y_percent_final = this.GetFinalValues(category, nil, color, size_mult, nil, lifespan_seconds, is_single_frame)
+
+    local item = items:GetNewItem()
+    this.SetItemBase(item, item_types.circle2D, nil, color_fore_final, size_mult_final, nil, lifespan_seconds_final, is_single_frame_final)
+    item.position = center
+    item.radius = radius
+
+    return item.id
 end
 
 function DebugRenderScreen.Add_Arc(center, start_point, end_point, category, color, lifespan_seconds, is_single_frame, size_mult, const_size)

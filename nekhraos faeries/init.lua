@@ -43,7 +43,7 @@ local this = {}
 local const =
 {
     shouldShowScreenDebug = true,      -- draws debug info in game
-    shouldShowDebugWindow = true,      -- shows a window with extra debug info
+    shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
 
 local debug_categories = CreateEnum("text2D_2sec")
