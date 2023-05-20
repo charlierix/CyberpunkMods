@@ -6,13 +6,19 @@ local this = {}
 --  orb     instance of orb
 local orbs = StickyList:new()
 
-function OrbPool.Tick(deltaTime)
+function OrbPool.Tick(o, deltaTime)
+    if orbs:GetCount() == 0 then
+        do return end
+    end
+
+    local eye_pos, look_dir = o:GetCrosshairInfo()
+
     local index = 1
 
     while index <= orbs:GetCount() do
         local item = orbs:GetItem(index)
 
-        item.orb:Tick(deltaTime)
+        item.orb:Tick(eye_pos, look_dir, deltaTime)
 
         if item.orb:ShouldRemove() then
             item.orb = nil

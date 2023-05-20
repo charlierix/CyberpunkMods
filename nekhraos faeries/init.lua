@@ -108,6 +108,8 @@ registerForEvent("onInit", function()
     function wrappers.Workspot_InWorkspot(workspot, player) return workspot:IsActorInWorkspot(player) end
     function wrappers.GetCameraSystem() return Game.GetCameraSystem() end
     function wrappers.Camera_GetForwardRight(camera) return camera:GetActiveCameraForward(), camera:GetActiveCameraRight() end
+    function wrappers.GetSenseManager() return Game.GetSenseManager() end
+    function wrappers.IsPositionVisible(sensor, fromPos, toPos) return sensor:IsPositionVisible(fromPos, toPos) end
     function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
     function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
     function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
@@ -156,7 +158,7 @@ registerForEvent("onUpdate", function(deltaTime)
         keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
     end
 
-    orb_pool.Tick(deltaTime)
+    orb_pool.Tick(o, deltaTime)
 
     debug_render_screen.CallFrom_onUpdate(deltaTime)
 end)

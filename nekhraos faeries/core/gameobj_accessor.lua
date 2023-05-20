@@ -6,6 +6,7 @@ end
 local pullInterval_player = this.GetRandom_Variance(12, 1)
 local pullInterval_workspot = this.GetRandom_Variance(12, 1)
 local pullInterval_camera = this.GetRandom_Variance(12, 1)
+local pullInterval_sensor = this.GetRandom_Variance(12, 1)
 local pullInterval_quest = this.GetRandom_Variance(12, 1)
 local pullInterval_targeting = this.GetRandom_Variance(12, 1)
 
@@ -24,6 +25,7 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_player = -(pullInterval_player * 2)      -- timer starts at zero.  So zero - -max = max   (multiplying by two to be sure there is no math drift error)
     obj.lastPulled_workspot = -(pullInterval_workspot * 2)
     obj.lastPulled_camera = -(pullInterval_camera * 2)
+    obj.lastPulled_sensor = -(pullInterval_sensor * 2)
     obj.lastPulled_quest = -(pullInterval_quest * 2)
     obj.lastPulled_targeting = -(pullInterval_targeting * 2)
 
@@ -144,6 +146,39 @@ function GameObjectAccessor:GetCamera()
     if self.camera and (self.lastGot_lookDir ~= self.timer) then
         self.lookdir_forward, self.lookdir_right = self.wrappers.Camera_GetForwardRight(self.camera)
         self.lastGot_lookDir = self.timer
+    end
+end
+
+-- Returns position, direction
+function GameObjectAccessor:GetCrosshairInfo()
+    self:EnsureLoaded_Player()
+    self:EnsureLoaded_Targeting()
+
+    if self.player and self.targeting then
+        return self.targeting:GetDefaultCrosshairData(self.player)
+    end
+
+    -- local player = Game.GetPlayer()
+    -- local targetting = Game.GetTargetingSystem()
+    -- local crosshairPosition, crosshairForward = targetting:GetDefaultCrosshairData(player)
+    -- local pos = player:GetWorldPosition()
+    -- print("diff: " .. vec_str(SubtractVectors(crosshairPosition, pos)))
+    --  the z changes based on looking up or not (1.59 looking down, 1.8 looking up)
+    --  x and y also have a small offset (about 0.25)
+end
+
+-- This serves as a quick/crude ray cast
+function GameObjectAccessor:IsPointVisible(fromPos, toPos)
+    if not self.sensor or (self.timer - self.lastPulled_sensor) >= pullInterval_sensor then
+        self.lastPulled_sensor = self.timer
+
+        self.sensor = self.wrappers.GetSenseManager()
+    end
+
+    if self.sensor then
+        return self.wrappers.IsPositionVisible(self.sensor, fromPos, toPos)
+    else
+        return nil
     end
 end
 

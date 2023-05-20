@@ -29,10 +29,10 @@ function Orb:new(o, pos)
     return obj
 end
 
-function Orb:Tick(deltaTime)
+function Orb:Tick(eye_pos, look_dir, deltaTime)
     self.ai:Tick(deltaTime)
     self.swarm:Tick(deltaTime)
-    self.audiovisual:Tick(deltaTime)
+    self.audiovisual:Tick(eye_pos, look_dir, deltaTime)
 end
 
 function Orb:ShouldRemove()
