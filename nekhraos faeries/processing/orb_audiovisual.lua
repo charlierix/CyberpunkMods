@@ -16,7 +16,8 @@ function Orb_AudioVisual:Tick(eye_pos, look_dir, deltaTime)
     if self.props.o:IsPointVisible(eye_pos, self.props.pos) then
         color = "8FFF"
     else
-        color = "4E6BADDA"
+        --color = "4E6BADDA"
+        color = "4EDFC673"
     end
 
     debug_render_screen.Add_Dot(self.props.pos, nil, color, nil, true, 6)
