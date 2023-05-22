@@ -18,6 +18,25 @@ function Orb:new(o, pos)
         max_speed = 4,
         max_dist_player = 12,
         max_accel = 1.5,
+
+        boundary_percent_start = 0.75,
+        speed_percent_start = 0.8,
+
+        maxbyspeed =
+        {
+            percent_start = 7,
+
+            speed_mult_rate = 1.5,
+            speed_mult_cap = 6,
+
+            dist_mult_rate = 1.333,
+            dist_mult_cap = 3,
+        },
+        maxbydist =
+        {
+            speed_mult_rate = 1.6667,
+            speed_mult_cap = 12,
+        },
     }
 
     obj.ai = Orb_AI:new(obj.props)

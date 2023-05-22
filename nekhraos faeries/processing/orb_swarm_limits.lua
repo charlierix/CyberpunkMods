@@ -3,8 +3,6 @@ local OrbSwarmLimits = {}
 local this = {}
 
 
---TODO: when out of bounds, apply extra drag to orthogonal velocity
-
 --TODO: instead of spherical boundary, make an ellipsoid
 --  Main boundary check should stay a sphere.  Just apply a ceiling/floor when in bounds (either ellipsoid, or just a larger sphere with offset centerpoint)
 
@@ -17,10 +15,10 @@ function OrbSwarmLimits.GetAccelLimits(props, limits, rel_vel, rel_speed_sqr)
 
     -- Allow a larger max speed based on how far away the orb is from the player.  I used low flying v to quickly escape an
     -- area.  Once I stopped, the orbs were 200 away and coming to me at their regular max speed
-    local max_speed, dist = this.GetMaxSpeed_ByDistance(max_speed, dist_sqr, max_dist)
+    local max_speed, dist = this.GetMaxSpeed_ByDistance(limits, max_speed, dist_sqr, max_dist)
 
-    local min_dist = max_dist * 0.75
-    local min_speed = max_speed * 0.8
+    local min_dist = max_dist * limits.boundary_percent_start
+    local min_speed = max_speed * limits.speed_percent_start
 
     if dist_sqr > min_dist * min_dist then
         if not dist then
@@ -80,36 +78,41 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function this.GetMaxes_BySpeed(props, limits)
-    local SPEED_THRESHOLD = 7
+    local overspeed_start = limits.max_speed * limits.maxbyspeed.percent_start
 
     local vel = props.o:Custom_CurrentlyFlying_GetVelocity(props.o.vel)       -- a mod could be flying, so use that velocity else the velocity known by the game
     local speed_sqr = GetVectorLengthSqr(vel)
 
-    if speed_sqr < SPEED_THRESHOLD * SPEED_THRESHOLD then
+    if speed_sqr < overspeed_start * overspeed_start then
         return limits.max_speed, limits.max_dist_player
     end
 
     local speed = math.sqrt(speed_sqr)
 
-    local speed_mult = GetScaledValue(1, 3, SPEED_THRESHOLD, SPEED_THRESHOLD * 6, speed)
-    speed_mult = Clamp(1, 6, speed_mult)
+    local overspeed_percent = (speed - overspeed_start) / overspeed_start
 
-    local dist_mult = GetScaledValue(1, 2, SPEED_THRESHOLD, SPEED_THRESHOLD * 6, speed)
-    dist_mult = Clamp(1, 3, dist_mult)
+    local speed_mult = overspeed_percent * limits.maxbyspeed.speed_mult_rate
+    speed_mult = Clamp(1, limits.maxbyspeed.speed_mult_cap)
+
+    local dist_mult = overspeed_percent * limits.maxbyspeed.dist_mult_rate
+    dist_mult = Clamp(1, limits.maxbyspeed.dist_mult_cap, dist_mult)
 
     return
         limits.max_speed * speed_mult,
         limits.max_dist_player * dist_mult
 end
-function this.GetMaxSpeed_ByDistance(max_speed, dist_sqr, max_dist)
+
+function this.GetMaxSpeed_ByDistance(limits, max_speed, dist_sqr, max_dist)
     if dist_sqr < max_dist * max_dist then
         return max_speed, nil
     end
 
     local dist = math.sqrt(dist_sqr)
 
-    local speed_mult = GetScaledValue(1, 3, max_dist, max_dist * 2, dist)
-    speed_mult = Clamp(1, 12, speed_mult)
+    local overdist_percent = (dist - max_dist) / max_dist
+
+    local speed_mult = overdist_percent * limits.maxbydist.speed_mult_rate
+    speed_mult = Clamp(1, limits.maxbydist.speed_mult_cap, speed_mult)
 
     return
         max_speed * speed_mult,
