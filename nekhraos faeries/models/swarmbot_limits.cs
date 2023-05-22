@@ -17,21 +17,46 @@ public record swarmbot_limits
 
     public swarmbot_limits_maxbyspeed maxbyspeed { get; init; }
     public swarmbot_limits_maxbydist maxbydist { get; init; }
+
+    public swarmbot_limits_outofbounds_speedingaway outofbounds_speedingaway { get; init; }
+    public swarmbot_limits_outofbounds outofbounds { get; init; }
+    public swarmbot_limits_overspeed overspeed { get; init; }
+
+    public swarmbot_limits_dragorthvelocity dragorthvelocity { get; init; }
 }
 
 public record swarmbot_limits_maxbyspeed
 {
     public float percent_start { get; init; }
 
-    public float speed_mult_rate { get; init; }
-    public float speed_mult_cap { get; init; }
+    public property_mult speed_mult { get; init; }
 
-    public float dist_mult_rate { get; init; }
-    public float dist_mult_cap { get; init; }
+    public property_mult dist_mult { get; init; }
 }
 
 public record swarmbot_limits_maxbydist
 {
-    public float speed_mult_rate { get; init; }
-    public float speed_mult_cap { get; init; }
+    public property_mult speed_mult { get; init; }
+}
+
+public record swarmbot_limits_outofbounds_speedingaway
+{
+    public property_mult accel_mult_speed { get; init; }
+
+    public property_mult accel_mult_bounds { get; init; }
+}
+
+public record swarmbot_limits_outofbounds
+{
+    public property_mult accel_mult { get; init; }
+}
+
+public record swarmbot_limits_overspeed
+{
+    public property_mult accel_mult { get; init; }
+}
+
+public record swarmbot_limits_dragorthvelocity
+{
+    public property_mult accel_mult { get; init; }
 }

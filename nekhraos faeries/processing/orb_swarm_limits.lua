@@ -2,6 +2,7 @@ local OrbSwarmLimits = {}
 
 local this = {}
 
+local swarm_util = require "processing/swarm_util"
 
 --TODO: instead of spherical boundary, make an ellipsoid
 --  Main boundary check should stay a sphere.  Just apply a ceiling/floor when in bounds (either ellipsoid, or just a larger sphere with offset centerpoint)
@@ -77,6 +78,8 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
+-- This expands the max allowable speed and max allowed distance from player when the orb is overspeed
+-- TODO: see if this is even useful (I don't think the orbs ever get overspeed enough for it to kick in)
 function this.GetMaxes_BySpeed(props, limits)
     local overspeed_start = limits.max_speed * limits.maxbyspeed.percent_start
 
@@ -91,17 +94,17 @@ function this.GetMaxes_BySpeed(props, limits)
 
     local overspeed_percent = (speed - overspeed_start) / overspeed_start
 
-    local speed_mult = overspeed_percent * limits.maxbyspeed.speed_mult_rate
-    speed_mult = Clamp(1, limits.maxbyspeed.speed_mult_cap)
+    local speed_mult = swarm_util.ApplyPropertyMult(limits.maxbyspeed.speed_mult, overspeed_percent)
 
-    local dist_mult = overspeed_percent * limits.maxbyspeed.dist_mult_rate
-    dist_mult = Clamp(1, limits.maxbyspeed.dist_mult_cap, dist_mult)
+    local dist_mult = swarm_util.ApplyPropertyMult(limits.maxbyspeed.dist_mult, overspeed_percent)
 
     return
         limits.max_speed * speed_mult,
         limits.max_dist_player * dist_mult
 end
 
+-- This increases the allowed speed when the orb gets too far from the player.  This allows the orb to catch up more quickly
+-- TODO: need to allow a larger max acceleration as well
 function this.GetMaxSpeed_ByDistance(limits, max_speed, dist_sqr, max_dist)
     if dist_sqr < max_dist * max_dist then
         return max_speed, nil
@@ -111,8 +114,7 @@ function this.GetMaxSpeed_ByDistance(limits, max_speed, dist_sqr, max_dist)
 
     local overdist_percent = (dist - max_dist) / max_dist
 
-    local speed_mult = overdist_percent * limits.maxbydist.speed_mult_rate
-    speed_mult = Clamp(1, limits.maxbydist.speed_mult_cap, speed_mult)
+    local speed_mult = swarm_util.ApplyPropertyMult(limits.maxbydist.speed_mult, overdist_percent)
 
     return
         max_speed * speed_mult,
@@ -120,13 +122,13 @@ function this.GetMaxSpeed_ByDistance(limits, max_speed, dist_sqr, max_dist)
 end
 
 function this.OutOfBounds_SpeedingAway(limits, rel_vel, min_speed, max_speed, rel_speed, to_player, min_dist, max_dist, dist)
-    local accel_speed = GetScaledValue(0, 1, min_speed, max_speed, rel_speed)
-    accel_speed = Clamp(0, 12, accel_speed)     -- really letting it get big so the orb can turn around quickly
-    accel_speed = accel_speed * limits.max_accel
+    local percent = GetScaledValue(0, 1, min_speed, max_speed, rel_speed)
+    local mult = swarm_util.ApplyPropertyMult(limits.outofbounds_speedingaway.accel_mult_speed, percent)
+    local accel_speed = mult * limits.max_accel
 
-    local accel_bounds = GetScaledValue(0, 1, min_dist, max_dist, dist)
-    accel_bounds = Clamp(0, 1, accel_bounds)        -- this isn't as important as reversing speed
-    accel_bounds = accel_bounds * limits.max_accel
+    local percent = GetScaledValue(0, 1, min_dist, max_dist, dist)
+    local mult = swarm_util.ApplyPropertyMult(limits.outofbounds_speedingaway.accel_mult_bounds, percent)
+    local accel_bounds = mult * limits.max_accel
 
     return
         ((rel_vel.x / rel_speed) * -accel_speed) + ((to_player.x / dist) * accel_bounds),
@@ -139,9 +141,13 @@ function this.OutOfBounds(limits, to_player, dist, min_dist, max_dist)
     -- 0 at 0.75, 1 at 1, 3 at 1.5
     --local accel = 4 * dist - 3
 
-    local accel = GetScaledValue(0, 3, min_dist, max_dist * 1.5, dist)
-    accel = Clamp(0, 2, accel)
-    accel = accel * limits.max_accel
+    -- local accel = GetScaledValue(0, 3, min_dist, max_dist * 1.5, dist)
+    -- accel = Clamp(0, 2, accel)
+    -- accel = accel * limits.max_accel
+
+    local percent = (dist - min_dist) / min_dist
+    local mult = swarm_util.ApplyPropertyMult(limits.outofbounds.accel_mult, percent)
+    local accel = mult * limits.max_accel
 
     return
         (to_player.x / dist) * accel,
@@ -151,9 +157,13 @@ function this.OutOfBounds(limits, to_player, dist, min_dist, max_dist)
 end
 
 function this.OverSpeed(limits, rel_vel, min_speed, max_speed, rel_speed)
-    local accel = GetScaledValue(0, 1, min_speed, max_speed, rel_speed)
-    accel = Clamp(0, 2, accel)
-    accel = accel * limits.max_accel
+    -- local accel = GetScaledValue(0, 1, min_speed, max_speed, rel_speed)
+    -- accel = Clamp(0, 2, accel)
+    -- accel = accel * limits.max_accel
+
+    local percent = (rel_speed - min_speed) / min_speed
+    local mult = swarm_util.ApplyPropertyMult(limits.overspeed.accel_mult, percent)
+    local accel = mult * limits.max_accel
 
     return
         (rel_vel.x / rel_speed) * -accel,
@@ -176,8 +186,11 @@ function this.DragOrthVelocity(limits, to_player, dist_to_player, rel_vel, rel_s
     local orth_vel = GetProjectedVector_AlongVector(rel_vel, orth_vel_unit, false)
     local orth_speed = GetVectorLength(orth_vel)
 
-    local accel_percent = GetScaledValue(0, 0.3333, bounds_max_dist, bounds_max_dist * 2, dist_to_player)
-    accel_percent = Clamp(0, 0.6667, accel_percent)
+    -- local accel_percent = GetScaledValue(0, 0.3333, bounds_max_dist, bounds_max_dist * 2, dist_to_player)
+    -- accel_percent = Clamp(0, 0.6667, accel_percent)
+
+    local percent = (dist_to_player - bounds_max_dist) / bounds_max_dist
+    local accel_percent = swarm_util.ApplyPropertyMult(limits.dragorthvelocity.accel_mult, percent)
 
     local accel = orth_speed * accel_percent
 
