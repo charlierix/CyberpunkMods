@@ -4,10 +4,16 @@ local this = {}
 
 local limit_util = require "processing/orb_swarm_limits"
 
+local SHOW_DEBUG = false
+local set_debug_categories = false
+local debug_categories = CreateEnum("SWARM_CappedAccel", "")
+
 function Orb_Swarm:new(props, limits)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
+
+    this.EnsureDebugCategoriesSet()
 
     obj.props = props
     obj.limits = limits
@@ -84,6 +90,8 @@ function Orb_Swarm:Tick(deltaTime)
     if should_cap_accel then
         accelX, accelY, accelZ = this.AccelConstraints(self, accelX, accelY, accelZ, log)
     end
+
+    --this.DrawFreeBody(self.props.o, self.props.vel, accelX, accelY, accelZ)
 
     -- Apply Acceleration
     self.props.vel = Vector4.new(self.props.vel.x + accelX * deltaTime, self.props.vel.y + accelY * deltaTime, self.props.vel.z + accelZ * deltaTime, 1)
@@ -164,6 +172,10 @@ function this.AccelConstraints(self, accelX, accelY, accelZ, log)
 
         local accel = math.sqrt(accel_sqr)
 
+        if SHOW_DEBUG then
+            debug_render_screen.Add_Text2D(nil, nil, "capping accel\r\nfrom: " .. tostring(Round(accel, 1)) .. "\r\nto: " .. tostring(Round(self.limits.max_accel, 1)), debug_categories.SWARM_CappedAccel)
+        end
+
         return
             (accelX / accel) * self.limits.max_accel,
             (accelY / accel) * self.limits.max_accel,
@@ -177,3 +189,23 @@ function this.FindNeighbors(retVal)
     -- is part of pod: return all members of pod
     -- otherwise return the closest N neighbors in local cluster
 end
+
+function this.EnsureDebugCategoriesSet()
+    if set_debug_categories then
+        do return end
+    end
+
+    debug_render_screen.DefineCategory(debug_categories.SWARM_CappedAccel, "BA1F585F", "FFF", nil, true, nil, nil, 0.3, 0.3)
+
+    set_debug_categories = true
+end
+
+-- function this.DrawFreeBody(o, vel, accelX, accelY, accelZ)
+--     o:GetCamera()
+
+--     -- Get a rotation from player's look to Y up
+--     local look_horz = GetProjectedVector_AlongPlane_Unit(o.lookdir_forward, Vector4.new(0, 0, 1, 1))
+--     local quat_world_to_local = GetRotation(look_horz, Vector4.new(0, 1, 0, 1))
+
+--     local accel_local = RotateVector3D(Vector4.new(accelX, accelY, accelZ, 1), quat_world_to_local)
+-- end
