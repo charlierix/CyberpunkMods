@@ -105,20 +105,19 @@ function this.FinishHarvest(o, map, scanner_player)
     local count = 0
 
     for _, body in ipairs(bodies) do
-
-
-        -- in case hash doesn't work as an entityID, store the full entEntity
-        -- change to id_hash, id_obj
-
-
         local entity = Game.FindEntityByID(body.entityID)
         if entity then
+
+
 
             --TODO: the loot in the body also get disposed.  Either spawn them, or keep track of what they are and let them boost the spawned orb
             entity:Dispose()
 
 
-            orb_pool.Add(body, o)
+
+            local vel = GetRandomVector_Cone(Vector4.new(0, 0, 1, 1), 0, 30, 0.1, 0.6)
+
+            orb_pool.Add(body, o, vel)
             count = count + 1
         end
 

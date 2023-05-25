@@ -32,6 +32,10 @@ function Keys:MapAction(action)
     end
 end
 
+function Keys:ItemAdded()
+    self.proceed = false        -- when they press F to take an item, the button released event never fires
+end
+
 function Keys:Tick()
     self.prev_proceed = self.proceed
 end

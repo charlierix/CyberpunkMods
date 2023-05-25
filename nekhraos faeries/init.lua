@@ -1,3 +1,20 @@
+--https://www.lua.org/pil/contents.html
+--https://docs.swift.org/swift-book/LanguageGuide/TheBasics.html
+--http://lua.sqlite.org/index.cgi/doc/tip/doc/lsqlite3.wiki#numerical_error_and_result_codes
+
+--https://github.com/yamashi/CyberEngineTweaks/blob/eb0f7daf2971ed480abf04355458cbe326a0e922/src/sol_imgui/README.md
+--https://github.com/ocornut/imgui/blob/b493cae8c971843886d760bb816dcab661779d69/imgui.h
+--https://github.com/ocornut/imgui/blob/25fbff2156640cc79e9a79db00522019b4a0420f/imgui_draw.cpp
+
+--https://wiki.cybermods.net/cyber-engine-tweaks/console/functions
+--https://redscript.redmodding.org/
+--https://codeberg.org/adamsmasher/cyberpunk/src/branch/master
+
+--https://github.com/jac3km4/redscript
+
+require "core/animation_curve"
+require "core/bezier"
+require "core/bezier_segment"
 require "core/color"
 require "core/gameobj_accessor"
 require "core/math_basic"
@@ -19,14 +36,15 @@ require "debug/reporting"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
-prototype_scanning = require "prototype/scanning"
+require "orb/ai"
+require "orb/audiovisual"
+require "orb/orb"
+require "orb/swarm"
 
 harvester = require "processing/harvester"
-require "processing/orb"
-require "processing/orb_ai"
-require "processing/orb_audiovisual"
 orb_pool = require "processing/orb_pool"
-require "processing/orb_swarm"
+
+prototype_scanning = require "prototype/scanning"
 
 require "ui/drawing"
 require "ui/init_ui"
@@ -76,6 +94,10 @@ registerForEvent("onInit", function()
 
     Observe("PlayerPuppet", "OnAction", function(_, action)        -- observe must be inside init and before other code
         keys:MapAction(action)
+    end)
+
+    Observe('PlayerPuppet', 'OnItemAddedToInventory', function(_, evt)      -- tdbd = evt.itemID.tdbid ; print(evt.itemID)
+        keys:ItemAdded()
     end)
 
     isLoaded = Game.GetPlayer() and Game.GetPlayer():IsAttached() and not GetSingleton('inkMenuScenario'):GetSystemRequestsHandler():IsPreGame()
@@ -216,6 +238,19 @@ registerHotkey("NekhraosFaeries_Perlin", "Perlin", function()
     end
 
     log:Save("perlin")
+end)
+
+
+registerHotkey("NekhraosFaeries_SpawnOrb", "Spawn Orb", function()
+    local pos, look_dir = o:GetCrosshairInfo()
+
+    pos = AddVectors(pos, MultiplyVector(look_dir, 2))
+
+    orb_pool.Add({ pos = pos }, o)
+end)
+
+registerHotkey("NekhraosFaeries_ClearOrbs", "Clear Orbs", function()
+    orb_pool.Clear()
 end)
 
 

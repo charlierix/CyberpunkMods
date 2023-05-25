@@ -472,6 +472,35 @@ function GetRandomVector_Circular_Shell(radius)
     return Vector4.new(x, y, 0, 1)
 end
 
+function GetRandomVector_Cone(axis, minAngle, maxAngle, minRadius, maxRadius)
+    local minRand = GetRandomForPhi(Degrees_to_Radians(minAngle))
+    local maxRand = GetRandomForPhi(Degrees_to_Radians(maxAngle))
+    if maxRand < minRand then
+        local temp = minRand
+        minRand = maxRand
+        maxRand = temp
+    end
+
+    local theta = math.random() * 2 * math.pi
+    local phi = GetPhiForRandom(minRand + (math.random() * (maxRand - minRand)))
+    local radius = minRadius + ((maxRadius - minRadius) * math.sqrt(math.random()))     -- without the square root, there is more chance at the center than the edges
+
+    local sinPhi = math.sin(phi)
+
+    local retVal = Vector4.new
+    (
+        radius * math.cos(theta) * sinPhi,
+        radius * math.sin(theta) * sinPhi,
+        radius * math.cos(phi),
+        1
+    );
+
+    local quat = GetRotation(Vector4.new(0, 0, 1, 1), axis)
+    retVal = RotateVector3D(retVal, quat)
+
+    return retVal
+end
+
 -- This returns a phi from 0 to pi based on an input from -1 to 1
 --
 -- NOTE: The input is linear (even chance of any value from -1 to 1), but the output is scaled to give an even chance of a Z

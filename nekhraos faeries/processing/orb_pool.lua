@@ -33,10 +33,60 @@ function OrbPool.Tick(o, deltaTime)
     end
 end
 
--- Adds an orb based on the body definition
-function OrbPool.Add(body_def, o)
+-- Adds an orb based on the body definition (velocity is optional)
+function OrbPool.Add(body_def, o, vel)
     local item = orbs:GetNewItem()
-    item.orb = Orb:new(o, body_def.pos)
+    item.orb = Orb:new(o, body_def.pos, vel)
+end
+
+function OrbPool.Clear()
+    orbs:Clear()
+end
+
+-- TODO: if the number of orbs is too large, periodically cluster with K-Means
+-- TODO: give an option for a weighted search.  ai could define goals as an ND vector, so there's a search for orbs in physical space and another search for orbs in goal space
+-- Returns all the items within radius, sorted by distance
+--  { {orb, dist_sqr}, ... }
+function OrbPool.FindNearby(center, radius, exclude_id)
+    local retVal = {}
+
+    for i = 1, orbs:GetCount(), 1 do
+        local item = orbs:GetItem(i)
+
+        if not exclude_id or item.orb.props.id ~= exclude_id then
+            local dist_sqr = GetVectorDiffLengthSqr(center, item.orb.props.pos)
+            if dist_sqr <= radius * radius then
+                this.FindNearby_Add(retVal, item.orb, dist_sqr)
+            end
+        end
+    end
+
+    return retVal
+end
+
+-- Using this method should avoid the bots forming spherical groupings
+function OrbPool.FindNearby_Cone(center, radius, look_dir_unit, min_dot, exclude_id)
+    local retVal = {}
+
+    for i = 1, orbs:GetCount(), 1 do
+        local item = orbs:GetItem(i)
+
+        if not exclude_id or item.orb.props.id ~= exclude_id then
+            local dist_sqr = GetVectorDiffLengthSqr(center, item.orb.props.pos)
+            if dist_sqr <= radius * radius then
+                if IsNearZero() then
+                    this.FindNearby_Add(retVal, item.orb, dist_sqr)
+                else
+                    local direction_unit = DivideVector(SubtractVectors(item.orb.props.pos, center), math.sqrt(dist_sqr))
+                    if DotProduct3D(look_dir_unit, direction_unit) >= min_dot then
+                        this.FindNearby_Add(retVal, item.orb, dist_sqr)
+                    end
+                end
+            end
+        end
+    end
+
+    return retVal
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -61,6 +111,24 @@ function this.DebugSummary()
     end
 
     debug_render_screen.Add_Text2D(0.9, 0.5, report, nil, "89081729", "FFF", nil, true)
+end
+
+-- This adds the item and keeps the list sorted by dist_sqr
+function this.FindNearby_Add(retVal, orb, dist_sqr)
+    local new_item =
+    {
+        orb = orb,
+        dist_sqr = dist_sqr,
+    }
+
+    for index, item in ipairs(retVal) do
+        if dist_sqr < item.dist_sqr then
+            table.insert(retVal, index, new_item)
+            do return end
+        end
+    end
+
+    table.insert(retVal, new_item)
 end
 
 return OrbPool

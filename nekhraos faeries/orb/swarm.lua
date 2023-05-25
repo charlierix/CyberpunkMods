@@ -2,13 +2,14 @@ Orb_Swarm = {}
 
 local this = {}
 
-local limit_util = require "processing/orb_swarm_limits"
+local limit_util = require "orb/swarm_limits"
+local neighbor_util = require "orb/swarm_neighbors"
 
 local SHOW_DEBUG = false
 local set_debug_categories = false
 local debug_categories = CreateEnum("SWARM_CappedAccel", "")
 
-function Orb_Swarm:new(props, limits)
+function Orb_Swarm:new(props, limits, neighbors)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -17,8 +18,7 @@ function Orb_Swarm:new(props, limits)
 
     obj.props = props
     obj.limits = limits
-
-    --obj.neighbors = StickyList:new()
+    obj.neighbors = neighbors
 
     -- These could be modified by ai, so that some weights take priority based on conditions
     obj.weight_neighbors = 1
@@ -54,7 +54,7 @@ function Orb_Swarm:Tick(deltaTime)
     -- Get component accelerations
     local accelX_limits, accelY_limits, accelZ_limits, limits_percent, should_cap_accel = limit_util.GetAccelLimits(self.props, self.limits, rel_vel, rel_speed_sqr)
 
-    local accelX_neighbors, accelY_neighbors, accelZ_neighbors, had_neighbors = this.GetAccelNeighbors(self.neighbors)
+    local accelX_neighbors, accelY_neighbors, accelZ_neighbors, had_neighbors = neighbor_util.GetAccelNeighbors(self.props, self.neighbors, self.limits)
 
     local accelX_goals, accelY_goals, accelZ_goals, had_goals = this.GetAccelGoals()
 
@@ -86,10 +86,11 @@ function Orb_Swarm:Tick(deltaTime)
         (accelZ_obstacles * mult_misc) +
         (accelZ_wander * mult_wander)
 
+    -- NOTE: I think capping acceleration was a flawed idea.  The individual components should respect max accel, and if they need to exceed that, there's a good reason
     -- Possibly cap acceleration
-    if should_cap_accel then
-        accelX, accelY, accelZ = this.AccelConstraints(self, accelX, accelY, accelZ, log)
-    end
+    -- if should_cap_accel then
+    --     accelX, accelY, accelZ = this.AccelConstraints(self, accelX, accelY, accelZ, log)
+    -- end
 
     --this.DrawFreeBody(self.props.o, self.props.vel, accelX, accelY, accelZ)
 
@@ -103,14 +104,6 @@ function Orb_Swarm:Tick(deltaTime)
 end
 
 ---------------------------------- Get Accelerations ----------------------------------
-
-function this.GetAccelNeighbors(neighbors)
-    --neighbors:Clear()
-    --this.FindNeighbors(neighbors)
-
-
-    return 0, 0, 0, false
-end
 
 function this.GetAccelGoals()
     return 0, 0, 0, false
@@ -185,11 +178,6 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.FindNeighbors(retVal)
-    -- is part of pod: return all members of pod
-    -- otherwise return the closest N neighbors in local cluster
-end
-
 function this.EnsureDebugCategoriesSet()
     if set_debug_categories then
         do return end
@@ -200,12 +188,16 @@ function this.EnsureDebugCategoriesSet()
     set_debug_categories = true
 end
 
--- function this.DrawFreeBody(o, vel, accelX, accelY, accelZ)
---     o:GetCamera()
+function this.DrawFreeBody(o, vel, accelX, accelY, accelZ)
+    o:GetCamera()
 
---     -- Get a rotation from player's look to Y up
---     local look_horz = GetProjectedVector_AlongPlane_Unit(o.lookdir_forward, Vector4.new(0, 0, 1, 1))
---     local quat_world_to_local = GetRotation(look_horz, Vector4.new(0, 1, 0, 1))
+    -- Get a rotation from player's look to Y up
+    local look_horz = GetProjectedVector_AlongPlane_Unit(o.lookdir_forward, Vector4.new(0, 0, 1, 1))
+    local quat_world_to_local = GetRotation(look_horz, Vector4.new(0, 1, 0, 1))
 
---     local accel_local = RotateVector3D(Vector4.new(accelX, accelY, accelZ, 1), quat_world_to_local)
--- end
+    local accel_local = RotateVector3D(Vector4.new(accelX, accelY, accelZ, 1), quat_world_to_local)
+
+
+
+
+end

@@ -68,6 +68,7 @@ function ToInteger(num)
 end
 
 -- This is good for converting one number into another
+-- NOTE: this doesn't clamp results
 --
 -- minReturn    This is the value that will be returned when valueRange == minRange
 -- maxReturn    This is the value that will be returned with valueRange == maxRange

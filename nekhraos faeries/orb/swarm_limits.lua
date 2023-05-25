@@ -102,9 +102,9 @@ function this.GetMaxes_BySpeed(props, limits)
 
     local overspeed_percent = (speed - overspeed_start) / overspeed_start
 
-    local speed_mult = swarm_util.ApplyPropertyMult(limits.maxbyspeed.speed_mult, overspeed_percent)
+    local speed_mult = swarm_util.ApplyPropertyMult_ORIG(limits.maxbyspeed.speed_mult, overspeed_percent)
 
-    local dist_mult = swarm_util.ApplyPropertyMult(limits.maxbyspeed.dist_mult, overspeed_percent)
+    local dist_mult = swarm_util.ApplyPropertyMult_ORIG(limits.maxbyspeed.dist_mult, overspeed_percent)
 
     if SHOW_DEBUG then
         debug_render_screen.Add_Text2D(nil, nil, "overspeed\r\nspeed_mult: " .. tostring(Round(speed_mult, 2)) .. "\r\ndist_mult: " .. tostring(Round(dist_mult, 2)), debug_categories.LIMIT_MaxesBySpeed)
@@ -126,7 +126,7 @@ function this.GetMaxSpeed_ByDistance(limits, max_speed, dist_sqr, max_dist)
 
     local overdist_percent = (dist - max_dist) / max_dist
 
-    local speed_mult = swarm_util.ApplyPropertyMult(limits.maxbydist.speed_mult, overdist_percent)
+    local speed_mult = swarm_util.ApplyPropertyMult_ORIG(limits.maxbydist.speed_mult, overdist_percent)
 
     if SHOW_DEBUG then
         debug_render_screen.Add_Text2D(nil, nil, "overdist\r\nspeed_mult: " .. tostring(Round(speed_mult, 2)), debug_categories.LIMIT_MaxSpeedByDist)
@@ -139,11 +139,11 @@ end
 
 function this.OutOfBounds_SpeedingAway(limits, rel_vel, min_speed, max_speed, rel_speed, to_player, min_dist, max_dist, dist)
     local percent = GetScaledValue(0, 1, min_speed, max_speed, rel_speed)
-    local mult = swarm_util.ApplyPropertyMult(limits.outofbounds_speedingaway.accel_mult_speed, percent)
+    local mult = swarm_util.ApplyPropertyMult_ORIG(limits.outofbounds_speedingaway.accel_mult_speed, percent)
     local accel_speed = mult * limits.max_accel
 
     local percent = GetScaledValue(0, 1, min_dist, max_dist, dist)
-    local mult = swarm_util.ApplyPropertyMult(limits.outofbounds_speedingaway.accel_mult_bounds, percent)
+    local mult = swarm_util.ApplyPropertyMult_ORIG(limits.outofbounds_speedingaway.accel_mult_bounds, percent)
     local accel_bounds = mult * limits.max_accel
 
     if SHOW_DEBUG then
@@ -166,7 +166,7 @@ function this.OutOfBounds(limits, to_player, dist, min_dist, max_dist)
     -- accel = accel * limits.max_accel
 
     local percent = (dist - min_dist) / min_dist
-    local mult = swarm_util.ApplyPropertyMult(limits.outofbounds.accel_mult, percent)
+    local mult = swarm_util.ApplyPropertyMult_ORIG(limits.outofbounds.accel_mult, percent)
     local accel = mult * limits.max_accel
 
     if SHOW_DEBUG then
@@ -186,7 +186,7 @@ function this.OverSpeed(limits, rel_vel, min_speed, max_speed, rel_speed)
     -- accel = accel * limits.max_accel
 
     local percent = (rel_speed - min_speed) / min_speed
-    local mult = swarm_util.ApplyPropertyMult(limits.overspeed.accel_mult, percent)
+    local mult = swarm_util.ApplyPropertyMult_ORIG(limits.overspeed.accel_mult, percent)
     local accel = mult * limits.max_accel
 
     if SHOW_DEBUG then
@@ -218,7 +218,7 @@ function this.DragOrthVelocity(limits, to_player, dist_to_player, rel_vel, rel_s
     -- accel_percent = Clamp(0, 0.6667, accel_percent)
 
     local percent = (dist_to_player - bounds_max_dist) / bounds_max_dist
-    local accel_percent = swarm_util.ApplyPropertyMult(limits.dragorthvelocity.accel_mult, percent)
+    local accel_percent = swarm_util.ApplyPropertyMult_ORIG(limits.dragorthvelocity.accel_mult, percent)
 
     local accel = orth_speed * accel_percent
 
