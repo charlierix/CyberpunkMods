@@ -4,8 +4,8 @@ local this = {}
 
 local swarm_util = require "processing/swarm_util"
 
-function OrbSwarmNeighbors.GetAccelNeighbors(props, neighbors, limits)
-    local nearby = this.FindNearby(props, neighbors)
+function OrbSwarmNeighbors.GetAccelNeighbors(props, nearby_scan, neighbors, limits)
+    local nearby = this.FindNearby(props, nearby_scan, neighbors)
     if #nearby == 0 then
         return 0, 0, 0, false
     end
@@ -40,30 +40,25 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.FindNearby(props, neighbors)
+function this.FindNearby(props, nearby_scan, neighbors)
     --TODO: handle being part of a pod
 
-
-    --TODO: don't store in neighbors, that's data that could be shared across bots.  Store in the swarm instance
-
-
-
     -- See if an existing scan is still valid
-    -- if neighbors.nearby and props.o.timer < neighbors.next_nearbyscan_time and this.AreAllAlive(neighbors.nearby) then
-    --     return neighbors.nearby
-    -- end
+    if nearby_scan.nearby and props.o.timer < nearby_scan.next_scan_time and this.AreAllAlive(nearby_scan.nearby) then
+        return nearby_scan.nearby
+    end
 
     -- Randomizing the pull time a bit to avoid the risk of multiple orbs created at the same time doing a scan in
     -- the same frame
-    local base = neighbors.nearbyscan_interval_seconds
+    local base = nearby_scan.interval_seconds
     local variance = base * 0.1
     local interval = GetScaledValue(base - variance, base + variance, 0, 1, math.random())
 
-    neighbors.next_nearbyscan_time = props.o.timer + interval
+    nearby_scan.next_scan_time = props.o.timer + interval
 
-    neighbors.nearby = orb_pool.FindNearby(props.pos, neighbors.search_radius, props.id)
+    nearby_scan.nearby = orb_pool.FindNearby(props.pos, neighbors.search_radius, props.id)
 
-    return neighbors.nearby
+    return nearby_scan.nearby
 end
 
 -- NOTE: returns true if count is zero
@@ -224,14 +219,25 @@ end
 function this.AvoidOthers_Other(pos, vel, other_pos, repel_other_orb, repel_other_orb_velocitytoward, max_accel)
     -- Repulse based on distance
     local to_other = SubtractVectors(other_pos, pos)
-    if IsNearZero_vec4(to_other) then       -- if same point, just return a random vector (the random vector isn't spherical, but this should never happen anyway)
-        return
-            GetScaledValue(-max_accel, max_accel, 0, 1, math.random()),
-            GetScaledValue(-max_accel, max_accel, 0, 1, math.random()),
-            GetScaledValue(-max_accel, max_accel, 0, 1, math.random())
+    if IsNearZero_vec4(to_other) then       -- if same point, just return a random vector
+        print("to_other is 0,0,0")
+        return GetRandomVector_Spherical(max_accel / 2, max_accel)
     end
 
     local dist_to_other = GetVectorLength(to_other)
+
+
+
+    -- There will be exactly 6 of these, then the report on the side permanently shows nan for dist and speed.
+    -- This makes me think the bots aren't on top of each other, the pos is already nan by the time it gets to this function
+    if IsNaN(dist_to_other) then
+        print("dist_to_other is nan")
+        return GetRandomVector_Spherical(max_accel / 2, max_accel)
+    end
+
+
+
+
 
     local percent_accel = swarm_util.ApplyPropertyMult(repel_other_orb, dist_to_other)
 

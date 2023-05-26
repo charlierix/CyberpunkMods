@@ -20,6 +20,12 @@ function Orb_Swarm:new(props, limits, neighbors)
     obj.limits = limits
     obj.neighbors = neighbors
 
+    obj.nearby_scan =
+    {
+        interval_seconds = 0.1,
+        next_scan_time = -1,
+    }
+
     -- These could be modified by ai, so that some weights take priority based on conditions
     obj.weight_neighbors = 1
     obj.weight_goals = 1
@@ -54,7 +60,7 @@ function Orb_Swarm:Tick(deltaTime)
     -- Get component accelerations
     local accelX_limits, accelY_limits, accelZ_limits, limits_percent, should_cap_accel = limit_util.GetAccelLimits(self.props, self.limits, rel_vel, rel_speed_sqr)
 
-    local accelX_neighbors, accelY_neighbors, accelZ_neighbors, had_neighbors = neighbor_util.GetAccelNeighbors(self.props, self.neighbors, self.limits)
+    local accelX_neighbors, accelY_neighbors, accelZ_neighbors, had_neighbors = neighbor_util.GetAccelNeighbors(self.props, self.nearby_scan, self.neighbors, self.limits)
 
     local accelX_goals, accelY_goals, accelZ_goals, had_goals = this.GetAccelGoals()
 

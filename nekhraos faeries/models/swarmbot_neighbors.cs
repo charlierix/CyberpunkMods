@@ -5,14 +5,7 @@ public record swarmbot_neighbors
 
     public float search_radius { get; init; }
 
-    public float nearbyscan_interval_seconds { get; init; }
-
     public swarmbot_acceleration_percents accel_percents { get; init; }
-
-    // -------------- Mutable Props --------------
-
-    public swarmbot_matchedneighbor[] nearby { get; set; }
-    public float next_nearbyscan_time { get; set; }
 }
 
 public record swarmbot_acceleration_percents
@@ -66,10 +59,4 @@ public record swarmbot_acceleration_percents
     // Input: distance
     // Output: % of max accel
     public property_mult repel_other_orb_velocitytoward { get; init; }
-}
-
-public record swarmbot_matchedneighbor
-{
-    public object orb { get; init; }
-    public float dist_sqr { get; init; }
 }

@@ -143,9 +143,6 @@ function this.GetDefinition_Neighbors()
         count = 3,
         search_radius = 8,
 
-        nearbyscan_interval_seconds = 0.1,
-        next_nearbyscan_time = -1,
-
         accel_percents =
         {
             center_project_seconds = 0.05,
