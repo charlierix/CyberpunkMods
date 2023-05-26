@@ -43,10 +43,15 @@ end
 function this.FindNearby(props, neighbors)
     --TODO: handle being part of a pod
 
+
+    --TODO: don't store in neighbors, that's data that could be shared across bots.  Store in the swarm instance
+
+
+
     -- See if an existing scan is still valid
-    if neighbors.nearby and props.o.timer < neighbors.next_nearbyscan_time and this.AreAllAlive(neighbors.nearby) then
-        return neighbors.nearby
-    end
+    -- if neighbors.nearby and props.o.timer < neighbors.next_nearbyscan_time and this.AreAllAlive(neighbors.nearby) then
+    --     return neighbors.nearby
+    -- end
 
     -- Randomizing the pull time a bit to avoid the risk of multiple orbs created at the same time doing a scan in
     -- the same frame
@@ -219,6 +224,13 @@ end
 function this.AvoidOthers_Other(pos, vel, other_pos, repel_other_orb, repel_other_orb_velocitytoward, max_accel)
     -- Repulse based on distance
     local to_other = SubtractVectors(other_pos, pos)
+    if IsNearZero_vec4(to_other) then       -- if same point, just return a random vector (the random vector isn't spherical, but this should never happen anyway)
+        return
+            GetScaledValue(-max_accel, max_accel, 0, 1, math.random()),
+            GetScaledValue(-max_accel, max_accel, 0, 1, math.random()),
+            GetScaledValue(-max_accel, max_accel, 0, 1, math.random())
+    end
+
     local dist_to_other = GetVectorLength(to_other)
 
     local percent_accel = swarm_util.ApplyPropertyMult(repel_other_orb, dist_to_other)

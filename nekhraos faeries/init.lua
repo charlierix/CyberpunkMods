@@ -17,11 +17,13 @@ require "core/bezier"
 require "core/bezier_segment"
 require "core/color"
 require "core/gameobj_accessor"
+require "core/lists"
 require "core/math_basic"
 require "core/math_shapes"
 require "core/math_vector"
 require "core/perlin"
 require "core/sticky_list"
+require "core/strings"
 require "core/util"
 
 entity_helper = require "data/entity_helper"
@@ -74,6 +76,7 @@ local isShutdown = true
 local isLoaded = false
 local shouldDraw_graphics = false
 local shouldDraw_config = false
+local isCETOpen = false
 
 local o = nil                           -- This is a class that wraps access to Game.xxx
 local debug = {}
@@ -185,19 +188,13 @@ registerForEvent("onUpdate", function(deltaTime)
     debug_render_screen.CallFrom_onUpdate(deltaTime)
 end)
 
-
-registerHotkey("NekhraosFaeries_IsCrouching", "Is Crouching", function()
-    debug_render_screen.Clear()
-
-    local text = nil
-    if Game.GetPlayer().inCrouch then
-        text = "crouching"
-    else
-        text = "standing up"
-    end
-
-    debug_render_screen.Add_Text2D(nil, nil, text, debug_categories.text2D_2sec)
+registerForEvent("onOverlayOpen", function()
+    isCETOpen = true
 end)
+registerForEvent("onOverlayClose", function()
+    isCETOpen = false
+end)
+
 
 registerHotkey("NekhraosFaeries_ScanAllObjecs", "Scan All Objects", function()
     local found, entities = prototype_scanning.GetAllObjects()
@@ -213,58 +210,39 @@ registerHotkey("NekhraosFaeries_ScanAllObjecs", "Scan All Objects", function()
         print("nothing found")
     end
 end)
-
-registerHotkey("NekhraosFaeries_Perlin", "Perlin", function()
-    local max_time = 3
-    local count = 144
-
-    local log = DebugRenderLogger:new(true)
-
-    for i = 1, 12, 1 do
-        log:NewFrame()
-
-        local start = GetRandomVector_Spherical(0, 12)
-        local dir = GetRandomVector_Spherical(0, 3)
-
-        for t = 1, count, 1 do
-            local time = max_time * ((t-1) / count)
-
-            local perlin = Perlin(start.x + dir.x * time, start.y + dir.y * time, start.z + dir.z * time)
-
-            log:Add_Dot(Vector4.new(time, perlin, 0, 1))
-
-            --print(tostring(time) .. " | " .. tostring(start.x + dir.x * time) .. ", " .. tostring(start.y + dir.y * time) .. ", " .. tostring(start.z + dir.z * time) .. " | " .. tostring(perlin))
-        end
-    end
-
-    log:Save("perlin")
+registerHotkey("NekhraosFaeries_ClearVisuals", "Clear Visuals", function()
+    debug_render_screen.Clear()
 end)
 
-
 registerHotkey("NekhraosFaeries_SpawnOrb", "Spawn Orb", function()
+    o:GetPlayerInfo()
     local pos, look_dir = o:GetCrosshairInfo()
 
     pos = AddVectors(pos, MultiplyVector(look_dir, 2))
 
     orb_pool.Add({ pos = pos }, o)
 end)
-
 registerHotkey("NekhraosFaeries_ClearOrbs", "Clear Orbs", function()
     orb_pool.Clear()
+end)
+
+registerHotkey("NekhraosFaeries_LoadConfigs", "load configs from json", function()
+    orb_pool.TEST_OverwriteConfigs_FromJSON()
 end)
 
 
 -- test to spawn an object, then call targeting sytem from its perspective
 
 
-registerHotkey("NekhraosFaeries_ClearVisuals", "Clear Visuals", function()
-    debug_render_screen.Clear()
-end)
 
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded then
         do return end
     end
+
+    -- if isCETOpen then
+    --     DrawConfig()
+    -- end
 
     if shouldDraw_config and const.shouldShowDebugWindow then
         DrawDebugWindow(debug, vars_ui)
