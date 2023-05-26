@@ -230,6 +230,10 @@ registerHotkey("NekhraosFaeries_LoadConfigs", "load configs from json", function
     orb_pool.TEST_OverwriteConfigs_FromJSON()
 end)
 
+-- registerHotkey("NekhraosFaeries_CompareNeighbors", "Compare Neighbors", function()
+--     orb_pool.TEST_CompareNeighbors(o)
+-- end)
+
 
 -- test to spawn an object, then call targeting sytem from its perspective
 

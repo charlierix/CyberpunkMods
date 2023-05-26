@@ -151,7 +151,7 @@ function this.GetDefinition_Neighbors()
             {
                 animcurve_values =
                 {
-                    { input = 0, output = 0.1 },
+                    { input = 0, output = 0.4 },
                     { input = 1, output = 0.75 },
                     { input = 8, output = 0.2 },
                 }
@@ -167,7 +167,6 @@ function this.GetDefinition_Neighbors()
                     { input = 4, output = 1.1 },
                 }
             },
-
             align_flock_velocity_distance =
             {
                 animcurve_values =
@@ -188,13 +187,12 @@ function this.GetDefinition_Neighbors()
                     { input = 1, output = 0.22 },
                 }
             },
-
             drag_orth_flock_velocity_distance =
             {
                 animcurve_values =
                 {
-                    { input = 0, output = 1 },
-                    { input = 8, output = 0.1 },
+                    { input = 0, output = 0.25 },
+                    { input = 8, output = 0.05 },
                     { input = 16, output = 0 },
                 }
             },
@@ -203,9 +201,9 @@ function this.GetDefinition_Neighbors()
             {
                 animcurve_values =
                 {
-                    { input = 0, output = 0.8 },
-                    { input = 1, output = 0.3 },
-                    { input = 2, output = 0.15 },
+                    { input = 0, output = 0.4 },
+                    { input = 1, output = 0.15 },
+                    { input = 2, output = 0.07 },
                     { input = 4, output = 0 },
                 }
             },
@@ -214,8 +212,8 @@ function this.GetDefinition_Neighbors()
             {
                 animcurve_values =
                 {
-                    { input = 0, output = 2.5 },
-                    { input = 1, output = 1.75 },
+                    { input = 0, output = 0.75 },
+                    { input = 1, output = 0.1 },
                     { input = 2, output = 0 },
                 }
             },

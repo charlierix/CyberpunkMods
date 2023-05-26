@@ -92,6 +92,22 @@ function Orb_Swarm:Tick(deltaTime)
         (accelZ_obstacles * mult_misc) +
         (accelZ_wander * mult_wander)
 
+
+    if IsNaN(accelX) then
+        -- This seems to happen after a json reload.  There's something about a shared instance that is causing failure
+        -- Orb_Swarm:Tick NaN.  accelX_limits: 0 | accelX_neighbors: nan | accelX_goals: 0 | accelX_obstacles: 0 | accelX_wander: 0.57474585775138
+        -- mult_limits: 1 | mult_misc: 1 | mult_wander: 1
+        print("Orb_Swarm:Tick NaN.  accelX_limits: " .. tostring(accelX_limits) .. " | accelX_neighbors: " .. tostring(accelX_neighbors) .. " | accelX_goals: " .. tostring(accelX_goals) .. " | accelX_obstacles: " .. tostring(accelX_obstacles) .. " | accelX_wander: " .. tostring(accelX_wander))
+        print("mult_limits: " .. tostring(mult_limits) .. " | mult_misc: " .. tostring(mult_misc) .. " | mult_wander: " .. tostring(mult_wander))
+
+        -- It's always related to neighbors.  This time it wasn't a reload, just random chance
+        print("self.props.pos: " .. vec_str(self.props.pos))
+        for index, item in ipairs(self.nearby_scan.nearby) do
+            print("[" .. tostring(index) .. "]: " .. tostring(item.dist_sqr) .. " | " .. vec_str(item.orb.props.pos))
+        end
+    end
+
+
     -- NOTE: I think capping acceleration was a flawed idea.  The individual components should respect max accel, and if they need to exceed that, there's a good reason
     -- Possibly cap acceleration
     -- if should_cap_accel then

@@ -100,6 +100,18 @@ function OrbPool.TEST_OverwriteConfigs_FromJSON()
     end
 end
 
+function OrbPool.TEST_CompareNeighbors(o)
+    local orb = Orb:new(o, Vector4.new(0, 0, 0, 1))
+
+    print("-------------- orb.neighbors --------------")
+    ReportTable(orb.neighbors)
+
+    local neighbors = this.DeserializeJSON("!configs/neighbors.json")
+
+    print("-------------- json neighbors --------------")
+    ReportTable(neighbors)
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.DebugSummary()
@@ -121,7 +133,7 @@ function this.DebugSummary()
         report = report .. tostring(Round(distance, 1)) .. "\t" .. tostring(Round(speed, 1))
     end
 
-    debug_render_screen.Add_Text2D(0.9, 0.5, report, nil, "89081729", "FFF", nil, true)
+    debug_render_screen.Add_Text2D(0.95, 0.5, report, nil, "89081729", "FFF", nil, true)
 end
 
 -- This adds the item and keeps the list sorted by dist_sqr
