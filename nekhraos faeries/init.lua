@@ -30,6 +30,7 @@ entity_helper = require "data/entity_helper"
 require "data/map"
 require "data/scanner_orbs"
 require "data/scanner_player"
+settings_util = require "data/settings_util"
 
 require "debug/debug_code"
 require "debug/debug_render_logger"

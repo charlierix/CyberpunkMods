@@ -90,7 +90,7 @@ function OrbPool.FindNearby_Cone(center, radius, look_dir_unit, min_dot, exclude
 end
 
 function OrbPool.TEST_OverwriteConfigs_FromJSON()
-    local neighbors = this.DeserializeJSON("!configs/neighbors.json")
+    local neighbors = settings_util.Neighbors()
 
     for i = 1, orbs:GetCount(), 1 do
         local item = orbs:GetItem(i)
@@ -152,25 +152,6 @@ function this.FindNearby_Add(retVal, orb, dist_sqr)
     end
 
     table.insert(retVal, new_item)
-end
-
--- Small wrapper to file.open and json.decode
--- Returns
---  object, nil
---  nil, errMsg
-function this.DeserializeJSON(filename)
-    local handle = io.open(filename, "r")
-    local json = handle:read("*all")
-
-    local sucess, retVal = pcall(
-        function(j) return extern_json.decode(j) end,
-        json)
-
-    if sucess then
-        return retVal, nil
-    else
-        return nil, tostring(retVal)      -- when pcall has an error, the second value returned is the error message, otherwise it't the successful return value.  It should already be a sting, but doing a tostring just to be safe
-    end
 end
 
 return OrbPool
