@@ -2,7 +2,7 @@ local SettingsUtil = {}
 
 local this = {}
 
-function SettingsUtil.Limits()
+function SettingsUtil.Limits_ORIG()
     -- models\swarmbot_limits
     return
     {
@@ -86,6 +86,11 @@ function SettingsUtil.Limits()
             },
         },
     }
+end
+
+function SettingsUtil.Limits()
+    -- models\swarmbot_limits
+    return this.DeserializeJSON("!configs/limits.json")
 end
 
 function SettingsUtil.Neighbors()
