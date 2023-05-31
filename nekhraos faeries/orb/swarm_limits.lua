@@ -4,9 +4,9 @@ local this = {}
 
 local swarm_util = require "processing/swarm_util"
 
-local SHOW_DEBUG = false
+local SHOW_DEBUG = true
 local set_debug_categories = false
---local debug_categories = CreateEnum("LIMIT_", "LIMIT_")
+local debug_categories = CreateEnum("LIMIT_Maxes_PlayerSpeed", "LIMIT_Maxes_OOB", "LIMIT_OverSpeed", "LIMIT_OOB", "LIMIT_DragOrthVelocity")
 
 --TODO: instead of spherical boundary, make an ellipsoid
 --  Main boundary check should stay a sphere.  Just apply a ceiling/floor when in bounds (either ellipsoid, or just a larger sphere with offset centerpoint)
@@ -83,10 +83,16 @@ function this.GetMaxes_ByPlayerSpeed(props, limits)
     local vel = props.o:Custom_CurrentlyFlying_GetVelocity(props.o.vel)       -- a mod could be flying, so use that velocity else the velocity known by the game
     local speed = GetVectorLength(vel)
 
-    return
-        limits.max_accel * swarm_util.ApplyPropertyMult(limits.max_by_playerspeed.accel, speed),
-        limits.max_dist_player * swarm_util.ApplyPropertyMult(limits.max_by_playerspeed.dist, speed),
-        limits.max_speed * swarm_util.ApplyPropertyMult(limits.max_by_playerspeed.speed, speed)
+    local max_accel = limits.max_accel * swarm_util.ApplyPropertyMult(limits.max_by_playerspeed.accel, speed)
+    local max_dist = limits.max_dist_player * swarm_util.ApplyPropertyMult(limits.max_by_playerspeed.dist, speed)
+    local max_speed = limits.max_speed * swarm_util.ApplyPropertyMult(limits.max_by_playerspeed.speed, speed)
+
+    if SHOW_DEBUG then
+        local report = "maxes player speed: " .. tostring(Round(speed, 1)) .. "\r\naccel: " .. tostring(Round(max_accel, 1)) .. "\r\ndist: " .. tostring(Round(max_dist, 1)) .. "\r\nspeed: " .. tostring(Round(max_speed, 1))
+        debug_render_screen.Add_Text2D(nil, nil, report, debug_categories.LIMIT_Maxes_PlayerSpeed)
+    end
+
+    return max_accel, max_dist, max_speed
 end
 
 -- When the orb is too far from the player, this helps it get back easier by increasing its abilities
@@ -97,15 +103,26 @@ function this.GetMaxes_ByDistToPlayer(limits, dist_to_player, max_accel, max_dis
 
     local amount_over = (dist_to_player - max_dist) / max_dist
 
-    return
-        max_accel * swarm_util.ApplyPropertyMult(limits.max_by_distfromplayer.accel, amount_over),
-        max_speed * swarm_util.ApplyPropertyMult(limits.max_by_distfromplayer.max_speed, amount_over)
+    max_accel = max_accel * swarm_util.ApplyPropertyMult(limits.max_by_distfromplayer.accel, amount_over)
+    max_speed = max_speed * swarm_util.ApplyPropertyMult(limits.max_by_distfromplayer.max_speed, amount_over)
+
+    if SHOW_DEBUG then
+        local report = "maxes oob dist: " .. tostring(Round(dist_to_player, 0)) .. "\r\namount_over: " .. tostring(Round(amount_over, 1)) .. "\r\nmax_accel: " .. tostring(Round(max_accel, 1)) .. "\r\nmax_speed: " .. tostring(Round(max_speed, 1))
+        debug_render_screen.Add_Text2D(nil, nil, report, debug_categories.LIMIT_Maxes_OOB)
+    end
+
+    return max_accel, max_speed
 end
 
 function this.Drag_Overspeed(property_mult, max_accel, rel_vel, rel_speed, overspeed_mult)
     local maxaccel_percent = swarm_util.ApplyPropertyMult(property_mult, overspeed_mult)
 
     local accel = max_accel * maxaccel_percent
+
+    if SHOW_DEBUG then
+        local report = "over speed: " .. tostring(Round(rel_speed, 1)) .. "\r\noverspeed_mult: " .. tostring(Round(overspeed_mult, 2)) .. "\r\nmaxaccel_percent: " .. tostring(Round(maxaccel_percent, 2)) .. "\r\naccel: " .. tostring(Round(accel, 1))
+        debug_render_screen.Add_Text2D(nil, nil, report, debug_categories.LIMIT_OverSpeed)
+    end
 
     return
         (rel_vel.x / rel_speed) * -accel,       -- negative accel, because it's a drag
@@ -119,6 +136,11 @@ function this.OutOfBounds_Accel(outofbounds_accel, to_player, dist_to_player, ma
     local maxaccel_percent = swarm_util.ApplyPropertyMult(outofbounds_accel, overdist_percent)
 
     local accel = max_accel * maxaccel_percent
+
+    if SHOW_DEBUG then
+        local report = "oob dist: " .. tostring(Round(dist_to_player, 0)) .. "\r\noverdist_percent: " .. tostring(Round(overdist_percent, 2)) .. "\r\nmaxaccel_percent: " .. tostring(Round(maxaccel_percent, 2)) .. "\r\naccel: " .. tostring(Round(accel, 1))
+        debug_render_screen.Add_Text2D(nil, nil, report, debug_categories.LIMIT_OOB)
+    end
 
     return
         (to_player.x / dist_to_player) * accel,
@@ -146,6 +168,11 @@ function this.Drag_OutOfBounds_OrthVelocity(drag_outofbounds_orthvelocity, to_pl
 
     local accel = max_accel * maxaccel_percent
 
+    if SHOW_DEBUG then
+        local report = "orthvel orth_speed: " .. tostring(Round(orth_speed, 1)) .. "\r\nspeed_percent: " .. tostring(Round(speed_percent, 2)) .. "\r\nmaxaccel_percent: " .. tostring(Round(maxaccel_percent, 2)) .. "\r\naccel: " .. tostring(Round(accel, 1))
+        debug_render_screen.Add_Text2D(nil, nil, report, debug_categories.LIMIT_DragOrthVelocity)
+    end
+
     return
         (orth_vel.x / orth_speed) * -accel,
         (orth_vel.y / orth_speed) * -accel,
@@ -157,13 +184,12 @@ function this.EnsureDebugCategoriesSet()
         do return end
     end
 
-    -- debug_render_screen.DefineCategory(debug_categories_ORIG.LIMIT_MaxesBySpeed, "BB66532C", "FFF", nil, true, nil, nil, 0.2, 0.3)
-    -- debug_render_screen.DefineCategory(debug_categories_ORIG.LIMIT_MaxSpeedByDist, "B96B6A2B", "FFF", nil, true, nil, nil, 0.2, 0.35)
+    debug_render_screen.DefineCategory(debug_categories.LIMIT_Maxes_PlayerSpeed, "BB66532C", "FFF", nil, true, nil, nil, 0.2, 0.2)
+    debug_render_screen.DefineCategory(debug_categories.LIMIT_Maxes_OOB, "B96B6A2B", "FFF", nil, true, nil, nil, 0.2, 0.3)
 
-    -- debug_render_screen.DefineCategory(debug_categories_ORIG.LIMIT_OutOfBounds_SpeedingAway, "B841355E", "FFF", nil, true, nil, nil, 0.2, 0.4)
-    -- debug_render_screen.DefineCategory(debug_categories_ORIG.LIMIT_OutOfBounds, "B84B194B", "FFF", nil, true, nil, nil, 0.2, 0.45)
-    -- debug_render_screen.DefineCategory(debug_categories_ORIG.LIMIT_OverSpeed, "B85A1826", "FFF", nil, true, nil, nil, 0.2, 0.5)
-    -- debug_render_screen.DefineCategory(debug_categories_ORIG.LIMIT_DragOrthVelocity, "B89E2E1F", "FFF", nil, true, nil, nil, 0.2, 0.55)
+    debug_render_screen.DefineCategory(debug_categories.LIMIT_OverSpeed, "B841355E", "FFF", nil, true, nil, nil, 0.2, 0.4)
+    debug_render_screen.DefineCategory(debug_categories.LIMIT_OOB, "B84B194B", "FFF", nil, true, nil, nil, 0.2, 0.5)
+    debug_render_screen.DefineCategory(debug_categories.LIMIT_DragOrthVelocity, "B85A1826", "FFF", nil, true, nil, nil, 0.2, 0.6)
 
     set_debug_categories = true
 end

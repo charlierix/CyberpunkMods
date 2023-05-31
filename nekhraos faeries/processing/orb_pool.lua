@@ -90,10 +90,14 @@ function OrbPool.FindNearby_Cone(center, radius, look_dir_unit, min_dot, exclude
 end
 
 function OrbPool.TEST_OverwriteConfigs_FromJSON()
+    local limits = settings_util.Limits()
     local neighbors = settings_util.Neighbors()
 
     for i = 1, orbs:GetCount(), 1 do
         local item = orbs:GetItem(i)
+
+        item.orb.limits = limits
+        item.orb.swarm.limits = limits
 
         item.orb.neighbors = neighbors
         item.orb.swarm.neighbors = neighbors
@@ -120,7 +124,7 @@ function this.DebugSummary()
         do return end
     end
 
-    local report = "dist\tspeed"
+    local report = "dist\tspd\trspd"
 
     for i = 1, count, 1 do
         report = report .. "\r\n"
@@ -128,9 +132,13 @@ function this.DebugSummary()
         local orb = orbs:GetItem(i).orb
 
         local distance = math.sqrt(GetVectorDiffLengthSqr(orb.props.o.pos, orb.props.pos))
-        local speed = GetVectorLength(SubtractVectors(orb.props.vel, orb.props.o.vel))
 
-        report = report .. tostring(Round(distance, 1)) .. "\t" .. tostring(Round(speed, 1))
+        local speed = GetVectorLength(orb.props.vel)
+
+        local vel = orb.props.o:Custom_CurrentlyFlying_GetVelocity(orb.props.o.vel)
+        local rel_speed = GetVectorLength(SubtractVectors(orb.props.vel, vel))
+
+        report = report .. tostring(Round(distance, 0)) .. "\t" .. tostring(Round(speed, 0)) .. "\t" .. tostring(Round(rel_speed, 0))
     end
 
     debug_render_screen.Add_Text2D(0.95, 0.5, report, nil, "89081729", "FFF", nil, true)
