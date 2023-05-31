@@ -41,23 +41,6 @@ public record swarmbot_limits
     // Output: % of max accel
     //          acceleration will be opposite of the perpendicular component of orb's velocity
     public property_mult drag_outofbounds_orthvelocity { get; init; }
-
-
-
-    // ------------------------------ corrective props ORIG ------------------------------
-
-    public float boundary_percent_start { get; init; }
-    public float speed_percent_start { get; init; }
-
-    public swarmbot_limits_maxbyspeed maxbyspeed { get; init; }
-    public swarmbot_limits_maxbydist maxbydist { get; init; }
-
-    //TODO: probably don't need speeding away have different mults from other.  Just have an extra drag apply when out of bounds and speeding away
-    public swarmbot_limits_outofbounds_speedingaway outofbounds_speedingaway { get; init; }
-    public swarmbot_limits_outofbounds outofbounds { get; init; }
-    public swarmbot_limits_overspeed overspeed { get; init; }
-
-    public swarmbot_limits_dragorthvelocity dragorthvelocity { get; init; }
 }
 
 public record swarmbot_limits_maxby_playerspeed
@@ -86,48 +69,4 @@ public record swarmbot_limits_maxby_distfromplayer
     // Input: (distance from player - max_dist_player) / max_dist_player
     // Output: % of orb's max speed
     public property_mult max_speed { get; init; }
-}
-
-
-
-
-
-
-
-
-// ------------------------------------ ORIG ------------------------------------
-
-public record swarmbot_limits_maxbyspeed
-{
-    public float percent_start { get; init; }
-
-    public property_mult_ORIG speed_mult { get; init; }
-
-    public property_mult_ORIG dist_mult { get; init; }
-}
-
-public record swarmbot_limits_maxbydist
-{
-    public property_mult_ORIG speed_mult { get; init; }
-}
-
-public record swarmbot_limits_outofbounds_speedingaway
-{
-    public property_mult_ORIG accel_mult_speed { get; init; }
-    public property_mult_ORIG accel_mult_bounds { get; init; }
-}
-
-public record swarmbot_limits_outofbounds
-{
-    public property_mult_ORIG accel_mult { get; init; }
-}
-
-public record swarmbot_limits_overspeed
-{
-    public property_mult_ORIG accel_mult { get; init; }
-}
-
-public record swarmbot_limits_dragorthvelocity
-{
-    public property_mult_ORIG accel_mult { get; init; }
 }

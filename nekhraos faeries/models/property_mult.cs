@@ -1,15 +1,3 @@
-//TODO: get rid of this, replace with the improved version below
-public record property_mult_ORIG
-{
-    public float rate { get; init; }
-
-    public float cap_min { get; init; }
-    public float cap_max { get; init; }
-}
-
-
-
-
 public record property_mult
 {
     // If populated, then it's always this value, regardless of input

@@ -2,13 +2,6 @@ local Swarm_Util = {}
 
 local this = {}
 
-function Swarm_Util.ApplyPropertyMult_ORIG(property_mult_ORIG, percent)
-    local retVal = percent * property_mult_ORIG.rate
-    retVal = Clamp(property_mult_ORIG.cap_min, property_mult_ORIG.cap_max, retVal)
-
-    return retVal
-end
-
 --Takes in a property_mult class and either returns the constant value, or gets the input and runs it through the animation curve
 --NOTE: This will create an animation curve instance the first time it's needed.  It's expected that the gradient values never change
 --  property_mult: (defined in models)
