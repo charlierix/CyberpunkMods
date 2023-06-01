@@ -213,7 +213,6 @@ registerHotkey("NekhraosFaeries_ScanAllObjecs", "Scan All Objects", function()
         print("nothing found")
     end
 end)
-
 registerHotkey("NekhraosFaeries_ScanHarvestableObjecs", "Scan Harvestable Objects", function()
     local found, entities = prototype_scanning.GetAllObjects()
 
@@ -229,7 +228,6 @@ registerHotkey("NekhraosFaeries_ScanHarvestableObjecs", "Scan Harvestable Object
 
     print("found count: " .. tostring(count))
 end)
-
 registerHotkey("NekhraosFaeries_ClearVisuals", "Clear Visuals", function()
     debug_render_screen.Clear()
 end)

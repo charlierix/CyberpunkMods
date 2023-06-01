@@ -2,7 +2,7 @@
     "min_speed": 1,
     "max_speed": 6,
 
-    "max_dist_player": 12,
+    "max_dist_center": 12,
 
     "max_accel": 3,
 
@@ -47,7 +47,7 @@
         }
     },
 
-    "max_by_distfromplayer":
+    "max_by_distfromcenter":
     {
         "accel":
         {

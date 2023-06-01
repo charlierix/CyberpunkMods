@@ -10,8 +10,8 @@
 		{
 			"animcurve_values":
 			[
-				{ "input": 0, "output": 0.4 },
-				{ "input": 1, "output": 0.75 },
+				{ "input": 0, "output": 0.7 },
+				{ "input": 1, "output": 0.85 },
 				{ "input": 8, "output": 0.2 }
             ]
 		},
@@ -21,9 +21,9 @@
 			"animcurve_values":
 			[
 				{ "input": 0, "output": 0 },
-				{ "input": 1, "output": 0.75 },
-				{ "input": 2, "output": 1 },
-				{ "input": 4, "output": 1.1 }
+				{ "input": 1, "output": 0.45 },
+				{ "input": 2, "output": 0.55 },
+				{ "input": 4, "output": 0.6 }
             ]
 		},
 		"align_flock_velocity_distance":

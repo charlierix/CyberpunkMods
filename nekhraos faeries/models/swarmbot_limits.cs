@@ -5,14 +5,14 @@ public record swarmbot_limits
     public float min_speed { get; init; }
     public float max_speed { get; init; }
 
-    public float max_dist_player { get; init; }
+    public float max_dist_center { get; init; }
 
     public float max_accel { get; init; }
 
     // ---------- corrective props ----------
 
     public swarmbot_limits_maxby_playerspeed max_by_playerspeed { get; init; }
-    public swarmbot_limits_maxby_distfromplayer max_by_distfromplayer { get; init; }
+    public swarmbot_limits_maxby_distfromcenter max_by_distfromcenter { get; init; }
 
     // Input: (speed - max_speed) / max_speed
     // Output: % of max accel to apply against the direction of current velocity
@@ -29,7 +29,7 @@ public record swarmbot_limits
     // Output: % of max accel to apply against the direction of current velocity
     public property_mult drag_outofbounds_overspeed_velaway { get; init; }
 
-    // Input: (dist - max_dist_player) / max_dist_player
+    // Input: (dist - max_dist_center) / max_dist_center
     // Output: accel toward player
     public property_mult outofbounds_accel { get; init; }
 
@@ -58,15 +58,15 @@ public record swarmbot_limits_maxby_playerspeed
     public property_mult speed { get; init; }
 }
 
-public record swarmbot_limits_maxby_distfromplayer
+public record swarmbot_limits_maxby_distfromcenter
 {
-    // These don't kick in until the orb is past max_dist_player.  So an input of zero is at max_dist_player
+    // These don't kick in until the orb is past max_dist_center.  So an input of zero is at max_dist_center
 
-    // Input: (distance from player - max_dist_player) / max_dist_player
+    // Input: (distance from player - max_dist_center) / max_dist_center
     // Output: % of max accel
     public property_mult accel { get; init; }
 
-    // Input: (distance from player - max_dist_player) / max_dist_player
+    // Input: (distance from player - max_dist_center) / max_dist_center
     // Output: % of orb's max speed
     public property_mult max_speed { get; init; }
 }
