@@ -125,11 +125,21 @@ function PrototypeScanning.DebugVisual_Entity(entity)
         report = report .. "\r\nExplosive"
         color = "0FF"
 
-    elseif entity:IsContainer() then
-        report = report .. "\r\nContainer"
-        if name == "gameItemDropObject" then
-            report = report .. "\r\nDropped Item?"      -- maybe it's only a container if it can take a scope or other upgrade
+    elseif name == "LootContainerObjectAnimatedByTransform" then
+        --report = report .. "\r\nDeterminGameplayRole: " .. tostring(entity:DeterminGameplayRole())        -- these two are no different between containers that look like bodies and other containers
+        --report = report .. "\r\nGetCurrentOutline: " .. tostring(entity:GetCurrentOutline())
+
+        report = report .. "\r\nIsContainer: " .. tostring(entity:IsContainer())        -- I think this is true when it holds stuff, false when it's empty
+
+        local appearance = Game.NameToString(entity:GetCurrentAppearanceName())
+
+
+        if appearance:find("_corpse") then
+            report = report .. "\r\nCORPSE CONTAINER!!!"
+        else
+            report = report .. "\r\nGetCurrentAppearanceName: " .. appearance
         end
+
         color = "FF0"
 
     elseif entity:IsDevice() then
@@ -143,6 +153,36 @@ function PrototypeScanning.DebugVisual_Entity(entity)
 
     debug_render_screen.Add_Dot(pos, nil, color)
     debug_render_screen.Add_Text(Vector4.new(pos.x, pos.y, pos.z - 0.5, 1), report, nil, "6222", "FFF")
+end
+
+function PrototypeScanning.DebugVisual_Entity_Harvestable(entity)
+    local pos = entity:GetWorldPosition()
+
+    local report = nil
+    local color = nil
+
+    if entity:IsNPC() then
+        if entity:IsDead() then
+            report = "dead"
+            color = "F00"
+
+        elseif entity:IsDefeated() then
+            report = "defeated"
+            color = "F66"
+        end
+
+    --elseif Game.NameToString(entity:GetClassName()) == "LootContainerObjectAnimatedByTransform" and Game.NameToString(entity:GetCurrentAppearanceName()):find("_corpse") then     -- sometimes it's gameObject
+    elseif Game.NameToString(entity:GetCurrentAppearanceName()):find("_corpse") then
+        report = "corpse container"
+        color = "FF0"
+    end
+
+    if report then
+        debug_render_screen.Add_Dot(pos, nil, color)
+        debug_render_screen.Add_Text(Vector4.new(pos.x, pos.y, pos.z - 0.5, 1), report, nil, "6222", "FFF")
+    end
+
+    return report ~= nil
 end
 
 ----------------------------------- Private Methods -----------------------------------

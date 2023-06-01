@@ -35,7 +35,7 @@ function this.TryStartHarvesting(o, keys, map, scanner_player)
     --TODO: also look for defeated.  Defeated should take some time to kill, then raise, but should become a higher quality orb
 
     scanner_player:EnsureScanned()
-    local bodies = map:GetNearby(o.pos, RADIUS, true, false, false)
+    local bodies = map:GetNearby(o.pos, RADIUS, true, true, true, false)
     if #bodies == 0 then
         do return end
     end
@@ -100,7 +100,7 @@ end
 
 function this.FinishHarvest(o, map, scanner_player)
     scanner_player:EnsureScanned()
-    local bodies = map:GetNearby(o.pos, RADIUS, true, false, false)
+    local bodies = map:GetNearby(o.pos, RADIUS, true, true, true, false)
 
     local count = 0
 
@@ -122,7 +122,7 @@ function this.FinishHarvest(o, map, scanner_player)
         end
 
         -- either way, remove from the map
-        map:Remove_NPC_Dead(body.id_hash)
+        map:Remove(body)
     end
 
     is_harvesting = false

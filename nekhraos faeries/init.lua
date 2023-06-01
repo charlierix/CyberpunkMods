@@ -63,6 +63,8 @@ local this = {}
 
 local const =
 {
+    map_body_type = CreateEnum("CorpseContainer", "NPC_Dead", "NPC_Defeated", "NPC_Alive"),
+
     shouldShowScreenDebug = true,      -- draws debug info in game
     shouldShowDebugWindow = false,      -- shows a window with extra debug info
 }
@@ -144,7 +146,7 @@ registerForEvent("onInit", function()
 
     o = GameObjectAccessor:new(wrappers)
     keys = Keys:new(o)
-    map = Map:new(o)
+    map = Map:new(o, const)
     scanner_player = Scanner_Player:new(o, map)
     scanner_orbs = Scanner_Orbs:new(o, map)
 
@@ -211,6 +213,23 @@ registerHotkey("NekhraosFaeries_ScanAllObjecs", "Scan All Objects", function()
         print("nothing found")
     end
 end)
+
+registerHotkey("NekhraosFaeries_ScanHarvestableObjecs", "Scan Harvestable Objects", function()
+    local found, entities = prototype_scanning.GetAllObjects()
+
+    local count = 0
+
+    if found and entities then
+        for _, entity in ipairs(entities) do
+            if prototype_scanning.DebugVisual_Entity_Harvestable(entity) then
+                count = count + 1
+            end
+        end
+    end
+
+    print("found count: " .. tostring(count))
+end)
+
 registerHotkey("NekhraosFaeries_ClearVisuals", "Clear Visuals", function()
     debug_render_screen.Clear()
 end)

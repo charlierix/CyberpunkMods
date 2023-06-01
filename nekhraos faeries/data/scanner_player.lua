@@ -15,20 +15,24 @@ end
 
 -- Instead of using the player's eyes, make a gameobject and put it above the player.  If there's a low ceiling, just swivel it around
 
-
-
--- Since this is only used when harvesting bodies, only look for dead bodies
-
 function Scanner_Player:EnsureScanned()
     local searchQuery = TSQ_ALL()
     searchQuery.maxDistance = 4
-    searchQuery.searchFilter = TSF_And(TSF_All(TSFMV.Obj_Puppet), TSF_Not(TSFMV.Obj_Player), TSF_Not(TSFMV.St_Alive))       -- only dead
 
     local found, entities = self.o:GetTargetEntities(searchQuery)
     if found then
         for _, entity in ipairs(entities) do
-            if entity:IsNPC() and entity:IsDead() then      -- the query filter should have handled this, just making sure
-                self.map:Add_NPC_Dead(entity:GetEntityID(), entity:GetWorldPosition(), entity:GetAffiliation(), entity:GetTotalFrameWoundsDamage())
+            if entity:IsNPC() then
+                if entity:IsDead() then
+                    self.map:Add_NPC_Dead(entity:GetEntityID(), entity:GetWorldPosition(), entity:GetAffiliation(), entity:GetTotalFrameWoundsDamage())
+
+                elseif entity:IsDefeated() then
+                    self.map:Add_NPC_Defeated(entity:GetEntityID(), entity:GetWorldPosition(), entity:GetAffiliation())
+                end
+
+            --elseif Game.NameToString(entity:GetClassName()) == "LootContainerObjectAnimatedByTransform" and Game.NameToString(entity:GetCurrentAppearanceName()):find("_corpse") then
+            elseif Game.NameToString(entity:GetCurrentAppearanceName()):find("_corpse") then        -- sometimes it's a gameObject
+                self.map:Add_Corpse_Container(entity:GetEntityID(), entity:GetWorldPosition())
             end
         end
     end
