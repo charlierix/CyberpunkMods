@@ -28,8 +28,10 @@ require "core/util"
 
 entity_helper = require "data/entity_helper"
 require "data/map"
+qual_vect = require "data/qualifier_vector"
 require "data/scanner_orbs"
 require "data/scanner_player"
+scanner_util = require "data/scanner_util"
 settings_util = require "data/settings_util"
 
 require "debug/debug_code"
@@ -147,8 +149,8 @@ registerForEvent("onInit", function()
     o = GameObjectAccessor:new(wrappers)
     keys = Keys:new(o)
     map = Map:new(o, const)
-    scanner_player = Scanner_Player:new(o, map)
-    scanner_orbs = Scanner_Orbs:new(o, map)
+    scanner_player = Scanner_Player:new(o, map, const)
+    scanner_orbs = Scanner_Orbs:new(o, map, const)
 
     this.SetupDebugCategories()
 end)
@@ -227,6 +229,15 @@ registerHotkey("NekhraosFaeries_ScanHarvestableObjecs", "Scan Harvestable Object
     end
 
     print("found count: " .. tostring(count))
+end)
+registerHotkey("NekhraosFaeries_ScanIntoMap", "Scan Into Map", function()
+    local found, entities = prototype_scanning.GetAllObjects()
+
+    if found and entities then
+        for _, entity in ipairs(entities) do
+            scanner_util.AddToMap(map, entity, const)
+        end
+    end
 end)
 registerHotkey("NekhraosFaeries_ClearVisuals", "Clear Visuals", function()
     debug_render_screen.Clear()

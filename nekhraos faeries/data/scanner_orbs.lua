@@ -1,12 +1,13 @@
 Scanner_Orbs = {}
 
-function Scanner_Orbs:new(o, map)
+function Scanner_Orbs:new(o, map, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
     obj.o = o
     obj.map = map
+    obj.const = const
 
     return obj
 end

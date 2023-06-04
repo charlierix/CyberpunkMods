@@ -1,0 +1,40 @@
+---------------- Spirit Mech ----------------
+Happens in an open area when there are a lot of hostiles
+
+Picks the player up and the player sort of drifts and flies around
+
+If melee, the player will blink to the next enemy as they swing
+
+Heavy health regen
+
+
+
+---------------- Demon Child ----------------
+Spawns a child.  The child will just wander around on their own
+
+Have some fx spewing off the child
+
+The child will act like a totem with areas of effect
+    lightning
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,12 +1,13 @@
 Scanner_Player = {}
 
-function Scanner_Player:new(o, map)
+function Scanner_Player:new(o, map, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
     obj.o = o
     obj.map = map
+    obj.const = const
 
     return obj
 end
@@ -22,18 +23,7 @@ function Scanner_Player:EnsureScanned()
     local found, entities = self.o:GetTargetEntities(searchQuery)
     if found then
         for _, entity in ipairs(entities) do
-            if entity:IsNPC() then
-                if entity:IsDead() then
-                    self.map:Add_NPC_Dead(entity:GetEntityID(), entity:GetWorldPosition(), entity:GetAffiliation(), entity:GetTotalFrameWoundsDamage())
-
-                elseif entity:IsDefeated() then
-                    self.map:Add_NPC_Defeated(entity:GetEntityID(), entity:GetWorldPosition(), entity:GetAffiliation())
-                end
-
-            --elseif Game.NameToString(entity:GetClassName()) == "LootContainerObjectAnimatedByTransform" and Game.NameToString(entity:GetCurrentAppearanceName()):find("_corpse") then
-            elseif Game.NameToString(entity:GetCurrentAppearanceName()):find("_corpse") then        -- sometimes it's a gameObject, most times it's LootContainerObjectAnimatedByTransform.  Just use entity:IsContainer() to see if it's holding anything
-                self.map:Add_Corpse_Container(entity:GetEntityID(), entity:GetWorldPosition())
-            end
+            scanner_util.AddToMap(self.map, entity, self.const)
         end
     end
 end

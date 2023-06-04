@@ -60,6 +60,23 @@ function GetVectorLength2D(x, y)
     return math.sqrt((x * x) + (y * y))
 end
 
+function GetVectorLengthNDSqr(vector)
+    if not vector then
+        return 0
+    end
+
+    local len_sqr = 0
+
+    for _, axis in ipairs(vector) do
+        len_sqr = len_sqr + (axis * axis)
+    end
+
+    return len_sqr
+end
+function GetVectorLengthND(vector)
+    return math.sqrt(GetVectorLengthNDSqr(vector))
+end
+
 ---------------------------------------- Misc -----------------------------------------
 
 function DotProduct2D(x1, y1, x2, y2)
@@ -68,6 +85,18 @@ end
 
 function DotProduct3D(v1, v2)
     return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z)
+end
+
+function DotProductND(v1, v2)
+    local retVal = 0
+
+    local count = math.min(#v1, #v2)
+
+    for i = 1, count, 1 do
+        retVal = retVal + (v1[i] * v2[i])
+    end
+
+    return retVal
 end
 
 -- This only needs to return a scalar, because 2D cross product is always along z
@@ -257,6 +286,24 @@ function ToUnit(vector)
     else
         return Vector4.new(vector.x / length, vector.y / length, vector.z / length, 1)
     end
+end
+
+function ToUnit_ND(vector)
+    local length_sqr = GetVectorLengthNDSqr(vector)
+
+    if IsNearZero(length_sqr) or IsNearValue(length_sqr, 1) then
+        return vector
+    end
+
+    local retVal = {}
+
+    local length = math.sqrt(length_sqr)
+
+    for index, value in ipairs(vector) do
+        retVal[index] = value / length
+    end
+
+    return retVal
 end
 
 -- This converts the vector into a unit vector (or leaves it zero length if zero length)

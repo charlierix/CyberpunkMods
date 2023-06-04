@@ -1,14 +1,6 @@
-public record map_body
+public record map_body : map_base_object
 {
     public map_body_type body_type { get; init; }
-
-    // Can be passed to Game.FindEntityByID()
-    public entEntityID entityID { get; init; }
-
-    // A string of the entityID.hash
-    public string id_hash { get; init; }
-
-    public Vector4 pos { get; init; }
 
     // Can't find a list of values, probably just have to wander around and log distinct values
     public string affiliation { get; init; }
