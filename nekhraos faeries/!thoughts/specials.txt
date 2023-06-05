@@ -20,9 +20,12 @@ The child will act like a totem with areas of effect
 
 
 
+---------------- Super Ball ----------------
+Bounce around, doing damage on impact
 
+Don't make reflections super realistic.  Reflect perpendicular to look direction?
 
-
+Mario style destruction, mixed with pinball
 
 
 

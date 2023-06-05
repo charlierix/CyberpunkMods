@@ -194,6 +194,22 @@ function Map:GetNearby_Body(pos, radius, include_corpse_container, include_dead,
     return retVal
 end
 
+function Map:GetNearby_ObjectiveItems(pos, radius)
+    local radius_sqr = radius * radius
+
+    local retVal = {}
+
+    for i = 1, self.objectives:GetCount(), 1 do
+        local item = self.objectives:GetItem(i)
+
+        if GetVectorDiffLengthSqr(item.pos, pos) <= radius_sqr then
+            table.insert(retVal, item)
+        end
+    end
+
+    return retVal
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.RefreshOrCreateItem(list, timer, entityID, pos)
@@ -251,7 +267,17 @@ function this.RemoveObjectiveItem(list, item)
         local objective_item = list:GetItem(i)
 
         if objective_item.base_object.id_hash == item.id_hash then
+            -- Break references (need to do this explicitly, since it's a stickylist, which reuses removed items)
+            objective_item.base_object = nil
+            objective_item.body = nil
+            objective_item.container = nil
+            objective_item.device = nil
+            objective_item.loot = nil
+
+            item.objective_item = nil
+
             list:RemoveItem(i)
+            do return end
         end
     end
 end
@@ -265,7 +291,11 @@ function this.Update_ObjectiveItem(objectives, qualifier_unit, item_base, body, 
 
     local objective_item = objectives:GetNewItem()
     objective_item.pos = item_base.pos
-    objective_item = qualifier_unit
+    objective_item.qualifier_unit = qualifier_unit
+
+    --NOTE: these links are set to nil in RemoveObjectiveItem
+
+    objective_item.base_object = item_base
 
     objective_item.body = body
     objective_item.container = container
@@ -300,9 +330,16 @@ function this.DebugTick_Body(bodies)
         local item = bodies:GetItem(i)
 
         local report = item.body_type
+        if item.affiliation then
+            report = report .. "\r\n" .. item.affiliation
+        end
 
         debug_render_screen.Add_Dot(item.pos, nil, "4F4", nil, true)
         debug_render_screen.Add_Text(Vector4.new(item.pos.x, item.pos.y, item.pos.z - 0.5, 1), report, nil, "6222", "FFF", nil, true)
+
+        if not item.objective_item then
+            print("this.DebugTick_Body | item.objective_item is nil | " .. report)
+        end
     end
 end
 function this.DebugTick_Other(list, description)
@@ -311,5 +348,9 @@ function this.DebugTick_Other(list, description)
 
         debug_render_screen.Add_Dot(item.pos, nil, "DD4", nil, true)
         debug_render_screen.Add_Text(Vector4.new(item.pos.x, item.pos.y, item.pos.z - 0.5, 1), description, nil, "6222", "FFF", nil, true)
+
+        if not item.objective_item then
+            print("this.DebugTick_Other | item.objective_item is nil | " .. description)
+        end
     end
 end

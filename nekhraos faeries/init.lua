@@ -188,7 +188,7 @@ registerForEvent("onUpdate", function(deltaTime)
         keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
     end
 
-    orb_pool.Tick(o, deltaTime)
+    orb_pool.Tick(o, scanner_orbs, deltaTime)
 
     debug_render_screen.CallFrom_onUpdate(deltaTime)
 end)
@@ -249,7 +249,7 @@ registerHotkey("NekhraosFaeries_SpawnOrb", "Spawn Orb", function()
 
     pos = AddVectors(pos, MultiplyVector(look_dir, 2))
 
-    orb_pool.Add({ pos = pos }, o)
+    orb_pool.Add({ pos = pos }, o, Vector4.new(0, 0, 0, 1), map)
 end)
 registerHotkey("NekhraosFaeries_ClearOrbs", "Clear Orbs", function()
     orb_pool.Clear()

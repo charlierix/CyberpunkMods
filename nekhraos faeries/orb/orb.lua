@@ -3,7 +3,7 @@ Orb = {}
 local next_token = 0
 
 -- velocity is optional
-function Orb:new(o, pos, vel)
+function Orb:new(o, pos, vel, map)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -25,7 +25,7 @@ function Orb:new(o, pos, vel)
     obj.limits = settings_util.Limits()
     obj.neighbors = settings_util.Neighbors()
 
-    obj.ai = Orb_AI:new(obj.props)
+    obj.ai = Orb_AI:new(obj.props, map)
     obj.audiovisual = Orb_AudioVisual:new(obj.props)
     obj.swarm = Orb_Swarm:new(obj.props, obj.limits, obj.neighbors)
 

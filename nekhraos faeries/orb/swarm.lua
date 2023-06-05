@@ -54,8 +54,8 @@ function Orb_Swarm:Tick(deltaTime)
     --     log:DefineCategory("orb", "0F4")
     -- end
 
-
     local vel = self.props.o:Custom_CurrentlyFlying_GetVelocity(self.props.o.vel)
+
     local rel_vel = SubtractVectors(self.props.vel, vel)
     local rel_speed_sqr = GetVectorLengthSqr(rel_vel)
 

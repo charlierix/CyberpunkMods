@@ -2,16 +2,22 @@ local OrbPool = {}
 
 local this = {}
 
+local SCAN_DURATION = 1.5
+
+local next_scan_time = 0
+
 -- Each item has these props:
 --  orb     instance of orb
 local orbs = StickyList:new()
 
-function OrbPool.Tick(o, deltaTime)
+function OrbPool.Tick(o, scanner_orbs, deltaTime)
     if orbs:GetCount() == 0 then
         do return end
     end
 
     local eye_pos, look_dir = o:GetCrosshairInfo()
+
+    this.EnsureScanned(o, scanner_orbs)
 
     local index = 1
 
@@ -34,9 +40,9 @@ function OrbPool.Tick(o, deltaTime)
 end
 
 -- Adds an orb based on the body definition (velocity is optional)
-function OrbPool.Add(body_def, o, vel)
+function OrbPool.Add(body_def, o, vel, map)
     local item = orbs:GetNewItem()
-    item.orb = Orb:new(o, body_def.pos, vel)
+    item.orb = Orb:new(o, body_def.pos, vel, map)
 end
 
 function OrbPool.Clear()
@@ -104,8 +110,8 @@ function OrbPool.TEST_OverwriteConfigs_FromJSON()
     end
 end
 
-function OrbPool.TEST_CompareNeighbors(o)
-    local orb = Orb:new(o, Vector4.new(0, 0, 0, 1))
+function OrbPool.TEST_CompareNeighbors(o, map)
+    local orb = Orb:new(o, Vector4.new(0, 0, 0, 1), Vector4.new(0, 0, 0, 1), map)
 
     print("-------------- orb.neighbors --------------")
     ReportTable(orb.neighbors)
@@ -160,6 +166,17 @@ function this.FindNearby_Add(retVal, orb, dist_sqr)
     end
 
     table.insert(retVal, new_item)
+end
+
+function this.EnsureScanned(o, scanner_orbs)
+    if o.timer < next_scan_time then
+        do return end
+    end
+
+    next_scan_time = o.timer + GetScaledValue(SCAN_DURATION * 0.85, SCAN_DURATION * 1.15, 0, 1, math.random())
+
+    --TODO: pick a random orb and scan from it's perspective
+    scanner_orbs:Scan_FromPlayersPerspective()
 end
 
 return OrbPool

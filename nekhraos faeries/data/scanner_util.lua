@@ -2,7 +2,7 @@ local ScannerUtil = {}
 
 function ScannerUtil.AddToMap(map, entity, const)
     if entity:IsPlayer() then
-        map:Add_NPC_Alive(entity:GetEntityID(), entity:GetWorldPosition(), entity:GetAffiliation())
+        map:Add_NPC_Alive(entity:GetEntityID(), entity:GetWorldPosition(), "Player")        -- GetAffiliation() is off of NPCPuppet, doesn't exist in PlayerPuppet
 
     elseif entity:IsNPC() then
         if entity:IsDead() then

@@ -117,7 +117,7 @@ function this.FinishHarvest(o, map, scanner_player)
 
             local vel = GetRandomVector_Cone(Vector4.new(0, 0, 1, 1), 0, 30, 0.1, 0.6)
 
-            orb_pool.Add(body, o, vel)
+            orb_pool.Add(body, o, vel, map)
             count = count + 1
         end
 
