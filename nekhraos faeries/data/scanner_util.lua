@@ -20,15 +20,14 @@ function ScannerUtil.AddToMap(map, entity, const)
         map:Add_Corpse_Container(entity:GetEntityID(), entity:GetWorldPosition())
 
     elseif entity:IsContainer() then
+        --NOTE: All loot also seem to be classified as container
         map:Add_Container(entity:GetEntityID(), entity:GetWorldPosition())
 
     elseif entity:IsDevice() then
         map:Add_Device(entity:GetEntityID(), entity:GetWorldPosition())
 
     else
-        --TODO: figure out what loot is
-        -- debug_render_screen.Add_Dot(pos, nil, color)
-        -- debug_render_screen.Add_Text(Vector4.new(pos.x, pos.y, pos.z - 0.5, 1), report, nil, "6322", "FFF")
+        --TODO: get rid of the loot category, since it seems to be container
     end
 end
 

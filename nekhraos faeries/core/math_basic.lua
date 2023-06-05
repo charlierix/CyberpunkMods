@@ -35,16 +35,30 @@ function IsNearZero(value)
     return IsNearValue(value, 0)
 end
 
-function IsNearZero_vec4(value)
-    if not value then
+function IsNearZero_vec4(vector)
+    if not vector then
         return true
     end
 
     -- Ignore w, it's always 1
     return
-        IsNearValue(value.x, 0) and
-        IsNearValue(value.y, 0) and
-        IsNearValue(value.z, 0)
+        IsNearValue(vector.x, 0) and
+        IsNearValue(vector.y, 0) and
+        IsNearValue(vector.z, 0)
+end
+
+function IsNearZero_vecnd(vector)
+    if not vector then
+        return true
+    end
+
+    for _, val in ipairs(vector) do
+        if not IsNearZero(val) then
+            return false
+        end
+    end
+
+    return true
 end
 
 --https://stackoverflow.com/questions/37753694/lua-check-if-a-number-value-is-nan

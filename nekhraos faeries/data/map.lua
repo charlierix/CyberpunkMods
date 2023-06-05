@@ -2,7 +2,7 @@ Map = {}
 
 local this = {}
 
-local SHOW_DEBUG = true
+local SHOW_DEBUG = false
 
 local STALECHECK_ALIVE = 0.1
 local STALECHECK_STATICITEM = 0.3333
@@ -119,11 +119,23 @@ function Map:Add_Container(entityID, pos)
     local item = this.RefreshOrCreateItem(self.containers, self.o.timer, entityID, pos)
 
     this.Update_ObjectiveItem(self.objectives, qual_vect.GetVector_Container(item), item, nil, item, nil, nil)
+
+    -- If a container is empty, it won't be of any interest, so there's no point in storing it
+    -- It's a bit inefficient adding then removing, but the get qualifier function needs an instance, and that's part of the add
+    if IsNearZero_vecnd(item.objective_item.qualifier_unit) then
+        self:Remove_Container(item)
+    end
 end
 function Map:Add_Device(entityID, pos)
     local item = this.RefreshOrCreateItem(self.devices, self.o.timer, entityID, pos)
 
     this.Update_ObjectiveItem(self.objectives, qual_vect.GetVector_Device(item), item, nil, nil, item, nil)
+
+    -- If a device can't be manipulated (like sound sources, walk/don't walk signs), it won't be of any interest, so there's no point in storing it
+    -- It's a bit inefficient adding then removing, but the get qualifier function needs an instance, and that's part of the add
+    if IsNearZero_vecnd(item.objective_item.qualifier_unit) then
+        self:Remove_Device(item)
+    end
 end
 function Map:Add_Loot(entityID, pos)
     local item = this.RefreshOrCreateItem(self.loot, self.o.timer, entityID, pos)
