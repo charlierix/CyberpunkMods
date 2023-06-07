@@ -71,6 +71,21 @@ function QualifierVector.GetVector_Loot(map_loot)
     return this.BuildVector(false, false, false, false, false, false, true)
 end
 
+function QualifierVector.GetVector_Random()
+    --TODO: may want to get a random vector inside sphere
+
+    return
+    {
+        math.random(),
+        math.random(),
+        math.random(),
+        math.random(),
+        math.random(),
+        math.random(),
+        math.random(),
+    }
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.BuildVector(person_friendly, person_neutral, person_enemy, person_dead, hackable, explosive, loot)

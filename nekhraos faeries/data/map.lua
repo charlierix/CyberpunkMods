@@ -206,6 +206,8 @@ function Map:GetNearby_Body(pos, radius, include_corpse_container, include_dead,
     return retVal
 end
 
+-- Returns items to be used by ai
+--  models\map_objective_item.cs
 function Map:GetNearby_ObjectiveItems(pos, radius)
     local radius_sqr = radius * radius
 

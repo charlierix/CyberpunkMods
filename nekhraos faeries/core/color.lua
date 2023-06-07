@@ -227,6 +227,24 @@ function Color_LERP(from_a, from_h, from_s, from_v, to_a, to_h, to_s, to_v, perc
         Clamp(0, 1, v)
 end
 
+function Color_LERP_Hex(from_hex, to_hex, percent)
+    --ConvertHexStringToNumbers
+    local _, _, from_a, from_r, from_g, from_b = ConvertHexStringToNumbers(from_hex)
+    local _, _, to_a, to_r, to_g, to_b = ConvertHexStringToNumbers(to_hex)
+
+    --RGB_HSV
+    local from_h, from_s, from_v = RGB_HSV(from_r, from_g, from_b)
+    local to_h, to_s, to_v = RGB_HSV(to_r, to_g, to_b)
+
+    --Color_LERP
+    local lerp_a, lerp_h, lerp_s, lerp_v = Color_LERP(from_a, from_h, from_s, from_v, to_a, to_h, to_s, to_v, percent)
+
+    --HSV_RGB
+    local lerp_r, lerp_g, lerp_b = HSV_RGB(lerp_h, lerp_s, lerp_v)
+
+    return this.RGB_Hex(lerp_a, lerp_r, lerp_g, lerp_b)
+end
+
 -- This pulls the from/to colors out of the stylesheet, then returns an intermediate color
 -- NOTE: using hsv because it makes a better transition
 function ColorLERP_FromStyleSheet(style, key_from, key_to, percent)
@@ -255,7 +273,7 @@ function GetRandomColor_RGB2_ToHex(r_min, r_max, g_min, g_max, b_min, b_max, a_m
     local g = Clamp(0, 1, g_min + ((g_max - g_min) * math.random()))
     local b = Clamp(0, 1, b_min + ((b_max - b_min) * math.random()))
 
-    return string.upper(this.ByteToHex(a * 255) .. this.ByteToHex(r * 255) .. this.ByteToHex(g * 255) .. this.ByteToHex(b * 255))
+    return this.RGB_Hex(a, r, g, b)
 end
 function GetRandomColor_HSV_ToHex(h_min, h_max, s_min, s_max, v_min, v_max, a_min, a_max)
     local a = 1
@@ -269,7 +287,7 @@ function GetRandomColor_HSV_ToHex(h_min, h_max, s_min, s_max, v_min, v_max, a_mi
 
     local r, g, b = HSV_RGB(h, s, v)
 
-    return string.upper(this.ByteToHex(a * 255) .. this.ByteToHex(r * 255) .. this.ByteToHex(g * 255) .. this.ByteToHex(b * 255))
+    return this.RGB_Hex(a, r, g, b)
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -319,4 +337,8 @@ function this.GetHSVFromColorKey(style, key)
     local h, s, v = RGB_HSV(r, g, b)
 
     return a, h, s, v
+end
+
+function this.RGB_Hex(a, r, g, b)
+    return string.upper(this.ByteToHex(a * 255) .. this.ByteToHex(r * 255) .. this.ByteToHex(g * 255) .. this.ByteToHex(b * 255))
 end
