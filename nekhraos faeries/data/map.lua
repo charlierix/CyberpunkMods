@@ -42,6 +42,7 @@ end
 function Map:Tick()
     local timer = self.o.timer
 
+    ---------------- Clear Stale ----------------
     if self.corpse_containers:GetCount() > 0 and timer - self.checkedstale_corpse_containers > STALECHECK_STATICITEM then
         this.ClearStale(self.corpse_containers, self.objectives, timer, REMEMBER_STATICITEM)
         self.checkedstale_corpse_containers = timer
@@ -70,6 +71,11 @@ function Map:Tick()
 
     if self.loot:GetCount() > 0 and timer - self.checkedstale_loot > STALECHECK_STATICITEM then
         this.ClearStale(self.loot, self.objectives, timer, REMEMBER_STATICITEM)
+    end
+
+    ---------------- Update Positions ----------------
+    if self.alive:GetCount() > 0 then
+        this.UpdatePositions(self.alive, self.objectives, true)
     end
 
     if SHOW_DEBUG then
@@ -268,6 +274,26 @@ function this.ClearStale(list, list_objectives, timer, max_time)
             this.RemoveObjectiveItem(list_objectives, item)
         else
             index = index + 1
+        end
+    end
+end
+
+function this.UpdatePositions(list, list_objectives, is_alive)
+    local index = 1
+
+    while index <= list:GetCount() do
+        local item = list:GetItem(index)
+
+        local pos = scanner_util.GetCurrentPosition(item.entityID, is_alive)
+
+        if pos then
+            item.pos = pos
+            item.objective_item.pos = pos
+
+            index = index + 1
+        else
+            list:RemoveItem(index)
+            this.RemoveObjectiveItem(list_objectives, item)
         end
     end
 end
