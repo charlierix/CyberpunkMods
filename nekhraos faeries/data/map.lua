@@ -21,17 +21,17 @@ function Map:new(o, const)
     obj.objectives = StickyList:new()
 
     obj.corpse_containers = StickyList:new()
-    obj.npcs_dead = StickyList:new()
-    obj.npcs_defeated = StickyList:new()
-    obj.npcs_alive = StickyList:new()
+    obj.dead = StickyList:new()
+    obj.defeated = StickyList:new()
+    obj.alive = StickyList:new()
     obj.containers = StickyList:new()
     obj.devices = StickyList:new()
     obj.loot = StickyList:new()
 
     obj.checkedstale_corpse_containers = o.timer
-    obj.checkedstale_npcs_dead = o.timer
-    obj.checkedstale_npcs_defeated = o.timer
-    obj.checkedstale_npcs_alive = o.timer
+    obj.checkedstale_dead = o.timer
+    obj.checkedstale_defeated = o.timer
+    obj.checkedstale_alive = o.timer
     obj.checkedstale_containers = o.timer
     obj.checkedstale_devices = o.timer
     obj.checkedstale_loot = o.timer
@@ -47,17 +47,17 @@ function Map:Tick()
         self.checkedstale_corpse_containers = timer
     end
 
-    if self.npcs_dead:GetCount() > 0 and timer - self.checkedstale_npcs_dead > STALECHECK_STATICITEM then
-        this.ClearStale(self.npcs_dead, self.objectives, timer, REMEMBER_STATICITEM)
-        self.checkedstale_npcs_dead = timer
+    if self.dead:GetCount() > 0 and timer - self.checkedstale_dead > STALECHECK_STATICITEM then
+        this.ClearStale(self.dead, self.objectives, timer, REMEMBER_STATICITEM)
+        self.checkedstale_dead = timer
     end
 
-    if self.npcs_defeated:GetCount() > 0 and timer - self.checkedstale_npcs_defeated > STALECHECK_STATICITEM then
-        this.ClearStale(self.npcs_defeated, self.objectives, timer, REMEMBER_STATICITEM)
+    if self.defeated:GetCount() > 0 and timer - self.checkedstale_defeated > STALECHECK_STATICITEM then
+        this.ClearStale(self.defeated, self.objectives, timer, REMEMBER_STATICITEM)
     end
 
-    if self.npcs_alive:GetCount() > 0 and timer - self.checkedstale_npcs_alive > STALECHECK_ALIVE then
-        this.ClearStale(self.npcs_alive, self.objectives, timer, REMEMBER_ALIVE)
+    if self.alive:GetCount() > 0 and timer - self.checkedstale_alive > STALECHECK_ALIVE then
+        this.ClearStale(self.alive, self.objectives, timer, REMEMBER_ALIVE)
     end
 
     if self.containers:GetCount() > 0 and timer - self.checkedstale_containers > STALECHECK_STATICITEM then
@@ -78,8 +78,7 @@ function Map:Tick()
 end
 
 
---TODO: change NPC to a different word, since player will be added to Add_NPC_Alive
---TODO: every tick, update the position of self.npcs_alive (be sure to also set the objective item's pos)
+--TODO: every tick, update the position of self.alive (be sure to also set the objective item's pos)
 
 
 function Map:Add_Corpse_Container(entityID, pos)
@@ -88,24 +87,24 @@ function Map:Add_Corpse_Container(entityID, pos)
 
     this.Update_ObjectiveItem(self.objectives, qual_vect.GetVector_Body(item, self.const), item, item, nil, nil, nil)
 end
-function Map:Add_NPC_Dead(entityID, pos, affiliation, limb_damage)
-    local item = this.RefreshOrCreateItem(self.npcs_dead, self.o.timer, entityID, pos)
+function Map:Add_Dead(entityID, pos, affiliation, limb_damage)
+    local item = this.RefreshOrCreateItem(self.dead, self.o.timer, entityID, pos)
     item.body_type = self.const.map_body_type.NPC_Dead
     item.affiliation = affiliation
     item.limb_damage = limb_damage
 
     this.Update_ObjectiveItem(self.objectives, qual_vect.GetVector_Body(item, self.const), item, item, nil, nil, nil)
 end
-function Map:Add_NPC_Defeated(entityID, pos, affiliation)
-    local item = this.RefreshOrCreateItem(self.npcs_defeated, self.o.timer, entityID, pos)
+function Map:Add_Defeated(entityID, pos, affiliation)
+    local item = this.RefreshOrCreateItem(self.defeated, self.o.timer, entityID, pos)
     item.body_type = self.const.map_body_type.NPC_Defeated
     item.affiliation = affiliation
     item.limb_damage = 0
 
     this.Update_ObjectiveItem(self.objectives, qual_vect.GetVector_Body(item, self.const), item, item, nil, nil, nil)
 end
-function Map:Add_NPC_Alive(entityID, pos, affiliation)
-    local item = this.RefreshOrCreateItem(self.npcs_alive, self.o.timer, entityID, pos)
+function Map:Add_Alive(entityID, pos, affiliation)
+    local item = this.RefreshOrCreateItem(self.alive, self.o.timer, entityID, pos)
     item.body_type = self.const.map_body_type.NPC_Alive
     item.affiliation = affiliation
     item.limb_damage = 0
@@ -147,13 +146,13 @@ function Map:Remove_Body(map_body)
         this.Remove_ByIDHash(self.corpse_containers, map_body.id_hash)
 
     elseif map_body.body_type == self.const.map_body_type.NPC_Dead then
-        this.Remove_ByIDHash(self.npcs_dead, map_body.id_hash)
+        this.Remove_ByIDHash(self.dead, map_body.id_hash)
 
     elseif map_body.body_type == self.const.map_body_type.NPC_Defeated then
-        this.Remove_ByIDHash(self.npcs_defeated, map_body.id_hash)
+        this.Remove_ByIDHash(self.defeated, map_body.id_hash)
 
     elseif map_body.body_type == self.const.map_body_type.NPC_Alive then
-        this.Remove_ByIDHash(self.npcs_alive, map_body.id_hash)
+        this.Remove_ByIDHash(self.alive, map_body.id_hash)
 
     else
         LogError("Map:Remove_Body - Unknown body type: " .. tostring(map_body.body_type))
@@ -189,15 +188,15 @@ function Map:GetNearby_Body(pos, radius, include_corpse_container, include_dead,
     end
 
     if include_dead then
-        this.GetNearby(self.npcs_dead, pos, radius_sqr, retVal)
+        this.GetNearby(self.dead, pos, radius_sqr, retVal)
     end
 
     if include_defeated then
-        this.GetNearby(self.npcs_defeated, pos, radius_sqr, retVal)
+        this.GetNearby(self.defeated, pos, radius_sqr, retVal)
     end
 
     if include_alive then
-        this.GetNearby(self.npcs_alive, pos, radius_sqr, retVal)
+        this.GetNearby(self.alive, pos, radius_sqr, retVal)
     end
 
     return retVal
@@ -328,9 +327,9 @@ end
 
 function this.DebugTick(self)
     this.DebugTick_Body(self.corpse_containers)
-    this.DebugTick_Body(self.npcs_dead)
-    this.DebugTick_Body(self.npcs_defeated)
-    this.DebugTick_Body(self.npcs_alive)
+    this.DebugTick_Body(self.dead)
+    this.DebugTick_Body(self.defeated)
+    this.DebugTick_Body(self.alive)
 
     this.DebugTick_Other(self.containers, "container")
     this.DebugTick_Other(self.devices, "device")
