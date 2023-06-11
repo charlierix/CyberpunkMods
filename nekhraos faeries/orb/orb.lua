@@ -22,12 +22,17 @@ function Orb:new(o, pos, vel, map)
         vel = vel,
     }
 
+    -- These are items in the world that the ai is interested in
+    -- list of models\interested_item.cs
+    obj.interested_items = StickyList:new()
+
+    obj.goals = settings_util.Goals()
     obj.limits = settings_util.Limits()
     obj.neighbors = settings_util.Neighbors()
 
-    obj.ai = Orb_AI:new(obj.props, map)
+    obj.ai = Orb_AI:new(obj.props, map, obj.interested_items, obj.goals)
     obj.audiovisual = Orb_AudioVisual:new(obj.props)
-    obj.swarm = Orb_Swarm:new(obj.props, obj.limits, obj.neighbors)
+    obj.swarm = Orb_Swarm:new(obj.props, obj.interested_items, obj.goals, obj.limits, obj.neighbors)
 
     obj.create_time = o.timer
     obj.is_alive = true

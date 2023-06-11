@@ -2,6 +2,11 @@ local SettingsUtil = {}
 
 local this = {}
 
+function SettingsUtil.Goals()
+    -- models\swarmbot_goals
+    return this.DeserializeJSON("!configs/goals.json")
+end
+
 function SettingsUtil.Limits()
     -- models\swarmbot_limits
     return this.DeserializeJSON("!configs/limits.json")

@@ -20,14 +20,10 @@ function Map:new(o, const)
 
     obj.objectives = StickyList:new()
 
-
-    --TODO: store all these in the same list
     obj.corpse_containers = StickyList:new()
     obj.npcs_dead = StickyList:new()
     obj.npcs_defeated = StickyList:new()
     obj.npcs_alive = StickyList:new()
-
-
     obj.containers = StickyList:new()
     obj.devices = StickyList:new()
     obj.loot = StickyList:new()
@@ -83,6 +79,7 @@ end
 
 
 --TODO: change NPC to a different word, since player will be added to Add_NPC_Alive
+--TODO: every tick, update the position of self.npcs_alive (be sure to also set the objective item's pos)
 
 
 function Map:Add_Corpse_Container(entityID, pos)

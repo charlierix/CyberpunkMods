@@ -2,14 +2,15 @@ Orb_Swarm = {}
 
 local this = {}
 
+local goal_util = require "orb/swarm_goals"
 local limit_util = require "orb/swarm_limits"
 local neighbor_util = require "orb/swarm_neighbors"
 
 local SHOW_DEBUG = false
 local set_debug_categories = false
-local debug_categories = CreateEnum("SWARM_CappedAccel", "")
+local debug_categories = CreateEnum("SWARM_CappedAccel")
 
-function Orb_Swarm:new(props, limits, neighbors)
+function Orb_Swarm:new(props, interested_items, goals, limits, neighbors)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -17,6 +18,8 @@ function Orb_Swarm:new(props, limits, neighbors)
     this.EnsureDebugCategoriesSet()
 
     obj.props = props
+    obj.interested_items = interested_items
+    obj.goals = goals
     obj.limits = limits
     obj.neighbors = neighbors
 
@@ -62,61 +65,58 @@ function Orb_Swarm:Tick(deltaTime)
     -- Get component accelerations
     local accelX_limits, accelY_limits, accelZ_limits, limits_percent, should_cap_accel = limit_util.GetAccelLimits(self.props, self.limits, rel_vel, rel_speed_sqr)
 
-    local accelX_neighbors, accelY_neighbors, accelZ_neighbors, had_neighbors = neighbor_util.GetAccelNeighbors(self.props, self.nearby_scan, self.neighbors, self.limits)
-
-    local accelX_goals, accelY_goals, accelZ_goals, had_goals = this.GetAccelGoals()
-
     local accelX_obstacles, accelY_obstacles, accelZ_obstacles, had_obstacles = this.GetAccelObstacles()
 
+    local accelX_neighbors, accelY_neighbors, accelZ_neighbors, had_neighbors = neighbor_util.GetAccelNeighbors(self.props, self.nearby_scan, self.neighbors, self.limits)
+
+    local accelX_goals, accelY_goals, accelZ_goals, goal_percent = goal_util.GetAccelGoals(self.props, self.interested_items, self.goals, self.limits)
+
     local accelX_wander, accelY_wander, accelZ_wander = this.GetAccelWander(self, log)
+
+
+    --TODO: rework this section a little.  Don't let neighbors+goals+wander exceed max accel (limits and obstacles can exceed)
+
+
 
     -- Adjust multipliers based on certain conditions
     local mult_limits, mult_misc, mult_wander = this.GetCombineMults(limits_percent)
 
     local accelX =
         (accelX_limits * mult_limits) +
+        (accelX_obstacles * mult_misc) +
         (accelX_neighbors * mult_misc) +
         (accelX_goals * mult_misc) +
-        (accelX_obstacles * mult_misc) +
         (accelX_wander * mult_wander)
 
     local accelY =
         (accelY_limits * mult_limits) +
+        (accelY_obstacles * mult_misc) +
         (accelY_neighbors * mult_misc) +
         (accelY_goals * mult_misc) +
-        (accelY_obstacles * mult_misc) +
         (accelY_wander * mult_wander)
 
     local accelZ =
         (accelZ_limits * mult_limits) +
+        (accelZ_obstacles * mult_misc) +
         (accelZ_neighbors * mult_misc) +
         (accelZ_goals * mult_misc) +
-        (accelZ_obstacles * mult_misc) +
         (accelZ_wander * mult_wander)
 
-
-    if IsNaN(accelX) then
-        -- This seems to happen after a json reload.  There's something about a shared instance that is causing failure
-        -- Orb_Swarm:Tick NaN.  accelX_limits: 0 | accelX_neighbors: nan | accelX_goals: 0 | accelX_obstacles: 0 | accelX_wander: 0.57474585775138
-        -- mult_limits: 1 | mult_misc: 1 | mult_wander: 1
-        print("Orb_Swarm:Tick NaN.  accelX_limits: " .. tostring(accelX_limits) .. " | accelX_neighbors: " .. tostring(accelX_neighbors) .. " | accelX_goals: " .. tostring(accelX_goals) .. " | accelX_obstacles: " .. tostring(accelX_obstacles) .. " | accelX_wander: " .. tostring(accelX_wander))
-        print("mult_limits: " .. tostring(mult_limits) .. " | mult_misc: " .. tostring(mult_misc) .. " | mult_wander: " .. tostring(mult_wander))
-
-        -- It's always related to neighbors.  This time it wasn't a reload, just random chance
-        print("self.props.pos: " .. vec_str(self.props.pos))
-        for index, item in ipairs(self.nearby_scan.nearby) do
-            print("[" .. tostring(index) .. "]: " .. tostring(item.dist_sqr) .. " | " .. vec_str(item.orb.props.pos))
-        end
-    end
-
+    accelX, accelY, accelZ = this.DetectNaN(accelX, accelY, accelZ)
 
     -- NOTE: I think capping acceleration was a flawed idea.  The individual components should respect max accel, and if they need to exceed that, there's a good reason
+    -- It's not a flawed idea, it just needs to ignore limits and obstacles
+
     -- Possibly cap acceleration
     -- if should_cap_accel then
     --     accelX, accelY, accelZ = this.AccelConstraints(self, accelX, accelY, accelZ, log)
     -- end
 
     --this.DrawFreeBody(self.props.o, self.props.vel, accelX, accelY, accelZ)
+
+
+
+
 
     -- Apply Acceleration
     self.props.vel = Vector4.new(self.props.vel.x + accelX * deltaTime, self.props.vel.y + accelY * deltaTime, self.props.vel.z + accelZ * deltaTime, 1)
@@ -128,10 +128,6 @@ function Orb_Swarm:Tick(deltaTime)
 end
 
 ---------------------------------- Get Accelerations ----------------------------------
-
-function this.GetAccelGoals()
-    return 0, 0, 0, false
-end
 
 function this.GetAccelObstacles()
     return 0, 0, 0, false
@@ -210,6 +206,39 @@ function this.EnsureDebugCategoriesSet()
     debug_render_screen.DefineCategory(debug_categories.SWARM_CappedAccel, "BA1F585F", "FFF", nil, true, nil, nil, 0.3, 0.3)
 
     set_debug_categories = true
+end
+
+function this.DetectNaN(accelX, accelY, accelZ)
+    -- This stopped happening, not sure what was causing it
+
+    -- if IsNaN(accelX) then
+    --     -- This seems to happen after a json reload.  There's something about a shared instance that is causing failure
+    --     -- Orb_Swarm:Tick NaN.  accelX_limits: 0 | accelX_neighbors: nan | accelX_goals: 0 | accelX_obstacles: 0 | accelX_wander: 0.57474585775138
+    --     -- mult_limits: 1 | mult_misc: 1 | mult_wander: 1
+    --     print("Orb_Swarm:Tick NaN.  accelX_limits: " .. tostring(accelX_limits) .. " | accelX_neighbors: " .. tostring(accelX_neighbors) .. " | accelX_goals: " .. tostring(accelX_goals) .. " | accelX_obstacles: " .. tostring(accelX_obstacles) .. " | accelX_wander: " .. tostring(accelX_wander))
+    --     print("mult_limits: " .. tostring(mult_limits) .. " | mult_misc: " .. tostring(mult_misc) .. " | mult_wander: " .. tostring(mult_wander))
+
+    --     -- It's always related to neighbors.  This time it wasn't a reload, just random chance
+    --     print("self.props.pos: " .. vec_str(self.props.pos))
+    --     for index, item in ipairs(self.nearby_scan.nearby) do
+    --         print("[" .. tostring(index) .. "]: " .. tostring(item.dist_sqr) .. " | " .. vec_str(item.orb.props.pos))
+    --     end
+    -- end
+
+    if IsNaN(accelX) then
+        LogError("accelX is NaN")
+        accelX = 0
+    end
+    if IsNaN(accelY) then
+        LogError("accelY is NaN")
+        accelY = 0
+    end
+    if IsNaN(accelZ) then
+        LogError("accelZ is NaN")
+        accelZ = 0
+    end
+
+    return accelX, accelY, accelZ
 end
 
 function this.DrawFreeBody(o, vel, accelX, accelY, accelZ)

@@ -41,11 +41,14 @@ public record swarmbot_acceleration_percents
     // Input: speed of component of velocity that is perpendicular to flock's velocity / max_speed
     //          0 would be orb's velocity aligned with flock's velocity (they may not be going the same speed, but they are moving parallel with each other - maybe same direction or opposite directions)
     //          1 would be max_speed perpendicular to flock's velocity
+    //          2 would be twice max_speed
     // Output: % of max accel
     //          acceleration will be opposite of the perpendicular component of orb's velocity
     public property_mult drag_orth_flock_velocity_speed { get; init; }
 
-    // Input: distance
+    // This allows the accel to be zero when far away and stronger as the orb gets closer.  Otherwise, the
+    // orb would cancel all orth velocity and fire at a straight line toward the flock from far away
+    // Input: distance to center of flock
     // Output: % of max accel
     public property_mult drag_orth_flock_velocity_distance { get; init; }
     //-----------------------------------------------------------------------------

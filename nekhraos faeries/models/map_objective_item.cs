@@ -7,7 +7,7 @@ public record map_objective_item
     // This is an ND vector that represents what the item is.  It is stored as a unit vector so a bot can take a dot product
     // between the bot's interest vector and this qualifier
     //
-    // The axiis could represent things like npc, hostile/neutral, hackable, device, loot, etc...
+    // The axes could represent things like npc, hostile/neutral, hackable, device, loot, etc...
     public float[] qualifier_unit { get; init; }
 
     // ------------------------------------------------------

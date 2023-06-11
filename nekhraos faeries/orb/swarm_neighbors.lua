@@ -26,7 +26,7 @@ function OrbSwarmNeighbors.GetAccelNeighbors(props, nearby_scan, neighbors, limi
     local accel_align_x, accel_align_y, accel_align_z = this.AlignVelocity(flock_vel, props.vel, distance_center, neighbors.accel_percents.align_flock_velocity_speed, neighbors.accel_percents.align_flock_velocity_distance, limits.max_accel, limits.max_speed)
 
     -- drag orth flock's velocity
-    local accel_orthvel_x, accel_orthvel_y, accel_orthvel_z = this.OrthFlockVelocity(flock_vel, props.vel, distance_center, neighbors.accel_percents.drag_orth_flock_velocity_speed, neighbors.accel_percents.drag_orth_flock_velocity_distance, limits.max_accel, limits.max_speed)
+    local accel_orthvel_x, accel_orthvel_y, accel_orthvel_z = swarm_util.Drag_Orth_Velocity(flock_vel, props.vel, distance_center, neighbors.accel_percents.drag_orth_flock_velocity_speed, neighbors.accel_percents.drag_orth_flock_velocity_distance, limits.max_accel, limits.max_speed)
 
     -- don't get too close to any
     local accel_avoid_x, accel_avoid_y, accel_avoid_z = this.AvoidOthers(props.pos, props.vel, nearby, neighbors.accel_percents.repel_other_orb, neighbors.accel_percents.repel_other_orb_velocitytoward, limits.max_accel)
@@ -167,37 +167,6 @@ function this.AlignVelocity(flock_vel, orb_vel, distance_center, align_flock_vel
         (vel_diff.x / speed_diff) * percent_accel_speed * percent_accel_dist * max_accel,
         (vel_diff.y / speed_diff) * percent_accel_speed * percent_accel_dist * max_accel,
         (vel_diff.z / speed_diff) * percent_accel_speed * percent_accel_dist * max_accel
-end
-
-function this.OrthFlockVelocity(flock_vel, orb_vel, distance_center, drag_orth_flock_velocity_speed, drag_orth_flock_velocity_distance, max_accel, max_speed)
-    -- There's a chance that accel is zero when the orb is too far away, so check this first
-    local percent_accel_dist = swarm_util.ApplyPropertyMult(drag_orth_flock_velocity_distance, distance_center)
-
-    if IsNearZero(percent_accel_dist) then
-        return 0, 0, 0
-    end
-
-    -- Find the part of the orb's velocity that is perpendicular from flock's velocity
-    local up = CrossProduct3D(flock_vel, orb_vel)       -- not taking unit vectors to keep it cheap
-
-    if IsNearZero(GetVectorLengthSqr(up)) then
-        return 0, 0, 0      -- they are either parallel or one of the vectors is near zero
-    end
-
-    local orth_unit = ToUnit(CrossProduct3D(flock_vel, up))
-
-    local vel_orth = GetProjectedVector_AlongVector(orb_vel, orth_unit, true)
-    local speed_orth = GetVectorLength(vel_orth)
-
-    local speed_percent = speed_orth / max_speed
-
-    local percent_accel_speed = swarm_util.ApplyPropertyMult(drag_orth_flock_velocity_speed, speed_percent)
-
-    -- Multiply these with the unit of orth velocity (negated to be drag)
-    return
-        (vel_orth.x / -speed_orth) * percent_accel_speed * percent_accel_dist * max_accel,
-        (vel_orth.y / -speed_orth) * percent_accel_speed * percent_accel_dist * max_accel,
-        (vel_orth.z / -speed_orth) * percent_accel_speed * percent_accel_dist * max_accel
 end
 
 function this.AvoidOthers(pos, vel, nearby, repel_other_orb, repel_other_orb_velocitytoward, max_accel)

@@ -22,6 +22,38 @@ function Swarm_Util.ApplyPropertyMult(property_mult, input)
     return property_mult.animcurve:Evaluate(input)
 end
 
+-- Applies drag orthogonal to the orb's velocity (this function is needed in a couple places, so defining it here)
+function Swarm_Util.Drag_Orth_Velocity(direction, orb_vel, distance, property_mult_speed, property_mult_distance, max_accel, max_speed)
+    -- There's a chance that accel is zero when the orb is too far away, so check this first
+    local percent_accel_dist = Swarm_Util.ApplyPropertyMult(property_mult_distance, distance)
+
+    if IsNearZero(percent_accel_dist) then
+        return 0, 0, 0
+    end
+
+    -- Find the part of the orb's velocity that is perpendicular to the desired direction
+    local up = CrossProduct3D(direction, orb_vel)       -- not taking unit vector of vel to keep it cheap
+
+    if IsNearZero(GetVectorLengthSqr(up)) then
+        return 0, 0, 0      -- they are either parallel or one of the vectors is near zero
+    end
+
+    local orth_unit = ToUnit(CrossProduct3D(direction, up))
+
+    local vel_orth = GetProjectedVector_AlongVector(orb_vel, orth_unit, true)
+    local speed_orth = GetVectorLength(vel_orth)
+
+    local speed_percent = speed_orth / max_speed
+
+    local percent_accel_speed = Swarm_Util.ApplyPropertyMult(property_mult_speed, speed_percent)
+
+    -- Multiply these with the unit of orth velocity (negated to be drag)
+    return
+        (vel_orth.x / -speed_orth) * percent_accel_speed * percent_accel_dist * max_accel,
+        (vel_orth.y / -speed_orth) * percent_accel_speed * percent_accel_dist * max_accel,
+        (vel_orth.z / -speed_orth) * percent_accel_speed * percent_accel_dist * max_accel
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 -- Takes an array of models\property_mult_gradientstop
