@@ -1,0 +1,10 @@
+{
+    "primitiveDimension_X": 0.1,
+    "primitiveDimension_Y": 0.1,
+    "primitiveDimension_Z": 0.1,
+
+    "maxDistance": 24,
+    "maxExtent": 24,
+    "probingPrecision": 1,
+    "probingMaxDistanceDiff": 24
+}
