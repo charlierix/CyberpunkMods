@@ -260,7 +260,7 @@ namespace PointParser.Workers
         }
 
         // This sort of works, but since it's convex, it still sometimes papers over gaps
-        // Need to come up with a custom algorithem that punches holes and/or breaks up when it sees regions with no points
+        // Need to come up with a custom algorithm that punches holes and/or breaks up when it sees regions with no points
         private static void TestSOM(Face3D_Points face)
         {
             //TODO: Reduce the number of iterations to something more reasonable

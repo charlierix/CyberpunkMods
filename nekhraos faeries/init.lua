@@ -29,6 +29,8 @@ require "core/util"
 entity_helper = require "data/entity_helper"
 require "data/map"
 qual_vect = require "data/qualifier_vector"
+nono_squares = require "data/nono_squares"
+require "data/scanner_obstacles"
 require "data/scanner_orbs"
 require "data/scanner_player"
 scanner_util = require "data/scanner_util"
@@ -143,6 +145,7 @@ registerForEvent("onInit", function()
     function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
     function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
     function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
+    function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
     function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end     -- gametargetingTargetingSystem
     function wrappers.GetTargetParts(targetting, player, searchQuery) return targetting:GetTargetParts(player, searchQuery) end
 
@@ -201,228 +204,70 @@ registerForEvent("onOverlayClose", function()
 end)
 
 
--- I think this is a dead end.  The best I saw was using depth query through a person to model a grenade fragment
--- I've tried various values and at best get an innacurate ray cast.  I'm not sure what this is for (maybe a raycast that has thickness?)
-registerHotkey("NekhraosFaeries_GeometryDescriptionQuery", "GeometryDescriptionQuery", function()
 
---TODO: Make a test button comparing this with straight raycasts
--- protected final func GetDistanceFromFloor() -> Float {
---     let currentPosition: Vector4;
---     let distanceFromFloor: Float;
---     let geometryDescription: ref<GeometryDescriptionQuery>;
---     let geometryDescriptionResult: ref<GeometryDescriptionResult>;
---     let staticQueryFilter: QueryFilter;
---     QueryFilter.AddGroup(staticQueryFilter, n"Static");
---     currentPosition = this.GetWorldPosition();
---     geometryDescription = new GeometryDescriptionQuery();
---     geometryDescription.refPosition = currentPosition;
---     geometryDescription.refDirection = new Vector4(0.00, 0.00, -1.00, 0.00);
---     geometryDescription.filter = staticQueryFilter;
---     geometryDescription.primitiveDimension = new Vector4(0.10, 0.10, 0.20, 0.00);
---     geometryDescriptionResult = GameInstance.GetSpatialQueriesSystem(this.GetGame()).GetGeometryDescriptionSystem().QueryExtents(geometryDescription);
---     if NotEquals(geometryDescriptionResult.queryStatus, worldgeometryDescriptionQueryStatus.OK) {
---       return -1.00;
---     };
---     distanceFromFloor = AbsF(geometryDescriptionResult.distanceVector.Z);
---     return distanceFromFloor;
---   }
+--TODO: random is too arbitrary, do plates of raycasts, similar to low flying v
 
--- public final static func GetDistanceToGround(const scriptInterface: ref<StateGameScriptInterface>) -> Float {
---     let distanceToGround: Float;
---     let geometryDescription: ref<GeometryDescriptionQuery>;
---     let geometryDescriptionResult: ref<GeometryDescriptionResult>;
---     let queryFilter: QueryFilter;
---     let currentPosition: Vector4 = DefaultTransition.GetPlayerPosition(scriptInterface);
---     QueryFilter.AddGroup(queryFilter, n"Static");
---     QueryFilter.AddGroup(queryFilter, n"Terrain");
---     QueryFilter.AddGroup(queryFilter, n"PlayerBlocker");
---     geometryDescription = new GeometryDescriptionQuery();
---     geometryDescription.AddFlag(worldgeometryDescriptionQueryFlags.DistanceVector);
---     geometryDescription.filter = queryFilter;
---     geometryDescription.refPosition = currentPosition;
---     geometryDescription.refDirection = new Vector4(0.00, 0.00, -1.00, 0.00);
---     geometryDescription.primitiveDimension = new Vector4(0.50, 0.10, 0.10, 0.00);
---     geometryDescription.maxDistance = 100.00;
---     geometryDescription.maxExtent = 100.00;
---     geometryDescription.probingPrecision = 10.00;
---     geometryDescription.probingMaxDistanceDiff = 100.00;
---     geometryDescriptionResult = scriptInterface.GetSpatialQueriesSystem().GetGeometryDescriptionSystem().QueryExtents(geometryDescription);
---     if Equals(geometryDescriptionResult.queryStatus, worldgeometryDescriptionQueryStatus.NoGeometry) || NotEquals(geometryDescriptionResult.queryStatus, worldgeometryDescriptionQueryStatus.OK) {
---       return -1.00;
---     };
---     distanceToGround = AbsF(geometryDescriptionResult.distanceVector.Z);
---     return distanceToGround;
---   }
+local material_color = {}
+registerHotkey("NekhraosFaeries_RandomRays", "Random Rays", function()
+    -- fire a ray
+    -- if it's a hit, add to no no squares
+
+    local raysPerFrame = 14
+    local rayLen = 60
+    local rayHeightMin = 1
+    local rayHeightMax = 2.5
 
 
-    local settings = this.DeserializeJSON("!configs/geometryquery.json")
+    o:GetPlayerInfo()
 
-    local eye_pos, look_dir = o:GetCrosshairInfo()
+    for i = 1, raysPerFrame, 1 do
+        local height = math.random(rayHeightMin, rayHeightMax)
 
-    local query_system = Game.GetSpatialQueriesSystem()
-    local geometry_system = query_system:GetGeometryDescriptionSystem()
+        local direction = GetRandomVector_Spherical_Shell(rayLen)
 
-    local filter = QueryFilter.AddGroup("Static")
-    filter.mask2 = filter.mask2 + QueryFilter.AddGroup("Terrain").mask2
+        local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + height, 1)
+        local toPos = Vector4.new(fromPos.x + direction.x, fromPos.y + direction.y, fromPos.z + direction.z, 1)
 
-    --local filter = QueryFilter.All()
+        local hit, normal, material_cname = o:RayCast(fromPos, toPos)
 
-    -- this may not be the correct way to instantiate, just guessing
-    local query = GeometryDescriptionQuery.new()
-    query.refPosition = eye_pos
-    query.refDirection = look_dir
-    query.filter = filter
+        if hit then
+            local material = Game.NameToString(material_cname)
+            if not material_color[material] then
+                material_color[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.5, 0.5)
+            end
 
-    -- I'm guessing this is the thickness of the ray?  The GetIsOnGround sets direction to 0,0,-1 and primitiveDimension to 0.1,0.1,0.2, but others
-    -- leave it 0.1,0.1,0.1 and set maxDistance
-    --
-    -- Maybe it's the min size of object to return
-    --query.primitiveDimension = Vector4.new(0.1, 0.1, 0.1, 1)
-    --query.primitiveDimension = Vector4.new(1, 1, 1, 1)      -- when it's this larger thickness, the search seems to find things farther away from the ray (but nearer to from point?)
-    query.primitiveDimension = Vector4.new(settings.primitiveDimension_X, settings.primitiveDimension_Y, settings.primitiveDimension_Z, 1)
+            -- debug_render_screen.Add_Dot(hit, nil, material_color[material])
+            -- debug_render_screen.Add_Line(hit, AddVectors(hit, normal), nil, material_color[material])
+            debug_render_screen.Add_Square(hit, normal, 1, 1, nil, material_color[material], "000")
+        end
+    end
 
+    -- print("--------------------------------")
+    -- ReportTable(material_color)
+end)
+registerHotkey("NekhraosFaeries_RaySquare", "Ray Square", function()
+    o:GetPlayerInfo()
+    local pos, look_dir = o:GetCrosshairInfo()
 
-    --TODO: play with different values to try to get the result props to be something other than none
+    local hit, normal, material_cname = o:RayCast(pos, AddVectors(pos, MultiplyVector(look_dir, 40)))
 
-    -- maxDistance and probingPrecision are fairly self explanatory
-    -- Not sure what maxExtent and probingMaxDistanceDiff are.  Most uses are just the same value as maxDistance
-    query.maxDistance = settings.maxDistance;
-    query.maxExtent = settings.maxExtent;
-    query.probingPrecision = settings.probingPrecision;
-    query.probingMaxDistanceDiff = settings.probingMaxDistanceDiff;
+    if hit then
+        local material = Game.NameToString(material_cname)
+        if not material_color[material] then
+            material_color[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.5, 0.5)
+        end
 
-
-    local result = geometry_system:QueryExtents(query)
-
-    debug_render_screen.Add_Line(eye_pos, AddVectors(eye_pos, MultiplyVector(look_dir, 24)), nil, "888")
-
-    -- enum worldgeometryDescriptionQueryStatus
-    -- {
-    --    OK = 0,
-    --    NoGeometry = 1,
-    --    UpVectorSameAsDirection = 2
-    -- }
-
-    if result.queryStatus == worldgeometryDescriptionQueryStatus.OK then
-    --if result.queryStatus == 0 then
-        print("ok")
-        --https://nativedb.red4ext.com/worldgeometryDescriptionResult
-
-
-        ------------ directions ------------
-        --left
-        --right
-        --top
-        --depth
-        --up
-        --down
-        --behind
-
-
-        ------------ probe status ------------
-        -- enum worldgeometryProbingStatus
-        -- {
-        --    None = 0,
-        --    StillInObstacle = 1,
-        --    GeometryDiverged = 2,
-        --    Failure = 3
-        -- }
-
-        -- These are all coming back none
-
-        --leftExtentStatus
-        print("leftExtentStatus: " .. tostring(result.leftExtentStatus))
-
-        --rightExtentStatus
-        print("rightExtentStatus: " .. tostring(result.rightExtentStatus))
-
-        --obstacleDepthStatus
-        print("obstacleDepthStatus: " .. tostring(result.obstacleDepthStatus))
-
-        --upExtentStatus
-        print("upExtentStatus: " .. tostring(result.upExtentStatus))
-
-        --downExtentStatus
-        print("downExtentStatus: " .. tostring(result.downExtentStatus))
-
-        --topTestStatus
-        print("topTestStatus: " .. tostring(result.topTestStatus))
-    
-        --behindTestStatus
-        print("behindTestStatus: " .. tostring(result.behindTestStatus))
-
-
-        ------------ vector4 ------------
-
-        local hit_point = AddVectors(eye_pos, result.distanceVector)
-        print("hit_point: " .. this.vec_str2(hit_point))
-
-        --distanceVector
-        debug_render_screen.Add_Line(eye_pos, hit_point, nil, "DDD")
-        debug_render_screen.Add_Text(hit_point, "distanceVector", nil, "4DDD", "FFF")
-
-        --collisionNormal
-        debug_render_screen.Add_Line(hit_point, AddVectors(hit_point, result.collisionNormal), nil, "8FFF")
-
-
-        -- Check the corresponding enum before looking at these points
-        -- If it's none, these will just be zeros
-
-        --leftHandData.grabPointStart
-        --leftHandData.grabPointEnd
-        -- local left_start = AddVectors(hit_point, result.leftHandData.grabPointStart)
-        -- debug_render_screen.Add_Dot(left_start, nil, "F88")
-        -- debug_render_screen.Add_Line(left_start, AddVectors(hit_point, result.leftHandData.grabPointEnd), nil, "F88")
-        -- debug_render_screen.Add_Text(left_start, "leftHandData", nil, "4F88", "FFF")
-        print("leftHandData.grabPointStart: " .. this.vec_str2(result.leftHandData.grabPointStart))
-        print("leftHandData.grabPointEnd: " .. this.vec_str2(result.leftHandData.grabPointEnd))
-
-        --rightHandData.grabPointStart
-        --rightHandData.grabPointEnd
-        -- local right_start = AddVectors(hit_point, result.rightHandData.grabPointStart)
-        -- debug_render_screen.Add_Dot(right_start, nil, "F00")
-        -- debug_render_screen.Add_Line(right_start, AddVectors(hit_point, result.rightHandData.grabPointEnd), nil, "F00")
-        -- debug_render_screen.Add_Text(right_start, "rightHandData", nil, "4F00", "FFF")
-        print("rightHandData.grabPointStart: " .. this.vec_str2(result.rightHandData.grabPointStart))
-        print("rightHandData.grabPointEnd: " .. this.vec_str2(result.rightHandData.grabPointEnd))
-
-        --topPoint
-        --topNormal
-        -- debug_render_screen.Add_Dot(result.topPoint, nil, "0F0")
-        -- debug_render_screen.Add_Line(result.topPoint, AddVectors(result.topPoint, result.topNormal), nil, "80F0")
-        -- debug_render_screen.Add_Text(result.topPoint, "topPoint", nil, "40F0", "FFF")
-        print("topPoint: " .. this.vec_str2(result.topPoint))
-       
-
-        --behindPoint
-        --behindNormal
-        print("behindPoint: " .. this.vec_str2(result.behindPoint))
-
-
-        ------------ float ------------
-
-        --obstacleDepth
-        print("obstacleDepth: " .. tostring(result.obstacleDepth))
-
-        --upExtent
-        print("upExtent: " .. tostring(result.upExtent))
-
-        --downExtent
-        print("downExtent: " .. tostring(result.downExtent))
-
-        --topExtent
-        print("topExtent: " .. tostring(result.topExtent))
-
-
-
-
-
-
-    else
-        print("not ok: " .. tostring(result.queryStatus))
-        --print(tostring(type(result.queryStatus)))     -- the type is userdata
+        -- 2 is good in open areas, but small bumps make it way too large
+        --debug_render_screen.Add_Square(hit, normal, 2, 2, nil, material_color[material], "000")
+        debug_render_screen.Add_Square(hit, normal, 1, 1, nil, material_color[material], "000")
     end
 end)
+registerHotkey("NekhraosFaeries_IcoScan", "Ico Scan", function()
+    local scanner = Scanner_Obstacles:new(o, 15)
+    scanner:TEST_Scan()
+end)
+
+
 
 registerHotkey("NekhraosFaeries_ScanAllObjecs", "Scan All Objects", function()
     local found, entities = prototype_scanning.GetAllObjects()
@@ -508,28 +353,4 @@ end)
 
 function this.SetupDebugCategories()
     debug_render_screen.DefineCategory(debug_categories.text2D_2sec, "BA50534A", "FFF", 2, nil, nil, nil, 0.25, 0.5)
-end
-
-function this.vec_str2(vector)
-    return tostring(vector.x) .. ", " .. tostring(vector.y) .. ", " .. tostring(vector.z)
-    
-end
-
--- Small wrapper to file.open and json.decode
--- Returns
---  object, nil
---  nil, errMsg
-function this.DeserializeJSON(filename)
-    local handle = io.open(filename, "r")
-    local json = handle:read("*all")
-
-    local sucess, retVal = pcall(
-        function(j) return extern_json.decode(j) end,
-        json)
-
-    if sucess then
-        return retVal, nil
-    else
-        return nil, tostring(retVal)      -- when pcall has an error, the second value returned is the error message, otherwise it't the successful return value.  It should already be a sting, but doing a tostring just to be safe
-    end
 end

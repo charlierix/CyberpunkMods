@@ -8,6 +8,7 @@ local pullInterval_workspot = this.GetRandom_Variance(12, 1)
 local pullInterval_camera = this.GetRandom_Variance(12, 1)
 local pullInterval_sensor = this.GetRandom_Variance(12, 1)
 local pullInterval_quest = this.GetRandom_Variance(12, 1)
+local pullInterval_spacialQueries = this.GetRandom_Variance(12, 1)
 local pullInterval_targeting = this.GetRandom_Variance(12, 1)
 
 GameObjectAccessor = {}
@@ -27,6 +28,7 @@ function GameObjectAccessor:new(wrappers)
     obj.lastPulled_camera = -(pullInterval_camera * 2)
     obj.lastPulled_sensor = -(pullInterval_sensor * 2)
     obj.lastPulled_quest = -(pullInterval_quest * 2)
+    obj.lastPulled_spacialQueries = -(pullInterval_spacialQueries * 2)
     obj.lastPulled_targeting = -(pullInterval_targeting * 2)
 
     obj.lastGot_lookDir = -1
@@ -182,6 +184,24 @@ function GameObjectAccessor:IsPointVisible(fromPos, toPos)
     end
 end
 
+-- Returns a position, normal, material (or nils)
+-- NOTE: use Game.NameToString(material) to get just the string of the material (it's a CName)
+function GameObjectAccessor:RayCast(fromPos, toPos)
+    self:EnsureLoaded_SpacialQueries()
+
+    if self.spacialQueries then
+        local hit = this.RayCast_Closest(self.spacialQueries, fromPos, toPos)
+        if hit then
+            return
+                Vector4.new(hit.position.x, hit.position.y, hit.position.z, 1),
+                Vector4.new(hit.normal.x, hit.normal.y, hit.normal.z, 1),
+                hit.material
+        else
+            return nil, nil, nil
+        end
+    end
+end
+
 function GameObjectAccessor:IsCrouching()
     self:EnsureLoaded_Player()
 
@@ -231,6 +251,14 @@ function GameObjectAccessor:EnsureLoaded_Quest()
     end
 end
 
+function GameObjectAccessor:EnsureLoaded_SpacialQueries()
+    if not self.spacialQueries or (self.timer - self.lastPulled_spacialQueries) >= pullInterval_spacialQueries then
+        self.lastPulled_spacialQueries = self.timer
+
+        self.spacialQueries = self.wrappers.GetSpatialQueriesSystem()
+    end
+end
+
 function GameObjectAccessor:EnsureLoaded_Targeting()
     if not self.targeting or (self.timer - self.lastPulled_targeting) >= pullInterval_targeting then
         self.lastPulled_targeting = self.timer
@@ -265,4 +293,36 @@ function this.Contains(list, item)
     end
 
     return false
+end
+
+local raycast_filters =
+{
+    --"Dynamic",      -- Movable Objects
+    --"Vehicle",
+    "Static",       -- Buildings, Concrete Roads, Crates, etc
+    --"Water",
+    "Terrain",
+    --"PlayerBlocker",        -- Trees, Billboards, Barriers
+}
+function this.RayCast_Closest(spatial, from_pos, to_pos)
+    local closest = nil
+    local closest_distsqr = nil
+
+    for i = 1, #raycast_filters do
+        -- it would be cool if QueryFilter.ALL() worked here, but it doesn't
+        local success, result = spatial:SyncRaycastByCollisionGroup(from_pos, to_pos, raycast_filters[i], false, false)
+
+        if success then
+            --print("hit: " .. raycast_filters[i] .. " | " .. tostring(result.material))
+
+            local dist_sqr = GetVectorDiffLengthSqr(from_pos, result.position)
+
+            if closest == nil or dist_sqr < closest_distsqr then
+                closest = result
+                closest_distsqr = dist_sqr
+            end
+        end
+    end
+
+    return closest
 end
