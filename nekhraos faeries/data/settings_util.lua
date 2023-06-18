@@ -15,4 +15,9 @@ function SettingsUtil.Neighbors()
     return DeserializeJSON("!configs/neighbors.json")
 end
 
+function SettingsUtil.Obstacles()
+    -- models\swarmbot_obstacles
+    return DeserializeJSON("!configs/obstacles.json")
+end
+
 return SettingsUtil

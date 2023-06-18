@@ -91,6 +91,7 @@ local keys = nil -- = Keys:new()        -- moved to init
 local map = nil
 local scanner_player = nil
 local scanner_orbs = nil
+local scanner_obstacles = nil
 
 local vars_ui =
 {
@@ -154,6 +155,7 @@ registerForEvent("onInit", function()
     map = Map:new(o, const)
     scanner_player = Scanner_Player:new(o, map, const)
     scanner_orbs = Scanner_Orbs:new(o, map, const)
+    scanner_obstacles = Scanner_Obstacles:new(o)
 
     this.SetupDebugCategories()
 end)
@@ -263,8 +265,10 @@ registerHotkey("NekhraosFaeries_RaySquare", "Ray Square", function()
     end
 end)
 registerHotkey("NekhraosFaeries_IcoScan", "Ico Scan", function()
-    local scanner = Scanner_Obstacles:new(o, 15)
-    scanner:TEST_Scan()
+    scanner_obstacles:TEST_Scan()
+end)
+registerHotkey("NekhraosFaeries_IcoScanPointExists", "Ico Scan Source Point", function()
+    scanner_obstacles:TEST_TryScanPoint()
 end)
 
 

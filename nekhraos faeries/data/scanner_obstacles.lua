@@ -2,17 +2,23 @@ Scanner_Obstacles = {}
 
 local this = {}
 
-function Scanner_Obstacles:new(o, search_radius)
+function Scanner_Obstacles:new(o)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
     obj.o = o
-    obj.search_radius = search_radius
+
+    -- models\swarmbot_obstacles.cs
+    obj.settings = settings_util.Obstacles()
 
     obj.material_colors = {}
 
     obj.icosahedrons = {}       -- gets populated from jsons when first needed
+
+    -- list of:
+    --  { pos, forget_time }
+    obj.prev_casts = StickyList:new()
 
     return obj
 end
@@ -20,18 +26,17 @@ end
 function Scanner_Obstacles:TEST_Scan()
     this.EnsureIcoLoaded(self)
 
-    -- project a point forward from eyes 2 meters
-    self.o:GetPlayerInfo()
-    local pos, look_dir = self.o:GetCrosshairInfo()
+    local center = this.GetSourcePos(self)
+    if not center then
+        print("from point isn't visible, skipping the scan")
+        do return end
+    end
 
-    local center = AddVectors(pos, MultiplyVector(look_dir, 2))
-
-    -- scan using ico's offsets and normals
+    -- scan using ico's normals (no need to use the offsets, that's just overly complicated)
     for _, face in ipairs(self.icosahedrons[math.random(#self.icosahedrons)]) do
-        local fromPos = Vector4.new(center.x + face.pos.x, center.y + face.pos.y, center.z + face.pos.z, 1)
-        local toPos = Vector4.new(fromPos.x + face.norm.x * self.search_radius, fromPos.y + face.norm.y * self.search_radius, fromPos.z + face.norm.z * self.search_radius, 1)
+        local toPos = AddVectors(center, MultiplyVector(face.norm, self.settings.search_radius))
 
-        local hit, normal, material_cname = self.o:RayCast(fromPos, toPos)
+        local hit, normal, material_cname = self.o:RayCast(center, toPos)
 
         if hit then
             local material = Game.NameToString(material_cname)
@@ -39,16 +44,41 @@ function Scanner_Obstacles:TEST_Scan()
                 self.material_colors[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.5, 0.5)
             end
 
-            debug_render_screen.Add_Line(fromPos, hit, nil, "40F0")
+            debug_render_screen.Add_Line(center, hit, nil, "40F0")
             debug_render_screen.Add_Square(hit, normal, 1.5, 1.5, nil, self.material_colors[material], "000")
         else
-            debug_render_screen.Add_Line(fromPos, toPos, nil, "4F00")
+            debug_render_screen.Add_Line(center, toPos, nil, "4F00")
         end
     end
 end
 
+function Scanner_Obstacles:TEST_TryScanPoint()
+    local pos = this.GetSourcePos_AlongLook(self.o, self.settings.scan_from_look_offset, self.settings.scan_from_up_offset)
+
+    debug_render_screen.Add_Dot(pos, nil, "8888")
+
+    local source_pos = this.GetSourcePos_Interval(pos, self.settings.from_interval_xy, self.settings.from_interval_z)
+
+    print(vec_str(pos) .. " - " .. vec_str(source_pos))
+
+    if this.DoesPrevCastExist(source_pos, self.prev_casts) then
+        print("already exists")
+    end
+
+    print("creating new")
+
+    -- add to list
+    local entry = self.prev_casts:GetNewItem()
+    entry.pos = source_pos
+    entry.forget_time = self.o.timer + self.settings.hit_remember_seconds
+
+    -- draw
+    debug_render_screen.Add_Dot(source_pos, nil, "FF0", nil, nil, 3)
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
+--TODO: instead of a folder full of hardcoded random rotations, just have the one config and do the random rotations here
 function this.EnsureIcoLoaded(self)
     local FOLDER = "!configs"
 
@@ -76,4 +106,65 @@ function this.EnsureIcoLoaded(self)
             table.insert(self.icosahedrons, ico)
         end
     end
+end
+
+function this.GetSourcePos(self)
+    -- local pos = this.GetSourcePos_AlongLook(self.o, self.settings.scan_from_look_offset, self.settings.scan_from_up_offset)
+    -- return this.GetSourcePos_Interval(pos, self.settings.from_interval_xy, self.settings.from_interval_z)
+
+    --if not self.o:IsPointVisible()
+
+    self.o:GetPlayerInfo()
+    local pos1, look_dir = self.o:GetCrosshairInfo()
+
+    local pos2 = Vector4.new
+    (
+        pos1.x + (look_dir.x * self.settings.scan_from_look_offset),
+        pos1.y + (look_dir.y * self.settings.scan_from_look_offset),
+        (pos1.z + (look_dir.z * self.settings.scan_from_look_offset)) + self.settings.scan_from_up_offset,
+        1
+    )
+
+    local pos3 = this.GetSourcePos_Interval(pos2, self.settings.from_interval_xy, self.settings.from_interval_z)
+
+    if self.o:IsPointVisible(pos1, pos3) then
+        return pos3
+    else
+        return nil
+    end
+end
+function this.GetSourcePos_AlongLook(o, look_offset, up_offset)
+    o:GetPlayerInfo()
+    local pos, look_dir = o:GetCrosshairInfo()
+
+    return Vector4.new
+    (
+        pos.x + (look_dir.x * look_offset),
+        pos.y + (look_dir.y * look_offset),
+        (pos.z + (look_dir.z * look_offset)) + up_offset,
+        1
+    )
+end
+function this.GetSourcePos_Interval(pos, interval_xy, interval_z)
+    -- I think it's divide pos.x and y by interval_xy
+    -- take floor of that
+    -- multiply by that floored to get the returned xy
+
+    local x = math.floor(pos.x / interval_xy) * interval_xy
+    local y = math.floor(pos.y / interval_xy) * interval_xy
+    local z = math.floor(pos.z / interval_z) * interval_z
+
+    return Vector4.new(x, y, z, 1)
+end
+
+function this.DoesPrevCastExist(pos, list)
+    for i = 1, list:GetCount(), 1 do
+        local entry = list:GetItem(i)
+
+        if IsNearValue_vec4(entry.pos, pos) then
+            return true
+        end
+    end
+
+    return false
 end

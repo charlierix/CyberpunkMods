@@ -1,0 +1,13 @@
+{
+    "scan_from_look_offset": 3,
+    "scan_from_up_offset": 1.5,
+
+    "search_radius": 15,
+
+    "from_interval_xy": 2,
+    "from_interval_z": 1,
+
+    "scan_refresh_seconds": 0.33,
+
+    "hit_remember_seconds": 48
+}
