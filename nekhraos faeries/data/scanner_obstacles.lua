@@ -23,17 +23,44 @@ function Scanner_Obstacles:new(o)
     return obj
 end
 
-function Scanner_Obstacles:TEST_Scan()
-    this.EnsureIcoLoaded(self)
+function Scanner_Obstacles:TEST_TryScanPoint()
+    local pos = this.GetSourcePos_AlongLook(self.o, self.settings.scan_from_look_offset, self.settings.scan_from_up_offset)
 
+    debug_render_screen.Add_Dot(pos, nil, "8888")
+
+    local source_pos = this.GetSourcePos_Interval(pos, self.settings.from_interval_xy, self.settings.from_interval_z)
+
+    print(vec_str(pos) .. " - " .. vec_str(source_pos))
+
+    if this.DoesPrevCastExist(source_pos, self.prev_casts) then
+        print("already exists")
+        do return end
+    end
+
+    print("creating new")
+
+    -- add to list
+    local entry = self.prev_casts:GetNewItem()
+    entry.pos = source_pos
+    entry.forget_time = self.o.timer + self.settings.hit_remember_seconds
+
+    -- draw
+    debug_render_screen.Add_Dot(source_pos, nil, "FF0", nil, nil, 3)
+end
+
+function Scanner_Obstacles:TEST_Scan1()
     local center = this.GetSourcePos(self)
     if not center then
         print("from point isn't visible, skipping the scan")
         do return end
     end
 
+    --this.EnsureIcoLoaded(self)
+    local ico = this.GetRandomIcosahedron(self.icosahedrons)
+
     -- scan using ico's normals (no need to use the offsets, that's just overly complicated)
-    for _, face in ipairs(self.icosahedrons[math.random(#self.icosahedrons)]) do
+    --for _, face in ipairs(self.icosahedrons[math.random(#self.icosahedrons)]) do
+    for _, face in ipairs(ico) do
         local toPos = AddVectors(center, MultiplyVector(face.norm, self.settings.search_radius))
 
         local hit, normal, material_cname = self.o:RayCast(center, toPos)
@@ -52,28 +79,48 @@ function Scanner_Obstacles:TEST_Scan()
     end
 end
 
-function Scanner_Obstacles:TEST_TryScanPoint()
-    local pos = this.GetSourcePos_AlongLook(self.o, self.settings.scan_from_look_offset, self.settings.scan_from_up_offset)
-
-    debug_render_screen.Add_Dot(pos, nil, "8888")
-
-    local source_pos = this.GetSourcePos_Interval(pos, self.settings.from_interval_xy, self.settings.from_interval_z)
-
-    print(vec_str(pos) .. " - " .. vec_str(source_pos))
-
-    if this.DoesPrevCastExist(source_pos, self.prev_casts) then
-        print("already exists")
+function Scanner_Obstacles:TEST_Scan2()
+    -- Project a point based on eye and look, then snap that point to a grid
+    local fromPos = this.GetSourcePos(self)
+    if not fromPos then
+        print("from point isn't visible, skipping the scan")
+        do return end
     end
 
-    print("creating new")
+    -- See if that point has recently been scanned from
+    if this.DoesPrevCastExist(fromPos, self.prev_casts) then
+        print("from point already exists, skipping the scan")
+        do return end
+    end
 
-    -- add to list
+    -- Store the scan point
     local entry = self.prev_casts:GetNewItem()
-    entry.pos = source_pos
+    entry.pos = fromPos
     entry.forget_time = self.o.timer + self.settings.hit_remember_seconds
 
-    -- draw
-    debug_render_screen.Add_Dot(source_pos, nil, "FF0", nil, nil, 3)
+    debug_render_screen.Add_Dot(fromPos, nil, "8888")
+
+    -- Use an icosahedron to define 20 uniform ray directions (there are several randomly rotated icosahedron to help things
+    -- be more random)
+    local ico = this.GetRandomIcosahedron(self.icosahedrons)
+
+    for _, face in ipairs(ico) do
+        local toPos = AddVectors(fromPos, MultiplyVector(face.norm, self.settings.search_radius))
+
+        local hit, normal, material_cname = self.o:RayCast(fromPos, toPos)
+
+        if hit then
+            local material = Game.NameToString(material_cname)
+            if not self.material_colors[material] then
+                self.material_colors[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.33, 0.33)
+            end
+
+            --debug_render_screen.Add_Line(fromPos, hit, nil, "40F0")
+            debug_render_screen.Add_Square(hit, normal, 1.5, 1.5, nil, self.material_colors[material], "6000")
+        else
+            --debug_render_screen.Add_Line(fromPos, toPos, nil, "4F00")
+        end
+    end
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -107,6 +154,65 @@ function this.EnsureIcoLoaded(self)
         end
     end
 end
+
+function this.GetRandomIcosahedron(list)
+    local MAX_COUNT = 24
+
+    if #list == 0 then
+        print("loading ico from json")
+        -- List is empty, load the unrotated ico from json
+        table.insert(list, this.LoadIcosahedronFromConfig())
+        return list[1]
+    end
+
+    -- Pick a random ico (unrotated or one of the randomly rotated variants)
+    local index = math.random(MAX_COUNT)
+    if index <= #list then
+        print("using existing ico: " .. tostring(index))
+        return list[index]
+    end
+
+    print("creating new rotated ico: " .. tostring(#list + 1))
+
+    -- Random rotation at index doesn't exist, create and return one more (don't want to create all rotations at once to avoid
+    -- a big execution spike)
+    table.insert(list, this.GetRotatedIcosahedron(list[1]))
+    return list[#list]
+end
+
+function this.LoadIcosahedronFromConfig()
+    local ico_deserialized = DeserializeJSON("!configs/icosahedron.json")
+
+    local retVal = {}
+
+    for _, face in ipairs(ico_deserialized.ico) do
+        table.insert(retVal,
+        {
+            pos = Vector4.new(face.pos_x, face.pos_y, face.pos_z, 1),
+            norm = Vector4.new(face.norm_x, face.norm_y, face.norm_z, 1),
+        })
+    end
+
+    return retVal
+end
+
+function this.GetRotatedIcosahedron(ico)
+    local quat = GetRandomRotation()
+
+    local retVal = {}
+
+    for _, face in ipairs(ico) do
+        table.insert(retVal,
+        {
+            pos = RotateVector3D(face.pos, quat),
+            norm = RotateVector3D(face.norm, quat),
+        })
+    end
+
+    return retVal
+end
+
+
 
 function this.GetSourcePos(self)
     -- local pos = this.GetSourcePos_AlongLook(self.o, self.settings.scan_from_look_offset, self.settings.scan_from_up_offset)

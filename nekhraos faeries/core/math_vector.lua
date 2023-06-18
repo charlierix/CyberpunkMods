@@ -548,6 +548,13 @@ function GetRandomVector_Cone(axis, minAngle, maxAngle, minRadius, maxRadius)
     return retVal
 end
 
+function GetRandomRotation()
+    local axis = GetRandomVector_Spherical_Shell(1)
+    local radians = math.random() * math.pi * 2
+
+    return Quaternion_FromAxisRadians(axis, radians)
+end
+
 -- This returns a phi from 0 to pi based on an input from -1 to 1
 --
 -- NOTE: The input is linear (even chance of any value from -1 to 1), but the output is scaled to give an even chance of a Z

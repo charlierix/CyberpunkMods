@@ -264,11 +264,13 @@ registerHotkey("NekhraosFaeries_RaySquare", "Ray Square", function()
         debug_render_screen.Add_Square(hit, normal, 1, 1, nil, material_color[material], "000")
     end
 end)
-registerHotkey("NekhraosFaeries_IcoScan", "Ico Scan", function()
-    scanner_obstacles:TEST_Scan()
-end)
+
+
 registerHotkey("NekhraosFaeries_IcoScanPointExists", "Ico Scan Source Point", function()
     scanner_obstacles:TEST_TryScanPoint()
+end)
+registerHotkey("NekhraosFaeries_IcoScan", "Ico Scan", function()
+    scanner_obstacles:TEST_Scan2()
 end)
 
 
