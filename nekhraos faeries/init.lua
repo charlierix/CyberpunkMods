@@ -205,76 +205,6 @@ registerForEvent("onOverlayClose", function()
     isCETOpen = false
 end)
 
-
-
---TODO: random is too arbitrary, do plates of raycasts, similar to low flying v
-
-local material_color = {}
-registerHotkey("NekhraosFaeries_RandomRays", "Random Rays", function()
-    -- fire a ray
-    -- if it's a hit, add to no no squares
-
-    local raysPerFrame = 14
-    local rayLen = 60
-    local rayHeightMin = 1
-    local rayHeightMax = 2.5
-
-
-    o:GetPlayerInfo()
-
-    for i = 1, raysPerFrame, 1 do
-        local height = math.random(rayHeightMin, rayHeightMax)
-
-        local direction = GetRandomVector_Spherical_Shell(rayLen)
-
-        local fromPos = Vector4.new(o.pos.x, o.pos.y, o.pos.z + height, 1)
-        local toPos = Vector4.new(fromPos.x + direction.x, fromPos.y + direction.y, fromPos.z + direction.z, 1)
-
-        local hit, normal, material_cname = o:RayCast(fromPos, toPos)
-
-        if hit then
-            local material = Game.NameToString(material_cname)
-            if not material_color[material] then
-                material_color[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.5, 0.5)
-            end
-
-            -- debug_render_screen.Add_Dot(hit, nil, material_color[material])
-            -- debug_render_screen.Add_Line(hit, AddVectors(hit, normal), nil, material_color[material])
-            debug_render_screen.Add_Square(hit, normal, 1, 1, nil, material_color[material], "000")
-        end
-    end
-
-    -- print("--------------------------------")
-    -- ReportTable(material_color)
-end)
-registerHotkey("NekhraosFaeries_RaySquare", "Ray Square", function()
-    o:GetPlayerInfo()
-    local pos, look_dir = o:GetCrosshairInfo()
-
-    local hit, normal, material_cname = o:RayCast(pos, AddVectors(pos, MultiplyVector(look_dir, 40)))
-
-    if hit then
-        local material = Game.NameToString(material_cname)
-        if not material_color[material] then
-            material_color[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.5, 0.5)
-        end
-
-        -- 2 is good in open areas, but small bumps make it way too large
-        --debug_render_screen.Add_Square(hit, normal, 2, 2, nil, material_color[material], "000")
-        debug_render_screen.Add_Square(hit, normal, 1, 1, nil, material_color[material], "000")
-    end
-end)
-
-
-registerHotkey("NekhraosFaeries_IcoScanPointExists", "Ico Scan Source Point", function()
-    scanner_obstacles:TEST_TryScanPoint()
-end)
-registerHotkey("NekhraosFaeries_IcoScan", "Ico Scan", function()
-    scanner_obstacles:TEST_Scan2()
-end)
-
-
-
 registerHotkey("NekhraosFaeries_ScanAllObjecs", "Scan All Objects", function()
     local found, entities = prototype_scanning.GetAllObjects()
 
@@ -331,6 +261,10 @@ end)
 
 registerHotkey("NekhraosFaeries_LoadConfigs", "load configs from json", function()
     orb_pool.TEST_OverwriteConfigs_FromJSON()
+end)
+
+registerHotkey("NekhraosFaeries_ObstacleScan", "Obstacle Scan", function()
+    scanner_obstacles:TEST_Scan2()
 end)
 
 
