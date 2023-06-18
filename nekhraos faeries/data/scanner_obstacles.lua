@@ -23,62 +23,6 @@ function Scanner_Obstacles:new(o)
     return obj
 end
 
-function Scanner_Obstacles:TEST_TryScanPoint()
-    local pos = this.GetSourcePos_AlongLook(self.o, self.settings.scan_from_look_offset, self.settings.scan_from_up_offset)
-
-    debug_render_screen.Add_Dot(pos, nil, "8888")
-
-    local source_pos = this.GetSourcePos_Interval(pos, self.settings.from_interval_xy, self.settings.from_interval_z)
-
-    print(vec_str(pos) .. " - " .. vec_str(source_pos))
-
-    if this.DoesPrevCastExist(source_pos, self.prev_casts) then
-        print("already exists")
-        do return end
-    end
-
-    print("creating new")
-
-    -- add to list
-    local entry = self.prev_casts:GetNewItem()
-    entry.pos = source_pos
-    entry.forget_time = self.o.timer + self.settings.hit_remember_seconds
-
-    -- draw
-    debug_render_screen.Add_Dot(source_pos, nil, "FF0", nil, nil, 3)
-end
-
-function Scanner_Obstacles:TEST_Scan1()
-    local center = this.GetSourcePos(self)
-    if not center then
-        print("from point isn't visible, skipping the scan")
-        do return end
-    end
-
-    --this.EnsureIcoLoaded(self)
-    local ico = this.GetRandomIcosahedron(self.icosahedrons)
-
-    -- scan using ico's normals (no need to use the offsets, that's just overly complicated)
-    --for _, face in ipairs(self.icosahedrons[math.random(#self.icosahedrons)]) do
-    for _, face in ipairs(ico) do
-        local toPos = AddVectors(center, MultiplyVector(face.norm, self.settings.search_radius))
-
-        local hit, normal, material_cname = self.o:RayCast(center, toPos)
-
-        if hit then
-            local material = Game.NameToString(material_cname)
-            if not self.material_colors[material] then
-                self.material_colors[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.5, 0.5)
-            end
-
-            debug_render_screen.Add_Line(center, hit, nil, "40F0")
-            debug_render_screen.Add_Square(hit, normal, 1.5, 1.5, nil, self.material_colors[material], "000")
-        else
-            debug_render_screen.Add_Line(center, toPos, nil, "4F00")
-        end
-    end
-end
-
 function Scanner_Obstacles:TEST_Scan2()
     -- Project a point based on eye and look, then snap that point to a grid
     local fromPos = this.GetSourcePos(self)
@@ -125,41 +69,10 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
---TODO: instead of a folder full of hardcoded random rotations, just have the one config and do the random rotations here
-function this.EnsureIcoLoaded(self)
-    local FOLDER = "!configs"
-
-    if #self.icosahedrons > 0 then
-        do return end
-    end
-
-    for _, file_folder in pairs(dir(FOLDER)) do
-        --icosahedron 0.json
-        if file_folder.type == "file" and file_folder.name:match("^icosahedron.+json$") then
-            print("loading file: " .. file_folder.name)
-
-            local ico_deserialized = DeserializeJSON(FOLDER .. "/" .. file_folder.name)
-
-            local ico = {}
-
-            for _, face in ipairs(ico_deserialized.ico) do
-                table.insert(ico,
-                {
-                    pos = Vector4.new(face.pos_x, face.pos_y, face.pos_z, 1),
-                    norm = Vector4.new(face.norm_x, face.norm_y, face.norm_z, 1),
-                })
-            end
-
-            table.insert(self.icosahedrons, ico)
-        end
-    end
-end
-
 function this.GetRandomIcosahedron(list)
     local MAX_COUNT = 24
 
     if #list == 0 then
-        print("loading ico from json")
         -- List is empty, load the unrotated ico from json
         table.insert(list, this.LoadIcosahedronFromConfig())
         return list[1]
@@ -168,11 +81,8 @@ function this.GetRandomIcosahedron(list)
     -- Pick a random ico (unrotated or one of the randomly rotated variants)
     local index = math.random(MAX_COUNT)
     if index <= #list then
-        print("using existing ico: " .. tostring(index))
         return list[index]
     end
-
-    print("creating new rotated ico: " .. tostring(#list + 1))
 
     -- Random rotation at index doesn't exist, create and return one more (don't want to create all rotations at once to avoid
     -- a big execution spike)
@@ -212,14 +122,7 @@ function this.GetRotatedIcosahedron(ico)
     return retVal
 end
 
-
-
 function this.GetSourcePos(self)
-    -- local pos = this.GetSourcePos_AlongLook(self.o, self.settings.scan_from_look_offset, self.settings.scan_from_up_offset)
-    -- return this.GetSourcePos_Interval(pos, self.settings.from_interval_xy, self.settings.from_interval_z)
-
-    --if not self.o:IsPointVisible()
-
     self.o:GetPlayerInfo()
     local pos1, look_dir = self.o:GetCrosshairInfo()
 
@@ -238,18 +141,6 @@ function this.GetSourcePos(self)
     else
         return nil
     end
-end
-function this.GetSourcePos_AlongLook(o, look_offset, up_offset)
-    o:GetPlayerInfo()
-    local pos, look_dir = o:GetCrosshairInfo()
-
-    return Vector4.new
-    (
-        pos.x + (look_dir.x * look_offset),
-        pos.y + (look_dir.y * look_offset),
-        (pos.z + (look_dir.z * look_offset)) + up_offset,
-        1
-    )
 end
 function this.GetSourcePos_Interval(pos, interval_xy, interval_z)
     -- I think it's divide pos.x and y by interval_xy
