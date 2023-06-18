@@ -49,6 +49,10 @@ function OrbPool.Clear()
     orbs:Clear()
 end
 
+function OrbPool.GetCount()
+    return orbs:GetCount()
+end
+
 -- TODO: if the number of orbs is too large, periodically cluster with K-Means
 -- TODO: give an option for a weighted search.  ai could define goals as an ND vector, so there's a search for orbs in physical space and another search for orbs in goal space
 -- Returns all the items within radius, sorted by distance

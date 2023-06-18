@@ -193,6 +193,7 @@ registerForEvent("onUpdate", function(deltaTime)
         keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
     end
 
+    scanner_obstacles:Tick()
     orb_pool.Tick(o, scanner_orbs, deltaTime)
 
     debug_render_screen.CallFrom_onUpdate(deltaTime)

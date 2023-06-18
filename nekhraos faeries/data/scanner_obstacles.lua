@@ -2,6 +2,8 @@ Scanner_Obstacles = {}
 
 local this = {}
 
+local SHOW_DEBUG = true
+
 function Scanner_Obstacles:new(o)
     local obj = {}
     setmetatable(obj, self)
@@ -17,15 +19,76 @@ function Scanner_Obstacles:new(o)
     obj.icosahedrons = {}       -- gets populated from jsons when first needed
 
     -- list of:
-    --  { pos, forget_time }
+    --  { pos, forget_time, debug_ids }
     obj.prev_casts = StickyList:new()
+
+    obj.next_scan_time = 0
 
     return obj
 end
 
+function Scanner_Obstacles:Tick()
+    -- If there aren't orbs, then there's nothing to do
+    if orb_pool.GetCount() == 0 then
+        do return end       -- don't waste processor checking if there's cleanup.  The next time there's an orb, all the old stuff will get cleaned up
+    end
+
+    -- Remove old scan points
+    this.RemoveOldScanPoints(self.prev_casts, self.o.timer)
+
+    -- Trying to scan every frame would be excessive
+    if self.o.timer < self.next_scan_time then
+        do return end
+    end
+
+    -- If moving too fast, all the detected obstacles will be behind the player, so there's no point in scanning
+    -- beyond a certain speed
+    local vel = self.o:Custom_CurrentlyFlying_GetVelocity(self.o.vel)       -- a mod could be flying, so use that velocity else the velocity known by the game
+    local speed_sqr = GetVectorLengthSqr(vel)
+    if speed_sqr > self.settings.max_speed * self.settings.max_speed then
+        do return end
+    end
+
+    self.next_scan_time = self.o.timer + GetScaledValue(self.settings.scan_refresh_seconds * 0.9, self.settings.scan_refresh_seconds * 1.1, 0, 1, math.random())
+
+    local speed = math.sqrt(speed_sqr)
+
+    -- Get scan from point
+    local fromPos = this.GetSourcePos(self, speed)
+    if not fromPos then
+        do return end       -- the point is behind a wall
+    end
+
+    -- See if that point has recently been scanned from
+    if this.DoesPrevCastExist(fromPos, self.prev_casts) then
+        do return end
+    end
+
+    -- Store the scan point
+    local entry = this.CreatePrevCast(self, fromPos)
+
+    if SHOW_DEBUG then
+        this.ShowDebug_ScanPoint(entry, fromPos)
+    end
+
+    -- Use an icosahedron to define 20 uniform ray directions (there are several randomly rotated icosahedrons to help things
+    -- be more random)
+    local ico = this.GetRandomIcosahedron(self.icosahedrons)
+
+    for _, face in ipairs(ico) do
+        local toPos = AddVectors(fromPos, MultiplyVector(face.norm, self.settings.search_radius))
+
+        local hit, normal, material_cname = self.o:RayCast(fromPos, toPos)
+
+        if SHOW_DEBUG then
+            this.ShowDebug_Hit(entry, fromPos, hit, normal, material_cname, self.material_colors)
+        end
+    end
+end
+
 function Scanner_Obstacles:TEST_Scan2()
     -- Project a point based on eye and look, then snap that point to a grid
-    local fromPos = this.GetSourcePos(self)
+    local fromPos = this.GetSourcePos(self, 0)
     if not fromPos then
         print("from point isn't visible, skipping the scan")
         do return end
@@ -38,13 +101,13 @@ function Scanner_Obstacles:TEST_Scan2()
     end
 
     -- Store the scan point
-    local entry = self.prev_casts:GetNewItem()
-    entry.pos = fromPos
-    entry.forget_time = self.o.timer + self.settings.hit_remember_seconds
+    local entry = this.CreatePrevCast(self, fromPos)
 
-    debug_render_screen.Add_Dot(fromPos, nil, "8888")
+    if SHOW_DEBUG then
+        this.ShowDebug_ScanPoint(entry, fromPos)
+    end
 
-    -- Use an icosahedron to define 20 uniform ray directions (there are several randomly rotated icosahedron to help things
+    -- Use an icosahedron to define 20 uniform ray directions (there are several randomly rotated icosahedrons to help things
     -- be more random)
     local ico = this.GetRandomIcosahedron(self.icosahedrons)
 
@@ -53,21 +116,33 @@ function Scanner_Obstacles:TEST_Scan2()
 
         local hit, normal, material_cname = self.o:RayCast(fromPos, toPos)
 
-        if hit then
-            local material = Game.NameToString(material_cname)
-            if not self.material_colors[material] then
-                self.material_colors[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.33, 0.33)
-            end
-
-            --debug_render_screen.Add_Line(fromPos, hit, nil, "40F0")
-            debug_render_screen.Add_Square(hit, normal, 1.5, 1.5, nil, self.material_colors[material], "6000")
-        else
-            --debug_render_screen.Add_Line(fromPos, toPos, nil, "4F00")
+        if SHOW_DEBUG then
+            this.ShowDebug_Hit(entry, fromPos, hit, normal, material_cname, self.material_colors)
         end
     end
 end
 
 ----------------------------------- Private Methods -----------------------------------
+
+function this.RemoveOldScanPoints(list, time)
+    local index = 1
+
+    while index <= list:GetCount() do
+        local entry = list:GetItem(index)
+
+        if time > entry.forget_time then
+            if SHOW_DEBUG then
+                for _, id in ipairs(entry.debug_ids) do
+                    debug_render_screen.Remove(id)
+                end
+            end
+
+            list:RemoveItem(index)
+        else
+            index = index + 1
+        end
+    end
+end
 
 function this.GetRandomIcosahedron(list)
     local MAX_COUNT = 24
@@ -122,15 +197,19 @@ function this.GetRotatedIcosahedron(ico)
     return retVal
 end
 
-function this.GetSourcePos(self)
+function this.GetSourcePos(self, speed)
     self.o:GetPlayerInfo()
     local pos1, look_dir = self.o:GetCrosshairInfo()
 
+    local look_offset = GetScaledValue(self.settings.scan_from_look_offset_zero, self.settings.scan_from_look_offset_max, 0, self.settings.max_speed, speed)
+    look_offset = Clamp(self.settings.scan_from_look_offset_zero, self.settings.scan_from_look_offset_max, look_offset)
+
+
     local pos2 = Vector4.new
     (
-        pos1.x + (look_dir.x * self.settings.scan_from_look_offset),
-        pos1.y + (look_dir.y * self.settings.scan_from_look_offset),
-        (pos1.z + (look_dir.z * self.settings.scan_from_look_offset)) + self.settings.scan_from_up_offset,
+        pos1.x + (look_dir.x * look_offset),
+        pos1.y + (look_dir.y * look_offset),
+        (pos1.z + (look_dir.z * look_offset)) + self.settings.scan_from_up_offset,
         1
     )
 
@@ -154,6 +233,15 @@ function this.GetSourcePos_Interval(pos, interval_xy, interval_z)
     return Vector4.new(x, y, z, 1)
 end
 
+function this.CreatePrevCast(self, pos)
+    local entry = self.prev_casts:GetNewItem()
+    entry.pos = pos
+    entry.forget_time = self.o.timer + self.settings.hit_remember_seconds
+    entry.debug_ids = {}
+
+    return entry
+end
+
 function this.DoesPrevCastExist(pos, list)
     for i = 1, list:GetCount(), 1 do
         local entry = list:GetItem(i)
@@ -164,4 +252,21 @@ function this.DoesPrevCastExist(pos, list)
     end
 
     return false
+end
+
+function this.ShowDebug_ScanPoint(entry, fromPos)
+    table.insert(entry.debug_ids, debug_render_screen.Add_Dot(fromPos, nil, "8888"))
+end
+function this.ShowDebug_Hit(entry, fromPos, hit, normal, material_cname, material_colors)
+    if hit then
+        local material = Game.NameToString(material_cname)
+        if not material_colors[material] then
+            material_colors[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.33, 0.33)
+        end
+
+        --table.insert(entry.debug_ids, debug_render_screen.Add_Line(fromPos, hit, nil, "40F0"))
+        table.insert(entry.debug_ids, debug_render_screen.Add_Square(hit, normal, 1.5, 1.5, nil, material_colors[material], "6000"))
+    else
+        --table.insert(entry.debug_ids, debug_render_screen.Add_Line(fromPos, toPos, nil, "4F00"))
+    end
 end
