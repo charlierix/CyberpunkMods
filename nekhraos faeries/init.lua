@@ -193,6 +193,7 @@ registerForEvent("onUpdate", function(deltaTime)
         keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
     end
 
+    --nono_squares.Tick(o)        -- doing this before scanner so that square merging isn't done in the same frame as scanner's ray casts
     scanner_obstacles:Tick()
     orb_pool.Tick(o, scanner_orbs, deltaTime)
 
@@ -265,7 +266,7 @@ registerHotkey("NekhraosFaeries_LoadConfigs", "load configs from json", function
 end)
 
 registerHotkey("NekhraosFaeries_ObstacleScan", "Obstacle Scan", function()
-    scanner_obstacles:TEST_Scan2()
+    scanner_obstacles:TEST_Scan2(true)
 end)
 
 
