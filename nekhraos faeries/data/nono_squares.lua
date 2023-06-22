@@ -2,8 +2,6 @@ local NoNoSquares = {}
 
 local this = {}
 
---local RADIUS = 1.5 / 2
-local RADIUS = 3 / 2
 local DOT = 0.98
 
 -- list of long term squares
@@ -15,6 +13,11 @@ local initial_list = {}
 -- instead of just hit and normal, store more of an entry that has centerpoint, size (final should have last update time)
 local intermediate_list = {}
 local final_list = {}
+
+local settings = nil                        --settings_util.Obstacles()
+
+local up = nil                              --Vector4.new(0, 0, 1, 1)
+local dot_hitradius_animcurve = nil         --AnimationCurve:new()
 
 function NoNoSquares.Tick(o)
     -- Merge intermediate squares into final.  Spreading the work over a couple frames to avoid processor spikes.  Doing
@@ -58,6 +61,10 @@ function NoNoSquares.GetNearby(point, radius)
 end
 
 function NoNoSquares.TEST_AddHits(hits)
+    if not settings then
+        settings = settings_util.Obstacles()
+    end
+
     local material_colors = {}
 
     local by_material = {}
@@ -76,8 +83,9 @@ function NoNoSquares.TEST_AddHits(hits)
         end
 
         --TODO: draw radius based on animation curve
-        --debug_render_screen.Add_Square(entry.hit, entry.normal, RADIUS * 2, RADIUS * 2, nil, material_colors[material], "4000")
-        debug_render_screen.Add_Circle(entry.hit, entry.normal, RADIUS, nil, "000", nil, nil, 6)
+        local radius = this.GetHitRadius(entry.normal)
+        --debug_render_screen.Add_Square(entry.hit, entry.normal, radius * 2, radius * 2, nil, material_colors[material], "4000")
+        debug_render_screen.Add_Circle(entry.hit, entry.normal, radius, nil, "000", nil, nil, 6)
 
         table.insert(by_material[material], { hit = entry.hit, normal = entry.normal })
     end
@@ -103,7 +111,8 @@ function this.TEST_MergeSquares(material_set)
     local retVal = {}
 
     for _, entry in ipairs(material_set) do
-        this.TEST_MergeSquares_Add(retVal, entry.hit, entry.normal, RADIUS)
+        local radius = this.GetHitRadius(entry.normal)
+        this.TEST_MergeSquares_Add(retVal, entry.hit, entry.normal, radius)
     end
 
     return retVal
@@ -213,6 +222,24 @@ function this.GetAverageNormal(normal1, radius1, normal2, radius2)
         1)
 
     return ToUnit(average)
+end
+
+function this.GetHitRadius(normal)
+    if not up then
+        up = Vector4.new(0, 0, 1, 1)
+    end
+
+    if not dot_hitradius_animcurve then
+        dot_hitradius_animcurve = AnimationCurve:new()
+
+        for _, entry in ipairs(settings.angle_hitradius_animcurve) do
+            dot_hitradius_animcurve:AddKeyValue(Angle_to_Dot(entry.input), entry.output)
+        end
+    end
+
+    local dot = DotProduct3D(normal, up)
+
+    return dot_hitradius_animcurve:Evaluate(dot)
 end
 
 function this.Move_Initial_to_Intermediate()

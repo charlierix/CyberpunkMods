@@ -12,5 +12,13 @@
 
     "max_speed": 9,
 
-    "hit_remember_seconds": 42
+    "hit_remember_seconds": 42,
+
+    "angle_hitradius_animcurve":
+    [
+        { "input": 0, "output": 1.5 },
+        { "input": 25, "output": 0.85 },
+        { "input": 90, "output": 0.66 },
+        { "input": 180, "output": 0.9 }
+    ]    
 }

@@ -20,4 +20,10 @@ public record swarmbot_obstacles
 
     // How long hits should be remembered
     public float hit_remember_seconds { get; init; }
+
+    // This allows walls to have a smaller radius than the ground
+    // Input: degrees between hit's normal and the up vector
+    //  values are in degrees.  0 would be a normal that is straight up, 90 is vertical wall, 180 is a ceiling
+    // Output: radius of the hit
+    public property_mult_gradientstop[] angle_hitradius_animcurve { get; init; }
 }
