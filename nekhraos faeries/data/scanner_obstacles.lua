@@ -80,6 +80,10 @@ function Scanner_Obstacles:Tick()
 
         local hit, normal, material_cname = self.o:RayCast(fromPos, toPos)
 
+        if hit then
+            nono_squares.AddRayHit(hit, normal, material_cname)
+        end
+
         if SHOW_DEBUG then
             this.ShowDebug_Hit(entry, fromPos, hit, normal, material_cname, self.material_colors)
         end

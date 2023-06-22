@@ -7,52 +7,72 @@ local DOT = 0.98
 -- list of long term squares
 -- list of newly added squares (they need to be merged into the long term squares.  Also, by storing these here, the merge can be done in a separate frame from the ray casts)
 
--- lists where material is the key, stickylist of { hit, normal } as the value
+-- lists where material is the key, stickylist of { center, normal, radius } as the value
 local initial_list = {}
-
--- instead of just hit and normal, store more of an entry that has centerpoint, size (final should have last update time)
 local intermediate_list = {}
-local final_list = {}
+local final_list = {}                       -- this should add last updated time
 
 local settings = nil                        --settings_util.Obstacles()
 
 local up = nil                              --Vector4.new(0, 0, 1, 1)
 local dot_hitradius_animcurve = nil         --AnimationCurve:new()
 
+local SHOW_DEBUG = true
+local material_colors = {}
+
 function NoNoSquares.Tick(o)
+    if not settings then
+        settings = settings_util.Obstacles()
+    end
+
     -- Merge intermediate squares into final.  Spreading the work over a couple frames to avoid processor spikes.  Doing
     -- intermediate first in case initial has a couple frames in a row of adding (shouldn't happen since scanner is set
     -- to run a few times a second)
-    local intermediate = this.Move_Intermediate_to_Final()
+    local intermediate = this.Move_Intermediate_to_Final(o.timer)
 
     if not intermediate then
-        this.Move_Initial_to_Intermediate()
+        this.Move_Initial_to_Intermediate(o.timer)
     end
 
     -- clean up old squares
+
+
+
+
+    -------- TEMP --------
+    if SHOW_DEBUG then
+        for material, list in pairs(intermediate_list) do
+            if not material_colors[material] then
+                material_colors[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.33, 0.33)
+                --material_colors[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.9, 0.9)
+            end
+
+            for i = 1, list:GetCount(), 1 do
+                local entry = list:GetItem(i)
+                --debug_render_screen.Add_Circle(entry.center, entry.normal, entry.radius, nil, "FFF", nil, true, 12)       -- expensive to use single frame
+                debug_render_screen.Add_Square(entry.center, entry.normal, entry.radius * 2, entry.radius * 2, nil, material_colors[material], "4000", nil, true)
+            end
+        end
+    end
 end
 
-function NoNoSquares.AddRayHit(point, normal, material)
+function NoNoSquares.AddRayHit(point, normal, material_cname)
+    if not settings then
+        settings = settings_util.Obstacles()
+    end
+
+    this.TEMP_ClearIntermediate()
+
+    local material = Game.NameToString(material_cname)
+
     if not initial_list[material] then
         initial_list[material] = StickyList:new()
     end
 
     local entry = initial_list[material]:GetNewItem()
-    entry.hit = point
+    entry.center = point
     entry.normal = normal
-
-
-    -- assume this hit is the center of a square
-
-    -- look for nearby hits with the same normal
-    --  if found, enlarge the assumed square
-
-
-    -- define a cube based on the square's area (may want more depth than just a cube)
-
-
-
-
+    entry.radius = this.GetHitRadius(entry.normal)
 end
 
 -- Returns a list of squares that are inside the search sphere
@@ -64,8 +84,6 @@ function NoNoSquares.TEST_AddHits(hits)
     if not settings then
         settings = settings_util.Obstacles()
     end
-
-    local material_colors = {}
 
     local by_material = {}
 
@@ -117,10 +135,6 @@ function this.TEST_MergeSquares(material_set)
 
     return retVal
 end
-
-
---TODO: radius should be larger for hits with straight up normals (use an animation curve)
-
 
 -- Adds the circle into the list, merging with whatever it is close to that has the same normal
 function this.TEST_MergeSquares_Add(list, center, normal, radius)
@@ -211,6 +225,12 @@ function this.TEST_GetMergedCircle(center1, normal1, radius1, center2, normal2, 
     return midpoint, new_radius, false, false
 end
 
+function this.TEMP_ClearIntermediate()
+    for _, list in pairs(intermediate_list) do
+        list:Clear()
+    end
+end
+
 -- Returns the weighted average of the normals (as unit vector)
 function this.GetAverageNormal(normal1, radius1, normal2, radius2)
     local sum_radius = radius1 + radius2
@@ -242,19 +262,109 @@ function this.GetHitRadius(normal)
     return dot_hitradius_animcurve:Evaluate(dot)
 end
 
-function this.Move_Initial_to_Intermediate()
+function this.Move_Initial_to_Intermediate(time)
     for material, list in pairs(initial_list) do
+        if not intermediate_list[material] then
+            intermediate_list[material] = StickyList:new()
+        end
 
+        this.MergeInto(list, intermediate_list[material], time)
+        list:Clear()
     end
 end
 
-function this.Move_Intermediate_to_Final()
-    for material, list in pairs(initial_list) do
-
-    end
+function this.Move_Intermediate_to_Final(time)
+    -- for material, list in pairs(initial_list) do
+    -- end
 
     return false
 end
+
+-- Each list is a StickyList with elements { center, normal, radius, last_update_time }
+function this.MergeInto(list_source, list_dest, time)
+    for i = 1, list_source:GetCount(), 1 do
+        local entry = list_source:GetItem(i)
+        this.MergeInto_Add(list_dest, entry.center, entry.normal, entry.radius, time)
+    end
+end
+-- Adds the circle into the list, merging with whatever it is close to that has the same normal
+function this.MergeInto_Add(list, center, normal, radius, time)
+    local index = 1
+
+    while index <= list:GetCount() do
+        local entry = list:GetItem(index)
+
+        local removed = false
+
+        if DotProduct3D(entry.normal, normal) >= DOT then
+            local dist_sqr = GetVectorDiffLengthSqr(entry.center, center)
+
+            local touch_dist = entry.radius + radius
+
+            if dist_sqr <= touch_dist * touch_dist then
+                -- Circles are touching.  Need to merge into a new one
+                local new_center, new_radius, is_eaten_by_1, is_eaten_by_2 = this.GetMergedCircle(entry.center, entry.radius, center, radius, math.sqrt(dist_sqr))
+
+                if is_eaten_by_1 then
+                    -- The circle being added is completely inside the existing.  Since the list only contains non
+                    -- touching circles, there is nothing else to do
+                    do return end
+
+                elseif is_eaten_by_2 then
+                    -- The proposed merged circle is inside the circle passed in.  Wipe the current circle and keep
+                    -- looking
+                    list:RemoveItem(index)
+                    removed = true
+
+                else
+                    -- Define a new circle that is the merge of these two
+                    local new_normal = this.GetAverageNormal(entry.normal, entry.radius, normal, radius)
+
+                    -- Remove existing and recurse with the new merged circle
+                    list:RemoveItem(index)
+                    this.MergeInto_Add(list, new_center, new_normal, new_radius, time)
+                    do return end       -- no further iterating needed, since the recurse call took care of adding (also, the for loop would be messed up from the remove)
+                end
+            end
+        end
+
+        if not removed then
+            index = index + 1
+        end
+    end
+
+    -- If execution gets there, then the circle passed in isn't touching existing
+    local new_entry = list:GetNewItem()
+    new_entry.center = center
+    new_entry.normal = normal
+    new_entry.radius = radius
+    new_entry.last_update_time = time
+end
+
+function this.GetMergedCircle(center1, radius1, center2, radius2, dist)
+    -- Check for one of the circles inside the other
+    if dist < radius1 - radius2 then
+        return center1, radius1, true, false        -- two is inside of one
+
+    elseif dist < radius2 - radius1 then
+        return center2, radius2, false, true        -- one is inside of two
+    end
+
+    -- Radius of the new circle
+    local new_radius = (radius1 + dist + radius2) / 2
+
+    -- Draw a line from the edge of circle1 to the edge of circle2
+    local dir_1_to_2 = DivideVector(SubtractVectors(center2, center1), dist)
+
+    local endpoint_1 = AddVectors(center1, MultiplyVector(dir_1_to_2, -radius1))
+    local endpoint_2 = AddVectors(center2, MultiplyVector(dir_1_to_2, radius2))
+
+    -- The center of the new circle is the middle of that line
+    local midpoint = GetMidPoint(endpoint_1, endpoint_2)
+
+    return midpoint, new_radius, false, false
+end
+
 
 function this.FindMatches(list_from, list_to)
     

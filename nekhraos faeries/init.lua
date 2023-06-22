@@ -193,7 +193,7 @@ registerForEvent("onUpdate", function(deltaTime)
         keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
     end
 
-    --nono_squares.Tick(o)        -- doing this before scanner so that square merging isn't done in the same frame as scanner's ray casts
+    nono_squares.Tick(o)        -- doing this before scanner so that square merging isn't done in the same frame as scanner's ray casts
     scanner_obstacles:Tick()
     orb_pool.Tick(o, scanner_orbs, deltaTime)
 
