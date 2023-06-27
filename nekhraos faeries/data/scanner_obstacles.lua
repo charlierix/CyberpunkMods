@@ -19,7 +19,7 @@ function Scanner_Obstacles:new(o)
     obj.icosahedrons = {}       -- gets populated from jsons when first needed
 
     -- list of:
-    --  { pos, forget_time, debug_ids }
+    --  { pos, forget_time_min, debug_ids }
     obj.prev_casts = StickyList:new()
 
     obj.next_scan_time = 0
@@ -34,7 +34,7 @@ function Scanner_Obstacles:Tick()
     end
 
     -- Remove old scan points
-    this.RemoveOldScanPoints(self.prev_casts, self.o.timer)
+    this.RemoveOldScanPoints(self.prev_casts, self.o.timer, self.o.pos, self.settings.hit_remember_max_distance)
 
     -- Trying to scan every frame would be excessive
     if self.o.timer < self.next_scan_time then
@@ -138,13 +138,13 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.RemoveOldScanPoints(list, time)
+function this.RemoveOldScanPoints(list, time, pos, max_distance)
     local index = 1
 
     while index <= list:GetCount() do
         local entry = list:GetItem(index)
 
-        if time > entry.forget_time then
+        if time > entry.forget_time_min and GetVectorDiffLengthSqr(pos, entry.pos) > max_distance * max_distance then
             if SHOW_DEBUG then
                 for _, id in ipairs(entry.debug_ids) do
                     debug_render_screen.Remove(id)
@@ -250,7 +250,7 @@ end
 function this.CreatePrevCast(o, prev_casts, settings, pos)
     local entry = prev_casts:GetNewItem()
     entry.pos = pos
-    entry.forget_time = o.timer + settings.hit_remember_seconds
+    entry.forget_time_min = o.timer + settings.hit_remember_min_seconds
 
     if SHOW_DEBUG then
         entry.debug_ids = {}

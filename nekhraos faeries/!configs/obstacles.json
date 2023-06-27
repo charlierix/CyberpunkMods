@@ -14,7 +14,8 @@
 
 
 
-    "hit_remember_seconds": 42,
+    "hit_remember_min_seconds": 6,
+    "hit_remember_max_distance": 40,
 
     "hit_max_radius": 8,
 

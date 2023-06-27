@@ -35,7 +35,7 @@ function NoNoSquares.Tick(o)
     end
 
     -- Clean up old squares
-    this.RemoveOldSquares(o.timer, settings.hit_remember_seconds)
+    this.RemoveOldSquares(o.timer, o.pos, settings.hit_remember_min_seconds, settings.hit_remember_max_distance)
 
     -------- TEMP DRAWING --------
     if SHOW_DEBUG then
@@ -410,14 +410,17 @@ function this.GetMergedCircle(center1, radius1, center2, radius2, dist)
     return midpoint, new_radius, false, false
 end
 
-function this.RemoveOldSquares(time, remember_seconds)
-    for _, list in pairs(initial_list) do
+function this.RemoveOldSquares(time, pos, min_seconds, max_distance)
+    local max_distance_sqr = max_distance * max_distance
+
+    for _, list in pairs(final_list) do
         local index = 1
 
         while index <= list:GetCount() do
             local entry = list:GetItem(index)
 
-            if time - entry.last_update_time > remember_seconds then
+            --NOTE: not accounting for radius of hit.  That needs to be part of max_distance
+            if time - entry.last_update_time > min_seconds and GetVectorDiffLengthSqr(pos, entry.center) > max_distance_sqr then
                 list:RemoveItem(index)
             else
                 index = index + 1

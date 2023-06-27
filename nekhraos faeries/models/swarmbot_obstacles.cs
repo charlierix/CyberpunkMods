@@ -20,10 +20,15 @@ public record swarmbot_obstacles
     // If the player is moving too fast, don't bother scanning for obstacles
     public float max_speed { get; init; }
 
-    // ----------------------- Storage -----------------------
+    // ----------------------- Scanning/Storage -----------------------
 
-    // How long hits should be remembered
-    public float hit_remember_seconds { get; init; }
+    // Throw away hits when they too far away, but keep them around for at least a small amount of time
+    // The min time is probably unnecessary complexity, it just feels like it might be needed in some cases
+    public float hit_remember_min_seconds { get; init; }
+    // NOTE: The calculation is only to center, so this needs to be large enough for hit_max_radius and scan_radius
+    public float hit_remember_max_distance { get; init; }
+
+    // ----------------------- Storage -----------------------
 
     // Don't let hits merge into infinite size
     public float hit_max_radius { get; init; }
