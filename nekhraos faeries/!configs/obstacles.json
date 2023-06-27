@@ -3,7 +3,7 @@
     "scan_from_look_offset_max": 8,
     "scan_from_up_offset": 1.5,
 
-    "search_radius": 15,
+    "scan_radius": 15,
 
     "from_interval_xy": 2,
     "from_interval_z": 1,
@@ -12,13 +12,40 @@
 
     "max_speed": 9,
 
+
+
     "hit_remember_seconds": 42,
 
-    "angle_hitradius_animcurve":
+    "hit_max_radius": 8,
+
+    "angle_hitradius":
     [
         { "input": 0, "output": 1.5 },
         { "input": 25, "output": 0.85 },
         { "input": 90, "output": 0.66 },
         { "input": 180, "output": 0.9 }
-    ]    
+    ],
+
+
+
+    "angle_radiusmult":
+    [
+        { "input": 90, "output": 1 },
+        { "input": 135, "output": 2.5 },
+        { "input": 180, "output": 3 }
+    ],
+
+    "edge_percentradius_accelmult":
+    [
+        { "input": 0, "output": 0 },
+        { "input": 0.15, "output": 0.97 },
+        { "input": 0.5, "output": 1 }
+    ],
+
+    "depth_percentradius_accelmult":
+    [
+        { "input": 0, "output": 0 },
+        { "input": 0.15, "output": 0.85 },
+        { "input": 0.33, "output": 1 }
+    ]
 }

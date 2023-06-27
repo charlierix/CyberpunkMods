@@ -28,20 +28,31 @@ function NoNoSquares.Tick(o)
     -- Merge intermediate squares into final.  Spreading the work over a couple frames to avoid processor spikes.  Doing
     -- intermediate first in case initial has a couple frames in a row of adding (shouldn't happen since scanner is set
     -- to run a few times a second)
-    local intermediate = this.Move_Intermediate_to_Final(o.timer)
+    local intermediate = this.Move_Intermediate_to_Final(o.timer, settings.hit_max_radius)
 
     if not intermediate then
-        this.Move_Initial_to_Intermediate(o.timer)
+        this.Move_Initial_to_Intermediate(o.timer, settings.hit_max_radius)
     end
 
-    -- clean up old squares
+    -- Clean up old squares
+    this.RemoveOldSquares(o.timer, settings.hit_remember_seconds)
 
-
-
-
-    -------- TEMP --------
+    -------- TEMP DRAWING --------
     if SHOW_DEBUG then
-        for material, list in pairs(intermediate_list) do
+        -- Give count summary of final, intermediate
+        local report_intermediate = this.GetCountReport(intermediate_list)
+        local report_final = this.GetCountReport(final_list)
+
+        if report_intermediate then
+            debug_render_screen.Add_Text2D(0.2, 0.4, report_intermediate, nil, "B84B194B", "FFF", nil, true)
+        end
+
+        if report_final then
+            debug_render_screen.Add_Text2D(0.1, 0.4, report_final, nil, "BB66532C", "FFF", nil, true)
+        end
+
+        -- Draw squares
+        for material, list in pairs(final_list) do
             if not material_colors[material] then
                 material_colors[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.33, 0.33)
                 --material_colors[material] = GetRandomColor_HSV_ToHex(0, 360, 0.5, 0.8, 0.66, 0.85, 0.9, 0.9)
@@ -61,7 +72,7 @@ function NoNoSquares.AddRayHit(point, normal, material_cname)
         settings = settings_util.Obstacles()
     end
 
-    this.TEMP_ClearIntermediate()
+    --this.TEMP_ClearIntermediate()
 
     local material = Game.NameToString(material_cname)
 
@@ -75,9 +86,31 @@ function NoNoSquares.AddRayHit(point, normal, material_cname)
     entry.radius = this.GetHitRadius(entry.normal)
 end
 
--- Returns a list of squares that are inside the search sphere
-function NoNoSquares.GetNearby(point, radius)
-    
+-- Returns a list of squares that are touching the point
+-- results_list is a StickyList (to help cut down on garbage collections).  Each entry is:
+--  { center, normal, radius, dist_sqr }
+function NoNoSquares.GetNearby(results_list, point, item_radius_mult)
+    results_list:Clear()
+
+    for _, list in pairs(final_list) do
+        for i = 1, list:GetCount(), 1 do
+            local entry = list:GetItem(i)
+
+            -- Distance from item
+            local dist_sqr = GetVectorDiffLengthSqr(point, entry.center)
+
+            local test_radius = entry.radius * item_radius_mult
+
+            -- Add the item's radius to the total
+            if dist_sqr <= test_radius * test_radius then
+                local result_entry = results_list:GetNewItem()
+                result_entry.center = entry.center
+                result_entry.normal = entry.normal
+                result_entry.radius = entry.radius
+                result_entry.dist_sqr = dist_sqr
+            end
+        end
+    end
 end
 
 function NoNoSquares.TEST_AddHits(hits)
@@ -252,7 +285,7 @@ function this.GetHitRadius(normal)
     if not dot_hitradius_animcurve then
         dot_hitradius_animcurve = AnimationCurve:new()
 
-        for _, entry in ipairs(settings.angle_hitradius_animcurve) do
+        for _, entry in ipairs(settings.angle_hitradius) do
             dot_hitradius_animcurve:AddKeyValue(Angle_to_Dot(entry.input), entry.output)
         end
     end
@@ -262,33 +295,45 @@ function this.GetHitRadius(normal)
     return dot_hitradius_animcurve:Evaluate(dot)
 end
 
-function this.Move_Initial_to_Intermediate(time)
+function this.Move_Initial_to_Intermediate(time, max_radius)
     for material, list in pairs(initial_list) do
         if not intermediate_list[material] then
             intermediate_list[material] = StickyList:new()
         end
 
-        this.MergeInto(list, intermediate_list[material], time)
+        this.MergeInto(list, intermediate_list[material], time, max_radius)
         list:Clear()
     end
 end
 
-function this.Move_Intermediate_to_Final(time)
-    -- for material, list in pairs(initial_list) do
-    -- end
+function this.Move_Intermediate_to_Final(time, max_radius)
+    local had_intermediate = false
 
-    return false
+    for material, list in pairs(initial_list) do
+        if list:GetCount() > 0 then
+            if not final_list[material] then
+                final_list[material] = StickyList:new()
+            end
+
+            this.MergeInto(list, final_list[material], time, max_radius)
+            list:Clear()
+
+            had_intermediate = true
+        end
+    end
+
+    return had_intermediate
 end
 
 -- Each list is a StickyList with elements { center, normal, radius, last_update_time }
-function this.MergeInto(list_source, list_dest, time)
+function this.MergeInto(list_source, list_dest, time, max_radius)
     for i = 1, list_source:GetCount(), 1 do
         local entry = list_source:GetItem(i)
-        this.MergeInto_Add(list_dest, entry.center, entry.normal, entry.radius, time)
+        this.MergeInto_Add(list_dest, entry.center, entry.normal, entry.radius, time, max_radius)
     end
 end
 -- Adds the circle into the list, merging with whatever it is close to that has the same normal
-function this.MergeInto_Add(list, center, normal, radius, time)
+function this.MergeInto_Add(list, center, normal, radius, time, max_radius)
     local index = 1
 
     while index <= list:GetCount() do
@@ -296,7 +341,7 @@ function this.MergeInto_Add(list, center, normal, radius, time)
 
         local removed = false
 
-        if DotProduct3D(entry.normal, normal) >= DOT then
+        if entry.radius < max_radius and DotProduct3D(entry.normal, normal) >= DOT then
             local dist_sqr = GetVectorDiffLengthSqr(entry.center, center)
 
             local touch_dist = entry.radius + radius
@@ -322,7 +367,7 @@ function this.MergeInto_Add(list, center, normal, radius, time)
 
                     -- Remove existing and recurse with the new merged circle
                     list:RemoveItem(index)
-                    this.MergeInto_Add(list, new_center, new_normal, new_radius, time)
+                    this.MergeInto_Add(list, new_center, new_normal, new_radius, time, max_radius)
                     do return end       -- no further iterating needed, since the recurse call took care of adding (also, the for loop would be messed up from the remove)
                 end
             end
@@ -365,9 +410,42 @@ function this.GetMergedCircle(center1, radius1, center2, radius2, dist)
     return midpoint, new_radius, false, false
 end
 
+function this.RemoveOldSquares(time, remember_seconds)
+    for _, list in pairs(initial_list) do
+        local index = 1
 
-function this.FindMatches(list_from, list_to)
-    
+        while index <= list:GetCount() do
+            local entry = list:GetItem(index)
+
+            if time - entry.last_update_time > remember_seconds then
+                list:RemoveItem(index)
+            else
+                index = index + 1
+            end
+        end
+    end
+end
+
+function this.GetCountReport(by_material)
+    local retVal = nil
+
+    for material, squares in pairs_sorted(by_material) do
+        local count = squares:GetCount()
+
+        if count > 0 then
+            if not retVal then
+                retVal = ""
+            end
+
+            if retVal then
+                retVal = retVal .. "\r\n"
+            end
+
+            retVal = retVal .. material .. ": " .. tostring(count)
+        end
+    end
+
+    return retVal
 end
 
 return NoNoSquares

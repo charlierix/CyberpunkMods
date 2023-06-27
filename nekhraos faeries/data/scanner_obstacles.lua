@@ -76,7 +76,7 @@ function Scanner_Obstacles:Tick()
     local ico = this.GetRandomIcosahedron(self.icosahedrons)
 
     for _, face in ipairs(ico) do
-        local toPos = AddVectors(fromPos, MultiplyVector(face.norm, self.settings.search_radius))
+        local toPos = AddVectors(fromPos, MultiplyVector(face.norm, self.settings.scan_radius))
 
         local hit, normal, material_cname = self.o:RayCast(fromPos, toPos)
 
@@ -118,7 +118,7 @@ function Scanner_Obstacles:TEST_Scan2(call_nono_test)
     local hits = {}
 
     for _, face in ipairs(ico) do
-        local toPos = AddVectors(fromPos, MultiplyVector(face.norm, self.settings.search_radius))
+        local toPos = AddVectors(fromPos, MultiplyVector(face.norm, self.settings.scan_radius))
 
         local hit, normal, material_cname = self.o:RayCast(fromPos, toPos)
 

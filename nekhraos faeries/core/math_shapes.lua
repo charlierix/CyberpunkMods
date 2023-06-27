@@ -86,7 +86,7 @@ end
 
 -- Returns a point on the plane that is closest to the test point (test point isn't on the plane)
 function GetClosestPoint_Plane_Point(pointOnPlane, normalUnit, testPoint)
-    --NOTE: This should never return nil, since the intersection between a plane and its normal should never be nill
+    --NOTE: This should never return nil, since the intersection between a plane and its normal should never be nil
     return GetIntersection_Plane_Line(pointOnPlane, normalUnit, testPoint, normalUnit, true, true)
 end
 

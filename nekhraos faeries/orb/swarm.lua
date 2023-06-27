@@ -5,12 +5,13 @@ local this = {}
 local goal_util = require "orb/swarm_goals"
 local limit_util = require "orb/swarm_limits"
 local neighbor_util = require "orb/swarm_neighbors"
+local obstacle_util = require "orb/swarm_obstacles"
 
 local SHOW_DEBUG = false
 local set_debug_categories = false
 local debug_categories = CreateEnum("SWARM_CappedAccel")
 
-function Orb_Swarm:new(props, interested_items, goals, limits, neighbors)
+function Orb_Swarm:new(props, interested_items, goals, limits, neighbors, obstacles)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -22,6 +23,7 @@ function Orb_Swarm:new(props, interested_items, goals, limits, neighbors)
     obj.goals = goals
     obj.limits = limits
     obj.neighbors = neighbors
+    obj.obstacles = obstacles
 
     obj.nearby_scan =
     {
@@ -65,7 +67,10 @@ function Orb_Swarm:Tick(deltaTime)
     -- Get component accelerations
     local accelX_limits, accelY_limits, accelZ_limits, limits_percent, should_cap_accel = limit_util.GetAccelLimits(self.props, self.limits, rel_vel, rel_speed_sqr)
 
-    local accelX_obstacles, accelY_obstacles, accelZ_obstacles, had_obstacles = this.GetAccelObstacles()
+    --local accelX_obstacles, accelY_obstacles, accelZ_obstacles, had_obstacles = obstacle_util.GetAccelObstacles(self.props, self.obstacles, self.limits)
+    local accelX_obstacles = 0
+    local accelY_obstacles = 0
+    local accelZ_obstacles = 0
 
     local accelX_neighbors, accelY_neighbors, accelZ_neighbors, had_neighbors = neighbor_util.GetAccelNeighbors(self.props, self.nearby_scan, self.neighbors, self.limits)
 
@@ -128,10 +133,6 @@ function Orb_Swarm:Tick(deltaTime)
 end
 
 ---------------------------------- Get Accelerations ----------------------------------
-
-function this.GetAccelObstacles()
-    return 0, 0, 0, false
-end
 
 function this.GetAccelWander(self, log)
     local time = self.props.o.timer - self.start_time

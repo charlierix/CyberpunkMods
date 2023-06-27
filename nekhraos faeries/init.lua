@@ -269,6 +269,21 @@ registerHotkey("NekhraosFaeries_ObstacleScan", "Obstacle Scan", function()
     scanner_obstacles:TEST_Scan2(true)
 end)
 
+registerHotkey("NekhraosFaeries_VisualizeObstacleVolume", "Visualize Obstacle Volume", function()
+
+    -- draw a circle with radius 1
+
+    -- draw a bunch of sample dots with color showing accel
+
+    -- only need to do points in 2D, and only need half (results can be mirrored, even rotated radially to get 3D)
+
+
+
+
+
+
+end)
+
 
 -- test to spawn an object, then call targeting sytem from its perspective
 

@@ -75,6 +75,36 @@ function Contains(list, testValue)
     return false
 end
 
+-------------------------------------- Iterators --------------------------------------
+
+-- Iterates the list, but sorted by key
+-- Usage:
+--  for key, value in pairs_sorted(list) do
+--  end
+function pairs_sorted(list)
+    local keys = {}
+
+    -- populate the table that holds the keys
+    for key in pairs(list) do
+        table.insert(keys, key)
+    end
+
+    -- sort the keys
+    table.sort(keys)
+
+    local i = 0
+
+    -- return an iterator that returns the next keyvalue pair each time it's called
+    return function ()
+        i = i + 1
+        if i <= #keys then
+            return keys[i], list[keys[i]]
+        else
+            return nil, nil
+        end
+    end
+end
+
 ------------------------------------ Helper Functs ------------------------------------
 
 -- This compares two items, returns an int
