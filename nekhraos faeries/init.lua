@@ -304,7 +304,7 @@ registerHotkey("NekhraosFaeries_VisualizeObstacleVolume", "Visualize Obstacle Vo
     -- draw a bunch of sample dots with color showing accel
     -- only need to do points in 2D, and only need half (results can be mirrored, even rotated radially to get 3D)
 
-    local num_steps = 48
+    local num_steps = 144
 
     for x = 0, num_steps, 1 do
         for z = 0, num_steps, 1 do

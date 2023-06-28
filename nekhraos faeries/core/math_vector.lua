@@ -60,6 +60,14 @@ function GetVectorLength2D(x, y)
     return math.sqrt((x * x) + (y * y))
 end
 
+function GetVectorLength3DSqr(x, y, z)
+    return (x * x) + (y * y) + (z * z)
+end
+
+function GetVectorLength3D(x, y, z)
+    return math.sqrt((x * x) + (y * y) * (z * z))
+end
+
 function GetVectorLengthNDSqr(vector)
     if not vector then
         return 0

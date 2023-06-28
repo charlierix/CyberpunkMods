@@ -67,10 +67,7 @@ function Orb_Swarm:Tick(deltaTime)
     -- Get component accelerations
     local accelX_limits, accelY_limits, accelZ_limits, limits_percent, should_cap_accel = limit_util.GetAccelLimits(self.props, self.limits, rel_vel, rel_speed_sqr)
 
-    --local accelX_obstacles, accelY_obstacles, accelZ_obstacles, had_obstacles = obstacle_util.GetAccelObstacles(self.props, self.obstacles, self.limits)
-    local accelX_obstacles = 0
-    local accelY_obstacles = 0
-    local accelZ_obstacles = 0
+    local accelX_obstacles, accelY_obstacles, accelZ_obstacles, had_obstacles = obstacle_util.GetAccelObstacles(self.props, self.obstacles, self.limits)
 
     local accelX_neighbors, accelY_neighbors, accelZ_neighbors, had_neighbors = neighbor_util.GetAccelNeighbors(self.props, self.nearby_scan, self.neighbors, self.limits)
 

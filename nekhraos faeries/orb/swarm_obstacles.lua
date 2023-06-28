@@ -4,6 +4,8 @@ local this = {}
 
 local nearby = StickyList:new()
 
+local SHOW_DEBUG = false
+
 function OrbSwarmObstacles.GetAccelObstacles(props, obstacles, limits)
     nono_squares.GetNearby(nearby, props.pos, obstacles.max_radiusmult)
 
@@ -11,7 +13,7 @@ function OrbSwarmObstacles.GetAccelObstacles(props, obstacles, limits)
         return 0, 0, 0, false
     end
 
-    local player_pos = props.o.GetCrosshairInfo()
+    local player_pos = props.o:GetCrosshairInfo()
 
     local accel_x = 0
     local accel_y = 0
@@ -29,8 +31,14 @@ function OrbSwarmObstacles.GetAccelObstacles(props, obstacles, limits)
 
         if used then
             had_obstacles = true
+
+            if SHOW_DEBUG then
+                this.Draw_Debug(props, entry, accel_x, accel_y, accel_z)
+            end
         end
     end
+
+    accel_x, accel_y, accel_z = this.CapAccel(accel_x, accel_y, accel_z, limits.max_accel * obstacles.max_accel_mult)
 
     return accel_x, accel_y, accel_z, had_obstacles
 end
@@ -94,7 +102,7 @@ function this.ProcessObstacle(props, entry, player_pos, obstacles, limits)
         accel_dir = Negate(entry.normal)
     end
 
-    local accel = limits.max_accel * edge_percent * depth_percent
+    local accel = limits.max_accel * obstacles.max_accel_mult * edge_percent * depth_percent
 
     return
         accel_dir.x * accel,
@@ -130,6 +138,29 @@ function this.GetAccelMult_Depth(center, normal, orb_pos, radius, animcurve)
     local dist_ratio = dist_to_plane / radius
 
     return animcurve:Evaluate(dist_ratio)
+end
+
+function this.CapAccel(accel_x, accel_y, accel_z, max_accel)
+    local accel_sqr = GetVectorLength3DSqr(accel_x, accel_y, accel_z)
+
+    if accel_sqr > max_accel * max_accel then
+        local accel = math.sqrt(accel_sqr)
+
+        accel_x = accel_x / accel * max_accel
+        accel_y = accel_y / accel * max_accel
+        accel_z = accel_z / accel * max_accel
+    end
+
+    return accel_x, accel_y, accel_z
+end
+
+function this.Draw_Debug(props, entry, accel_x, accel_y, accel_z)
+    -- line
+    debug_render_screen.Add_Dot(props.pos, nil, "FFF", nil, true)
+    debug_render_screen.Add_Line(props.pos, Vector4.new(props.pos.x + accel_x, props.pos.y + accel_y, props.pos.z + accel_z, 1), nil, "FF0", nil, true)
+
+    -- plate
+    debug_render_screen.Add_Square(entry.center, entry.normal, entry.radius * 2, entry.radius * 2, nil, "2FFF", "4000", nil, true)
 end
 
 return OrbSwarmObstacles

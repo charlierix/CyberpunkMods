@@ -44,6 +44,9 @@ public record swarmbot_obstacles
 
     // ----------------------- Orb Processing -----------------------
 
+    // This gets multiplied by swarmbot_limits.max_accel to get the maximum acceleration
+    public float max_accel_mult { get; init; }
+
     // Input: angle between normal and direction
     //  values in degrees.  90 is perpendicular, 180 is directly behind
     // Output: multiplier of radius (max distance from hit center)
