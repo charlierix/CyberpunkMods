@@ -59,18 +59,6 @@ require "ui/keys"
 
 require "ui_framework/util_misc"
 
-
-
-
-
-
-local obstacle_util = require "orb/swarm_obstacles"
-
-
-
-
-
-
 local this = {}
 
 --------------------------------------------------------------------
@@ -205,8 +193,10 @@ registerForEvent("onUpdate", function(deltaTime)
         keys:Tick()     --NOTE: This must be after everything is processed, or prev will always be the same as current
     end
 
-    nono_squares.Tick(o)        -- doing this before scanner so that square merging isn't done in the same frame as scanner's ray casts
-    scanner_obstacles:Tick()
+    -- Obstacles needs more work, probably never finish it
+    --nono_squares.Tick(o)        -- doing this before scanner so that square merging isn't done in the same frame as scanner's ray casts
+    --scanner_obstacles:Tick()
+
     orb_pool.Tick(o, scanner_orbs, deltaTime)
 
     debug_render_screen.CallFrom_onUpdate(deltaTime)
@@ -282,6 +272,8 @@ registerHotkey("NekhraosFaeries_ObstacleScan", "Obstacle Scan", function()
 end)
 
 registerHotkey("NekhraosFaeries_VisualizeObstacleVolume", "Visualize Obstacle Volume", function()
+    local obstacle_util = require "orb/swarm_obstacles"
+
     o:GetPlayerInfo()
     local pos, look_dir = o:GetCrosshairInfo()
     local center = AddVectors(pos, MultiplyVector(look_dir, 2))

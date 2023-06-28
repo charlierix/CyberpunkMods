@@ -66,6 +66,9 @@ public record swarmbot_obstacles
     public property_mult_gradientstop[] depth_percentradius_accelmult { get; init; }
 
 
+    //TODO: Add friction when behind an obstacle and traveling deeper
+
+
     public float max_radiusmult => angle_radiusmult.Max(o => o.output);
 
     public AnimationCurve dot_radiusmult_animcurve => BuildAnimCurve_AngleToDot(angle_radiusmult);

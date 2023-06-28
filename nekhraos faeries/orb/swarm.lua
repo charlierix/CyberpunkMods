@@ -67,7 +67,8 @@ function Orb_Swarm:Tick(deltaTime)
     -- Get component accelerations
     local accelX_limits, accelY_limits, accelZ_limits, limits_percent, should_cap_accel = limit_util.GetAccelLimits(self.props, self.limits, rel_vel, rel_speed_sqr)
 
-    local accelX_obstacles, accelY_obstacles, accelZ_obstacles, had_obstacles = obstacle_util.GetAccelObstacles(self.props, self.obstacles, self.limits)
+    --local accelX_obstacles, accelY_obstacles, accelZ_obstacles, had_obstacles = obstacle_util.GetAccelObstacles(self.props, self.obstacles, self.limits)
+    local accelX_obstacles, accelY_obstacles, accelZ_obstacles, had_obstacles = this.BypassObstacles()
 
     local accelX_neighbors, accelY_neighbors, accelZ_neighbors, had_neighbors = neighbor_util.GetAccelNeighbors(self.props, self.nearby_scan, self.neighbors, self.limits)
 
@@ -149,6 +150,17 @@ function this.GetAccelWander(self, log)
         GetScaledValue(-self.limits.max_accel, self.limits.max_accel, 0, 1, x),
         GetScaledValue(-self.limits.max_accel, self.limits.max_accel, 0, 1, y),
         GetScaledValue(-self.limits.max_accel, self.limits.max_accel, 0, 1, z)
+end
+
+function this.BypassObstacles()
+    -- Obstacles takes too much framerate and isn't working like I hoped.  In order to be more useful, the scan range needs to
+    -- be increased
+    --
+    -- Also in no no squares, there is a limit to not let squares get too big.  But there ends up being lots of overlapping squares.
+    -- That logic would need to be cleaned up to avoid overlapping plates.  All of those redundant squares is probably a significant
+    -- part of the framerate drop
+
+    return 0, 0, 0, false
 end
 
 function this.GetCombineMults(limits_percent)

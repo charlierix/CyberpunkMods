@@ -4,8 +4,8 @@ local this = {}
 
 local DOT = 0.98
 
--- list of long term squares
--- list of newly added squares (they need to be merged into the long term squares.  Also, by storing these here, the merge can be done in a separate frame from the ray casts)
+--TODO: The handling of hit_max_radius is too basic.  There ends up being multiple squares that mostly overlap
+--I think this is the main reason for the runtime slowdown
 
 -- lists where material is the key, stickylist of { center, normal, radius } as the value
 local initial_list = {}
