@@ -59,6 +59,18 @@ require "ui/keys"
 
 require "ui_framework/util_misc"
 
+
+
+
+
+
+local obstacle_util = require "orb/swarm_obstacles"
+
+
+
+
+
+
 local this = {}
 
 --------------------------------------------------------------------
@@ -270,18 +282,56 @@ registerHotkey("NekhraosFaeries_ObstacleScan", "Obstacle Scan", function()
 end)
 
 registerHotkey("NekhraosFaeries_VisualizeObstacleVolume", "Visualize Obstacle Volume", function()
+    o:GetPlayerInfo()
+    local pos, look_dir = o:GetCrosshairInfo()
+    local center = AddVectors(pos, MultiplyVector(look_dir, 2))
+
+    local normal = Vector4.new(0, 0, 1, 1)
+
+    local player_pos = AddVectors(center, Negate(normal))       -- choose a point underneath so all tests will be behind the plane
+
+    local radius = 1
+
+    local obstacles = settings_util.Obstacles()
+    local limits = settings_util.Limits()
+
 
     -- draw a circle with radius 1
+    debug_render_screen.Add_Circle(center, normal, radius, nil, "FFF")
+
+    debug_render_screen.Add_Dot(player_pos, nil, "FF0")
 
     -- draw a bunch of sample dots with color showing accel
-
     -- only need to do points in 2D, and only need half (results can be mirrored, even rotated radially to get 3D)
 
+    local num_steps = 48
 
+    for x = 0, num_steps, 1 do
+        for z = 0, num_steps, 1 do
+            local offset_x = GetScaledValue(0, radius * obstacles.max_radiusmult, 0, num_steps, x)
+            local offset_z = GetScaledValue(0, radius * obstacles.max_radiusmult, 0, num_steps, z)
 
+            local test_point = Vector4.new(center.x + offset_x, center.y, center.z + offset_z, 1)
 
+            local accel_x, accel_y, accel_z, used = obstacle_util.TEST_ProcessPoint(test_point, player_pos, center, normal, radius, obstacles, limits)
 
+            if used then
+                local accel = Vector4.new(accel_x, accel_y, accel_z, 1)
 
+                local percent = GetVectorLength(accel) / limits.max_accel
+
+                local color = Color_PercentToHex(percent) .. "FFFFFF"
+
+                debug_render_screen.Add_Dot(test_point, nil, color)
+
+                if x ~= 0 then
+                    debug_render_screen.Add_Dot(Vector4.new(center.x + -offset_x, center.y, center.z + offset_z, 1), nil, color)
+                end
+            else
+                --debug_render_screen.Add_Dot(test_point, nil, "8000")
+            end
+        end
+    end
 end)
 
 

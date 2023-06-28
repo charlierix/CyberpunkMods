@@ -35,6 +35,23 @@ function OrbSwarmObstacles.GetAccelObstacles(props, obstacles, limits)
     return accel_x, accel_y, accel_z, had_obstacles
 end
 
+function OrbSwarmObstacles.TEST_ProcessPoint(test_pos, player_pos, center, normal, radius, obstacles, limits)
+    local mock_props =
+    {
+        pos = test_pos
+    }
+
+    local mock_entry =
+    {
+        center = center,
+        normal = normal,
+        radius = radius,
+        dist_sqr = GetVectorDiffLengthSqr(test_pos, center),
+    }
+
+    return this.ProcessObstacle(mock_props, mock_entry, player_pos, obstacles, limits)
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.ProcessObstacle(props, entry, player_pos, obstacles, limits)
@@ -87,6 +104,10 @@ function this.ProcessObstacle(props, entry, player_pos, obstacles, limits)
 end
 
 function this.IsBehindObstacle(normal, center_to_orb, center_to_player)
+    if IsNearZero_vec4(center_to_orb) or IsNearZero_vec4(center_to_player) then
+        return false
+    end
+
     local dot_orb = DotProduct3D(normal, center_to_orb)
     local dot_player = DotProduct3D(normal, center_to_player)
 

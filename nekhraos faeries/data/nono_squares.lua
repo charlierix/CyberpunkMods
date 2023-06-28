@@ -17,7 +17,7 @@ local settings = nil                        --settings_util.Obstacles()
 local up = nil                              --Vector4.new(0, 0, 1, 1)
 local dot_hitradius_animcurve = nil         --AnimationCurve:new()
 
-local SHOW_DEBUG = true
+local SHOW_DEBUG = false
 local material_colors = {}
 
 function NoNoSquares.Tick(o)

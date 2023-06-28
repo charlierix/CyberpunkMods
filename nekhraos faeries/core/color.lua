@@ -290,6 +290,12 @@ function GetRandomColor_HSV_ToHex(h_min, h_max, s_min, s_max, v_min, v_max, a_mi
     return this.RGB_Hex(a, r, g, b)
 end
 
+-- percent is 0 to 1
+-- Returns "00" to "FF"
+function Color_PercentToHex(percent)
+    return string.upper(this.ByteToHex(Clamp(0, 1, percent) * 255))
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.GetHueCapped(hue)
