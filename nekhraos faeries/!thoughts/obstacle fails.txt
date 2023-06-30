@@ -1,0 +1,29 @@
+nono_squares this.MergeInto_Add is still allowing quite a bit of overlapping squares.  Need to come up with
+test cases and step through/visualize to see why
+
+
+
+When the orbs are far in front of the player, there's nothing scanned that far.  The scanner would need to
+have an array of scan origin points based on player pos/look.  Only fire rays from one of those in a frame
+
+
+
+There was a lot of slowdown/instability when testing the orbs.  A lot of the slowness was probably from the
+duplication of overlapping squares.  Another optimization would be to only process one hit plane (stop searching
+after first square)
+
+Also, the orb got trapped in corners.  obstacles.json angle_hitradius was changed to ignore vertical walls
+
+
+
+A major issue would be guard rails along walkways.  Those railings chain together to make large squares which
+would block the orbs from getting to street level.  To counter this, nono_squares merge would need to detect
+colinear vs spread out over an area.  Then it could mark colinear squares as ignore
+
+
+
+I think once goals are given more weight, it won't feel so obvious that the orbs can be anywhere in a sphere.
+Especially when they aren't being drawn all the time, but instead of more fx based and not drawn when behind
+cover
+
+So I think obstacle processing is a lot of processor overhead with very little potential benefit

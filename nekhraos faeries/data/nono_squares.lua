@@ -6,6 +6,8 @@ local DOT = 0.98
 
 --TODO: The handling of hit_max_radius is too basic.  There ends up being multiple squares that mostly overlap
 --I think this is the main reason for the runtime slowdown
+--
+--There was an attempt to fix it, but more work is needed
 
 -- lists where material is the key, stickylist of { center, normal, radius } as the value
 local initial_list = {}
@@ -17,8 +19,9 @@ local settings = nil                        --settings_util.Obstacles()
 local up = nil                              --Vector4.new(0, 0, 1, 1)
 local dot_hitradius_animcurve = nil         --AnimationCurve:new()
 
-local SHOW_DEBUG = true
+local SHOW_DEBUG = false
 local material_colors = {}
+local remove_indices = nil
 
 function NoNoSquares.Tick(o)
     if not settings then
@@ -338,66 +341,7 @@ function this.MergeInto(list_source, list_dest, time, max_radius)
     end
 end
 
-
-
 -- Adds the circle into the list, merging with whatever it is close to that has the same normal
-function this.MergeInto_Add_ORIG(list, center, normal, radius, time, max_radius)
-    local index = 1
-
-    while index <= list:GetCount() do
-        local entry = list:GetItem(index)
-
-        local removed = false
-
-        if entry.radius < max_radius and DotProduct3D(entry.normal, normal) >= DOT then
-            local dist_sqr = GetVectorDiffLengthSqr(entry.center, center)
-
-            local touch_dist = entry.radius + radius
-
-            if dist_sqr <= touch_dist * touch_dist then
-                -- Circles are touching.  Need to merge into a new one
-                local new_center, new_radius, is_eaten_by_1, is_eaten_by_2 = this.GetMergedCircle(entry.center, entry.radius, center, radius, math.sqrt(dist_sqr))
-
-                if is_eaten_by_1 then
-                    -- The circle being added is completely inside the existing.  Since the list only contains non
-                    -- touching circles, there is nothing else to do
-                    do return end
-
-                elseif is_eaten_by_2 then
-                    -- The proposed merged circle is inside the circle passed in.  Wipe the current circle and keep
-                    -- looking
-                    list:RemoveItem(index)
-                    removed = true
-
-                else
-                    -- Define a new circle that is the merge of these two
-                    local new_normal = this.GetAverageNormal(entry.normal, entry.radius, normal, radius)
-
-                    -- Remove existing and recurse with the new merged circle
-                    list:RemoveItem(index)
-                    this.MergeInto_Add(list, new_center, new_normal, new_radius, time, max_radius)
-                    do return end       -- no further iterating needed, since the recurse call took care of adding (also, the for loop would be messed up from the remove)
-                end
-            end
-        end
-
-        if not removed then
-            index = index + 1
-        end
-    end
-
-    -- If execution gets there, then the circle passed in isn't touching existing
-    local new_entry = list:GetNewItem()
-    new_entry.center = center
-    new_entry.normal = normal
-    new_entry.radius = radius
-    new_entry.last_update_time = time
-end
-
-
-
-local remove_indices = nil
-
 -- Don't just stop on the first intersecting item.  Compare with all, look to see if it's eaten by one.  Otherwise add to the one that is closest
 function this.MergeInto_Add(list, center, normal, radius, time, max_radius)
     if not remove_indices then
@@ -416,7 +360,7 @@ function this.MergeInto_Add(list, center, normal, radius, time, max_radius)
     for i = 1, list:GetCount(), 1 do
         local entry = list:GetItem(i)
 
-        if entry.radius < max_radius and DotProduct3D(entry.normal, normal) >= DOT then
+        if entry.radius < max_radius and this.IsOnSamePlane(center, normal, entry.center, entry.normal) then
             local dist_sqr = GetVectorDiffLengthSqr(entry.center, center)
 
             local touch_dist = entry.radius + radius
@@ -470,6 +414,17 @@ function this.MergeInto_Add(list, center, normal, radius, time, max_radius)
         new_entry.radius = radius
         new_entry.last_update_time = time
     end
+end
+
+function this.IsOnSamePlane(point1, normal1, point2, normal2)
+    if DotProduct3D(normal1, normal2) < DOT then
+        return false
+    end
+
+    local point_on_plane = GetClosestPoint_Plane_Point(point2, normal2, point1)
+    local dist_sqr = GetVectorDiffLengthSqr(point_on_plane, point1)
+
+    return dist_sqr < 0.25 * 0.25
 end
 
 -- The remove list needs to stay sorted, so insert index into the appropriate spot
