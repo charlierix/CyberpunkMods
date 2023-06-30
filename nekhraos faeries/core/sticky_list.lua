@@ -66,6 +66,39 @@ function StickyList:GetNewItem()
     return self.table[self.maxIndex], self.maxIndex
 end
 
+-- This moves all the entries after this index down one
+function StickyList:InsertNewItem(index)
+    if index < 1 or index > self.maxIndex + 1 then
+        LogError("StickyList.InsertNewItem: index out of range (index=" .. tostring(index) .. ") (max=" .. tostring(self.maxIndex + 1) .. ")")
+        return nil
+    end
+
+    -- See if it's a simple add
+    if index == self.maxIndex + 1 then
+        return self:GetNewItem()
+    end
+
+    -- Make sure there's room at the end
+    if self.maxIndex == self.count then
+        self.count = self.count + 1
+        self.table[self.count] = { }
+    end
+
+    -- Take the entry after max.  This will be swapped into the spot at index
+    local temp = self.table[self.maxIndex + 1]
+
+    -- Move everything down one
+    for i = self.maxIndex, index, -1 do
+        self.table[i + 1] = self.table[i]
+    end
+
+    -- Finish the swap
+    self.table[index] = temp
+
+    -- Keep the same return signature as GetNewItem
+    return self.table[index], index
+end
+
 -- This pretends to remove the item from the list
 -- It shifts the item into the garbage zone and decrements the public max
 function StickyList:RemoveItem(index)

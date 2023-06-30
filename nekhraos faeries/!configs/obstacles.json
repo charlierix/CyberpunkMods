@@ -23,11 +23,12 @@
     [
         { "input": 0, "output": 1.5 },
         { "input": 25, "output": 0.85 },
-        { "input": 90, "output": 0.66 },
+        { "input": 30, "output": 0 },
+        { "input": 90, "output": -0.05 },
+        { "input": 155, "output": 0 },
+        { "input": 160, "output": 0.5 },
         { "input": 180, "output": 0.9 }
     ],
-
-
 
     "max_accel_mult": 0.2,
 

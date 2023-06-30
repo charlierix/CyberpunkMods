@@ -37,6 +37,7 @@ public record swarmbot_obstacles
     // Input: degrees between hit's normal and the up vector
     //  values are in degrees.  0 would be a normal that is straight up, 90 is vertical wall, 180 is a ceiling
     // Output: radius of the hit
+    //  NOTE: radius can be zero.  If less than 0.25, it will be ignored
     public property_mult_gradientstop[] angle_hitradius { get; init; }
 
 

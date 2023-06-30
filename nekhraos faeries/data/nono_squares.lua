@@ -17,7 +17,7 @@ local settings = nil                        --settings_util.Obstacles()
 local up = nil                              --Vector4.new(0, 0, 1, 1)
 local dot_hitradius_animcurve = nil         --AnimationCurve:new()
 
-local SHOW_DEBUG = false
+local SHOW_DEBUG = true
 local material_colors = {}
 
 function NoNoSquares.Tick(o)
@@ -74,6 +74,11 @@ function NoNoSquares.AddRayHit(point, normal, material_cname)
 
     --this.TEMP_ClearIntermediate()
 
+    local radius = this.GetHitRadius(normal)
+    if radius < 0.25 then
+        do return end
+    end
+
     local material = Game.NameToString(material_cname)
 
     if not initial_list[material] then
@@ -83,7 +88,7 @@ function NoNoSquares.AddRayHit(point, normal, material_cname)
     local entry = initial_list[material]:GetNewItem()
     entry.center = point
     entry.normal = normal
-    entry.radius = this.GetHitRadius(entry.normal)
+    entry.radius = radius
 end
 
 -- Returns a list of squares that are touching the point
@@ -332,8 +337,11 @@ function this.MergeInto(list_source, list_dest, time, max_radius)
         this.MergeInto_Add(list_dest, entry.center, entry.normal, entry.radius, time, max_radius)
     end
 end
+
+
+
 -- Adds the circle into the list, merging with whatever it is close to that has the same normal
-function this.MergeInto_Add(list, center, normal, radius, time, max_radius)
+function this.MergeInto_Add_ORIG(list, center, normal, radius, time, max_radius)
     local index = 1
 
     while index <= list:GetCount() do
@@ -385,6 +393,101 @@ function this.MergeInto_Add(list, center, normal, radius, time, max_radius)
     new_entry.radius = radius
     new_entry.last_update_time = time
 end
+
+
+
+local remove_indices = nil
+
+-- Don't just stop on the first intersecting item.  Compare with all, look to see if it's eaten by one.  Otherwise add to the one that is closest
+function this.MergeInto_Add(list, center, normal, radius, time, max_radius)
+    if not remove_indices then
+        remove_indices = StickyList:new()
+    end
+
+    remove_indices:Clear()
+
+    local best_center = nil
+    local best_new_radius = nil
+    local best_existing_radius = nil
+    local best_normal = nil
+    local best_index = nil
+
+    -- Scan the list, get the closest mergable or if eating occurred
+    for i = 1, list:GetCount(), 1 do
+        local entry = list:GetItem(i)
+
+        if entry.radius < max_radius and DotProduct3D(entry.normal, normal) >= DOT then
+            local dist_sqr = GetVectorDiffLengthSqr(entry.center, center)
+
+            local touch_dist = entry.radius + radius
+
+            if dist_sqr <= touch_dist * touch_dist then
+                -- Circles are touching.  Calculate what the new circle would look like
+                local new_center, new_radius, is_eaten_by_1, is_eaten_by_2 = this.GetMergedCircle(entry.center, entry.radius, center, radius, math.sqrt(dist_sqr))
+
+                if is_eaten_by_1 then
+                    -- The circle being added is completely inside the existing.  Since the list only contains non
+                    -- touching circles, there is nothing else to do
+                    do return end
+
+                elseif is_eaten_by_2 then
+                    local remove_entry = remove_indices:GetNewItem()
+                    remove_entry.index = i
+
+                elseif not best_new_radius or new_radius < best_new_radius then
+                    best_center = new_center
+                    best_new_radius = new_radius
+                    best_existing_radius = entry.radius
+                    best_normal = entry.normal
+                    best_index = i
+                end
+            end
+        end
+    end
+
+    if best_index then
+        -- Mark the existing for removal, because it will be replaced with the merged
+        this.InsertRemoveIndex(remove_indices, best_index)
+    end
+
+    for i = remove_indices:GetCount(), 1, -1 do
+        local remove_entry = remove_indices:GetItem(i)
+        list:RemoveItem(remove_entry.index)
+    end
+
+    if best_center then
+        -- Define a new circle that is the merge of these two
+        local new_normal = this.GetAverageNormal(best_normal, best_existing_radius, normal, radius)
+
+        -- Recurse with the new merged circle
+        this.MergeInto_Add(list, best_center, new_normal, best_new_radius, time, max_radius)
+
+    else
+        -- The circle passed in isn't touching existing
+        local new_entry = list:GetNewItem()
+        new_entry.center = center
+        new_entry.normal = normal
+        new_entry.radius = radius
+        new_entry.last_update_time = time
+    end
+end
+
+-- The remove list needs to stay sorted, so insert index into the appropriate spot
+function this.InsertRemoveIndex(list, index)
+    for i = 1, remove_indices:GetCount(), 1 do
+        local remove_entry = remove_indices:GetItem(i)
+
+        if index < remove_entry.index then
+            local remove_entry2 = list:InsertNewItem(i)
+            remove_entry2.index = index
+            do return end
+        end
+    end
+
+    local remove_entry = remove_indices:GetNewItem()
+    remove_entry.index = index
+end
+
 
 function this.GetMergedCircle(center1, radius1, center2, radius2, dist)
     -- Check for one of the circles inside the other
