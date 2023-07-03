@@ -2,12 +2,13 @@ Keys = {}
 
 local this = {}
 
-function Keys:new(o)
+function Keys:new(o, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
     obj.o = o
+    obj.const = const
 
     -- hardcoded keys (explicit propertes to make it easy to code against)
     obj.mouse_x = 0
@@ -176,8 +177,10 @@ end
 function Keys:MapAction_Fixed(action, actionName, pressed, released)
     if actionName == "CameraMouseX" then
         self.mouse_x = tonumber(action:GetValue())
-    else
-        self.mouse_x = 0
+    elseif actionName == "right_stick_x" then       -- actionType: "AXIS_CHANGE"
+        self.mouse_x = tonumber(action:GetValue()) * self.const.rightstick_sensitivity
+    -- else
+    --     self.mouse_x = 0     -- setting to zero causes the controller's right stick to not work.  Commenting this out doesn't seem to have any negative affect
     end
 
     for key, value in pairs(self.hardcodedMapping) do

@@ -176,6 +176,8 @@ local const =
 
     customKeyBase = "Grapple_Custom_",
 
+    rightstick_sensitivity = 50,        -- the mouse x seems to be yaw/second (in degrees).  The controller's right thumbstick is -1 to 1.  So this multiplier will convert into yaw/second.  NOTE: the game speeds it up if they hold it for a while, but this doesn't do that
+
     maxSpeed = 432,                     -- player:GetVelocity() isn't the same as the car's reported speed, it's about 4 times slower.  So 100 would be roughly car speed of 400
 
     shouldShowScreenDebug = false,      -- draws debug info in game
@@ -338,7 +340,7 @@ registerForEvent("onInit", function()
     function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
     function wrappers.SetQuestFactStr(quest, key, id) quest:SetFactStr(key, id) end       -- id must be an integer
     function wrappers.GetTransactionSystem() return Game.GetTransactionSystem() end
-    function wrappers.GetGetItemList(transaction, player) return transaction:GetItemList(player) end
+    function wrappers.GetItemList(transaction, player) return transaction:GetItemList(player) end
     function wrappers.GetEquipmentSystem() return Game.GetScriptableSystemsContainer():Get("EquipmentSystem") end
     function wrappers.IsItemEquipped(equipment, player, item) return equipment:IsEquipped(player, item:GetID()) end
     function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
@@ -346,7 +348,7 @@ registerForEvent("onInit", function()
 
     o = GameObjectAccessor:new(wrappers)
 
-    keys = Keys:new(o)
+    keys = Keys:new(o, const)
     vars_ui.keys = keys
 
     InitializeKeyTrackers(vars, keys, o, const)

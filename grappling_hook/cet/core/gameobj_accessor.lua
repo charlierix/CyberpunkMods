@@ -339,7 +339,7 @@ function GameObjectAccessor:GetInventoryList()
     self:EnsureLoaded_Transaction()
 
     if self.player and self.transaction then
-        local success, items = self.wrappers.GetGetItemList(self.transaction, self.player)
+        local success, items = self.wrappers.GetItemList(self.transaction, self.player)
 
         if success then
             return items
