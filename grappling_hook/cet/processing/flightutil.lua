@@ -118,7 +118,7 @@ function IsAboveAnyPlane(planes, pos)
 end
 
 function GetGrappleLine(o, vars, const)
-    local playerAnchor = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
+    local playerAnchor = o:GetCrosshairInfo()
 
     local grappleDir = SubtractVectors(vars.rayHit, playerAnchor)
     local grappleLen = GetVectorLength(grappleDir)

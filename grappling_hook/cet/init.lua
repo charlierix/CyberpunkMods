@@ -136,8 +136,6 @@ local const =
         "flight_swing", "freefall"                      -- teleport based flight
     ),
 
-    grappleFrom_Z = 1.85,
-
     -- These are set in Define_UI_Framework_Constants() called during init
     -- alignment_horizontal = CreateEnum("left", "center", "right"),
     -- alignment_vertical = CreateEnum("top", "center", "bottom"),

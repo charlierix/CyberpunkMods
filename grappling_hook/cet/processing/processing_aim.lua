@@ -60,9 +60,10 @@ function this.Aim_Straight(aim, o, player, vars, const, debug)
 
     -- Fire a ray
     o:GetCamera()
+    local position, look_dir = o:GetCrosshairInfo()
 
-    local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
-    local to = GetPoint(o.pos, o.lookdir_forward, aim.max_distance)
+    local from = position
+    local to = GetPoint(position, look_dir, aim.max_distance)
 
     local hitPoint = o:RayCast(from, to)
 
@@ -151,7 +152,6 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     end
 
     o:GetCamera()
-
     local position, look_dir = o:GetCrosshairInfo()
 
     if debug_render_screen.IsEnabled() then

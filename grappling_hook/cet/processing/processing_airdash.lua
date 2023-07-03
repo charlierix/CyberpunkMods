@@ -38,11 +38,12 @@ function Process_AirDash(o, player, vars, const, debug, deltaTime)
         do return end
     end
 
-    o:GetCamera()
-
     -- Fire a ray, according to initial conditions
-    local from = Vector4.new(o.pos.x, o.pos.y, o.pos.z + const.grappleFrom_Z, 1)
-    local to = GetPoint(from, o.lookdir_forward, vars.rayLength)
+    o:GetCamera()
+    local position, look_dir = o:GetCrosshairInfo()
+
+    local from = position
+    local to = GetPoint(from, look_dir, vars.rayLength)
 
     local hitPoint = o:RayCast(from, to)
 
