@@ -51,6 +51,7 @@ require "orb/swarm"
 harvester = require "processing/harvester"
 orb_pool = require "processing/orb_pool"
 
+prototype_grenades = require "prototype/grenades"
 prototype_scanning = require "prototype/scanning"
 
 require "ui/drawing"
@@ -67,6 +68,8 @@ local this = {}
 
 local const =
 {
+    mod_name = "NekhraosFaeries",
+
     map_body_type = CreateEnum("CorpseContainer", "NPC_Dead", "NPC_Defeated", "NPC_Alive"),
 
     shouldShowScreenDebug = true,      -- draws debug info in game
@@ -247,30 +250,10 @@ registerHotkey("NekhraosFaeries_ScanIntoMap", "Scan Into Map", function()
         end
     end
 end)
-registerHotkey("NekhraosFaeries_ClearVisuals", "Clear Visuals", function()
-    debug_render_screen.Clear()
-end)
-
-registerHotkey("NekhraosFaeries_SpawnOrb", "Spawn Orb", function()
-    o:GetPlayerInfo()
-    local pos, look_dir = o:GetCrosshairInfo()
-
-    pos = AddVectors(pos, MultiplyVector(look_dir, 2))
-
-    orb_pool.Add({ pos = pos }, o, Vector4.new(0, 0, 0, 1), map)
-end)
-registerHotkey("NekhraosFaeries_ClearOrbs", "Clear Orbs", function()
-    orb_pool.Clear()
-end)
-
-registerHotkey("NekhraosFaeries_LoadConfigs", "load configs from json", function()
-    orb_pool.TEST_OverwriteConfigs_FromJSON()
-end)
 
 registerHotkey("NekhraosFaeries_ObstacleScan", "Obstacle Scan", function()
     scanner_obstacles:TEST_Scan2(true)
 end)
-
 registerHotkey("NekhraosFaeries_VisualizeObstacleVolume", "Visualize Obstacle Volume", function()
     local obstacle_util = require "orb/swarm_obstacles"
 
@@ -324,6 +307,45 @@ registerHotkey("NekhraosFaeries_VisualizeObstacleVolume", "Visualize Obstacle Vo
             end
         end
     end
+end)
+
+registerHotkey("NekhraosFaeries_ClearVisuals", "Clear Visuals", function()
+    debug_render_screen.Clear()
+end)
+
+registerHotkey("NekhraosFaeries_SpawnOrb", "Spawn Orb", function()
+    o:GetPlayerInfo()
+    local pos, look_dir = o:GetCrosshairInfo()
+
+    pos = AddVectors(pos, MultiplyVector(look_dir, 2))
+
+    orb_pool.Add({ pos = pos }, o, Vector4.new(0, 0, 0, 1), map)
+end)
+registerHotkey("NekhraosFaeries_ClearOrbs", "Clear Orbs", function()
+    orb_pool.Clear()
+end)
+
+registerHotkey("NekhraosFaeries_LoadConfigs", "load configs from json", function()
+    orb_pool.TEST_OverwriteConfigs_FromJSON()
+end)
+
+
+registerHotkey("NekhraosFaeries_Grenade1", "Grenade 1", function()
+    o:GetPlayerInfo()
+    local pos, look_dir = o:GetCrosshairInfo()
+
+    local spawn_point = AddVectors(pos, MultiplyVector(look_dir, 1))
+
+    prototype_grenades.SpawnGrenade(spawn_point)
+end)
+registerHotkey("NekhraosFaeries_Grenade2", "Grenade 2", function()
+    o:GetPlayerInfo()
+    local pos, look_dir = o:GetCrosshairInfo()
+
+    local from = AddVectors(pos, MultiplyVector(look_dir, 0.5))
+    local to = AddVectors(pos, MultiplyVector(look_dir, 4))
+
+    prototype_grenades.ThrowStraight(from, to)
 end)
 
 
