@@ -1,9 +1,9 @@
 {
     "title_color_focused": "FD1B1B1B",
-    "title_color_notFocused": "981B1B1B",
-    "title_color_collapsed": "30141414",
+    "title_color_notFocused": "E01B1B1B",
+    "title_color_collapsed": "98191919",
     
-    "title_color_foreground": "98A0A0A0",
+    "title_color_foreground": "A0C0C0C0",
     
     "title_color_button_hover": "904D483B",
     "title_color_button_click": "B0635B46",
