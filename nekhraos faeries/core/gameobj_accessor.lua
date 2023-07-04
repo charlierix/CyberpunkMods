@@ -46,6 +46,9 @@ function GameObjectAccessor:Clear()
     self.player = nil
     self.workspot = nil
     self.camera = nil
+	self.sensor = nil
+	self.quest = nil
+	self.spacialQueries = nil
     self.targeting = nil
 end
 

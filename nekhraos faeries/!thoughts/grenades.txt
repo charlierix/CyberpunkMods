@@ -1,0 +1,199 @@
+class NPCPuppet extends ScriptedPuppet
+class PlayerPuppet extends ScriptedPuppet
+    class ScriptedPuppet extends gamePuppet
+        function GetAIControllerComponent() : handle:AIHumanComponent; // GetAIControllerComponent;
+
+
+------------------------------------------
+
+public importonly class gameprojectileSetUpAndLaunchEvent extends gameprojectileLaunchEvent {
+
+    //class gameprojectileAccelerateTowardsTrajectoryParams extends gameprojectileTrajectoryParams
+    //class gameprojectileFollowCurveTrajectoryParams extends gameprojectileTrajectoryParams
+    //class gameprojectileFollowTrajectoryParams extends gameprojectileTrajectoryParams
+    //class gameprojectileLinearTrajectoryParams extends gameprojectileTrajectoryParams
+    //class gameprojectileParabolicTrajectoryParams extends gameprojectileTrajectoryParams
+    //class gameprojectileSlideTrajectoryParams extends gameprojectileTrajectoryParams
+  public native let trajectoryParams: ref<gameprojectileTrajectoryParams>;
+
+  public native let lerpMultiplier: Float;
+}
+public importonly class gameprojectileLaunchEvent extends Event {
+
+  public native let launchParams: gameprojectileLaunchParams;
+
+  public native let owner: wref<GameObject>;
+
+  public native let projectileParams: gameprojectileWeaponParams;
+}
+
+
+public importonly struct gameprojectileLaunchParams {
+  //var launchMode : gameprojectileELaunchMode
+  //var logicalPositionProvider : handle:entIPositionProvider
+  //var logicalOrientationProvider : handle:entIOrientationProvider
+  //var visualPositionProvider : handle:entIPositionProvider
+  //var visualOrientationProvider : handle:entIOrientationProvider
+  //var ownerVelocityProvider : handle:entIVelocityProvider
+
+  public native let launchMode: gameprojectileELaunchMode;
+
+  public native let logicalPositionProvider: ref<IPositionProvider>;
+
+  public native let logicalOrientationProvider: ref<IOrientationProvider>;
+
+  public native let visualPositionProvider: ref<IPositionProvider>;
+
+  public native let visualOrientationProvider: ref<IOrientationProvider>;
+
+  public native let ownerVelocityProvider: ref<IVelocityProvider>;
+}
+
+
+enum gameprojectileELaunchMode {
+  Default = 0,
+  FromLogic = 1,
+  FromVisuals = 2,
+}
+
+
+public importonly struct gameprojectileWeaponParams {
+
+  public native let targetPosition: Vector4;
+
+  public native let smartGunSpreadOnHitPlane: Vector3;
+
+  public native let charge: Float;
+
+  public native let trackedTargetComponent: wref<IPlacedComponent>;
+
+  public native let smartGunAccuracy: Float;
+
+  public native let smartGunIsProjectileGuided: Bool;
+
+  public native let hitPlaneOffset: Vector4;
+
+  public native let shootingOffset: Float;
+
+  public native let ignoreWeaponOwnerCollision: Bool;
+
+  public native let ricochetData: gameRicochetData;
+
+  public native let range: Float;
+
+  public final static native func AddObjectToIgnoreCollisionWith(self: gameprojectileWeaponParams, entityID: EntityID) -> Void;
+}
+
+------------------------------------------
+
+
+  public final static func ThrowInit(context: ScriptExecutionContext, record: wref<AISubActionThrowItem_Record>) -> Void {
+    let target: wref<GameObject>;
+    
+    if IsDefined(record.Target()) && !AIActionTarget.GetObject(context, record.Target(), target) {
+      return;
+    };
+    
+    if IsDefined(target) && ScriptExecutionContext.GetOwner(context).IsNPC() {
+      (ScriptExecutionContext.GetOwner(context) as NPCPuppet).GetAIControllerComponent().CacheThrowGrenadeAtTargetQuery(target);
+    };
+  }
+
+
+------------------------------------------
+
+
+  public final static func ThrowItem(context: ScriptExecutionContext, record: wref<AISubActionThrowItem_Record>) -> Bool {
+    let angleToTarget: Float;
+    let isGrenade: Bool;
+    let item: wref<ItemObject>;
+    let launchEvent: ref<gameprojectileSetUpAndLaunchEvent>;
+    let ownerPuppet: ref<gamePuppet>;
+    let startType: gameGrenadeThrowStartType;
+    let target: wref<GameObject>;
+    let targetPosition: Vector4;
+    let targetVelocity: Vector4;
+    let throwAngle: Float;
+
+    if !IsDefined(record.AttachmentSlot()) || !IsDefined(record.Target()) {
+      return false;
+    };
+
+    ownerPuppet = ScriptExecutionContext.GetOwner(context);
+
+    item = GameInstance.GetTransactionSystem(ownerPuppet.GetGame()).GetItemInSlot(ownerPuppet, record.AttachmentSlot().GetID());
+    if !IsDefined(item) {
+      return false;
+    };
+
+    if IsDefined(record.Target()) && !AIActionTarget.Get(context, record.Target(), false, target, targetPosition) {
+      return false;
+    };
+
+    isGrenade = (item as BaseGrenade) != null;
+
+    if isGrenade {
+      if !AISubActionThrowItem_Record_Implementation.GetCachedGrenadeQuery(context, targetPosition, throwAngle, startType) && IsDefined(target) && ownerPuppet.IsNPC() {
+        if record.CheckThrowQuery() && !(ownerPuppet as NPCPuppet).GetAIControllerComponent().CanThrowGrenadeAtTarget(target, targetPosition, throwAngle, startType) {
+          return false;
+        };
+      };
+
+      if !IsDefined(target) {
+        throwAngle = record.ThrowAngle();
+      };
+
+      AISubActionThrowItem_Record_Implementation.SetNPCThrowingGrenade(context);
+    } else {
+      ScriptExecutionContext.SetArgumentObject(context, n"TargetItem", item);
+      throwAngle = record.ThrowAngle();
+      targetPosition = ownerPuppet.GetWorldPosition() + ownerPuppet.GetWorldForward() * 15.00;
+
+      if IsDefined(target) {
+        angleToTarget = Vector4.GetAngleDegAroundAxis(target.GetWorldPosition() - ownerPuppet.GetWorldPosition(), ownerPuppet.GetWorldForward(), ownerPuppet.GetWorldUp());
+
+        if AbsF(angleToTarget) <= 70.00 {
+          AIActionHelper.GetTargetSlotPosition(target, n"Chest", targetPosition);
+
+          if record.PositionPredictionTime() > 0.00 && IsDefined(target as gamePuppet) {
+            targetVelocity = (target as gamePuppet).GetVelocity();
+            targetVelocity.Z = 0.00;
+            targetPosition += Vector4.ClampLength(targetVelocity, 0.00, 4.50) * record.PositionPredictionTime();
+          };
+        };
+      };
+
+      targetPosition = ownerPuppet.GetWorldPosition() + Vector4.ClampLength(targetPosition - ownerPuppet.GetWorldPosition(), 7.50, 20.00);
+    };
+
+    launchEvent = new gameprojectileSetUpAndLaunchEvent();
+
+    launchEvent.launchParams.launchMode = gameprojectileELaunchMode.FromVisuals;
+    launchEvent.launchParams.logicalPositionProvider = IPositionProvider.CreateEntityPositionProvider(item);
+    launchEvent.launchParams.logicalOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(null, n"", ownerPuppet);
+    launchEvent.launchParams.visualPositionProvider = IPositionProvider.CreateEntityPositionProvider(item);
+    launchEvent.launchParams.visualOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(null, n"", item);
+    launchEvent.launchParams.ownerVelocityProvider = MoveComponentVelocityProvider.CreateMoveComponentVelocityProvider(ownerPuppet);
+
+    launchEvent.lerpMultiplier = 15.00;
+    
+    launchEvent.owner = ownerPuppet;
+
+    launchEvent.trajectoryParams = ParabolicTrajectoryParams.GetAccelTargetAngleParabolicParams(new Vector4(0.00, 0.00, record.TrajectoryGravity(), 0.00), targetPosition, throwAngle);
+    
+    launchEvent.projectileParams.shootingOffset = 2.00;
+
+    if isGrenade {
+      item.QueueEvent(launchEvent);
+      GameInstance.GetTransactionSystem(ownerPuppet.GetGame()).RemoveItemFromSlot(ownerPuppet, record.AttachmentSlot().GetID(), false);
+    } else {
+      GameInstance.GetTransactionSystem(ownerPuppet.GetGame()).ThrowItem(ownerPuppet, item, launchEvent);
+    };
+
+    return true;
+  }
+
+
+
+
+
