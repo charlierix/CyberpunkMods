@@ -52,6 +52,7 @@ harvester = require "processing/harvester"
 orb_pool = require "processing/orb_pool"
 
 prototype_grenades = require "prototype/grenades"
+prototype_grenades2 = require "prototype/grenades2"
 prototype_scanning = require "prototype/scanning"
 
 require "ui/drawing"
@@ -330,24 +331,72 @@ registerHotkey("NekhraosFaeries_LoadConfigs", "load configs from json", function
 end)
 
 
-registerHotkey("NekhraosFaeries_Grenade1", "Grenade 1", function()
-    o:GetPlayerInfo()
-    local pos, look_dir = o:GetCrosshairInfo()
+-- registerHotkey("NekhraosFaeries_Grenade1", "Grenade 1", function()
+--     o:GetPlayerInfo()
+--     local pos, look_dir = o:GetCrosshairInfo()
 
-    local spawn_point = AddVectors(pos, MultiplyVector(look_dir, 1))
+--     local spawn_point = AddVectors(pos, MultiplyVector(look_dir, 1))
 
-    prototype_grenades.SpawnGrenade(spawn_point)
+--     prototype_grenades.SpawnGrenade(spawn_point)
+-- end)
+-- registerHotkey("NekhraosFaeries_Grenade2", "Grenade 2", function()
+--     o:GetPlayerInfo()
+--     local pos, look_dir = o:GetCrosshairInfo()
+
+--     local from = AddVectors(pos, MultiplyVector(look_dir, 0.5))
+--     local to = AddVectors(pos, MultiplyVector(look_dir, 4))
+
+--     prototype_grenades.ThrowStraight(from, to)
+-- end)
+-- registerHotkey("NekhraosFaeries_Grenade4", "Grenade 4", function()
+--     local player = Game.GetPlayer()
+--     local transaction = Game.GetTransactionSystem()
+
+--     -- all nil
+--     local names =
+--     {
+--         "GrenadeCore",
+--         "GrenadeDelivery",
+--         "GrenadeLeft",
+--         "GrenadeRight",
+--         "GrenadeSlots",
+--     }
+
+--     for _, name in ipairs(names) do
+--         local full_name = "AttachmentSlots." .. name
+
+--         print(full_name)
+
+--         local item = transaction:GetItemInSlot(player, TweakDBID.new(full_name))
+
+--         print(tostring(item))
+--     end
+-- end)
+
+registerHotkey("NekhraosFaeries_Grenade3", "Grenade 3", function()
+    local player = Game.GetPlayer()
+    local transaction = Game.GetTransactionSystem()
+
+    local item_object = transaction:GetItemInSlot(player, TweakDBID.new("AttachmentSlots.WeaponRight"))        -- only returns something if weapon isn't holstered
+    --local item_object = transaction:GetItemInSlot(player, TweakDBID.new("AttachmentSlots.Consumable"))     -- always nil
+
+    if not item_object then
+        print("nil")
+
+    elseif not IsDefined(item_object) then
+        print("not defined")
+    end
+
+    local item_data = item_object:GetItemData()
+    if item_data:GetItemType().value == "Gad_Grenade" then
+        print("not a grenade")
+    end
+
+
+    print("grenade")
+
+
 end)
-registerHotkey("NekhraosFaeries_Grenade2", "Grenade 2", function()
-    o:GetPlayerInfo()
-    local pos, look_dir = o:GetCrosshairInfo()
-
-    local from = AddVectors(pos, MultiplyVector(look_dir, 0.5))
-    local to = AddVectors(pos, MultiplyVector(look_dir, 4))
-
-    prototype_grenades.ThrowStraight(from, to)
-end)
-
 
 -- test to spawn an object, then call targeting sytem from its perspective
 

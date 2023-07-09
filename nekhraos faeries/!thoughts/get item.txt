@@ -1,0 +1,150 @@
+Trying to get a grenade
+
+Should be able to do it by recordID ("Items.GrenadeFlashHoming")
+
+item:QueueEvent is off of entEntity
+
+------------------------------------------
+
+GetItemInSlot is finicky and isn't general purpose
+
+item is gameItemObject
+
+
+local player = Game.GetPlayer()
+local transaction = Game.GetTransactionSystem()
+local item = transaction:GetItemInSlot(player, TweakDBID.new("AttachmentSlots.WeaponRight"))
+
+------------------------------------------
+
+
+
+BaseGrenade
+    gameweaponGrenade
+        gameItemObject
+
+
+ExplodingBullet    
+    BaseBullet
+        BaseProjectile
+            gameItemObject
+
+
+Knife
+minibossPlasmaProjectile
+MonoDisc
+nanowireGrenade
+NanoWireProjectile
+piercingGrenade
+RainMissileProjectile
+sampleBullet
+sampleBulletGeneric
+sampleGranade
+sampleSmartBullet
+SpiderbotHeavyProjectile
+    BaseProjectile
+        gameItemObject
+
+
+gameGarmentItemObject
+    gameItemObject
+
+
+gameweaponObject
+    gameItemObject
+
+
+InspectableItemObject
+    gameItemObject
+ProjectileLauncherRound
+    gameItemObject
+
+
+
+    gameItemObject
+        gameTimeDilatable
+            gameObject
+                entGameEntity
+                    entEntity
+
+
+------------------------------------------
+
+gameDeviceComponent
+gameScriptableComponent
+AICAgent
+AITargetTrackerComponent
+cpTestComponent
+EntityStubComponent
+gameAttitudeAgent
+gameDeviceCameraControlComponent
+gameEntitySpawnerComponent
+gameEntityStubComponent
+gameInventory
+gameMasterDeviceComponent
+gameScanningComponent
+gameSquadMemberComponent
+gameStatsComponent
+gameStatusEffectComponent
+gameVisionModeComponent
+scnVoicesetComponent
+vehicleCameraManagerComponent
+vehicleController
+vehicleGarageComponent
+vehiclePersistentData
+    gameComponent
+        entIComponent
+            .GetEntity() : whandle:entEntity
+
+
+------------------------------------------
+
+
+gameStackedItemData
+    gameItemData
+
+
+gamePreviewItemData
+    gameUniqueItemData
+        gameItemData
+
+
+gameBlueprintStackableItemData
+    gameItemData
+
+
+gameItemData
+
+
+------------------------------------------
+
+
+functions to investigate
+
+
+    -- I think noderef is to something live
+	function GetEntityFromNode(nodeRef : NodeRef) : handle:entEntity; // GetEntityFromNode;NodeRef
+
+
+
+	import function GetEntity() : whandle:entEntity; // GetEntity
+	static function GetItem(entity : whandle:entEntity) : whandle:gameItemObject; // AITicketCondition::GetItem;Entity
+	import static function GetEntity(self : entEntityGameInterface) : handle:entEntity; // GetEntity
+	import function GetSpawnedEntities(out entities : array:whandle:entEntity, optional recordID : TweakDBID); // GetSpawnedEntities
+	import static function GetEntity(ctx : gameEffectData, id : gamebbScriptID_EntityPtr, out value : whandle:entEntity) : Bool; // GetEntity
+	import static function GetEntity(filterCtx : gameEffectGroupFilterScriptContext, index : Int32) : handle:entEntity; // GetEntity
+	import static function GetEntity(filterCtx : gameEffectSingleFilterScriptContext) : handle:entEntity; // GetEntity
+	import function GetEntity() : handle:entEntity; // GetEntity
+	import static function FindEntityByID(self : ScriptGameInstance, entityId : entEntityID) : handle:entEntity; // FindEntityByID
+
+
+
+
+
+
+
+
+
+
+
+

@@ -194,6 +194,105 @@ public importonly struct gameprojectileWeaponParams {
   }
 
 
+------------------------------------------
 
 
+  protected final const func Throw(scriptInterface: ref<StateGameScriptInterface>, stateContext: ref<StateContext>, isQuickthrow: Bool, opt inLocalAimForward: Vector4, opt inLocalAimPosition: Vector4) -> Void {
+    let blackboard: ref<IBlackboard>;
+    let blackboardSystem: ref<BlackboardSystem>;
+    let item: ref<ItemObject>;
+    let launchEvent: ref<gameprojectileSetUpAndLaunchEvent>;
+    let logicalOrientationProvider: ref<IOrientationProvider>;
+    let logicalPositionProvider: ref<IPositionProvider>;
+    let orientationEntitySpace: Quaternion;
+    let playerPuppet: ref<PlayerPuppet>;
+    let targetingSystem: ref<TargetingSystem>;
+    let transactionSystem: ref<TransactionSystem> = scriptInterface.GetTransactionSystem();
+    if !this.CheckItemCategoryInQuickWheel(scriptInterface, gamedataItemCategory.Gadget) {
+      return;
+    };
+    blackboardSystem = scriptInterface.GetBlackboardSystem();
+    blackboard = blackboardSystem.Get(GetAllBlackboardDefs().UI_QuickSlotsData);
+    blackboard.SetBool(GetAllBlackboardDefs().UI_QuickSlotsData.dpadHintRefresh, true);
+    blackboard.SignalBool(GetAllBlackboardDefs().UI_QuickSlotsData.dpadHintRefresh);
+    playerPuppet = scriptInterface.executionOwner as PlayerPuppet;
+    item = transactionSystem.GetItemInSlot(playerPuppet, this.GetSlotTDBID(stateContext));
+    GameInstance.GetTelemetrySystem(playerPuppet.GetGame()).LogCombatGadgetUsed(playerPuppet, item.GetItemID());
+    if (item as BaseGrenade) != null {
+      transactionSystem.RemoveItemFromSlot(playerPuppet, this.GetSlotTDBID(stateContext), item.IsClientSideOnlyGadget(), false, true);
+    };
+    if IsDefined(item) && !item.IsClientSideOnlyGadget() {
+	
+	
+      launchEvent = new gameprojectileSetUpAndLaunchEvent();
+      this.SetItemIDWrapperPermanentParameter(stateContext, n"grenade", item.GetItemID());
+      Quaternion.SetIdentity(orientationEntitySpace);
+      Quaternion.SetXRot(orientationEntitySpace, this.GetRotateAngle(isQuickthrow));
+      if Vector4.IsZero(inLocalAimPosition) || Vector4.IsZero(inLocalAimForward) {
+        targetingSystem = GameInstance.GetTargetingSystem(playerPuppet.GetGame());
+        logicalPositionProvider = targetingSystem.GetDefaultCrosshairPositionProvider(playerPuppet);
+        logicalOrientationProvider = targetingSystem.GetDefaultCrosshairOrientationProvider(playerPuppet, orientationEntitySpace);
+      } else {
+        logicalPositionProvider = IPositionProvider.CreateEntityPositionProvider(playerPuppet, Vector4.Vector4To3(inLocalAimPosition));
+        inLocalAimForward = Quaternion.Transform(orientationEntitySpace, inLocalAimForward);
+        orientationEntitySpace = Quaternion.BuildFromDirectionVector(inLocalAimForward);
+        logicalOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(null, n"", playerPuppet, orientationEntitySpace);
+      };
+      launchEvent.launchParams.logicalPositionProvider = logicalPositionProvider;
+      launchEvent.launchParams.logicalOrientationProvider = logicalOrientationProvider;
+      launchEvent.launchParams.visualPositionProvider = IPositionProvider.CreateEntityPositionProvider(item);
+      launchEvent.launchParams.visualOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(null, n"", item);
+      launchEvent.launchParams.ownerVelocityProvider = MoveComponentVelocityProvider.CreateMoveComponentVelocityProvider(playerPuppet);
+      launchEvent.lerpMultiplier = 15.00;
+      launchEvent.trajectoryParams = this.CreateTrajectoryParams(item, isQuickthrow);
+      launchEvent.owner = playerPuppet;
 
+
+      item.QueueEvent(launchEvent);
+
+    };
+  }
+
+
+------------------------------------------
+
+// these are all the classes that inherit from entIPositionProvider, but they're all empty except gameLookAtFacingPositionProvider
+
+AIThreatBeliefPositionProvider
+AIThreatLastKnownPositionProvider
+AIThreatPositionProvider
+AIThreatSharedBeliefPositionProvider
+AIThreatSharedLastKnownPositionProvider
+entCollisionPredictionPositionProvider
+entDebugPositionProvider
+entEntityPositionProvider
+entFuncPositionProvider
+entHistoryPositionProvider
+entPlacedComponentPositionProvider
+entSlotPositionProvider
+entStaticPositionProvider
+gameLookAtFacingPositionProvider            //import function SetCameraComponent(owner : handle:gameObject); // SetCameraComponent
+gamePhotoModeAutoFocusPositionProvider
+gamePhotoModeObjectPositionProvider
+gameTPPRepresentationPositionProvider
+
+entIPositionProvider
+
+
+class entStaticPositionProvider extends entIPositionProvider
+{
+}
+
+class entIPositionProvider extends IScriptable
+{
+	import static function CreateCollisionPredictionPositionProvider(targetPosProvider : handle:entIPositionProvider, ownerPosProvider : handle:entIPositionProvider, targetVelocityProvider : handle:entIVelocityProvider, ownerVelocity : Float) : handle:entIPositionProvider; // CreateCollisionPredictionPositionProvider
+	import static function CreateEntityHistoryPositionProvider(transformHistoryComp : whandle:entTransformHistoryComponent, timeDelay : Float, optional localOffset : Vector3) : handle:entIPositionProvider; // CreateEntityHistoryPositionProvider
+	import static function CreateEntityPositionProvider(entity : handle:entEntity, optional localOffset : Vector3) : handle:entIPositionProvider; // CreateEntityPositionProvider
+	import static function CreatePlacedComponentPositionProvider(entity : handle:entIPlacedComponent, optional localOffset : Vector3) : handle:entIPositionProvider; // CreatePlacedComponentPositionProvider
+	import static function CreateSlotPositionProvider(entity : handle:entEntity, slotName : CName, optional localOffset : Vector3) : handle:entIPositionProvider; // CreateSlotPositionProvider
+	import static function CreateStaticPositionProvider(position : WorldPosition) : handle:entIPositionProvider; // CreateStaticPositionProvider
+
+	import function CalculatePosition(out outPos : Vector4) : Bool; // CalculatePosition
+	import function GetWorldOffset() : Vector4; // GetWorldOffset
+	import function SetWorldOffset(worldOffset : Vector4); // SetWorldOffset
+}
