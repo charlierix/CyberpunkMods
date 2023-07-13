@@ -119,6 +119,23 @@ gameItemData
 ------------------------------------------
 
 
+gamedataGrenade_Record
+    gamedataGadget_Record
+        gamedataWeaponItem_Record
+            gamedataItem_Record
+                gamedataBaseObject_Record
+                    gamedataTweakDBRecord
+
+
+------------------------------------------
+
+
+entEntityID
+
+
+------------------------------------------
+
+
 functions to investigate
 
 

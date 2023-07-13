@@ -208,26 +208,33 @@ public importonly struct gameprojectileWeaponParams {
     let playerPuppet: ref<PlayerPuppet>;
     let targetingSystem: ref<TargetingSystem>;
     let transactionSystem: ref<TransactionSystem> = scriptInterface.GetTransactionSystem();
+
     if !this.CheckItemCategoryInQuickWheel(scriptInterface, gamedataItemCategory.Gadget) {
       return;
     };
+
     blackboardSystem = scriptInterface.GetBlackboardSystem();
     blackboard = blackboardSystem.Get(GetAllBlackboardDefs().UI_QuickSlotsData);
     blackboard.SetBool(GetAllBlackboardDefs().UI_QuickSlotsData.dpadHintRefresh, true);
     blackboard.SignalBool(GetAllBlackboardDefs().UI_QuickSlotsData.dpadHintRefresh);
+
     playerPuppet = scriptInterface.executionOwner as PlayerPuppet;
     item = transactionSystem.GetItemInSlot(playerPuppet, this.GetSlotTDBID(stateContext));
+
     GameInstance.GetTelemetrySystem(playerPuppet.GetGame()).LogCombatGadgetUsed(playerPuppet, item.GetItemID());
     if (item as BaseGrenade) != null {
       transactionSystem.RemoveItemFromSlot(playerPuppet, this.GetSlotTDBID(stateContext), item.IsClientSideOnlyGadget(), false, true);
     };
+
     if IsDefined(item) && !item.IsClientSideOnlyGadget() {
 	
 	
       launchEvent = new gameprojectileSetUpAndLaunchEvent();
+
       this.SetItemIDWrapperPermanentParameter(stateContext, n"grenade", item.GetItemID());
       Quaternion.SetIdentity(orientationEntitySpace);
       Quaternion.SetXRot(orientationEntitySpace, this.GetRotateAngle(isQuickthrow));
+      
       if Vector4.IsZero(inLocalAimPosition) || Vector4.IsZero(inLocalAimForward) {
         targetingSystem = GameInstance.GetTargetingSystem(playerPuppet.GetGame());
         logicalPositionProvider = targetingSystem.GetDefaultCrosshairPositionProvider(playerPuppet);
@@ -238,6 +245,7 @@ public importonly struct gameprojectileWeaponParams {
         orientationEntitySpace = Quaternion.BuildFromDirectionVector(inLocalAimForward);
         logicalOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(null, n"", playerPuppet, orientationEntitySpace);
       };
+      
       launchEvent.launchParams.logicalPositionProvider = logicalPositionProvider;
       launchEvent.launchParams.logicalOrientationProvider = logicalOrientationProvider;
       launchEvent.launchParams.visualPositionProvider = IPositionProvider.CreateEntityPositionProvider(item);

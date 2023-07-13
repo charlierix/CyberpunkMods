@@ -621,6 +621,13 @@ function GetMidPoint(point1, point2)
         1)
 end
 
+function ToWorldPosition(position)
+    local worldPosition = NewObject("WorldPosition")
+    GetSingleton("WorldPosition"):SetVector4(worldPosition, position)
+
+    return worldPosition
+end
+
 -------------------------------------- Operators --------------------------------------
 
 --TODO: See if some of these operators are already part of the Vector4

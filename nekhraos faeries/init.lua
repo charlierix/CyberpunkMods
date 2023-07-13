@@ -53,6 +53,7 @@ orb_pool = require "processing/orb_pool"
 
 prototype_grenades = require "prototype/grenades"
 prototype_grenades2 = require "prototype/grenades2"
+prototype_grenades3 = require "prototype/grenades3"
 prototype_scanning = require "prototype/scanning"
 
 require "ui/drawing"
@@ -129,6 +130,30 @@ registerForEvent("onInit", function()
             --this.ClearObjects()
         end
     end)
+
+
+
+    ObserveAfter('BaseGrenade', 'OnGameAttached', function(obj);
+        if not obj:IsA('BaseGrenade') then return end;
+        local id = obj:GetItemData():GetID().id;
+        print('BaseGrenade', 'OnGameAttached', id, id.value, os.clock());
+        if Game['OperatorEqual;TweakDBIDTweakDBID;Bool'](id, TweakDBID.new("Items.GrenadeFlashRegular")) then;
+            print('HERE WE GO:', id, id.value);
+        end;
+    end);
+
+    ObserveAfter('BaseGrenade', 'OnVisualSpawnAttached', function(obj);
+        if not obj:IsA('BaseGrenade') then return end;
+        local id = obj:GetItemData():GetID().id;
+        print('BaseGrenade', 'OnVisualSpawnAttached', id, id.value, os.clock());
+        if Game['OperatorEqual;TweakDBIDTweakDBID;Bool'](id, TweakDBID.new("Items.GrenadeFlashRegular")) then;
+            print('HERE WE GO:', id, id.value);
+        end;
+    end);
+
+
+
+
 
     isShutdown = false
 
@@ -382,21 +407,127 @@ registerHotkey("NekhraosFaeries_Grenade3", "Grenade 3", function()
 
     if not item_object then
         print("nil")
+        do return end
 
     elseif not IsDefined(item_object) then
         print("not defined")
+        do return end
     end
 
     local item_data = item_object:GetItemData()
     if item_data:GetItemType().value == "Gad_Grenade" then
         print("not a grenade")
-    end
+        do return end
 
+    end
 
     print("grenade")
 
 
+    --------------------------------------
+
+
+    local pos, look_dir = o:GetCrosshairInfo()
+
+    local from = AddVectors(pos, MultiplyVector(look_dir, 4))
+    local to = AddVectors(pos, MultiplyVector(look_dir, 6))
+
+    local orientation = GetRandomRotation()
+
+    print("Grenade3: a")
+
+    -- set up event
+    local launchEvent = gameprojectileSetUpAndLaunchEvent.new()
+    launchEvent.owner = player
+
+    print("Grenade3: b")
+
+    -- launchEvent.launchParams.logicalPositionProvider = entIPositionProvider.CreateStaticPositionProvider(ToWorldPosition(from))
+    -- launchEvent.launchParams.logicalOrientationProvider = entIOrientationProvider.CreateStaticOrientationProvider(orientation)
+
+    launchEvent.launchParams.logicalPositionProvider = entIPositionProvider.CreateEntityPositionProvider(item_object)
+    launchEvent.launchParams.logicalOrientationProvider = entIOrientationProvider.CreateEntityOrientationProvider(nil, "", item_object)
+
+    print("Grenade3: c")
+
+    launchEvent.launchParams.visualPositionProvider = entIPositionProvider.CreateEntityPositionProvider(item_object)
+    launchEvent.launchParams.visualOrientationProvider = entIOrientationProvider.CreateEntityOrientationProvider(nil, "", item_object)
+
+    print("Grenade3: d")
+
+    -- I think this is to get the initial velocity.  There doesn't seem to be any static providers like above
+    -- This takes gamePuppet.  These are the only classes that seem available
+    --  NPCPuppet extends ScriptedPuppet
+    --  PlayerPuppet extends ScriptedPuppet
+    --      ScriptedPuppet extends gamePuppet
+    --          gamePuppet
+    --
+    -- entIVelocityProvider implements IScriptable, has one function: CalculateVelocity()
+    --  CalculateVelocity has no in/out params, IScriptable doesn't have a velocity property
+    launchEvent.launchParams.ownerVelocityProvider = MoveComponentVelocityProvider.CreateMoveComponentVelocityProvider(player)
+
+    print("Grenade3: e")
+
+    launchEvent.lerpMultiplier = 15.00
+
+
+
+
+
+    -- this is in base bullet's initialize
+    -- protected cb func OnProjectileInitialize(eventData: ref<gameprojectileSetUpEvent>) -> Bool {
+    --     let linearParams: ref<LinearTrajectoryParams> = new LinearTrajectoryParams();
+    --     linearParams.startVel = this.m_startVelocity;
+    --     linearParams.acceleration = this.m_acceleration;
+    --     this.m_projectileComponent.AddLinear(linearParams);
+    --     this.m_projectileComponent.ToggleAxisRotation(true);
+    --     this.m_projectileComponent.AddAxisRotation(new Vector4(0.00, 1.00, 0.00, 0.00), 100.00);
+    -- }
+
+
+
+    -- I wonder if grenades only work with certain trajectory params
+
+    local trajectoryParams = gameprojectileLinearTrajectoryParams.new()
+    trajectoryParams.startVel = 6
+    trajectoryParams.acceleration = 4
+
+
+
+
+
+
+
+    print("Grenade3: f")
+
+    launchEvent.trajectoryParams = trajectoryParams
+
+    print("Grenade3: g")
+
+    item_object:QueueEvent(launchEvent)
+
+    print("Grenade3: h")
+
 end)
+
+
+
+-- Nothing is happening.  Maybe that only works for NPCs?
+--  Try to find the code for player grenade
+--  Use some of the compares from the event listeners
+--  Call something from update that scans for npcs, apply filter, draw dot if they can throw a grenade
+
+-- May want to give up on grenade for a bit and try gun projectiles
+
+registerHotkey("NekhraosFaeries_Grenade5", "Grenade 5", function()
+    prototype_grenades3.ThrowFromSlot(o)
+end)
+registerHotkey("NekhraosFaeries_DropGrenade", "Drop Grenade", function()
+    prototype_grenades3.DropFromSlot(o)
+end)
+
+
+
 
 -- test to spawn an object, then call targeting sytem from its perspective
 
