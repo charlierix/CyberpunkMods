@@ -450,6 +450,34 @@ function this.StopSound(player, soundName)
     player:QueueEvent(audioEvent)
 end
 
+-- Turns target parts into entities, deduped on hash
+function this.GetDedupedEntities(targetParts)
+    local entities = {}
+    local ids = {}
+
+    for _, part in ipairs(targetParts) do
+        local entity = part:GetComponent():GetEntity()
+        local id_hash = entity_helper.GetIDHash_Entity(entity)
+
+        if not this.Contains(ids, id_hash) then
+            table.insert(ids, id_hash)
+            table.insert(entities, entity)
+        end
+    end
+
+    return entities
+end
+
+function this.Contains(list, item)
+    for _, value in ipairs(list) do
+        if value == item then
+            return true
+        end
+    end
+
+    return false
+end
+
 local raycast_filters =
 {
     "Dynamic",      -- Movable Objects

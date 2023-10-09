@@ -21,6 +21,7 @@ require "core/math_yaw"
 require "core/util"
 
 require "data/dal"
+entity_helper = require "data/entity_helper"
 require "data/modes"
 
 require "debug/debug_code"
