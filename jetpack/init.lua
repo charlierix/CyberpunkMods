@@ -171,8 +171,8 @@ registerForEvent("onInit", function()
     function wrappers.GetTimeSystem() return Game.GetTimeSystem() end
     function wrappers.SetTimeDilation(timesystem, reason, speed) timesystem:SetTimeDilation(reason, speed) end
     function wrappers.SetTimeDilationOnLocalPlayerZero(timesystem, reason, player_mult) timesystem:SetTimeDilationOnLocalPlayerZero(reason, player_mult) end
-    function wrappers.UnsetTimeDilation(timesystem, reason) timesystem:UnsetTimeDilation(reason) end
-    function wrappers.UnsetTimeDilationOnLocalPlayerZero(timesystem) timesystem:UnsetTimeDilationOnLocalPlayerZero() end
+    function wrappers.UnsetTimeDilation(timesystem, reason) timesystem:UnsetTimeDilation(reason, "None") end
+    function wrappers.UnsetTimeDilationOnLocalPlayerZero(timesystem, reason) timesystem:UnsetTimeDilationOnLocalPlayerZero(reason, "None") end
     function wrappers.GetTransactionSystem() return Game.GetTransactionSystem() end
     function wrappers.GetItemInSlot(transaction, player, slotID) transaction:GetItemInSlot(player, slotID) end
     function wrappers.GetStatsSystem() return Game.GetStatsSystem() end

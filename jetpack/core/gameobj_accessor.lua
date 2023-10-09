@@ -278,7 +278,7 @@ function GameObjectAccessor:UnsetTimeSpeed()
 
     if self.timesystem then
         self.wrappers.UnsetTimeDilation(self.timesystem, time_reason)
-        self.wrappers.UnsetTimeDilationOnLocalPlayerZero(self.timesystem)
+        self.wrappers.UnsetTimeDilationOnLocalPlayerZero(self.timesystem, time_reason)
 
         --TODO: To do this right, listen to events to know when weapon is switched, quickhacks applied, other game events
         self:SetWeaponSpeed(1, 1)
