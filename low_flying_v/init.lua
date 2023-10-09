@@ -116,8 +116,8 @@ local const =
     minSpeed_absolute = 12,             -- if slowing down below min speed, the cruise control will be more coarse and not auto speed up.  This is as slow as it will go (much slower, and you'll drop out of flight)
 
     -- Launch Settings
-    launch_horz = 48,                    -- this is the impulse strength to apply when starting flight from a hotkey
-    launch_vert = 48,
+    launch_horz = 8,                    -- this is the impulse strength to apply when starting flight from a hotkey
+    launch_vert = 12,
 
     maxSpeed = 144,                     -- player:GetVelocity() isn't the same as the car's reported speed.  A car speed of 100 is around 26 world speed.  150 is about 33.  So a world speed of 180 would be a car speed of around 720
 
