@@ -75,7 +75,7 @@ local const =
     map_body_type = CreateEnum("CorpseContainer", "NPC_Dead", "NPC_Defeated", "NPC_Alive"),
 
     shouldShowScreenDebug = true,      -- draws debug info in game
-    shouldShowDebugWindow = false,      -- shows a window with extra debug info
+    shouldShowDebugWindow = true,      -- shows a window with extra debug info
 }
 
 local debug_categories = CreateEnum("text2D_2sec")
@@ -152,7 +152,56 @@ registerForEvent("onInit", function()
     end);
 
 
+    -- orig, but converted to local variables
+    -- Override('CombatGadgetTransitions', 'Throw;StateGameScriptInterfaceStateContextBoolVector4Vector4', function(obj, scriptInterface, stateContext, isQuickthrow, inLocalAimForward, inLocalAimPosition)
+    --     local transactionSystem = Game.GetTransactionSystem()
+    --     if not obj:CheckItemCategoryInQuickWheel(scriptInterface, gamedataItemCategory.Gadget) then
+    --         return
+    --     end
 
+    --     local blackboardSystem = Game.GetBlackboardSystem()
+    --     local blackboard = blackboardSystem:Get(GetAllBlackboardDefs().UI_QuickSlotsData)
+    --     blackboard:SetBool(GetAllBlackboardDefs().UI_QuickSlotsData.dpadHintRefresh, true)
+    --     blackboard:SignalBool(GetAllBlackboardDefs().UI_QuickSlotsData.dpadHintRefresh)
+    --     local playerPuppet = GetPlayer()
+    --     local item = transactionSystem:GetItemInSlot(playerPuppet, obj:GetSlotTDBID(stateContext))
+    --     Game.GetTelemetrySystem():LogCombatGadgetUsed(playerPuppet, item:GetItemID())
+    --     if item ~= nil then
+    --         transactionSystem:RemoveItemFromSlot(playerPuppet, obj:GetSlotTDBID(stateContext), item:IsClientSideOnlyGadget(), false, true)
+    --     end
+
+    --     if item and not item:IsClientSideOnlyGadget() then
+    --         local launchEvent = gameprojectileSetUpAndLaunchEvent.new()
+    --         obj:SetItemIDWrapperPermanentParameter(stateContext, 'grenade', item:GetItemID())
+    --         local orientationEntitySpace = Quaternion.new()
+    --         Quaternion.SetIdentity(orientationEntitySpace)
+    --         Quaternion.SetXRot(orientationEntitySpace, obj:GetRotateAngle(isQuickthrow))
+
+    --         local logicalPositionProvider = nil
+    --         local logicalOrientationProvider = nil
+    --         if Vector4.IsZero(inLocalAimPosition) or Vector4.IsZero(inLocalAimForward) then
+    --             local targetingSystem = Game.GetTargetingSystem()
+    --             logicalPositionProvider = targetingSystem:GetDefaultCrosshairPositionProvider(playerPuppet)
+    --             logicalOrientationProvider = targetingSystem:GetDefaultCrosshairOrientationProvider(playerPuppet, orientationEntitySpace)
+    --         else
+    --             logicalPositionProvider = IPositionProvider.CreateEntityPositionProvider(playerPuppet, Vector4.Vector4To3(inLocalAimPosition))
+    --             inLocalAimForward = Quaternion.Transform(orientationEntitySpace, inLocalAimForward)
+    --             orientationEntitySpace = Quaternion.BuildFromDirectionVector(inLocalAimForward)
+    --             logicalOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(nil, '', playerPuppet, orientationEntitySpace)
+    --         end
+
+    --         launchEvent.logicalPositionProvider = logicalPositionProvider
+    --         launchEvent.logicalOrientationProvider = logicalOrientationProvider
+    --         launchEvent.visualPositionProvider = IPositionProvider.CreateEntityPositionProvider(item)
+    --         launchEvent.visualOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(nil, '', item)
+    --         launchEvent.ownerVelocityProvider = MoveComponentVelocityProvider.CreateMoveComponentVelocityProvider(playerPuppet)
+    --         launchEvent.lerpMultiplier = 15.0
+    --         launchEvent.trajectoryParams = obj:CreateTrajectoryParams(item, isQuickthrow)
+    --         launchEvent.owner = playerPuppet
+    --         item:QueueEvent(launchEvent)
+    --         print('throw')
+    --     end
+    -- end)
 
 
     isShutdown = false
@@ -194,6 +243,11 @@ registerForEvent("onShutdown", function()
     --this.ClearObjects()
 end)
 
+
+local ownerPuppet_id = nil
+local grenade_tick_countdown = nil
+
+
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw_graphics = false
     shouldDraw_config = false
@@ -229,6 +283,62 @@ registerForEvent("onUpdate", function(deltaTime)
     orb_pool.Tick(o, scanner_orbs, deltaTime)
 
     debug_render_screen.CallFrom_onUpdate(deltaTime)
+
+
+
+
+    if ownerPuppet_id then
+        print("update grenade a")
+
+        if grenade_tick_countdown > 0 then
+            print("update grenade b")
+            grenade_tick_countdown = grenade_tick_countdown - 1
+
+        else
+            print("update grenade c")
+
+            local ownerPuppet = Game.FindEntityByID(ownerPuppet_id)
+            local item = Game.GetTransactionSystem():GetItemInSlot(ownerPuppet, "AttachmentSlots.GrenadeRight")
+
+            if not item then
+                print("npc doesn't have a grenade")
+                do return end
+            end
+
+            local throwAngle = 45
+            local targetPosition = GetPlayer():GetWorldPosition()
+
+            local launchParams = gameprojectileLaunchParams.new()
+            launchParams.launchMode = gameprojectileELaunchMode.FromVisuals
+            launchParams.logicalPositionProvider = IPositionProvider.CreateEntityPositionProvider(item)
+            launchParams.logicalOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(nil, "", ownerPuppet)
+            launchParams.visualPositionProvider = IPositionProvider.CreateEntityPositionProvider(item)
+            launchParams.visualOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(nil, "", item)
+            launchParams.ownerVelocityProvider = MoveComponentVelocityProvider.CreateMoveComponentVelocityProvider(ownerPuppet)
+
+            local launchEvent = gameprojectileSetUpAndLaunchEvent.new()
+            launchEvent.lerpMultiplier = 15
+            launchEvent.owner = ownerPuppet
+            launchEvent.launchParams = launchParams
+            launchEvent.trajectoryParams = ParabolicTrajectoryParams.GetAccelTargetAngleParabolicParams(Vector4.new(0.00, 0.00, -9.8, 0.00), targetPosition,  throwAngle, 20)
+
+            print("update grenade d")
+
+            item:QueueEvent(launchEvent)
+
+            print("update grenade e")
+
+            Game.GetTransactionSystem():RemoveItemFromSlot(ownerPuppet, "AttachmentSlots.GrenadeRight", false)
+
+            print("update grenade f")
+
+            ownerPuppet_id = nil
+            grenade_tick_countdown = nil
+        end
+
+        print("update grenade g")
+    end
+
 end)
 
 registerForEvent("onOverlayOpen", function()
@@ -526,7 +636,194 @@ registerHotkey("NekhraosFaeries_DropGrenade", "Drop Grenade", function()
     prototype_grenades3.DropFromSlot(o)
 end)
 
+registerHotkey("NekhraosFaeries_Grenade6", "Grenade 6", function()
+    print("grenade6 a")
 
+    local player = Game.GetPlayer()
+
+    -- local targetting = Game.GetTargetingSystem()
+    -- local crosshairPosition, crosshairForward = targetting:GetDefaultCrosshairData(player)    
+    local pos, look_dir = o:GetCrosshairInfo()
+
+    --return Vector4.new(vector1.x + vector2.x, vector1.y + vector2.y, vector1.z + vector2.z, 1)
+    --return Vector4.new(vector.x * constant, vector.y * constant, vector.z * constant, 1)
+    local to = AddVectors(pos, MultiplyVector(look_dir, 3))
+
+
+    --local item = Game.GetTransactionSystem():GetItemInSlot(player, "AttachmentSlots.GrenadeRight")
+    local item = Game.GetTransactionSystem():GetItemInSlot(player, TweakDBID.new("AttachmentSlots.WeaponRight"))        -- only returns something if weapon isn't holstered
+
+    if not item then
+        print("no item in right slot - be sure your weapon isn't holstered")
+        do return end
+
+    elseif not IsDefined(item) then
+        print("item isn't defined")
+        do return end
+    end
+
+    local item_data = item:GetItemData()
+
+    --TODO: handle other types of projectiles
+    if item_data:GetItemType().value == "Gad_Grenade" then
+        print("item isn't a grenade")
+        do return end
+    end
+
+    if item:IsClientSideOnlyGadget() then
+        print("ClientSideOnlyGadget")
+        do return end
+    end
+
+
+    print("grenade6 b")
+
+    local throwAngle = 45
+    local targetPosition = to
+
+    local launchParams = gameprojectileLaunchParams.new()
+    launchParams.launchMode = gameprojectileELaunchMode.FromVisuals
+    launchParams.logicalPositionProvider = IPositionProvider.CreateEntityPositionProvider(item)
+    launchParams.logicalOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(nil, "", player)
+    launchParams.visualPositionProvider = IPositionProvider.CreateEntityPositionProvider(item)
+    launchParams.visualOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(nil, "", item)
+    launchParams.ownerVelocityProvider = MoveComponentVelocityProvider.CreateMoveComponentVelocityProvider(player)
+
+    local launchEvent = gameprojectileSetUpAndLaunchEvent.new()
+    launchEvent.lerpMultiplier = 15
+    launchEvent.owner = player
+    launchEvent.launchParams = launchParams
+    launchEvent.trajectoryParams = ParabolicTrajectoryParams.GetAccelTargetAngleParabolicParams(Vector4.new(0.00, 0.00, -9.8, 0.00), targetPosition, throwAngle, 20)
+
+    print("grenade6 c")
+
+    item:QueueEvent(launchEvent)
+
+    print("grenade6 d")
+
+    --Game.GetTransactionSystem():RemoveItemFromSlot(player, "AttachmentSlots.GrenadeRight", false)
+end)
+
+registerHotkey("NekhraosFaeries_Grenade7", "Grenade 7", function()
+    print("grenade7 a")
+
+    -- Find npc
+    local searchQuery = TSQ_ALL()
+    searchQuery.maxDistance = 12
+
+    local found, entities = o:GetTargetEntities(searchQuery)
+
+    print("grenade7 b")
+
+    local ownerPuppet = nil
+    if found then
+        for _, entity in ipairs(entities) do
+            if entity:IsNPC() and not entity:IsDead() and not entity:IsDefeated() then
+                ownerPuppet = entity
+                do break end
+            end
+        end
+    end
+
+    if not ownerPuppet then
+        print("didn't find npc")
+        do return end
+    end
+
+    print("grenade7 c")
+
+    -- Give npc a grenade
+    local cmd = NewObject("AIEquipCommand")
+    cmd.slotId = TweakDBID.new("AttachmentSlots.GrenadeRight")
+    cmd.itemId = TweakDBID.new("Items.GrenadeFragRegular")
+    cmd.failIfItemNotFound = false
+    cmd.durationOverride = true
+    ownerPuppet:GetAIControllerComponent():SendCommand(cmd)
+
+    print("grenade7 d")
+
+    --TODO: probably need to wait a tick
+
+    --ownerPuppet = Game.FindEntityByID(newNPC)
+    local item = Game.GetTransactionSystem():GetItemInSlot(ownerPuppet, "AttachmentSlots.GrenadeRight")
+
+    if not item then
+        print("npc doesn't have a grenade")
+        do return end
+    end
+
+    local throwAngle = 45
+    local targetPosition = GetPlayer():GetWorldPosition()
+
+    local launchParams = gameprojectileLaunchParams.new()
+    launchParams.launchMode = gameprojectileELaunchMode.FromVisuals
+    launchParams.logicalPositionProvider = IPositionProvider.CreateEntityPositionProvider(item)
+    launchParams.logicalOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(nil, "", ownerPuppet)
+    launchParams.visualPositionProvider = IPositionProvider.CreateEntityPositionProvider(item)
+    launchParams.visualOrientationProvider = IOrientationProvider.CreateEntityOrientationProvider(nil, "", item)
+    launchParams.ownerVelocityProvider = MoveComponentVelocityProvider.CreateMoveComponentVelocityProvider(ownerPuppet)
+
+    local launchEvent = gameprojectileSetUpAndLaunchEvent.new()
+    launchEvent.lerpMultiplier = 15
+    launchEvent.owner = ownerPuppet
+    launchEvent.launchParams = launchParams
+    launchEvent.trajectoryParams = ParabolicTrajectoryParams.GetAccelTargetAngleParabolicParams(Vector4.new(0.00, 0.00, -9.8, 0.00), targetPosition,  throwAngle, 20)
+
+    print("grenade7 e")
+
+    item:QueueEvent(launchEvent)
+
+    print("grenade7 f")
+
+    Game.GetTransactionSystem():RemoveItemFromSlot(ownerPuppet, "AttachmentSlots.GrenadeRight", false)
+
+    print("grenade7 g")
+
+end)
+
+registerHotkey("NekhraosFaeries_Grenade8", "Grenade 8", function()
+    print("grenade8 a")
+
+    -- Find npc
+    local searchQuery = TSQ_ALL()
+    searchQuery.maxDistance = 12
+
+    local found, entities = o:GetTargetEntities(searchQuery)
+
+    print("grenade8 b")
+
+    local ownerPuppet = nil
+    if found then
+        for _, entity in ipairs(entities) do
+            if entity:IsNPC() and not entity:IsDead() and not entity:IsDefeated() then
+                ownerPuppet = entity
+                do break end
+            end
+        end
+    end
+
+    if not ownerPuppet then
+        print("didn't find npc")
+        do return end
+    end
+
+    print("grenade8 c")
+
+    -- Give npc a grenade
+    local cmd = NewObject("AIEquipCommand")
+    cmd.slotId = TweakDBID.new("AttachmentSlots.GrenadeRight")
+    cmd.itemId = TweakDBID.new("Items.GrenadeFragRegular")
+    cmd.failIfItemNotFound = false
+    cmd.durationOverride = true
+    ownerPuppet:GetAIControllerComponent():SendCommand(cmd)
+
+    print("grenade8 d")
+
+    ownerPuppet_id = ownerPuppet:GetEntityID()
+    grenade_tick_countdown = 3      -- let the update fire a few times before throwing
+
+    print("grenade8 e")
+end)
 
 
 -- test to spawn an object, then call targeting sytem from its perspective

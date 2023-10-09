@@ -7,4 +7,6 @@ function PopulateDebug(debug, o, keys)
     local vel = o:Custom_CurrentlyFlying_GetVelocity(o.vel)
     debug.vel = vec_str(vel)
     debug.vel_speed = tostring(Round(GetVectorLength(vel), 1))
+
+    debug.pos = vec_str(o.pos)
 end
