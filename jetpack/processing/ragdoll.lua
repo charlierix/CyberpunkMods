@@ -144,7 +144,18 @@ function this.GetForceMultiplier(npc)
     -- elseif npc:IsCharacterCivilian() then        -- I think this used to need a 6
     --     return 1
 
+    elseif npc:IsAggressive() then
+        return 6
+
     else
+
+        -- A few others.  There are more of these function, these just looked like they might be relevant
+        --npc:IsEnemy()
+        --npc:IsCivilian()
+        --npc:IsCharacterCivilian()
+        --npc:IsCharacterGanger()
+        --npc:IsCharacterPolice()
+
         return 1
     end
 end

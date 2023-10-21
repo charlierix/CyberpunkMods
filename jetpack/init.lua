@@ -179,7 +179,7 @@ registerForEvent("onInit", function()
     function wrappers.GetStatsSystem() return Game.GetStatsSystem() end
     function wrappers.AddModifier(stats, entityID, modifierData) stats:AddModifier(entityID, modifierData) end
     function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
-    function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end
+    function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end     -- gametargetingTargetingSystem
     function wrappers.GetTargetParts(targetting, player, searchQuery) return targetting:GetTargetParts(player, searchQuery) end
     function wrappers.GetQuestsSystem() return Game.GetQuestsSystem() end
     function wrappers.GetQuestFactStr(quest, key) return quest:GetFactStr(key) end
