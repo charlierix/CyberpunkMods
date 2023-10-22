@@ -20,7 +20,8 @@ function ShouldExitFlight(o, vars, mode, deltaTime)
         vel_z = vars.vel.z
     end
 
-    if vars.thrust.isDown and vars.remainBurnTime > 0.1 and vel_z >= 0 then
+    -- Only skip if thrust has been down when it started on the ground and no more than a second
+    if vars.thrust.isDown and vars.remainBurnTime > 0.1 and vars.thrust.started_on_ground and vars.thrust.downTime < 0.5 and vel_z >= 0 then
         return false
     end
 
@@ -185,7 +186,7 @@ function AdjustTimeSpeed(o, vars, mode, velocity)
     end
 end
 
-function ExitFlight(vars, debug, o, mode)
+function ExitFlight(vars, debug, o, mode, keep_thrustkeys)
     -- This gets called every frame when they are in the menu, driving, etc.  So it needs to be
     -- safe and cheap
     if (not vars) or (not vars.isInFlight) then
@@ -202,6 +203,10 @@ function ExitFlight(vars, debug, o, mode)
     vars.stop_flight_time = o.timer
     vars.stop_flight_velocity = GetVelocity(mode, vars, o)
     vars.last_rebound_time = nil
+
+    if not keep_thrustkeys then
+        vars.thrust:Clear()
+    end
 
     RemoveFlightDebug(debug)
 end

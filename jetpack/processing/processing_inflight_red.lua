@@ -32,7 +32,7 @@ function this.PrepForRebound(o, vars, mode, debug)
         ExplosivelyLand(o, o.vel.z, vars)
     end
 
-    ExitFlight(vars, debug, o, mode)
+    ExitFlight(vars, debug, o, mode, true)
 
     o:Teleport(o.pos, o.yaw)        -- don't let the player slam into the ground (teleporting zeros out velocity).  This needs to be called after exit flight so it can remember the current velocity
 end
