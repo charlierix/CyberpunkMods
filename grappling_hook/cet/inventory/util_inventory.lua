@@ -16,7 +16,7 @@ local types_money = { "Gen_Misc" }
 local count_shotgun = 1
 local count_knife = 3
 local count_silencer = 1
-local count_grenade = 4
+local count_grenade = 1
 local count_clothes = 6
 local count_money = 12000
 
@@ -40,14 +40,16 @@ function GetUnlockReport(o, const)
     this.AddToUnlockReport(retVal, "silencer", count_silencer, #found, nil, nil, const.unlockType.silencer, found)
 
     found = this.FindItems(items, types_grenade, "emp", true, o)        --IsEquipped isn't working for grenades, but it doesn't really matter whether they are equipped or not
-    local count = this.GetQuantityValue(found)
-    this.AddToUnlockReport(retVal, "emp grenades", count_grenade, count, nil, nil, const.unlockType.grenade, found)
+    this.AddToUnlockReport(retVal, "emp grenade", count_grenade, #found, nil, nil, const.unlockType.grenade, found)
+
+    found = this.FindItems(items, types_grenade, "flash", true, o)
+    this.AddToUnlockReport(retVal, "flash grenade", count_grenade, #found, nil, nil, const.unlockType.grenade, found)
 
     found = this.FindItems(items, types_clothes, nil, false, o)
     this.AddToUnlockReport(retVal, "clothes (not head or footware)", count_clothes, #found, nil, nil, const.unlockType.clothes, found)
 
     found = this.FindItems(items, types_money, "money", true, o)
-    count = this.GetQuantityValue(found)
+    local count = this.GetQuantityValue(found)
     this.AddToUnlockReport(retVal, "eurodollars", count_money, count, tostring(Round(count_money / 1000)) .. "K", tostring(Round(math.floor(count / 1000))) .. "K", const.unlockType.money, found)
 
     return retVal

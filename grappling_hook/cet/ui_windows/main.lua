@@ -462,7 +462,7 @@ function this.Define_UnlockTitle(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 50,
+            pos_y = 25,
 
             relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
