@@ -166,7 +166,7 @@ local const =
 
     settings = CreateEnum("AutoShowConfig_WithConsole"),
 
-    unlockType = CreateEnum("shotgun", "knife", "silencer", "grenade", "clothes", "money"),
+    unlockType = CreateEnum("shotgun", "knife", "silencer", "grenade", "weapon_mod", "clothes", "money"),
 
     Visuals_GrappleLine_Type = CreateEnum("solid_line"),
 
@@ -341,6 +341,7 @@ registerForEvent("onInit", function()
     function wrappers.GetItemList(transaction, player) return transaction:GetItemList(player) end
     function wrappers.GetEquipmentSystem() return Game.GetScriptableSystemsContainer():Get("EquipmentSystem") end
     function wrappers.IsItemEquipped(equipment, player, item) return equipment:IsEquipped(player, item:GetID()) end
+    function wrappers.GetItemSlotIndex(equipment, player, item) return equipment:GetItemSlotIndex(player, item:GetID()) end
     function wrappers.GetSpatialQueriesSystem() return Game.GetSpatialQueriesSystem() end
     function wrappers.GetTargetingSystem() return Game.GetTargetingSystem() end
 

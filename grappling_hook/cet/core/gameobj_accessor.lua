@@ -374,7 +374,18 @@ function GameObjectAccessor:IsItem_Equipped(item)
     self:EnsureLoaded_Equipment()
 
     if self.player and self.equipment then
-        return self.wrappers.IsItemEquipped(self.equipment, self.player, item)
+        if self.wrappers.IsItemEquipped(self.equipment, self.player, item) then
+            return true
+        end
+
+        -- Grenades aren't equipped.  Instead attached to slots
+        local slot_index = self.wrappers.GetItemSlotIndex(self.equipment, self.player, item)
+        if slot_index and slot_index >= 0 then      -- it appears to be -1 when unassigned
+            return true
+        end
+
+        return false
+
     else
         return nil
     end

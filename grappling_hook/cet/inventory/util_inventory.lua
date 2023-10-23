@@ -10,6 +10,7 @@ local types_shotgun = { "Wea_ShotgunDual", "Wea_Shotgun" }
 local types_knife = { "Wea_Knife" }
 local types_silencer = { "Prt_Muzzle" }
 local types_grenade = { "Gad_Grenade" }
+local types_weapon_mods = { "Prt_AR_SMG_LMGMod", "Prt_HandgunMod", "Prt_PowerMod", "Prt_Precision_Sniper_RifleMod", "Prt_RangedMod", "Prt_ShotgunMod", "Prt_SmartMod", "Prt_TechMod" }       -- "Prt_BladeMod", "Prt_BluntMod", "Prt_MeleeMod", "Prt_Mod", "Prt_ThrowableMod"       --TODO: figure out what prt_mod is
 local types_clothes = { "Clo_Legs", "Clo_InnerChest", "Clo_OuterChest", "Clo_Outfit" }
 local types_money = { "Gen_Misc" }
 
@@ -17,6 +18,7 @@ local count_shotgun = 1
 local count_knife = 3
 local count_silencer = 1
 local count_grenade = 1
+local count_weapon_mods = 3
 local count_clothes = 6
 local count_money = 12000
 
@@ -30,6 +32,10 @@ function GetUnlockReport(o, const)
     local items = o:GetInventoryList()
     --ReportTable(items)
 
+    --print("-----------------------------------------------------")
+    --this.SummarizeInventory(items, o)
+    --this.SummarizeWeaponMods(items, o)
+
     local found = this.FindItems(items, types_shotgun, nil, false, o)
     this.AddToUnlockReport(retVal, "shotgun", count_shotgun, #found, nil, nil, const.unlockType.shotgun, found)
 
@@ -39,11 +45,13 @@ function GetUnlockReport(o, const)
     found = this.FindItems(items, types_silencer, nil, false, o)        -- proved that this doesn't return silencers that are attached to weapons
     this.AddToUnlockReport(retVal, "silencer", count_silencer, #found, nil, nil, const.unlockType.silencer, found)
 
-    found = this.FindItems(items, types_grenade, "emp", true, o)        --IsEquipped isn't working for grenades, but it doesn't really matter whether they are equipped or not
-    this.AddToUnlockReport(retVal, "emp grenade", count_grenade, #found, nil, nil, const.unlockType.grenade, found)
+    found = this.FindItems(items, types_grenade, nil, false, o)
+    --this.Debug_ReportItems(found, o)
+    this.AddToUnlockReport(retVal, "grenade", count_grenade, #found, nil, nil, const.unlockType.grenade, found)
 
-    found = this.FindItems(items, types_grenade, "flash", true, o)
-    this.AddToUnlockReport(retVal, "flash grenade", count_grenade, #found, nil, nil, const.unlockType.grenade, found)
+    --found = this.FindItems_ByTag(items, "WeaponMod", false, o)      -- comes back with too many (scopes, silencers)
+    found = this.FindItems(items, types_weapon_mods, nil, false, o)     --NOTE: IsEquipped has no meaning here.  If a mod is attached to a weapon, it won't be in items list
+    this.AddToUnlockReport(retVal, "gun mods", count_weapon_mods, #found, nil, nil, const.unlockType.weapon_mod, found)
 
     found = this.FindItems(items, types_clothes, nil, false, o)
     this.AddToUnlockReport(retVal, "clothes (not head or footware)", count_clothes, #found, nil, nil, const.unlockType.clothes, found)
@@ -208,20 +216,59 @@ end
 function this.FindItems(items, types, name, canBeEquipped, o)
     local retVal = {}
 
-    for i = 1, #items do
-        if this.IsMatchingItem(items[i], types, name, canBeEquipped, o) then
-            retVal[#retVal+1] = items[i]
+    for _, item in ipairs(items) do
+        if this.IsMatchingItem(item, types, name, canBeEquipped, o) then
+            table.insert(retVal, item)
         end
     end
 
     return retVal
 end
+function this.FindItems_ByTag(items, tag, canBeEquipped, o)
+    local retVal = {}
+
+    for _, item in ipairs(items) do
+        if this.IsMatchingItem_ByTag(item, tag, canBeEquipped, o) then
+            table.insert(retVal, item)
+        end
+    end
+
+    return retVal
+end
+
 function this.IsMatchingItem(item, types, name, canBeEquipped, o)
     if not Contains(types, item:GetItemType().value) then
         return false
     end
 
     if name and item:GetNameAsString() ~= name then
+        return false
+    end
+
+    if not canBeEquipped and o:IsItem_Equipped(item) then
+        return false
+    end
+
+    if o:IsItem_Quest(item) or o:IsItem_Iconic(item) or o:IsItem_Legendary(item) then
+        return false
+    end
+
+    return true
+end
+function this.IsMatchingItem_ByTag(item, tag, canBeEquipped, o)
+    local has_tag = false
+
+    local tags = item:GetDynamicTags()
+    if tags then
+        for _, item_tag in ipairs(tags) do
+            if NameToString(item_tag) == tag then
+                has_tag = true
+                do break end
+            end
+        end
+    end
+
+    if not has_tag then
         return false
     end
 
@@ -270,12 +317,78 @@ function this.InAny(testValue, ...)
 end
 
 function this.Debug_ReportItems(items, o)
-    for i = 1, #items do
-        print(items[i]:GetItemType().value)
-        print(items[i]:GetNameAsString())
-        print("count: " .. tostring(items[i]:GetQuantity()) .. "            GetQuantity()")
-        print("is equipped: " .. tostring(o:IsItem_Equipped(items[i])))
+    for _, item in ipairs(items) do
+        print(item:GetItemType().value)
+        print(item:GetNameAsString())
+        print("count: " .. tostring(item:GetQuantity()) .. "            GetQuantity()")
+        print("is equipped: " .. tostring(o:IsItem_Equipped(item)))
         print("   ")
+    end
+end
+
+function this.Debug_SummarizeInventory(items, o)
+    local types = {}
+    local type_names = {}
+
+    local comparer = function (a, b)
+        return Comparer(a, b)
+    end
+
+    for i, item in ipairs(items) do
+        local item_type = item:GetItemType().value
+        if not item_type then
+            item_type = "<nil>"
+        end
+
+        local name = item:GetNameAsString()
+        if not name then
+            name = "<nil>"
+        end
+
+        if o:IsItem_Quest(item) or o:IsItem_Iconic(item) or o:IsItem_Legendary(item) then
+            name = name .. " (special)"
+        end
+
+        local type_name = item_type .. " | " .. name
+
+        if not Contains(types, item_type) then
+            InsertSorted(types, item_type, comparer)
+        end
+
+        if not Contains(type_names, type_name) then
+            InsertSorted(type_names, type_name, comparer)
+        end
+    end
+
+    print("------------ Types ------------")
+    for _, type in ipairs(types) do
+        print(type)
+    end
+
+    print("------------ Type | Name ------------")
+    for _, type_name in ipairs(type_names) do
+        print(type_name)
+    end
+end
+
+function this.Debug_SummarizeWeaponMods(items, o)
+    local matches = this.FindItems(items, types_weapon_mods, nil, true, o)
+
+    for _, item in ipairs(matches) do
+        local type = item:GetItemType().value
+        if o:IsItem_Equipped(item) then
+            type = type .. " (equipped)"
+        end
+
+        print("")
+        print(type)
+
+        local tags = item:GetDynamicTags()
+        if tags then
+            for _, tag in ipairs(tags) do
+                print(NameToString(tag))
+            end
+        end
     end
 end
 
