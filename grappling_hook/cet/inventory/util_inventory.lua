@@ -49,7 +49,7 @@ function GetUnlockReport(o, const)
     --this.Debug_ReportItems(found, o)
     this.AddToUnlockReport(retVal, "grenade", count_grenade, #found, nil, nil, const.unlockType.grenade, found)
 
-    --found = this.FindItems_ByTag(items, "WeaponMod", false, o)      -- comes back with too many (scopes, silencers)
+    --found = this.FindItems_ByTag(items, "WeaponMod", false, o)      -- too loose (includes scopes, silencers)
     found = this.FindItems(items, types_weapon_mods, nil, false, o)     --NOTE: IsEquipped has no meaning here.  If a mod is attached to a weapon, it won't be in items list
     this.AddToUnlockReport(retVal, "gun mods", count_weapon_mods, #found, nil, nil, const.unlockType.weapon_mod, found)
 

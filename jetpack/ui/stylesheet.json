@@ -313,6 +313,7 @@
         "title": { "the_color": "F0F0F0" },
         "subTitle": { "the_color": "FF4" },
         "info": { "the_color": "C4A380" },
+        "note_header": { "the_color": "D9D2A4" },
 
         "experience_prompt": { "the_color": "F5EA65" },
         "experience_value": { "the_color": "E6BB50" },
@@ -326,6 +327,9 @@
         
         "hint": { "the_color": "CFC29D" },
         "instruction": { "the_color": "EEE" },
-        "help": { "the_color": "67707A" }
+        "help": { "the_color": "67707A" },
+
+        "requirement_met": { "the_color": "AAE" },
+        "requirement_unmet": { "the_color": "E6592E" }
     }
 }

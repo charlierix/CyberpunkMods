@@ -12,12 +12,20 @@
 
 --https://github.com/jac3km4/redscript
 
+require "core/animation_curve"
+require "core/bezier"
+require "core/bezier_segment"
+require "core/color"
+require "core/even_dist_cone"
 require "core/gameobj_accessor"
 require "core/lists"
 require "core/math_basic"
 require "core/math_shapes"
 require "core/math_vector"
 require "core/math_yaw"
+require "core/rollingbuffer"
+require "core/sticky_list"
+require "core/strings"
 require "core/util"
 
 require "data/dal"
@@ -26,6 +34,8 @@ require "data/modes"
 
 require "debug/debug_code"
 require "debug/reporting"
+
+extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 require "processing/flightutil"
 require "processing/flightutil_cet"
@@ -39,12 +49,40 @@ require "processing/rmb_pushup"
 require "processing/safetyfire"
 
 require "ui/drawing"
+require "ui/init_ui"
 require "ui/key_accel"
 require "ui/keydash_tracker"
 require "ui/keydash_tracker_analog"
 require "ui/keys"
 require "ui/sounds_thrusting"
 require "ui/sounds_wallhit"
+
+require "ui_controls_generic/button"
+require "ui_controls_generic/checkbox"
+require "ui_controls_generic/combobox"
+require "ui_controls_generic/colorsample"
+require "ui_controls_generic/gridview"
+require "ui_controls_generic/help_button"
+require "ui_controls_generic/label"
+require "ui_controls_generic/label_clickable"
+require "ui_controls_generic/listbox"
+require "ui_controls_generic/multiitem_displaylist"
+require "ui_controls_generic/okcancel_buttons"
+require "ui_controls_generic/orderedlist"
+require "ui_controls_generic/progressbar_slim"
+require "ui_controls_generic/remove_button"
+require "ui_controls_generic/slider"
+require "ui_controls_generic/summary_button"
+require "ui_controls_generic/textbox"
+require "ui_controls_generic/updownbuttons"
+
+require "ui_framework/changes"
+require "ui_framework/common_definitions"
+require "ui_framework/updown_delegates"
+require "ui_framework/util_controls"
+require "ui_framework/util_layout"
+require "ui_framework/util_misc"
+require "ui_framework/util_setup"
 
 local this = {}
 
@@ -63,6 +101,12 @@ local const =
     hide_energy_above_percent = 0.985,  -- For the infinite energy modes (well rounded, airplane), the progress bar is just annoying
 
     thrust_sound_type = CreateEnum("steam", "steam_quiet", "levitate", "jump"),
+
+    windows = CreateEnum
+    (
+        "main",
+            "other_windows"
+    ),
 
     settings = CreateEnum(
         -- Bools
@@ -120,6 +164,34 @@ local vars =
     --toggled_enabled,           -- this is a flag to tell the draw function to say enabled/disabled for a couple seconds
 }
 
+local vars_ui =
+{
+    --screen    -- info about the current screen resolution -- see GetScreenInfo()
+    --style     -- this gets loaded from json during init
+    --configWindow  -- info about the location of the config window -- see Define_ConfigWindow()
+    --line_heights  -- the height of strings -- see Refresh_LineHeights()
+
+    scale = 1,      -- control and window sizes are defined in pixels, then get multiplied by scale at runtime.  CET may adjust scale on non 1920x1080 monitors to give a consistent relative size, but higher resolution
+
+    --autoshow_withconsole      -- bool that tells whether config shows the same time as the cet console, or requires a separate hotkey
+
+    isTooltipShowing = false,       -- the tooltip is actually a sub window.  This is needed so the parent window's titlebar can stay the active color
+
+    -- ***** See window_transitions.lua *****
+    currentWindow = const.windows.main,
+    transition_info = {}       -- this holds properties needed for the window (like grappleIndex for grapple_straight)
+
+    -- ***** Each of these is a container of controls (name matches the values in windows enum) *****
+    --main
+    --energy_tank
+    --grapple_straight
+}
+
+local vars_ui_progressbar =
+{
+    scale = 1,
+}
+
 --------------------------------------------------------------------
 
 registerForEvent("onInit", function()
@@ -150,6 +222,8 @@ registerForEvent("onInit", function()
 
     InitializeRandom()
     EnsureTablesCreated()
+    Define_UI_Framework_Constants(const)
+    InitializeUI(vars_ui, vars_ui_progressbar, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
 
     keys = Keys:new(debug, const)
 
