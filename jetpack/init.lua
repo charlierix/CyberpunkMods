@@ -31,6 +31,7 @@ require "core/util"
 require "data/dal"
 entity_helper = require "data/entity_helper"
 require "data/modes"
+require "data/player"
 
 require "debug/debug_code"
 require "debug/reporting"
@@ -192,6 +193,9 @@ local vars_ui_progressbar =
     scale = 1,
 }
 
+--TODO: move settings from vars to player
+local player = nil
+
 --------------------------------------------------------------------
 
 registerForEvent("onInit", function()
@@ -270,10 +274,17 @@ registerForEvent("onInit", function()
 
     const.isEnabled = GetSetting_Bool(const.settings.IsEnabled, true)
 
+
+
+    -- Push this into player's constructor
+
     mode = GetConfigValues(GetSetting_Int(const.settings.Mode, 0), vars.sounds_thrusting, const)
     vars.sounds_thrusting:ModeChanged(mode.sound_type)
 
     vars.remainBurnTime = mode.energy.maxBurnTime
+
+
+
 end)
 
 registerForEvent("onShutdown", function()
@@ -297,6 +308,10 @@ registerForEvent("onUpdate", function(deltaTime)
         do return end
     end
 
+    if not player then
+        player = Player:new(o, vars, const, debug)
+    end
+
     PossiblyStopSound(o, vars)
 
     o:GetInWorkspot()
@@ -313,6 +328,10 @@ registerForEvent("onUpdate", function(deltaTime)
 
     -- Cycle Config
     if keys.cycleModes then
+
+        --player:NextMode()
+
+
         keys.cycleModes = false
 
         local newIndex = mode.index + 1

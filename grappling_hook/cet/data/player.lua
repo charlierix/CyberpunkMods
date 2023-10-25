@@ -19,7 +19,7 @@ function Player:new(o, vars, const, debug)
     obj.const = const
     obj.debug = debug
 
-    -- See MapRowToSelf() for the rest of the member variables
+    -- See MapModelToSelf() for the rest of the member variables
 
     obj:Load()
 

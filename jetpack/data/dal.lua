@@ -10,6 +10,10 @@ function EnsureTablesCreated()
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS mode (modeIndex INTEGER);") end)
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Settings_Int (Key TEXT NOT NULL UNIQUE, Value INTEGER NOT NULL);") end)
+
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Player (PlayerKey INTEGER NOT NULL UNIQUE, PlayerID INTEGER NOT NULL, ModeKeys TEXT NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(PlayerKey AUTOINCREMENT));") end)
+
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Mode2 (ModeKey INTEGER NOT NULL UNIQUE, Name TEXT, JSON TEXT NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(ModeKey AUTOINCREMENT));") end)
 end
 
 -------------------------------------- Settings ---------------------------------------
@@ -161,6 +165,206 @@ function SetSetting_Int(key, value)
     end
 end
 
+--------------------------------------- Player ----------------------------------------
+
+function InsertPlayer(playerID, modeKeys)
+    local sucess, pkey, errMsg = pcall(function ()
+        local time, time_readable = this.GetCurrentTime_AndReadable()
+        local modeKeys_text = this.ModeKeys_List_to_String(modeKeys)
+
+        local stmt = db:prepare
+        [[
+            INSERT INTO Player
+                (PlayerID, ModeKeys, LastUsed, LastUsed_Readable)
+            VALUES
+                (?, ?, ?, ?)
+        ]]
+
+        local errMsg = this.Bind_NonSelect(stmt, "InsertPlayer", playerID, modeKeys_text, time, time_readable)
+        if errMsg then
+            return nil, errMsg
+        end
+
+        -- This is the primary key of the inserted row
+        return db:last_insert_rowid(), nil
+    end)
+
+    if sucess then
+        return pkey, errMsg
+    else
+        return nil, "InsertPlayer: Unknown Error"
+    end
+end
+
+-- This finds the most recently saved player based on their playerID (not the primary key, but the playerID that's
+-- stored in the save file)
+-- Returns:
+--    Array with column names as keys (or nil).  These are the column names as they're stored in the db, not models\player
+--    Error message if returned row is nil
+function GetLatestPlayer(playerID)
+    local sucess, player, errMsg = pcall(function ()
+        local stmt = db:prepare
+        [[
+            SELECT
+                PlayerKey,
+                PlayerID,
+                ModeKeys
+            FROM Player
+            WHERE PlayerID = ?
+            ORDER BY LastUsed DESC
+            LIMIT 1
+        ]]
+
+        local row, errMsg = this.Bind_Select_SingleRow(stmt, "GetLatestPlayer", playerID)
+
+        -- Don't want to return an internal implementation of the list.  Callers expect a regular array of ints
+        if row and row.ModeKeys then
+            row.ModeKeys = this.ModeKeys_String_to_List(row.ModeKeys)
+        end
+
+        return row, errMsg
+    end)
+
+    if sucess then
+        return player, errMsg
+    else
+        return nil, "GetLatestPlayer: Unknown Error"
+    end
+end
+
+-- This deletes all but the last 12 rows of player, for the playerID
+-- Returns
+--  Error Message or nil
+function DeleteOldPlayerRows(playerID)
+    local sucess, errMsg = pcall(function ()
+        -- Can't use joins, so a subquery seems to be the only option.  There shouldn't be enough rows to really matter anyway
+
+        local stmt = db:prepare
+        [[
+            DELETE FROM Player
+            WHERE
+                PlayerID = ? AND
+                PlayerKey NOT IN
+                (
+                    SELECT a.PlayerKey
+                    FROM Player a
+                    ORDER BY a.LastUsed DESC
+                    LIMIT 12
+                )
+        ]]
+
+        local errMsg = this.Bind_NonSelect(stmt, "DeleteOldPlayerRows", playerID)
+        if errMsg then
+            return errMsg
+        end
+    end)
+
+    if sucess then
+        return errMsg
+    else
+        return "DeleteOldPlayerRows: Unknown Error"
+    end
+end
+
+---------------------------------------- Mode2 ----------------------------------------
+
+-- Inserts a mode entry into the Mode2 table
+-- Params:
+--    mode: This is a mode entry (see models\mode)
+-- Returns:
+--    primary key or nil
+--    error message if primary key is nil
+function InsertMode(mode)
+    local sucess, pkey, errMsg = pcall(function ()
+        local time, time_readable = this.GetCurrentTime_AndReadable()
+        local json = extern_json.encode(mode)
+
+        local stmt = db:prepare
+        [[
+            INSERT INTO Mode2
+                (Name, JSON, LastUsed, LastUsed_Readable)
+            VALUES
+                (?, ?, ?, ?)
+        ]]
+
+        local errMsg = this.Bind_NonSelect(stmt, "InsertMode", mode.name, json, time, time_readable)
+        if errMsg then
+            return errMsg
+        end
+
+        -- This is the primary key of the inserted row
+        return db:last_insert_rowid(), nil
+    end)
+
+    if sucess then
+        return pkey, errMsg
+    else
+        return nil, "InsertMode: Unknown Error"
+    end
+end
+
+function GetMode_ByKey(primaryKey)
+    local sucess, mode, errMsg = pcall(function ()
+        local stmt = db:prepare
+        [[
+            SELECT JSON
+            FROM Mode2
+            WHERE ModeKey = ?
+            LIMIT 1
+        ]]
+
+        local row, errMsg = this.Bind_Select_SingleRow(stmt, "GetMode_ByKey", primaryKey)
+        if row then
+            return extern_json.decode(row.JSON), nil
+        else
+            return nil, errMsg
+        end
+    end)
+
+    if sucess then
+        return mode, errMsg
+    else
+        return nil, "GetMode_ByKey: Unknown Error"
+    end
+end
+
+-- This is nearly identical to InsertMode, except it's a select.  It's used to avoid unnecessarily
+-- inserting dupes
+function GetModeKey_ByContent(mode)
+    local sucess, modeKey, errMsg = pcall(function ()
+        local json = extern_json.encode(mode)
+
+        --NOTE: This could just compare json, since that contains name and experience.  But doing it this way
+        --exactly mirrors the insert method (just in case there are bugs)
+        local stmt = db:prepare
+        [[
+            SELECT ModeKey
+            FROM Mode2
+            WHERE
+                Name = ? AND
+                JSON = ?
+            LIMIT 1
+        ]]
+
+        local row, errMsg = this.Bind_Select_SingleRow(stmt, "GetModeKey_ByContent", mode.name, json)
+        if row then
+            return row.ModeKey, nil
+        else
+            return nil, errMsg
+        end
+    end)
+
+    if sucess then
+        return modeKey, errMsg
+    else
+        return nil, "GetModeKey_ByContent: Unknown Error"
+    end
+end
+
+
+-- Grapple keeps a spread of rows evenly distributed by xp.  Jetpack should just occasionally throw out all rows that aren't referenced
+
+
 ----------------------------------- Private Methods -----------------------------------
 
 -- This returns an int and a human readable string of that time (yyyy-mm-dd hh:mm:ss), that can be stored
@@ -172,21 +376,33 @@ function this.GetCurrentTime_AndReadable()
     return time, time_readable
 end
 
-function this.GetGrappleDescription(json)
-    if not json then
+-- Converts a list of ints into a space delimited string
+function this.ModeKeys_List_to_String(modeKeys)
+    if not modeKeys then
         return ""
     end
 
-    local grapple = extern_json.decode(json)
-    if not grapple then
-        return ""
+    local retVal = ""
+
+    for _, modeKey in ipairs(modeKeys) do
+        if retVal ~= "" then
+            retVal = retVal .. " "
+        end
+
+        retVal = retVal .. tostring(modeKey)
     end
 
-    if not grapple.description then
-        return ""
-    end
+    return retVal
+end
+-- Converts a space delimited string of keys into an array of ints
+function this.ModeKeys_String_to_List(modeKeys)
+    local retVal = {}
 
-    return grapple.description
+    for key in string.gmatch(modeKeys, "%d+") do        -- description was space delimited, but just grab each set of numbers regardless how they are delimited
+        table.insert(retVal, tonumber(key))
+     end
+
+     return retVal
 end
 
 -- Select statements have the same set of checks.  This binds the values, then returns the row
