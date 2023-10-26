@@ -720,14 +720,14 @@ end
 --function this.Save(bind_buttons, startStopTracker, keys)
 function this.Save(vars, const, usecustom_wallhang, bind_buttons, keys)
     -- Update DB is vars
-    SetSetting_Bool(const.settings.WallHangKey_UseCustom, vars.wallhangkey_usecustom)
+    dal.SetSetting_Bool(const.settings.WallHangKey_UseCustom, vars.wallhangkey_usecustom)
 
     vars.wallhangkey_usecustom = usecustom_wallhang.isChecked
 
     -- Update DB and keys
     for i = 1, #bind_buttons do
         if bind_buttons[i].isDeleteChange then
-            SetInputBinding(bind_buttons[i].binding, nil)
+            dal.SetInputBinding(bind_buttons[i].binding, nil)
 
             if bind_buttons[i].binding == const.bindings.hang then
                 keys:ClearHangActions()
@@ -736,7 +736,7 @@ function this.Save(vars, const, usecustom_wallhang, bind_buttons, keys)
             end
 
         elseif bind_buttons[i].newActions then
-            SetInputBinding(bind_buttons[i].binding, bind_buttons[i].newActions)
+            dal.SetInputBinding(bind_buttons[i].binding, bind_buttons[i].newActions)
 
             if bind_buttons[i].binding == const.bindings.hang then
                 keys:SetHangActions(bind_buttons[i].newActions)

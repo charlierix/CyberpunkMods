@@ -1,8 +1,8 @@
 function InitializeKeyBindings(keys, vars, const)
-    vars.wallhangkey_usecustom = GetSetting_Bool(const.settings.WallHangKey_UseCustom, false)
+    vars.wallhangkey_usecustom = dal.GetSetting_Bool(const.settings.WallHangKey_UseCustom, false)
 
     -- Pull bindings from the DB
-    local bindings = GetAllInputBindings()
+    local bindings = dal.GetAllInputBindings()
 
     if not bindings then
         -- No rows, use defaults
@@ -10,7 +10,7 @@ function InitializeKeyBindings(keys, vars, const)
 
         -- No need to store something that is hardcoded
         -- for key, value in pairs(bindings) do
-        --     SetInputBinding(key, value)
+        --     dal.SetInputBinding(key, value)
         -- end
     end
 
@@ -30,9 +30,9 @@ end
 
 -- This pulls other settings out of the database
 function InitializeSavedFields(const)
-    const.mouse_sensitivity = GetSetting_Float(const.settings.MouseSensitivity, -0.06)
-    const.rightstick_sensitivity = GetSetting_Float(const.settings.RightStickSensitivity, 50)
+    const.mouse_sensitivity = dal.GetSetting_Float(const.settings.MouseSensitivity, -0.06)
+    const.rightstick_sensitivity = dal.GetSetting_Float(const.settings.RightStickSensitivity, 50)
 
-    const.latch_wallhang = GetSetting_Bool(const.settings.Latch_WallHang, true)
-    const.jump_sound_standard = GetSetting_Bool(const.settings.JumpSoundStandard, false)
+    const.latch_wallhang = dal.GetSetting_Bool(const.settings.Latch_WallHang, true)
+    const.jump_sound_standard = dal.GetSetting_Bool(const.settings.JumpSoundStandard, false)
 end

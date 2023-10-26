@@ -2,9 +2,11 @@
 --https://sqlite.org/c3ref/c_abort.html
 
 local this = {}
+local DAL = {}
+
 local empty_param = "^^this is an empty param^^"
 
-function EnsureTablesCreated()
+function DAL.EnsureTablesCreated()
     --https://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Settings_Int (Key TEXT NOT NULL UNIQUE, Value INTEGER NOT NULL);") end)
@@ -23,7 +25,7 @@ end
 
 -- Returns
 --  bool, error message
-function GetSetting_Bool(key, default)
+function DAL.GetSetting_Bool(key, default)
     local sucess, value, errMsg = pcall(function ()
         --NOTE: There was no bit or bool datatype, so using int
         local stmt = db:prepare
@@ -55,7 +57,7 @@ end
 -- Inserts/Updates the key/value pair
 -- Returns
 --  error message or nil
-function SetSetting_Bool(key, value)
+function DAL.SetSetting_Bool(key, value)
     local valueInt
     if value then
         valueInt = 1
@@ -101,7 +103,7 @@ end
 
 -- Returns
 --  floating point value, error message
-function GetSetting_Float(key, default)
+function DAL.GetSetting_Float(key, default)
     local sucess, value, errMsg = pcall(function ()
         local stmt = db:prepare
         [[
@@ -128,7 +130,7 @@ end
 -- Inserts/Updates the key/value pair
 -- Returns
 --  error message or nil
-function SetSetting_Float(key, value)
+function DAL.SetSetting_Float(key, value)
     local sucess, errMsg = pcall(function ()
         -- Insert
         local stmt = db:prepare
@@ -168,7 +170,7 @@ end
 ----------------------------------- Input Bindings ------------------------------------
 
 -- Returns { binding1 = {"action1", "action2"}, binding2 = {"action3", "action4"} }
-function GetAllInputBindings()
+function DAL.GetAllInputBindings()
     local sucess, rows = pcall(function ()
         local stmt = db:prepare
         [[
@@ -204,7 +206,7 @@ function GetAllInputBindings()
 end
 
 -- This overwrites the current binding with the one passed in
-function SetInputBinding(binding, actionNames)
+function DAL.SetInputBinding(binding, actionNames)
     local sucess, errMsg = pcall(function ()
         -- Delete Old
         local stmt = db:prepare
@@ -254,7 +256,7 @@ end
 ------------------------------------ Player Arcade ------------------------------------
 
 -- This returns the json (or nil)
-function GetPlayerArcade()
+function DAL.GetPlayerArcade()
     local sucess, player, errMsg = pcall(function ()
         --NOTE: There should never be more than one row, but it's easy enough to order desc and limit 1
         local stmt = db:prepare
@@ -279,7 +281,7 @@ function GetPlayerArcade()
         return nil, "GetPlayerArcade: Unknown Error"
     end
 end
-function SetPlayerArcade(json)
+function DAL.SetPlayerArcade(json)
     local sucess, errMsg = pcall(function ()
         local time, time_readable = this.GetCurrentTime_AndReadable()
 
@@ -454,3 +456,5 @@ function this.IsEmptyParam(...)
         type(select(1, ...)) == "string" and    -- getting the first item
         select(1, ...) == empty_param
 end
+
+return DAL

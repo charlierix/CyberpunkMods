@@ -213,7 +213,7 @@ function this.Update_ShouldAutoShow(def, vars_ui, const)
     vars_ui.autoshow_withconsole = def.isChecked
 
     -- DB copy of the bool
-    SetSetting_Bool(const.settings.AutoShowConfig_WithConsole, def.isChecked)
+    dal.SetSetting_Bool(const.settings.AutoShowConfig_WithConsole, def.isChecked)
 end
 
 function this.Define_InputBindings(style, const)
@@ -752,9 +752,9 @@ function this.Save(latch_wallhang, mouse_sensitivity, rightstick_sensitivity, fa
     const.rightstick_sensitivity = GetScaledValue(STICK_MIN, STICK_MAX, rightstick_sensitivity.min, rightstick_sensitivity.max, rightstick_sensitivity.value)
     player_arcade.fall_damage = fall_damage_combo.selected_item:gsub(" ", "_")
 
-    SetSetting_Bool(const.settings.Latch_WallHang, const.latch_wallhang)
-    SetSetting_Float(const.settings.MouseSensitivity, const.mouse_sensitivity)
-    SetSetting_Float(const.settings.RightStickSensitivity, const.rightstick_sensitivity)
+    dal.SetSetting_Bool(const.settings.Latch_WallHang, const.latch_wallhang)
+    dal.SetSetting_Float(const.settings.MouseSensitivity, const.mouse_sensitivity)
+    dal.SetSetting_Float(const.settings.RightStickSensitivity, const.rightstick_sensitivity)
 
     player_arcade:Save()
     player:Reset()

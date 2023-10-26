@@ -28,7 +28,7 @@ end
 function PlayerArcade:Save()
     local model = self:MapSelfToModel()
     local json = extern_json.encode(model)
-    SetPlayerArcade(json)
+    dal.SetPlayerArcade(json)
 
     -- Save is likely called from ui, which means they may have changed the jump combos
     self:LoadJumpConfigs()
@@ -114,7 +114,7 @@ end
 -- This loads the row.  If there is none, this will create a new one based on defaults
 function PlayerArcade:Load()
     -- Retrieve entry from db
-    local json, errMsg = GetPlayerArcade()
+    local json, errMsg = dal.GetPlayerArcade()
 
     local entry = nil
 
@@ -248,7 +248,7 @@ function this.PossiblyPortJumpSettings(model, const)
         end
     else
         -- Nothing is populated
-        local db_value = GetSetting_Bool(const.settings.ShouldJumpBackward, nil)
+        local db_value = dal.GetSetting_Bool(const.settings.ShouldJumpBackward, nil)
 
         if db_value == nil then
             -- Database is empty, use new defaults

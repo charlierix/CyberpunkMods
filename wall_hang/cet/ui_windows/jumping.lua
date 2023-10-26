@@ -1064,7 +1064,7 @@ function this.Save(player, player_arcade, const, planted_combo, planted_shift_co
     player_arcade.override_strength_mult = this.GetMultSlider_Value_Save(override_strength_slider.value, STRENGTH_0, STRENGTH_2)
     player_arcade.override_speed_mult = this.GetMultSlider_Value_Save(override_speed_slider.value, SPEED_0, SPEED_2)
 
-    SetSetting_Bool(const.settings.JumpSoundStandard, const.jump_sound_standard)
+    dal.SetSetting_Bool(const.settings.JumpSoundStandard, const.jump_sound_standard)
 
     player_arcade:Save()
     player:Reset()
