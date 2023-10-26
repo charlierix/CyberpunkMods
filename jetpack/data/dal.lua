@@ -11,7 +11,7 @@ function EnsureTablesCreated()
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Settings_Int (Key TEXT NOT NULL UNIQUE, Value INTEGER NOT NULL);") end)
 
-    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Player (PlayerKey INTEGER NOT NULL UNIQUE, PlayerID INTEGER NOT NULL, ModeKeys TEXT NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(PlayerKey AUTOINCREMENT));") end)
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Player (PlayerKey INTEGER NOT NULL UNIQUE, PlayerID INTEGER NOT NULL, ModeKeys TEXT NOT NULL, ModeIndex INTEGER NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(PlayerKey AUTOINCREMENT));") end)
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Mode2 (ModeKey INTEGER NOT NULL UNIQUE, Name TEXT, JSON TEXT NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(ModeKey AUTOINCREMENT));") end)
 end
@@ -84,12 +84,7 @@ function SetSetting_Bool(key, value)
             WHERE Key = ?
         ]]
 
-        errMsg = this.Bind_NonSelect(stmt, "SetSetting_Bool (update)", valueInt, key)
-        if errMsg then
-            return errMsg
-        end
-
-        return nil
+        return this.Bind_NonSelect(stmt, "SetSetting_Bool (update)", valueInt, key)
     end)
 
     if sucess then
@@ -150,12 +145,7 @@ function SetSetting_Int(key, value)
             WHERE Key = ?
         ]]
 
-        errMsg = this.Bind_NonSelect(stmt, "SetSetting_Int (update)", value, key)
-        if errMsg then
-            return errMsg
-        end
-
-        return nil
+        return this.Bind_NonSelect(stmt, "SetSetting_Int (update)", value, key)
     end)
 
     if sucess then
@@ -167,7 +157,7 @@ end
 
 --------------------------------------- Player ----------------------------------------
 
-function InsertPlayer(playerID, modeKeys)
+function InsertPlayer(playerID, modeKeys, modeIndex)
     local sucess, pkey, errMsg = pcall(function ()
         local time, time_readable = this.GetCurrentTime_AndReadable()
         local modeKeys_text = this.ModeKeys_List_to_String(modeKeys)
@@ -175,12 +165,12 @@ function InsertPlayer(playerID, modeKeys)
         local stmt = db:prepare
         [[
             INSERT INTO Player
-                (PlayerID, ModeKeys, LastUsed, LastUsed_Readable)
+                (PlayerID, ModeKeys, ModeIndex, LastUsed, LastUsed_Readable)
             VALUES
-                (?, ?, ?, ?)
+                (?, ?, ?, ?, ?)
         ]]
 
-        local errMsg = this.Bind_NonSelect(stmt, "InsertPlayer", playerID, modeKeys_text, time, time_readable)
+        local errMsg = this.Bind_NonSelect(stmt, "InsertPlayer", playerID, modeKeys_text, modeIndex, time, time_readable)
         if errMsg then
             return nil, errMsg
         end
@@ -193,6 +183,30 @@ function InsertPlayer(playerID, modeKeys)
         return pkey, errMsg
     else
         return nil, "InsertPlayer: Unknown Error"
+    end
+end
+
+function UpdatePlayer_ModeIndex(playerKey, modeIndex)
+    local sucess, errMsg = pcall(function ()
+        local time, time_readable = this.GetCurrentTime_AndReadable()
+
+        local stmt = db:prepare
+        [[
+            UPDATE Player
+            SET
+                ModeIndex = ?,
+                LastUsed = ?,
+                LastUsed_Readable = ?
+            WHERE PlayerKey = ?
+        ]]
+
+        return this.Bind_NonSelect(stmt, "UpdatePlayer_ModeIndex", modeIndex, time, time_readable, playerKey)
+    end)
+
+    if sucess then
+        return errMsg
+    else
+        return "UpdatePlayer_ModeIndex: Unknown Error"
     end
 end
 
