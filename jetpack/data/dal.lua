@@ -2,9 +2,11 @@
 --https://sqlite.org/c3ref/c_abort.html
 
 local this = {}
+local DAL = {}
+
 local empty_param = "^^this is an empty param^^"
 
-function EnsureTablesCreated()
+function DAL.EnsureTablesCreated()
     --https://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS mode (modeIndex INTEGER);") end)
@@ -23,7 +25,7 @@ end
 
 -- Returns
 --  bool, error message
-function GetSetting_Bool(key, default)
+function DAL.GetSetting_Bool(key, default)
     local sucess, value, errMsg = pcall(function ()
         --NOTE: There was no bit or bool datatype, so using int
         local stmt = db:prepare
@@ -55,7 +57,7 @@ end
 -- Inserts/Updates the key/value pair
 -- Returns
 --  error message or nil
-function SetSetting_Bool(key, value)
+function DAL.SetSetting_Bool(key, value)
     local valueInt
     if value then
         valueInt = 1
@@ -96,7 +98,7 @@ end
 
 -- Returns
 --  integer value, error message
-function GetSetting_Int(key, default)
+function DAL.GetSetting_Int(key, default)
     local sucess, value, errMsg = pcall(function ()
         local stmt = db:prepare
         [[
@@ -123,7 +125,7 @@ end
 -- Inserts/Updates the key/value pair
 -- Returns
 --  error message or nil
-function SetSetting_Int(key, value)
+function DAL.SetSetting_Int(key, value)
     local sucess, errMsg = pcall(function ()
         -- Insert
         local stmt = db:prepare
@@ -157,7 +159,7 @@ end
 
 --------------------------------------- Player ----------------------------------------
 
-function InsertPlayer(playerID, modeKeys, modeIndex)
+function DAL.InsertPlayer(playerID, modeKeys, modeIndex)
     local sucess, pkey, errMsg = pcall(function ()
         local time, time_readable = this.GetCurrentTime_AndReadable()
         local modeKeys_text = this.ModeKeys_List_to_String(modeKeys)
@@ -186,7 +188,7 @@ function InsertPlayer(playerID, modeKeys, modeIndex)
     end
 end
 
-function UpdatePlayer_ModeIndex(playerKey, modeIndex)
+function DAL.UpdatePlayer_ModeIndex(playerKey, modeIndex)
     local sucess, errMsg = pcall(function ()
         local time, time_readable = this.GetCurrentTime_AndReadable()
 
@@ -215,7 +217,7 @@ end
 -- Returns:
 --    Array with column names as keys (or nil).  These are the column names as they're stored in the db, not models\player
 --    Error message if returned row is nil
-function GetLatestPlayer(playerID)
+function DAL.GetLatestPlayer(playerID)
     local sucess, player, errMsg = pcall(function ()
         local stmt = db:prepare
         [[
@@ -249,7 +251,7 @@ end
 -- This deletes all but the last 12 rows of player, for the playerID
 -- Returns
 --  Error Message or nil
-function DeleteOldPlayerRows(playerID)
+function DAL.DeleteOldPlayerRows(playerID)
     local sucess, errMsg = pcall(function ()
         -- Can't use joins, so a subquery seems to be the only option.  There shouldn't be enough rows to really matter anyway
 
@@ -288,7 +290,7 @@ end
 -- Returns:
 --    primary key or nil
 --    error message if primary key is nil
-function InsertMode(mode)
+function DAL.InsertMode(mode)
     local sucess, pkey, errMsg = pcall(function ()
         local time, time_readable = this.GetCurrentTime_AndReadable()
         local json = extern_json.encode(mode)
@@ -317,7 +319,7 @@ function InsertMode(mode)
     end
 end
 
-function GetMode_ByKey(primaryKey)
+function DAL.GetMode_ByKey(primaryKey)
     local sucess, mode, errMsg = pcall(function ()
         local stmt = db:prepare
         [[
@@ -344,7 +346,7 @@ end
 
 -- This is nearly identical to InsertMode, except it's a select.  It's used to avoid unnecessarily
 -- inserting dupes
-function GetModeKey_ByContent(mode)
+function DAL.GetModeKey_ByContent(mode)
     local sucess, modeKey, errMsg = pcall(function ()
         local json = extern_json.encode(mode)
 
@@ -539,3 +541,5 @@ function this.IsEmptyParam(...)
         type(select(1, ...)) == "string" and    -- getting the first item
         select(1, ...) == empty_param
 end
+
+return DAL

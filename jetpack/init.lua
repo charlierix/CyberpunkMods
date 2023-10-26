@@ -28,7 +28,7 @@ require "core/sticky_list"
 require "core/strings"
 require "core/util"
 
-require "data/dal"
+dal = require "data/dal"
 entity_helper = require "data/entity_helper"
 require "data/modes"
 require "data/player"
@@ -223,7 +223,7 @@ registerForEvent("onInit", function()
     isShutdown = false
 
     InitializeRandom()
-    EnsureTablesCreated()
+    dal.EnsureTablesCreated()
     Define_UI_Framework_Constants(const)
     InitializeUI(vars_ui, vars_ui_progressbar, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
 
@@ -270,7 +270,7 @@ registerForEvent("onInit", function()
 
     vars.sounds_thrusting = SoundsThrusting:new(o, keys, vars.horz_analog, const)
 
-    const.isEnabled = GetSetting_Bool(const.settings.IsEnabled, true)
+    const.isEnabled = dal.GetSetting_Bool(const.settings.IsEnabled, true)
 end)
 
 registerForEvent("onShutdown", function()
@@ -349,7 +349,7 @@ end)
 
 registerHotkey("jetpackEnableDisable", "Enable/Disable", function()
     const.isEnabled = not const.isEnabled
-    SetSetting_Bool(const.settings.IsEnabled, const.isEnabled)
+    dal.SetSetting_Bool(const.settings.IsEnabled, const.isEnabled)
 
     vars.toggled_enabled = o.timer
 

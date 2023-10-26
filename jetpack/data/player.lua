@@ -23,7 +23,7 @@ end
 
 function Player:NextMode()
     local newIndex = self.mode.index + 1
-    SetSetting_Int(self.const.settings.Mode, newIndex)
+    dal.SetSetting_Int(self.const.settings.Mode, newIndex)
 
     self.mode = GetConfigValues(newIndex, self.vars.sounds_thrusting, self.const)
     self.vars.showConfigNameUntil = self.o.timer + 3
@@ -38,7 +38,7 @@ function this.Load(obj)
 
     -- For this first draft, just moving the code that was in init into this class
 
-    obj.mode = GetConfigValues(GetSetting_Int(obj.const.settings.Mode, 0), obj.vars.sounds_thrusting, obj.const)
+    obj.mode = GetConfigValues(dal.GetSetting_Int(obj.const.settings.Mode, 0), obj.vars.sounds_thrusting, obj.const)
     obj.vars.sounds_thrusting:ModeChanged(obj.mode.sound_type)
 
     obj.vars.remainBurnTime = obj.mode.energy.maxBurnTime
