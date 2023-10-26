@@ -6,7 +6,7 @@ local this = {}
 --    PrimaryKey of player
 --    Error Message (only populated if the first two are nil)
 function GetPlayerEntry(playerID, const)
-    local row, errMsg = GetLatestPlayer(playerID)
+    local row, errMsg = dal.GetLatestPlayer(playerID)
     if not row then
         return nil, nil, errMsg
     end
@@ -45,10 +45,10 @@ function SavePlayer(playerEntry)
         return nil, errMsg
     end
 
-    local playerKey, errMsg InsertPlayer(playerEntry.playerID, playerEntry.energy_tank, grappleKeys, playerEntry.experience)
+    local playerKey, errMsg dal.InsertPlayer(playerEntry.playerID, playerEntry.energy_tank, grappleKeys, playerEntry.experience)
 
     if math.random(72) == 1 then
-        DeleteOldPlayerRows(playerEntry.playerID)
+        dal.DeleteOldPlayerRows(playerEntry.playerID)
     elseif grapplesChanged and math.random(72) == 1 then
         this.ReduceGrappleRows()
     -- elseif grapplesChanged and math.random(288) == 1 then
@@ -70,14 +70,14 @@ function this.SaveGrapples(playerEntry)
         local key = "grapple" .. tostring(i)
 
         if playerEntry[key] then
-            local pkey = GetGrappleKey_ByContent(playerEntry[key])
+            local pkey = dal.GetGrappleKey_ByContent(playerEntry[key])
 
             if pkey then
                 -- The grapple settings are unchanged, point to the existing row
                 pkeys[i] = pkey
             else
                 -- Newly created, or changed grapple settings.  Create a new row
-                local pkey, errMsg = InsertGrapple(playerEntry[key])
+                local pkey, errMsg = dal.InsertGrapple(playerEntry[key])
                 if pkey then
                     pkeys[i] = pkey
                 else
@@ -101,7 +101,7 @@ function this.GetGrapples(playerRow)
         local column = "GrappleKey" .. tostring(i)
 
         if playerRow[column] then
-            local grapple, errMsg = GetGrapple_ByKey(playerRow[column])
+            local grapple, errMsg = dal.GetGrapple_ByKey(playerRow[column])
 
             if grapple then
                 grapples[i] = grapple
@@ -157,13 +157,13 @@ end
 function this.ReduceGrappleRows()
     -- BEGIN TRANSACTION        -- there won't be multiple threads hitting the db, so there's not much point in the extra complication.  The only real statement is the final delete.  Everything before it could be stopped in the middle without consequence
 
-    DeleteOldGrappleRows_TruncateWorkingTable()     -- could probably use a temp table instead.  Not sure about the pros and cons
+    dal.DeleteOldGrappleRows_TruncateWorkingTable()     -- could probably use a temp table instead.  Not sure about the pros and cons
 
     -- Store all the keys that are pointed to by player table
-    DeleteOldGrappleRows_KeepReferenced()
+    dal.DeleteOldGrappleRows_KeepReferenced()
 
     -- Get the remaining rows that aren't pointed to by player
-    local rows = DeleteOldGrappleRows_GetCandidateGrapples()
+    local rows = dal.DeleteOldGrappleRows_GetCandidateGrapples()
 
     -- ReportTable(rows)
     -- print("")
@@ -191,11 +191,11 @@ function this.ReduceGrappleRows()
         -- this.ReportXP(rows, keep)
 
         -- Put these in the temp table
-        DeleteOldGrappleRows_KeepHistorical(keep)
+        dal.DeleteOldGrappleRows_KeepHistorical(keep)
     end
 
     -- Now delete everything that isn't in the temp table
-    DeleteOldGrappleRows_DeleteGrapples()
+    dal.DeleteOldGrappleRows_DeleteGrapples()
 
     -- COMMIT TRANSACTION
 end

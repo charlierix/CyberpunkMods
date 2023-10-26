@@ -28,7 +28,7 @@ require "core/sticky_list"
 require "core/strings"
 require "core/util"
 
-require "data/dal"
+dal = require "data/dal"
 require "data/dal_tests"
 require "data/datautil"
 require "data/defaults"
@@ -308,7 +308,7 @@ registerForEvent("onInit", function()
     isShutdown = false
 
     InitializeRandom()
-    EnsureTablesCreated()
+    dal.EnsureTablesCreated()
     Define_UI_Framework_Constants(const)
     InitializeUI(vars_ui, vars_ui_progressbar, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
     grapple_render.CallFrom_onInit()

@@ -96,7 +96,7 @@ end
 
 function this.GetAvailable(experience, const)
     local defaults = GetDefault_Grapple_Choices(const)
-    local fromDB = GetAvailableGrapples()
+    local fromDB = dal.GetAvailableGrapples()
 
     local info = {}
     local items = {}
@@ -321,7 +321,7 @@ function this.Save(player, grappleIndex, info, const)
     if info.isDefault then
         grapple = GetDefault_Grapple_ByName(info.name, const)      -- it's one of the default templates
     else
-        grapple = GetGrapple_ByKey(info.grappleKey)
+        grapple = dal.GetGrapple_ByKey(info.grappleKey)
     end
 
     if not grapple then

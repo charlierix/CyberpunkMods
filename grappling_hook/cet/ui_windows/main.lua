@@ -233,7 +233,7 @@ function this.Update_ShouldAutoShow(def, vars_ui, const)
     vars_ui.autoshow_withconsole = def.isChecked
 
     -- DB copy of the bool
-    SetSetting_Bool(const.settings.AutoShowConfig_WithConsole, def.isChecked)
+    dal.SetSetting_Bool(const.settings.AutoShowConfig_WithConsole, def.isChecked)
 end
 
 function this.Define_InputBindings(const)

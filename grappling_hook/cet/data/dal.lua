@@ -2,9 +2,11 @@
 --https://sqlite.org/c3ref/c_abort.html
 
 local this = {}
+local DAL = {}
+
 local empty_param = "^^this is an empty param^^"
 
-function EnsureTablesCreated()
+function DAL.EnsureTablesCreated()
     --https://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Settings_Int (Key TEXT NOT NULL UNIQUE, Value INTEGER NOT NULL);") end)
@@ -29,7 +31,7 @@ end
 
 -- Returns
 --  bool, error message
-function GetSetting_Bool(key, default)
+function DAL.GetSetting_Bool(key, default)
     local sucess, value, errMsg = pcall(function ()
         --NOTE: There was no bit or bool datatype, so using int
         local stmt = db:prepare
@@ -62,7 +64,7 @@ end
 -- Inserts/Updates the key/value pair
 -- Returns
 --  error message or nil
-function SetSetting_Bool(key, value)
+function DAL.SetSetting_Bool(key, value)
     local valueInt
     if value then
         valueInt = 1
@@ -109,7 +111,7 @@ end
 ----------------------------------- Input Bindings ------------------------------------
 
 -- Returns { binding1 = {"action1", "action2"}, binding2 = {"action3", "action4"} }
-function GetAllInputBindings()
+function DAL.GetAllInputBindings()
     local sucess, rows = pcall(function ()
         local stmt = db:prepare
         [[
@@ -145,7 +147,7 @@ function GetAllInputBindings()
 end
 
 -- This overwrites the current binding with the one passed in
-function SetInputBinding(binding, actionNames)
+function DAL.SetInputBinding(binding, actionNames)
     local sucess, errMsg = pcall(function ()
         -- Delete Old
         local stmt = db:prepare
@@ -194,7 +196,7 @@ end
 
 --------------------------------------- Player ----------------------------------------
 
-function InsertPlayer(playerID, energy_tank, grappleKeys, experience)
+function DAL.InsertPlayer(playerID, energy_tank, grappleKeys, experience)
     local sucess, pkey, errMsg = pcall(function ()
         local time, time_readable = this.GetCurrentTime_AndReadable()
         local json_energy_tank = extern_json.encode(energy_tank)
@@ -228,7 +230,7 @@ end
 -- Returns:
 --    Array with column names as keys (or nil).  These are the column names as they're stored in the db, not models\player
 --    Error message if returned row is nil
-function GetLatestPlayer(playerID)
+function DAL.GetLatestPlayer(playerID)
     local sucess, player, errMsg = pcall(function ()
         local stmt = db:prepare
         [[
@@ -262,7 +264,7 @@ end
 -- This deletes all but the last 12 rows of player, for the playerID
 -- Returns
 --  Error Message or nil
-function DeleteOldPlayerRows(playerID)
+function DAL.DeleteOldPlayerRows(playerID)
     local sucess, errMsg = pcall(function ()
         -- Can't use joins, so a subquery seems to be the only option.  There shouldn't be enough rows to really matter anyway
 
@@ -301,7 +303,7 @@ end
 -- Returns:
 --    primary key or nil
 --    error message if primary key is nil
-function InsertGrapple(grapple)
+function DAL.InsertGrapple(grapple)
     local sucess, pkey, errMsg = pcall(function ()
         local time, time_readable = this.GetCurrentTime_AndReadable()
         local json = extern_json.encode(grapple)
@@ -330,7 +332,7 @@ function InsertGrapple(grapple)
     end
 end
 
-function GetGrapple_ByKey(primaryKey)
+function DAL.GetGrapple_ByKey(primaryKey)
     local sucess, grapple, errMsg = pcall(function ()
         local stmt = db:prepare
         [[
@@ -357,7 +359,7 @@ end
 
 -- This is nearly identical to InsertGrapple, except it's a select.  It's used to avoid unnecessarily
 -- inserting dupes
-function GetGrappleKey_ByContent(grapple)
+function DAL.GetGrappleKey_ByContent(grapple)
     local sucess, grappleKey, errMsg = pcall(function ()
         local json = extern_json.encode(grapple)
 
@@ -392,7 +394,7 @@ end
 -- This returns information about each grapple row, sorted by xp, name
 -- Returns
 --  { { grapple_key, name, experience, description, date }, {...}, {...}, }
-function GetAvailableGrapples()
+function DAL.GetAvailableGrapples()
     local sucess, rows = pcall(function ()
         local stmt = db:prepare
         [[
@@ -439,7 +441,7 @@ function GetAvailableGrapples()
 end
 
 -- These are a set of functions that will delete excess rows from the grapple table (see datautil.ReduceGrappleRows)
-function DeleteOldGrappleRows_TruncateWorkingTable()
+function DAL.DeleteOldGrappleRows_TruncateWorkingTable()
    local sucess, errMsg = pcall(function ()
         -- sqlite doesn't have a truncate
         local stmt = db:prepare("DELETE FROM WorkingKeys")
@@ -453,7 +455,7 @@ function DeleteOldGrappleRows_TruncateWorkingTable()
        return "DeleteOldGrappleRows_TruncateWorkingTable: Unknown Error"
    end
 end
-function DeleteOldGrappleRows_KeepReferenced()
+function DAL.DeleteOldGrappleRows_KeepReferenced()
     local sucess, errMsg = pcall(function ()
         local stmt = db:prepare
         [[
@@ -485,7 +487,7 @@ function DeleteOldGrappleRows_KeepReferenced()
        return "DeleteOldGrappleRows_KeepReferenced: Unknown Error"
    end
 end
-function DeleteOldGrappleRows_GetCandidateGrapples()
+function DAL.DeleteOldGrappleRows_GetCandidateGrapples()
     local sucess, rows = pcall(function ()
         local stmt = db:prepare
         [[
@@ -510,7 +512,7 @@ function DeleteOldGrappleRows_GetCandidateGrapples()
         return nil
     end
 end
-function DeleteOldGrappleRows_KeepHistorical(keys)
+function DAL.DeleteOldGrappleRows_KeepHistorical(keys)
     local sucess, errMsg = pcall(function ()
         local sql = "INSERT INTO WorkingKeys VALUES "
         for i = 1, #keys do
@@ -534,7 +536,7 @@ function DeleteOldGrappleRows_KeepHistorical(keys)
        return "DeleteOldGrappleRows_KeepHistorical: Unknown Error"
    end
 end
-function DeleteOldGrappleRows_DeleteGrapples()
+function DAL.DeleteOldGrappleRows_DeleteGrapples()
     local sucess, errMsg = pcall(function ()
         local stmt = db:prepare
         [[
@@ -700,3 +702,5 @@ function this.IsEmptyParam(...)
         type(select(1, ...)) == "string" and    -- getting the first item
         select(1, ...) == empty_param
 end
+
+return DAL

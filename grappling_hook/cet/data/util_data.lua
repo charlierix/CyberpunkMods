@@ -1,13 +1,13 @@
 function InitializeKeyTrackers(vars, keys, o, const)
     -- Pull bindings from the DB
-    local bindings = GetAllInputBindings()
+    local bindings = dal.GetAllInputBindings()
 
     if not bindings then
         -- No rows, use defaults
         bindings = GetDefaultInputBindings(const)
 
         for key, value in pairs(bindings) do
-            SetInputBinding(key, value)
+            dal.SetInputBinding(key, value)
         end
     end
 

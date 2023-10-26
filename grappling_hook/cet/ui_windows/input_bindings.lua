@@ -656,11 +656,11 @@ function this.Save(bind_buttons, startStopTracker, keys)
     -- Update DB and startStopTracker
     for i = 1, #bind_buttons do
         if bind_buttons[i].isDeleteChange then
-            SetInputBinding(bind_buttons[i].binding, nil)
+            dal.SetInputBinding(bind_buttons[i].binding, nil)
             startStopTracker:ClearBinding(bind_buttons[i].binding)
 
         elseif bind_buttons[i].newActions then
-            SetInputBinding(bind_buttons[i].binding, bind_buttons[i].newActions)
+            dal.SetInputBinding(bind_buttons[i].binding, bind_buttons[i].newActions)
             startStopTracker:UpdateBinding(bind_buttons[i].binding, bind_buttons[i].newActions)
         end
     end
