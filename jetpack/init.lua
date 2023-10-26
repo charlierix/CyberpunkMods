@@ -132,8 +132,6 @@ local keys = nil -- = Keys:new()        -- moved to init
 
 local debug = {}
 
-local mode = nil -- moved to init
-
 local vars =
 {
     isInFlight = false,
@@ -145,7 +143,7 @@ local vars =
     startThrustTime = 0,
     lastThrustTime = 0,
 
-    --remainBurnTime = mode.energy.maxBurnTime,        -- moved to init
+    --remainBurnTime = player.mode.energy.maxBurnTime,        -- moved to player constructor (in update event)
 
     --stop_flight_time              -- gets populated in ExitFlight
     --stop_flight_velocity
@@ -273,18 +271,6 @@ registerForEvent("onInit", function()
     vars.sounds_thrusting = SoundsThrusting:new(o, keys, vars.horz_analog, const)
 
     const.isEnabled = GetSetting_Bool(const.settings.IsEnabled, true)
-
-
-
-    -- Push this into player's constructor
-
-    mode = GetConfigValues(GetSetting_Int(const.settings.Mode, 0), vars.sounds_thrusting, const)
-    vars.sounds_thrusting:ModeChanged(mode.sound_type)
-
-    vars.remainBurnTime = mode.energy.maxBurnTime
-
-
-
 end)
 
 registerForEvent("onShutdown", function()
@@ -296,7 +282,7 @@ end)
 registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = false
     if isShutdown or not isLoaded or IsPlayerInAnyMenu() then
-        ExitFlight(vars, debug, o, mode)
+        ExitFlight(vars, debug, o, player)
         do return end
     end
 
@@ -304,7 +290,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetPlayerInfo()      -- very important to use : and not . (colon is a syntax shortcut that passes self as a hidden first param)
     if not o.player then
-        ExitFlight(vars, debug, o, mode)
+        ExitFlight(vars, debug, o, player)
         do return end
     end
 
@@ -316,7 +302,7 @@ registerForEvent("onUpdate", function(deltaTime)
 
     o:GetInWorkspot()
     if o.isInWorkspot then      -- in a vehicle
-        ExitFlight(vars, debug, o, mode)
+        ExitFlight(vars, debug, o, player)
         do return end
     end
 
@@ -328,39 +314,28 @@ registerForEvent("onUpdate", function(deltaTime)
 
     -- Cycle Config
     if keys.cycleModes then
-
-        --player:NextMode()
-
-
         keys.cycleModes = false
+        player:NextMode()
 
-        local newIndex = mode.index + 1
-        SetSetting_Int(const.settings.Mode, newIndex)
-        mode = GetConfigValues(newIndex, vars.sounds_thrusting, const)
-        vars.showConfigNameUntil = o.timer + 3
-
-        vars.sounds_thrusting:ModeChanged(mode.sound_type)
-        vars.should_rebound_redscript = false
-
-        ExitFlight(vars, debug, o, mode)
+        ExitFlight(vars, debug, o, player)
     end
 
     vars.thrust:Tick()     -- this is needed for flight and non flight
 
     if vars.isInFlight then
         -- In Flight
-        if not o:Custom_CurrentlyFlying_Update(GetVelocity(mode, vars, o)) then
-            ExitFlight(vars, debug, o, mode)
+        if not o:Custom_CurrentlyFlying_Update(GetVelocity(player.mode, vars, o)) then
+            ExitFlight(vars, debug, o, player)
 
-        elseif mode.useRedscript then
-            Process_InFlight_Red(o, vars, const, mode, keys, debug, deltaTime)
+        elseif player.mode.useRedscript then
+            Process_InFlight_Red(o, vars, const, player, keys, debug, deltaTime)
 
         else
-            Process_InFlight_CET(o, vars, const, mode, keys, debug, deltaTime)
+            Process_InFlight_CET(o, vars, const, player, keys, debug, deltaTime)
         end
     else
         -- Standard (walking around)
-        Process_Standard(o, vars, mode, const, debug, deltaTime)
+        Process_Standard(o, vars, player, const, debug, deltaTime)
     end
 
     vars.sounds_thrusting:Tick(vars.isInFlight)
@@ -379,7 +354,7 @@ registerHotkey("jetpackEnableDisable", "Enable/Disable", function()
     vars.toggled_enabled = o.timer
 
     if not const.isEnabled then
-        ExitFlight(vars, debug, o, mode)
+        ExitFlight(vars, debug, o, player)
     end
 end)
 
@@ -388,14 +363,16 @@ registerForEvent("onDraw", function()
         do return end
     end
 
-    -- Energy tank (only show when it's not full)
-    if vars.remainBurnTime / mode.energy.maxBurnTime < const.hide_energy_above_percent then
-        DrawJetpackProgress(mode.name, vars.remainBurnTime, mode.energy.maxBurnTime)
-    end
+    if player and player.mode then
+        -- Energy tank (only show when it's not full)
+        if vars.remainBurnTime / player.mode.energy.maxBurnTime < const.hide_energy_above_percent then
+            DrawJetpackProgress(player.mode.name, vars.remainBurnTime, player.mode.energy.maxBurnTime)
+        end
 
-    -- Config Name
-    if vars.showConfigNameUntil > o.timer then
-        DrawConfigName(mode)
+        -- Config Name
+        if vars.showConfigNameUntil > o.timer then
+            DrawConfigName(player.mode)
+        end
     end
 
     if vars.toggled_enabled and o.timer - vars.toggled_enabled < 2 then
@@ -411,7 +388,7 @@ end)
 
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
-    ExitFlight(vars, debug, o, mode)
+    ExitFlight(vars, debug, o, player)
 
     if o then
         o:Clear()

@@ -6,8 +6,8 @@ local isAirborne_extended = nil
 -- This is called each tick when they aren't in flight (just walking around)
 -- Timer has already been updated and it's verified that they aren't in a vehicle
 -- or in the menu
-function Process_Standard(o, vars, mode, const, debug, deltaTime)
-    vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, mode.energy.maxBurnTime, mode.energy.recoveryRate, deltaTime)
+function Process_Standard(o, vars, player, const, debug, deltaTime)
+    vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, player.mode.energy.maxBurnTime, player.mode.energy.recoveryRate, deltaTime)
 
     if not const.isEnabled then
         do return end       -- the user has explicitly disabled jetpack
@@ -16,15 +16,15 @@ function Process_Standard(o, vars, mode, const, debug, deltaTime)
     isAirborne_standard = nil
     isAirborne_extended = nil
 
-    if this.ShouldReboundJump(o, vars, mode) then
-        local rebound_impulse = GetReboundImpulse(mode, vars.stop_flight_velocity)
-        this.TryActivateFlight(o, vars, mode, rebound_impulse)
+    if this.ShouldReboundJump(o, vars, player.mode) then
+        local rebound_impulse = GetReboundImpulse(player.mode, vars.stop_flight_velocity)
+        this.TryActivateFlight(o, vars, player.mode, rebound_impulse)
 
-    elseif vars.thrust.isDown and (vars.thrust.downDuration > mode.jump_land.holdJumpDelay) then
-        this.TryActivateFlight(o, vars, mode, nil)
+    elseif vars.thrust.isDown and (vars.thrust.downDuration > player.mode.jump_land.holdJumpDelay) then
+        this.TryActivateFlight(o, vars, player.mode, nil)
 
     elseif o:Custom_CurrentlyFlying_IsOwnerOrNone() then
-        local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, mode, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
+        local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, player.mode, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
         if safetyFireHit then
             SafetyFire(o, safetyFireHit)
         end

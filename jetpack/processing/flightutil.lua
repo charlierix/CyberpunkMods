@@ -186,7 +186,7 @@ function AdjustTimeSpeed(o, vars, mode, velocity)
     end
 end
 
-function ExitFlight(vars, debug, o, mode, keep_thrustkeys)
+function ExitFlight(vars, debug, o, player, keep_thrustkeys)
     -- This gets called every frame when they are in the menu, driving, etc.  So it needs to be
     -- safe and cheap
     if (not vars) or (not vars.isInFlight) then
@@ -201,7 +201,13 @@ function ExitFlight(vars, debug, o, mode, keep_thrustkeys)
     vars.cur_timeSpeed = nil
     vars.sounds_thrusting:StopAll()
     vars.stop_flight_time = o.timer
-    vars.stop_flight_velocity = GetVelocity(mode, vars, o)
+
+    if player and player.mode then
+        vars.stop_flight_velocity = GetVelocity(player.mode, vars, o)
+    else
+        vars.stop_flight_velocity = o.vel
+    end
+
     vars.last_rebound_time = nil
 
     if not keep_thrustkeys then

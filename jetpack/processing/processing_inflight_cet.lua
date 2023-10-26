@@ -1,18 +1,18 @@
 local this = {}
 
-function Process_InFlight_CET(o, vars, const, mode, keys, debug, deltaTime)
+function Process_InFlight_CET(o, vars, const, player, keys, debug, deltaTime)
     debug.time_flying_idle = o.timer - vars.lastThrustTime
 
-    if ShouldReboundJump_InFlight(o, vars, mode) then
-        this.Rebound(o, vars, mode)
+    if ShouldReboundJump_InFlight(o, vars, player.mode) then
+        this.Rebound(o, vars, player.mode)
     end
 
-    if ShouldExitFlight(o, vars, mode, deltaTime) then
-        this.ExitFlight(o, vars, mode, debug)
+    if ShouldExitFlight(o, vars, player.mode, deltaTime) then
+        this.ExitFlight(o, vars, player, debug)
         do return end
     end
 
-    this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
+    this.Accelerate(o, vars, const, player.mode, keys, debug, deltaTime)
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -24,12 +24,12 @@ function this.Rebound(o, vars, mode)
     o:PlaySound("lcm_player_double_jump", vars)
 end
 
-function this.ExitFlight(o, vars, mode, debug)
-    if mode.jump_land.explosiveLanding and not IsAirborne(o) then
+function this.ExitFlight(o, vars, player, debug)
+    if player.mode.jump_land.explosiveLanding and not IsAirborne(o) then
         ExplosivelyLand(o, vars.vel, vars)
     end
 
-    ExitFlight(vars, debug, o, mode)
+    ExitFlight(vars, debug, o, player)
 end
 
 function this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
