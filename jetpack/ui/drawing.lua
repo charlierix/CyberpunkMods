@@ -1,14 +1,19 @@
 --Borderless progress bar inspired by / lifted from survival mod by Architect
 --https://www.nexusmods.com/cyberpunk2077/mods/1405
-function DrawJetpackProgress(name, remainBurnTime, maxBurnTime)
-    ImGui.SetNextWindowPos(20, 200, ImGuiCond.Always)       -- this is under the top left combat graphic
-    ImGui.SetNextWindowSize(380, 50, ImGuiCond.Appearing)
+function DrawJetpackProgress(name, remainBurnTime, maxBurnTime, vars_ui_progressbar, const)
+    local scale = vars_ui_progressbar.scale
+
+    ImGui.SetNextWindowPos(20 * scale, 200 * scale, ImGuiCond.Always)       -- this is under the top left combat graphic
+    ImGui.SetNextWindowSize(380 * scale, 50 * scale, ImGuiCond.Appearing)
 
     if (ImGui.Begin(name, true, ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoScrollbar + ImGuiWindowFlags.NoBackground)) then
-        ImGui.SetWindowFontScale(1.5)
+        ImGui.SetWindowFontScale(0.75)
+
+        Refresh_LineHeights(vars_ui_progressbar, const, false)
+        scale = vars_ui_progressbar.scale       -- it might have gotten updated
 
         -- Progress Bar
-        ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 3)
+        ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 3 * scale)
 
         -- The color ints are in ABGR (comments to the side are ARGB for easy copy/pasting into color editor)
 
@@ -16,10 +21,11 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime)
         ImGui.PushStyleColor(ImGuiCol.FrameBg, 0x99ADAD5E)
         ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0xE6D4D473)
 
-        ImGui.SetCursorPos(0, 0)
-        ImGui.PushItemWidth(130)
+        --ImGui.SetCursorPos(0, 0)
+        ImGui.SetCursorPos(0, vars_ui_progressbar.line_heights.line / 2)
+        ImGui.PushItemWidth(130 * scale)
 
-        ImGui.ProgressBar(remainBurnTime / maxBurnTime, 130, 24)     -- %, width, height
+        ImGui.ProgressBar(remainBurnTime / maxBurnTime, 130 * scale, 4 * scale)     -- %, width, height
 
         ImGui.PopItemWidth()
 
@@ -29,7 +35,7 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime)
         -- Label
         ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)
 
-        ImGui.SetCursorPos(140, 0)
+        ImGui.SetCursorPos(140 * scale, 0)
 
         ImGui.Text(name)
 
@@ -38,17 +44,22 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime)
     ImGui.End()
 end
 
-function DrawConfigName(mode)
+function DrawConfigName(mode, vars_ui_configname, const)
+    local scale = vars_ui_configname.scale
+
     ImGui.PushStyleColor(ImGuiCol.WindowBg, 0x5454542E)     --542E5454
     ImGui.PushStyleColor(ImGuiCol.Border, 0x806E6E3D)       --803D6E6E
 
-    ImGui.SetNextWindowPos(20, 300, ImGuiCond.Always)
-    ImGui.SetNextWindowSize(240, 160, ImGuiCond.Appearing)
+    ImGui.SetNextWindowPos(20 * scale, 300, ImGuiCond.Always)
+    ImGui.SetNextWindowSize(240 * scale, 160 * scale, ImGuiCond.Appearing)
 
     if (ImGui.Begin("Jetpack Mode", true, ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoScrollbar)) then
         --ImGui.SetWindowFocus("Jetpack Mode")        -- hopefully, this forces it to be on top
 
         ImGui.SetWindowFontScale(1.2)
+
+        Refresh_LineHeights(vars_ui_configname, const, false)
+        scale = vars_ui_configname.scale       -- it might have gotten updated
 
         ImGui.Spacing()
         ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)     --FFFF4C
@@ -58,7 +69,9 @@ function DrawConfigName(mode)
         ImGui.Spacing()
         ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)     --75FFFF
 
-        --Only reporting settings out of ordinary (low gravity, high gravity, etc)
+        -- Only reporting settings out of ordinary (low gravity, high gravity, etc)
+
+        --TODO: these should come from a property off of mode (like description)
 
         if not mode.jump_land.shouldSafetyFire then
             ImGui.Spacing()

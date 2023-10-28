@@ -193,6 +193,11 @@ local vars_ui_progressbar =
     scale = 1,
 }
 
+local vars_ui_configname =
+{
+    scale = 1,
+}
+
 --TODO: move settings from vars to player
 local player = nil
 
@@ -227,7 +232,7 @@ registerForEvent("onInit", function()
     InitializeRandom()
     dal.EnsureTablesCreated()
     Define_UI_Framework_Constants(const)
-    InitializeUI(vars_ui, vars_ui_progressbar, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
+    InitializeUI(vars_ui, vars_ui_progressbar, vars_ui_configname, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
 
     keys = Keys:new(debug, const)
 
@@ -368,12 +373,12 @@ registerForEvent("onDraw", function()
     if player and player.mode then
         -- Energy tank (only show when it's not full)
         if vars.remainBurnTime / player.mode.energy.maxBurnTime < const.hide_energy_above_percent then
-            DrawJetpackProgress(player.mode.name, vars.remainBurnTime, player.mode.energy.maxBurnTime)
+            DrawJetpackProgress(player.mode.name, vars.remainBurnTime, player.mode.energy.maxBurnTime, vars_ui_progressbar, const)
         end
 
         -- Config Name
         if vars.showConfigNameUntil > o.timer then
-            DrawConfigName(player.mode)
+            DrawConfigName(player.mode, vars_ui_configname, const)
         end
     end
 

@@ -1,6 +1,6 @@
 local this = {}
 
-function InitializeUI(vars_ui, vars_ui_progressbar, const)
+function InitializeUI(vars_ui, vars_ui_progressbar, vars_ui_configname, const)
     vars_ui.autoshow_withconsole = dal.GetSetting_Bool(const.settings.AutoShowConfig_WithConsole)
     if vars_ui.autoshow_withconsole == nil then     -- this will only happen if there's a db error
         vars_ui.autoshow_withconsole = true
@@ -12,6 +12,7 @@ function InitializeUI(vars_ui, vars_ui_progressbar, const)
 
     Refresh_LineHeights(vars_ui, const, true)
     Refresh_LineHeights(vars_ui_progressbar, const, true)
+    Refresh_LineHeights(vars_ui_configname, const, true)
 
     vars_ui.configWindow = this.Define_ConfigWindow(vars_ui.screen)      -- going with a SPA, so it's probably going to be the only window
 

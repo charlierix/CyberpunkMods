@@ -29,11 +29,9 @@ function DrawEnergyProgress(energy, max, experience, vars, vars_ui_progressbar, 
             ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0xE6D4D473)     --E673D4D4
         end
 
-        --ImGui.SetCursorPos(0, 0)
         ImGui.SetCursorPos(0, vars_ui_progressbar.line_heights.line / 2)
         ImGui.PushItemWidth(130 * scale)
 
-        --ImGui.ProgressBar(energy / max, 130 * scale, 24 * scale)     -- %, width, height
         ImGui.ProgressBar(energy / max, 130 * scale, 4 * scale)     -- %, width, height
 
         ImGui.PopItemWidth()
