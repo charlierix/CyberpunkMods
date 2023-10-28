@@ -13,13 +13,14 @@
 
 RMB_Dash = {}
 
-function RMB_Dash:new(acceleration, burnRate)
+function RMB_Dash:new(acceleration, burnRate, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
-    self.acceleration = acceleration
-    self.burnRate = burnRate
+    obj.rmb_type = const.rmb_type.dash
+    obj.acceleration = acceleration
+    obj.burnRate = burnRate
 
     return obj
 end

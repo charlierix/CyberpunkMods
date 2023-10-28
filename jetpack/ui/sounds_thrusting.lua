@@ -58,7 +58,6 @@ function SoundsThrusting:Tick(isInFlight)
     end
 end
 
-
 -- Each thrust mode could have a different set of sounds
 function SoundsThrusting:ModeChanged(sound_type)
     self.sound_type = sound_type

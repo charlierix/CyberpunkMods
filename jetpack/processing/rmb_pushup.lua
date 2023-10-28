@@ -13,15 +13,16 @@
 
 RMB_PushUp = {}
 
-function RMB_PushUp:new(force, randHorz, randVert, burnRate)
+function RMB_PushUp:new(force, randHorz, randVert, burnRate, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
-    self.force = force
-    self.randHorz = randHorz
-    self.randVert = randVert
-    self.burnRate = burnRate
+    obj.rmb_type = const.rmb_type.pushup
+    obj.force = force
+    obj.randHorz = randHorz
+    obj.randVert = randVert
+    obj.burnRate = burnRate
 
     return obj
 end

@@ -352,6 +352,28 @@ function GameObjectAccessor:StopSound(soundName)
     end
 end
 
+-- This gets/sets a unique ID (must be int) in the save file's quest system.  That is used to
+-- uniquely identify a playthrough so that each created character has their own config
+--
+-- Everything in the sqlite db is kept separated with this ID so that settings don't bleed
+-- between playthroughs
+function GameObjectAccessor:GetPlayerUniqueID()
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        -- this is a made up key, and can't be the same as other mod's
+        -- this returns zero if the key doesn't exist
+        return self.wrappers.GetQuestFactStr(self.quest, "jetpack_player_uniqueid")
+    end
+end
+function GameObjectAccessor:SetPlayerUniqueID(id)
+    self:EnsureLoaded_Quest()
+
+    if self.quest then
+        self.wrappers.SetQuestFactStr(self.quest, "jetpack_player_uniqueid", id)      -- the ID must be integer
+    end
+end
+
 -- This hits the player with an acceleration
 function GameObjectAccessor:AddImpulse(x, y, z)
     self:EnsureLoaded_Player()

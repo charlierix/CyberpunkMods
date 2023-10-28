@@ -13,6 +13,7 @@ function DAL.EnsureTablesCreated()
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Settings_Int (Key TEXT NOT NULL UNIQUE, Value INTEGER NOT NULL);") end)
 
+    --TODO: json for misc settings (like progress bar visibility)
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Player (PlayerKey INTEGER NOT NULL UNIQUE, PlayerID INTEGER NOT NULL, ModeKeys TEXT NOT NULL, ModeIndex INTEGER NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(PlayerKey AUTOINCREMENT));") end)
 
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Mode2 (ModeKey INTEGER NOT NULL UNIQUE, Name TEXT, JSON TEXT NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(ModeKey AUTOINCREMENT));") end)
@@ -224,7 +225,8 @@ function DAL.GetLatestPlayer(playerID)
             SELECT
                 PlayerKey,
                 PlayerID,
-                ModeKeys
+                ModeKeys,
+                ModeIndex
             FROM Player
             WHERE PlayerID = ?
             ORDER BY LastUsed DESC
@@ -286,14 +288,14 @@ end
 
 -- Inserts a mode entry into the Mode2 table
 -- Params:
---    mode: This is a mode entry (see models\mode)
+--    mode_name: name given to the mode (this is inside of the json, but also stored explicitely in a column)
+--    mode_json: This is a json from a mode entry (see models\mode)
 -- Returns:
 --    primary key or nil
 --    error message if primary key is nil
-function DAL.InsertMode(mode)
+function DAL.InsertMode(mode_name, mode_json)
     local sucess, pkey, errMsg = pcall(function ()
         local time, time_readable = this.GetCurrentTime_AndReadable()
-        local json = extern_json.encode(mode)
 
         local stmt = db:prepare
         [[
@@ -303,9 +305,9 @@ function DAL.InsertMode(mode)
                 (?, ?, ?, ?)
         ]]
 
-        local errMsg = this.Bind_NonSelect(stmt, "InsertMode", mode.name, json, time, time_readable)
+        local errMsg = this.Bind_NonSelect(stmt, "InsertMode", mode_name, mode_json, time, time_readable)
         if errMsg then
-            return errMsg
+            return nil, errMsg
         end
 
         -- This is the primary key of the inserted row
@@ -319,6 +321,7 @@ function DAL.InsertMode(mode)
     end
 end
 
+-- Returns the json of a mode
 function DAL.GetMode_ByKey(primaryKey)
     local sucess, mode, errMsg = pcall(function ()
         local stmt = db:prepare
@@ -331,7 +334,7 @@ function DAL.GetMode_ByKey(primaryKey)
 
         local row, errMsg = this.Bind_Select_SingleRow(stmt, "GetMode_ByKey", primaryKey)
         if row then
-            return extern_json.decode(row.JSON), nil
+            return row.JSON, nil
         else
             return nil, errMsg
         end
@@ -346,10 +349,8 @@ end
 
 -- This is nearly identical to InsertMode, except it's a select.  It's used to avoid unnecessarily
 -- inserting dupes
-function DAL.GetModeKey_ByContent(mode)
+function DAL.GetModeKey_ByContent(mode_name, mode_json)
     local sucess, modeKey, errMsg = pcall(function ()
-        local json = extern_json.encode(mode)
-
         --NOTE: This could just compare json, since that contains name and experience.  But doing it this way
         --exactly mirrors the insert method (just in case there are bugs)
         local stmt = db:prepare
@@ -362,7 +363,7 @@ function DAL.GetModeKey_ByContent(mode)
             LIMIT 1
         ]]
 
-        local row, errMsg = this.Bind_Select_SingleRow(stmt, "GetModeKey_ByContent", mode.name, json)
+        local row, errMsg = this.Bind_Select_SingleRow(stmt, "GetModeKey_ByContent", mode_name, mode_json)
         if row then
             return row.ModeKey, nil
         else

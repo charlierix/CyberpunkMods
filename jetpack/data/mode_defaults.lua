@@ -1,18 +1,12 @@
 local this = {}
+local ModeDefaults = {}
+
+-- Presets, the index will point to one of these (or wrap around to the beginning)
+local presets = nil
 
 -- Every time keys.cycleConfig is pressed, this function will get called with the next mode
-function GetConfigValues(index, sounds_thrusting, const)
-    -- Presets, the index will point to one of these (or wrap around to the beginning)
-    local presets =
-    {
-        this.Realism,
-        this.WellRounded,
-        this.JetTrooper,
-        this.Airplane,
-        this.NPCLauncher,
-        this.HulkStomp,
-        this.DreamJump,
-    }
+function ModeDefaults.GetConfigValues(index, sounds_thrusting, const)
+    this.EnsurePresetsAssigned()
 
     -- Default Values - overridden by presets
     local mode = this.Default(const)
@@ -29,6 +23,79 @@ function GetConfigValues(index, sounds_thrusting, const)
     this.AdjustAccelForGravity(mode)
 
     return mode
+end
+
+function ModeDefaults.GetConfigValues_Count()
+    this.EnsurePresetsAssigned()
+    return #presets
+end
+
+function ModeDefaults.ToJSON(mode, const)
+    local retVal = mode
+
+    -- Need to replace rmb_extra with a definition, since it's currently a live object that would serialize as too much
+    if mode.rmb_extra then
+        retVal = this.CloneTable_CurrentLayer(mode)
+
+        if mode.rmb_extra.rmb_type == const.rmb_type.hover then
+            retVal.rmb_extra =
+            {
+                rmb_type = mode.rmb_extra.rmb_type,
+                mult = mode.rmb_extra.mult,
+                accel_up = mode.rmb_extra.accel_up_ORIG,
+                accel_down = mode.rmb_extra.accel_down,
+                burnRate = mode.rmb_extra.burnRate,
+                holdDuration = mode.rmb_extra.holdDuration,
+            }
+
+        elseif mode.rmb_extra.rmb_type == const.rmb_type.pushup then
+            retVal.rmb_extra =
+            {
+                rmb_type = mode.rmb_extra.rmb_type,
+                force = mode.rmb_extra.force,
+                randHorz = mode.rmb_extra.randHorz,
+                randVert = mode.rmb_extra.randVert,
+                burnRate = mode.rmb_extra.burnRate,
+            }
+
+        elseif mode.rmb_extra.rmb_type == const.rmb_type.dash then
+            retVal.rmb_extra =
+            {
+                rmb_type = mode.rmb_extra.rmb_type,
+                acceleration = mode.rmb_extra.acceleration,
+                burnRate = mode.rmb_extra.burnRate,
+            }
+
+        else
+            LogError("ModeDefaults.ToJSON: Unknown mode.rmb_extra.rmb_type: " .. tostring(mode.rmb_extra.rmb_type))
+            retVal.rmb_extra = nil
+        end
+    end
+
+    return extern_json.encode(retVal)
+end
+function ModeDefaults.FromJSON(json, sounds_thrusting, const)
+    local retVal = extern_json.decode(json)
+
+    -- Replace rmb_extra with a live object
+    if retVal.rmb_extra then
+
+        if retVal.rmb_extra.rmb_type == const.rmb_type.hover then
+            retVal.rmb_extra = RMB_Hover:new(retVal.rmb_extra.mult, retVal.rmb_extra.accel_up, retVal.rmb_extra.accel_down, retVal.rmb_extra.burnRate, retVal.rmb_extra.holdDuration, retVal.useRedscript, retVal.accel.gravity, sounds_thrusting, const)
+
+        elseif retVal.rmb_extra.rmb_type == const.rmb_type.pushup then
+            retVal.rmb_extra = RMB_PushUp:new(retVal.rmb_extra.force, retVal.rmb_extra.randHorz, retVal.rmb_extra.randVert, retVal.rmb_extra.burnRate, const)
+
+        elseif retVal.rmb_extra.rmb_type == const.rmb_type.dash then
+            retVal.rmb_extra = RMB_Dash:new(retVal.rmb_extra.acceleration, retVal.rmb_extra.burnRate, const)
+
+        else
+            LogError("ModeDefaults.FromJSON: Unknown mode.rmb_extra.rmb_type: " .. tostring(retVal.rmb_extra.rmb_type))
+            retVal.rmb_extra = nil
+        end
+    end
+
+    return retVal
 end
 
 --------------------------------------- Presets ---------------------------------------
@@ -148,7 +215,7 @@ function this.WellRounded(mode, sounds_thrusting, const)
 
     mode.accel.gravity = -7
 
-    mode.rmb_extra = RMB_Hover:new(10, 6, 2, 1, 9999, mode.useRedscript, mode.accel.gravity, sounds_thrusting)
+    mode.rmb_extra = RMB_Hover:new(10, 6, 2, 1, 9999, mode.useRedscript, mode.accel.gravity, sounds_thrusting, const)
 
     mode.sound_type = const.thrust_sound_type.steam_quiet
 end
@@ -169,7 +236,7 @@ function this.JetTrooper(mode, sounds_thrusting, const)
 
     mode.accel.vert_initial = 2
 
-    mode.rmb_extra = RMB_Hover:new(2, 2, 0.4, 0.3, 12, mode.useRedscript, mode.accel.gravity, sounds_thrusting)
+    mode.rmb_extra = RMB_Hover:new(2, 2, 0.4, 0.3, 12, mode.useRedscript, mode.accel.gravity, sounds_thrusting, const)
 
     mode.sound_type = const.thrust_sound_type.steam_quiet
 end
@@ -193,7 +260,7 @@ function this.Airplane(mode, sounds_thrusting, const)
 
     mode.accel.gravity = -16
 
-    mode.rmb_extra = RMB_Hover:new(12, 6, 2, 1, 9999, mode.useRedscript, mode.accel.gravity, sounds_thrusting)
+    mode.rmb_extra = RMB_Hover:new(12, 6, 2, 1, 9999, mode.useRedscript, mode.accel.gravity, sounds_thrusting, const)
 
     mode.rotateVel.is_used = true
 
@@ -211,7 +278,7 @@ function this.NPCLauncher(mode, sounds_thrusting, const)
     mode.accel.gravity = -1
     mode.accel.vert_stand = 3.5
 
-    mode.rmb_extra = RMB_PushUp:new(22, 6, 8, 60)      -- the burn rate is only applied for one frame, so need something large
+    mode.rmb_extra = RMB_PushUp:new(22, 6, 8, 60, const)      -- the burn rate is only applied for one frame, so need something large
 
     mode.sound_type = const.thrust_sound_type.levitate
 end
@@ -292,6 +359,21 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
+function this.EnsurePresetsAssigned()
+    if not presets then
+        presets =
+        {
+            this.Realism,
+            this.WellRounded,
+            this.JetTrooper,
+            this.Airplane,
+            this.NPCLauncher,
+            this.HulkStomp,
+            this.DreamJump,
+        }
+    end
+end
+
 function this.AdjustAccelForGravity(mode)
     -- The vertical accelerations need to defeat gravity
     if mode.useRedscript then
@@ -309,3 +391,15 @@ function this.GetAccelAdjustedForGravity_Redscript(accel, mode)
         return accel
     end
 end
+
+function this.CloneTable_CurrentLayer(table)
+    local retVal = {}
+
+    for key, value in pairs(table) do
+        retVal[key] = value
+    end
+
+    return retVal
+end
+
+return ModeDefaults

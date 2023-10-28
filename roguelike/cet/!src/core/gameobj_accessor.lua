@@ -267,7 +267,7 @@ end
 -- This gets/sets a unique ID (must be int) in the save file's quest system.  That is used to
 -- uniquely identify a playthrough so that each created character has their own grapple config
 --
--- Everything in the sqllite db is kept separated with this ID so that settings don't bleed
+-- Everything in the sqlite db is kept separated with this ID so that settings don't bleed
 -- between playthroughs
 function GameObjectAccessor:GetPlayerUniqueID()
     self:EnsureQuestLoaded()

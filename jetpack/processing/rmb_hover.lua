@@ -13,10 +13,12 @@
 
 RMB_Hover = {}
 
-function RMB_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, usesRedscript, gravity, sounds_thrusting)
+function RMB_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, usesRedscript, gravity, sounds_thrusting, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
+
+    obj.rmb_type = const.rmb_type.hover
 
     obj.sounds_thrusting = sounds_thrusting
 
@@ -26,7 +28,10 @@ function RMB_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, usesR
     end
 
     obj.mult = mult
+
+    obj.accel_up_ORIG = accel_up
     obj.accel_up = accel_up + extraUp
+
     obj.accel_down = accel_down
     obj.burnRate = burnRate
 
