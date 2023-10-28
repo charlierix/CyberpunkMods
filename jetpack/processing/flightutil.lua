@@ -9,12 +9,12 @@ function ShouldExitFlight(o, vars, mode, deltaTime)
     -- Even if they are close to the ground, if they are actively under thrust, then they shouldn't
     -- exit flight
     --
-    -- If it's flown exclusively in CET, then also need to make sure that velocity is up, or they
+    -- If it's flown exclusively teleports, then also need to make sure that velocity is up, or they
     -- might clip through the ground
-    -- NOTE: It was originally only doing that z>=0 check for cet, but there shouldn't be any harm
-    -- in also doing that for redscript
+    -- NOTE: It was originally only doing that z>=0 check for teleport, but there shouldn't be any harm
+    -- in also doing that for impulse
     local vel_z
-    if mode.useRedscript then
+    if mode.useImpulse then
         vel_z = o.vel.z
     else
         vel_z = vars.vel.z
@@ -221,7 +221,7 @@ function GetVelocity(mode, vars, o)
     if not mode then
         return o.vel
 
-    elseif mode.useRedscript then
+    elseif mode.useImpulse then
         return o.vel
 
     else

@@ -390,7 +390,7 @@ function GameObjectAccessor:DelayEventNextFrame(entity, event)
     self:EnsureLoaded_Delay()
 
     if self.delay then
-        --NOTE: DelayEvent that takes time currently crashes to desktop when called from cet (works from redscript)
+        --NOTE: DelayEvent that takes time currently crashes to desktop when called from teleport based (works from impulse based)
         self.wrappers.DelayEventNextFrame(self.delay, entity, event)
     end
 end

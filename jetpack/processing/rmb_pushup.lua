@@ -1,7 +1,7 @@
 ------------------------- Interface -------------------------
 -- All derived right mouse button classes require this same interface
 
--- Velocity has to be passed in, because it's stored differently between redscript and cet flight
+-- Velocity has to be passed in, because it's stored differently between impulse and teleport based flight
 -- NOTE: Can't return 0 energy if nonzero accelerations are returned, or the calling function will ignore them
 
 -- function RMB_:Description()

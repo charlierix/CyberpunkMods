@@ -1,6 +1,6 @@
 local this = {}
 
-function Process_InFlight_Red(o, vars, const, player, keys, debug, deltaTime)
+function Process_InFlight_Impulse(o, vars, const, player, keys, debug, deltaTime)
     debug.time_flying_idle = o.timer - vars.lastThrustTime
 
     if ShouldReboundJump_InFlight(o, vars, player.mode) then
@@ -9,7 +9,7 @@ function Process_InFlight_Red(o, vars, const, player, keys, debug, deltaTime)
         do return end
     end
 
-    local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, player.mode, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
+    local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, player.mode, deltaTime)     -- even though impulse based won't kill on impact, it still plays pain and stagger animations on hard landings
     if safetyFireHit then
         this.SafetyFire(o, vars, player, debug, safetyFireHit)
         do return end
@@ -26,7 +26,7 @@ end
 ----------------------------------- Private Methods -----------------------------------
 
 function this.PrepForRebound(o, vars, player, debug)
-    vars.should_rebound_redscript = true
+    vars.should_rebound_impulse = true
 
     if player.mode.jump_land.explosiveLanding then
         ExplosivelyLand(o, o.vel.z, vars)

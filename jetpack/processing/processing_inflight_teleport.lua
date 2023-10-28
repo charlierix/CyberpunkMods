@@ -1,6 +1,6 @@
 local this = {}
 
-function Process_InFlight_CET(o, vars, const, player, keys, debug, deltaTime)
+function Process_InFlight_Teleport(o, vars, const, player, keys, debug, deltaTime)
     debug.time_flying_idle = o.timer - vars.lastThrustTime
 
     if ShouldReboundJump_InFlight(o, vars, player.mode) then

@@ -85,7 +85,7 @@ function this.ResetToMock(obj, errMsg)
     this.SetupMock(obj)
 
     obj.vars.sounds_thrusting:ModeChanged(obj.mode.sound_type)
-    obj.vars.should_rebound_redscript = false
+    obj.vars.should_rebound_impulse = false
 end
 
 function this.SetupMock(obj)

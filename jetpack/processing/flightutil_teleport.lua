@@ -1,5 +1,5 @@
 ------------------------------------
--- These are methods that are only used when flying using cet teleports (non redscript)
+-- These are methods that are only used when flying using teleports (non impulse)
 ------------------------------------
 
 local this = {}

@@ -81,7 +81,7 @@ function ModeDefaults.FromJSON(json, sounds_thrusting, const)
     if retVal.rmb_extra then
 
         if retVal.rmb_extra.rmb_type == const.rmb_type.hover then
-            retVal.rmb_extra = RMB_Hover:new(retVal.rmb_extra.mult, retVal.rmb_extra.accel_up, retVal.rmb_extra.accel_down, retVal.rmb_extra.burnRate, retVal.rmb_extra.holdDuration, retVal.useRedscript, retVal.accel.gravity, sounds_thrusting, const)
+            retVal.rmb_extra = RMB_Hover:new(retVal.rmb_extra.mult, retVal.rmb_extra.accel_up, retVal.rmb_extra.accel_down, retVal.rmb_extra.burnRate, retVal.rmb_extra.holdDuration, retVal.useImpulse, retVal.accel.gravity, sounds_thrusting, const)
 
         elseif retVal.rmb_extra.rmb_type == const.rmb_type.pushup then
             retVal.rmb_extra = RMB_PushUp:new(retVal.rmb_extra.force, retVal.rmb_extra.randHorz, retVal.rmb_extra.randVert, retVal.rmb_extra.burnRate, const)
@@ -105,7 +105,7 @@ function this.Default(const)
     {
         name = "",
 
-        useRedscript = false,               -- TODO: Rename this to Acceleration vs Teleport based flight (redscript function is now done in cet, but it's still acceleration)
+        useImpulse = false,               -- True: impulse based flight (game engine handles physics/collisions) | False: teleport based flight (this mod handles physics/collisions)
 
         sound_type = const.thrust_sound_type.steam,
 
@@ -154,7 +154,7 @@ function this.Default(const)
 
         rotateVel =
         {
-            is_used = false,            -- This should only be done in CET based flight (non redscript).  This will pull the velocity to line up with the direction facing
+            is_used = false,            -- This should only be done in teleport based flight (non impulse).  This will pull the velocity to line up with the direction facing
             percent_horz = 0.8,         -- How strong the pull is.  This is percent per second (1 would be fully aligned after one second)
             percent_vert = 0,           -- Aligning vertically gets annoying, because the player is naturally looking down at an angle, causing it to always want to go down
             dotPow = 3,                 -- unsigned integer, percent will be multiplied by the dot product so when they are looking perpendicular to velocity (or more), percent will be zero.  That dot will be taken to this power.  0 won't do the dot product, 1 is standard, 2 is squared, etc.  Paste this into desmos for a visualization: "\cos\left(\frac{\pi}{2}\cdot\left(1-x\right)\right)^{n}"
@@ -175,7 +175,7 @@ end
 function this.Realism(mode, sounds_thrusting, const)
     mode.name = "realism"
 
-    mode.useRedscript = true
+    mode.useImpulse = true
 
     mode.energy.maxBurnTime = 3.5
 
@@ -194,7 +194,7 @@ end
 function this.WellRounded(mode, sounds_thrusting, const)
     mode.name = "well rounded"
 
-    mode.useRedscript = true
+    mode.useImpulse = true
 
     mode.energy.maxBurnTime = 999
     mode.energy.recoveryRate = 99
@@ -206,7 +206,7 @@ function this.WellRounded(mode, sounds_thrusting, const)
 
     mode.accel.vert_initial = 5
 
-    mode.rebound =       -- need to figure out why redscript mode has such unstable impulses
+    mode.rebound =       -- need to figure out why impulse mode has such unstable impulses
     {
         percent_at_zero = 0.8,        -- there seems to be a problem where value > 1 over amplifies the rebound velocity.  Maybe impulse accel isn't 1:1 with speed?
         percent_at_max = 0.6,
@@ -215,7 +215,7 @@ function this.WellRounded(mode, sounds_thrusting, const)
 
     mode.accel.gravity = -7
 
-    mode.rmb_extra = RMB_Hover:new(10, 6, 2, 1, 9999, mode.useRedscript, mode.accel.gravity, sounds_thrusting, const)
+    mode.rmb_extra = RMB_Hover:new(10, 6, 2, 1, 9999, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.sound_type = const.thrust_sound_type.steam_quiet
 end
@@ -236,7 +236,7 @@ function this.JetTrooper(mode, sounds_thrusting, const)
 
     mode.accel.vert_initial = 2
 
-    mode.rmb_extra = RMB_Hover:new(2, 2, 0.4, 0.3, 12, mode.useRedscript, mode.accel.gravity, sounds_thrusting, const)
+    mode.rmb_extra = RMB_Hover:new(2, 2, 0.4, 0.3, 12, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.sound_type = const.thrust_sound_type.steam_quiet
 end
@@ -260,7 +260,7 @@ function this.Airplane(mode, sounds_thrusting, const)
 
     mode.accel.gravity = -16
 
-    mode.rmb_extra = RMB_Hover:new(12, 6, 2, 1, 9999, mode.useRedscript, mode.accel.gravity, sounds_thrusting, const)
+    mode.rmb_extra = RMB_Hover:new(12, 6, 2, 1, 9999, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.rotateVel.is_used = true
 
@@ -270,7 +270,7 @@ end
 function this.NPCLauncher(mode, sounds_thrusting, const)
     mode.name = "npc launcher"       -- telekinetic eyeball
 
-    mode.useRedscript = true
+    mode.useImpulse = true
 
     mode.energy.maxBurnTime = 12
     mode.energy.recoveryRate = 1.2
@@ -301,7 +301,7 @@ function this.HulkStomp(mode, sounds_thrusting, const)
     mode.accel.gravity = -28
 
     mode.jump_land.holdJumpDelay = 0.2
-    mode.useRedscript = true
+    mode.useImpulse = true
 
     mode.jump_land.explosiveJumping = true
     mode.jump_land.explosiveLanding = true
@@ -376,15 +376,15 @@ end
 
 function this.AdjustAccelForGravity(mode)
     -- The vertical accelerations need to defeat gravity
-    if mode.useRedscript then
-        mode.accel.vert_stand = this.GetAccelAdjustedForGravity_Redscript(mode.accel.vert_stand, mode)
-        mode.accel.vert_dash = this.GetAccelAdjustedForGravity_Redscript(mode.accel.vert_dash, mode)
+    if mode.useImpulse then
+        mode.accel.vert_stand = this.GetAccelAdjustedForGravity_Impulse(mode.accel.vert_stand, mode)
+        mode.accel.vert_dash = this.GetAccelAdjustedForGravity_Impulse(mode.accel.vert_dash, mode)
     end
 end
 
 -- Increases/Decreases accel to cancel out gravity
-function this.GetAccelAdjustedForGravity_Redscript(accel, mode)
-    if mode.useRedscript then
+function this.GetAccelAdjustedForGravity_Impulse(accel, mode)
+    if mode.useImpulse then
         local extra = 16 + mode.accel.gravity      -- if gravity is 16, then this is zero.  If gravity is higher, then this is some negative amount
         return accel + 16 - extra
     else

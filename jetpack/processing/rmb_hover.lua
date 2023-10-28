@@ -1,7 +1,7 @@
 ------------------------- Interface -------------------------
 -- All derived right mouse button classes require this same interface
 
--- Velocity has to be passed in, because it's stored differently between redscript and cet flight
+-- Velocity has to be passed in, because it's stored differently between impulse and teleport based flight
 -- NOTE: Can't return 0 energy if nonzero accelerations are returned, or the calling function will ignore them
 
 -- function RMB_:Description()
@@ -13,7 +13,7 @@
 
 RMB_Hover = {}
 
-function RMB_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, usesRedscript, gravity, sounds_thrusting, const)
+function RMB_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, useImpulse, gravity, sounds_thrusting, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -23,7 +23,7 @@ function RMB_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, usesR
     obj.sounds_thrusting = sounds_thrusting
 
     local extraUp = 0
-    if usesRedscript then
+    if useImpulse then
         extraUp = 16 + gravity      -- The vertical accelerations need to defeat gravity.  If gravity is 16, then this is zero.  If gravity is higher, then this is some negative amount
     end
 

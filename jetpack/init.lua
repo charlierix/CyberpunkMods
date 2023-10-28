@@ -39,9 +39,9 @@ require "debug/reporting"
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
 require "processing/flightutil"
-require "processing/flightutil_cet"
-require "processing/processing_inflight_cet"
-require "processing/processing_inflight_red"
+require "processing/flightutil_teleport"
+require "processing/processing_inflight_impulse"
+require "processing/processing_inflight_teleport"
 require "processing/processing_standard"
 require "processing/ragdoll"
 require "processing/rmb_dash"
@@ -151,7 +151,7 @@ local vars =
     --stop_flight_velocity
 
     --last_rebound_time
-    should_rebound_redscript = false,
+    should_rebound_impulse = false,
 
     showConfigNameUntil = 0,
 
@@ -329,11 +329,11 @@ registerForEvent("onUpdate", function(deltaTime)
         if not o:Custom_CurrentlyFlying_Update(GetVelocity(player.mode, vars, o)) then
             ExitFlight(vars, debug, o, player)
 
-        elseif player.mode.useRedscript then
-            Process_InFlight_Red(o, vars, const, player, keys, debug, deltaTime)
+        elseif player.mode.useImpulse then
+            Process_InFlight_Impulse(o, vars, const, player, keys, debug, deltaTime)
 
         else
-            Process_InFlight_CET(o, vars, const, player, keys, debug, deltaTime)
+            Process_InFlight_Teleport(o, vars, const, player, keys, debug, deltaTime)
         end
     else
         -- Standard (walking around)

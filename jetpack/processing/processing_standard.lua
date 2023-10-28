@@ -24,7 +24,7 @@ function Process_Standard(o, vars, player, const, debug, deltaTime)
         this.TryActivateFlight(o, vars, player.mode, nil)
 
     elseif o:Custom_CurrentlyFlying_IsOwnerOrNone() then
-        local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, player.mode, deltaTime)     -- even though redscript won't kill on impact, it still plays pain and stagger animations on hard landings
+        local safetyFireHit = GetSafetyFireHitPoint(o, o.pos, o.vel.z, player.mode, deltaTime)     -- even though impulse based won't kill on impact, it still plays pain and stagger animations on hard landings
         if safetyFireHit then
             SafetyFire(o, safetyFireHit)
         end
@@ -55,7 +55,7 @@ function this.ActivateFlight(o, vars, mode, velocity, rebound_impulse)
         vars.last_rebound_time = nil
     end
 
-    if not mode.useRedscript then
+    if not mode.useImpulse then
         -- Once teleporting occurs, o.vel will be zero, so vars.vel holds a copy that gets updated by accelerations
         vars.vel = velocity
 
@@ -103,13 +103,13 @@ function this.ActivateFlight_Extras(o, vars, mode, rebound_impulse)
     end
 
     if impulse_z then
-        if mode.useRedscript then
+        if mode.useImpulse then
             impulse_z = impulse_z - o.vel.z     -- jump is 5.66
             o:AddImpulse(impulse_x, impulse_y, impulse_z)
         else
             vars.vel.x = vars.vel.x + impulse_x
             vars.vel.y = vars.vel.y + impulse_y
-            vars.vel.z = vars.vel.z + impulse_z     -- cet based flight looks at existing velocity, so no need to apply acceleration, just directly increase the velocity
+            vars.vel.z = vars.vel.z + impulse_z     -- teleport based flight looks at existing velocity, so no need to apply acceleration, just directly increase the velocity
         end
     end
 end
@@ -119,8 +119,8 @@ function this.ShouldReboundJump(o, vars, mode)
         return false        -- this mode doesn't have a rebound
     end
 
-    if vars.should_rebound_redscript then
-        vars.should_rebound_redscript = false
+    if vars.should_rebound_impulse then
+        vars.should_rebound_impulse = false
         return true
     end
 
@@ -156,7 +156,7 @@ function this.ReboundHorizontalImpulse(o, vars, mode)
     end
 
     local velocity
-    if mode.useRedscript then
+    if mode.useImpulse then
         velocity = o.vel
     else
         velocity = vars.vel
