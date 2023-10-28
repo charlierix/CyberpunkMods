@@ -57,6 +57,7 @@ require "ui/keydash_tracker_analog"
 require "ui/keys"
 require "ui/sounds_thrusting"
 require "ui/sounds_wallhit"
+require "ui/transition_windows"
 
 require "ui_controls_generic/button"
 require "ui_controls_generic/checkbox"
@@ -84,6 +85,8 @@ require "ui_framework/util_controls"
 require "ui_framework/util_layout"
 require "ui_framework/util_misc"
 require "ui_framework/util_setup"
+
+require "ui_windows/main"
 
 local this = {}
 
@@ -281,6 +284,8 @@ registerForEvent("onInit", function()
     vars.sounds_thrusting = SoundsThrusting:new(o, keys, vars.horz_analog, const)
 
     const.isEnabled = dal.GetSetting_Bool(const.settings.IsEnabled, true)
+
+    TransitionWindows_Main(vars_ui, const)
 end)
 
 registerForEvent("onShutdown", function()
@@ -409,7 +414,7 @@ registerForEvent("onDraw", function()
 
         if not shouldShowConfig then
             -- They closed from an arbitrary window, make sure the next time config starts at main
-            --TransitionWindows_Main(vars_ui, const)
+            TransitionWindows_Main(vars_ui, const)
         end
     end
 
@@ -423,6 +428,9 @@ end)
 -- This gets called when a load or shutdown occurs.  It removes references to the current session's objects
 function this.ClearObjects()
     ExitFlight(vars, debug, o, player)
+    TransitionWindows_Main(vars_ui, const)
+
+    player = nil
 
     if o then
         o:Clear()

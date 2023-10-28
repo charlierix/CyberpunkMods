@@ -189,10 +189,9 @@ function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, player, o, co
         Refresh_LineHeights(vars_ui, const, false)
         Refresh_WindowPos(window, vars_ui, const)
 
-
-
-
-
+        if vars_ui.currentWindow == const.windows.main then
+            continueShowing = DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, const)
+        end
 
         is_minimized = false
     else
