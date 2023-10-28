@@ -47,11 +47,11 @@ end
 function DrawConfigName(mode, vars_ui_configname, const)
     local scale = vars_ui_configname.scale
 
-    ImGui.PushStyleColor(ImGuiCol.WindowBg, 0x5454542E)     --542E5454
+    ImGui.PushStyleColor(ImGuiCol.WindowBg, 0xA054542E)     --542E5454
     ImGui.PushStyleColor(ImGuiCol.Border, 0x806E6E3D)       --803D6E6E
 
-    ImGui.SetNextWindowPos(20 * scale, 300, ImGuiCond.Always)
-    ImGui.SetNextWindowSize(240 * scale, 160 * scale, ImGuiCond.Appearing)
+    ImGui.SetNextWindowPos(20 * scale, 250, ImGuiCond.Always)       --NOTE: not applying scale to Y.  That would make it draw too low
+    ImGui.SetNextWindowSize(0, 0, ImGuiCond.Always)      -- setting to zero to tell it to autosize
 
     if (ImGui.Begin("Jetpack Mode", true, ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoScrollbar)) then
         --ImGui.SetWindowFocus("Jetpack Mode")        -- hopefully, this forces it to be on top
@@ -70,8 +70,6 @@ function DrawConfigName(mode, vars_ui_configname, const)
         ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)     --75FFFF
 
         -- Only reporting settings out of ordinary (low gravity, high gravity, etc)
-
-        --TODO: these should come from a property off of mode (like description)
 
         if not mode.jump_land.shouldSafetyFire then
             ImGui.Spacing()
