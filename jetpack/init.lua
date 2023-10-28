@@ -127,6 +127,9 @@ local const =
 local isShutdown = true
 local isLoaded = false
 local shouldDraw = false
+local shouldShowConfig = false
+local isCETOpen = false
+local isConfigMinimized = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
@@ -365,8 +368,17 @@ registerHotkey("jetpackEnableDisable", "Enable/Disable", function()
     end
 end)
 
+registerForEvent("onOverlayOpen", function()
+    isCETOpen = true
+    shouldShowConfig = true
+end)
+registerForEvent("onOverlayClose", function()
+    isCETOpen = false
+end)
+
 registerForEvent("onDraw", function()
     if isShutdown or not isLoaded or not shouldDraw then
+        shouldShowConfig = false
         do return end
     end
 
@@ -384,6 +396,21 @@ registerForEvent("onDraw", function()
 
     if vars.toggled_enabled and o.timer - vars.toggled_enabled < 2 then
         DrawEnabledDisabled(const.isEnabled)
+    end
+
+    if shouldShowConfig and player then
+        local loc_shouldshow, is_minimized = DrawConfig(not isCETOpen, isConfigMinimized, vars, vars_ui, player, o, const)
+        shouldShowConfig = loc_shouldshow
+        isConfigMinimized = is_minimized
+
+        if not isCETOpen and isConfigMinimized then      -- can't just close when cet is gone, one of the windows could be in a dirty state
+            shouldShowConfig = false
+        end
+
+        if not shouldShowConfig then
+            -- They closed from an arbitrary window, make sure the next time config starts at main
+            --TransitionWindows_Main(vars_ui, const)
+        end
     end
 
     if const.shouldShowDebugWindow then
