@@ -52,7 +52,7 @@ function Draw_HelpButton(def, style_help, screenOffset_x, screenOffset_y, vars_u
     return isClicked, isHovered
 end
 
-------------------------------------------- Private Methods -------------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.Calculate_Sizes(def, style_help, scale)
     local width, height = ImGui.CalcTextSize(character)

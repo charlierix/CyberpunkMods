@@ -45,7 +45,7 @@ function Draw_LabelClickable(def, style_text, style_colors, screenOffset_x, scre
     return isClicked
 end
 
-------------------------------------------- Private Methods -------------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.Calculate_Sizes(def, style_text, scale)
     local width_text, height_text = ImGui.CalcTextSize(def.text, false, def.max_width * scale)

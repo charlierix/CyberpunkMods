@@ -46,7 +46,7 @@ function Draw_SummaryButton(def, line_heights, style_summary, screenOffset_x, sc
     return isClicked, isHovered
 end
 
-------------------------------------------- Private Methods -------------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.Calculate_UsedWidth(def, style_summary, scale)
     local unused = 0

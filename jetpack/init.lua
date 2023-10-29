@@ -74,9 +74,12 @@ require "ui_controls_generic/orderedlist"
 require "ui_controls_generic/progressbar_slim"
 require "ui_controls_generic/remove_button"
 require "ui_controls_generic/slider"
+require "ui_controls_generic/stackpanel"
 require "ui_controls_generic/summary_button"
 require "ui_controls_generic/textbox"
 require "ui_controls_generic/updownbuttons"
+
+require "ui_controls_jetpack/modelist_item"
 
 require "ui_framework/changes"
 require "ui_framework/common_definitions"

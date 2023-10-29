@@ -16,6 +16,7 @@ function DefineWindow_Main(vars_ui, const)
     --main.consoleWarning = this.Define_ConsoleWarning(const)       -- since jetpack doesn't have a hotkey for show/hide config, this warning seems more like noise than something useful
 
 
+    main.modelist = this.Define_ModeList(const)
 
 
 
@@ -29,7 +30,18 @@ function ActivateWindow_Main(vars_ui, const)
         DefineWindow_Main(vars_ui, const)
     end
 
-    vars_ui.main.changes:Clear()
+    local main = vars_ui.main
+
+    main.changes:Clear()
+
+    local items = {}
+    for i = 1, 5, 1 do
+        --table.insert(items, tostring(i))
+        table.insert(items, ModeList_Item:new(nil))
+    end
+
+    main.modelist.items = items
+
 
     --vars_ui.keys:StopWatching()     -- doing this in case it came from the input bindings window (which put keys in a watching state)
 end
@@ -52,6 +64,7 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, con
 
     --Draw_Label(main.consoleWarning, vars_ui.style.colors, vars_ui.scale)
 
+    Draw_StackPanel(main.modelist, vars_ui.style.listbox, window.left, window.top, vars_ui.scale)
 
 
     local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
@@ -81,3 +94,27 @@ function this.Define_ConsoleWarning(const)
     }
 end
 
+function this.Define_ModeList(const)
+    -- StackPanel
+    return
+    {
+        invisible_name = "Main_Modes_List",
+
+        -- These are populated for real in activate
+        items = {},
+
+        width = 340,
+        --height = 490,
+        height = 100,
+
+        position =
+        {
+            pos_x = 0,
+            pos_y = 0,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_StackPanel,
+    }
+end

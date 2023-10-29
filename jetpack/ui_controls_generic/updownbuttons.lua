@@ -177,7 +177,7 @@ function GetDecrementIncrement(valueUpdates, currentValue, currentExperience)
     return dec, inc, isFree_down, isFree_up
 end
 
-------------------------------------------- Private Methods -------------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.FinalText(def)
     local text_down = "-"

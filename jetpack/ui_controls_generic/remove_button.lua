@@ -51,7 +51,7 @@ function Draw_RemoveButton(def, style_remove, screenOffset_x, screenOffset_y, sc
     return isClicked, isHovered
 end
 
-------------------------------------------- Private Methods -------------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.Calculate_Sizes(def, style_remove, scale)
     local radius = style_remove.radius * scale

@@ -75,7 +75,7 @@ function Draw_OrderedList(def, style_colors)
     end
 end
 
-------------------------------------------- Private Methods -------------------------------------------
+----------------------------------- Private Methods -----------------------------------
 
 function this.Calculate_Width(def, scale)
     local prompt = 0
