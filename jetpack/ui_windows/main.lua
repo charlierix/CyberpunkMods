@@ -40,7 +40,7 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, con
 
     player:EnsureNotMock()
 
-    this.Refresh_ModeList(main.modelist, player, vars.sounds_thrusting, const)
+    this.Refresh_ModeList(main.modelist, vars_ui, player, vars.sounds_thrusting, const)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -63,26 +63,6 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.Define_ConsoleWarning(const)
-    -- Label
-    return
-    {
-        text = "NOTE: buttons won't respond unless the console window is also open",
-
-        position =
-        {
-            pos_x = 0,
-            pos_y = 24,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.top,
-        },
-
-        color = "info",
-
-        CalcSize = CalcSize_Label,
-    }
-end
-
 function this.Define_ModeList(const)
     -- StackPanel
     return
@@ -94,37 +74,37 @@ function this.Define_ModeList(const)
 
         width = 340,
         --height = 490,
-        height = 100,
+        height = 480,
 
         position =
         {
-            pos_x = 0,
+            pos_x = 20,
             pos_y = 0,
-            horizontal = const.alignment_horizontal.center,
+            horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.center,
         },
 
         CalcSize = CalcSize_StackPanel,
     }
 end
-function this.Refresh_ModeList(def, player, sounds_thrusting, const)
+function this.Refresh_ModeList(def, vars_ui, player, sounds_thrusting, const)
     if not def.items then       -- cleared during activate
-        def.items = this.Rebuild_ModeList(player.mode_keys, sounds_thrusting, const)
+        def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, const)
 
     elseif #def.items ~= #player.mode_keys then     -- this case should never happen
-        def.items = this.Rebuild_ModeList(player.mode_keys, sounds_thrusting, const)
+        def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, const)
 
     else        -- make sure the stored list matches what the player row has
         for i = 1, #player.mode_keys, 1 do
             if def.items[i].mode.mode_key ~= player.mode_keys[i] then
-                def.items = this.Rebuild_ModeList(player.mode_keys, sounds_thrusting, const)
+                def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, const)
                 do break end
             end
         end
     end
 end
 
-function this.Rebuild_ModeList(mode_keys, sounds_thrusting, const)
+function this.Rebuild_ModeList(mode_keys, vars_ui, sounds_thrusting, const)
     local retVal = {}
 
     for _, key in ipairs(mode_keys) do
@@ -141,14 +121,16 @@ function this.Rebuild_ModeList(mode_keys, sounds_thrusting, const)
             modes_by_key[key_string] = mode
         end
 
-        table.insert(retVal, ModeList_Item:new(modes_by_key[key_string]))
+        local item = ModeList_Item:new(modes_by_key[key_string], vars_ui, const)
+
+        table.insert(retVal, item)
     end
 
     return retVal
 end
 
 -- This would be more efficient if I could get it to work (select rows where primarykey in (...))
-function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, sounds_thrusting, const)
+function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, vars_ui, sounds_thrusting, const)
     -- Get a list of keys that aren't in the mode cache
     local missing_keys = {}
 
@@ -185,7 +167,9 @@ function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, sounds_thrusting, const)
             return {}
         end
 
-        table.insert(retVal, mode)
+        local item = ModeList_Item:new(mode, vars_ui, const)
+
+        table.insert(retVal, item)
     end
 
     return retVal

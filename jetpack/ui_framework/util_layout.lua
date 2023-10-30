@@ -36,6 +36,21 @@ function CalculatePositions(render_nodes, parent_width, parent_height, const, sc
     end
 end
 
+-- This is for controls that are part of a child element (like a scrollable listbox)
+function AdjustPositions(render_nodes, x, y)
+    for _, node in ipairs(render_nodes) do
+        local control = node.control
+
+        control.render_pos.left = control.render_pos.left + x
+        control.render_pos.top = control.render_pos.top + y
+
+        -- Recurse
+        if node.children then
+            AdjustPositions(node.children, x, y)
+        end
+    end
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.EnsureRenderPosExists(control)

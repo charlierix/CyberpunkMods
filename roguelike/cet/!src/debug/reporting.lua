@@ -7,7 +7,7 @@ function ReportTable(val, indent)
         indent = ""
     end
 
-	print(indent .. tostring(val))		-- this just returns table and it's id
+    print(indent .. tostring(val))		-- this just returns table and its id
 
     if not val then
         do return end
@@ -15,7 +15,7 @@ function ReportTable(val, indent)
 
     if type(val) == "table" then
         --#val is only non zero if the keys are integers
-		--print("count: " .. #val)		-- this returns the max index of the array (1 based)  NOTE: This is reporting zero when the keys are strings
+        --print("count: " .. #val)		-- this returns the max index of the array (1 based)  NOTE: This is reporting zero when the keys are strings
 
         for key, value in pairs(val) do
             if not value then
@@ -57,7 +57,7 @@ function ReportTable_lite(val, indent, overrideChildReport)
 
     if type(val) == "table" then
         --#val is only non zero if the keys are integers
-		--print("count: " .. #val)		-- this returns the max index of the array (1 based)  NOTE: This is reporting zero when the keys are strings
+        --print("count: " .. #val)		-- this returns the max index of the array (1 based)  NOTE: This is reporting zero when the keys are strings
 
         -- Sort it
         local keys = {}

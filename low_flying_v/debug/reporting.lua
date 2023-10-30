@@ -7,7 +7,7 @@ function ReportTable(val, indent)
         indent = ""
     end
 
-    print(indent .. tostring(val))      -- this just returns table and it's id
+    print(indent .. tostring(val))      -- this just returns table and its id
 
     if not val then
         do return end
