@@ -38,12 +38,14 @@ function DataUtil.LoadExistingPlayer(playerID, sounds_thrusting, const)
         return nil, errMsg
     end
 
-    local mode_json, errMsg = dal.GetMode_ByKey(player_row.ModeKeys[player_row.ModeIndex])
+    local mode_key = player_row.ModeKeys[player_row.ModeIndex]
+
+    local mode_json, errMsg = dal.GetMode_ByKey(mode_key)
     if not mode_json then
         return nil, errMsg
     end
 
-    local mode = mode_defaults.FromJSON(mode_json, sounds_thrusting, const)
+    local mode = mode_defaults.FromJSON(mode_json, mode_key, sounds_thrusting, const)
 
     return
     {
@@ -85,7 +87,7 @@ function DataUtil.NextMode(playerKey, mode_keys, current_index, sounds_thrusting
         return nil, nil, errMsg
     end
 
-    local mode = mode_defaults.FromJSON(mode_json, sounds_thrusting, const)
+    local mode = mode_defaults.FromJSON(mode_json, mode_keys[index], sounds_thrusting, const)
 
     local errMsg = dal.UpdatePlayer_ModeIndex(playerKey, index)
     if errMsg then
@@ -106,7 +108,6 @@ function this.GetDefaultModes(sounds_thrusting, const)
     for i = 1, count, 1 do
         --NOTE: sounds_thrusting is a live class, but only gets called during tick
         local mode = mode_defaults.GetConfigValues(i, sounds_thrusting, const)
-        table.insert(modes_live, mode)
 
         local mode_json = mode_defaults.ToJSON(mode, const)
 
@@ -121,7 +122,10 @@ function this.GetDefaultModes(sounds_thrusting, const)
             end
         end
 
+        mode.mode_key = modeKey
+
         table.insert(modes_key, modeKey)
+        table.insert(modes_live, mode)
     end
 
     return modes_key, modes_live, nil

@@ -207,7 +207,7 @@ end
 -- Same idea as the single row version, but this returns an iterator function.  Each time that function is
 -- called, it returns the next row (nil when there are no more rows to return)
 -- NOTE: This doesn't bother with returning error messages.  If there is an error, it just pretends no rows found
-function this.Bind_Select_MultiplRows_Iterator(stmt, name, ...)
+function this.Bind_Select_MultipleRows_Iterator(stmt, name, ...)
     if not this.IsEmptyParam(...) then
         local err = stmt:bind_values(...)
         if err ~= sqlite3.OK then
@@ -239,11 +239,11 @@ end
 -- Instead of returning an iterator, forcing the caller to keep calling in a loop, this returns the entire result
 -- as a single array of row arrays
 -- WARNING: Be careful not to request something huge.  The other function is more memory efficient
-function this.Bind_Select_MultiplRows_Jagged(stmt, name, ...)
+function this.Bind_Select_MultipleRows_Jagged(stmt, name, ...)
     local retVal = {}
     local index = 1
 
-    for row in this.Bind_Select_MultiplRows_Iterator(stmt, name, ...) do
+    for row in this.Bind_Select_MultipleRows_Iterator(stmt, name, ...) do
         retVal[index] = row
         index = index + 1
     end

@@ -5,6 +5,8 @@
 --https://github.com/yamashi/CyberEngineTweaks/blob/eb0f7daf2971ed480abf04355458cbe326a0e922/src/sol_imgui/README.md
 --https://github.com/ocornut/imgui/blob/b493cae8c971843886d760bb816dcab661779d69/imgui.h
 --https://github.com/ocornut/imgui/blob/25fbff2156640cc79e9a79db00522019b4a0420f/imgui_draw.cpp
+--https://github.com/psiberx/CyberEngineTweaks/wiki/VS-Code-Support#installation
+--https://github.com/Nats-ji/CET_ImGui_lua_type_defines/blob/main/ImGui.lua
 
 --https://wiki.cybermods.net/cyber-engine-tweaks/console/functions
 --https://redscript.redmodding.org/

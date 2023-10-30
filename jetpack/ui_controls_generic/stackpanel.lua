@@ -31,7 +31,7 @@ function Draw_StackPanel(def, style_list, screenOffset_x, screenOffset_y, scale)
 
             -- Calculate available width
             --local scrollbar_width = ImGui.GetStyleVar(ImGuiStyleVar.ScrollbarSize)        -- this function doesn't exist (SetStyleVar does, but no get).  CET's imgui helper shows max as 20, so just going with that
-            local inner_width = (def.width - 20) * scale
+            local inner_width = (def.width - 20 - 4) * scale        -- scrollbar width + a gap
 
             for _, item in ipairs(def.items) do
                 local inner_left, inner_top = ImGui.GetCursorPos()

@@ -1,6 +1,11 @@
 // See mode_defaults.lua for default values
 public record Mode_Data
 {
+    // ----------------------------------------------------------------
+    // Only in the live version of the mode class (not the data class that gets serialized to/from json)
+    public long mode_key { get; init; }
+    // ----------------------------------------------------------------
+
     public string name { get; init; }
 
     public bool useImpulse { get; init; }
@@ -82,6 +87,8 @@ public record Mode_Data
     // than the data object's definition
     public object rmb_extra { get; init; }
 
+    // ----------------------------------------------------------------
+
     // These are types that the rmb_extra prop could be in the data class (serialized to json and stored in database)
     public record RMB_Hover_Type
     {
@@ -108,4 +115,6 @@ public record Mode_Data
         public double acceleration { get; init; }
         public double burnRate { get; init; }
     }
+
+    // ----------------------------------------------------------------
 }

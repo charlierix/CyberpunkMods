@@ -18,7 +18,7 @@ namespace models.viewmodels
         /// </summary>
         public string invisible_name { get; init; }
 
-        public StackPanelItem[] items { get; set; }
+        public IStackPanelItem[] items { get; set; }
 
         public double width { get; set; }
 
@@ -34,11 +34,22 @@ namespace models.viewmodels
         public Action<IControl, stylesheet.Stylesheet, LineHeights> CalcSize { get; init; }
     }
 
-    public class StackPanelItem
+    /// <summary>
+    /// This is a class that acts like a user control, will be shown inside the listbox (using the listbox as
+    /// a scrollable container)
+    /// </summary>
+    public interface IStackPanelItem
     {
-        // Probably not needed
-        //public double height { get; set; }
-
-        // Probably need a draw function
+        /// <summary>
+        /// NOTE: This calls the draw method using colon (item:Draw instead of item.Draw)
+        /// </summary>
+        /// <param name="screenOffset_x">Used by graphics calls</param>
+        /// <param name="screenOffset_y"></param>
+        /// <param name="x">Used by SetCursorPos</param>
+        /// <param name="y"></param>
+        /// <param name="width">The width of the box that can be drawn in</param>
+        /// <param name="scale">Sort of a dpi scaling.  Needs to be multiplied by defined sizes</param>
+        /// <returns>The height of the box that was drawn in</returns>
+        double Draw(screenOffset_x, screenOffset_y, x, y, width, scale)
     }
 }

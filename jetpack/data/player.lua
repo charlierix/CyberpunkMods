@@ -28,20 +28,7 @@ function Player:new(o, vars, const, debug)
 end
 
 function Player:NextMode()
-    if self.is_mock then
-        -- Create a uniqueID and save in the save file
-        local playerID = os.time()      -- seconds since 1/1/1970
-        self.o:SetPlayerUniqueID(playerID)
-
-        -- Create a new row in the database and store the contents of that row in this class's member variables
-        local player_entry, errMsg = datautil.CreateNewPlayer(playerID, self.vars.sounds_thrusting, self.const)
-        if not player_entry then
-            this.ResetToMock(self, "Couldn't load player row, loading defaults: " .. tostring(errMsg))
-            do return end
-        end
-
-        this.StorePlayerEntry(self, player_entry)
-    end
+    self:EnsureNotMock()
 
     -- Advance to the next one, also updating the db
     local index, mode, errMsg = datautil.NextMode(self.playerKey, self.mode_keys, self.mode_index, self.vars.sounds_thrusting, self.const)
@@ -54,6 +41,25 @@ function Player:NextMode()
     this.StoreMode(self, mode)
 
     self.vars.showConfigNameUntil = self.o.timer + 3
+end
+
+function Player:EnsureNotMock()
+    if not self.is_mock then
+        do return end
+    end
+
+    -- Create a uniqueID and save in the save file
+    local playerID = os.time()      -- seconds since 1/1/1970
+    self.o:SetPlayerUniqueID(playerID)
+
+    -- Create a new row in the database and store the contents of that row in this class's member variables
+    local player_entry, errMsg = datautil.CreateNewPlayer(playerID, self.vars.sounds_thrusting, self.const)
+    if not player_entry then
+        this.ResetToMock(self, "Couldn't load player row, loading defaults: " .. tostring(errMsg))
+        do return end
+    end
+
+    this.StorePlayerEntry(self, player_entry)
 end
 
 ----------------------------------- Private Methods -----------------------------------

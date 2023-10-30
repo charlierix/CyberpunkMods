@@ -1,5 +1,7 @@
 local this = {}
 
+local modes_by_key = {}
+
 -- This gets called during init and sets up as much static inforation as it can for all the
 -- controls (the rest of the info gets filled out each frame)
 --
@@ -11,14 +13,7 @@ function DefineWindow_Main(vars_ui, const)
 
     main.changes = Changes:new()
 
-    --main.title = Define_Title("Jetpack", const)        -- the title bar already says this
-
-    --main.consoleWarning = this.Define_ConsoleWarning(const)       -- since jetpack doesn't have a hotkey for show/hide config, this warning seems more like noise than something useful
-
-
     main.modelist = this.Define_ModeList(const)
-
-
 
     main.okcancel = Define_OkCancelButtons(true, vars_ui, const)
 
@@ -34,16 +29,7 @@ function ActivateWindow_Main(vars_ui, const)
 
     main.changes:Clear()
 
-    local items = {}
-    for i = 1, 5, 1 do
-        --table.insert(items, tostring(i))
-        table.insert(items, ModeList_Item:new(nil))
-    end
-
-    main.modelist.items = items
-
-
-    --vars_ui.keys:StopWatching()     -- doing this in case it came from the input bindings window (which put keys in a watching state)
+    main.modelist.items = nil
 end
 
 -- This gets called each frame from DrawConfig()
@@ -52,6 +38,9 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, con
 
     ------------------------- Finalize models for this frame -------------------------
 
+    player:EnsureNotMock()
+
+    this.Refresh_ModeList(main.modelist, player, vars.sounds_thrusting, const)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -117,4 +106,87 @@ function this.Define_ModeList(const)
 
         CalcSize = CalcSize_StackPanel,
     }
+end
+function this.Refresh_ModeList(def, player, sounds_thrusting, const)
+    if not def.items then       -- cleared during activate
+        def.items = this.Rebuild_ModeList(player.mode_keys, sounds_thrusting, const)
+
+    elseif #def.items ~= #player.mode_keys then     -- this case should never happen
+        def.items = this.Rebuild_ModeList(player.mode_keys, sounds_thrusting, const)
+
+    else        -- make sure the stored list matches what the player row has
+        for i = 1, #player.mode_keys, 1 do
+            if def.items[i].mode.mode_key ~= player.mode_keys[i] then
+                def.items = this.Rebuild_ModeList(player.mode_keys, sounds_thrusting, const)
+                do break end
+            end
+        end
+    end
+end
+
+function this.Rebuild_ModeList(mode_keys, sounds_thrusting, const)
+    local retVal = {}
+
+    for _, key in ipairs(mode_keys) do
+        local key_string = tostring(key)
+
+        if not modes_by_key[key_string] then
+            local mode_json, errMsg = dal.GetMode_ByKey(key)
+            if errMsg then
+                LogError("Couldn't retrieve mode: " .. errMsg)
+                return {}
+            end
+
+            local mode = mode_defaults.FromJSON(mode_json, key, sounds_thrusting, const)
+            modes_by_key[key_string] = mode
+        end
+
+        table.insert(retVal, ModeList_Item:new(modes_by_key[key_string]))
+    end
+
+    return retVal
+end
+
+-- This would be more efficient if I could get it to work (select rows where primarykey in (...))
+function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, sounds_thrusting, const)
+    -- Get a list of keys that aren't in the mode cache
+    local missing_keys = {}
+
+    for _, key in ipairs(mode_keys) do
+        if not modes_by_key[tostring(key)] then
+            table.insert(missing_keys, key)
+        end
+    end
+
+    -- Fill cache with missing from the database
+    if #missing_keys > 0 then
+        local missing_modes, errMsg = dal.GetModes_ByKeys(table.pack(missing_keys))
+        if errMsg then
+            LogError("Couldn't retrieve modes: " .. errMsg)
+            return {}
+        end
+
+        for _, mode_row in ipairs(missing_modes) do
+            local mode = mode_defaults.FromJSON(mode_row.JSON, mode_row.ModeKey, sounds_thrusting, const)
+            modes_by_key[tostring(mode.ModeKey)] = mode
+        end
+    end
+
+    -- Build the return list
+    local retVal = {}
+
+    for _, key in ipairs(mode_keys) do
+        local key_string = tostring(key)
+
+        local mode = modes_by_key[key_string]
+
+        if not mode then
+            LogError("Couldn't find mode by key: " .. key_string)
+            return {}
+        end
+
+        table.insert(retVal, mode)
+    end
+
+    return retVal
 end

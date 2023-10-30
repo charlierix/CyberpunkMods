@@ -33,6 +33,8 @@ end
 function ModeDefaults.ToJSON(mode, const)
     local retVal = mode
 
+    retVal.mode_key = nil
+
     -- Need to replace rmb_extra with a definition, since it's currently a live object that would serialize as too much
     if mode.rmb_extra then
         retVal = this.CloneTable_CurrentLayer(mode)
@@ -74,8 +76,10 @@ function ModeDefaults.ToJSON(mode, const)
 
     return extern_json.encode(retVal)
 end
-function ModeDefaults.FromJSON(json, sounds_thrusting, const)
+function ModeDefaults.FromJSON(json, mode_key, sounds_thrusting, const)
     local retVal = extern_json.decode(json)
+
+    retVal.mode_key = mode_key
 
     -- Replace rmb_extra with a live object
     if retVal.rmb_extra then

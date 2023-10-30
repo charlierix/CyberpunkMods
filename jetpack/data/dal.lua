@@ -347,6 +347,53 @@ function DAL.GetMode_ByKey(primaryKey)
     end
 end
 
+-- WARNING: This function doesn't work, not sure why.  It fails in Bind_Select_MultipleRows_Iterator stmt:bind_values(...)
+-- Returns a list of { ModeKey, JSON } of modes by primary keys
+function DAL.GetModes_ByKeys(...)
+    local arg = {...}
+    local param_arr = arg[1]        -- it puts the array in an array with one element
+
+    local sucess, modes, errMsg = pcall(function ()
+        local sql =
+        [[
+            SELECT
+                ModeKey,
+                JSON
+            FROM Mode2
+            WHERE ModeKey IN (]]
+
+        for i = 1, #param_arr, 1 do
+            if i > 1 then
+                sql = sql .. ", "
+            end
+
+            sql = sql .. "?"
+        end
+
+        sql = sql .. ")"
+
+        local stmt = db:prepare(sql)
+
+        local retVal = {}
+
+        for row in this.Bind_Select_MultipleRows_Iterator(stmt, "GetModes_ByKeys", table.unpack(arg)) do
+            if row then
+                table.insert(retVal, row)
+            else
+                return "Error retrieving modes: " .. String_Join(", ", param_arr)
+            end
+        end
+
+        return retVal, nil
+    end)
+
+    if sucess then
+        return modes, errMsg
+    else
+        return nil, "GetModes_ByKeys: Unknown Error"
+    end
+end
+
 -- This is nearly identical to InsertMode, except it's a select.  It's used to avoid unnecessarily
 -- inserting dupes
 function DAL.GetModeKey_ByContent(mode_name, mode_json)
@@ -457,9 +504,10 @@ end
 -- Same idea as the single row version, but this returns an iterator function.  Each time that function is
 -- called, it returns the next row (nil when there are no more rows to return)
 -- NOTE: This doesn't bother with returning error messages.  If there is an error, it just pretends no rows found
-function this.Bind_Select_MultiplRows_Iterator(stmt, name, ...)
+function this.Bind_Select_MultipleRows_Iterator(stmt, name, ...)
     if not this.IsEmptyParam(...) then
         local err = stmt:bind_values(...)
+
         if err ~= sqlite3.OK then
             LogError(name .. ": bind_values returned an error: " .. tostring(err) .. " (" .. tostring(db:errmsg()) .. ")")
 
@@ -489,11 +537,11 @@ end
 -- Instead of returning an iterator, forcing the caller to keep calling in a loop, this returns the entire result
 -- as a single array of row arrays
 -- WARNING: Be careful not to request something huge.  The other function is more memory efficient
-function this.Bind_Select_MultiplRows_Jagged(stmt, name, ...)
+function this.Bind_Select_MultipleRows_Jagged(stmt, name, ...)
     local retVal = {}
     local index = 1
 
-    for row in this.Bind_Select_MultiplRows_Iterator(stmt, name, ...) do
+    for row in this.Bind_Select_MultipleRows_Iterator(stmt, name, ...) do
         retVal[index] = row
         index = index + 1
     end
