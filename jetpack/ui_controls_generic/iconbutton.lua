@@ -18,7 +18,7 @@ end
 -- style_button is models\stylesheet\IconButton
 -- Returns:
 --  isClicked
-function Draw_IconButton(def, style_iconbutton, screenOffset_x, screenOffset_y, scale)
+function Draw_IconButton(def, vars_ui, screenOffset_x, screenOffset_y, scale)
     local left = def.render_pos.left
     local top = def.render_pos.top
 
@@ -30,24 +30,36 @@ function Draw_IconButton(def, style_iconbutton, screenOffset_x, screenOffset_y, 
         clickableSize = def.sizes.width_height
     end
 
-    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, left + def.sizes.center_x, top + def.sizes.center_y, clickableSize, clickableSize, 0)
 
-    local color_back, color_fore, color_border = this.GetColors(def.isEnabled, isClicked, isHovered, style_iconbutton)
+
+    local color_back, color_fore, color_border = this.GetColors(def.isEnabled, def.was_clicked, def.was_hovered, vars_ui.style.iconbutton)
 
     -- Border
     if def.is_circle then
-        Draw_Circle(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.radius, false, color_back, nil, color_border, nil, style_iconbutton.border_thickness)
+        Draw_Circle(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.radius, false, color_back, nil, color_border, nil, vars_ui.style.iconbutton.border_thickness)
     else
-        Draw_Border(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width_height, def.sizes.width_height, 0, false, color_back, nil, color_border, nil, style_iconbutton.border_cornerRadius, style_iconbutton.border_thickness)
+        Draw_Border(screenOffset_x, screenOffset_y, left + def.sizes.center_x, top + def.sizes.center_y, def.sizes.width_height, def.sizes.width_height, 0, false, color_back, nil, color_border, nil, vars_ui.style.iconbutton.border_cornerRadius, vars_ui.style.iconbutton.border_thickness)
+    end
+
+    -- Tooltip
+    if def.was_hovered and def.tooltip then
+        local notouch = def.sizes.radius + (12 * scale)
+        Draw_Tooltip(def.tooltip, vars_ui.style.tooltip, screenOffset_x + left + def.sizes.center_x, screenOffset_y + top + def.sizes.center_y, notouch, notouch, vars_ui)
     end
 
 
 
+    --TODO: image
 
 
-    --TODO: show tooltip
+    local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, left + def.sizes.center_x, top + def.sizes.center_y, clickableSize, clickableSize, 0)
 
+    def.was_clicked = isClicked
+    def.was_hovered = isHovered
 
+    if isClicked then
+        print("icon button clicked: " .. def.tooltip)
+    end
 
 
     return isClicked, isHovered
@@ -67,19 +79,19 @@ function this.GetColors(isEnabled, isClicked, isHovered, style_iconbutton)
         return
             style_iconbutton.back_color_click_abgr,
             style_iconbutton.foreground_color_click_abgr,
-            style_iconbutton.border_color_abgr
+            style_iconbutton.border_color_click_abgr
 
     elseif isHovered then
         return
             style_iconbutton.back_color_hover_abgr,
             style_iconbutton.foreground_color_hover_abgr,
-            style_iconbutton.border_color_abgr
+            style_iconbutton.border_color_hover_abgr
 
     else
         return
             style_iconbutton.back_color_standard_abgr,
             style_iconbutton.foreground_color_standard_abgr,
-            style_iconbutton.border_color_abgr
+            style_iconbutton.border_color_standard_abgr
     end
 end
 

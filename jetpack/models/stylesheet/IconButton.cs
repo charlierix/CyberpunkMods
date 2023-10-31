@@ -8,7 +8,9 @@ public record IconButton
     public double border_cornerRadius { get; init; }
     public double border_thickness { get; init; }
 
-    public string border_color { get; init; }
+    public string border_color_standard { get; init; }
+    public string border_color_hover { get; init; }
+    public string border_color_click { get; init; }
 
     /// <summary>
     /// Color of the icon drawing

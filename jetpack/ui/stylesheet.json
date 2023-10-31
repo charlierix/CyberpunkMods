@@ -93,7 +93,9 @@
         "border_cornerRadius": 4,
         "border_thickness": 1,
 
-        "border_color": "666",
+        "border_color_standard": "444",
+        "border_color_hover": "666",
+        "border_color_click": "777",
 
         "foreground_color_standard": "CCC",
         "foreground_color_hover": "DDD",

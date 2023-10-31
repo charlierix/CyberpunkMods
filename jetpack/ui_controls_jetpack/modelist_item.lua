@@ -33,6 +33,8 @@ function this.DefineWindow(mode, vars_ui, const)
         invisible_name_suffix = tostring(mode.mode_key)
     end
 
+    item.invisbutton_invisname = "ModeList_Item_" .. invisible_name_suffix .. "_InvisibleButton"
+
     item.modename = this.Define_ModeName(const)
 
     item.button_up = this.Define_Button_Up(invisible_name_suffix, const)
@@ -60,29 +62,52 @@ function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x,
 
     -------------------------------- Show ui elements --------------------------------
 
+
+    -- there is interference between this invisible button and the icon button's invisible button
+
+    local isClicked, isHovered = Draw_InvisibleButton(item.invisbutton_invisname, x + width / 2, y + height / 2, width, height, 0)
+    ImGui.SetItemAllowOverlap()
+
+
+
+    if isClicked then
+        print("item clicked")
+    end
+
+
     Draw_Label(item.modename, vars_ui.style.colors, vars_ui.scale)
 
-    --TODO: only draw buttons if mouse is over this entry
+    -- Only draw buttons if mouse is over this entry
+    if item.is_mouse_over and item.is_mouse_over > 0 then
+        if Draw_IconButton(item.button_up, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
+            --TODO: raise event
+        end
 
-    if Draw_IconButton(item.button_up, vars_ui.style.iconbutton, screenOffset_x, screenOffset_y, vars_ui.scale) then
-        --TODO: raise event
+        if Draw_IconButton(item.button_down, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
+            --TODO: raise event
+        end
+
+        if Draw_IconButton(item.button_delete, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
+            --TODO: raise event
+        end
+
+        if Draw_IconButton(item.button_clone, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
+            --TODO: raise event
+        end
+
+        if Draw_IconButton(item.button_edit, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
+            --TODO: raise event
+        end
     end
 
-    if Draw_IconButton(item.button_down, vars_ui.style.iconbutton, screenOffset_x, screenOffset_y, vars_ui.scale) then
-        --TODO: raise event
+
+
+    if isClicked or isHovered then
+        item.is_mouse_over = 30
+    elseif item.is_mouse_over ~= nil then
+        item.is_mouse_over = math.max(0, item.is_mouse_over - 1)
     end
 
-    if Draw_IconButton(item.button_delete, vars_ui.style.iconbutton, screenOffset_x, screenOffset_y, vars_ui.scale) then
-        --TODO: raise event
-    end
-
-    if Draw_IconButton(item.button_clone, vars_ui.style.iconbutton, screenOffset_x, screenOffset_y, vars_ui.scale) then
-        --TODO: raise event
-    end
-
-    if Draw_IconButton(item.button_edit, vars_ui.style.iconbutton, screenOffset_x, screenOffset_y, vars_ui.scale) then
-        --TODO: raise event
-    end
 end
 
 function this.Define_ModeName(const)
@@ -220,7 +245,7 @@ function this.Define_Button_Clone(relative_to, invisible_name_suffix, const)
     {
         invisible_name = "ModeList_Item_" .. invisible_name_suffix .. "_Clone",
 
-        tooltip = "Clone Mode",
+        tooltip = "Clone",
 
         icon_data = icon_data,
 
@@ -256,7 +281,7 @@ function this.Define_Button_Edit(relative_to, invisible_name_suffix, const)
     {
         invisible_name = "ModeList_Item_" .. invisible_name_suffix .. "_Edit",
 
-        tooltip = "Edit Mode",
+        tooltip = "Edit",
 
         icon_data = icon_data,
 
