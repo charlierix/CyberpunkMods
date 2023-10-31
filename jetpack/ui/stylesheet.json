@@ -86,6 +86,28 @@
         "highlight_text_background_color": "9666"
     },
 
+    "iconbutton":
+    {
+        "width_height": 18,
+
+        "border_cornerRadius": 4,
+        "border_thickness": 1,
+
+        "border_color": "666",
+
+        "foreground_color_standard": "CCC",
+        "foreground_color_hover": "DDD",
+        "foreground_color_click": "EEE",
+
+        "back_color_standard": "222",
+        "back_color_hover": "444",
+        "back_color_click": "555",
+
+        "disabled_back_color": "40808080",
+        "disabled_fore_color": "6CCC",
+        "disabled_border_color": "40666666"
+    },
+
     "button":
     {
         "width": 72,

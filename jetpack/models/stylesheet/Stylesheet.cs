@@ -57,6 +57,8 @@ namespace models.stylesheet
 
         public Slider slider { get; init; }
 
+        public IconButton iconbutton { get; init; }
+
         public Button button { get; init; }
 
         public OkCancelButtons okcancelButtons { get; init; }
