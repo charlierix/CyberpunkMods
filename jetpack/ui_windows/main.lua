@@ -40,7 +40,7 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, con
 
     player:EnsureNotMock()
 
-    this.Refresh_ModeList(main.modelist, vars_ui, player, vars.sounds_thrusting, const)
+    this.Refresh_ModeList(main.modelist, vars_ui, player, vars.sounds_thrusting, o, const)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -87,24 +87,24 @@ function this.Define_ModeList(const)
         CalcSize = CalcSize_StackPanel,
     }
 end
-function this.Refresh_ModeList(def, vars_ui, player, sounds_thrusting, const)
+function this.Refresh_ModeList(def, vars_ui, player, sounds_thrusting, o, const)
     if not def.items then       -- cleared during activate
-        def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, const)
+        def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, o, const)
 
     elseif #def.items ~= #player.mode_keys then     -- this case should never happen
-        def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, const)
+        def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, o, const)
 
     else        -- make sure the stored list matches what the player row has
         for i = 1, #player.mode_keys, 1 do
             if def.items[i].mode.mode_key ~= player.mode_keys[i] then
-                def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, const)
+                def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, o, const)
                 do break end
             end
         end
     end
 end
 
-function this.Rebuild_ModeList(mode_keys, vars_ui, sounds_thrusting, const)
+function this.Rebuild_ModeList(mode_keys, vars_ui, sounds_thrusting, o, const)
     local retVal = {}
 
     for _, key in ipairs(mode_keys) do
@@ -121,7 +121,7 @@ function this.Rebuild_ModeList(mode_keys, vars_ui, sounds_thrusting, const)
             modes_by_key[key_string] = mode
         end
 
-        local item = ModeList_Item:new(modes_by_key[key_string], vars_ui, const)
+        local item = ModeList_Item:new(modes_by_key[key_string], vars_ui, o, const)
 
         table.insert(retVal, item)
     end
@@ -130,7 +130,7 @@ function this.Rebuild_ModeList(mode_keys, vars_ui, sounds_thrusting, const)
 end
 
 -- This would be more efficient if I could get it to work (select rows where primarykey in (...))
-function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, vars_ui, sounds_thrusting, const)
+function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, vars_ui, sounds_thrusting, o, const)
     -- Get a list of keys that aren't in the mode cache
     local missing_keys = {}
 
@@ -167,7 +167,7 @@ function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, vars_ui, sounds_thrusting,
             return {}
         end
 
-        local item = ModeList_Item:new(mode, vars_ui, const)
+        local item = ModeList_Item:new(mode, vars_ui, o, const)
 
         table.insert(retVal, item)
     end

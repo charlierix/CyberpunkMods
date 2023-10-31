@@ -1,13 +1,14 @@
 local this = {}
 ModeList_Item = {}
 
-function ModeList_Item:new(mode, vars_ui, const)
+function ModeList_Item:new(mode, vars_ui, o, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
     obj.mode = mode
     obj.vars_ui = vars_ui
+    obj.o = o
     obj.const = const
 
     obj.item = this.DefineWindow(mode, vars_ui, const)
@@ -16,9 +17,9 @@ function ModeList_Item:new(mode, vars_ui, const)
 end
 
 function ModeList_Item:Draw(screenOffset_x, screenOffset_y, x, y, width, scale)
-    local height = 45 * scale
+    local height = self.item.height * scale
 
-    this.DrawWindow(self.item, self.mode, self.vars_ui, screenOffset_x, screenOffset_y, x, y, width, height, self.const)
+    this.DrawWindow(self.item, self.mode, self.vars_ui, screenOffset_x, screenOffset_y, x, y, width, height, self.o, self.const)
 
     return height
 end
@@ -46,10 +47,13 @@ function this.DefineWindow(mode, vars_ui, const)
 
     FinishDefiningWindow(item)
 
+    --TODO: get this from button heights and gaps
+    item.height = 45
+
     return item
 end
 
-function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x, y, width, height, const)
+function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x, y, width, height, o, const)
     ------------------------- Finalize models for this frame -------------------------
 
     this.Refresh_ModeName(item.modename, mode)
@@ -62,23 +66,17 @@ function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x,
 
     -------------------------------- Show ui elements --------------------------------
 
-
-    -- there is interference between this invisible button and the icon button's invisible button
-
     local isClicked, isHovered = Draw_InvisibleButton(item.invisbutton_invisname, x + width / 2, y + height / 2, width, height, 0)
-    ImGui.SetItemAllowOverlap()
+    ImGui.SetItemAllowOverlap()     -- without this, the iconbuttons won't get click event
 
-
-
-    if isClicked then
-        print("item clicked")
+    if isClicked or isHovered then
+        item.is_mouse_over = o.timer     -- need the buttons to stay visible for the mouse down and up to occur.  While this works, it has a side effect of leaving the buttons up while they mouse over a different item
     end
-
 
     Draw_Label(item.modename, vars_ui.style.colors, vars_ui.scale)
 
     -- Only draw buttons if mouse is over this entry
-    if item.is_mouse_over and item.is_mouse_over > 0 then
+    if item.is_mouse_over and o.timer - item.is_mouse_over < 0.18 then
         if Draw_IconButton(item.button_up, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
             --TODO: raise event
         end
@@ -99,15 +97,6 @@ function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x,
             --TODO: raise event
         end
     end
-
-
-
-    if isClicked or isHovered then
-        item.is_mouse_over = 30
-    elseif item.is_mouse_over ~= nil then
-        item.is_mouse_over = math.max(0, item.is_mouse_over - 1)
-    end
-
 end
 
 function this.Define_ModeName(const)
