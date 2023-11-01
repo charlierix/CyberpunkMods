@@ -120,6 +120,9 @@ local const =
             "other_windows"
     ),
 
+    -- These are for the main window to know what button was pushed
+    modelist_actions = CreateEnum("move_up", "move_down", "delete", "clone", "edit"),
+
     settings = CreateEnum(
         -- Bools
         "IsEnabled",

@@ -2,6 +2,8 @@ local this = {}
 
 local modes_by_key = {}
 
+local next_token = 0
+
 -- This gets called during init and sets up as much static inforation as it can for all the
 -- controls (the rest of the info gets filled out each frame)
 --
@@ -30,6 +32,8 @@ function ActivateWindow_Main(vars_ui, const)
     main.changes:Clear()
 
     main.modelist.items = nil
+
+    next_token = 0
 end
 
 -- This gets called each frame from DrawConfig()
@@ -40,6 +44,7 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, con
 
     player:EnsureNotMock()
 
+    --TODO: add button
     this.Refresh_ModeList(main.modelist, vars_ui, player, vars.sounds_thrusting, o, const)
 
     ------------------------------ Calculate Positions -------------------------------
@@ -55,8 +60,9 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, con
 
     Draw_StackPanel(main.modelist, vars_ui.style.listbox, window.left, window.top, vars_ui.scale)
 
-
     local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
+
+    this.Actions_ModeList(main.modelist, player, const)
 
     return not (isCloseRequested or isCloseClicked)       -- stop showing when they click the close button (or press config key a second time.  This main page doesn't have anything to save, so it's ok to exit at any time)
 end
@@ -103,7 +109,55 @@ function this.Refresh_ModeList(def, vars_ui, player, sounds_thrusting, o, const)
         end
     end
 end
+function this.Actions_ModeList(def, player, const)
+    if not def.items then
+        do return end
+    end
 
+    for i, item in ipairs(def.items) do
+        if item.action_instruction then
+            if item.action_instruction == const.modelist_actions.move_up then
+                this.Actions_ModeList_MoveUpDown(def, item, i, -1, player)
+
+            elseif item.action_instruction == const.modelist_actions.move_down then
+                this.Actions_ModeList_MoveUpDown(def, item, i, 1, player)
+
+            elseif item.action_instruction == const.modelist_actions.delete then
+            elseif item.action_instruction == const.modelist_actions.clone then
+            elseif item.action_instruction == const.modelist_actions.edit then
+            end
+
+            do return end       -- only one button should ever be pressed.  If more than one, just execute the first
+        end
+    end
+end
+
+function this.Actions_ModeList_MoveUpDown(def, item, index, direction, player)
+    --TODO: keep add entry in mind (#def.items - 1)
+    local new_index = index + direction
+    if new_index < 1 or new_index > #def.items then
+        do return end       -- already at the front or end of the list, nothing to do
+    end
+
+    -- Adjust player.mode_keys
+    local key_temp = player.mode_keys[new_index]
+    player.mode_keys[new_index] = player.mode_keys[index]
+    player.mode_keys[index] = key_temp
+
+    -- Adjust player.mode_index
+    if player.mode_index == index then
+        player.mode_index = new_index
+    elseif player.mode_index == new_index then
+        player.mode_index = index
+    end
+
+    -- Update database
+    player:Save()
+
+    -- no need to call this.Rebuild_ModeList, since it will be called next frame
+end
+
+-- Creates a list of ModeList_Item that matches the list of mode primary keys in player entry (player.mode_keys)
 function this.Rebuild_ModeList(mode_keys, vars_ui, sounds_thrusting, o, const)
     local retVal = {}
 
@@ -121,7 +175,8 @@ function this.Rebuild_ModeList(mode_keys, vars_ui, sounds_thrusting, o, const)
             modes_by_key[key_string] = mode
         end
 
-        local item = ModeList_Item:new(modes_by_key[key_string], vars_ui, o, const)
+        next_token = next_token + 1     -- this needs to be unique, used in invisible names
+        local item = ModeList_Item:new(next_token, modes_by_key[key_string], vars_ui, o, const)
 
         table.insert(retVal, item)
     end
@@ -174,3 +229,4 @@ function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, vars_ui, sounds_thrusting,
 
     return retVal
 end
+

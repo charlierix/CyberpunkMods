@@ -1,17 +1,21 @@
 local this = {}
 ModeList_Item = {}
 
-function ModeList_Item:new(mode, vars_ui, o, const)
+function ModeList_Item:new(token, mode, vars_ui, o, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
+    obj.token = token
     obj.mode = mode
     obj.vars_ui = vars_ui
     obj.o = o
     obj.const = const
 
-    obj.item = this.DefineWindow(mode, vars_ui, const)
+    obj.item = this.DefineWindow(token, mode, vars_ui, const)
+
+    -- See const.modelist_actions for what this could be (set when they push one of the buttons)
+    obj.action_instruction = nil
 
     return obj
 end
@@ -19,21 +23,17 @@ end
 function ModeList_Item:Draw(screenOffset_x, screenOffset_y, x, y, width, scale)
     local height = self.item.height * scale
 
-    this.DrawWindow(self.item, self.mode, self.vars_ui, screenOffset_x, screenOffset_y, x, y, width, height, self.o, self.const)
+    self.action_instruction = this.DrawWindow(self.item, self.mode, self.vars_ui, screenOffset_x, screenOffset_y, x, y, width, height, self.o, self.const)
 
     return height
 end
 
------------------------------------ Private Methods -----------------------------------
+--------------------------- Private Methods (Window Drawing) --------------------------
 
-function this.DefineWindow(mode, vars_ui, const)
+function this.DefineWindow(token, mode, vars_ui, const)
     local item = {}
 
-    local invisible_name_suffix = ""
-    if mode then
-        invisible_name_suffix = tostring(mode.mode_key)
-    end
-
+    local invisible_name_suffix = tostring(token)
     item.invisbutton_invisname = "ModeList_Item_" .. invisible_name_suffix .. "_InvisibleButton"
 
     item.modename = this.Define_ModeName(const)
@@ -47,8 +47,7 @@ function this.DefineWindow(mode, vars_ui, const)
 
     FinishDefiningWindow(item)
 
-    --TODO: get this from button heights and gaps
-    item.height = (vars_ui.style.iconbutton.width_height * 2) + 4
+    item.height = (vars_ui.style.iconbutton.width_height * 2) + 4       -- icons are the tallest part. (2 + gap)
 
     return item
 end
@@ -75,29 +74,39 @@ function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x,
 
     Draw_Label(item.modename, vars_ui.style.colors, vars_ui.scale)
 
+    local action_instruction = nil
+
     -- Only draw buttons if mouse is over this entry
     if item.is_mouse_over and o.timer - item.is_mouse_over < 0.18 then
         if Draw_IconButton(item.button_up, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
-            --TODO: raise event
+            action_instruction = const.modelist_actions.move_up
         end
 
         if Draw_IconButton(item.button_down, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
-            --TODO: raise event
+            action_instruction = const.modelist_actions.move_down
         end
 
         if Draw_IconButton(item.button_delete, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
-            --TODO: raise event
+            action_instruction = const.modelist_actions.delete
         end
 
         if Draw_IconButton(item.button_clone, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
-            --TODO: raise event
+            action_instruction = const.modelist_actions.clone
         end
 
         if Draw_IconButton(item.button_edit, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
-            --TODO: raise event
+            action_instruction = const.modelist_actions.edit
+        end
+
+        if isClicked then
+            action_instruction = const.modelist_actions.edit        -- if they click on the entry background, also consider that as an edit
         end
     end
+
+    return action_instruction
 end
+
+----------------------------------- Private Methods -----------------------------------
 
 function this.Define_ModeName(const)
     -- Label
@@ -399,4 +408,8 @@ function this.GetPencilCoords(x1, y1, x2, y2, width)
     })
 
     return retVal
+end
+
+function this.ShiftUpDown()
+    
 end

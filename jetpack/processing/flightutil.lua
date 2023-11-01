@@ -90,6 +90,36 @@ end
 
 -- This will blow people back if the impact speed is large enough
 function ExplosivelyLand(o, velZ, vars)
+
+    --TODO: look for events that could be triggered
+    -- In this mod, they are increasing tweakdb values:
+    --  https://www.nexusmods.com/cyberpunk2077/mods/10596
+
+	-- TweakDB:SetFlat("Attacks.GroundSlamFar.hitReactionSeverityMax", 4) -- -1
+	-- TweakDB:SetFlat("Attacks.GroundSlamFar.hitReactionSeverityMin", 4) -- 2
+	-- TweakDB:SetFlat("Attacks.GroundSlamFar.range", 40) -- 10 Range
+
+	-- TweakDB:SetFlat("Attacks.GroundSlamFarImpulse.hitReactionSeverityMax", 4) -- -1
+	-- TweakDB:SetFlat("Attacks.GroundSlamFarImpulse.hitReactionSeverityMin", 4) -- -1
+	-- TweakDB:SetFlat("Attacks.GroundSlamFarImpulse.range", 20) -- 6
+
+	-- TweakDB:SetFlat("Attacks.GroundSlamFarImpulse.range", 4) -- -1
+	-- TweakDB:SetFlat("Attacks.GroundSlamNear.hitReactionSeverityMin", 4) -- 3
+	-- TweakDB:SetFlat("Attacks.GroundSlamNear.range", 10) -- 4
+
+	-- TweakDB:SetFlat("Attacks.GroundSlamNearImpulse.hitReactionSeverityMax", 4) -- -1
+	-- TweakDB:SetFlat("Attacks.GroundSlamNearImpulse.hitReactionSeverityMin", 4) -- -1
+	-- TweakDB:SetFlat("Attacks.GroundSlamNearImpulse.range", 15) -- 1.5
+
+	-- TweakDB:SetFlat("Attacks.GroundSlamAttack.hitReactionSeverityMax", 4) -- 3
+	-- TweakDB:SetFlat("Attacks.GroundSlamAttack.hitReactionSeverityMin", 4) -- 3
+	-- TweakDB:SetFlat("Attacks.GroundSlamAttack.radius", 10) -- 0
+	-- TweakDB:SetFlat("Attacks.GroundSlamAttack.range", 10)-- 0
+
+
+
+
+
     local maxForce = 9
 
     local force = GetScaledValue(0, maxForce, 0, 36, -velZ)

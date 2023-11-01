@@ -62,6 +62,18 @@ function Player:EnsureNotMock()
     this.StorePlayerEntry(self, player_entry)
 end
 
+function Player:Save()
+    self:EnsureNotMock()        -- the player shouldn't be mocked if save is called, but making sure
+
+    local primaryKey, errMsg = dal.InsertPlayer(self.playerID, self.mode_keys, self.mode_index)
+    if errMsg then
+        LogError("Couldn't save player: " .. errMsg)
+        do return end
+    end
+
+    self.playerKey = primaryKey
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 -- This loads the current profile for the current playthrough.  If there are none, use default mode, but

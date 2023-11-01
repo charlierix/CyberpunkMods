@@ -58,15 +58,6 @@ function DataUtil.LoadExistingPlayer(playerID, sounds_thrusting, const)
     nil
 end
 
--- Creates a new player row with the changes.  This is more than a simple mode change
--- Returns:
---    PlayerEntry (the type returned is defined in models\Player)
---    PrimaryKey of player
---    Error Message (only populated if the first two are nil)
-function DataUtil.UpdatePlayer()
-    
-end
-
 -- Advances the index to the next mode in the list (or loops back to one)
 -- Returns:
 --  modeIndex
