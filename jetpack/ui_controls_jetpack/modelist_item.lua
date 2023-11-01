@@ -48,7 +48,7 @@ function this.DefineWindow(mode, vars_ui, const)
     FinishDefiningWindow(item)
 
     --TODO: get this from button heights and gaps
-    item.height = 45
+    item.height = (vars_ui.style.iconbutton.width_height * 2) + 4
 
     return item
 end
@@ -125,6 +125,7 @@ end
 function this.Define_Button_Up(invisible_name_suffix, const)
     local icon_data =
     [[
+        arrow 0.5 0.85 0.5 0.15 2.3
     ]]
 
     -- IconButton
@@ -155,6 +156,7 @@ end
 function this.Define_Button_Down(relative_to, invisible_name_suffix, const)
     local icon_data =
     [[
+        arrow 0.5 0.15 0.5 0.85 2.3
     ]]
 
     -- IconButton
@@ -189,9 +191,15 @@ function this.Define_Button_Down(relative_to, invisible_name_suffix, const)
 end
 
 function this.Define_Button_Delete(relative_to, invisible_name_suffix, const)
-    local icon_data =
-    [[
-    ]]
+    local shift = 0.025     -- the border circle is shifted by a pixel, which makes the X seem off center
+    local xy = 0.27
+
+    local xy1 = tostring(xy - shift)
+    local xy2 = tostring(1 - xy - shift)
+
+    local icon_data = ""
+    icon_data = icon_data .. "line " .. xy1 .. " " .. xy1 .. " " .. xy2 .. " " .. xy2 .. " 3 "
+    icon_data = icon_data .. "line " .. xy1 .. " " .. xy2 .. " " .. xy2 .. " " .. xy1 .. " 3"
 
     -- IconButton
     return
@@ -204,7 +212,7 @@ function this.Define_Button_Delete(relative_to, invisible_name_suffix, const)
 
         isEnabled = true,
 
-        is_circle = false,
+        is_circle = true,
 
         position =
         {
@@ -227,6 +235,15 @@ end
 function this.Define_Button_Clone(relative_to, invisible_name_suffix, const)
     local icon_data =
     [[
+        rect 0.35 0.35 0.9 0.9 2
+        line 0.625 0.45 0.625 0.8 1.5
+        line 0.45 0.625 0.8 0.625 1.5
+
+        line 0.1 0.1 0.65 0.1 2
+        line 0.65 0.1 0.65 0.25 2
+
+        line 0.1 0.1 0.1 0.65 2
+        line 0.1 0.65 0.25 0.65 2
     ]]
 
     -- IconButton
@@ -263,7 +280,19 @@ end
 function this.Define_Button_Edit(relative_to, invisible_name_suffix, const)
     local icon_data =
     [[
+        line 0.1 0.9 0.1 0.25 2
+        line 0.1 0.25 0.55 0.25 2
+
+        line 0.1 0.9 0.75 0.9 2
+        line 0.75 0.9 0.75 0.45 2
     ]]
+
+    local pencil = this.GetPencilCoords(0.87, 0.13, 0.3, 0.7, 0.1)
+
+    local thickness = 1.5
+    for _, coords in ipairs(pencil) do
+        icon_data = icon_data .. "\nline " .. tostring(coords[1]) .. " " .. tostring(coords[2]) .. " " .. tostring(coords[3]) .. " " .. tostring(coords[4]) .. " " .. tostring(thickness)
+    end
 
     -- IconButton
     return
@@ -294,4 +323,80 @@ function this.Define_Button_Edit(relative_to, invisible_name_suffix, const)
 
         CalcSize = CalcSize_IconButton,
     }
+end
+
+-- Copied from util_controls GetArrowCoords()
+-- Returns
+--  List of 4 element arrays { {x1, y1, x2, y2}, {x1, y1, x2, y2}, ... }
+function this.GetPencilCoords(x1, y1, x2, y2, width)
+    local half_width = width / 2
+
+    local magnitude = GetVectorLength2D(x2 - x1, y2 - y1)
+
+    -- Get a unit vector that goes 1 -> 2
+    local along_unit_x = (x2 - x1) / magnitude
+    local along_unit_y = (y2 - y1) / magnitude
+
+    -- Now get two unit vectors that point away
+    local orth_unit_x1 = -along_unit_y
+    local orth_unit_y1 = along_unit_x
+
+    local orth_unit_x2 = along_unit_y
+    local orth_unit_y2 = -along_unit_x
+
+    -- Figure out the length of the tip.  Keep the width=7 length=10 ratio
+    local tip_len = width * (10 / 7)
+
+    -- Subtract back from the tip (base of the triangle portion)
+    local base_x = x2 - along_unit_x * tip_len
+    local base_y = y2 - along_unit_y * tip_len
+
+    local retVal = {}
+
+    -- Eraser Edge
+    table.insert(retVal,
+    {
+        x1 + orth_unit_x1 * half_width,
+        y1 + orth_unit_y1 * half_width,
+        x1 + orth_unit_x2 * half_width,
+        y1 + orth_unit_y2 * half_width,
+    })
+
+    -- Shaft Top
+    table.insert(retVal,
+    {
+        x1 + orth_unit_x1 * half_width,
+        y1 + orth_unit_y1 * half_width,
+        base_x + orth_unit_x1 * half_width,
+        base_y + orth_unit_y1 * half_width,
+    })
+
+    -- Shaft Bottom
+    table.insert(retVal,
+    {
+        x1 + orth_unit_x2 * half_width,
+        y1 + orth_unit_y2 * half_width,
+        base_x + orth_unit_x2 * half_width,
+        base_y + orth_unit_y2 * half_width,
+    })
+
+    -- Tip Top
+    table.insert(retVal,
+    {
+        x2,
+        y2,
+        base_x + orth_unit_x1 * half_width,
+        base_y + orth_unit_y1 * half_width,
+    })
+
+    -- Tip Bottom
+    table.insert(retVal,
+    {
+        x2,
+        y2,
+        base_x + orth_unit_x2 * half_width,
+        base_y + orth_unit_y2 * half_width,
+    })
+
+    return retVal
 end

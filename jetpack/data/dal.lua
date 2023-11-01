@@ -464,9 +464,9 @@ function this.ModeKeys_String_to_List(modeKeys)
 
     for key in string.gmatch(modeKeys, "%d+") do        -- description was space delimited, but just grab each set of numbers regardless how they are delimited
         table.insert(retVal, tonumber(key))
-     end
+    end
 
-     return retVal
+    return retVal
 end
 
 -- Select statements have the same set of checks.  This binds the values, then returns the row

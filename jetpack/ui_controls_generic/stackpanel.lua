@@ -30,8 +30,20 @@ function Draw_StackPanel(def, style_list, screenOffset_x, screenOffset_y, scale)
             screenOffset_y = screenOffset_y + def.render_pos.top - ImGui.GetScrollY()
 
             -- Calculate available width
+
             --local scrollbar_width = ImGui.GetStyleVar(ImGuiStyleVar.ScrollbarSize)        -- this function doesn't exist (SetStyleVar does, but no get).  CET's imgui helper shows max as 20, so just going with that
+
+            -- some other possibly helpful functions:
+            --  GetItemRectMin()        -- these three are for the most recently created item
+            --  GetItemRectMax()
+            --  GetItemRectSize()
+
+            --  GetScrollMaxY()         -- after all items are added, call this to see if it's > height.  Remember that for next frame
+
+
             local inner_width = (def.width - 20 - 4) * scale        -- scrollbar width + a gap
+
+
 
             for _, item in ipairs(def.items) do
                 local inner_left, inner_top = ImGui.GetCursorPos()

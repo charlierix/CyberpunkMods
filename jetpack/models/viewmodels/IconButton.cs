@@ -17,6 +17,11 @@ public class IconButton : IControl
     ///     arrow x1 y1 x2 y2 [thickness]
     ///     circle centerX centerY radius [thickness]
     ///     rect x1 y1 x2 y2 [thickness]
+    ///     triangle x1 y1 x2 y2 x3 y3 [thickness]
+    /// 
+    /// NOTE: at runtime, the control creates two other props based on this:
+    ///     icon_data_parsed                - a list of { "qual", num, num ... } elements
+    ///     icon_data_parsed_against        - a copy of icon_data
     /// </remarks>
     public string icon_data { get; set; }
 
