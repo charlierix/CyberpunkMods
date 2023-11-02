@@ -7,6 +7,10 @@ local isAirborne_extended = nil
 -- Timer has already been updated and it's verified that they aren't in a vehicle
 -- or in the menu
 function Process_Standard(o, vars, player, const, debug, deltaTime)
+    if not player.mode then
+        do return end
+    end
+
     vars.remainBurnTime = RecoverBurnTime(vars.remainBurnTime, player.mode.energy.maxBurnTime, player.mode.energy.recoveryRate, deltaTime)
 
     if not const.isEnabled then

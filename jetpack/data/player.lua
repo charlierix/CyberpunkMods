@@ -30,6 +30,11 @@ end
 function Player:NextMode()
     self:EnsureNotMock()
 
+    if not self.mode_keys or #self.mode_keys == 0 then
+        self.vars.showConfigNameUntil = self.o.timer + 3
+        do return end
+    end
+
     -- Advance to the next one, also updating the db
     local index, mode, errMsg = datautil.NextMode(self.playerKey, self.mode_keys, self.mode_index, self.vars.sounds_thrusting, self.const)
     if errMsg then
@@ -125,6 +130,9 @@ function this.StorePlayerEntry(obj, player_entry)
 end
 function this.StoreMode(obj, mode)
     obj.mode = mode
-    obj.vars.sounds_thrusting:ModeChanged(obj.mode.sound_type)
-    obj.vars.remainBurnTime = obj.mode.energy.maxBurnTime
+
+    if mode then
+        obj.vars.sounds_thrusting:ModeChanged(obj.mode.sound_type)
+        obj.vars.remainBurnTime = obj.mode.energy.maxBurnTime
+    end
 end

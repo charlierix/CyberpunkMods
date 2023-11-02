@@ -348,7 +348,10 @@ registerForEvent("onUpdate", function(deltaTime)
 
     if vars.isInFlight then
         -- In Flight
-        if not o:Custom_CurrentlyFlying_Update(GetVelocity(player.mode, vars, o)) then
+        if not player.mode then
+            ExitFlight(vars, debug, o, player)      -- should never get here, unless they pulled up cet and deleted modes mid flight
+
+        elseif not o:Custom_CurrentlyFlying_Update(GetVelocity(player.mode, vars, o)) then
             ExitFlight(vars, debug, o, player)
 
         elseif player.mode.useImpulse then
@@ -396,9 +399,9 @@ registerForEvent("onDraw", function()
         do return end
     end
 
-    if player and player.mode then
+    if player then
         -- Energy tank (only show when it's not full)
-        if vars.remainBurnTime / player.mode.energy.maxBurnTime < const.hide_energy_above_percent then
+        if player.mode and vars.remainBurnTime / player.mode.energy.maxBurnTime < const.hide_energy_above_percent then
             DrawJetpackProgress(player.mode.name, vars.remainBurnTime, player.mode.energy.maxBurnTime, vars_ui_progressbar, const)
         end
 

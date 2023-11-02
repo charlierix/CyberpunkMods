@@ -38,6 +38,8 @@ function this.DefineWindow(token, mode, vars_ui, const)
 
     item.modename = this.Define_ModeName(const)
 
+    --TODO: indicate if currently selected
+
     item.button_up = this.Define_Button_Up(invisible_name_suffix, const)
     item.button_down = this.Define_Button_Down(item.button_up, invisible_name_suffix, const)
 

@@ -1,6 +1,11 @@
 local this = {}
 
 function Process_InFlight_Teleport(o, vars, const, player, keys, debug, deltaTime)
+    if not player.mode then
+        ExitFlight(vars, debug, o, player)      -- should never get here, unless they pulled up cet and deleted modes mid flight
+        do return end
+    end
+
     debug.time_flying_idle = o.timer - vars.lastThrustTime
 
     if ShouldReboundJump_InFlight(o, vars, player.mode) then

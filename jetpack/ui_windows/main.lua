@@ -62,7 +62,7 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, con
 
     local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
 
-    this.Actions_ModeList(main.modelist, player, const)
+    this.Actions_ModeList(main.modelist, player, vars.sounds_thrusting, const)
 
     return not (isCloseRequested or isCloseClicked)       -- stop showing when they click the close button (or press config key a second time.  This main page doesn't have anything to save, so it's ok to exit at any time)
 end
@@ -94,14 +94,19 @@ function this.Define_ModeList(const)
     }
 end
 function this.Refresh_ModeList(def, vars_ui, player, sounds_thrusting, o, const)
+    local mode_keys_count = 0
+    if player.mode_keys then
+        mode_keys_count = #player.mode_keys
+    end
+
     if not def.items then       -- cleared during activate
         def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, o, const)
 
-    elseif #def.items ~= #player.mode_keys then     -- this case should never happen
+    elseif #def.items ~= mode_keys_count then     -- this case should never happen
         def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, o, const)
 
     else        -- make sure the stored list matches what the player row has
-        for i = 1, #player.mode_keys, 1 do
+        for i = 1, mode_keys_count, 1 do
             if def.items[i].mode.mode_key ~= player.mode_keys[i] then
                 def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, o, const)
                 do break end
@@ -109,7 +114,8 @@ function this.Refresh_ModeList(def, vars_ui, player, sounds_thrusting, o, const)
         end
     end
 end
-function this.Actions_ModeList(def, player, const)
+
+function this.Actions_ModeList(def, player, sounds_thrusting, const)
     if not def.items then
         do return end
     end
@@ -123,6 +129,8 @@ function this.Actions_ModeList(def, player, const)
                 this.Actions_ModeList_MoveUpDown(def, item, i, 1, player)
 
             elseif item.action_instruction == const.modelist_actions.delete then
+                this.Actions_ModeList_Delete(def, item, i, player, sounds_thrusting, const)
+
             elseif item.action_instruction == const.modelist_actions.clone then
             elseif item.action_instruction == const.modelist_actions.edit then
             end
@@ -131,7 +139,6 @@ function this.Actions_ModeList(def, player, const)
         end
     end
 end
-
 function this.Actions_ModeList_MoveUpDown(def, item, index, direction, player)
     --TODO: keep add entry in mind (#def.items - 1)
     local new_index = index + direction
@@ -156,9 +163,48 @@ function this.Actions_ModeList_MoveUpDown(def, item, index, direction, player)
 
     -- no need to call this.Rebuild_ModeList, since it will be called next frame
 end
+function this.Actions_ModeList_Delete(def, item, index, player, sounds_thrusting, const)
+    if not player.mode_keys or index > #player.mode_keys then
+        LogError("Told to delete a mode that doesn't exist")
+        do return end
+    end
+
+    table.remove(player.mode_keys, index)
+
+    if player.mode_index > 0 then
+        if index < player.mode_index then
+            player.mode_index = player.mode_index - 1
+        end
+
+        if player.mode_index > #player.mode_keys then
+            player.mode_index = #player.mode_keys
+        end
+
+        if #player.mode_keys == 0 then
+            player.mode_index = 0
+            player.mode = nil
+
+        elseif player.mode_keys[player.mode_index] ~= player.mode.mode_key then
+            local mode_json, errMsg = dal.GetMode_ByKey(player.mode_keys[player.mode_index])
+            if not mode_json then
+                LogError("Actions_ModeList_Delete: Couldn't get new mode: " .. errMsg)
+                player.mode_index = 0
+                player.mode = nil
+            end
+
+            player.mode = mode_defaults.FromJSON(mode_json, player.mode_keys[player.mode_index], sounds_thrusting, const)
+        end
+    end
+
+    player:Save()
+end
 
 -- Creates a list of ModeList_Item that matches the list of mode primary keys in player entry (player.mode_keys)
 function this.Rebuild_ModeList(mode_keys, vars_ui, sounds_thrusting, o, const)
+    if not mode_keys then
+        return {}
+    end
+
     local retVal = {}
 
     for _, key in ipairs(mode_keys) do

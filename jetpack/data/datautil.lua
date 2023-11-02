@@ -38,14 +38,20 @@ function DataUtil.LoadExistingPlayer(playerID, sounds_thrusting, const)
         return nil, errMsg
     end
 
-    local mode_key = player_row.ModeKeys[player_row.ModeIndex]
+    local mode = nil
+    if not player_row.ModeKeys or not player_row.ModeIndex or player_row.ModeIndex < 1 or player_row.ModeIndex > #player_row.ModeKeys then
+        player_row.ModeKeys = nil
+        player_row.ModeIndex = 0
+    else
+        local mode_key = player_row.ModeKeys[player_row.ModeIndex]
 
-    local mode_json, errMsg = dal.GetMode_ByKey(mode_key)
-    if not mode_json then
-        return nil, errMsg
+        local mode_json, errMsg = dal.GetMode_ByKey(mode_key)
+        if not mode_json then
+            return nil, errMsg
+        end
+
+        mode = mode_defaults.FromJSON(mode_json, mode_key, sounds_thrusting, const)
     end
-
-    local mode = mode_defaults.FromJSON(mode_json, mode_key, sounds_thrusting, const)
 
     return
     {
@@ -64,7 +70,7 @@ end
 --  mode (see models\Mode)
 --  Error Message (only populated if first two are nil)
 function DataUtil.NextMode(playerKey, mode_keys, current_index, sounds_thrusting, const)
-    if #mode_keys == 0 then
+    if not mode_keys or #mode_keys == 0 then
         return nil, nil, "list of mode keys is empty"
     end
 
