@@ -82,6 +82,7 @@ require "ui_controls_generic/summary_button"
 require "ui_controls_generic/textbox"
 require "ui_controls_generic/updownbuttons"
 
+require "ui_controls_jetpack/modelist_add"
 require "ui_controls_jetpack/modelist_item"
 
 require "ui_framework/changes"

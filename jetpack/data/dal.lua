@@ -380,7 +380,7 @@ function DAL.GetModes_ByKeys(...)
             if row then
                 table.insert(retVal, row)
             else
-                return "Error retrieving modes: " .. String_Join(", ", param_arr)
+                return nil, "Error retrieving modes: " .. String_Join(", ", param_arr)
             end
         end
 
@@ -422,6 +422,34 @@ function DAL.GetModeKey_ByContent(mode_name, mode_json)
         return modeKey, errMsg
     else
         return nil, "GetModeKey_ByContent: Unknown Error"
+    end
+end
+
+function DAL.GetAllModeKeys()
+    local sucess, modeKey, errMsg = pcall(function ()
+        local stmt = db:prepare
+        [[
+            SELECT ModeKey
+            FROM Mode2
+        ]]
+
+        local retVal = {}
+
+        for row in this.Bind_Select_MultipleRows_Iterator(stmt, "GetAllModeKeys") do
+            if row then
+                table.insert(retVal, row.ModeKey)
+            else
+                return nil, "Error retrieving all mode keys"
+            end
+        end
+
+        return retVal, nil
+    end)
+
+    if sucess then
+        return modeKey, errMsg
+    else
+        return nil, "GetAllModeKeys: Unknown Error"
     end
 end
 
