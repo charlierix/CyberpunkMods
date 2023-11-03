@@ -265,6 +265,17 @@
         "gap_vertical": 12
     },
 
+    "modelistitem":
+    {
+        "hover_padding": 6,
+
+        "border_cornerRadius": 6,
+        "border_thickness": 1,
+
+        "back_color_hover": "4444",
+        "border_color_hover": "4666"
+    },
+
     "progressbar_slim":
     {
         "border_cornerRadius": 2,
@@ -354,6 +365,10 @@
         "help": { "the_color": "67707A" },
 
         "requirement_met": { "the_color": "AAE" },
-        "requirement_unmet": { "the_color": "E6592E" }
+        "requirement_unmet": { "the_color": "E6592E" },
+
+        "modelistitem_name": { "the_color": "D4D4D4" },
+        "modelistitem_description": { "the_color": "C0C0F0" },
+        "modelistitem_add": { "the_color": "BABA80" }
     }
 }

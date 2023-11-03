@@ -57,7 +57,7 @@ function this.DrawWindow(item, vars_ui, screenOffset_x, screenOffset_y, x, y, wi
     local isClicked, isHovered = Draw_InvisibleButton(item.invisbutton_invisname, center_x, center_y, width, height, 0)
 
     if isHovered then
-        Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, width, height, -4, false, vars_ui.style.iconbutton.back_color_hover_abgr, nil, vars_ui.style.iconbutton.border_color_hover_abgr, nil, vars_ui.style.button.border_cornerRadius, vars_ui.style.iconbutton.border_thickness)        --NOTE: using corner radius from button, but everything else from iconbutton
+        Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, width, height, vars_ui.style.modelistitem.hover_padding, false, vars_ui.style.modelistitem.back_color_hover_abgr, nil, vars_ui.style.modelistitem.border_color_hover_abgr, nil, vars_ui.style.modelistitem.border_cornerRadius, vars_ui.style.modelistitem.border_thickness)
     end
 
     Draw_Label(item.label, vars_ui.style.colors, vars_ui.scale)
@@ -81,7 +81,7 @@ function this.Define_Label(const)
             vertical = const.alignment_vertical.center,
         },
 
-        color = "subTitle",
+        color = "modelistitem_add",
 
         CalcSize = CalcSize_Label,
     }

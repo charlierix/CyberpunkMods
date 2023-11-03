@@ -38,7 +38,7 @@ function this.DefineWindow(token, mode, vars_ui, const)
 
     item.modename = this.Define_ModeName(const)
 
-    --TODO: description
+    item.description = this.Define_Description(item.modename, const)
 
     --TODO: indicate if currently selected
 
@@ -61,6 +61,8 @@ function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x,
 
     this.Refresh_ModeName(item.modename, mode)
 
+    this.Refresh_Description(item.description, mode, item.button_edit, vars_ui.scale)
+
     ------------------------------ Calculate Positions -------------------------------
 
     CalculateSizes(item.render_nodes, vars_ui.style, const, vars_ui.line_heights, vars_ui.scale)
@@ -69,14 +71,23 @@ function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x,
 
     -------------------------------- Show ui elements --------------------------------
 
-    local isClicked, isHovered = Draw_InvisibleButton(item.invisbutton_invisname, x + width / 2, y + height / 2, width, height, 0)
+    local center_x = x + width / 2
+    local center_y = y + height / 2
+
+    local isClicked, isHovered = Draw_InvisibleButton(item.invisbutton_invisname, center_x, center_y, width, height, 0)
     ImGui.SetItemAllowOverlap()     -- without this, the iconbuttons won't get click event
 
     if isClicked or isHovered then
         item.is_mouse_over = o.timer     -- need the buttons to stay visible for the mouse down and up to occur.  While this works, it has a side effect of leaving the buttons up while they mouse over a different item
     end
 
+    if isHovered then
+        Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, width, height, vars_ui.style.modelistitem.hover_padding, false, vars_ui.style.modelistitem.back_color_hover_abgr, nil, vars_ui.style.modelistitem.border_color_hover_abgr, nil, vars_ui.style.modelistitem.border_cornerRadius, vars_ui.style.modelistitem.border_thickness)
+    end
+
     Draw_Label(item.modename, vars_ui.style.colors, vars_ui.scale)
+
+    Draw_Label(item.description, vars_ui.style.colors, vars_ui.scale)
 
     local action_instruction = nil
 
@@ -126,13 +137,55 @@ function this.Define_ModeName(const)
             vertical = const.alignment_vertical.top,
         },
 
-        color = "instruction",
+        color = "modelistitem_name",
 
         CalcSize = CalcSize_Label,
     }
 end
 function this.Refresh_ModeName(def, mode)
     def.text = mode.name
+end
+
+function this.Define_Description(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Sample Description",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 8,
+            pos_y = 4,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        color = "modelistitem_description",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Refresh_Description(def, mode, leftmost_button, scale)
+
+    -- Width is passed into the draw
+    -- max_right needs to account for the width of the icons
+    --  item.button_edit.def.render_pos.left, which won't be populated until a frame is
+    -- max_width is max_right - def.left
+    -- be sure to account for scale
+    -- may need to wait a frame before def.render_pos.left is populated
+
+    --def.max_width = 
+
+
+    --def.text = mode.description
+
+
 end
 
 function this.Define_Button_Up(invisible_name_suffix, const)
