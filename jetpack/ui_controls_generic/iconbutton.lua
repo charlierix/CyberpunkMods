@@ -33,9 +33,6 @@ function Draw_IconButton(def, vars_ui, screenOffset_x, screenOffset_y, scale)
     end
 
     local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, left + def.sizes.center_x, top + def.sizes.center_y, clickableSize, clickableSize, 0)
-    if isClicked then
-        print("icon button clicked: " .. def.tooltip)
-    end
 
     -- Get colors
     local color_back, color_fore, color_border = this.GetColors(def.isEnabled, isClicked, isHovered, vars_ui.style.iconbutton)

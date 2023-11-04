@@ -1,5 +1,5 @@
 // See mode_defaults.lua for default values
-public record Mode_Data
+public record Mode
 {
     // ----------------------------------------------------------------
     // Only in the live version of the mode class (not the data class that gets serialized to/from json)
@@ -8,6 +8,10 @@ public record Mode_Data
 
     public string name { get; init; }
 
+    public string description { get; init; }
+
+    // True: Impulse based flight
+    // False: Teleport based flight
     public bool useImpulse { get; init; }
 
     // Enum: see const in init.lua
@@ -61,7 +65,7 @@ public record Mode_Data
     }
 
     public RotateVelocity_Type rotateVel { get; init; }
-    public RotateVelocity_Type
+    public record RotateVelocity_Type
     {
         public bool is_used { get; init; }              // This should only be done in teleport based flight (non impulse).  This will pull the velocity to line up with the direction facing
         public double percent_horz { get; init; }       // How strong the pull is.  This is percent per second (1 would be fully aligned after one second)
@@ -88,8 +92,8 @@ public record Mode_Data
     public object rmb_extra { get; init; }
 
     // ----------------------------------------------------------------
-
     // These are types that the rmb_extra prop could be in the data class (serialized to json and stored in database)
+
     public record RMB_Hover_Type
     {
         public rmb_type rmb_type { get; init; }     // Enum: see const in init.lua
@@ -109,7 +113,7 @@ public record Mode_Data
         public double burnRate { get; init; }
     }
 
-    public recharges RMB_Dash_Type
+    public record RMB_Dash_Type
     {
         public rmb_type rmb_type { get; init; }     // Enum: see const in init.lua
         public double acceleration { get; init; }

@@ -21,7 +21,7 @@ function ModeList_Item:new(token, mode, vars_ui, o, const)
 end
 
 function ModeList_Item:Draw(screenOffset_x, screenOffset_y, x, y, width, scale)
-    local height = self.item.height * scale
+    local height = this.GetItemHeight(self.item, screenOffset_y, y, scale)
 
     self.action_instruction = this.DrawWindow(self.item, self.mode, self.vars_ui, screenOffset_x, screenOffset_y, x, y, width, height, self.o, self.const)
 
@@ -51,7 +51,7 @@ function this.DefineWindow(token, mode, vars_ui, const)
 
     FinishDefiningWindow(item)
 
-    item.height = (vars_ui.style.iconbutton.width_height * 2) + 4       -- icons are the tallest part. (2 + gap)
+    item.height = (vars_ui.style.iconbutton.width_height * 2) + 4       -- icons are the tallest part without description (2 + gap).  Draw function will fall back on this if render_pos and render_size are unknown
 
     return item
 end
@@ -61,7 +61,7 @@ function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x,
 
     this.Refresh_ModeName(item.modename, mode)
 
-    this.Refresh_Description(item.description, mode, item.button_edit, vars_ui.scale)
+    this.Refresh_Description(item.description, mode, item.button_edit, width, vars_ui.scale)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -82,6 +82,7 @@ function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x,
     end
 
     if isHovered then
+        --Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, width, height, vars_ui.style.modelistitem.hover_padding, false, vars_ui.style.modelistitem.back_color_hover_abgr, nil, vars_ui.style.modelistitem.border_color_hover_abgr, nil, vars_ui.style.modelistitem.border_cornerRadius, vars_ui.style.modelistitem.border_thickness)
         Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, width, height, vars_ui.style.modelistitem.hover_padding, false, vars_ui.style.modelistitem.back_color_hover_abgr, nil, vars_ui.style.modelistitem.border_color_hover_abgr, nil, vars_ui.style.modelistitem.border_cornerRadius, vars_ui.style.modelistitem.border_thickness)
     end
 
@@ -93,6 +94,11 @@ function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x,
 
     -- Only draw buttons if mouse is over this entry
     if item.is_mouse_over and o.timer - item.is_mouse_over < 0.18 then
+        local bar_center_x, bar_center_y, bar_width, bar_height = this.GetIconBarBounds(vars_ui.style.modelistitem.iconbar_margin, 1, vars_ui.scale, item.button_up, item.button_down, item.button_delete, item.button_clone, item.button_edit)
+        if bar_center_x then
+            Draw_Border(screenOffset_x, screenOffset_y, bar_center_x, bar_center_y, bar_width, bar_height, 0, false, vars_ui.style.modelistitem.iconbar_color_abgr, nil, nil, nil, vars_ui.style.modelistitem.border_cornerRadius, nil)
+        end
+
         if Draw_IconButton(item.button_up, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
             action_instruction = const.modelist_actions.move_up
         end
@@ -171,21 +177,45 @@ function this.Define_Description(relative_to, const)
         CalcSize = CalcSize_Label,
     }
 end
-function this.Refresh_Description(def, mode, leftmost_button, scale)
+function this.Refresh_Description(def, mode, leftmost_button, width, scale)
+    def.text = mode.description
+
+    local max_width = nil
+
+    ---------------------------------- Attempt 1 ----------------------------------
+
+    -- This works, but it leaves a big empty space along the right.  It would be better if the description went the full width,
+    -- and the buttons just draw over top
+
 
     -- Width is passed into the draw
     -- max_right needs to account for the width of the icons
-    --  item.button_edit.def.render_pos.left, which won't be populated until a frame is
+    --  item.button_edit.def.render_pos.left, which won't be populated until a frame has fully drawn
     -- max_width is max_right - def.left
     -- be sure to account for scale
     -- may need to wait a frame before def.render_pos.left is populated
 
-    --def.max_width = 
+    -- if def.render_pos and def.render_pos.left and leftmost_button.render_pos and leftmost_button.render_pos.left then
+    --     local gap = 4
 
+    --     if leftmost_button.render_pos.left > def.render_pos.left + gap then
+    --         max_width = (leftmost_button.render_pos.left - def.render_pos.left - gap) / scale
+    --     end
+    -- end
 
-    --def.text = mode.description
+    ---------------------------------- Attempt 2 ----------------------------------
 
+    if def.render_pos and def.render_pos.left then
+        local margin = def.render_pos.left * 2
 
+        if width - margin > 0 then
+            max_width = (width - margin) / scale
+        end
+    end
+
+    -------------------------------------------------------------------------------
+
+    def.max_width = max_width
 end
 
 function this.Define_Button_Up(invisible_name_suffix, const)
@@ -467,6 +497,104 @@ function this.GetPencilCoords(x1, y1, x2, y2, width)
     return retVal
 end
 
-function this.ShiftUpDown()
-    
+-- Takes in the icon buttons and returns dimensions to draw a bar under them
+function this.GetIconBarBounds(margin_left_down, margin_right_up, scale, ...)
+    local min_x = nil
+    local min_y = nil
+    local max_x = nil
+    local max_y = nil
+
+    for i = 1, select("#", ...) do
+        local button = select(i, ...)
+
+        if button.render_pos then
+            local left = button.render_pos.left
+            local top = button.render_pos.top
+            local right = left + button.render_pos.width
+            local bottom = top + button.render_pos.height
+
+            if min_x then
+                min_x = math.min(min_x, left)
+            else
+                min_x = left
+            end
+
+            if min_y then
+                min_y = math.min(min_y, top)
+            else
+                min_y = top
+            end
+
+            if max_x then
+                max_x = math.max(max_x, right)
+            else
+                max_x = right
+            end
+
+            if max_y then
+                max_y = math.max(max_y, bottom)
+            else
+                max_y = bottom
+            end
+        end
+    end
+
+    if not min_x then
+        return nil, nil, nil, nil
+    end
+
+    min_x = min_x - (margin_left_down * scale)
+    min_y = min_y - (margin_right_up * scale)
+    max_x = max_x + (margin_right_up * scale)
+    max_y = max_y + (margin_left_down * scale)
+
+    local width = max_x - min_x
+    local height = max_y - min_y
+
+    return
+        min_x + width / 2,
+        min_y + height / 2,
+        width,
+        height
+end
+
+function this.GetItemHeight(item, screenOffset_y, y, scale)
+    local max_y = this.GetMaxY(item.render_nodes)
+
+    local height = 0
+
+    if max_y > 0 then       -- stuff will be nil the first frame, then positions will stabalize
+        height = max_y - y
+    else
+        height = item.height * scale
+    end
+
+    height = height + (8 * scale)       -- add gap to the bottom
+
+    return height
+end
+
+function this.GetMaxY(render_nodes)
+    if not render_nodes or #render_nodes == 0 then
+        return 0
+    end
+
+    local max_y = 0
+
+    for _, node in ipairs(render_nodes) do
+        local render_pos = node.control.render_pos
+
+        if render_pos then      -- this will be nil the first frame
+            local current_y = render_pos.top + render_pos.height
+
+            max_y = math.max(max_y, current_y)
+        end
+
+        -- Recurse
+        if node.children then
+            max_y = math.max(max_y, this.GetMaxY(node.children))
+        end
+    end
+
+    return max_y
 end

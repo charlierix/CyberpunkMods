@@ -41,7 +41,7 @@ function Draw_StackPanel(def, style_list, screenOffset_x, screenOffset_y, scale)
             --  GetScrollMaxY()         -- after all items are added, call this to see if it's > height.  Remember that for next frame
 
 
-            local inner_width = (def.width - 20 - 4) * scale        -- scrollbar width + a gap
+            local inner_width = (def.width - 20 - 6) * scale        -- scrollbar width + a gap
 
 
 

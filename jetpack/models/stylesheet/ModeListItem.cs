@@ -16,4 +16,11 @@ public record ModeListItem
 
     public string back_color_hover { get; init; }
     public string border_color_hover { get; init; }
+
+    // The icon buttons draw over top of the description, so this is a bar that draws under the icon buttons
+    // and above the description
+    //
+    // The margin is only down and left.  Reuses border_cornerRadius
+    public double iconbar_margin { get; init; }
+    public string iconbar_color { get; init; }
 }
