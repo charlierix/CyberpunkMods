@@ -86,13 +86,15 @@ public record Mode
 
 
 
-    // This is an optional class that does custom actions when right mouse button is held in
+    // These are optional classes that do custom actions when corresponding button is pressed or held in
     // There are multiple possible types that it could be.  Live object instance will be different
     // than the data object's definition
     public object extra_rmb { get; init; }
+    public object extra_key1 { get; init; }
+    public object extra_key2 { get; init; }
 
     // ----------------------------------------------------------------
-    // These are types that the extra_rmb prop could be in the data class (serialized to json and stored in database)
+    // These are types that the extra_xxx props could be in the data class (serialized to json and stored in database)
 
     public record Extra_Hover_Type
     {

@@ -387,6 +387,13 @@ registerHotkey("jetpackEnableDisable", "Enable/Disable", function()
     end
 end)
 
+registerInput("jetpackExtra1", "Extra Key 1", function(isDown)
+    keys.extra1 = isDown
+end)
+registerInput("jetpackExtra2", "Extra Key 2", function(isDown)
+    keys.extra2 = isDown
+end)
+
 registerForEvent("onOverlayOpen", function()
     isCETOpen = true
     shouldShowConfig = true

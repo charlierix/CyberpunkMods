@@ -31,47 +31,21 @@ function ModeDefaults.GetConfigValues_Count()
 end
 
 function ModeDefaults.ToJSON(mode, const)
-    local retVal = mode
+    local retVal = this.CloneTable_CurrentLayer(mode)
 
     retVal.mode_key = nil
 
-    -- Need to replace extra_rmb with a definition, since it's currently a live object that would serialize as too much
+    -- Need to replace extra_xxx with a definition, since it's currently a live object that would serialize as too much
     if mode.extra_rmb then
-        retVal = this.CloneTable_CurrentLayer(mode)
+        retVal.extra_rmb = this.ToJSON_Extra(mode.extra_rmb, const)
+    end
 
-        if mode.extra_rmb.extra_type == const.extra_type.hover then
-            retVal.extra_rmb =
-            {
-                extra_type = mode.extra_rmb.extra_type,
-                mult = mode.extra_rmb.mult,
-                accel_up = mode.extra_rmb.accel_up_ORIG,
-                accel_down = mode.extra_rmb.accel_down,
-                burnRate = mode.extra_rmb.burnRate,
-                holdDuration = mode.extra_rmb.holdDuration,
-            }
+    if mode.extra_key1 then
+        retVal.extra_key1 = this.ToJSON_Extra(mode.extra_key1, const)
+    end
 
-        elseif mode.extra_rmb.extra_type == const.extra_type.pushup then
-            retVal.extra_rmb =
-            {
-                extra_type = mode.extra_rmb.extra_type,
-                force = mode.extra_rmb.force,
-                randHorz = mode.extra_rmb.randHorz,
-                randVert = mode.extra_rmb.randVert,
-                burnRate = mode.extra_rmb.burnRate,
-            }
-
-        elseif mode.extra_rmb.extra_type == const.extra_type.dash then
-            retVal.extra_rmb =
-            {
-                extra_type = mode.extra_rmb.extra_type,
-                acceleration = mode.extra_rmb.acceleration,
-                burnRate = mode.extra_rmb.burnRate,
-            }
-
-        else
-            LogError("ModeDefaults.ToJSON: Unknown mode.extra_rmb.extra_type: " .. tostring(mode.extra_rmb.extra_type))
-            retVal.extra_rmb = nil
-        end
+    if mode.extra_key2 then
+        retVal.extra_key2 = this.ToJSON_Extra(mode.extra_key2, const)
     end
 
     return extern_json.encode(retVal)
@@ -81,22 +55,17 @@ function ModeDefaults.FromJSON(json, mode_key, sounds_thrusting, const)
 
     retVal.mode_key = mode_key
 
-    -- Replace extra_rmb with a live object
+    -- Replace extra_xxx with a live object
     if retVal.extra_rmb then
+        retVal.extra_rmb = this.FromJSON_Extra(retVal.extra_rmb, retVal, sounds_thrusting, const)
+    end
 
-        if retVal.extra_rmb.extra_type == const.extra_type.hover then
-            retVal.extra_rmb = Extra_Hover:new(retVal.extra_rmb.mult, retVal.extra_rmb.accel_up, retVal.extra_rmb.accel_down, retVal.extra_rmb.burnRate, retVal.extra_rmb.holdDuration, retVal.useImpulse, retVal.accel.gravity, sounds_thrusting, const)
+    if retVal.extra_key1 then
+        retVal.extra_key1 = this.FromJSON_Extra(retVal.extra_key1, retVal, sounds_thrusting, const)
+    end
 
-        elseif retVal.extra_rmb.extra_type == const.extra_type.pushup then
-            retVal.extra_rmb = Extra_PushUp:new(retVal.extra_rmb.force, retVal.extra_rmb.randHorz, retVal.extra_rmb.randVert, retVal.extra_rmb.burnRate, const)
-
-        elseif retVal.extra_rmb.extra_type == const.extra_type.dash then
-            retVal.extra_rmb = Extra_Dash:new(retVal.extra_rmb.acceleration, retVal.extra_rmb.burnRate, const)
-
-        else
-            LogError("ModeDefaults.FromJSON: Unknown mode.extra_rmb.extra_type: " .. tostring(retVal.extra_rmb.extra_type))
-            retVal.extra_rmb = nil
-        end
+    if retVal.extra_key2 then
+        retVal.extra_key2 = this.FromJSON_Extra(retVal.extra_key2, retVal, sounds_thrusting, const)
     end
 
     return retVal
@@ -126,6 +95,8 @@ function this.Default(const)
         -- },
 
         extra_rmb = nil,                    -- this is an optional class that does custom actions when right mouse button is held in
+        extra_key1 = nil,
+        extra_key2 = nil,
 
         jump_land =
         {
@@ -313,6 +284,7 @@ It has a slow and ominous feel to it, low gravity]]
     mode.accel.vert_stand = 3.5
 
     mode.extra_rmb = Extra_PushUp:new(22, 6, 8, 60, const)      -- the burn rate is only applied for one frame, so need something large
+    mode.extra_key1 = Extra_Hover:new(2, 4, 0.4, 0.1, 36, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.sound_type = const.thrust_sound_type.levitate
 end
@@ -446,6 +418,57 @@ function this.CloneTable_CurrentLayer(table)
     end
 
     return retVal
+end
+
+function this.ToJSON_Extra(extra, const)
+    if extra.extra_type == const.extra_type.hover then
+        return
+        {
+            extra_type = extra.extra_type,
+            mult = extra.mult,
+            accel_up = extra.accel_up_ORIG,
+            accel_down = extra.accel_down,
+            burnRate = extra.burnRate,
+            holdDuration = extra.holdDuration,
+        }
+
+    elseif extra.extra_type == const.extra_type.pushup then
+        return
+        {
+            extra_type = extra.extra_type,
+            force = extra.force,
+            randHorz = extra.randHorz,
+            randVert = extra.randVert,
+            burnRate = extra.burnRate,
+        }
+
+    elseif extra.extra_type == const.extra_type.dash then
+        return
+        {
+            extra_type = extra.extra_type,
+            acceleration = extra.acceleration,
+            burnRate = extra.burnRate,
+        }
+
+    else
+        LogError("ModeDefaults.ToJSON_Extra: Unknown extra_type: " .. tostring(extra.extra_type))
+        return nil
+    end
+end
+function this.FromJSON_Extra(extra, deserialized, sounds_thrusting, const)
+    if extra.extra_type == const.extra_type.hover then
+        return Extra_Hover:new(extra.mult, extra.accel_up, extra.accel_down, extra.burnRate, extra.holdDuration, deserialized.useImpulse, deserialized.accel.gravity, sounds_thrusting, const)
+
+    elseif extra.extra_type == const.extra_type.pushup then
+        return Extra_PushUp:new(extra.force, extra.randHorz, extra.randVert, extra.burnRate, const)
+
+    elseif extra.extra_type == const.extra_type.dash then
+        return Extra_Dash:new(extra.acceleration, extra.burnRate, const)
+
+    else
+        LogError("ModeDefaults.FromJSON_Extra: Unknown extra_type: " .. tostring(extra.extra_type))
+        return nil
+    end
 end
 
 return ModeDefaults

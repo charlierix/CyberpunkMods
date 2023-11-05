@@ -17,6 +17,8 @@ function Keys:new(debug, const)
 
     obj.jump = false
     obj.rmb = false
+    obj.extra1 = false
+    obj.extra2 = false
 
     obj.prev_jump = false
     obj.prev_rmb = false

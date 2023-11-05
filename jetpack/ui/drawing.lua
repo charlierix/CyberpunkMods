@@ -104,6 +104,16 @@ function DrawConfigName(mode, vars_ui_configname, const)
                 ImGui.Spacing()
                 ImGui.Text("right mouse: " .. mode.extra_rmb:Description())
             end
+
+            if mode.extra_key1 then
+                ImGui.Spacing()
+                ImGui.Text("extra 1: " .. mode.extra_key1:Description())
+            end
+
+            if mode.extra_key2 then
+                ImGui.Spacing()
+                ImGui.Text("extra 2: " .. mode.extra_key2:Description())
+            end
         end
 
         ImGui.PopStyleColor(1)

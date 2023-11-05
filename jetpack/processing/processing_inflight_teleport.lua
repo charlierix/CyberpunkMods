@@ -41,14 +41,12 @@ function this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
     -- Convert key presses into acceleration, energy burn
     local accelX, accelY, accelZ, requestedEnergy = GetAccel_Keys(vars, mode, o, debug, deltaTime)
 
-    -- Right Mouse Button (rmb holding altitude, rmb extra accel in look dir, rmb slam down...)
-    if mode.extra_rmb then
-        local extraX, extraY, extraZ, extraEnergy = mode.extra_rmb:Tick(o, vars.vel, keys, vars)
-        accelX = accelX + extraX
-        accelY = accelY + extraY
-        accelZ = accelZ + extraZ
-        requestedEnergy = requestedEnergy + extraEnergy
-    end
+    -- Extra (holding altitude, accel in look dir, slam down...)
+    local extraX, extraY, extraZ, extraEnergy = this.Accelerate_Extra(o, vars.vel, keys, vars, mode.extra_rmb, mode.extra_key1, mode.extra_key2)
+    accelX = accelX + extraX
+    accelY = accelY + extraY
+    accelZ = accelZ + extraZ
+    requestedEnergy = requestedEnergy + extraEnergy
 
     local deltaYaw = keys.mouse_x * -0.08
 
@@ -101,4 +99,24 @@ function this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
     end
 
     AdjustTimeSpeed(o, vars, mode, vars.vel)
+end
+function this.Accelerate_Extra(o, vel, keys, vars, ...)
+    local accelX = 0
+    local accelY = 0
+    local accelZ = 0
+    local requestedEnergy = 0
+
+    for i = 1, select("#", ...) do
+        local extra = select(i, ...)
+
+        if extra then
+            local extraX, extraY, extraZ, extraEnergy = extra:Tick(o, vel, keys, vars)
+            accelX = accelX + extraX
+            accelY = accelY + extraY
+            accelZ = accelZ + extraZ
+            requestedEnergy = requestedEnergy + extraEnergy
+        end
+    end
+
+    return accelX, accelY, accelZ, requestedEnergy
 end

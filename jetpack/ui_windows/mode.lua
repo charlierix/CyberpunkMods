@@ -23,7 +23,9 @@ function DefineWindow_Mode(vars_ui, const)
     modewin.timedilation = this.Define_TimeDilation(const)
     modewin.rebound = this.Define_Rebound(const)
     modewin.mouse_steer = this.Define_MouseSteer(const)
-    modewin.rmb = this.Define_RightMouseButton(const)
+    modewin.extrarmb = this.Define_RightMouseButton(const)
+    modewin.extrakey1 = this.Define_ExtraKey1(modewin.extrarmb, const)
+    modewin.extrakey2 = this.Define_ExtraKey2(modewin.extrakey1, const)
 
     modewin.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 
@@ -62,7 +64,9 @@ function DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, con
     this.Refresh_TimeDilation(modewin.timedilation, mode)
     this.Refresh_Rebound(modewin.rebound, mode)
     this.Refresh_MouseSteer(modewin.mouse_steer, mode)
-    this.Refresh_RightMouseButton(modewin.rmb, mode)
+    this.Refresh_RightMouseButton(modewin.extrarmb, mode)
+    this.Refresh_ExtraKey1(modewin.extrakey1, mode)
+    this.Refresh_ExtraKey2(modewin.extrakey2, mode)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -99,8 +103,16 @@ function DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, con
         --TransitionWindows_Mode_MouseSteer(vars_ui, const)
     end
 
-    if Draw_SummaryButton(modewin.rmb, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        --TransitionWindows_Mode_RightMouseButton(vars_ui, const)
+    if Draw_SummaryButton(modewin.extrarmb, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
+        --TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_rmb, function(m, e) m.extra_rmb = e end)      -- the delegate takes a mode and extra and populates the correct property off of mode
+    end
+
+    if Draw_SummaryButton(modewin.extrakey1, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
+        --TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_key1, function(m, e) m.extra_key1 = e end)
+    end
+
+    if Draw_SummaryButton(modewin.extrakey2, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
+        --TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_key2, function(m, e) m.extra_key2 = e end)
     end
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(modewin.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
@@ -460,6 +472,86 @@ end
 function this.Refresh_RightMouseButton(def, mode)
     if mode.extra_rmb then
         def.content.a_type.value = mode.extra_rmb.extra_type
+        def.unused_text = nil
+    else
+        def.unused_text = def.header_prompt
+    end
+end
+
+function this.Define_ExtraKey1(relative_to, const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 40,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.right,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        header_prompt = "Extra Key 1",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_type = { prompt = nil },
+        },
+
+        invisible_name = "Mode_ExtraKey1",
+
+        CalcSize = CalcSize_SummaryButton,
+    }
+end
+function this.Refresh_ExtraKey1(def, mode)
+    if mode.extra_key1 then
+        def.content.a_type.value = mode.extra_key1.extra_type
+        def.unused_text = nil
+    else
+        def.unused_text = def.header_prompt
+    end
+end
+
+function this.Define_ExtraKey2(relative_to, const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 40,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.right,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        header_prompt = "Extra Key 2",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_type = { prompt = nil },
+        },
+
+        invisible_name = "Mode_ExtraKey2",
+
+        CalcSize = CalcSize_SummaryButton,
+    }
+end
+function this.Refresh_ExtraKey2(def, mode)
+    if mode.extra_key2 then
+        def.content.a_type.value = mode.extra_key2.extra_type
         def.unused_text = nil
     else
         def.unused_text = def.header_prompt
