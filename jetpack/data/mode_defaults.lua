@@ -108,6 +108,7 @@ function this.Default(const)
     return
     {
         name = "",
+        description = "",
 
         useImpulse = false,               -- True: impulse based flight (game engine handles physics/collisions) | False: teleport based flight (this mod handles physics/collisions)
 
@@ -179,7 +180,12 @@ end
 function this.Realism(mode, sounds_thrusting, const)
     mode.name = "realism"
 
-    mode.description = "A good default implementation of a jetpack.  Has low accelerations, a small fuel tank, and doesn't protect you from fall damage.  It's designed to be less overpowered than other modes"
+    mode.description =
+[[Default implementation of a jetpack
+
+Has low accelerations, a small fuel tank, and doesn't protect you from fall damage
+
+It's designed to be less overpowered than other modes]]
 
     mode.useImpulse = true
 
@@ -200,7 +206,10 @@ end
 function this.WellRounded(mode, sounds_thrusting, const)
     mode.name = "well rounded"
 
-    mode.description = "A strong general purpose mode.  A bit more acceleration, infinite fuel, and no fall damage"
+    mode.description =
+[[A strong general purpose mode
+
+A bit more acceleration, infinite fuel, and no fall damage]]
 
     mode.useImpulse = true
 
@@ -231,7 +240,12 @@ end
 function this.JetTrooper(mode, sounds_thrusting, const)
     mode.name = "jet trooper"
 
-    mode.description = "Slows time, weakens gravity.  Pairs well with smart weapons or heavy machine gun.  Somewhat limited fuel tank to keep from being too overpowered"
+    mode.description =
+[[Slows time, weakens gravity
+
+Pairs well with smart weapons or heavy machine gun
+
+Somewhat limited fuel tank to keep from being too overpowered]]
 
     -- Extra fuel, but still somewhat constrained
     mode.energy.maxBurnTime = 18
@@ -254,7 +268,10 @@ end
 function this.Airplane(mode, sounds_thrusting, const)
     mode.name = "airplane"
 
-    mode.description = "Very high acceleration, infinite fuel.  Use this to get around the map quickly"
+    mode.description =
+[[Very high acceleration, infinite fuel
+
+Use this to get around the map quickly]]
 
     -- Give infinite fuel
     mode.energy.maxBurnTime = 999
@@ -282,7 +299,10 @@ end
 function this.NPCLauncher(mode, sounds_thrusting, const)
     mode.name = "npc launcher"       -- telekinetic eyeball
 
-    mode.description = "Designed to launch NPCs in the air when you press the right mouse button. It has a slow and ominous feel to it, low gravity"
+    mode.description =
+[[Designed to launch NPCs in the air when you press the right mouse button
+
+It has a slow and ominous feel to it, low gravity]]
 
     mode.useImpulse = true
 
@@ -300,7 +320,10 @@ end
 function this.HulkStomp(mode, sounds_thrusting, const)
     mode.name = "hulk stomp"
 
-    mode.description = "High acceleration up and down.  Knocks people back if you land near them"
+    mode.description =
+[[High acceleration up and down
+
+Knocks people back if you land near them]]
 
     mode.energy.maxBurnTime = 0.6
     mode.energy.burnRate_dash = 1
@@ -335,7 +358,12 @@ end
 function this.DreamJump(mode, sounds_thrusting, const)
     mode.name = "dream jump"
 
-    mode.description = "Designed to mimic the feeling of jumping in a dream.  It features low gravity, time nearly stops at the top of the arc, and can rebound as you land to go higher on the next jump.  It's a laid back way to play (major tom to ground control usually loops in my head while using it)"
+    mode.description =
+[[Designed to mimic the feeling of jumping in a dream
+
+It features low gravity, time nearly stops at the top of the arc, and can rebound as you land to go higher on the next jump
+
+It's a laid back way to play (major tom to ground control usually loops in my head while using it)]]
 
     -- Give infinite fuel
     mode.energy.maxBurnTime = 0.8
