@@ -59,7 +59,7 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, con
 
     local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
 
-    this.Actions_ModeList(main.modelist, player, vars.sounds_thrusting, const)
+    this.Actions_ModeList(main.modelist, vars_ui, player, vars.sounds_thrusting, const)
 
     return not (isCloseRequested or isCloseClicked)       -- stop showing when they click the close button (or press config key a second time.  This main page doesn't have anything to save, so it's ok to exit at any time)
 end
@@ -115,7 +115,7 @@ function this.Refresh_ModeList(def, vars_ui, player, sounds_thrusting, o, const)
     end
 end
 
-function this.Actions_ModeList(def, player, sounds_thrusting, const)
+function this.Actions_ModeList(def, vars_ui, player, sounds_thrusting, const)
     if not def.items then
         do return end
     end
@@ -136,6 +136,7 @@ function this.Actions_ModeList(def, player, sounds_thrusting, const)
                     this.Actions_ModeList_Clone(i, player)
 
                 elseif item.action_instruction == const.modelist_actions.edit then
+                    TransitionWindows_Mode(vars_ui, const, item.mode, i)
                 end
 
                 do return end       -- only one button should ever be pressed.  If more than one, just execute the first
