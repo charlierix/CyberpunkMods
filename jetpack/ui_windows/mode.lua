@@ -12,19 +12,21 @@ function DefineWindow_Mode(vars_ui, const)
     modewin.changes = Changes:new()
 
     modewin.name = this.Define_Name(const)
-    modewin.description = this.Define_Description(modewin.name, const, vars_ui.configWindow.width / vars_ui.scale)
+    modewin.description = this.Define_Description(modewin.name, const, vars_ui.configWindow.width / vars_ui.scale)      -- I don't think scale is set properly yet
 
     --TODO: impulse / teleport
     --TODO: sounds
 
     modewin.accel = this.Define_Accel(const)
-    modewin.jump_land = this.Define_JumpLand(const)
+    modewin.jump_land = this.Define_JumpLand(modewin.accel, const)
+    modewin.rebound = this.Define_Rebound(modewin.jump_land, const)
+    modewin.timedilation = this.Define_TimeDilation(modewin.jump_land, const)
+    modewin.mouse_steer = this.Define_MouseSteer(modewin.rebound, const)
+
     modewin.energy = this.Define_Energy(const)
-    modewin.timedilation = this.Define_TimeDilation(const)
-    modewin.rebound = this.Define_Rebound(const)
-    modewin.mouse_steer = this.Define_MouseSteer(const)
-    modewin.extrarmb = this.Define_RightMouseButton(const)
-    modewin.extrakey1 = this.Define_ExtraKey1(modewin.extrarmb, const)
+
+    modewin.extrakey1 = this.Define_ExtraKey1(const)
+    modewin.extrarmb = this.Define_RightMouseButton(modewin.extrakey1, const)
     modewin.extrakey2 = this.Define_ExtraKey2(modewin.extrakey1, const)
 
     modewin.okcancel = Define_OkCancelButtons(false, vars_ui, const)
@@ -145,8 +147,8 @@ function this.Define_Name(const)
 
         position =
         {
-            pos_x = 30,
-            pos_y = 30,
+            pos_x = 25,
+            pos_y = 40,
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.top,
         },
@@ -169,8 +171,8 @@ function this.Define_Description(relative_to, const, parent_width)
         invisible_name = "Mode_Description",
 
         maxChars = 288,
-        width = parent_width - (30 * 2),        -- the relative_to has an x offset of 30
-        height = 60,        -- height is required when multi line
+        width = parent_width - 10 - (25 * 2),       -- shouldn't need that extra 10 reduced, but it's too wide otherwise
+        height = 90,        -- height is required when multi line
 
         isMultiLine = true,
 
@@ -207,9 +209,9 @@ function this.Define_Accel(const)
     {
         position =
         {
-            pos_x = -180,
-            pos_y = -60,
-            horizontal = const.alignment_horizontal.center,
+            pos_x = 25,
+            pos_y = -10,
+            horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.center,
         },
 
@@ -242,15 +244,21 @@ function this.Refresh_Accel(def, mode)
     end
 end
 
-function this.Define_JumpLand(const)
+function this.Define_JumpLand(relative_to, const)
     -- SummaryButton
     return
     {
         position =
         {
-            pos_x = 0,
-            pos_y = -60,
+            relative_to = relative_to,
+
+            pos_x = 180,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
+
+            relative_vert = const.alignment_vertical.center,
             vertical = const.alignment_vertical.center,
         },
 
@@ -298,54 +306,61 @@ function this.Refresh_JumpLand(def, mode)
     end
 end
 
-function this.Define_Energy(const)
+function this.Define_Rebound(relative_to, const)
     -- SummaryButton
     return
     {
         position =
         {
+            relative_to = relative_to,
+
             pos_x = 180,
-            pos_y = -60,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
+
+            relative_vert = const.alignment_vertical.center,
             vertical = const.alignment_vertical.center,
         },
 
-        header_prompt = "Energy",
+        header_prompt = "Rebound",
 
         content =
         {
             -- the content is presented as sorted by name
-            a_max = { prompt = "max" },
-            b_burn = { prompt = "burn rate" },
-            c_recovery = { prompt = "recovery" },
+            a_hasrebound = { prompt = nil },
         },
 
-        invisible_name = "Mode_Energy",
+        invisible_name = "Mode_Rebound",
 
         CalcSize = CalcSize_SummaryButton,
     }
 end
-function this.Refresh_Energy(def, mode)
-    if mode.energy then
-        def.content.a_max.value = this.QualifySummaryValue({}, mode.energy.maxBurnTime)
-        def.content.b_burn.value = this.QualifySummaryValue({}, mode.energy.burnRate_dash)      --TODO: overload that takes dash and horz, averages results
-        def.content.c_recovery.value = this.QualifySummaryValue({}, mode.energy.recoveryRate)
+function this.Refresh_Rebound(def, mode)
+    if mode.rebound then
+        def.content.a_hasrebound.value = "has rebound"
         def.unused_text = nil
-
     else
         def.unused_text = def.header_prompt
     end
 end
 
-function this.Define_TimeDilation(const)
+function this.Define_TimeDilation(relative_to, const)
     -- SummaryButton
     return
     {
         position =
         {
-            pos_x = -180,
-            pos_y = 90,
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 130,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
+
+            relative_vert = const.alignment_vertical.center,
             vertical = const.alignment_vertical.center,
         },
 
@@ -376,49 +391,21 @@ function this.Refresh_TimeDilation(def, mode)
     end
 end
 
-function this.Define_Rebound(const)
+function this.Define_MouseSteer(relative_to, const)
     -- SummaryButton
     return
     {
         position =
         {
+            relative_to = relative_to,
+
             pos_x = 0,
-            pos_y = 90,
+            pos_y = 130,
+
+            relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
-        },
 
-        header_prompt = "Rebound",
-
-        content =
-        {
-            -- the content is presented as sorted by name
-            a_hasrebound = { prompt = nil },
-        },
-
-        invisible_name = "Mode_Rebound",
-
-        CalcSize = CalcSize_SummaryButton,
-    }
-end
-function this.Refresh_Rebound(def, mode)
-    if mode.rebound then
-        def.content.a_hasrebound.value = "has rebound"
-        def.unused_text = nil
-    else
-        def.unused_text = def.header_prompt
-    end
-end
-
-function this.Define_MouseSteer(const)
-    -- SummaryButton
-    return
-    {
-        position =
-        {
-            pos_x = 180,
-            pos_y = 90,
-            horizontal = const.alignment_horizontal.center,
+            relative_vert = const.alignment_vertical.center,
             vertical = const.alignment_vertical.center,
         },
 
@@ -444,16 +431,61 @@ function this.Refresh_MouseSteer(def, mode)
     end
 end
 
-function this.Define_RightMouseButton(const)
+function this.Define_Energy(const)
     -- SummaryButton
     return
     {
         position =
         {
-            pos_x = 40,
-            pos_y = 40,
+            pos_x = 25,
+            pos_y = 25,
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.bottom,
+        },
+
+        header_prompt = "Energy",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            a_max = { prompt = "max" },
+            b_burn = { prompt = "burn rate" },
+            c_recovery = { prompt = "recovery" },
+        },
+
+        invisible_name = "Mode_Energy",
+
+        CalcSize = CalcSize_SummaryButton,
+    }
+end
+function this.Refresh_Energy(def, mode)
+    if mode.energy then
+        def.content.a_max.value = this.QualifySummaryValue({}, mode.energy.maxBurnTime)
+        def.content.b_burn.value = this.QualifySummaryValue({}, mode.energy.burnRate_dash)      --TODO: overload that takes dash and horz, averages results
+        def.content.c_recovery.value = this.QualifySummaryValue({}, mode.energy.recoveryRate)
+        def.unused_text = nil
+
+    else
+        def.unused_text = def.header_prompt
+    end
+end
+
+function this.Define_RightMouseButton(relative_to, const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = -80,
+
+            relative_horz = const.alignment_horizontal.center,
+            horizontal = const.alignment_horizontal.center,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
         },
 
         header_prompt = "Right Mouse Button",
@@ -478,21 +510,15 @@ function this.Refresh_RightMouseButton(def, mode)
     end
 end
 
-function this.Define_ExtraKey1(relative_to, const)
+function this.Define_ExtraKey1(const)
     -- SummaryButton
     return
     {
         position =
         {
-            relative_to = relative_to,
-
-            pos_x = 40,
-            pos_y = 0,
-
-            relative_horz = const.alignment_horizontal.right,
-            horizontal = const.alignment_horizontal.left,
-
-            relative_vert = const.alignment_vertical.center,
+            pos_x = 70,
+            pos_y = 50,
+            horizontal = const.alignment_horizontal.right,
             vertical = const.alignment_vertical.center,
         },
 
@@ -526,11 +552,11 @@ function this.Define_ExtraKey2(relative_to, const)
         {
             relative_to = relative_to,
 
-            pos_x = 40,
-            pos_y = 0,
+            pos_x = 0,
+            pos_y = 80,
 
-            relative_horz = const.alignment_horizontal.right,
-            horizontal = const.alignment_horizontal.left,
+            relative_horz = const.alignment_horizontal.center,
+            horizontal = const.alignment_horizontal.center,
 
             relative_vert = const.alignment_vertical.center,
             vertical = const.alignment_vertical.center,
