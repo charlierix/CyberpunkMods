@@ -35,42 +35,42 @@ function ModeDefaults.ToJSON(mode, const)
 
     retVal.mode_key = nil
 
-    -- Need to replace rmb_extra with a definition, since it's currently a live object that would serialize as too much
-    if mode.rmb_extra then
+    -- Need to replace extra_rmb with a definition, since it's currently a live object that would serialize as too much
+    if mode.extra_rmb then
         retVal = this.CloneTable_CurrentLayer(mode)
 
-        if mode.rmb_extra.rmb_type == const.rmb_type.hover then
-            retVal.rmb_extra =
+        if mode.extra_rmb.extra_type == const.extra_type.hover then
+            retVal.extra_rmb =
             {
-                rmb_type = mode.rmb_extra.rmb_type,
-                mult = mode.rmb_extra.mult,
-                accel_up = mode.rmb_extra.accel_up_ORIG,
-                accel_down = mode.rmb_extra.accel_down,
-                burnRate = mode.rmb_extra.burnRate,
-                holdDuration = mode.rmb_extra.holdDuration,
+                extra_type = mode.extra_rmb.extra_type,
+                mult = mode.extra_rmb.mult,
+                accel_up = mode.extra_rmb.accel_up_ORIG,
+                accel_down = mode.extra_rmb.accel_down,
+                burnRate = mode.extra_rmb.burnRate,
+                holdDuration = mode.extra_rmb.holdDuration,
             }
 
-        elseif mode.rmb_extra.rmb_type == const.rmb_type.pushup then
-            retVal.rmb_extra =
+        elseif mode.extra_rmb.extra_type == const.extra_type.pushup then
+            retVal.extra_rmb =
             {
-                rmb_type = mode.rmb_extra.rmb_type,
-                force = mode.rmb_extra.force,
-                randHorz = mode.rmb_extra.randHorz,
-                randVert = mode.rmb_extra.randVert,
-                burnRate = mode.rmb_extra.burnRate,
+                extra_type = mode.extra_rmb.extra_type,
+                force = mode.extra_rmb.force,
+                randHorz = mode.extra_rmb.randHorz,
+                randVert = mode.extra_rmb.randVert,
+                burnRate = mode.extra_rmb.burnRate,
             }
 
-        elseif mode.rmb_extra.rmb_type == const.rmb_type.dash then
-            retVal.rmb_extra =
+        elseif mode.extra_rmb.extra_type == const.extra_type.dash then
+            retVal.extra_rmb =
             {
-                rmb_type = mode.rmb_extra.rmb_type,
-                acceleration = mode.rmb_extra.acceleration,
-                burnRate = mode.rmb_extra.burnRate,
+                extra_type = mode.extra_rmb.extra_type,
+                acceleration = mode.extra_rmb.acceleration,
+                burnRate = mode.extra_rmb.burnRate,
             }
 
         else
-            LogError("ModeDefaults.ToJSON: Unknown mode.rmb_extra.rmb_type: " .. tostring(mode.rmb_extra.rmb_type))
-            retVal.rmb_extra = nil
+            LogError("ModeDefaults.ToJSON: Unknown mode.extra_rmb.extra_type: " .. tostring(mode.extra_rmb.extra_type))
+            retVal.extra_rmb = nil
         end
     end
 
@@ -81,21 +81,21 @@ function ModeDefaults.FromJSON(json, mode_key, sounds_thrusting, const)
 
     retVal.mode_key = mode_key
 
-    -- Replace rmb_extra with a live object
-    if retVal.rmb_extra then
+    -- Replace extra_rmb with a live object
+    if retVal.extra_rmb then
 
-        if retVal.rmb_extra.rmb_type == const.rmb_type.hover then
-            retVal.rmb_extra = RMB_Hover:new(retVal.rmb_extra.mult, retVal.rmb_extra.accel_up, retVal.rmb_extra.accel_down, retVal.rmb_extra.burnRate, retVal.rmb_extra.holdDuration, retVal.useImpulse, retVal.accel.gravity, sounds_thrusting, const)
+        if retVal.extra_rmb.extra_type == const.extra_type.hover then
+            retVal.extra_rmb = Extra_Hover:new(retVal.extra_rmb.mult, retVal.extra_rmb.accel_up, retVal.extra_rmb.accel_down, retVal.extra_rmb.burnRate, retVal.extra_rmb.holdDuration, retVal.useImpulse, retVal.accel.gravity, sounds_thrusting, const)
 
-        elseif retVal.rmb_extra.rmb_type == const.rmb_type.pushup then
-            retVal.rmb_extra = RMB_PushUp:new(retVal.rmb_extra.force, retVal.rmb_extra.randHorz, retVal.rmb_extra.randVert, retVal.rmb_extra.burnRate, const)
+        elseif retVal.extra_rmb.extra_type == const.extra_type.pushup then
+            retVal.extra_rmb = Extra_PushUp:new(retVal.extra_rmb.force, retVal.extra_rmb.randHorz, retVal.extra_rmb.randVert, retVal.extra_rmb.burnRate, const)
 
-        elseif retVal.rmb_extra.rmb_type == const.rmb_type.dash then
-            retVal.rmb_extra = RMB_Dash:new(retVal.rmb_extra.acceleration, retVal.rmb_extra.burnRate, const)
+        elseif retVal.extra_rmb.extra_type == const.extra_type.dash then
+            retVal.extra_rmb = Extra_Dash:new(retVal.extra_rmb.acceleration, retVal.extra_rmb.burnRate, const)
 
         else
-            LogError("ModeDefaults.FromJSON: Unknown mode.rmb_extra.rmb_type: " .. tostring(retVal.rmb_extra.rmb_type))
-            retVal.rmb_extra = nil
+            LogError("ModeDefaults.FromJSON: Unknown mode.extra_rmb.extra_type: " .. tostring(retVal.extra_rmb.extra_type))
+            retVal.extra_rmb = nil
         end
     end
 
@@ -125,7 +125,7 @@ function this.Default(const)
         --     highZSpeed = 4.5,
         -- },
 
-        rmb_extra = nil,                    -- this is an optional class that does custom actions when right mouse button is held in
+        extra_rmb = nil,                    -- this is an optional class that does custom actions when right mouse button is held in
 
         jump_land =
         {
@@ -232,7 +232,7 @@ A bit more acceleration, infinite fuel, and no fall damage]]
 
     mode.accel.gravity = -7
 
-    mode.rmb_extra = RMB_Hover:new(10, 6, 2, 1, 9999, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
+    mode.extra_rmb = Extra_Hover:new(10, 6, 2, 1, 9999, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.sound_type = const.thrust_sound_type.steam_quiet
 end
@@ -260,7 +260,7 @@ Somewhat limited fuel tank to keep from being too overpowered]]
 
     mode.accel.vert_initial = 2
 
-    mode.rmb_extra = RMB_Hover:new(2, 2, 0.4, 0.3, 12, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
+    mode.extra_rmb = Extra_Hover:new(2, 2, 0.4, 0.3, 12, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.sound_type = const.thrust_sound_type.steam_quiet
 end
@@ -289,7 +289,7 @@ Use this to get around the map quickly]]
 
     mode.accel.gravity = -16
 
-    mode.rmb_extra = RMB_Hover:new(12, 6, 2, 1, 9999, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
+    mode.extra_rmb = Extra_Hover:new(12, 6, 2, 1, 9999, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.rotateVel.is_used = true
 
@@ -312,7 +312,7 @@ It has a slow and ominous feel to it, low gravity]]
     mode.accel.gravity = -1
     mode.accel.vert_stand = 3.5
 
-    mode.rmb_extra = RMB_PushUp:new(22, 6, 8, 60, const)      -- the burn rate is only applied for one frame, so need something large
+    mode.extra_rmb = Extra_PushUp:new(22, 6, 8, 60, const)      -- the burn rate is only applied for one frame, so need something large
 
     mode.sound_type = const.thrust_sound_type.levitate
 end

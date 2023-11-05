@@ -59,12 +59,12 @@ function this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
     local accelX, accelY, accelZ, requestedEnergy = GetAccel_Keys(vars, mode, o, debug, deltaTime)
 
     -- Right Mouse Button (rmb holding altitude, rmb extra accel in look dir, rmb slam down...)
-    if mode.rmb_extra then
-        local rmbX, rmbY, rmbZ, rmbEnergy = mode.rmb_extra:Tick(o, o.vel, keys, vars)
-        accelX = accelX + rmbX
-        accelY = accelY + rmbY
-        accelZ = accelZ + rmbZ
-        requestedEnergy = requestedEnergy + rmbEnergy
+    if mode.extra_rmb then
+        local extraX, extraY, extraZ, extraEnergy = mode.extra_rmb:Tick(o, o.vel, keys, vars)
+        accelX = accelX + extraX
+        accelY = accelY + extraY
+        accelZ = accelZ + extraZ
+        requestedEnergy = requestedEnergy + extraEnergy
     end
 
     -- Calculate actual burn

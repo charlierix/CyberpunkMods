@@ -1,35 +1,35 @@
 ------------------------- Interface -------------------------
--- All derived right mouse button classes require this same interface
+-- All derived extra classes require this same interface
 
 -- Velocity has to be passed in, because it's stored differently between impulse and teleport based flight
 -- NOTE: Can't return 0 energy if nonzero accelerations are returned, or the calling function will ignore them
 
--- function RMB_:Description()
+-- function Extra_:Description()
 --     return "quick description"
 
--- function RMB_:Tick(o, vel, keys, vars)
+-- function Extra_:Tick(o, vel, keys, vars)
 --     return accelX, accelY, accelZ, requestedEnergy
 -------------------------------------------------------------
 
-RMB_Dash = {}
+Extra_Dash = {}
 
-function RMB_Dash:new(acceleration, burnRate, const)
+function Extra_Dash:new(acceleration, burnRate, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
-    obj.rmb_type = const.rmb_type.dash
+    obj.extra_type = const.extra_type.dash
     obj.acceleration = acceleration
     obj.burnRate = burnRate
 
     return obj
 end
 
-function RMB_Dash:Description()
+function Extra_Dash:Description()
     return "dash"
 end
 
-function RMB_Dash:Tick(o, vel, keys, vars)
+function Extra_Dash:Tick(o, vel, keys, vars)
     if not keys.rmb then
         return 0, 0, 0, 0
     end

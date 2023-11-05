@@ -40,15 +40,15 @@ require "debug/reporting"
 
 extern_json = require "external/json"       -- storing this in a global variable so that its functions must be accessed through that variable (most examples use json as the variable name, but this project already has variables called json)
 
+require "processing/extra_dash"
+require "processing/extra_hover"
+require "processing/extra_pushup"
 require "processing/flightutil"
 require "processing/flightutil_teleport"
 require "processing/processing_inflight_impulse"
 require "processing/processing_inflight_teleport"
 require "processing/processing_standard"
 require "processing/ragdoll"
-require "processing/rmb_dash"
-require "processing/rmb_hover"
-require "processing/rmb_pushup"
 require "processing/safetyfire"
 
 require "ui/drawing"
@@ -114,7 +114,7 @@ local const =
 
     thrust_sound_type = CreateEnum("steam", "steam_quiet", "levitate", "jump"),
 
-    rmb_type = CreateEnum("hover", "pushup", "dash"),       --TODO: drop item, all stop
+    extra_type = CreateEnum("hover", "pushup", "dash"),       --TODO: drop item, all stop
 
     windows = CreateEnum
     (

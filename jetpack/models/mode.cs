@@ -89,14 +89,14 @@ public record Mode
     // This is an optional class that does custom actions when right mouse button is held in
     // There are multiple possible types that it could be.  Live object instance will be different
     // than the data object's definition
-    public object rmb_extra { get; init; }
+    public object extra_rmb { get; init; }
 
     // ----------------------------------------------------------------
-    // These are types that the rmb_extra prop could be in the data class (serialized to json and stored in database)
+    // These are types that the extra_rmb prop could be in the data class (serialized to json and stored in database)
 
-    public record RMB_Hover_Type
+    public record Extra_Hover_Type
     {
-        public rmb_type rmb_type { get; init; }     // Enum: see const in init.lua
+        public extra_type extra_type { get; init; }     // Enum: see const in init.lua
         public double mult { get; init; }
         public double accel_up { get; init; }
         public double accel_down { get; init; }
@@ -104,18 +104,18 @@ public record Mode
         public double holdDuration { get; init; }
     }
 
-    public record RMB_PushUp_Type
+    public record Extra_PushUp_Type
     {
-        public rmb_type rmb_type { get; init; }     // Enum: see const in init.lua
+        public extra_type extra_type { get; init; }     // Enum: see const in init.lua
         public double force { get; init; }
         public double randHorz { get; init; }
         public double randVert { get; init; }
         public double burnRate { get; init; }
     }
 
-    public record RMB_Dash_Type
+    public record Extra_Dash_Type
     {
-        public rmb_type rmb_type { get; init; }     // Enum: see const in init.lua
+        public extra_type extra_type { get; init; }     // Enum: see const in init.lua
         public double acceleration { get; init; }
         public double burnRate { get; init; }
     }

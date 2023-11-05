@@ -1,24 +1,24 @@
 ------------------------- Interface -------------------------
--- All derived right mouse button classes require this same interface
+-- All derived extra classes require this same interface
 
 -- Velocity has to be passed in, because it's stored differently between impulse and teleport based flight
 -- NOTE: Can't return 0 energy if nonzero accelerations are returned, or the calling function will ignore them
 
--- function RMB_:Description()
+-- function Extra_:Description()
 --     return "quick description"
 
--- function RMB_:Tick(o, vel, keys, vars)
+-- function Extra_:Tick(o, vel, keys, vars)
 --     return accelX, accelY, accelZ, requestedEnergy
 -------------------------------------------------------------
 
-RMB_PushUp = {}
+Extra_PushUp = {}
 
-function RMB_PushUp:new(force, randHorz, randVert, burnRate, const)
+function Extra_PushUp:new(force, randHorz, randVert, burnRate, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
-    obj.rmb_type = const.rmb_type.pushup
+    obj.extra_type = const.extra_type.pushup
     obj.force = force
     obj.randHorz = randHorz
     obj.randVert = randVert
@@ -27,11 +27,11 @@ function RMB_PushUp:new(force, randHorz, randVert, burnRate, const)
     return obj
 end
 
-function RMB_PushUp:Description()
+function Extra_PushUp:Description()
     return "npc lift"
 end
 
-function RMB_PushUp:Tick(o, vel, keys, vars)
+function Extra_PushUp:Tick(o, vel, keys, vars)
     -- Initial press down
     if keys.rmb and not keys.prev_rmb then
 

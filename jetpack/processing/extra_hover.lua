@@ -1,24 +1,24 @@
 ------------------------- Interface -------------------------
--- All derived right mouse button classes require this same interface
+-- All derived extra classes require this same interface
 
 -- Velocity has to be passed in, because it's stored differently between impulse and teleport based flight
 -- NOTE: Can't return 0 energy if nonzero accelerations are returned, or the calling function will ignore them
 
--- function RMB_:Description()
+-- function Extra_:Description()
 --     return "quick description"
 
--- function RMB_:Tick(o, vel, keys, vars)
+-- function Extra_:Tick(o, vel, keys, vars)
 --     return accelX, accelY, accelZ, requestedEnergy
 -------------------------------------------------------------
 
-RMB_Hover = {}
+Extra_Hover = {}
 
-function RMB_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, useImpulse, gravity, sounds_thrusting, const)
+function Extra_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, useImpulse, gravity, sounds_thrusting, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
-    obj.rmb_type = const.rmb_type.hover
+    obj.extra_type = const.extra_type.hover
 
     obj.sounds_thrusting = sounds_thrusting
 
@@ -36,27 +36,27 @@ function RMB_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, useIm
     obj.burnRate = burnRate
 
     obj.holdAltitude = 0
-    obj.rmbLastDownTime = -holdDuration
+    obj.buttonLastDownTime = -holdDuration
     obj.holdDuration = holdDuration
 
     return obj
 end
 
-function RMB_Hover:Description()
+function Extra_Hover:Description()
     return "hover"
 end
 
-function RMB_Hover:Tick(o, vel, keys, vars)
+function Extra_Hover:Tick(o, vel, keys, vars)
     if keys.jump then
-        self.rmbLastDownTime = -self.holdDuration      -- pressing jump needs to turn off cruise control
+        self.buttonLastDownTime = -self.holdDuration      -- pressing jump needs to turn off cruise control
         self.sounds_thrusting:StopHover()
 
     elseif keys.rmb then
-        self.rmbLastDownTime = o.timer
+        self.buttonLastDownTime = o.timer
         self.sounds_thrusting:StartHover()
     end
 
-    if (o.timer - self.rmbLastDownTime) > self.holdDuration then
+    if (o.timer - self.buttonLastDownTime) > self.holdDuration then
         return 0, 0, 0, 0
     end
 
@@ -75,7 +75,7 @@ function RMB_Hover:Tick(o, vel, keys, vars)
     return 0, 0, standard + velAdjust, self.burnRate
 end
 
-function RMB_Hover:GetStandardAccel(diff)
+function Extra_Hover:GetStandardAccel(diff)
     -- Scale diff to be an acceleration
     local accel = diff * self.mult
 
@@ -94,7 +94,7 @@ function RMB_Hover:GetStandardAccel(diff)
     return accel
 end
 
-function RMB_Hover:GetVelocityAccel(vel, diff)
+function Extra_Hover:GetVelocityAccel(vel, diff)
     --NOTE: diff is desired-pos, so is negative when above plane, positive when below plane.  Think of it
     --as the acceleration needed to get back to the plane
     if (diff < 0 and vel.z < 0) or (diff > 0 and vel.z > 0) then

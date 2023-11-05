@@ -458,8 +458,8 @@ function this.Define_RightMouseButton(const)
     }
 end
 function this.Refresh_RightMouseButton(def, mode)
-    if mode.rmb_extra then
-        def.content.a_type.value = mode.rmb_extra.rmb_type
+    if mode.extra_rmb then
+        def.content.a_type.value = mode.extra_rmb.extra_type
         def.unused_text = nil
     else
         def.unused_text = def.header_prompt

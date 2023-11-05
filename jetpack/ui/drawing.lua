@@ -100,9 +100,9 @@ function DrawConfigName(mode, vars_ui_configname, const)
                 ImGui.Text("rebound jumping")
             end
 
-            if mode.rmb_extra then
+            if mode.extra_rmb then
                 ImGui.Spacing()
-                ImGui.Text("right mouse: " .. mode.rmb_extra:Description())
+                ImGui.Text("right mouse: " .. mode.extra_rmb:Description())
             end
         end
 
