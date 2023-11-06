@@ -10,6 +10,7 @@ public record Mode
 
     public string description { get; init; }
 
+    // Flight Method
     // True: Impulse based flight
     // False: Teleport based flight
     public bool useImpulse { get; init; }

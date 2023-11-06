@@ -18,7 +18,7 @@ function DefineWindow_GrappleStraight_AirAnchor(vars_ui, const)
     gst8_airanchor.name = Define_Name(const)
 
 
--- highlight the standard line on hover
+    -- highlight the standard line on hover
 
     gst8_airanchor.stickFigure = Define_StickFigure(false, const)
     gst8_airanchor.arrows = Define_GrappleArrows(true, false)

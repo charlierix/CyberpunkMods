@@ -1,5 +1,7 @@
 local this = {}
 
+local flight_method = CreateEnum("impulse", "teleport")
+
 -- This gets called during init and sets up as much static inforation as it can for all the
 -- controls (the rest of the info gets filled out each frame)
 --
@@ -14,9 +16,6 @@ function DefineWindow_Mode(vars_ui, const)
     modewin.name = this.Define_Name(const)
     modewin.description = this.Define_Description(modewin.name, const, vars_ui.configWindow.width / vars_ui.scale)      -- I don't think scale is set properly yet
 
-    --TODO: impulse / teleport
-    --TODO: sounds
-
     modewin.accel = this.Define_Accel(const)
     modewin.jump_land = this.Define_JumpLand(modewin.accel, const)
     modewin.rebound = this.Define_Rebound(modewin.jump_land, const)
@@ -28,6 +27,14 @@ function DefineWindow_Mode(vars_ui, const)
     modewin.extrakey1 = this.Define_ExtraKey1(const)
     modewin.extrarmb = this.Define_RightMouseButton(modewin.extrakey1, const)
     modewin.extrakey2 = this.Define_ExtraKey2(modewin.extrakey1, const)
+
+    modewin.flightmethod_combo = this.Define_FlightMethod_Combo(const)
+    modewin.flightmethod_help = this.Define_FlightMethod_Help(modewin.flightmethod_combo, const)
+    modewin.flightmethod_label = this.Define_FlightMethod_Label(modewin.flightmethod_help, const)
+
+    modewin.sound_combo = this.Define_Sound_Combo(modewin.flightmethod_combo, const)
+    modewin.sound_help = this.Define_Sound_Help(modewin.sound_combo, const)
+    modewin.sound_label = this.Define_Sound_Label(modewin.sound_help, const)
 
     modewin.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 
@@ -46,7 +53,8 @@ function ActivateWindow_Mode(vars_ui, const)
     modewin.name.text = nil
     modewin.description.text = nil
 
-
+    modewin.flightmethod_combo.selected_item = nil
+    modewin.sound_combo.selected_item = nil
 end
 
 -- This gets called each frame from DrawConfig()
@@ -69,6 +77,11 @@ function DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, con
     this.Refresh_RightMouseButton(modewin.extrarmb, mode)
     this.Refresh_ExtraKey1(modewin.extrakey1, mode)
     this.Refresh_ExtraKey2(modewin.extrakey2, mode)
+
+    this.Refresh_FlightMethod_Combo(modewin.flightmethod_combo, mode)
+    this.Refresh_Sound_Combo(modewin.sound_combo, mode)
+
+    --this.Refresh_IsDirty()
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -116,6 +129,14 @@ function DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, con
     if Draw_SummaryButton(modewin.extrakey2, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
         --TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_key2, function(m, e) m.extra_key2 = e end)
     end
+
+    Draw_ComboBox(modewin.flightmethod_combo, vars_ui.style.combobox, vars_ui.scale)
+    Draw_HelpButton(modewin.flightmethod_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Label(modewin.flightmethod_label, vars_ui.style.colors, vars_ui.scale)
+
+    Draw_ComboBox(modewin.sound_combo, vars_ui.style.combobox, vars_ui.scale)
+    Draw_HelpButton(modewin.sound_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Label(modewin.sound_label, vars_ui.style.colors, vars_ui.scale)
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(modewin.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
@@ -210,7 +231,7 @@ function this.Define_Accel(const)
         position =
         {
             pos_x = 25,
-            pos_y = -10,
+            pos_y = -15,
             horizontal = const.alignment_horizontal.left,
             vertical = const.alignment_vertical.center,
         },
@@ -355,7 +376,7 @@ function this.Define_TimeDilation(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 130,
+            pos_y = 125,
 
             relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
@@ -400,7 +421,7 @@ function this.Define_MouseSteer(relative_to, const)
             relative_to = relative_to,
 
             pos_x = 0,
-            pos_y = 130,
+            pos_y = 125,
 
             relative_horz = const.alignment_horizontal.center,
             horizontal = const.alignment_horizontal.center,
@@ -582,6 +603,197 @@ function this.Refresh_ExtraKey2(def, mode)
     else
         def.unused_text = def.header_prompt
     end
+end
+
+function this.Define_FlightMethod_Combo(const)
+    -- ComboBox
+    return
+    {
+        preview_text = flight_method.impulse,
+        selected_item = nil,
+
+        items =
+        {
+            flight_method.impulse,
+            flight_method.teleport,
+        },
+
+        width = 120,
+
+        position =
+        {
+            pos_x = 75,
+            pos_y = 30,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        invisible_name = "Mode_FlightMethod_Combo",
+
+        CalcSize = CalcSize_ComboBox,
+    }
+end
+function this.Refresh_FlightMethod_Combo(def, mode)
+    if not def.selected_item then
+        if mode.useImpulse then
+            def.selected_item = flight_method.impulse
+        else
+            def.selected_item = flight_method.teleport
+        end
+    end
+end
+function this.Define_FlightMethod_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Mode_FlightMethod_Help",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[Impulse:  The game does physics and collisions.  Better for lower speeds, better interaction with walls/ledges
+
+Teleport:  The mod does physics and collisions.  Better for high speed, slightly more floaty feeling
+
+It's recommended to use a mod that removes the sepia filter (for impulse based flight)]]
+
+    return retVal
+end
+function this.Define_FlightMethod_Label(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Flight Method",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+
+function this.Define_Sound_Combo(relative_to, const)
+    -- ComboBox
+    return
+    {
+        preview_text = const.thrust_sound_type.steam,
+        selected_item = nil,
+
+        items =
+        {
+            const.thrust_sound_type.steam,
+            const.thrust_sound_type.steam_quiet,
+            const.thrust_sound_type.levitate,
+            const.thrust_sound_type.jump,
+            const.thrust_sound_type.silent,
+        },
+
+        width = 120,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 15,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.top,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        invisible_name = "Mode_Sound_Combo",
+
+        CalcSize = CalcSize_ComboBox,
+    }
+end
+function this.Refresh_Sound_Combo(def, mode)
+    if not def.selected_item then
+        def.selected_item = mode.sound_type
+    end
+end
+function this.Define_Sound_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "Mode_Sound_Help",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[What set of sounds to use]]
+
+    return retVal
+end
+function this.Define_Sound_Label(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Sounds",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
+    }
 end
 
 function this.Save(player, mode, mode_index)

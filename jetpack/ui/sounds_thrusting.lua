@@ -114,7 +114,7 @@ function this.GetSound_Thrust1(sound_type, const)
     elseif sound_type == const.thrust_sound_type.jump then
         return "lcm_wallrun_out"
 
-    else
+    else        -- const.thrust_sound_type.silent
         return nil
     end
 end
@@ -131,7 +131,7 @@ function this.GetSound_Thrust2(sound_type, const)
     elseif sound_type == const.thrust_sound_type.jump then
         return nil
 
-    else
+    else        -- const.thrust_sound_type.silent
         return nil
     end
 end
@@ -148,7 +148,7 @@ function this.GetSound_Maneuver(sound_type, const)
     elseif sound_type == const.thrust_sound_type.jump then
         return nil
 
-    else
+    else        -- const.thrust_sound_type.silent
         return nil
     end
 end
@@ -165,7 +165,7 @@ function this.GetSound_Hover(sound_type, const)
     elseif sound_type == const.thrust_sound_type.jump then
         return nil
 
-    else
+    else        -- const.thrust_sound_type.silent
         return nil
     end
 end

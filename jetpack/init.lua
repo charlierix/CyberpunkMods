@@ -112,7 +112,7 @@ local const =
 
     hide_energy_above_percent = 0.985,  -- For the infinite energy modes (well rounded, airplane), the progress bar is just annoying
 
-    thrust_sound_type = CreateEnum("steam", "steam_quiet", "levitate", "jump"),
+    thrust_sound_type = CreateEnum("steam", "steam_quiet", "levitate", "jump", "silent"),
 
     extra_type = CreateEnum("hover", "pushup", "dash"),       --TODO: drop item, all stop
 
