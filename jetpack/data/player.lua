@@ -79,6 +79,33 @@ function Player:Save()
     self.playerKey = primaryKey
 end
 
+function Player:SaveUpdatedMode(mode, mode_index)
+    if self.is_mock then
+        LogError("SaveUpdatedMode can't be called when player is in a mocked state")
+        do return end
+    end
+
+    if mode_index < 1 or mode_index > #self.mode_keys then
+        LogError("SaveUpdatedMode: mode_index index out of range: " .. tostring(mode_index) .. ", mode_keys count: " .. tostring(#self.mode_keys))
+        do return end
+    end
+
+    if self.mode_keys[mode_index] ~= mode.mode_key then
+        LogError("SaveUpdatedMode: primary key doesn't match.  mode_keys[mode_index]: " .. tostring(self.mode_keys[mode_index]) .. ", mode.mode_key: " .. tostring(mode.mode_key))
+        do return end
+    end
+
+    local mode_key = this.SaveMode(mode, self.const)
+
+    self.mode_keys[mode_index] = mode_key
+
+    self:Save()
+
+    if self.mode_index == mode_index then
+        this.StoreMode(self, mode)      -- mode.mode_key was updated in this.SaveMode
+    end
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 -- This loads the current profile for the current playthrough.  If there are none, use default mode, but
@@ -135,4 +162,24 @@ function this.StoreMode(obj, mode)
         obj.vars.sounds_thrusting:ModeChanged(obj.mode.sound_type)
         obj.vars.remainBurnTime = obj.mode.energy.maxBurnTime
     end
+end
+
+function this.SaveMode(mode, const)
+    local mode_json = mode_defaults.ToJSON(mode, const)
+
+    local modeKey = dal.GetModeKey_ByContent(mode.name, mode_json)
+    if not modeKey then
+        local modeKey_temp, errMsg = dal.InsertMode(mode.name, mode_json)
+
+        if modeKey_temp then
+            modeKey = modeKey_temp
+        else
+            LogError("Player.SaveMode: Couldn't insert mode: " .. tostring(errMsg))
+            return mode.mode_key        -- just return the existing key
+        end
+    end
+
+    mode.mode_key = modeKey
+
+    return modeKey
 end

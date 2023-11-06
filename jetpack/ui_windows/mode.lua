@@ -81,7 +81,7 @@ function DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, con
     this.Refresh_FlightMethod_Combo(modewin.flightmethod_combo, mode)
     this.Refresh_Sound_Combo(modewin.sound_combo, mode)
 
-    --this.Refresh_IsDirty()
+    this.Refresh_IsDirty(modewin.okcancel, modewin.name, modewin.description, modewin.flightmethod_combo, modewin.sound_combo, mode)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -140,7 +140,7 @@ function DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, con
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(modewin.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        this.Save(player, mode, vars_ui.transition_info.mode_index)
+        this.Save(player, mode, vars_ui.transition_info.mode_index, modewin.name, modewin.description, modewin.flightmethod_combo, modewin.sound_combo)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
@@ -605,6 +605,11 @@ function this.Refresh_ExtraKey2(def, mode)
     end
 end
 
+-- Take in params for ranges and their description
+function this.QualifySummaryValue(ranges, value)
+    return "tbd"
+end
+
 function this.Define_FlightMethod_Combo(const)
     -- ComboBox
     return
@@ -796,20 +801,39 @@ function this.Define_Sound_Label(relative_to, const)
     }
 end
 
-function this.Save(player, mode, mode_index)
-    -- Store mode in the database, maybe build a new instance of mode
+function this.Refresh_IsDirty(def, def_name, def_description, def_flightmethod, def_sound, mode)
+    local isDirty = false
 
+    if def_name.text and def_name.text ~= mode.name then
+        isDirty = true
 
-    -- Change player's mode primary key list
+    elseif def_description.text and def_description.text ~= mode.description then
+        isDirty = true
 
+    elseif def_flightmethod.selected_item == flight_method.impulse and not mode.useImpulse then
+        isDirty = true
 
-    -- If mode_index == player.mode_index, make sure player has the updated mode
+    elseif def_flightmethod.selected_item == flight_method.teleport and mode.useImpulse then
+        isDirty = true
 
+    elseif def_sound.selected_item ~= mode.sound_type then
+        isDirty = true
+    end
 
-    -- Save player
+    def.isDirty = isDirty
 end
 
--- Take in params for ranges and their description
-function this.QualifySummaryValue(ranges, value)
-    return "tbd"
+function this.Save(player, mode, mode_index, def_name, def_description, def_flightmethod, def_sound)
+    mode.name = def_name.text
+    mode.description = def_description.text
+
+    if def_flightmethod.selected_item == flight_method.impulse then
+        mode.useImpulse = true
+    elseif def_flightmethod.selected_item == flight_method.teleport then
+        mode.useImpulse = false
+    end
+
+    mode.sound_type = def_sound.selected_item
+
+    player:SaveUpdatedMode(mode, mode_index)
 end
