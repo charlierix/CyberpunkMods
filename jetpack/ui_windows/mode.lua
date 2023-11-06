@@ -103,7 +103,7 @@ function DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, con
     end
 
     if Draw_SummaryButton(modewin.energy, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        --TransitionWindows_Mode_Energy(vars_ui, const)
+        TransitionWindows_Mode_Energy(vars_ui, const)
     end
 
     if Draw_SummaryButton(modewin.timedilation, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
@@ -605,11 +605,6 @@ function this.Refresh_ExtraKey2(def, mode)
     end
 end
 
--- Take in params for ranges and their description
-function this.QualifySummaryValue(ranges, value)
-    return "tbd"
-end
-
 function this.Define_FlightMethod_Combo(const)
     -- ComboBox
     return
@@ -836,4 +831,11 @@ function this.Save(player, mode, mode_index, def_name, def_description, def_flig
     mode.sound_type = def_sound.selected_item
 
     player:SaveUpdatedMode(mode, mode_index)
+end
+
+---------------------------------------------------------------------------------------
+
+-- Take in params for ranges and their description
+function this.QualifySummaryValue(ranges, value)
+    return "tbd"
 end
