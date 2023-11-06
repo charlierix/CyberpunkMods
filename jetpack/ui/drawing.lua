@@ -210,6 +210,9 @@ function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, player, o, co
 
         elseif vars_ui.currentWindow == const.windows.mode then
             continueShowing = DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, const)
+
+        elseif vars_ui.currentWindow == const.windows.mode_energy then
+            continueShowing = DrawWindow_Mode_Energy(isCloseRequested, vars, vars_ui, player, window, o, const)
         end
 
         is_minimized = false

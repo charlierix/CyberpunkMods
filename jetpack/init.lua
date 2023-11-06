@@ -95,6 +95,7 @@ require "ui_framework/util_setup"
 
 require "ui_windows/main"
 require "ui_windows/mode"
+require "ui_windows/mode_energy"
 
 local this = {}
 
@@ -119,7 +120,8 @@ local const =
     windows = CreateEnum
     (
         "main",
-            "mode"
+            "mode",
+                "mode_energy"
     ),
 
     -- These are for the main window to know what button was pushed
