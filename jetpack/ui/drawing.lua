@@ -211,8 +211,26 @@ function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, player, o, co
         elseif vars_ui.currentWindow == const.windows.mode then
             continueShowing = DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, const)
 
+        elseif vars_ui.currentWindow == const.windows.mode_accel then
+            continueShowing = DrawWindow_Mode_Accel(isCloseRequested, vars, vars_ui, player, window, o, const)
+
         elseif vars_ui.currentWindow == const.windows.mode_energy then
             continueShowing = DrawWindow_Mode_Energy(isCloseRequested, vars, vars_ui, player, window, o, const)
+
+        elseif vars_ui.currentWindow == const.windows.mode_extra then
+            continueShowing = DrawWindow_Mode_Extra(isCloseRequested, vars, vars_ui, player, window, o, const)
+
+        elseif vars_ui.currentWindow == const.windows.mode_jumpland then
+            continueShowing = DrawWindow_Mode_JumpLand(isCloseRequested, vars, vars_ui, player, window, o, const)
+
+        elseif vars_ui.currentWindow == const.windows.mode_mousesteer then
+            continueShowing = DrawWindow_Mode_MouseSteer(isCloseRequested, vars, vars_ui, player, window, o, const)
+
+        elseif vars_ui.currentWindow == const.windows.mode_rebound then
+            continueShowing = DrawWindow_Mode_Rebound(isCloseRequested, vars, vars_ui, player, window, o, const)
+
+        elseif vars_ui.currentWindow == const.windows.mode_timedilation then
+            continueShowing = DrawWindow_Mode_TimeDilation(isCloseRequested, vars, vars_ui, player, window, o, const)
         end
 
         is_minimized = false

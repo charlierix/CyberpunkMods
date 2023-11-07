@@ -97,6 +97,14 @@ require "ui_windows/main"
 require "ui_windows/mode"
 require "ui_windows/mode_energy"
 
+require "ui_windows/mode_accel"
+require "ui_windows/mode_extra"
+require "ui_windows/mode_jumpland"
+require "ui_windows/mode_mousesteer"
+require "ui_windows/mode_rebound"
+require "ui_windows/mode_timedilation"
+
+
 local this = {}
 
 --------------------------------------------------------------------
@@ -121,7 +129,13 @@ local const =
     (
         "main",
             "mode",
-                "mode_energy"
+                "mode_accel",
+                "mode_energy",
+                "mode_extra",
+                "mode_jumpland",
+                "mode_mousesteer",
+                "mode_rebound",
+                "mode_timedilation"
     ),
 
     -- These are for the main window to know what button was pushed

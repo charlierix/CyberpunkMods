@@ -95,11 +95,11 @@ function DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, con
 
     -- NOTE: ignoring isHovered
     if Draw_SummaryButton(modewin.accel, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        --TransitionWindows_Mode_Accel(vars_ui, const)
+        TransitionWindows_Mode_Accel(vars_ui, const)
     end
 
     if Draw_SummaryButton(modewin.jump_land, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        --TransitionWindows_Mode_JumpLand(vars_ui, const)
+        TransitionWindows_Mode_JumpLand(vars_ui, const)
     end
 
     if Draw_SummaryButton(modewin.energy, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
@@ -107,27 +107,27 @@ function DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, con
     end
 
     if Draw_SummaryButton(modewin.timedilation, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        --TransitionWindows_Mode_TimeDilation(vars_ui, const)
+        TransitionWindows_Mode_TimeDilation(vars_ui, const)
     end
 
     if Draw_SummaryButton(modewin.rebound, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        --TransitionWindows_Mode_Rebound(vars_ui, const)
+        TransitionWindows_Mode_Rebound(vars_ui, const)
     end
 
     if Draw_SummaryButton(modewin.mouse_steer, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        --TransitionWindows_Mode_MouseSteer(vars_ui, const)
+        TransitionWindows_Mode_MouseSteer(vars_ui, const)
     end
 
     if Draw_SummaryButton(modewin.extrarmb, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        --TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_rmb, function(m, e) m.extra_rmb = e end)      -- the delegate takes a mode and extra and populates the correct property off of mode
+        TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_rmb, function(m, e) m.extra_rmb = e end)      -- the delegate takes a mode and extra and populates the correct property off of mode
     end
 
     if Draw_SummaryButton(modewin.extrakey1, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        --TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_key1, function(m, e) m.extra_key1 = e end)
+        TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_key1, function(m, e) m.extra_key1 = e end)
     end
 
     if Draw_SummaryButton(modewin.extrakey2, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        --TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_key2, function(m, e) m.extra_key2 = e end)
+        TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_key2, function(m, e) m.extra_key2 = e end)
     end
 
     Draw_ComboBox(modewin.flightmethod_combo, vars_ui.style.combobox, vars_ui.scale)
