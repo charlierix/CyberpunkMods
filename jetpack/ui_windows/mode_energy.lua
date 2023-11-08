@@ -340,7 +340,9 @@ function this.Define_Dash_Help(relative_to, const)
     retVal.tooltip =
 [[Standard vertical thrust has a burn rate of one energy per second
 
-Dashing should use more fuel]]
+Dashing should use more fuel
+
+To activate dash, tap the button, let go, then hold in that button]]
 
     return retVal
 end

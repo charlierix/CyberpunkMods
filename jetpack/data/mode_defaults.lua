@@ -193,7 +193,7 @@ It's designed to be less overpowered than other modes]]
     mode.accel.vert_stand = 1.5
     mode.accel.vert_dash = 6
 
-    mode.accel.vert_initial = 4
+    mode.accel.vert_initial = 3
 
     mode.accel.gravity = -12
 

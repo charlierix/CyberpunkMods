@@ -187,7 +187,7 @@ function this.Define_Vert_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[How much acceleration to apply when holding in the jump button]]
 
     return retVal
 end
@@ -210,7 +210,7 @@ function this.Define_Vert_Value(const)
         position =
         {
             pos_x = -180,
-            pos_y = -150,
+            pos_y = -130,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -255,7 +255,9 @@ function this.Define_VertDash_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[This gives an option to accelerate harder at the cost of more fuel
+
+To activate dash, tap jump, let go, then hold in jump]]
 
     return retVal
 end
@@ -278,7 +280,7 @@ function this.Define_VertDash_Value(const)
         position =
         {
             pos_x = -180,
-            pos_y = -50,
+            pos_y = -30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -323,7 +325,9 @@ function this.Define_Horz_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[This is the acceleration used for front/back, left/right
+
+Some modes could be more flight based, so stronger horizontal than vertical.  Other modes could be more about tall jumping]]
 
     return retVal
 end
@@ -346,7 +350,7 @@ function this.Define_Horz_Value(const)
         position =
         {
             pos_x = 180,
-            pos_y = -150,
+            pos_y = -130,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -388,7 +392,9 @@ function this.Define_HorzDash_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[This gives an option to accelerate harder at the cost of more fuel
+
+To activate dash, tap the direction button, let go, then hold in that button]]
 
     return retVal
 end
@@ -411,7 +417,7 @@ function this.Define_HorzDash_Value(const)
         position =
         {
             pos_x = 180,
-            pos_y = -50,
+            pos_y = -30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -453,7 +459,11 @@ function this.Define_Initial_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[This is an optional one time boost up, only applies when starting from the ground
+
+This is the primary acceleration for jump style modes.  Smaller values can also help the regular modes not feel so sluggish getting off the ground
+
+There seems to be a difference between impulse and teleport based flight modes.  Teleport based can use smaller values.  With impulse based, values under 2 don't seem to do anything]]
 
     return retVal
 end
@@ -476,7 +486,7 @@ function this.Define_Initial_Value(const)
         position =
         {
             pos_x = -180,
-            pos_y = 100,
+            pos_y = 150,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -559,7 +569,9 @@ function this.Define_Gravity_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[Standard gravity in game for the player is -16 (though I think grenades use -9.8)
+
+Setting a value closer to 0 will make the player more floaty.  Stonger values are good for high speed modes]]
 
     return retVal
 end
@@ -582,7 +594,7 @@ function this.Define_Gravity_Value(const)
         position =
         {
             pos_x = 180,
-            pos_y = 100,
+            pos_y = 150,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
