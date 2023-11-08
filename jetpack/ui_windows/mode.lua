@@ -822,10 +822,21 @@ function this.Save(player, mode, mode_index, def_name, def_description, def_flig
     mode.name = def_name.text
     mode.description = def_description.text
 
+    local prev_useImpulse = mode.useImpulse
+
     if def_flightmethod.selected_item == flight_method.impulse then
         mode.useImpulse = true
     elseif def_flightmethod.selected_item == flight_method.teleport then
         mode.useImpulse = false
+    end
+
+    if prev_useImpulse ~= mode.useImpulse then
+        -- Vertical accelerations are adjusted for gravity with impulse, but not with teleport
+        local vert_prev = mode_defaults.ImpulseGravityAdjust_ToUI(prev_useImpulse, mode.accel.gravity, mode.accel.vert_stand)
+        mode.accel.vert_stand = mode_defaults.ImpulseGravityAdjust_ToMode(mode.useImpulse, mode.accel.gravity, vert_prev)
+
+        local vertdash_prev = mode_defaults.ImpulseGravityAdjust_ToUI(prev_useImpulse, mode.accel.gravity, mode.accel.vert_dash)
+        mode.accel.vert_dash = mode_defaults.ImpulseGravityAdjust_ToMode(mode.useImpulse, mode.accel.gravity, vertdash_prev)
     end
 
     mode.sound_type = def_sound.selected_item

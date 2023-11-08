@@ -141,6 +141,8 @@ local const =
     -- These are for the main window to know what button was pushed
     modelist_actions = CreateEnum("move_up", "move_down", "delete", "clone", "edit"),
 
+    ui_dirty_epsilon = 0.009,
+
     settings = CreateEnum(
         -- Bools
         "IsEnabled",

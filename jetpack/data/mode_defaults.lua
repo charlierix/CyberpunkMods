@@ -20,7 +20,9 @@ function ModeDefaults.GetConfigValues(index, sounds_thrusting, const)
 
     mode.index = index
 
-    this.AdjustAccelForGravity(mode)
+    -- The vertical accelerations need to defeat gravity
+    mode.accel.vert_stand = ModeDefaults.ImpulseGravityAdjust_ToMode(mode.useImpulse, mode.accel.gravity, mode.accel.vert_stand)
+    mode.accel.vert_dash = ModeDefaults.ImpulseGravityAdjust_ToMode(mode.useImpulse, mode.accel.gravity, mode.accel.vert_dash)
 
     return mode
 end
@@ -69,6 +71,30 @@ function ModeDefaults.FromJSON(json, mode_key, sounds_thrusting, const)
     end
 
     return retVal
+end
+
+-- Impulse based flight needs to adjust the value to account for gravity.  This is done to the modes returned by
+-- ModeDefaults.GetConfigValues.  So those adjustments are in the live modes as well as stored in the database.
+-- But the UI needs to show the unmodified values, also convert the ui values into modified ones when saving changes
+-- to the mode
+function ModeDefaults.ImpulseGravityAdjust_ToMode(uses_impulse, gravity, accel)
+    -- Increases/Decreases accel to cancel out gravity
+    if uses_impulse then
+        -- Gravity is negative.  If gravity is -16, then the adjustment is zero.  If gravity is more negative then the returned accel needs to overcome that
+        --return accel + 16 - (16 + gravity)
+        return accel - gravity
+    else
+        return accel
+    end
+end
+function ModeDefaults.ImpulseGravityAdjust_ToUI(uses_impulse, gravity, accel)
+    -- Reverses the transform done in ToMode so the value can be shown
+    -- NOTE: make sure that the values passed in are ui values.  Don't mix an old baked accel with a new gravity (unpack the old accel with old gravity, then repack the pure accel with new gravity)
+    if uses_impulse then
+        return accel + gravity
+    else
+        return accel
+    end
 end
 
 --------------------------------------- Presets ---------------------------------------
@@ -389,24 +415,6 @@ function this.EnsurePresetsAssigned()
             this.HulkStomp,
             this.DreamJump,
         }
-    end
-end
-
-function this.AdjustAccelForGravity(mode)
-    -- The vertical accelerations need to defeat gravity
-    if mode.useImpulse then
-        mode.accel.vert_stand = this.GetAccelAdjustedForGravity_Impulse(mode.accel.vert_stand, mode)
-        mode.accel.vert_dash = this.GetAccelAdjustedForGravity_Impulse(mode.accel.vert_dash, mode)
-    end
-end
-
--- Increases/Decreases accel to cancel out gravity
-function this.GetAccelAdjustedForGravity_Impulse(accel, mode)
-    if mode.useImpulse then
-        local extra = 16 + mode.accel.gravity      -- if gravity is 16, then this is zero.  If gravity is higher, then this is some negative amount
-        return accel + 16 - extra
-    else
-        return accel
     end
 end
 

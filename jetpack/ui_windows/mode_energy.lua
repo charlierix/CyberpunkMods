@@ -81,7 +81,7 @@ function DrawWindow_Mode_Energy(isCloseRequested, vars, vars_ui, player, window,
     this.Refresh_Dash_Rate(mode_energy.dash_rate, mode.energy)
     this.Refresh_Horz_Rate(mode_energy.horz_rate, mode.energy)
 
-    this.Refresh_IsDirty(mode_energy.okcancel, mode, mode_energy.max_unlimited, mode_energy.max_time, mode_energy.recovery_rate, mode_energy.dash_rate, mode_energy.horz_rate)
+    this.Refresh_IsDirty(mode_energy.okcancel, mode, const, mode_energy.max_unlimited, mode_energy.max_time, mode_energy.recovery_rate, mode_energy.dash_rate, mode_energy.horz_rate)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -445,19 +445,19 @@ function this.Refresh_Horz_Rate(def, energy)
     end
 end
 
-function this.Refresh_IsDirty(def, mode, def_max_unlimited, def_max_time, def_recovery_rate, def_dash_rate, def_horz_rate)
+function this.Refresh_IsDirty(def, mode, const, def_max_unlimited, def_max_time, def_recovery_rate, def_dash_rate, def_horz_rate)
     local isDirty = false
 
-    if not IsNearValue(mode.energy.maxBurnTime, this.GetNew_MaxBurnTime(def_max_unlimited, def_max_time)) then
+    if not IsNearValue_custom(mode.energy.maxBurnTime, this.GetNew_MaxBurnTime(def_max_unlimited, def_max_time), const.ui_dirty_epsilon) then
         isDirty = true
 
-    elseif not IsNearValue(mode.energy.recoveryRate, this.GetNew_ReoveryRate(def_max_unlimited, def_recovery_rate)) then
+    elseif not IsNearValue_custom(mode.energy.recoveryRate, this.GetNew_ReoveryRate(def_max_unlimited, def_recovery_rate), const.ui_dirty_epsilon) then
         isDirty = true
 
-    elseif not IsNearValue(mode.energy.burnRate_dash, def_dash_rate.value) then
+    elseif not IsNearValue_custom(mode.energy.burnRate_dash, def_dash_rate.value, const.ui_dirty_epsilon) then
         isDirty = true
 
-    elseif not IsNearValue(mode.energy.burnRate_horz, def_horz_rate.value) then
+    elseif not IsNearValue_custom(mode.energy.burnRate_horz, def_horz_rate.value, const.ui_dirty_epsilon) then
         isDirty = true
     end
 
@@ -475,6 +475,8 @@ end
 
 ---------------------------------------------------------------------------------------
 
+
+--TODO: Generalize these functions and put them in a public utility class
 function this.GetNew_MaxBurnTime(def_max_unlimited, def_max_time)
     if def_max_unlimited.isChecked or not def_max_time.value then
         return 999
@@ -537,6 +539,8 @@ function this.MaxBurnTime_ToSlider(value)
 
     return curve_max_toslider:Evaluate(value)
 end
+
+
 
 function this.EnsureCurvesPopulated()
     if curve_max_fromslider then
