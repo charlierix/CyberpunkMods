@@ -167,7 +167,7 @@ function this.Default(const)
         rebound = nil,                      -- allows the player to bounce off the ground if they hit jump as they hit the ground
         -- rebound =
         -- {
-        --     percent_at_zero = 1.5,       -- the percent of Z part of velocity to bebound with when speed along Z is zero
+        --     percent_at_zero = 1.5,       -- the percent of Z part of velocity to rebound with when speed along Z is zero
         --     percent_at_max = 0.8,        -- the percent to use at a high impact speed
         --     speed_of_max = 40,           -- the speed where percent_at_max should be applied.  Any speed higher than this will also use percent_at_max
         -- },

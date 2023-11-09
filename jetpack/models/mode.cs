@@ -80,7 +80,7 @@ public record Mode
     public Rebound_Type rebound { get; init; }          // allows the player to bounce off the ground if they hit jump as they hit the ground
     public record Rebound_Type
     {
-        public double percent_at_zero { get; init; }    // the percent of Z part of velocity to bebound with when speed along Z is zero
+        public double percent_at_zero { get; init; }    // the percent of Z part of velocity to rebound with when speed along Z is zero
         public double percent_at_max { get; init; }     // the percent to use at a high impact speed
         public double speed_of_max { get; init; }       // the speed where percent_at_max should be applied.  Any speed higher than this will also use percent_at_max
     }
