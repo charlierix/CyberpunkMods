@@ -19,15 +19,15 @@ public record Mode
     public thrust_sound_type sound_type { get; init; }
 
     // Only one of these two can be populated (or none)
-    public double? timeSpeed { get; init; }     // 0.0001 is frozen time, 1 is standard
-    public TimeSpeed_Gradient_Type timeSpeed_gradient { get; init; }     // this defines bullet time based on abs(vel.z)
+    public double? timeDilation { get; init; }     // 0.0001 is frozen time, 1 is standard
+    public TimeDilation_Gradient_Type timeDilation_gradient { get; init; }     // this defines bullet time based on abs(vel.z)
 
-    public record TimeSpeed_Gradient_Type
+    public record TimeDilation_Gradient_Type
     {
-        public double timeSpeed_lowZSpeed { get; init; }        // the bullet time to use when z speed is lower than this
+        public double timeDilation_lowZSpeed { get; init; }        // the bullet time to use when z speed is lower than this
         public double lowZSpeed { get; init; }
 
-        public double timeSpeed_highZSpeed { get; init; }
+        public double timeDilation_highZSpeed { get; init; }
         public double highZSpeed { get; init; }
     }
 
@@ -38,7 +38,8 @@ public record Mode
 
         public bool explosiveJumping { get; init; }     // this will ragdoll nearby NPCs when jumping from ground (a small force compared to landing)
         public bool explosiveLanding { get; init; }     // this will ragdoll nearby NPCs when landing
-        //TODO: electric landing (applies the electric shock effect)
+
+        // TODO: electric landing (applies the electric shock effect).  more notes in flightutil.ExplosivelyLand
 
         public bool shouldSafetyFire { get; init; }     // this detects when they are falling fast and close to the ground.  It will blip teleport to eliminate velocity and avoid death
     }

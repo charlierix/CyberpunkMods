@@ -86,13 +86,13 @@ function DrawConfigName(mode, vars_ui_configname, const)
                 ImGui.Text("explosive landing")
             end
 
-            if mode.timeSpeed and mode.timeSpeed < 1 then
+            if mode.timeDilation and mode.timeDilation < 1 then
                 ImGui.Spacing()
-                ImGui.Text(string.format("%.0f", Round(mode.timeSpeed * 100, 0)) .. "% speed")
+                ImGui.Text(string.format("%.0f", Round(mode.timeDilation * 100, 0)) .. "% speed")
 
-            elseif mode.timeSpeed_gradient then
+            elseif mode.timeDilation_gradient then
                 ImGui.Spacing()
-                ImGui.Text(string.format("%.0f", Round(mode.timeSpeed_gradient.timeSpeed_highZSpeed * 100, 0)) .. "% to " .. string.format("%.0f", Round(mode.timeSpeed_gradient.timeSpeed_lowZSpeed * 100, 0)) .. "% speed")
+                ImGui.Text(string.format("%.0f", Round(mode.timeDilation_gradient.timeDilation_highZSpeed * 100, 0)) .. "% to " .. string.format("%.0f", Round(mode.timeDilation_gradient.timeDilation_lowZSpeed * 100, 0)) .. "% speed")
             end
 
             if mode.rebound then

@@ -98,7 +98,7 @@ function this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
         Process_InFlight_HitWall(vars.vel, hit_normal, o, vars)
     end
 
-    AdjustTimeSpeed(o, vars, mode, vars.vel)
+    AdjustTimeDilation(o, vars, mode, vars.vel)
 end
 function this.Accelerate_Extra(o, vel, keys, vars, ...)
     local accelX = 0

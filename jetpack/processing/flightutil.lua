@@ -116,6 +116,9 @@ function ExplosivelyLand(o, velZ, vars)
 	-- TweakDB:SetFlat("Attacks.GroundSlamAttack.radius", 10) -- 0
 	-- TweakDB:SetFlat("Attacks.GroundSlamAttack.range", 10)-- 0
 
+    -- also maybe this:
+    -- https://www.nexusmods.com/cyberpunk2077/mods/6017
+
 
 
 
@@ -198,20 +201,20 @@ function ClampVelocity_Drag(vel, maxSpeed)
     return vel.x / speed * -accel, vel.y / speed * -accel, vel.z / speed * -accel
 end
 
-function AdjustTimeSpeed(o, vars, mode, velocity)
-    if mode.timeSpeed then
-        if mode.timeSpeed > 0 and not IsNearValue(mode.timeSpeed, 1) and (not vars.cur_timeSpeed or mode.timeSpeed ~= vars.cur_timeSpeed) then
-            vars.cur_timeSpeed = mode.timeSpeed
-            o:SetTimeSpeed(mode.timeSpeed, 1)
+function AdjustTimeDilation(o, vars, mode, velocity)
+    if mode.timeDilation then
+        if mode.timeDilation > 0 and not IsNearValue(mode.timeDilation, 1) and (not vars.cur_timeDilation or mode.timeDilation ~= vars.cur_timeDilation) then
+            vars.cur_timeDilation = mode.timeDilation
+            o:SetTimeDilation(mode.timeDilation, 1)
         end
 
-    elseif mode.timeSpeed_gradient then
-        local timeSpeed = this.GetGradientTimeSpeed(math.abs(velocity.z), mode.timeSpeed_gradient)
-        timeSpeed = Round(timeSpeed, 2)     -- don't want to set every frame
+    elseif mode.timeDilation_gradient then
+        local timeDilation = this.GetGradientTimeDilation(math.abs(velocity.z), mode.timeDilation_gradient)
+        timeDilation = Round(timeDilation, 2)     -- don't want to set every frame
 
-        if not vars.cur_timeSpeed or not IsNearValue(timeSpeed, vars.cur_timeSpeed) then
-            vars.cur_timeSpeed = timeSpeed
-            o:SetTimeSpeed(timeSpeed, 1)
+        if not vars.cur_timeDilation or not IsNearValue(timeDilation, vars.cur_timeDilation) then
+            vars.cur_timeDilation = timeDilation
+            o:SetTimeDilation(timeDilation, 1)
         end
     end
 end
@@ -227,8 +230,8 @@ function ExitFlight(vars, debug, o, player, keep_thrustkeys)
     o:Custom_CurrentlyFlying_Clear()
     vars.lastThrustTime = 0
     vars.startThrustTime = 0
-    o:UnsetTimeSpeed()
-    vars.cur_timeSpeed = nil
+    o:UnsetTimeDilation()
+    vars.cur_timeDilation = nil
     vars.sounds_thrusting:StopAll()
     vars.stop_flight_time = o.timer
 
@@ -278,15 +281,15 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.GetGradientTimeSpeed(abs_z, timeSpeed_gradient)
-    if abs_z <= timeSpeed_gradient.lowZSpeed then
-        return timeSpeed_gradient.timeSpeed_lowZSpeed
+function this.GetGradientTimeDilation(abs_z, timeDilation_gradient)
+    if abs_z <= timeDilation_gradient.lowZSpeed then
+        return timeDilation_gradient.timeDilation_lowZSpeed
 
-    elseif abs_z >= timeSpeed_gradient.highZSpeed then
-        return timeSpeed_gradient.timeSpeed_highZSpeed
+    elseif abs_z >= timeDilation_gradient.highZSpeed then
+        return timeDilation_gradient.timeDilation_highZSpeed
 
     else
-        return GetScaledValue(timeSpeed_gradient.timeSpeed_lowZSpeed, timeSpeed_gradient.timeSpeed_highZSpeed, timeSpeed_gradient.lowZSpeed, timeSpeed_gradient.highZSpeed, abs_z)
+        return GetScaledValue(timeDilation_gradient.timeDilation_lowZSpeed, timeDilation_gradient.timeDilation_highZSpeed, timeDilation_gradient.lowZSpeed, timeDilation_gradient.highZSpeed, abs_z)
     end
 end
 

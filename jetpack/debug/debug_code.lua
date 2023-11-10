@@ -32,10 +32,10 @@ function PopulateDebug(debug, o, keys, vars)
     -- debug.thrust_isDashing = vars.thrust.isDashing
     -- debug.thrust_downDuration = Round(vars.thrust.downDuration, 1)
 
-    if vars.cur_timeSpeed then
-        debug.timeSpeed = Round(vars.cur_timeSpeed, 2)
+    if vars.cur_timeDilation then
+        debug.timeDilation = Round(vars.cur_timeDilation, 2)
     else
-        debug.timeSpeed = 1
+        debug.timeDilation = 1
     end
 
     debug.timer = Round(o.timer, 1)

@@ -17,7 +17,7 @@ local pullInterval_timesystem = this.GetRandom_Variance(12, 1)
 local pullInterval_transaction = this.GetRandom_Variance(12, 1)
 local pullInterval_stats = this.GetRandom_Variance(12, 1)
 
-local time_reason = "JetpackTimeSpeed"
+local time_reason = "JetpackTimeDilation"
 
 GameObjectAccessor = {}
 
@@ -256,9 +256,9 @@ end
 -- This is used to slow time
 --  0.00001 for near stop
 --  up to 1
-function GameObjectAccessor:SetTimeSpeed(speed, player_percent)
+function GameObjectAccessor:SetTimeDilation(speed, player_percent)
     if speed <= 0 or speed >= 1 or player_percent <= 0 or player_percent > 1 then
-        LogError("SetTimeSpeed args error: " .. tostring(speed) .. ", " .. tostring(player_percent))
+        LogError("SetTimeDilation args error: " .. tostring(speed) .. ", " .. tostring(player_percent))
         do return end
     end
 
@@ -273,7 +273,7 @@ function GameObjectAccessor:SetTimeSpeed(speed, player_percent)
         self:SetWeaponSpeed(speed, player_percent)
     end
 end
-function GameObjectAccessor:UnsetTimeSpeed()
+function GameObjectAccessor:UnsetTimeDilation()
     self:EnsureLoaded_Time()
 
     if self.timesystem then

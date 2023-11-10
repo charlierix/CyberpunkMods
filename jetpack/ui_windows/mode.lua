@@ -399,11 +399,11 @@ function this.Define_TimeDilation(relative_to, const)
     }
 end
 function this.Refresh_TimeDilation(def, mode)
-    if mode.timeSpeed then
-        def.content.a_type.value = this.QualifySummaryValue({}, mode.timeSpeed)
+    if mode.timeDilation then
+        def.content.a_type.value = this.QualifySummaryValue({}, mode.timeDilation)
         def.unused_text = nil
 
-    elseif mode.timeSpeed_gradient then
+    elseif mode.timeDilation_gradient then
         def.content.a_type.value = "gradient"
         def.unused_text = nil
 

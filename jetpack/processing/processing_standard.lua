@@ -77,7 +77,7 @@ function this.ActivateFlight(o, vars, mode, velocity, rebound_impulse)
         end
     end
 
-    AdjustTimeSpeed(o, vars, mode, velocity)
+    AdjustTimeDilation(o, vars, mode, velocity)
 
     -- A couple extras to do when jumping from the ground
     this.ActivateFlight_Extras(o, vars, mode, rebound_impulse)

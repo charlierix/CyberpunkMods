@@ -109,14 +109,14 @@ function this.Default(const)
 
         sound_type = const.thrust_sound_type.steam,
 
-        -- can't use both timespeed settings, only one or none
-        timeSpeed = nil,                    -- 0.0001 is frozen time, 1 is standard
-        timeSpeed_gradient = nil,           -- this defines bullet time based on abs(vel.z)
+        -- can't use both time dilation settings, only one or none
+        timeDilation = nil,                    -- 0.0001 is frozen time, 1 is standard
+        timeDilation_gradient = nil,           -- this defines bullet time based on abs(vel.z)
         -- {
-        --     timeSpeed_lowZSpeed = 0.05,  -- the bullet time to use when z speed is lower than this
+        --     timeDilation_lowZSpeed = 0.05,  -- the bullet time to use when z speed is lower than this
         --     lowZSpeed = 2,
 
-        --     timeSpeed_highZSpeed = 0.9,
+        --     timeDilation_highZSpeed = 0.9,
         --     highZSpeed = 4.5,
         -- },
 
@@ -250,7 +250,7 @@ Somewhat limited fuel tank to keep from being too overpowered]]
 
     -- Slow things down for air superiority
     mode.accel.gravity = -3
-    mode.timeSpeed = 0.33
+    mode.timeDilation = 0.33
 
     mode.accel.vert_stand = 1.5
     mode.accel.vert_dash = 3
@@ -372,12 +372,12 @@ It's a laid back way to play (major tom to ground control usually loops in my he
     -- Slow things down, like it's a dream
     mode.accel.gravity = -2
 
-    mode.timeSpeed_gradient =               -- this defines bullet time based on abs(vel.z)
+    mode.timeDilation_gradient =               -- this defines bullet time based on abs(vel.z)
     {
-        timeSpeed_lowZSpeed = 0.05,          -- the bullet time to use when z speed is lower than this
+        timeDilation_lowZSpeed = 0.05,          -- the bullet time to use when z speed is lower than this
         lowZSpeed = 2,
 
-        timeSpeed_highZSpeed = 0.9,
+        timeDilation_highZSpeed = 0.9,
         highZSpeed = 4.5,
     }
 
@@ -399,6 +399,47 @@ It's a laid back way to play (major tom to ground control usually loops in my he
     }
 
     mode.sound_type = const.thrust_sound_type.jump
+end
+
+function this.ExtremeSlowMotion()
+    --TODO: this also needs hover on right click
+
+    -- {
+    --     "accel": {
+    --         "gravity": -0.7,
+    --         "horz_dash": 9,
+    --         "horz_stand": 2,
+    --         "vert_dash": 5.5,
+    --         "vert_initial": 0.667,
+    --         "vert_stand": 0.85
+    --     },
+    --     "description": "Just for fun, very over powered.  Buzz around, take people out with impunity",
+    --     "energy": {
+    --         "burnRate_dash": 0.1,
+    --         "burnRate_horz": 0.1,
+    --         "maxBurnTime": 999,
+    --         "recoveryRate": 99
+    --     },
+    --     "index": 1,
+    --     "jump_land": {
+    --         "explosiveJumping": false,
+    --         "explosiveLanding": false,
+    --         "holdJumpDelay": 0.22,
+    --         "shouldSafetyFire": false
+    --     },
+    --     "name": "Extreme Slow Motion",
+    --     "rotateVel": {
+    --         "dotPow": 3,
+    --         "is_used": false,
+    --         "maxSpeed": 55,
+    --         "minSpeed": 30,
+    --         "percent_horz": 0.8,
+    --         "percent_vert": 0
+    --     },
+    --     "sound_type": "levitate",
+    --     "timeDilation": 0.07,
+    --     "useImpulse": false
+    -- }
 end
 
 ----------------------------------- Private Methods -----------------------------------
