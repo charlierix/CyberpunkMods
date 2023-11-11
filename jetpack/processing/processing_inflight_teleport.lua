@@ -85,7 +85,7 @@ function this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
 
     vars.vel = ClampVelocity(vars.vel, const.maxSpeed)      -- the game gets unstable and crashes at high speed.  Probably trying to load scenes too fast, probably machine dependent
 
-    RotateVelocityToLookDir(o, mode, vars, deltaTime, debug)
+    RotateVelocityToLookDir(o, mode, vars, deltaTime, debug)        -- mouse steer
 
     -- Try to move in the desired velocity (raycast first)
     local newPos = Vector4.new(o.pos.x + (vars.vel.x * deltaTime), o.pos.y + (vars.vel.y * deltaTime), o.pos.z + (vars.vel.z * deltaTime), 1)

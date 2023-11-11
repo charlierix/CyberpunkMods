@@ -15,6 +15,11 @@ function DefineWindow_Mode_MouseSteer(vars_ui, const)
     mode_mousesteer.name = Define_Name(const)
 
 
+
+
+
+    
+
     mode_mousesteer.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 
     FinishDefiningWindow(mode_mousesteer)

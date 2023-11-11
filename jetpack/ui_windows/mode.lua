@@ -444,7 +444,7 @@ function this.Define_MouseSteer(relative_to, const)
     }
 end
 function this.Refresh_MouseSteer(def, mode)
-    if mode.rotateVel and mode.rotateVel.is_used then
+    if mode.mouseSteer then
         def.content.a_has_mouse_steer.value = "has mouse steering"
         def.unused_text = nil
     else

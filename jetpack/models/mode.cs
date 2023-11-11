@@ -66,10 +66,11 @@ public record Mode
         public double recoveryRate { get; init; }       // how quickly "energy" recharges when not using thrust
     }
 
-    public RotateVelocity_Type rotateVel { get; init; }
-    public record RotateVelocity_Type
+    // This should only be done in teleport based flight (non impulse).  This will pull the velocity to
+    // line up with the direction facing
+    public MouseSteer_Type mouseSteer { get; init; }
+    public record MouseSteer_Type
     {
-        public bool is_used { get; init; }              // This should only be done in teleport based flight (non impulse).  This will pull the velocity to line up with the direction facing
         public double percent_horz { get; init; }       // How strong the pull is.  This is percent per second (1 would be fully aligned after one second)
         public double percent_vert { get; init; }       // Aligning vertically gets annoying, because the player is naturally looking down at an angle, causing it to always want to go down
         public double dotPow { get; init; }             // unsigned integer, percent will be multiplied by the dot product so when they are looking perpendicular to velocity (or more), percent will be zero.  That dot will be taken to this power.  0 won't do the dot product, 1 is standard, 2 is squared, etc.  Paste this into desmos for a visualization: "\cos\left(\frac{\pi}{2}\cdot\left(1-x\right)\right)^{n}"

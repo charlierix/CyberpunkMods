@@ -87,13 +87,13 @@ end
 
 -- This will pull the velocity toward the direction facing
 function RotateVelocityToLookDir(o, mode, vars, deltaTime, debug)
-    if not mode.rotateVel.is_used then
+    if not mode.mouseSteer then
         do return end
     end
 
     o:GetCamera()
 
-    local percentHorz, percentVert = RotateVelocity_Percent(o.lookdir_forward, vars.vel, mode.rotateVel, debug)
+    local percentHorz, percentVert = this.RotateVelocity_Percent(o.lookdir_forward, vars.vel, mode.mouseSteer, debug)
     if not percentHorz then     -- they are either both nil or both non nil
         do return end
     end
@@ -103,86 +103,14 @@ function RotateVelocityToLookDir(o, mode, vars, deltaTime, debug)
     local velZ = vars.vel.z
 
     -- Horizontal
-    velX, velY = RotateVelocity_NewXY(o.lookdir_forward.x, o.lookdir_forward.y, velX, velY, percentHorz, deltaTime)
+    velX, velY = this.RotateVelocity_NewXY(o.lookdir_forward.x, o.lookdir_forward.y, velX, velY, percentHorz, deltaTime)
 
     -- Vertical (the logic is the same, just using YZ instead of XY)
-    velY, velZ = RotateVelocity_NewXY(o.lookdir_forward.y, o.lookdir_forward.z, velY, velZ, percentVert, deltaTime)
+    velY, velZ = this.RotateVelocity_NewXY(o.lookdir_forward.y, o.lookdir_forward.z, velY, velZ, percentVert, deltaTime)
 
     vars.vel.x = velX
     vars.vel.y = velY
     vars.vel.z = velZ
-end
-
-function RotateVelocity_Percent(dirFacing, vel, rotateVel, debug)
-
-    -- debug.zzz_dot = "n/a"
-    -- debug.zzz_scale = "n/a"
-    -- debug.zzz_perc_horz = "n/a"
-    -- debug.zzz_perc_vert = "n/a"
-
-    local speedSqr = GetVectorLengthSqr(vel)
-    if speedSqr < (rotateVel.minSpeed * rotateVel.minSpeed) then
-        -- Going too slow
-        return nil, nil
-    end
-
-    local speed = math.sqrt(speedSqr)
-    local velUnit = DivideVector(vel, speed)
-
-    local percentHorz = rotateVel.percent_horz
-    local percentVert = rotateVel.percent_vert
-
-    -- Limit percent if looking too far away
-    if rotateVel.dotPow > 0 then
-        local dot = DotProduct3D(dirFacing, velUnit)        -- direction facing is already a unit vector
-
-        -- debug.zzz_dot = dot
-
-        if dot <= 0 then
-            -- Looking perpendicular or more to velocity
-            return nil, nil
-        end
-
-        percentHorz = RotateVelocity_Percent_Pow(percentHorz, dot, rotateVel.dotPow)
-        percentVert = RotateVelocity_Percent_Pow(percentVert, dot, rotateVel.dotPow)
-    end
-
-    -- Limit percent if going too slow
-    if speed < rotateVel.maxSpeed then
-        local scale = GetScaledValue(0, 1, rotateVel.minSpeed, rotateVel.maxSpeed, speed)
-
-        -- debug.zzz_scale = scale
-
-        percentHorz = percentHorz * scale
-        percentVert = percentVert * scale
-    end
-
-    -- debug.zzz_perc_horz = percentHorz
-    -- debug.zzz_perc_vert = percentVert
-
-    return percentHorz, percentVert
-end
-
-function RotateVelocity_Percent_Pow(percent, dot, pow)
-    -- Take dot^pow
-    local dotPow = dot
-
-    for i=2, pow do
-        dotPow = dotPow * dot
-    end
-
-    return percent * dotPow
-end
-
-function RotateVelocity_NewXY(lookX, lookY, velX, velY, percent, deltaTime)
-    -- Get the angle difference
-    local rad = RadiansBetween2D(lookX, lookY, velX, velY)
-    if CrossProduct2D(lookX, lookY, velX, velY) < 0 then
-        rad = -rad
-    end
-
-    -- Pull velocity toward camera
-    return RotateVector2D(velX, velY, -rad * percent * deltaTime)
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -207,4 +135,76 @@ function this.IsHitUpFromTheGrave(velocity, hit_norm)
 
     -- They are moving up onto the backside of an up facing tile
     return true
+end
+
+function this.RotateVelocity_Percent(dirFacing, vel, mouseSteer, debug)
+
+    -- debug.zzz_dot = "n/a"
+    -- debug.zzz_scale = "n/a"
+    -- debug.zzz_perc_horz = "n/a"
+    -- debug.zzz_perc_vert = "n/a"
+
+    local speedSqr = GetVectorLengthSqr(vel)
+    if speedSqr < (mouseSteer.minSpeed * mouseSteer.minSpeed) then
+        -- Going too slow
+        return nil, nil
+    end
+
+    local speed = math.sqrt(speedSqr)
+    local velUnit = DivideVector(vel, speed)
+
+    local percentHorz = mouseSteer.percent_horz
+    local percentVert = mouseSteer.percent_vert
+
+    -- Limit percent if looking too far away
+    if mouseSteer.dotPow > 0 then
+        local dot = DotProduct3D(dirFacing, velUnit)        -- direction facing is already a unit vector
+
+        -- debug.zzz_dot = dot
+
+        if dot <= 0 then
+            -- Looking perpendicular or more to velocity
+            return nil, nil
+        end
+
+        percentHorz = this.RotateVelocity_Percent_Pow(percentHorz, dot, mouseSteer.dotPow)
+        percentVert = this.RotateVelocity_Percent_Pow(percentVert, dot, mouseSteer.dotPow)
+    end
+
+    -- Limit percent if going too slow
+    if speed < mouseSteer.maxSpeed then
+        local scale = GetScaledValue(0, 1, mouseSteer.minSpeed, mouseSteer.maxSpeed, speed)
+
+        -- debug.zzz_scale = scale
+
+        percentHorz = percentHorz * scale
+        percentVert = percentVert * scale
+    end
+
+    -- debug.zzz_perc_horz = percentHorz
+    -- debug.zzz_perc_vert = percentVert
+
+    return percentHorz, percentVert
+end
+
+function this.RotateVelocity_Percent_Pow(percent, dot, pow)
+    -- Take dot^pow
+    local dotPow = dot
+
+    for i=2, pow do
+        dotPow = dotPow * dot
+    end
+
+    return percent * dotPow
+end
+
+function this.RotateVelocity_NewXY(lookX, lookY, velX, velY, percent, deltaTime)
+    -- Get the angle difference
+    local rad = RadiansBetween2D(lookX, lookY, velX, velY)
+    if CrossProduct2D(lookX, lookY, velX, velY) < 0 then
+        rad = -rad
+    end
+
+    -- Pull velocity toward camera
+    return RotateVector2D(velX, velY, -rad * percent * deltaTime)
 end

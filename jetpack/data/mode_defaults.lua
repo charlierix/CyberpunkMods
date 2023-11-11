@@ -154,15 +154,15 @@ function this.Default(const)
             recoveryRate = 0.35,        -- how quickly "energy" recharges when not using thrust
         },
 
-        rotateVel =
-        {
-            is_used = false,            -- This should only be done in teleport based flight (non impulse).  This will pull the velocity to line up with the direction facing
-            percent_horz = 0.8,         -- How strong the pull is.  This is percent per second (1 would be fully aligned after one second)
-            percent_vert = 0,           -- Aligning vertically gets annoying, because the player is naturally looking down at an angle, causing it to always want to go down
-            dotPow = 3,                 -- unsigned integer, percent will be multiplied by the dot product so when they are looking perpendicular to velocity (or more), percent will be zero.  That dot will be taken to this power.  0 won't do the dot product, 1 is standard, 2 is squared, etc.  Paste this into desmos for a visualization: "\cos\left(\frac{\pi}{2}\cdot\left(1-x\right)\right)^{n}"
-            minSpeed = 30,              -- the speed to start rotating velocity to look dir
-            maxSpeed = 55,              -- the speed is above this, percent will be at its max
-        },
+        mouseSteer = nil,
+        -- mouseSteer =
+        -- {
+        --     percent_horz = 0.8,         -- How strong the pull is.  This is percent per second (1 would be fully aligned after one second)
+        --     percent_vert = 0,           -- Aligning vertically gets annoying, because the player is naturally looking down at an angle, causing it to always want to go down
+        --     dotPow = 3,                 -- unsigned integer, percent will be multiplied by the dot product so when they are looking perpendicular to velocity (or more), percent will be zero.  That dot will be taken to this power.  0 won't do the dot product, 1 is standard, 2 is squared, etc.  Paste this into desmos for a visualization: "\cos\left(\frac{\pi}{2}\cdot\left(1-x\right)\right)^{n}"
+        --     minSpeed = 30,              -- the speed to start rotating velocity to look dir
+        --     maxSpeed = 55,              -- the speed is above this, percent will be at its max
+        -- },
 
         rebound = nil,                      -- allows the player to bounce off the ground if they hit jump as they hit the ground
         -- rebound =
@@ -288,7 +288,14 @@ Use this to get around the map quickly]]
 
     mode.extra_rmb = Extra_Hover:new(12, 6, 2, 1, 9999, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
-    mode.rotateVel.is_used = true
+    mode.mouseSteer =
+    {
+        percent_horz = 0.8,         -- How strong the pull is.  This is percent per second (1 would be fully aligned after one second)
+        percent_vert = 0,           -- Aligning vertically gets annoying, because the player is naturally looking down at an angle, causing it to always want to go down
+        dotPow = 3,                 -- unsigned integer, percent will be multiplied by the dot product so when they are looking perpendicular to velocity (or more), percent will be zero.  That dot will be taken to this power.  0 won't do the dot product, 1 is standard, 2 is squared, etc.  Paste this into desmos for a visualization: "\cos\left(\frac{\pi}{2}\cdot\left(1-x\right)\right)^{n}"
+        minSpeed = 30,              -- the speed to start rotating velocity to look dir
+        maxSpeed = 55,              -- the speed is above this, percent will be at its max
+    }
 
     mode.sound_type = const.thrust_sound_type.steam_quiet
 end
@@ -428,14 +435,6 @@ function this.ExtremeSlowMotion()
     --         "shouldSafetyFire": false
     --     },
     --     "name": "Extreme Slow Motion",
-    --     "rotateVel": {
-    --         "dotPow": 3,
-    --         "is_used": false,
-    --         "maxSpeed": 55,
-    --         "minSpeed": 30,
-    --         "percent_horz": 0.8,
-    --         "percent_vert": 0
-    --     },
     --     "sound_type": "levitate",
     --     "timeDilation": 0.07,
     --     "useImpulse": false
