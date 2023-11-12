@@ -108,6 +108,10 @@ function RotateVelocityToLookDir(o, mode, vars, deltaTime, debug)
     -- Vertical (the logic is the same, just using YZ instead of XY)
     velY, velZ = this.RotateVelocity_NewXY(o.lookdir_forward.y, o.lookdir_forward.z, velY, velZ, percentVert, deltaTime)
 
+    if IsNaN(velX) or IsNaN(velY) or IsNaN(velZ) then
+        do return end       -- can happen at slow percents, or if going straight up
+    end
+
     vars.vel.x = velX
     vars.vel.y = velY
     vars.vel.z = velZ
@@ -167,8 +171,8 @@ function this.RotateVelocity_Percent(dirFacing, vel, mouseSteer, debug)
             return nil, nil
         end
 
-        percentHorz = this.RotateVelocity_Percent_Pow(percentHorz, dot, mouseSteer.dotPow)
-        percentVert = this.RotateVelocity_Percent_Pow(percentVert, dot, mouseSteer.dotPow)
+        percentHorz = percentHorz * dot ^ mouseSteer.dotPow
+        percentVert = percentVert * dot ^ mouseSteer.dotPow
     end
 
     -- Limit percent if going too slow
@@ -185,17 +189,6 @@ function this.RotateVelocity_Percent(dirFacing, vel, mouseSteer, debug)
     -- debug.zzz_perc_vert = percentVert
 
     return percentHorz, percentVert
-end
-
-function this.RotateVelocity_Percent_Pow(percent, dot, pow)
-    -- Take dot^pow
-    local dotPow = dot
-
-    for i=2, pow do
-        dotPow = dotPow * dot
-    end
-
-    return percent * dotPow
 end
 
 function this.RotateVelocity_NewXY(lookX, lookY, velX, velY, percent, deltaTime)
