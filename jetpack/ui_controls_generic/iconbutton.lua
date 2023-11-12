@@ -76,7 +76,7 @@ function this.DrawIcon(icon_data_parsed, screenOffset_x, screenOffset_y, left, t
 
             elseif entry[1] == instructions.arrow then
                 local arrow_width = thickness * 2 * scale
-                local arrow_length = arrow_width * 1.429        -- grappling hook has width=7, length=10.  Keeping that same ratio
+                local arrow_length = arrow_width * (10 / 7)        -- grappling hook has width=7, length=10.  Keeping that same ratio
 
                 Draw_Arrow(screenOffset_x, screenOffset_y, x1, y1, x2, y2, color, thickness, arrow_length, arrow_width)
 

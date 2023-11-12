@@ -1,5 +1,8 @@
 local this = {}
 
+local curve_maxpow_fromslider = nil
+local curve_maxpow_toslider = nil
+
 -- This gets called during init and sets up as much static inforation as it can for all the
 -- controls (the rest of the info gets filled out each frame)
 --
@@ -10,6 +13,8 @@ function DefineWindow_Mode_MouseSteer(vars_ui, const)
     vars_ui.mode_mousesteer = mode_mousesteer
 
     mode_mousesteer.changes = Changes:new()
+
+    this.EnsureCurvesPopulated()
 
     mode_mousesteer.title = Define_Title("Mouse Steering", const)
     mode_mousesteer.name = Define_Name(const)
@@ -32,15 +37,7 @@ function DefineWindow_Mode_MouseSteer(vars_ui, const)
     mode_mousesteer.dotpow_value = this.Define_DotPow_Value(const)
     mode_mousesteer.dotpow_label = this.Define_DotPow_Label(mode_mousesteer.dotpow_value, const)
     mode_mousesteer.dotpow_help = this.Define_DotPow_Help(mode_mousesteer.dotpow_label, const)
-
-    --TODO: dotPow graphic under the slider
-    -- a line chart
-    --  X = 1 to 0 (dot product)
-    --  Y = 0 to 1 (percent)
-    -- below for X axis labels
-    --  have an arrow pointing up: |
-    --  have another pair of arrows at 45 degrees: |/
-    --  and another at 90 degrees: |__
+    mode_mousesteer.dotpow_graph = this.Define_DotPow_Graph(mode_mousesteer.dotpow_value, const)
 
     -- minSpeed
     mode_mousesteer.minspeed_value = this.Define_MinSpeed_Value(const)
@@ -88,10 +85,11 @@ function DrawWindow_Mode_MouseSteer(isCloseRequested, vars, vars_ui, player, win
     this.Refresh_PercentHorz_Value(mode_mousesteer.percent_horz_value, mode)
     this.Refresh_PercentVert_Value(mode_mousesteer.percent_vert_value, mode)
     this.Refresh_DotPow_Value(mode_mousesteer.dotpow_value, mode)
+    this.Refresh_DotPow_Graph(mode_mousesteer.dotpow_graph, mode_mousesteer.dotpow_value)
     this.Refresh_MinSpeed_Value(mode_mousesteer.minspeed_value, mode)
     this.Refresh_MaxSpeed_Value(mode_mousesteer.maxspeed_value, mode)
 
-    this.Refresh_IsDirty(mode_mousesteer.okcancel, mode, mode_mousesteer.hassteer_checkbox, mode_mousesteer.percent_horz_value, mode_mousesteer.percent_vert_value, mode_mousesteer.dotpow_value, mode_mousesteer.minspeed_value, mode_mousesteer.maxspeed_value)
+    this.Refresh_IsDirty(mode_mousesteer.okcancel, mode, const, mode_mousesteer.hassteer_checkbox, mode_mousesteer.percent_horz_value, mode_mousesteer.percent_vert_value, mode_mousesteer.dotpow_value, mode_mousesteer.minspeed_value, mode_mousesteer.maxspeed_value)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -122,6 +120,7 @@ function DrawWindow_Mode_MouseSteer(isCloseRequested, vars, vars_ui, player, win
         Draw_Label(mode_mousesteer.dotpow_label, vars_ui.style.colors, vars_ui.scale)
         Draw_HelpButton(mode_mousesteer.dotpow_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
         Draw_Slider(mode_mousesteer.dotpow_value, vars_ui.style.slider, vars_ui.scale)
+        Draw_DotPowGraph(mode_mousesteer.dotpow_graph, vars_ui.style.dotpow_graph, window.left, window.top, vars_ui.scale)
 
         -- minSpeed
         Draw_Label(mode_mousesteer.minspeed_label, vars_ui.style.colors, vars_ui.scale)
@@ -191,7 +190,9 @@ function this.Define_HasSteer_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[--- ONLY USED IN TELEPORT BASED FLIGHT (NON IMPULSE) ---
+
+This will pull the velocity to line up with the direction facing]]
 
     return retVal
 end
@@ -221,7 +222,7 @@ function this.Define_PercentHorz_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[How strong the pull is.  This is percent per second (1 would be fully aligned after one second)]]
 
     return retVal
 end
@@ -289,7 +290,9 @@ function this.Define_PercentVert_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[Aligning vertically could get annoying, since the player is naturally looking down at an angle, causing it to always want to go down
+
+But for a mode that is more about flying around, this could be desirable]]
 
     return retVal
 end
@@ -363,7 +366,13 @@ function this.Define_DotPow_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[Use this to have percent reduce when look direction is not lined up with velocity direction
+
+So maybe you want percent to drop off and be near zero at 45 degrees
+
+This is basically sine^pow (normalized 0 to 1)
+    
+At power of zero, this is just a flat line at 100%.  At 1, it's sine.  Larger than one pinches so percent is zero for most angles less than 90 degrees]]
 
     return retVal
 end
@@ -374,9 +383,9 @@ function this.Define_DotPow_Value(const)
         invisible_name = "Mode_MouseSteer_DotPow_Value",
 
         min = 0,
-        max = 6,
+        max = 1,
 
-        decimal_places = 2,
+        get_custom_text = function(val) return this.Value_FromSlider_Display(val, curve_maxpow_fromslider) end,
 
         width = 300,
 
@@ -386,7 +395,7 @@ function this.Define_DotPow_Value(const)
         position =
         {
             pos_x = 180,
-            pos_y = -50,
+            pos_y = -100,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -398,12 +407,43 @@ function this.Refresh_DotPow_Value(def, mode)
     -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_MouseSteer sets this to nil
     if not def.value then
+        local new_value = 2
         if mode.mouseSteer then
-            def.value = mode.mouseSteer.dotPow
-        else
-            def.value = 2
+            new_value = mode.mouseSteer.dotPow
         end
+
+        def.value = curve_maxpow_toslider:Evaluate(new_value)
     end
+end
+function this.Define_DotPow_Graph(relative_to, const)
+    -- DotPowGraph
+    return
+    {
+        width = 280,
+        graph_height = 280 / 1.618,
+
+        graph_icon_gap = 10,
+        icon_size = 20,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 40,
+
+            relative_horz = const.alignment_horizontal.center,
+            horizontal = const.alignment_horizontal.center,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
+        },
+
+        CalcSize = CalcSize_DotPowGraph,
+    }
+end
+function this.Refresh_DotPow_Graph(def, def_slider)
+    def.power = curve_maxpow_fromslider:Evaluate(def_slider.value)
 end
 
 function this.Define_MinSpeed_Label(relative_to, const)
@@ -431,7 +471,9 @@ function this.Define_MinSpeed_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[Any speeds below this won't do any mouse steering
+
+Percent is a gradient when between min and max speed (0 at min, full at max)]]
 
     return retVal
 end
@@ -499,7 +541,9 @@ function this.Define_MaxSpeed_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[At max speed and above, the full percents assigned here are applied
+
+Percent is a gradient when between min and max speed (0 at min, full at max)]]
 
     return retVal
 end
@@ -548,7 +592,7 @@ function this.Refresh_MaxSpeed_Value(def, mode)
     end
 end
 
-function this.Refresh_IsDirty(def, mode, def_hassteer_checkbox, def_percent_horz_value, def_percent_vert_value, def_dotpow_value, def_minspeed_value, def_maxspeed_value)
+function this.Refresh_IsDirty(def, mode, const, def_hassteer_checkbox, def_percent_horz_value, def_percent_vert_value, def_dotpow_value, def_minspeed_value, def_maxspeed_value)
     local isDirty = false
 
     if def_hassteer_checkbox.isChecked then
@@ -568,7 +612,7 @@ function this.Refresh_IsDirty(def, mode, def_hassteer_checkbox, def_percent_horz
         elseif not IsNearValue(mode.mouseSteer.percent_vert, def_percent_vert_value.value) then
             isDirty = true
 
-        elseif not IsNearValue(mode.mouseSteer.dotPow, def_dotpow_value.value) then
+        elseif not IsNearValue_custom(mode.mouseSteer.dotPow, curve_maxpow_fromslider:Evaluate(def_dotpow_value.value), const.ui_dirty_epsilon) then
             isDirty = true
 
         elseif not IsNearValue(mode.mouseSteer.minSpeed, def_minspeed_value.value) then
@@ -590,7 +634,7 @@ function this.Save(player, mode, mode_index, def_hassteer_checkbox, def_percent_
 
         mode.mouseSteer.percent_horz = def_percent_horz_value.value
         mode.mouseSteer.percent_vert = def_percent_vert_value.value
-        mode.mouseSteer.dotPow = def_dotpow_value.value
+        mode.mouseSteer.dotPow = curve_maxpow_fromslider:Evaluate(def_dotpow_value.value)
         mode.mouseSteer.minSpeed = def_minspeed_value.value
         mode.mouseSteer.maxSpeed = def_maxspeed_value.value
     else
@@ -602,5 +646,40 @@ end
 
 ---------------------------------------------------------------------------------------
 
+function this.Value_FromSlider_Display(value, curve)
+    local result = curve:Evaluate(value)
 
+    local decimal_places = 0
+    if result < 2 then
+        decimal_places = 2
+    elseif result < 7 then
+        decimal_places = 1
+    end
 
+    local format = "%"
+    if decimal_places == 0 then
+        format = format .. "."
+    else
+        format = format .. "." .. tostring(decimal_places)
+    end
+
+    return string.format(format .. "f", result)
+end
+
+function this.EnsureCurvesPopulated()
+    if curve_maxpow_fromslider then
+        do return end
+    end
+
+    curve_maxpow_fromslider = AnimationCurve:new()
+    curve_maxpow_fromslider:AddKeyValue(0, 0)
+    curve_maxpow_fromslider:AddKeyValue(0.5, 3)
+    curve_maxpow_fromslider:AddKeyValue(0.75, 12)
+    curve_maxpow_fromslider:AddKeyValue(1, 60)
+
+    curve_maxpow_toslider = AnimationCurve:new()
+    curve_maxpow_toslider:AddKeyValue(0, 0)
+    curve_maxpow_toslider:AddKeyValue(3, 0.5)
+    curve_maxpow_toslider:AddKeyValue(12, 0.75)
+    curve_maxpow_toslider:AddKeyValue(60, 1)
+end

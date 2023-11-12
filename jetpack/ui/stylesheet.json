@@ -346,6 +346,21 @@
         "checker_color_light": "999"
     },
 
+    "dotpow_graph":
+    {
+        "x_axis_color": "444",
+        "x_axis_thickness": 1,
+
+        "vert_axis_color": "4E542E",
+        "vert_axis_thickness": 2,
+
+        "graphline_color": "FFF",
+        "graphline_thickness": 2,
+
+        "legendicon_color": "70735E",
+        "legendicon_thickness": 1.5
+    },
+
     "colors":
     {
         "title": { "the_color": "F0F0F0" },

@@ -81,11 +81,9 @@ namespace models.stylesheet
 
         public Tooltip tooltip { get; init; }
 
-        public MinDotGraphic mindotGraphic { get; init; }
-
-        public Graphics graphics { get; init; }
-
         public ColorSample colorSample { get; init; }
+
+        public DotPowGraph dotpow_graph { get; init; }
 
         /// <summary>
         /// For now, it's just a place to define named colors.  If more is needed later, change this to
