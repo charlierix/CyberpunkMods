@@ -1,6 +1,8 @@
 local this = {}
 local ModeDefaults = {}
 
+ModeDefaults.HOVER_MAX_HOLD_DURATION = 9999
+
 -- Presets, the index will point to one of these (or wrap around to the beginning)
 local presets = nil
 
@@ -229,7 +231,7 @@ A bit more acceleration, infinite fuel, and no fall damage]]
 
     mode.accel.gravity = -7
 
-    mode.extra_rmb = Extra_Hover:new(10, 6, 2, 1, 9999, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
+    mode.extra_rmb = Extra_Hover:new(10, 6, 2, 1, ModeDefaults.HOVER_MAX_HOLD_DURATION, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.sound_type = const.thrust_sound_type.steam_quiet
 end
@@ -286,7 +288,7 @@ Use this to get around the map quickly]]
 
     mode.accel.gravity = -16
 
-    mode.extra_rmb = Extra_Hover:new(12, 6, 2, 1, 9999, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
+    mode.extra_rmb = Extra_Hover:new(12, 6, 2, 1, ModeDefaults.HOVER_MAX_HOLD_DURATION, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.mouseSteer =
     {
