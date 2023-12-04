@@ -1,13 +1,14 @@
 local this = {}
 ModeList_Item = {}
 
-function ModeList_Item:new(token, mode, vars_ui, o, const)
+function ModeList_Item:new(token, mode, is_current_mode, vars_ui, o, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
     obj.token = token
     obj.mode = mode
+    obj.is_current_mode = is_current_mode
     obj.vars_ui = vars_ui
     obj.o = o
     obj.const = const
@@ -23,7 +24,7 @@ end
 function ModeList_Item:Draw(screenOffset_x, screenOffset_y, x, y, width, scale)
     local height = this.GetItemHeight(self.item, screenOffset_y, y, scale)
 
-    self.action_instruction = this.DrawWindow(self.item, self.mode, self.vars_ui, screenOffset_x, screenOffset_y, x, y, width, height, self.o, self.const)
+    self.action_instruction = this.DrawWindow(self.item, self.mode, self.is_current_mode, self.vars_ui, screenOffset_x, screenOffset_y, x, y, width, height, self.o, self.const)
 
     return height
 end
@@ -56,7 +57,7 @@ function this.DefineWindow(token, mode, vars_ui, const)
     return item
 end
 
-function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x, y, width, height, o, const)
+function this.DrawWindow(item, mode, is_current_mode, vars_ui, screenOffset_x, screenOffset_y, x, y, width, height, o, const)
     ------------------------- Finalize models for this frame -------------------------
 
     this.Refresh_ModeName(item.modename, mode)
@@ -122,6 +123,10 @@ function this.DrawWindow(item, mode, vars_ui, screenOffset_x, screenOffset_y, x,
         if isClicked then
             action_instruction = const.modelist_actions.edit        -- if they click on the entry background, also consider that as an edit
         end
+    end
+
+    if is_current_mode then
+        Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, width, height, vars_ui.style.modelistitem.hover_padding, false, nil, nil, vars_ui.style.modelistitem.current_mode_border_color_abgr, nil, vars_ui.style.modelistitem.current_mode_border_cornerRadius, vars_ui.style.modelistitem.current_mode_border_thickness)
     end
 
     return action_instruction

@@ -99,16 +99,21 @@ function this.Refresh_ModeList(def, vars_ui, player, sounds_thrusting, o, const)
         mode_keys_count = #player.mode_keys
     end
 
+    local mode_index = 1
+    if player.mode_index then
+        mode_index = player.mode_index
+    end
+
     if not def.items then       -- cleared during activate
-        def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, o, const)
+        def.items = this.Rebuild_ModeList(player.mode_keys, mode_index, vars_ui, sounds_thrusting, o, const)
 
     elseif #def.items - 1 ~= mode_keys_count then     -- this case should never happen
-        def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, o, const)
+        def.items = this.Rebuild_ModeList(player.mode_keys, mode_index, vars_ui, sounds_thrusting, o, const)
 
     else        -- make sure the stored list matches what the player row has
         for i = 1, mode_keys_count, 1 do
             if def.items[i].mode.mode_key ~= player.mode_keys[i] then
-                def.items = this.Rebuild_ModeList(player.mode_keys, vars_ui, sounds_thrusting, o, const)
+                def.items = this.Rebuild_ModeList(player.mode_keys, mode_index, vars_ui, sounds_thrusting, o, const)
                 do break end
             end
         end
@@ -241,14 +246,14 @@ function this.Actions_ModeList_Add(player)
 end
 
 -- Creates a list of ModeList_Item that matches the list of mode primary keys in player entry (player.mode_keys)
-function this.Rebuild_ModeList(mode_keys, vars_ui, sounds_thrusting, o, const)
+function this.Rebuild_ModeList(mode_keys, mode_index, vars_ui, sounds_thrusting, o, const)
     if not mode_keys then
         return this.Rebuild_ModeList_AppendAddItem({}, vars_ui, o, const)
     end
 
     local retVal = {}
 
-    for _, key in ipairs(mode_keys) do
+    for i, key in ipairs(mode_keys) do
         local key_string = tostring(key)
 
         if not modes_by_key[key_string] then
@@ -263,7 +268,7 @@ function this.Rebuild_ModeList(mode_keys, vars_ui, sounds_thrusting, o, const)
         end
 
         next_token = next_token + 1     -- this needs to be unique, used in invisible names
-        local item = ModeList_Item:new(next_token, modes_by_key[key_string], vars_ui, o, const)
+        local item = ModeList_Item:new(next_token, modes_by_key[key_string], i == mode_index, vars_ui, o, const)
 
         table.insert(retVal, item)
     end

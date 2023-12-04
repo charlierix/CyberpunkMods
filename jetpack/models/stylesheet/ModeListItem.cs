@@ -8,6 +8,11 @@ public record ModeListItem
     // modelistitem_description
     // modelistitem_add
 
+    // This is a border for the currently used mode
+    public double current_mode_border_cornerRadius { get; init; }
+    public double current_mode_border_thickness { get; init; }
+    public string current_mode_border_color { get; init; }
+
     // These are used to define the bar that appears when mouse is over the control
     public double hover_padding { get; init; }
 

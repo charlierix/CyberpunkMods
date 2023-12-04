@@ -269,6 +269,10 @@
     {
         "hover_padding": 4,
 
+        "current_mode_border_cornerRadius": 6,
+        "current_mode_border_thickness": 2,
+        "current_mode_border_color": "60E6D64E",
+
         "border_cornerRadius": 6,
         "border_thickness": 1,
 
