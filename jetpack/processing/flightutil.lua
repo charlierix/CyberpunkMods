@@ -262,10 +262,14 @@ function GetVelocity(mode, vars, o)
     end
 end
 
-function PopulateFlightDebug(vars, debug, accelX, accelY, accelZ)
+function PopulateFlightDebug(vars, debug, accelX, accelY, accelZ, is_impulse)
     debug.accelX = Round(accelX, 1)
     debug.accelY = Round(accelY, 1)
     debug.accelZ = Round(accelZ, 1)
+
+    if is_impulse then
+        debug.accelZ_grav = Round(accelZ - 16, 1)
+    end
 
     debug.vel2 = vec_str(vars.vel)
     debug.speed2 = Round(GetVectorLength(vars.vel), 1)

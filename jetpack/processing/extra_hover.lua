@@ -13,6 +13,8 @@
 
 Extra_Hover = {}
 
+local this = {}
+
 function Extra_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, useImpulse, gravity, sounds_thrusting, const)
     local obj = {}
     setmetatable(obj, self)
@@ -22,18 +24,15 @@ function Extra_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, use
 
     obj.sounds_thrusting = sounds_thrusting
 
-    local extraUp = 0
-    if useImpulse then
-        extraUp = 16 + gravity      -- The vertical accelerations need to defeat gravity.  If gravity is 16, then this is zero.  If gravity is higher, then this is some negative amount
-    end
-
     obj.mult = mult
 
     obj.accel_up_ORIG = accel_up
-    obj.accel_up = accel_up + extraUp
+    obj.accel_up = mode_defaults.ImpulseGravityAdjust_ToMode(useImpulse, gravity, accel_up)
 
     obj.accel_down = accel_down
     obj.burnRate = burnRate
+
+    obj.gravity = gravity
 
     obj.holdAltitude = 0
     obj.buttonLastDownTime = -holdDuration
@@ -66,25 +65,28 @@ function Extra_Hover:Tick(o, vel, keys, vars)
     end
 
     -- Above or below desired altitude
-    local diff = self.holdAltitude - o.pos.z
+    local offset = -self.gravity / self.mult        -- need to target above the hold altitude, because at a distance of gravity below is where the forces zero out
+    local diff = self.holdAltitude + offset - o.pos.z
 
     -- Get accelerations
-    local standard = self:GetStandardAccel(diff)
-    local velAdjust = self:GetVelocityAccel(vel, diff)
+    local standard = this.GetStandardAccel(diff, self.mult, self.accel_up, self.accel_down)
+    local velAdjust = this.GetVelocityAccel(vel, diff, self.mult, self.accel_up, self.accel_down)
 
     return 0, 0, standard + velAdjust, self.burnRate
 end
 
-function Extra_Hover:GetStandardAccel(diff)
+----------------------------------- Private Methods -----------------------------------
+
+function this.GetStandardAccel(diff, mult, accel_up, accel_down)
     -- Scale diff to be an acceleration
-    local accel = diff * self.mult
+    local accel = diff * mult
 
     -- Cap acceleration
     local max = 999
     if accel > 0 then
-        max = self.accel_up
+        max = accel_up
     else
-        max = self.accel_down
+        max = accel_down
     end
 
     if math.abs(accel) > max then
@@ -94,7 +96,7 @@ function Extra_Hover:GetStandardAccel(diff)
     return accel
 end
 
-function Extra_Hover:GetVelocityAccel(vel, diff)
+function this.GetVelocityAccel(vel, diff, mult, accel_up, accel_down)
     --NOTE: diff is desired-pos, so is negative when above plane, positive when below plane.  Think of it
     --as the acceleration needed to get back to the plane
     if (diff < 0 and vel.z < 0) or (diff > 0 and vel.z > 0) then
@@ -104,7 +106,7 @@ function Extra_Hover:GetVelocityAccel(vel, diff)
 
     local mockDiff = diff * math.abs(vel.z * 4)
 
-    local accel = self:GetStandardAccel(mockDiff)
+    local accel = this.GetStandardAccel(mockDiff, mult, accel_up, accel_down)
 
     --print("diff="..tostring(Round(diff,2)) .." | ".. "vel="..tostring(Round(vel.z,2)) .." | ".. "mockDiff="..tostring(Round(mockDiff,2)) .." | ".. "accel="..tostring(Round(accel,2)))
 

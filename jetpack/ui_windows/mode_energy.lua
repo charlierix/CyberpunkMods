@@ -418,7 +418,7 @@ function this.Define_Horz_Rate(const)
     {
         invisible_name = "Mode_Energy_Horz_Rate",
 
-        min = 0,
+        min = 0.01,
         max = 2,
 
         decimal_places = 2,

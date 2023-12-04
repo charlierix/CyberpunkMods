@@ -48,7 +48,7 @@ function DefineWindow_Mode_Extra(vars_ui, const)
     mode_extra.hover_holdduration_value = this.Define_Hover_HoldDuration_Value(mode_extra.hover_burnrate_value, const)
     --mode_extra.hover_holdduration_label = this.Define_Hover_HoldDuration_Label(mode_extra.hover_holdduration_value, const)
     mode_extra.hover_holdduration_checkbox = this.Define_Hover_HoldDuration_Checkbox(mode_extra.hover_holdduration_value, const)        -- using the checkbox as the label
-    mode_extra.hover_holdduration_help = this.Define_Hover_HoldDuration_Help(mode_extra.hover_holdduration_label, const)
+    mode_extra.hover_holdduration_help = this.Define_Hover_HoldDuration_Help(mode_extra.hover_holdduration_checkbox, const)
 
 
     --------- push up ---------
@@ -231,7 +231,7 @@ function DrawWindow_Mode_Extra(isCloseRequested, vars, vars_ui, player, window, 
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(mode_extra.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        this.Save(player, mode, vars_ui.transition_info.mode_index, vars_ui.transition_info.set_extra, const, mode_extra.type_combo, mode_extra.hover_mult_value, mode_extra.hover_accelup_value, mode_extra.hover_acceldown_value, mode_extra.hover_burnrate_value, mode_extra.hover_holdduration_value, mode_extra.hover_holdduration_checkbox, mode_extra.pushup_force_value, mode_extra.pushup_randvert_value, mode_extra.pushup_randhorz_value, mode_extra.pushup_burnrate_value, mode_extra.dash_accel_value, mode_extra.dash_burnrate_value)
+        this.Save(player, mode, vars_ui.transition_info.mode_index, vars_ui.transition_info.set_extra, vars.sounds_thrusting, const, mode_extra.type_combo, mode_extra.hover_mult_value, mode_extra.hover_accelup_value, mode_extra.hover_acceldown_value, mode_extra.hover_burnrate_value, mode_extra.hover_holdduration_value, mode_extra.hover_holdduration_checkbox, mode_extra.pushup_force_value, mode_extra.pushup_randvert_value, mode_extra.pushup_randhorz_value, mode_extra.pushup_burnrate_value, mode_extra.dash_accel_value, mode_extra.dash_burnrate_value)
         TransitionWindows_Mode(vars_ui, const, vars_ui.transition_info.mode, vars_ui.transition_info.mode_index)
 
     elseif isCancelClicked then
@@ -317,7 +317,13 @@ function this.Define_Type_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[These are custom actions that get applied when a key is pressed
+
+Hover: Holds altitude when you push the button.  Only need to tap the button (no need to hold the button down).  This will turn off when you press jump again
+
+Push Up:  Launches NPCs in the air every time the button is pressed.  The scan can only see NPCs that are in the vision cone, so any that are not currently on screen will be skipped
+
+Dash:  Accelerates in the look direction while the button is held in]]
 
     return retVal
 end
@@ -353,7 +359,7 @@ function this.Define_Hover_Mult_Label(relative_to, const)
     -- Label
     return
     {
-        text = "Multiplier",
+        text = "Altitude Stick Multiplier",
 
         position = GetRelativePosition_LabelAbove(relative_to, const),
 
@@ -374,7 +380,11 @@ function this.Define_Hover_Mult_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[How aggresively to snap to the desired altitude
+
+If the value is lower, the difference between current and desired altitude will be larger before max acceleration is applied
+
+Larger values will try to stick to that altitude more quickly]]
 
     return retVal
 end
@@ -384,7 +394,7 @@ function this.Define_Hover_Mult_Value(const)
     {
         invisible_name = "Mode_Extra_Hover_Mult_Value",
 
-        min = 0,
+        min = 0.1,
         max = 24,
 
         decimal_places = 1,
@@ -412,7 +422,7 @@ function this.Refresh_Hover_Mult_Value(def, extra, const)
         if extra and extra.extra_type == const.extra_type.hover then
             def.value = extra.mult
         else
-            def.value = 4
+            def.value = 1
         end
     end
 end
@@ -442,7 +452,7 @@ function this.Define_Hover_AccelUp_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[How much acceleration to apply when below the desired altitude]]
 
     return retVal
 end
@@ -465,7 +475,7 @@ function this.Define_Hover_AccelUp_Value(const)
         position =
         {
             pos_x = -180,
-            pos_y = -100,
+            pos_y = -30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -478,7 +488,7 @@ function this.Refresh_Hover_AccelUp_Value(def, extra, const)
     --NOTE: ActivateWindow_Mode_Extra sets this to nil
     if not def.value then
         if extra and extra.extra_type == const.extra_type.hover then
-            def.value = extra.accel_up
+            def.value = extra.accel_up_ORIG
         else
             def.value = 2
         end
@@ -510,7 +520,9 @@ function this.Define_Hover_AccelDown_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[How much acceleration to apply when above the desired altitude
+
+This will be an extra acceleration downward]]
 
     return retVal
 end
@@ -584,7 +596,7 @@ function this.Define_Hover_BurnRate_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[This will use additional energy when hover is active]]
 
     return retVal
 end
@@ -594,7 +606,7 @@ function this.Define_Hover_BurnRate_Value(const)
     {
         invisible_name = "Mode_Extra_Hover_BurnRate_Value",
 
-        min = 0,
+        min = 0.01,     -- if it's zero, processing will ignore it
         max = 2,
 
         decimal_places = 2,
@@ -607,7 +619,7 @@ function this.Define_Hover_BurnRate_Value(const)
         position =
         {
             pos_x = 180,
-            pos_y = -100,
+            pos_y = -30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -622,7 +634,7 @@ function this.Refresh_Hover_BurnRate_Value(def, extra, const)
         if extra and extra.extra_type == const.extra_type.hover then
             def.value = extra.burnRate
         else
-            def.value = 2
+            def.value = 0.5
         end
     end
 end
@@ -652,7 +664,9 @@ function this.Define_Hover_HoldDuration_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[This gives a chance for hover to auto shutoff after a few seconds
+
+It is also shut off when pressing the jump button]]
 
     return retVal
 end
@@ -860,7 +874,7 @@ function this.Define_PushUp_RandVert_Value(const)
         position =
         {
             pos_x = -180,
-            pos_y = -100,
+            pos_y = -30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -989,7 +1003,7 @@ function this.Define_PushUp_BurnRate_Value(const)
     {
         invisible_name = "Mode_Extra_PushUp_BurnRate_Value",
 
-        min = 0,
+        min = 0.01,
         max = 144,
 
         decimal_places = 0,
@@ -1002,7 +1016,7 @@ function this.Define_PushUp_BurnRate_Value(const)
         position =
         {
             pos_x = 180,
-            pos_y = -100,
+            pos_y = -30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -1072,7 +1086,7 @@ function this.Define_Dash_Accel_Value(const)
         position =
         {
             pos_x = -180,
-            pos_y = -100,
+            pos_y = -30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -1127,7 +1141,7 @@ function this.Define_Dash_BurnRate_Value(const)
     {
         invisible_name = "Mode_Extra_Dash_BurnRate_Value",
 
-        min = 0,
+        min = 0.01,
         max = 2,
 
         decimal_places = 2,
@@ -1140,7 +1154,7 @@ function this.Define_Dash_BurnRate_Value(const)
         position =
         {
             pos_x = 180,
-            pos_y = -100,
+            pos_y = -30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -1174,7 +1188,7 @@ function this.Refresh_IsDirty(def, mode, extra, const, def_type_combo, def_hover
             if not IsNearValue(extra.mult, def_hover_mult_value.value) then
                 isDirty = true
 
-            elseif not IsNearValue(extra.accel_up, def_hover_accelup_value.value) then
+            elseif not IsNearValue(extra.accel_up_ORIG, def_hover_accelup_value.value) then
                 isDirty = true
 
             elseif not IsNearValue(extra.accel_down, def_hover_acceldown_value.value) then
@@ -1231,7 +1245,7 @@ function this.Refresh_IsDirty(def, mode, extra, const, def_type_combo, def_hover
     def.isDirty = isDirty
 end
 
-function this.Save(player, mode, mode_index, set_extra, const, def_type_combo, def_hover_mult_value, def_hover_accelup_value, def_hover_acceldown_value, def_hover_burnrate_value, def_hover_holdduration_value, def_hover_holdduration_checkbox, def_pushup_force_value, def_pushup_randvert_value, def_pushup_randhorz_value, def_pushup_burnrate_value, def_dash_accel_value, def_dash_burnrate_value)
+function this.Save(player, mode, mode_index, set_extra, sounds_thrusting, const, def_type_combo, def_hover_mult_value, def_hover_accelup_value, def_hover_acceldown_value, def_hover_burnrate_value, def_hover_holdduration_value, def_hover_holdduration_checkbox, def_pushup_force_value, def_pushup_randvert_value, def_pushup_randhorz_value, def_pushup_burnrate_value, def_dash_accel_value, def_dash_burnrate_value)
     local extra = nil
 
     if def_type_combo.selected_item == extra_type.none then
@@ -1245,33 +1259,14 @@ function this.Save(player, mode, mode_index, set_extra, const, def_type_combo, d
             holdDuration = mode_defaults.HOVER_MAX_HOLD_DURATION
         end
 
-        extra =
-        {
-            extra_type = const.extra_type.hover,
-            mult = def_hover_mult_value.value,
-            accel_up = def_hover_accelup_value.value,
-            accel_down = def_hover_acceldown_value.value,
-            burnRate = def_hover_burnrate_value.value,
-            holdDuration = holdDuration,
-        }
+        -- Needs to be the live instance.  Player will call ModeDefaults.ToJSON
+        extra = Extra_Hover:new(def_hover_mult_value.value, def_hover_accelup_value.value, def_hover_acceldown_value.value, def_hover_burnrate_value.value, holdDuration, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     elseif def_type_combo.selected_item == extra_type.push_up then
-        extra =
-        {
-            extra_type = const.extra_type.pushup,
-            force = def_pushup_force_value.value,
-            randVert = def_pushup_randvert_value.value,
-            randHorz = def_pushup_randhorz_value.value,
-            burnRate = def_pushup_burnrate_value.value,
-        }
+        extra = Extra_PushUp:new(def_pushup_force_value.value, def_pushup_randhorz_value.value, def_pushup_randvert_value.value, def_pushup_burnrate_value.value, const)
 
     elseif def_type_combo.selected_item == extra_type.dash then
-        extra =
-        {
-            extra_type = const.extra_type.dash,
-            acceleration = def_dash_accel_value.value,
-            burnRate = def_dash_burnrate_value.value,
-        }
+        extra = Extra_Dash:new(def_dash_accel_value.value, def_dash_burnrate_value.value, const)
     end
 
     set_extra(mode, extra)
