@@ -42,7 +42,7 @@ function this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
     local accelX, accelY, accelZ, requestedEnergy = GetAccel_Keys(vars, mode, o, debug, deltaTime)
 
     -- Extra (holding altitude, accel in look dir, slam down...)
-    local extraX, extraY, extraZ, extraEnergy = this.Accelerate_Extra(o, vars.vel, keys, vars, mode.extra_rmb, mode.extra_key1, mode.extra_key2)
+    local extraX, extraY, extraZ, extraEnergy = this.Accelerate_Extra(o, vars.vel, keys, vars, deltaTime, mode.extra_rmb, mode.extra_key1, mode.extra_key2)
     accelX = accelX + extraX
     accelY = accelY + extraY
     accelZ = accelZ + extraZ
@@ -100,7 +100,7 @@ function this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
 
     AdjustTimeDilation(o, vars, mode, vars.vel)
 end
-function this.Accelerate_Extra(o, vel, keys, vars, ...)
+function this.Accelerate_Extra(o, vel, keys, vars, deltaTime, ...)
     local accelX = 0
     local accelY = 0
     local accelZ = 0
@@ -110,7 +110,7 @@ function this.Accelerate_Extra(o, vel, keys, vars, ...)
         local extra = select(i, ...)
 
         if extra then
-            local extraX, extraY, extraZ, extraEnergy = extra:Tick(o, vel, keys, vars)
+            local extraX, extraY, extraZ, extraEnergy = extra:Tick(o, vel, keys, vars, deltaTime)
             accelX = accelX + extraX
             accelY = accelY + extraY
             accelZ = accelZ + extraZ

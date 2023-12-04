@@ -59,7 +59,7 @@ function DefineWindow_Mode_Extra(vars_ui, const)
     mode_extra.pushup_force_help = this.Define_PushUp_Force_Help(mode_extra.pushup_force_label, const)
 
     -- randVert
-    mode_extra.pushup_randvert_value = this.Define_PushUp_RandVert_Value(const)
+    mode_extra.pushup_randvert_value = this.Define_PushUp_RandVert_Value(mode_extra.pushup_force_value, const)
     mode_extra.pushup_randvert_label = this.Define_PushUp_RandVert_Label(mode_extra.pushup_randvert_value, const)
     mode_extra.pushup_randvert_help = this.Define_PushUp_RandVert_Help(mode_extra.pushup_randvert_label, const)
 
@@ -762,7 +762,7 @@ function this.Define_PushUp_Force_Label(relative_to, const)
     -- Label
     return
     {
-        text = "Impulse Strength",
+        text = "Vertical Impulse Strength",
 
         position = GetRelativePosition_LabelAbove(relative_to, const),
 
@@ -783,7 +783,11 @@ function this.Define_PushUp_Force_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[How much impulse to apply to the NPCs straight up
+
+The vertical applied per NPC will be Vertical Impulse Strength +- Random Vertical
+
+If they are ragdolling for too long, the game seems to snap them out of it and just reset their animation.  So although large values are funny, more medium values are more effective]]
 
     return retVal
 end
@@ -805,8 +809,8 @@ function this.Define_PushUp_Force_Value(const)
 
         position =
         {
-            pos_x = 0,
-            pos_y = 190,
+            pos_x = -180,
+            pos_y = -30,
             horizontal = const.alignment_horizontal.center,
             vertical = const.alignment_vertical.center,
         },
@@ -851,11 +855,13 @@ function this.Define_PushUp_RandVert_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[The vertical applied per NPC will be Vertical Impulse Strength +- Random Vertical
+
+So if you don't want any variation, set Random Vertical to zero]]
 
     return retVal
 end
-function this.Define_PushUp_RandVert_Value(const)
+function this.Define_PushUp_RandVert_Value(relative_to, const)
     -- Slider
     return
     {
@@ -873,10 +879,16 @@ function this.Define_PushUp_RandVert_Value(const)
 
         position =
         {
-            pos_x = -180,
-            pos_y = -30,
-            horizontal = const.alignment_horizontal.center,
-            vertical = const.alignment_vertical.center,
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 60,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.bottom,
+            vertical = const.alignment_vertical.top,
         },
 
         CalcSize = CalcSize_Slider,
@@ -919,7 +931,7 @@ function this.Define_PushUp_RandHorz_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[Each NPC will get a horizontal impulse randomly applied anywhere from 0 to this max value]]
 
     return retVal
 end
@@ -930,7 +942,7 @@ function this.Define_PushUp_RandHorz_Value(relative_to, const)
         invisible_name = "Mode_Extra_PushUp_RandHorz_Value",
 
         min = 0,
-        max = 12,
+        max = 36,
 
         decimal_places = 1,
 
@@ -993,7 +1005,7 @@ function this.Define_PushUp_BurnRate_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[This will use up fuel each time the launch is pressed]]
 
     return retVal
 end
@@ -1004,9 +1016,9 @@ function this.Define_PushUp_BurnRate_Value(const)
         invisible_name = "Mode_Extra_PushUp_BurnRate_Value",
 
         min = 0.01,
-        max = 144,
+        max = 4,
 
-        decimal_places = 0,
+        decimal_places = 1,
 
         width = 300,
 
@@ -1042,7 +1054,7 @@ function this.Define_Dash_Accel_Label(relative_to, const)
     -- Label
     return
     {
-        text = "Impulse Strength",
+        text = "Acceleration",
 
         position = GetRelativePosition_LabelAbove(relative_to, const),
 
@@ -1063,7 +1075,7 @@ function this.Define_Dash_Accel_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[How hard to accelerate]]
 
     return retVal
 end
@@ -1074,7 +1086,7 @@ function this.Define_Dash_Accel_Value(const)
         invisible_name = "Mode_Extra_Dash_Accel_Value",
 
         min = 0,
-        max = 36,
+        max = 80,
 
         decimal_places = 0,
 
@@ -1110,7 +1122,7 @@ function this.Define_Dash_BurnRate_Label(relative_to, const)
     -- Label
     return
     {
-        text = "Impulse Strength",
+        text = "Burn Rate",
 
         position = GetRelativePosition_LabelAbove(relative_to, const),
 
@@ -1131,7 +1143,7 @@ function this.Define_Dash_BurnRate_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[Additional energy to use while boosting]]
 
     return retVal
 end
@@ -1169,7 +1181,7 @@ function this.Refresh_Dash_BurnRate_Value(def, extra, const)
         if extra and extra.extra_type == const.extra_type.dash then
             def.value = extra.burnRate
         else
-            def.value = 12
+            def.value = 1
         end
     end
 end

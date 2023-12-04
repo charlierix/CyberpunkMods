@@ -7,7 +7,7 @@
 -- function Extra_:Description()
 --     return "quick description"
 
--- function Extra_:Tick(o, vel, keys, vars)
+-- function Extra_:Tick(o, vel, keys, vars, deltaTime)
 --     return accelX, accelY, accelZ, requestedEnergy
 -------------------------------------------------------------
 
@@ -29,7 +29,7 @@ function Extra_Dash:Description()
     return "dash"
 end
 
-function Extra_Dash:Tick(o, vel, keys, vars)
+function Extra_Dash:Tick(o, vel, keys, vars, deltaTime)
     if not keys.rmb then
         return 0, 0, 0, 0
     end

@@ -7,7 +7,7 @@
 -- function Extra_:Description()
 --     return "quick description"
 
--- function Extra_:Tick(o, vel, keys, vars)
+-- function Extra_:Tick(o, vel, keys, vars, deltaTime)
 --     return accelX, accelY, accelZ, requestedEnergy
 -------------------------------------------------------------
 
@@ -45,7 +45,7 @@ function Extra_Hover:Description()
     return "hover"
 end
 
-function Extra_Hover:Tick(o, vel, keys, vars)
+function Extra_Hover:Tick(o, vel, keys, vars, deltaTime)
     if keys.jump then
         self.buttonLastDownTime = -self.holdDuration      -- pressing jump needs to turn off cruise control
         self.sounds_thrusting:StopHover()

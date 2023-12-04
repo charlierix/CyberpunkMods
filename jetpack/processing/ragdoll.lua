@@ -50,10 +50,14 @@ function this.LaunchUp(entity, force, randHorz, randVert, o)
 
     local mult = this.GetForceMultiplier(npc)
 
+    local horz = GetRandomVector_Circular(0, randHorz * mult)
+    local min_vert = (force - randVert) * mult
+    local max_vert = (force + randVert) * mult
+
     local direction = Vector4.new(
-        this.Random_MinMax(-randHorz * mult, randHorz * mult),
-        this.Random_MinMax(-randHorz * mult, randHorz * mult),
-        this.Random_MinMax((force - randVert) * mult, (force + randVert) * mult),
+        horz.x,
+        horz.y,
+        Clamp(0, max_vert, this.Random_MinMax(min_vert, max_vert)),
         1)
 
     npc:QueueEvent(CreateForceRagdollEvent("Launch Up"))

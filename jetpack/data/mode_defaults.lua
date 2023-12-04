@@ -318,7 +318,7 @@ It has a slow and ominous feel to it, low gravity]]
     mode.accel.gravity = -1
     mode.accel.vert_stand = 3.5
 
-    mode.extra_rmb = Extra_PushUp:new(22, 6, 8, 60, const)      -- the burn rate is only applied for one frame, so need something large
+    mode.extra_rmb = Extra_PushUp:new(22, 6, 8, 0.5, const)
     mode.extra_key1 = Extra_Hover:new(2, 4, 0.4, 0.1, 36, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.sound_type = const.thrust_sound_type.levitate
