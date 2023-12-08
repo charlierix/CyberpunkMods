@@ -136,7 +136,8 @@ local const =
                 "mode_jumpland",
                 "mode_mousesteer",
                 "mode_rebound",
-                "mode_timedilation"
+                "mode_timedilation",
+            ""
     ),
 
     -- These are for the main window to know what button was pushed
@@ -166,7 +167,7 @@ local isConfigMinimized = false
 
 local o     -- This is a class that wraps access to Game.xxx
 
-local keys = nil -- = Keys:new()        -- moved to init
+local keys      -- = Keys:new()        -- moved to init
 
 local debug = {}
 
