@@ -22,6 +22,8 @@ function Keys:new(debug, const)
 
     obj.prev_jump = false
     obj.prev_rmb = false
+    obj.prev_extra1 = false
+    obj.prev_extra2 = false
 
     return obj
 end

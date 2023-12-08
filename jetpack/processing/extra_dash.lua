@@ -13,12 +13,14 @@
 
 Extra_Dash = {}
 
-function Extra_Dash:new(acceleration, burnRate, const)
+function Extra_Dash:new(key, acceleration, burnRate, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
     obj.extra_type = const.extra_type.dash
+
+    obj.key = key
     obj.acceleration = acceleration
     obj.burnRate = burnRate
 
@@ -30,7 +32,7 @@ function Extra_Dash:Description()
 end
 
 function Extra_Dash:Tick(o, vel, keys, vars, deltaTime)
-    if not keys.rmb then
+    if not keys[self.key] then
         return 0, 0, 0, 0
     end
 

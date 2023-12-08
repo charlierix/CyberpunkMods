@@ -1272,13 +1272,14 @@ function this.Save(player, mode, mode_index, set_extra, sounds_thrusting, const,
         end
 
         -- Needs to be the live instance.  Player will call ModeDefaults.ToJSON
-        extra = Extra_Hover:new(def_hover_mult_value.value, def_hover_accelup_value.value, def_hover_acceldown_value.value, def_hover_burnrate_value.value, holdDuration, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
+        -- NOTE: key param is populated in set_extra()
+        extra = Extra_Hover:new("", def_hover_mult_value.value, def_hover_accelup_value.value, def_hover_acceldown_value.value, def_hover_burnrate_value.value, holdDuration, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     elseif def_type_combo.selected_item == extra_type.push_up then
-        extra = Extra_PushUp:new(def_pushup_force_value.value, def_pushup_randhorz_value.value, def_pushup_randvert_value.value, def_pushup_burnrate_value.value, const)
+        extra = Extra_PushUp:new("", def_pushup_force_value.value, def_pushup_randhorz_value.value, def_pushup_randvert_value.value, def_pushup_burnrate_value.value, const)
 
     elseif def_type_combo.selected_item == extra_type.dash then
-        extra = Extra_Dash:new(def_dash_accel_value.value, def_dash_burnrate_value.value, const)
+        extra = Extra_Dash:new("", def_dash_accel_value.value, def_dash_burnrate_value.value, const)
     end
 
     set_extra(mode, extra)

@@ -15,14 +15,14 @@ Extra_Hover = {}
 
 local this = {}
 
-function Extra_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, useImpulse, gravity, sounds_thrusting, const)
+function Extra_Hover:new(key, mult, accel_up, accel_down, burnRate, holdDuration, useImpulse, gravity, sounds_thrusting, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
     obj.extra_type = const.extra_type.hover
 
-    obj.sounds_thrusting = sounds_thrusting
+    obj.key = key
 
     obj.mult = mult
 
@@ -33,6 +33,8 @@ function Extra_Hover:new(mult, accel_up, accel_down, burnRate, holdDuration, use
     obj.burnRate = burnRate
 
     obj.gravity = gravity
+
+    obj.sounds_thrusting = sounds_thrusting
 
     obj.holdAltitude = 0
     obj.buttonLastDownTime = -holdDuration
@@ -50,7 +52,7 @@ function Extra_Hover:Tick(o, vel, keys, vars, deltaTime)
         self.buttonLastDownTime = -self.holdDuration      -- pressing jump needs to turn off cruise control
         self.sounds_thrusting:StopHover()
 
-    elseif keys.rmb then
+    elseif keys[self.key] then
         self.buttonLastDownTime = o.timer
         self.sounds_thrusting:StartHover()
     end
@@ -60,7 +62,7 @@ function Extra_Hover:Tick(o, vel, keys, vars, deltaTime)
     end
 
     -- Initial press down
-    if keys.rmb and not keys.prev_rmb then
+    if keys[self.key] and not keys["prev_" .. self.key] then
         self.holdAltitude = o.pos.z
     end
 

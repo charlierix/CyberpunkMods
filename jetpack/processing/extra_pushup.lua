@@ -14,12 +14,14 @@
 
 Extra_PushUp = {}
 
-function Extra_PushUp:new(force, randHorz, randVert, burnRate, const)
+function Extra_PushUp:new(key, force, randHorz, randVert, burnRate, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
 
     obj.extra_type = const.extra_type.pushup
+
+    obj.key = key
     obj.force = force
     obj.randHorz = randHorz
     obj.randVert = randVert
@@ -34,7 +36,7 @@ end
 
 function Extra_PushUp:Tick(o, vel, keys, vars, deltaTime)
     -- Initial press down
-    if keys.rmb and not keys.prev_rmb then
+    if keys[self.key] and not keys["prev_" .. self.key] then
         RagdollNPCs_StraightUp(48, self.force, self.randHorz, self.randVert, o)
 
         o:PlaySound("grenade_charge_1s", vars)

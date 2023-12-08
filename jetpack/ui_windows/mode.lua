@@ -119,15 +119,15 @@ function DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, con
     end
 
     if Draw_SummaryButton(modewin.extrarmb, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_rmb, function(m, e) m.extra_rmb = e end)      -- the delegate takes a mode and extra and populates the correct property off of mode
+        TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_rmb, function(m, e) e.key = "rmb"; m.extra_rmb = e end)      -- the delegate takes a mode and extra and populates the correct property off of mode (also tells the instance of extra what key to look for in keys)
     end
 
     if Draw_SummaryButton(modewin.extrakey1, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_key1, function(m, e) m.extra_key1 = e end)
+        TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_key1, function(m, e) e.key = "extra1"; m.extra_key1 = e end)
     end
 
     if Draw_SummaryButton(modewin.extrakey2, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
-        TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_key2, function(m, e) m.extra_key2 = e end)
+        TransitionWindows_Mode_Extra(vars_ui, const, mode.extra_key2, function(m, e) e.key = "extra2"; m.extra_key2 = e end)
     end
 
     Draw_ComboBox(modewin.flightmethod_combo, vars_ui.style.combobox, vars_ui.scale)

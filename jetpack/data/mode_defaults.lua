@@ -231,7 +231,7 @@ A bit more acceleration, infinite fuel, and no fall damage]]
 
     mode.accel.gravity = -7
 
-    mode.extra_rmb = Extra_Hover:new(10, 6, 2, 1, ModeDefaults.HOVER_MAX_HOLD_DURATION, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
+    mode.extra_rmb = Extra_Hover:new("rmb", 10, 6, 2, 1, ModeDefaults.HOVER_MAX_HOLD_DURATION, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.sound_type = const.thrust_sound_type.steam_quiet
 end
@@ -259,7 +259,7 @@ Somewhat limited fuel tank to keep from being too overpowered]]
 
     mode.accel.vert_initial = 2
 
-    mode.extra_rmb = Extra_Hover:new(2, 2, 0.4, 0.3, 12, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
+    mode.extra_rmb = Extra_Hover:new("rmb", 2, 2, 0.4, 0.3, 12, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.sound_type = const.thrust_sound_type.steam_quiet
 end
@@ -288,7 +288,7 @@ Use this to get around the map quickly]]
 
     mode.accel.gravity = -16
 
-    mode.extra_rmb = Extra_Hover:new(12, 6, 2, 1, ModeDefaults.HOVER_MAX_HOLD_DURATION, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
+    mode.extra_rmb = Extra_Hover:new("rmb", 12, 6, 2, 1, ModeDefaults.HOVER_MAX_HOLD_DURATION, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.mouseSteer =
     {
@@ -318,8 +318,8 @@ It has a slow and ominous feel to it, low gravity]]
     mode.accel.gravity = -1
     mode.accel.vert_stand = 3.5
 
-    mode.extra_rmb = Extra_PushUp:new(22, 6, 8, 0.5, const)
-    mode.extra_key1 = Extra_Hover:new(2, 4, 0.4, 0.1, 36, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
+    mode.extra_rmb = Extra_PushUp:new("rmb", 22, 6, 8, 0.5, const)
+    mode.extra_key1 = Extra_Hover:new("extra1", 2, 4, 0.4, 0.1, 36, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 
     mode.sound_type = const.thrust_sound_type.levitate
 end
@@ -475,6 +475,7 @@ function this.ToJSON_Extra(extra, const)
         return
         {
             extra_type = extra.extra_type,
+            key = extra.key,
             mult = extra.mult,
             accel_up = extra.accel_up_ORIG,
             accel_down = extra.accel_down,
@@ -486,6 +487,7 @@ function this.ToJSON_Extra(extra, const)
         return
         {
             extra_type = extra.extra_type,
+            key = extra.key,
             force = extra.force,
             randHorz = extra.randHorz,
             randVert = extra.randVert,
@@ -496,6 +498,7 @@ function this.ToJSON_Extra(extra, const)
         return
         {
             extra_type = extra.extra_type,
+            key = extra.key,
             acceleration = extra.acceleration,
             burnRate = extra.burnRate,
         }
@@ -507,13 +510,13 @@ function this.ToJSON_Extra(extra, const)
 end
 function this.FromJSON_Extra(extra, deserialized, sounds_thrusting, const)
     if extra.extra_type == const.extra_type.hover then
-        return Extra_Hover:new(extra.mult, extra.accel_up, extra.accel_down, extra.burnRate, extra.holdDuration, deserialized.useImpulse, deserialized.accel.gravity, sounds_thrusting, const)
+        return Extra_Hover:new(extra.key, extra.mult, extra.accel_up, extra.accel_down, extra.burnRate, extra.holdDuration, deserialized.useImpulse, deserialized.accel.gravity, sounds_thrusting, const)
 
     elseif extra.extra_type == const.extra_type.pushup then
-        return Extra_PushUp:new(extra.force, extra.randHorz, extra.randVert, extra.burnRate, const)
+        return Extra_PushUp:new(extra.key, extra.force, extra.randHorz, extra.randVert, extra.burnRate, const)
 
     elseif extra.extra_type == const.extra_type.dash then
-        return Extra_Dash:new(extra.acceleration, extra.burnRate, const)
+        return Extra_Dash:new(extra.key, extra.acceleration, extra.burnRate, const)
 
     else
         LogError("ModeDefaults.FromJSON_Extra: Unknown extra_type: " .. tostring(extra.extra_type))
