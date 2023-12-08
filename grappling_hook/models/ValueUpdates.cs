@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace models
+﻿namespace models
 {
     /// <summary>
     /// This tells how an individual property should be updated

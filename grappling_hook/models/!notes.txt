@@ -4,6 +4,3 @@ Lots of functionality will be written around these types
 
 So using c#, because it's easier to define types in that (also, the files won't be seen as lua
 and try to be interpreted at runtime)
-
-
-NOTE: There is a post build event in the c# project that replaces these .cs files with its copy
