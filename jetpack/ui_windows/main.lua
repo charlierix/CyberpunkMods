@@ -4,7 +4,7 @@ local modes_by_key = {}
 
 local next_token = 0
 
--- This gets called during init and sets up as much static inforation as it can for all the
+-- This gets called during activate and sets up as much static inforation as it can for all the
 -- controls (the rest of the info gets filled out each frame)
 --
 -- Individual controls are defined in
@@ -59,6 +59,7 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, con
 
     local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
 
+    -- Look for and respond to button press events in any of the stack panel's children
     this.Actions_ModeList(main.modelist, vars_ui, player, vars.sounds_thrusting, const)
 
     return not (isCloseRequested or isCloseClicked)       -- stop showing when they click the close button (or press config key a second time.  This main page doesn't have anything to save, so it's ok to exit at any time)
@@ -76,7 +77,6 @@ function this.Define_ModeList(const)
         items = {},
 
         width = 340,
-        --height = 490,
         height = 480,
 
         position =
@@ -149,7 +149,8 @@ function this.Actions_ModeList(def, vars_ui, player, sounds_thrusting, const)
         else
             if item.is_clicked then
                 --TODO: switch to mode choose window.  If they commit, do the mode keys addition logic and player save in that window
-                this.Actions_ModeList_Add(player)
+                --this.Actions_ModeList_Add(player)
+                TransitionWindows_ChooseMode(vars_ui, const, i)
                 do return end
             end
         end
@@ -326,4 +327,3 @@ function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, vars_ui, sounds_thrusting,
 
     return retVal
 end
-

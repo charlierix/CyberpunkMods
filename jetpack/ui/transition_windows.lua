@@ -4,6 +4,14 @@ function TransitionWindows_Main(vars_ui, const)
     ActivateWindow_Main(vars_ui, const)
 end
 
+function TransitionWindows_ChooseMode(vars_ui, const, mode_index)
+    vars_ui.currentWindow = const.windows.choose_mode
+
+    vars_ui.transition_info.mode_index = mode_index
+
+    ActivateWindow_ChooseMode(vars_ui, const)
+end
+
 function TransitionWindows_Mode(vars_ui, const, mode, mode_index)
     vars_ui.currentWindow = const.windows.mode
 

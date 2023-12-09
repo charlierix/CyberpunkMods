@@ -2,7 +2,7 @@ local this = {}
 
 local dilation_type = CreateEnum("none", "constant", "gradient")
 
--- This gets called during init and sets up as much static inforation as it can for all the
+-- This gets called during activate and sets up as much static inforation as it can for all the
 -- controls (the rest of the info gets filled out each frame)
 --
 -- Individual controls are defined in

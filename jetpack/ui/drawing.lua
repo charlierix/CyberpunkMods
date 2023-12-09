@@ -231,6 +231,9 @@ function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, player, o, co
 
         elseif vars_ui.currentWindow == const.windows.mode_timedilation then
             continueShowing = DrawWindow_Mode_TimeDilation(isCloseRequested, vars, vars_ui, player, window, o, const)
+
+        elseif vars_ui.currentWindow == const.windows.choose_mode then
+            continueShowing = DrawWindow_ChooseMode(isCloseRequested, vars, vars_ui, player, window, o, const)
         end
 
         is_minimized = false

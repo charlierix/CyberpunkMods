@@ -94,10 +94,10 @@ require "ui_framework/util_layout"
 require "ui_framework/util_misc"
 require "ui_framework/util_setup"
 
+require "ui_windows/choose_mode"
 require "ui_windows/main"
 require "ui_windows/mode"
 require "ui_windows/mode_energy"
-
 require "ui_windows/mode_accel"
 require "ui_windows/mode_extra"
 require "ui_windows/mode_jumpland"
@@ -137,7 +137,7 @@ local const =
                 "mode_mousesteer",
                 "mode_rebound",
                 "mode_timedilation",
-            ""
+            "choose_mode"
     ),
 
     -- These are for the main window to know what button was pushed

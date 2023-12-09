@@ -220,6 +220,49 @@ function this.Refresh_Description(def, mode, leftmost_button, width, scale)
 
     -------------------------------------------------------------------------------
 
+    local appendDelim = function (s)
+        if s == "" then
+            return ""
+        else
+            return s .. " | "
+        end
+    end
+
+    local getReport = function ()
+        local retVal = ""
+
+        retVal = appendDelim(retVal) .. "width: " .. tostring(width)
+
+        if def.render_pos then
+            if def.render_pos.left then
+                retVal = appendDelim(retVal) .. "def.render_pos.left: " .. tostring(def.render_pos.left)
+
+                local margin = def.render_pos.left * 2
+                retVal = appendDelim(retVal) .. "margin: " .. tostring(margin)
+
+                retVal = appendDelim(retVal) .. "margin: " .. tostring(margin)
+
+            else
+                retVal = appendDelim(retVal) .. "def.render_pos.left: nil"
+            end
+        else
+            retVal = appendDelim(retVal) .. "def.render_pos: nil"
+        end
+
+        return retVal
+    end
+
+
+    if max_width then
+        if max_width > width then
+            print("max_width is more than width -- " .. getReport())
+        end
+    else
+        print("max_width is nil -- " .. getReport())
+    end
+
+
+
     def.max_width = max_width
 end
 
