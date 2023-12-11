@@ -49,6 +49,7 @@ function SavePlayer(playerEntry)
 
     if math.random(72) == 1 then
         dal.DeleteOldPlayerRows(playerEntry.playerID)
+
     elseif grapplesChanged and math.random(72) == 1 then
         this.ReduceGrappleRows()
     -- elseif grapplesChanged and math.random(288) == 1 then

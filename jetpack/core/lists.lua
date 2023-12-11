@@ -65,6 +65,7 @@ function Is_A_SubsetOf_B(list_a, list_b)
     return true
 end
 
+-- NOTE: This is not optimal is called from inside a loop.  Build a key/value list instead (see Except function)
 function Contains(list, testValue)
     for i = 1, #list do
         if list[i] == testValue then
@@ -73,6 +74,25 @@ function Contains(list, testValue)
     end
 
     return false
+end
+
+-- Returns any values of list_a that are not in list_b
+function Except(list_a, list_b)
+    -- Store list_b as a key/value list, since the key lookup is way faster than incremental scan
+    local excluded = {}
+    for _, item in ipairs(list_b) do
+        excluded[item] = true
+    end
+
+    local retVal = {}
+
+    for _, item in ipairs(list_a) do
+        if not excluded[item] then
+            table.insert(retVal, item)
+        end
+    end
+
+    return retVal
 end
 
 ------------------------------------ Helper Functs ------------------------------------

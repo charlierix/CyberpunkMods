@@ -213,6 +213,52 @@ function DAL.UpdatePlayer_ModeIndex(playerKey, modeIndex)
     end
 end
 
+-- Returns the most recently saved players for each playerID
+function DAL.GetLatestPlayers()
+    local sucess, players, errMsg = pcall(function ()
+        local stmt = db:prepare
+        [[
+            SELECT
+                PlayerKey,
+                PlayerID,
+                ModeKeys,
+                ModeIndex,
+                LastUsed,
+                LastUsed_Readable
+            FROM Player
+            WHERE PlayerKey IN
+                (
+                    SELECT MAX(a.PlayerKey)
+                    FROM Player a
+                    GROUP BY a.PlayerID
+                )
+        ]]
+
+        local retVal = {}
+
+        for row in this.Bind_Select_MultipleRows_Iterator(stmt, "GetLatestPlayers") do
+            if row then
+                -- Don't want to return an internal implementation of the list.  Callers expect a regular array of ints
+                if row.ModeKeys then
+                    row.ModeKeys = this.ModeKeys_String_to_List(row.ModeKeys)
+                end
+
+                table.insert(retVal, row)
+            else
+                return nil, "Unknown error retrieving latest players"
+            end
+        end
+
+        return retVal, nil
+    end)
+
+    if sucess then
+        return players, errMsg
+    else
+        return nil, "GetLatestPlayer: Unknown Error"
+    end
+end
+
 -- This finds the most recently saved player based on their playerID (not the primary key, but the playerID that's
 -- stored in the save file)
 -- Returns:
@@ -376,7 +422,7 @@ function DAL.GetModes_ByKeys(...)
 
         local retVal = {}
 
-        for row in this.Bind_Select_MultipleRows_Iterator(stmt, "GetModes_ByKeys", table.unpack(arg)) do
+        for row in this.Bind_Select_MultipleRows_Iterator(stmt, "GetModes_ByKeys", table.unpack(param_arr)) do      -- unpacking args would give an array.  Need to unpack that inner array
             if row then
                 table.insert(retVal, row)
             else
@@ -453,9 +499,42 @@ function DAL.GetAllModeKeys()
     end
 end
 
+function DAL.DeleteAllModes_ExceptKeys(...)
+    local arg = {...}
+    local param_arr = arg[1]        -- it puts the array in an array with one element
 
--- Grapple keeps a spread of rows evenly distributed by xp.  Jetpack should just occasionally throw out all rows that aren't referenced
+    local sucess, errMsg = pcall(function ()
+        local sql =
+        [[
+            DELETE FROM Mode2
+            WHERE
+                ModeKey NOT IN
+                (]]
 
+        for i = 1, #param_arr, 1 do
+            if i > 1 then
+                sql = sql .. ", "
+            end
+
+            sql = sql .. "?"
+        end
+
+        sql = sql .. ")"
+
+        local stmt = db:prepare(sql)
+
+        local errMsg = this.Bind_NonSelect(stmt, "DeleteAllModes_ExceptKeys", table.unpack(param_arr))      -- unpacking the inner array (unpacking args would just pass in the array as a single argument)
+        if errMsg then
+            return errMsg
+        end
+    end)
+
+    if sucess then
+        return errMsg
+    else
+        return "DeleteOldPlayerRows: Unknown Error"
+    end
+end
 
 ----------------------------------- Private Methods -----------------------------------
 

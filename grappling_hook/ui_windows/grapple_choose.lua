@@ -38,8 +38,8 @@ function ActivateWindow_Grapple_Choose(vars_ui, const, player)
 
     available_info = info
 
-    grapple_choose.available.items = items
-    grapple_choose.available.selectable = selectable
+    grapple_choose.available.items = items                  -- list of these: { isDefault, name, grappleKey, description }
+    grapple_choose.available.selectable = selectable        -- list of strings
     grapple_choose.available.selected_index = 0
 
     isAnyAvailable = this.IsAnyAvailable(grapple_choose.available.selectable)
@@ -93,93 +93,6 @@ function DrawWindow_Grapple_Choose(isCloseRequested, vars_ui, player, window, co
 end
 
 ----------------------------------- Private Methods -----------------------------------
-
-function this.GetAvailable(experience, const)
-    local defaults = GetDefault_Grapple_Choices(const)
-    local fromDB = dal.GetAvailableGrapples()
-
-    local info = {}
-    local items = {}
-    local selectable = {}
-
-    -- Defaults
-    for i = 1, #defaults do
-        info[#info+1] = this.GetAvailable_Info(true, defaults[i].name, nil, defaults[i].description)
-        items[#items+1] = this.Format_ItemText(defaults[i].experience, defaults[i].name)
-        selectable[#selectable+1] = experience >= defaults[i].experience
-    end
-
-    if fromDB and #fromDB > 0 then
-        -- Separator Line
-        info[#info+1] = this.GetAvailable_Info(false, nil, nil, nil)
-        items[#items+1] = "  ------------------------------------------  "
-        selectable[#selectable+1] = false
-
-        -- From DB
-        for i = 1, #fromDB do
-            info[#info+1] = this.GetAvailable_Info(false, fromDB[i].name, fromDB[i].grapple_key, fromDB[i].description)
-            items[#items+1] = this.Format_ItemText(fromDB[i].experience, fromDB[i].name, fromDB[i].date)
-            selectable[#selectable+1] = experience >= fromDB[i].experience
-        end
-    end
-
-    return info, items, selectable
-end
-function this.GetAvailable_Info(isDefault, name, grappleKey, description)
-    return
-    {
-        isDefault = isDefault,
-        name = name,
-        grappleKey = grappleKey,
-        description = description,
-    }
-end
-
-function this.Format_ItemText(experience, name, date)
-    -- Column 1: Experience
-    local retVal = tostring(experience)
-
-    -- Column 2: Name
-    retVal = this.EnsureStringLength(retVal, 3, true)
-    retVal = retVal .. "  " .. name
-
-    -- Column 3: Date
-    if date then
-        retVal = this.EnsureStringLength(retVal, 30, false)
-        retVal = retVal .. "  " .. date
-    end
-
-    return retVal
-end
-
-function this.EnsureStringLength(text, desired_length, shouldPadLeft)
-    local retVal = text
-
-    local len = string.len(retVal)
-    if len < desired_length then
-        if shouldPadLeft then
-            retVal = string.rep(" ", desired_length - len) .. retVal
-        else
-            retVal = retVal .. string.rep(" ", desired_length - len)
-        end
-    end
-
-    return retVal
-end
-
-function this.IsAnyAvailable(selectable)
-    if not selectable then
-        return false
-    end
-
-    for i = 1, #selectable do
-        if selectable[i] then
-            return true
-        end
-    end
-
-    return false
-end
 
 function this.Define_LowXP1(const)
     -- Label
@@ -334,4 +247,93 @@ function this.Save(player, grappleIndex, info, const)
     player.experience = player.experience - grapple.experience
 
     player:Save()
+end
+
+---------------------------------------------------------------------------------------
+
+function this.GetAvailable(experience, const)
+    local defaults = GetDefault_Grapple_Choices(const)
+    local fromDB = dal.GetAvailableGrapples()
+
+    local info = {}
+    local items = {}
+    local selectable = {}
+
+    -- Defaults
+    for i = 1, #defaults do
+        info[#info+1] = this.GetAvailable_Info(true, defaults[i].name, nil, defaults[i].description)
+        items[#items+1] = this.Format_ItemText(defaults[i].experience, defaults[i].name)
+        selectable[#selectable+1] = experience >= defaults[i].experience
+    end
+
+    if fromDB and #fromDB > 0 then
+        -- Separator Line
+        info[#info+1] = this.GetAvailable_Info(false, nil, nil, nil)
+        items[#items+1] = "  ------------------------------------------  "
+        selectable[#selectable+1] = false
+
+        -- From DB
+        for i = 1, #fromDB do
+            info[#info+1] = this.GetAvailable_Info(false, fromDB[i].name, fromDB[i].grapple_key, fromDB[i].description)
+            items[#items+1] = this.Format_ItemText(fromDB[i].experience, fromDB[i].name, fromDB[i].date)
+            selectable[#selectable+1] = experience >= fromDB[i].experience
+        end
+    end
+
+    return info, items, selectable
+end
+function this.GetAvailable_Info(isDefault, name, grappleKey, description)
+    return
+    {
+        isDefault = isDefault,
+        name = name,
+        grappleKey = grappleKey,
+        description = description,
+    }
+end
+
+function this.Format_ItemText(experience, name, date)
+    -- Column 1: Experience
+    local retVal = tostring(experience)
+
+    -- Column 2: Name
+    retVal = this.EnsureStringLength(retVal, 3, true)
+    retVal = retVal .. "  " .. name
+
+    -- Column 3: Date
+    if date then
+        retVal = this.EnsureStringLength(retVal, 30, false)
+        retVal = retVal .. "  " .. date
+    end
+
+    return retVal
+end
+
+function this.EnsureStringLength(text, desired_length, shouldPadLeft)
+    local retVal = text
+
+    local len = string.len(retVal)
+    if len < desired_length then
+        if shouldPadLeft then
+            retVal = string.rep(" ", desired_length - len) .. retVal
+        else
+            retVal = retVal .. string.rep(" ", desired_length - len)
+        end
+    end
+
+    return retVal
+end
+
+function this.IsAnyAvailable(selectable)
+    if not selectable then
+        return false
+    end
+
+    for i = 1, #selectable do
+        if selectable[i] then
+            return true
+        end
+    end
+
+    return false
 end

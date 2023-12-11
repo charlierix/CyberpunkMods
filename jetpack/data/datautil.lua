@@ -5,7 +5,7 @@ local DataUtil = {}
 -- NOTE: Even if there are rows for this playerID, a new row will still be created with default modes
 -- Returns:
 --    PlayerEntry (the type returned is defined in models\Player)
---    Error Message (only populated if the first two are nil)
+--    Error Message (only populated if the first is nil)
 function DataUtil.CreateNewPlayer(playerID, sounds_thrusting, const)
     local modes_key, modes_live, errMsg = this.GetDefaultModes(sounds_thrusting, const)
     if errMsg then
@@ -94,6 +94,118 @@ function DataUtil.NextMode(playerKey, mode_keys, current_index, sounds_thrusting
     return index, mode, nil
 end
 
+-- This is for the mode chooser window.  It returns all the modes that should be shown
+-- The first items are default modes in order when calling mode_defaults.GetConfigValues
+-- The entries after that are modes that not default, but used by any player
+-- Returns:
+--    List of { isDefault, modeKey, mode }
+--    errMsg (if list is nil)
+function DataUtil.GetModeList(sounds_thrusting, const)
+
+    print("GetModeList a")
+
+    -- Get all the default modes, making sure there is a DB entry
+    local default_mode_keys, default_modes, errMsg = this.GetDefaultModes(sounds_thrusting, const)
+
+    print("GetModeList b: " .. tostring(#default_mode_keys))
+
+    if errMsg then
+        print("GetModeList c: " .. errMsg)
+
+        return nil, errMsg
+    end
+
+    print("GetModeList d")
+
+    -- Find modes that are used by any active players
+    local player_rows, errMsg = dal.GetLatestPlayers()
+
+    print("GetModeList e: " .. tostring(#player_rows))
+
+    if errMsg then
+        print("GetModeList f: " .. errMsg)
+
+        return nil, errMsg
+    end
+
+    print("GetModeList g")
+
+    local used_mode_keys = this.GetDistinctModeKeys(player_rows)
+
+    print("GetModeList h: " .. tostring(#used_mode_keys))
+
+    -- Remove the defaults
+    used_mode_keys = Except(used_mode_keys, default_mode_keys)
+
+    print("GetModeList i: " .. tostring(#used_mode_keys))
+
+    local used_modes = {}
+    if #used_mode_keys > 0 then
+        print("GetModeList j")
+
+        used_modes, errMsg = dal.GetModes_ByKeys(used_mode_keys)
+
+        print("GetModeList k: " .. tostring(#used_modes))
+
+        if errMsg then
+            print("GetModeList l: " .. errMsg)
+
+            return nil, errMsg
+        end
+
+        print("GetModeList m")
+
+        if #used_modes ~= #used_mode_keys then
+
+            print("GetModeList n")
+
+            return nil, "Didn't find the same number of used modes as the input keys.  keys: " .. tostring(#used_mode_keys) .. ", modes: " .. tostring(used_modes)
+        end
+    end
+
+    print("GetModeList o")
+
+    -- Build the final list
+    local retVal = {}
+
+    for i = 1, #default_mode_keys, 1 do
+        table.insert(retVal,
+        {
+            isDefault = true,
+            modeKey = default_mode_keys[i],
+            mode = default_modes[i],
+        })
+    end
+
+    for i = 1, #used_mode_keys, 1 do
+        table.insert(retVal,
+        {
+            isDefault = false,
+            modeKey = used_mode_keys[i],
+            mode = mode_defaults.FromJSON(used_modes[i].JSON, used_mode_keys[i], sounds_thrusting, const),
+        })
+    end
+
+    print("GetModeList p: " .. tostring(#retVal))
+
+    return retVal, nil
+end
+
+function DataUtil.DeleteUnusedModes()
+    -- Get the most recent row for each playerID
+    local player_rows, errMsg = dal.GetLatestPlayers()
+    if errMsg then
+        LogError(errMsg)
+        do return end
+    end
+
+    -- Get a list of distinct mode keys
+    local mode_keys = this.GetDistinctModeKeys(player_rows)
+
+    -- Delete all modes that aren't in this list of keys
+    dal.DeleteAllModes_ExceptKeys(mode_keys)
+end
+
 ----------------------------------- Private Methods -----------------------------------
 
 function this.GetDefaultModes(sounds_thrusting, const)
@@ -126,6 +238,22 @@ function this.GetDefaultModes(sounds_thrusting, const)
     end
 
     return modes_key, modes_live, nil
+end
+
+function this.GetDistinctModeKeys(player_rows)
+    local retVal = {}
+    local seen = {}
+
+    for _, row in ipairs(player_rows) do
+        for _, key in ipairs(row.ModeKeys) do
+            if not seen[key] then       -- Key lookup is faster than calling Contains
+                seen[key] = true
+                table.insert(retVal, key)
+            end
+        end
+    end
+
+    return retVal
 end
 
 return DataUtil
