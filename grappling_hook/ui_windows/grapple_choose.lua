@@ -38,8 +38,8 @@ function ActivateWindow_Grapple_Choose(vars_ui, const, player)
 
     available_info = info
 
-    grapple_choose.available.items = items                  -- list of these: { isDefault, name, grappleKey, description }
-    grapple_choose.available.selectable = selectable        -- list of strings
+    grapple_choose.available.items = items                  -- list of strings to display
+    grapple_choose.available.selectable = selectable        -- list of bools
     grapple_choose.available.selected_index = 0
 
     isAnyAvailable = this.IsAnyAvailable(grapple_choose.available.selectable)

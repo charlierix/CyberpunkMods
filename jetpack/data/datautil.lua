@@ -101,69 +101,37 @@ end
 --    List of { isDefault, modeKey, mode }
 --    errMsg (if list is nil)
 function DataUtil.GetModeList(sounds_thrusting, const)
-
-    print("GetModeList a")
-
     -- Get all the default modes, making sure there is a DB entry
     local default_mode_keys, default_modes, errMsg = this.GetDefaultModes(sounds_thrusting, const)
 
-    print("GetModeList b: " .. tostring(#default_mode_keys))
-
     if errMsg then
-        print("GetModeList c: " .. errMsg)
-
         return nil, errMsg
     end
-
-    print("GetModeList d")
 
     -- Find modes that are used by any active players
     local player_rows, errMsg = dal.GetLatestPlayers()
 
-    print("GetModeList e: " .. tostring(#player_rows))
-
     if errMsg then
-        print("GetModeList f: " .. errMsg)
-
         return nil, errMsg
     end
 
-    print("GetModeList g")
-
     local used_mode_keys = this.GetDistinctModeKeys(player_rows)
-
-    print("GetModeList h: " .. tostring(#used_mode_keys))
 
     -- Remove the defaults
     used_mode_keys = Except(used_mode_keys, default_mode_keys)
 
-    print("GetModeList i: " .. tostring(#used_mode_keys))
-
     local used_modes = {}
     if #used_mode_keys > 0 then
-        print("GetModeList j")
-
         used_modes, errMsg = dal.GetModes_ByKeys(used_mode_keys)
 
-        print("GetModeList k: " .. tostring(#used_modes))
-
         if errMsg then
-            print("GetModeList l: " .. errMsg)
-
             return nil, errMsg
         end
 
-        print("GetModeList m")
-
         if #used_modes ~= #used_mode_keys then
-
-            print("GetModeList n")
-
             return nil, "Didn't find the same number of used modes as the input keys.  keys: " .. tostring(#used_mode_keys) .. ", modes: " .. tostring(used_modes)
         end
     end
-
-    print("GetModeList o")
 
     -- Build the final list
     local retVal = {}
@@ -185,8 +153,6 @@ function DataUtil.GetModeList(sounds_thrusting, const)
             mode = mode_defaults.FromJSON(used_modes[i].JSON, used_mode_keys[i], sounds_thrusting, const),
         })
     end
-
-    print("GetModeList p: " .. tostring(#retVal))
 
     return retVal, nil
 end
