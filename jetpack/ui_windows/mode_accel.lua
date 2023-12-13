@@ -22,8 +22,6 @@ function DefineWindow_Mode_Accel(vars_ui, const)
     local mode_accel = {}
     vars_ui.mode_accel = mode_accel
 
-    mode_accel.changes = Changes:new()
-
     this.EnsureCurvesPopulated()
 
     mode_accel.title = Define_Title("Accelerations", const)
@@ -73,8 +71,6 @@ function ActivateWindow_Mode_Accel(vars_ui, const)
     end
 
     local mode_accel = vars_ui.mode_accel
-
-    mode_accel.changes:Clear()
 
     mode_accel.vert_value.value = nil
     mode_accel.vertdash_value.value = nil
@@ -219,7 +215,6 @@ function this.Define_Vert_Value(const)
     }
 end
 function this.Refresh_Vert_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Accel sets this to nil
     if not def.value then
         -- Posibly remove the gravity adjustment
@@ -289,7 +284,6 @@ function this.Define_VertDash_Value(const)
     }
 end
 function this.Refresh_VertDash_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Accel sets this to nil
     if not def.value then
         -- Posibly remove the gravity adjustment
@@ -359,7 +353,6 @@ function this.Define_Horz_Value(const)
     }
 end
 function this.Refresh_Horz_Value(def, accel)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Accel sets this to nil
     if not def.value then
         --NOTE: Evaluate caps to min/max
@@ -426,7 +419,6 @@ function this.Define_HorzDash_Value(const)
     }
 end
 function this.Refresh_HorzDash_Value(def, accel)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Accel sets this to nil
     if not def.value then
         --NOTE: Evaluate caps to min/max
@@ -495,7 +487,6 @@ function this.Define_Initial_Value(const)
     }
 end
 function this.Refresh_Initial_Value(def, accel)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Accel sets this to nil
     if not def.value then
         --NOTE: Evaluate caps to min/max
@@ -603,7 +594,6 @@ function this.Define_Gravity_Value(const)
     }
 end
 function this.Refresh_Gravity_Value(def, accel)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Accel sets this to nil
     if not def.value then
         --NOTE: Evaluate caps to min/max

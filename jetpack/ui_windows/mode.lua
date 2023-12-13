@@ -11,8 +11,6 @@ function DefineWindow_Mode(vars_ui, const)
     local modewin = {}
     vars_ui.modewin = modewin
 
-    modewin.changes = Changes:new()
-
     modewin.name = this.Define_Name(const)
     modewin.description = this.Define_Description(modewin.name, const, vars_ui.configWindow.width / vars_ui.scale)      -- I don't think scale is set properly yet
 
@@ -47,8 +45,6 @@ function ActivateWindow_Mode(vars_ui, const)
     end
 
     local modewin = vars_ui.modewin
-
-    modewin.changes:Clear()
 
     modewin.name.text = nil
     modewin.description.text = nil
@@ -178,7 +174,6 @@ function this.Define_Name(const)
     }
 end
 function this.Refresh_Name(def, mode)
-    -- There is no need to store changes in the changes list.  Text is directly changed as they type
     -- NOTE: ActivateWindow_Mode sets this to nil
     if not def.text then
         def.text = mode.name
@@ -217,7 +212,6 @@ function this.Define_Description(relative_to, const, parent_width)
     }
 end
 function this.Refresh_Description(def, mode)
-    -- There is no need to store changes in the changes list.  Text is directly changed as they type
     -- NOTE: ActivateWindow_Mode sets this to nil
     if not def.text then
         def.text = mode.description

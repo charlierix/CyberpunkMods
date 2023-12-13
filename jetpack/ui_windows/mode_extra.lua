@@ -11,8 +11,6 @@ function DefineWindow_Mode_Extra(vars_ui, const)
     local mode_extra = {}
     vars_ui.mode_extra = mode_extra
 
-    mode_extra.changes = Changes:new()
-
     mode_extra.title = Define_Title("Extra Actions", const)
     mode_extra.name = Define_Name(const)
 
@@ -98,8 +96,6 @@ function ActivateWindow_Mode_Extra(vars_ui, const)
     end
 
     local mode_extra = vars_ui.mode_extra
-
-    mode_extra.changes:Clear()
 
     mode_extra.type_combo.selected_item = nil
     mode_extra.hover_mult_value.value = nil
@@ -416,7 +412,6 @@ function this.Define_Hover_Mult_Value(const)
     }
 end
 function this.Refresh_Hover_Mult_Value(def, extra, const)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Extra sets this to nil
     if not def.value then
         if extra and extra.extra_type == const.extra_type.hover then
@@ -484,7 +479,6 @@ function this.Define_Hover_AccelUp_Value(const)
     }
 end
 function this.Refresh_Hover_AccelUp_Value(def, extra, const)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Extra sets this to nil
     if not def.value then
         if extra and extra.extra_type == const.extra_type.hover then
@@ -560,7 +554,6 @@ function this.Define_Hover_AccelDown_Value(relative_to, const)
     }
 end
 function this.Refresh_Hover_AccelDown_Value(def, extra, const)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Extra sets this to nil
     if not def.value then
         if extra and extra.extra_type == const.extra_type.hover then
@@ -628,7 +621,6 @@ function this.Define_Hover_BurnRate_Value(const)
     }
 end
 function this.Refresh_Hover_BurnRate_Value(def, extra, const)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Extra sets this to nil
     if not def.value then
         if extra and extra.extra_type == const.extra_type.hover then
@@ -704,7 +696,6 @@ function this.Define_Hover_HoldDuration_Value(relative_to, const)
     }
 end
 function this.Refresh_Hover_HoldDuration_Value(def, extra, const)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Extra sets this to nil
     if not def.value then
         if extra and extra.extra_type == const.extra_type.hover and extra.holdDuration <= def.max then
@@ -819,7 +810,6 @@ function this.Define_PushUp_Force_Value(const)
     }
 end
 function this.Refresh_PushUp_Force_Value(def, extra, const)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Extra sets this to nil
     if not def.value then
         if extra and extra.extra_type == const.extra_type.pushup then
@@ -895,7 +885,6 @@ function this.Define_PushUp_RandVert_Value(relative_to, const)
     }
 end
 function this.Refresh_PushUp_RandVert_Value(def, extra, const)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Extra sets this to nil
     if not def.value then
         if extra and extra.extra_type == const.extra_type.pushup then
@@ -969,7 +958,6 @@ function this.Define_PushUp_RandHorz_Value(relative_to, const)
     }
 end
 function this.Refresh_PushUp_RandHorz_Value(def, extra, const)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Extra sets this to nil
     if not def.value then
         if extra and extra.extra_type == const.extra_type.pushup then
@@ -1037,7 +1025,6 @@ function this.Define_PushUp_BurnRate_Value(const)
     }
 end
 function this.Refresh_PushUp_BurnRate_Value(def, extra, const)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Extra sets this to nil
     if not def.value then
         if extra and extra.extra_type == const.extra_type.pushup and extra.burnRate <= def.max then
@@ -1107,7 +1094,6 @@ function this.Define_Dash_Accel_Value(const)
     }
 end
 function this.Refresh_Dash_Accel_Value(def, extra, const)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Extra sets this to nil
     if not def.value then
         if extra and extra.extra_type == const.extra_type.dash then
@@ -1175,7 +1161,6 @@ function this.Define_Dash_BurnRate_Value(const)
     }
 end
 function this.Refresh_Dash_BurnRate_Value(def, extra, const)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Extra sets this to nil
     if not def.value then
         if extra and extra.extra_type == const.extra_type.dash then

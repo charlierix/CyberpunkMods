@@ -12,8 +12,6 @@ function DefineWindow_Mode_Energy(vars_ui, const)
     local mode_energy = {}
     vars_ui.mode_energy = mode_energy
 
-    mode_energy.changes = Changes:new()
-
     mode_energy.title = Define_Title("Energy", const)
     mode_energy.name = Define_Name(const)
 
@@ -54,8 +52,6 @@ function ActivateWindow_Mode_Energy(vars_ui, const)
     end
 
     local mode_energy = vars_ui.mode_energy
-
-    mode_energy.changes:Clear()
 
     mode_energy.max_time.value = nil
     mode_energy.max_unlimited.isChecked = nil
@@ -230,7 +226,6 @@ function this.Define_Max_Time(const)
     }
 end
 function this.Refresh_Max_Time(def, energy)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Energy sets this to nil
     if not def.value then
         if energy.maxBurnTime <= 36 then
@@ -302,7 +297,6 @@ function this.Define_Recovery_Rate(const)
     }
 end
 function this.Refresh_Recovery_Rate(def, energy)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Energy sets this to nil
     if not def.value then
         if energy.recoveryRate <= def.max then
@@ -374,7 +368,6 @@ function this.Define_Dash_Rate(const)
     }
 end
 function this.Refresh_Dash_Rate(def, energy)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Energy sets this to nil
     if not def.value then
         def.value = energy.burnRate_dash
@@ -440,7 +433,6 @@ function this.Define_Horz_Rate(const)
     }
 end
 function this.Refresh_Horz_Rate(def, energy)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Energy sets this to nil
     if not def.value then
         def.value = energy.burnRate_horz

@@ -930,17 +930,6 @@ function this.Define_ColorURL_TextBox(vars_ui, const)
     }
 end
 
-function this.GetColorTooltipText()
-    return
-    [[ARBG as hex (alpha is optional)
-
-    Values go from 00 to FF (hex for 0 to 255)
-    
-    FF0000 would be red, 00FF00 green, 0000FF blue
-    
-    80FF0000 would be 50% transparent red]]
-end
-
 function this.Refresh_IsDirty(def, changes, def_line_colorprim, def_anchorstyle, def_anchor_color1, def_anchor_color2, def_stopplane_checkbox, def_stopplane_color, grapple)
     local isDirty = false
 
@@ -981,4 +970,17 @@ function this.Save(player, grapple, changes, def_line_colorprim, def_anchorstyle
     grapple.visuals.stopplane_color = def_stopplane_color.text
 
     player:Save()
+end
+
+---------------------------------------------------------------------------------------
+
+function this.GetColorTooltipText()
+    return
+    [[ARBG as hex (alpha is optional)
+
+    Values go from 00 to FF (hex for 0 to 255)
+    
+    FF0000 would be red, 00FF00 green, 0000FF blue
+    
+    80FF0000 would be 50% transparent red]]
 end

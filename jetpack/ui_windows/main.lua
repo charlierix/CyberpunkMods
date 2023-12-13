@@ -13,9 +13,9 @@ function DefineWindow_Main(vars_ui, const)
     local main = {}
     vars_ui.main = main
 
-    main.changes = Changes:new()
-
     main.modelist = this.Define_ModeList(const)
+
+    main.popups = this.Define_Popups(const)
 
     main.okcancel = Define_OkCancelButtons(true, vars_ui, const)
 
@@ -28,8 +28,6 @@ function ActivateWindow_Main(vars_ui, const)
     end
 
     local main = vars_ui.main
-
-    main.changes:Clear()
 
     main.modelist.items = nil
 
@@ -53,9 +51,11 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, con
 
     -------------------------------- Show ui elements --------------------------------
 
-    --TODO: label describing the mode list
-
     Draw_StackPanel(main.modelist, vars_ui.style.listbox, window.left, window.top, vars_ui.scale)
+
+    if Draw_SummaryButton(main.popups, vars_ui.line_heights, vars_ui.style.summaryButton, window.left, window.top, vars_ui.scale) then
+        TransitionWindows_Popups(vars_ui, const)
+    end
 
     local _, isCloseClicked = Draw_OkCancelButtons(main.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
 
@@ -119,6 +119,37 @@ function this.Refresh_ModeList(def, vars_ui, player, sounds_thrusting, o, const)
         end
     end
 end
+
+function this.Define_Popups(const)
+    -- SummaryButton
+    return
+    {
+        position =
+        {
+            pos_x = 180,
+            pos_y = -50,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        header_prompt = "Popups",
+
+        content =
+        {
+            -- the content is presented as sorted by name
+            -- a_horz = { prompt = "horizontal" },
+            -- b_vert = { prompt = "vertical" },
+            -- c_initial = { prompt = "initial" },
+            -- d_gravity = { prompt = "gravity" },
+        },
+
+        invisible_name = "Main_Popups",
+
+        CalcSize = CalcSize_SummaryButton,
+    }
+end
+
+---------------------------------------------------------------------------------------
 
 function this.Actions_ModeList(def, vars_ui, player, sounds_thrusting, const)
     if not def.items then

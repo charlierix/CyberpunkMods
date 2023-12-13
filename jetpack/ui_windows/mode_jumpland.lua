@@ -9,8 +9,6 @@ function DefineWindow_Mode_JumpLand(vars_ui, const)
     local mode_jumpland = {}
     vars_ui.mode_jumpland = mode_jumpland
 
-    mode_jumpland.changes = Changes:new()
-
     mode_jumpland.title = Define_Title("Jump / Land", const)
     mode_jumpland.name = Define_Name(const)
 
@@ -43,8 +41,6 @@ function ActivateWindow_Mode_JumpLand(vars_ui, const)
     end
 
     local mode_jumpland = vars_ui.mode_jumpland
-
-    mode_jumpland.changes:Clear()
 
     mode_jumpland.safetyfire_checkbox.isChecked = nil
     mode_jumpland.explosivejump_checkbox.isChecked = nil
@@ -321,7 +317,6 @@ function this.Define_JumpDelay_Value(const)
     }
 end
 function this.Refresh_JumpDelay_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_JumpLand sets this to nil
     if not def.value then
         def.value = mode.jump_land.holdJumpDelay

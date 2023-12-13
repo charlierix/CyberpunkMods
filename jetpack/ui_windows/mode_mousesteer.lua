@@ -12,8 +12,6 @@ function DefineWindow_Mode_MouseSteer(vars_ui, const)
     local mode_mousesteer = {}
     vars_ui.mode_mousesteer = mode_mousesteer
 
-    mode_mousesteer.changes = Changes:new()
-
     this.EnsureCurvesPopulated()
 
     mode_mousesteer.title = Define_Title("Mouse Steering", const)
@@ -60,8 +58,6 @@ function ActivateWindow_Mode_MouseSteer(vars_ui, const)
     end
 
     local mode_mousesteer = vars_ui.mode_mousesteer
-
-    mode_mousesteer.changes:Clear()
 
     mode_mousesteer.hassteer_checkbox.isChecked = nil
     mode_mousesteer.percent_horz_value.value = nil
@@ -254,7 +250,6 @@ function this.Define_PercentHorz_Value(const)
     }
 end
 function this.Refresh_PercentHorz_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_MouseSteer sets this to nil
     if not def.value then
         if mode.mouseSteer then
@@ -330,7 +325,6 @@ function this.Define_PercentVert_Value(relative_to, const)
     }
 end
 function this.Refresh_PercentVert_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_MouseSteer sets this to nil
     if not def.value then
         if mode.mouseSteer then
@@ -404,7 +398,6 @@ function this.Define_DotPow_Value(const)
     }
 end
 function this.Refresh_DotPow_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_MouseSteer sets this to nil
     if not def.value then
         local new_value = 2
@@ -505,7 +498,6 @@ function this.Define_MinSpeed_Value(const)
     }
 end
 function this.Refresh_MinSpeed_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_MouseSteer sets this to nil
     if not def.value then
         if mode.mouseSteer then
@@ -581,7 +573,6 @@ function this.Define_MaxSpeed_Value(relative_to, const)
     }
 end
 function this.Refresh_MaxSpeed_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_MouseSteer sets this to nil
     if not def.value then
         if mode.mouseSteer then

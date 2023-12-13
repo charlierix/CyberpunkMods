@@ -34,6 +34,7 @@ dal = require "data/dal"
 entity_helper = require "data/entity_helper"
 mode_defaults = require "data/mode_defaults"
 require "data/player"
+popups_util = require "data/popups_util"
 
 require "debug/debug_code"
 require "debug/reporting"
@@ -104,7 +105,7 @@ require "ui_windows/mode_jumpland"
 require "ui_windows/mode_mousesteer"
 require "ui_windows/mode_rebound"
 require "ui_windows/mode_timedilation"
-
+require "ui_windows/popups"
 
 local this = {}
 
@@ -137,7 +138,8 @@ local const =
                 "mode_mousesteer",
                 "mode_rebound",
                 "mode_timedilation",
-            "choose_mode"
+            "choose_mode",
+            "popups"
     ),
 
     -- These are for the main window to know what button was pushed
@@ -235,8 +237,8 @@ local vars_ui_configname =
     scale = 1,
 }
 
---TODO: move settings from vars to player
 local player = nil
+local popups = nil
 
 --------------------------------------------------------------------
 
@@ -270,6 +272,7 @@ registerForEvent("onInit", function()
     dal.EnsureTablesCreated()
     Define_UI_Framework_Constants(const)
     InitializeUI(vars_ui, vars_ui_progressbar, vars_ui_configname, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
+    popups = popups_util.Load()
 
     keys = Keys:new(debug, const)
 
@@ -431,12 +434,12 @@ registerForEvent("onDraw", function()
     if player then
         -- Energy tank (only show when it's not full)
         if player.mode and vars.remainBurnTime / player.mode.energy.maxBurnTime < const.hide_energy_above_percent then
-            DrawJetpackProgress(player.mode.name, vars.remainBurnTime, player.mode.energy.maxBurnTime, vars_ui_progressbar, const)
+            DrawJetpackProgress(player.mode.name, vars.remainBurnTime, player.mode.energy.maxBurnTime, vars_ui_progressbar, popups, const)
         end
 
         -- Config Name
         if vars.showConfigNameUntil > o.timer then
-            DrawConfigName(player.mode, vars_ui_configname, const)
+            DrawConfigName(player.mode, vars_ui_configname, popups, const)
         end
     end
 
@@ -445,7 +448,7 @@ registerForEvent("onDraw", function()
     end
 
     if shouldShowConfig and player then
-        local loc_shouldshow, is_minimized = DrawConfig(not isCETOpen, isConfigMinimized, vars, vars_ui, player, o, const)
+        local loc_shouldshow, is_minimized = DrawConfig(not isCETOpen, isConfigMinimized, vars, vars_ui, player, popups, o, const)
         shouldShowConfig = loc_shouldshow
         isConfigMinimized = is_minimized
 

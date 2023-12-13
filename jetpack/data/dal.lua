@@ -9,14 +9,16 @@ local empty_param = "^^this is an empty param^^"
 function DAL.EnsureTablesCreated()
     --https://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists
 
-    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS mode (modeIndex INTEGER);") end)
-
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Settings_Int (Key TEXT NOT NULL UNIQUE, Value INTEGER NOT NULL);") end)
 
-    --TODO: json for misc settings (like progress bar visibility)
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Player (PlayerKey INTEGER NOT NULL UNIQUE, PlayerID INTEGER NOT NULL, ModeKeys TEXT NOT NULL, ModeIndex INTEGER NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(PlayerKey AUTOINCREMENT));") end)
 
+    -- I looked through history and can't find when this table was actually used.  But naming as Mode2 just to be safe
+    --pcall(function () db:exec("CREATE TABLE IF NOT EXISTS mode (modeIndex INTEGER);") end)
+
     pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Mode2 (ModeKey INTEGER NOT NULL UNIQUE, Name TEXT, JSON TEXT NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(ModeKey AUTOINCREMENT));") end)
+
+    pcall(function () db:exec("CREATE TABLE IF NOT EXISTS Popups (PopupsKey INTEGER NOT NULL UNIQUE, JSON TEXT NOT NULL, LastUsed INTEGER NOT NULL, LastUsed_Readable TEXT NOT NULL, PRIMARY KEY(PopupsKey AUTOINCREMENT));") end)
 end
 
 -------------------------------------- Settings ---------------------------------------
@@ -533,6 +535,95 @@ function DAL.DeleteAllModes_ExceptKeys(...)
         return errMsg
     else
         return "DeleteOldPlayerRows: Unknown Error"
+    end
+end
+
+---------------------------------------- Popups ----------------------------------------
+
+-- NOTE: Popups is named plural to match what it's called in the rest of this project.  So insert and get latest are single row even though the name is plural
+
+function DAL.InsertPopups(popups_json)
+    local sucess, pkey, errMsg = pcall(function ()
+        local time, time_readable = this.GetCurrentTime_AndReadable()
+
+        local stmt = db:prepare
+        [[
+            INSERT INTO Popups
+                (JSON, LastUsed, LastUsed_Readable)
+            VALUES
+                (?, ?, ?)
+        ]]
+
+        local errMsg = this.Bind_NonSelect(stmt, "InsertPopups", popups_json, time, time_readable)
+        if errMsg then
+            return nil, errMsg
+        end
+
+        -- This is the primary key of the inserted row
+        return db:last_insert_rowid(), nil
+    end)
+
+    if sucess then
+        return pkey, errMsg
+    else
+        return nil, "InsertPopups: Unknown Error"
+    end
+end
+
+-- Returns the json of the popups config values
+function DAL.GetLatestPopups()
+    local sucess, row, errMsg = pcall(function ()
+        local stmt = db:prepare
+        [[
+            SELECT
+                JSON
+            FROM Popups
+            ORDER BY LastUsed DESC
+            LIMIT 1
+        ]]
+
+        local row, errMsg = this.Bind_Select_SingleRow(stmt, "GetLatestPopups")
+
+        return row, errMsg
+    end)
+
+    if sucess then
+        return row.JSON, errMsg
+    else
+        return nil, "GetLatestPopups: Unknown Error"
+    end
+end
+
+-- This deletes all but the last 12 rows of popups
+-- Returns
+--  Error Message or nil
+function DAL.DeleteOldPopupsRows(playerID)
+    local sucess, errMsg = pcall(function ()
+        -- Can't use joins, so a subquery seems to be the only option.  There shouldn't be enough rows to really matter anyway
+
+        local stmt = db:prepare
+        [[
+            DELETE FROM Popups
+            WHERE
+                PopupsKey NOT IN
+                (
+                    SELECT a.PopupsKey
+                    FROM Popups a
+                    ORDER BY a.LastUsed DESC
+                    LIMIT 12
+                )
+        ]]
+
+        local errMsg = this.Bind_NonSelect(stmt, "DeleteOldPopupsRows", playerID)
+        if errMsg then
+            return errMsg
+        end
+    end)
+
+    if sucess then
+        return errMsg
+    else
+        return "DeleteOldPopupsRows: Unknown Error"
     end
 end
 

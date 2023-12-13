@@ -11,8 +11,6 @@ function DefineWindow_Mode_TimeDilation(vars_ui, const)
     local mode_timedilation = {}
     vars_ui.mode_timedilation = mode_timedilation
 
-    mode_timedilation.changes = Changes:new()
-
     mode_timedilation.title = Define_Title("Time Dilation", const)
     mode_timedilation.name = Define_Name(const)
 
@@ -59,8 +57,6 @@ function ActivateWindow_Mode_TimeDilation(vars_ui, const)
     end
 
     local mode_timedilation = vars_ui.mode_timedilation
-
-    mode_timedilation.changes:Clear()
 
     mode_timedilation.type_combo.selected_item = nil
     mode_timedilation.const_dilation_value.value = nil
@@ -299,7 +295,6 @@ function this.Define_Const_Dilation_Value(const)
     }
 end
 function this.Refresh_Const_Dilation_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_TimeDilation sets this to nil
     if not def.value then
         if mode.timeDilation then
@@ -367,7 +362,6 @@ function this.Define_Gradient_DilationLow_Value(const)
     }
 end
 function this.Refresh_Gradient_DilationLow_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_TimeDilation sets this to nil
     if not def.value then
         if mode.timeDilation_gradient then
@@ -435,7 +429,6 @@ function this.Define_Gradient_SpeedLow_Value(const)
     }
 end
 function this.Refresh_Gradient_SpeedLow_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_TimeDilation sets this to nil
     if not def.value then
         if mode.timeDilation_gradient then
@@ -503,7 +496,6 @@ function this.Define_Gradient_DilationHigh_Value(const)
     }
 end
 function this.Refresh_Gradient_DilationHigh_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_TimeDilation sets this to nil
     if not def.value then
         if mode.timeDilation_gradient then
@@ -571,7 +563,6 @@ function this.Define_Gradient_SpeedHigh_Value(const)
     }
 end
 function this.Refresh_Gradient_SpeedHigh_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_TimeDilation sets this to nil
     if not def.value then
         if mode.timeDilation_gradient then

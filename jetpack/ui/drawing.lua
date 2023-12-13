@@ -1,6 +1,6 @@
 --Borderless progress bar inspired by / lifted from survival mod by Architect
 --https://www.nexusmods.com/cyberpunk2077/mods/1405
-function DrawJetpackProgress(name, remainBurnTime, maxBurnTime, vars_ui_progressbar, const)
+function DrawJetpackProgress(name, remainBurnTime, maxBurnTime, vars_ui_progressbar, popups, const)
     local scale = vars_ui_progressbar.scale
 
     ImGui.SetNextWindowPos(20 * scale, 200 * scale, ImGuiCond.Always)       -- this is under the top left combat graphic
@@ -17,9 +17,9 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime, vars_ui_progress
 
         -- The color ints are in ABGR (comments to the side are ARGB for easy copy/pasting into color editor)
 
-        ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)
-        ImGui.PushStyleColor(ImGuiCol.FrameBg, 0x99ADAD5E)
-        ImGui.PushStyleColor(ImGuiCol.PlotHistogram, 0xE6D4D473)
+        ImGui.PushStyleColor(ImGuiCol.Text, popups.text_secondary_abgr)
+        ImGui.PushStyleColor(ImGuiCol.FrameBg, popups.energy_background_abgr)
+        ImGui.PushStyleColor(ImGuiCol.PlotHistogram, popups.energy_border_abgr)
 
         --ImGui.SetCursorPos(0, 0)
         ImGui.SetCursorPos(0, vars_ui_progressbar.line_heights.line / 2)
@@ -33,7 +33,7 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime, vars_ui_progress
         ImGui.PopStyleVar(1)
 
         -- Label
-        ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)
+        ImGui.PushStyleColor(ImGuiCol.Text, popups.text_primary_abgr)
 
         ImGui.SetCursorPos(140 * scale, 0)
 
@@ -44,25 +44,23 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime, vars_ui_progress
     ImGui.End()
 end
 
-function DrawConfigName(mode, vars_ui_configname, const)
+function DrawConfigName(mode, vars_ui_configname, popups, const)
     local scale = vars_ui_configname.scale
 
-    ImGui.PushStyleColor(ImGuiCol.WindowBg, 0xA054542E)     --542E5454
-    ImGui.PushStyleColor(ImGuiCol.Border, 0x806E6E3D)       --803D6E6E
+    ImGui.PushStyleColor(ImGuiCol.WindowBg, popups.switch_background_abgr)
+    ImGui.PushStyleColor(ImGuiCol.Border, popups.switch_border_abgr)
 
     ImGui.SetNextWindowPos(20 * scale, 250, ImGuiCond.Always)       --NOTE: not applying scale to Y.  That would make it draw too low
     ImGui.SetNextWindowSize(0, 0, ImGuiCond.Always)      -- setting to zero to tell it to autosize
 
     if (ImGui.Begin("Jetpack Mode", true, ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove + ImGuiWindowFlags.NoScrollbar)) then
-        --ImGui.SetWindowFocus("Jetpack Mode")        -- hopefully, this forces it to be on top
-
-        ImGui.SetWindowFontScale(1.2)
+        ImGui.SetWindowFontScale(popups.switch_scale)
 
         Refresh_LineHeights(vars_ui_configname, const, false)
         scale = vars_ui_configname.scale       -- it might have gotten updated
 
         ImGui.Spacing()
-        ImGui.PushStyleColor(ImGuiCol.Text, 0xFF4CFFFF)     --FFFF4C
+        ImGui.PushStyleColor(ImGuiCol.Text, popups.text_primary_abgr)
         if mode then
             ImGui.Text(mode.name)
         else
@@ -71,7 +69,7 @@ function DrawConfigName(mode, vars_ui_configname, const)
         ImGui.PopStyleColor(1)
 
         ImGui.Spacing()
-        ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFF75)     --75FFFF
+        ImGui.PushStyleColor(ImGuiCol.Text, popups.text_secondary_abgr)
 
         -- Only reporting settings out of ordinary (low gravity, high gravity, etc)
 
@@ -163,7 +161,7 @@ end
 -- Returns:
 --  continue_showing        true: keep showing config, false: stop showing config
 --  is_minimized            true: the window is in a collapsed state (or completely blocked)
-function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, player, o, const)
+function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, player, popups, o, const)
     if not player then
         return false, false
     end
@@ -234,6 +232,9 @@ function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, player, o, co
 
         elseif vars_ui.currentWindow == const.windows.choose_mode then
             continueShowing = DrawWindow_ChooseMode(isCloseRequested, vars, vars_ui, player, window, o, const)
+
+        elseif vars_ui.currentWindow == const.windows.popups then
+            continueShowing = DrawWindow_Popups(isCloseRequested, vars, vars_ui, popups, window, o, const)
         end
 
         is_minimized = false

@@ -86,3 +86,9 @@ function TransitionWindows_Mode_TimeDilation(vars_ui, const)
 
     ActivateWindow_Mode_TimeDilation(vars_ui, const)
 end
+
+function TransitionWindows_Popups(vars_ui, const)
+    vars_ui.currentWindow = const.windows.popups
+
+    ActivateWindow_Popups(vars_ui, const)
+end

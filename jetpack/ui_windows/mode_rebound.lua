@@ -9,8 +9,6 @@ function DefineWindow_Mode_Rebound(vars_ui, const)
     local mode_rebound = {}
     vars_ui.mode_rebound = mode_rebound
 
-    mode_rebound.changes = Changes:new()
-
     mode_rebound.title = Define_Title("Rebound", const)
     mode_rebound.name = Define_Name(const)
 
@@ -44,8 +42,6 @@ function ActivateWindow_Mode_Rebound(vars_ui, const)
     end
 
     local mode_rebound = vars_ui.mode_rebound
-
-    mode_rebound.changes:Clear()
 
     mode_rebound.hasrebound_checkbox.isChecked = nil
     mode_rebound.percentzero_value.value = nil
@@ -226,7 +222,6 @@ function this.Define_PercentZero_Value(const)
     }
 end
 function this.Refresh_PercentZero_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Rebound sets this to nil
     if not def.value then
         if mode.rebound then
@@ -296,7 +291,6 @@ function this.Define_PercentMax_Value(const)
     }
 end
 function this.Refresh_PercentMax_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Rebound sets this to nil
     if not def.value then
         if mode.rebound then
@@ -368,7 +362,6 @@ function this.Define_SpeedMax_Value(const)
     }
 end
 function this.Refresh_SpeedMax_Value(def, mode)
-    -- There is no need to store changes in the changes list.  Value is directly changed
     --NOTE: ActivateWindow_Mode_Rebound sets this to nil
     if not def.value then
         if mode.rebound then
