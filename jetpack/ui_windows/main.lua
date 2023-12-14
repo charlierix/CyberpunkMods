@@ -283,38 +283,6 @@ function this.Rebuild_ModeList(mode_keys, mode_index, vars_ui, sounds_thrusting,
         return this.Rebuild_ModeList_AppendAddItem({}, vars_ui, o, const)
     end
 
-    local retVal = {}
-
-    for i, key in ipairs(mode_keys) do
-        local key_string = tostring(key)
-
-        if not modes_by_key[key_string] then
-            local mode_json, errMsg = dal.GetMode_ByKey(key)
-            if errMsg then
-                LogError("Couldn't retrieve mode: " .. errMsg)
-                return this.Rebuild_ModeList_AppendAddItem({}, vars_ui, o, const)
-            end
-
-            local mode = mode_defaults.FromJSON(mode_json, key, sounds_thrusting, const)
-            modes_by_key[key_string] = mode
-        end
-
-        next_token = next_token + 1     -- this needs to be unique, used in invisible names
-        local item = ModeList_Item:new(next_token, modes_by_key[key_string], i == mode_index, vars_ui, o, const)
-
-        table.insert(retVal, item)
-    end
-
-    return this.Rebuild_ModeList_AppendAddItem(retVal, vars_ui, o, const)
-end
-function this.Rebuild_ModeList_AppendAddItem(items, vars_ui, o, const)
-    local item = ModeList_Add:new(vars_ui, o, const)
-    table.insert(items, item)
-    return items
-end
-
--- This would be more efficient if I could get it to work (select rows where primarykey in (...))
-function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, vars_ui, sounds_thrusting, o, const)
     -- Get a list of keys that aren't in the mode cache
     local missing_keys = {}
 
@@ -326,7 +294,8 @@ function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, vars_ui, sounds_thrusting,
 
     -- Fill cache with missing from the database
     if #missing_keys > 0 then
-        local missing_modes, errMsg = dal.GetModes_ByKeys(table.pack(missing_keys))
+        --local missing_modes, errMsg = dal.GetModes_ByKeys(table.unpack(missing_keys))
+        local missing_modes, errMsg = dal.GetModes_ByKeys(missing_keys)
         if errMsg then
             LogError("Couldn't retrieve modes: " .. errMsg)
             return {}
@@ -334,14 +303,14 @@ function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, vars_ui, sounds_thrusting,
 
         for _, mode_row in ipairs(missing_modes) do
             local mode = mode_defaults.FromJSON(mode_row.JSON, mode_row.ModeKey, sounds_thrusting, const)
-            modes_by_key[tostring(mode.ModeKey)] = mode
+            modes_by_key[tostring(mode_row.ModeKey)] = mode
         end
     end
 
     -- Build the return list
     local retVal = {}
 
-    for _, key in ipairs(mode_keys) do
+    for i, key in ipairs(mode_keys) do
         local key_string = tostring(key)
 
         local mode = modes_by_key[key_string]
@@ -351,10 +320,16 @@ function this.Rebuild_ModeList_SINGLEQUERY(mode_keys, vars_ui, sounds_thrusting,
             return {}
         end
 
-        local item = ModeList_Item:new(mode, vars_ui, o, const)
+        next_token = next_token + 1     -- this needs to be unique, used in invisible names
+        local item = ModeList_Item:new(next_token, mode, i == mode_index, vars_ui, o, const)
 
         table.insert(retVal, item)
     end
 
-    return retVal
+    return this.Rebuild_ModeList_AppendAddItem(retVal, vars_ui, o, const)
+end
+function this.Rebuild_ModeList_AppendAddItem(items, vars_ui, o, const)
+    local item = ModeList_Add:new(vars_ui, o, const)
+    table.insert(items, item)
+    return items
 end

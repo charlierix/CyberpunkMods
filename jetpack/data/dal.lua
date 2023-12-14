@@ -435,7 +435,6 @@ function DAL.GetMode_ByKey(primaryKey)
     end
 end
 
--- WARNING: This function doesn't work, not sure why.  It fails in Bind_Select_MultipleRows_Iterator stmt:bind_values(...)
 -- Returns a list of { ModeKey, JSON } of modes by primary keys
 function DAL.GetModes_ByKeys(...)
     local arg = {...}
