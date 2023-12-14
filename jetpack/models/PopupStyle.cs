@@ -8,8 +8,8 @@ public class PopupStyle
     public string energy_background { get; set; }
     public int energy_background_abgr { get; set; }
 
-    public string energy_border { get; set; }
-    public int energy_border_abgr { get; set; }
+    public string energy_foreground { get; set; }
+    public int energy_foreground_abgr { get; set; }
 
     public string switch_background { get; set; }
     public int switch_background_abgr { get; set; }

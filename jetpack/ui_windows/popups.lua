@@ -28,15 +28,15 @@ function DefineWindow_Popups(vars_ui, const)
     pop.energy_background_label = this.Define_Energy_Background_Label(pop.energy_background_help, const)
     pop.energy_background_sample = this.Define_Energy_Background_Sample(pop.energy_background_value, const)
 
-    -- Energy Border
-    pop.energy_border_value = this.Define_Energy_Border_Value(pop.energy_background_value, const)
-    pop.energy_border_help = this.Define_Energy_Border_Help(pop.energy_border_value, const)
-    pop.energy_border_label = this.Define_Energy_Border_Label(pop.energy_border_help, const)
-    pop.energy_border_sample = this.Define_Energy_Border_Sample(pop.energy_border_value, const)
+    -- Energy Foreground
+    pop.energy_foreground_value = this.Define_Energy_Foreground_Value(pop.energy_background_value, const)
+    pop.energy_foreground_help = this.Define_Energy_Foreground_Help(pop.energy_foreground_value, const)
+    pop.energy_foreground_label = this.Define_Energy_Foreground_Label(pop.energy_foreground_help, const)
+    pop.energy_foreground_sample = this.Define_Energy_Foreground_Sample(pop.energy_foreground_value, const)
 
 
     -- Switch Background
-    pop.switch_background_value = this.Define_Switch_Background_Value(pop.energy_border_value, const)
+    pop.switch_background_value = this.Define_Switch_Background_Value(pop.energy_foreground_value, const)
     pop.switch_background_help = this.Define_Switch_Background_Help(pop.switch_background_value, const)
     pop.switch_background_label = this.Define_Switch_Background_Label(pop.switch_background_help, const)
     pop.switch_background_sample = this.Define_Switch_Background_Sample(pop.switch_background_value, const)
@@ -87,7 +87,7 @@ function ActivateWindow_Popups(vars_ui, const)
     pop.scale_slider.value = nil
 
     pop.energy_background_value.text = nil
-    pop.energy_border_value.text = nil
+    pop.energy_foreground_value.text = nil
     pop.switch_background_value.text = nil
     pop.switch_border_value.text = nil
     pop.text_primary_value.text = nil
@@ -108,8 +108,8 @@ function DrawWindow_Popups(isCloseRequested, vars, vars_ui, popups, window, o, c
     this.Refresh_Energy_Background_Value(pop.energy_background_value, popups)
     this.Refresh_Energy_Background_Sample(pop.energy_background_sample, pop.energy_background_value)
 
-    this.Refresh_Energy_Border_Value(pop.energy_border_value, popups)
-    this.Refresh_Energy_Border_Sample(pop.energy_border_sample, pop.energy_border_value)
+    this.Refresh_Energy_Foreground_Value(pop.energy_foreground_value, popups)
+    this.Refresh_Energy_Foreground_Sample(pop.energy_foreground_sample, pop.energy_foreground_value)
 
     this.Refresh_Switch_Background_Value(pop.switch_background_value, popups)
     this.Refresh_Switch_Background_Sample(pop.switch_background_sample, pop.switch_background_value)
@@ -123,7 +123,7 @@ function DrawWindow_Popups(isCloseRequested, vars, vars_ui, popups, window, o, c
     this.Refresh_Text_Secondary_Value(pop.text_secondary_value, popups)
     this.Refresh_Text_Secondary_Sample(pop.text_secondary_sample, pop.text_secondary_value)
 
-    this.Refresh_IsDirty(pop.okcancel, popups, pop.visibility_checkbox, pop.visibility_slider, pop.scale_slider, pop.energy_background_value, pop.energy_border_value, pop.switch_background_value, pop.switch_border_value, pop.text_primary_value, pop.text_secondary_value)
+    this.Refresh_IsDirty(pop.okcancel, popups, pop.visibility_checkbox, pop.visibility_slider, pop.scale_slider, pop.energy_background_value, pop.energy_foreground_value, pop.switch_background_value, pop.switch_border_value, pop.text_primary_value, pop.text_secondary_value)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -152,10 +152,10 @@ function DrawWindow_Popups(isCloseRequested, vars, vars_ui, popups, window, o, c
     Draw_ColorSample(pop.energy_background_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
     -- Energy Border
-    Draw_Label(pop.energy_border_label, vars_ui.style.colors, vars_ui.scale)
-    Draw_HelpButton(pop.energy_border_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
-    Draw_TextBox(pop.energy_border_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
-    Draw_ColorSample(pop.energy_border_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
+    Draw_Label(pop.energy_foreground_label, vars_ui.style.colors, vars_ui.scale)
+    Draw_HelpButton(pop.energy_foreground_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_TextBox(pop.energy_foreground_value, vars_ui.style.textbox, vars_ui.style.colors, vars_ui.scale)
+    Draw_ColorSample(pop.energy_foreground_sample, vars_ui.style.colorSample, window.left, window.top, vars_ui.scale)
 
     -- Switch Background
     Draw_Label(pop.switch_background_label, vars_ui.style.colors, vars_ui.scale)
@@ -189,12 +189,12 @@ function DrawWindow_Popups(isCloseRequested, vars, vars_ui, popups, window, o, c
 
     -- Defaults
     if Draw_Button(pop.defaults, vars_ui.style.button, vars_ui.scale) then
-        this.Restore_Defaults(pop.visibility_checkbox, pop.visibility_slider, pop.scale_slider, pop.energy_background_value, pop.energy_border_value, pop.switch_background_value, pop.switch_border_value, pop.text_primary_value, pop.text_secondary_value)
+        this.Restore_Defaults(pop.visibility_checkbox, pop.visibility_slider, pop.scale_slider, pop.energy_background_value, pop.energy_foreground_value, pop.switch_background_value, pop.switch_border_value, pop.text_primary_value, pop.text_secondary_value)
     end
 
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(pop.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        this.Save(popups, pop.visibility_checkbox, pop.visibility_slider, pop.scale_slider, pop.energy_background_value, pop.energy_border_value, pop.switch_background_value, pop.switch_border_value, pop.text_primary_value, pop.text_secondary_value)
+        this.Save(popups, pop.visibility_checkbox, pop.visibility_slider, pop.scale_slider, pop.energy_background_value, pop.energy_foreground_value, pop.switch_background_value, pop.switch_border_value, pop.text_primary_value, pop.text_secondary_value)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
@@ -239,7 +239,13 @@ function this.Define_Visibility_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[Sets when the energy progress bar should show
+
+Uncheck if you never want it to show
+
+The slider is a way for it to be hidden unless energy is below that percent
+
+1 will be visible as soon as it's less than 100%.  0.5 would only show when below 50%]]
 
     return retVal
 end
@@ -302,7 +308,7 @@ function this.Define_Scale_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[The font scale of the description panel when switching modes]]
 
     return retVal
 end
@@ -377,12 +383,17 @@ function this.Refresh_Energy_Background_Value(def, popups)
     end
 end
 function this.Define_Energy_Background_Help(relative_to, const)
+    local tooltip =
+[[Background color of the energy progress bar that shows while using jetpack
+
+]] .. this.GetColorTooltipText()
+
     -- HelpButton
     return
     {
         invisible_name = "Popups_Energy_Background_Help",
 
-        tooltip = this.GetColorTooltipText(),
+        tooltip = tooltip,
 
         position =
         {
@@ -455,11 +466,11 @@ function this.Refresh_Energy_Background_Sample(def, def_value)
     def.color_hex = def_value.text
 end
 
-function this.Define_Energy_Border_Value(relative_to, const)
+function this.Define_Energy_Foreground_Value(relative_to, const)
     -- TextBox
     return
     {
-        invisible_name = "Popups_Energy_Border_Value",
+        invisible_name = "Popups_Energy_Foreground_Value",
 
         maxChars = 8,
         width = 120,
@@ -485,19 +496,24 @@ function this.Define_Energy_Border_Value(relative_to, const)
         CalcSize = CalcSize_TextBox,
     }
 end
-function this.Refresh_Energy_Border_Value(def, popups)
+function this.Refresh_Energy_Foreground_Value(def, popups)
     --NOTE: ActivateWindow_Popups sets this to nil
     if not def.text then
-        def.text = popups.energy_border
+        def.text = popups.energy_foreground
     end
 end
-function this.Define_Energy_Border_Help(relative_to, const)
+function this.Define_Energy_Foreground_Help(relative_to, const)
+    local tooltip =
+[[Foreground color of the energy progress bar that shows while using jetpack
+
+]] .. this.GetColorTooltipText()
+
     -- HelpButton
     return
     {
-        invisible_name = "Popups_Energy_Border_Help",
+        invisible_name = "Popups_Energy_Foreground_Help",
 
-        tooltip = this.GetColorTooltipText(),
+        tooltip = tooltip,
 
         position =
         {
@@ -516,7 +532,7 @@ function this.Define_Energy_Border_Help(relative_to, const)
         CalcSize = CalcSize_HelpButton,
     }
 end
-function this.Define_Energy_Border_Label(relative_to, const)
+function this.Define_Energy_Foreground_Label(relative_to, const)
     -- Label
     return
     {
@@ -541,11 +557,11 @@ function this.Define_Energy_Border_Label(relative_to, const)
         CalcSize = CalcSize_Label,
     }
 end
-function this.Define_Energy_Border_Sample(relative_to, const)
+function this.Define_Energy_Foreground_Sample(relative_to, const)
     -- ColorSample
     return
     {
-        invisible_name = "Popups_Energy_Border_Sample",
+        invisible_name = "Popups_Energy_Foreground_Sample",
 
         color_hex = "8F00",
 
@@ -566,7 +582,7 @@ function this.Define_Energy_Border_Sample(relative_to, const)
         CalcSize = CalcSize_ColorSample,
     }
 end
-function this.Refresh_Energy_Border_Sample(def, def_value)
+function this.Refresh_Energy_Foreground_Sample(def, def_value)
     def.color_hex = def_value.text
 end
 
@@ -607,12 +623,17 @@ function this.Refresh_Switch_Background_Value(def, popups)
     end
 end
 function this.Define_Switch_Background_Help(relative_to, const)
+    local tooltip =
+[[Background color of the description panel when switching modes
+
+]] .. this.GetColorTooltipText()
+
     -- HelpButton
     return
     {
         invisible_name = "Popups_Switch_Background_Help",
 
-        tooltip = this.GetColorTooltipText(),
+        tooltip = tooltip,
 
         position =
         {
@@ -722,12 +743,17 @@ function this.Refresh_Switch_Border_Value(def, popups)
     end
 end
 function this.Define_Switch_Border_Help(relative_to, const)
+    local tooltip =
+[[Border color of the description panel when switching modes
+
+]] .. this.GetColorTooltipText()
+
     -- HelpButton
     return
     {
         invisible_name = "Popups_Switch_Border_Help",
 
-        tooltip = this.GetColorTooltipText(),
+        tooltip = tooltip,
 
         position =
         {
@@ -837,12 +863,17 @@ function this.Refresh_Text_Primary_Value(def, popups)
     end
 end
 function this.Define_Text_Primary_Help(relative_to, const)
+    local tooltip =
+[[Color of the text of the mode name when energy progress bar shows.  Also used in switch mode panel
+
+]] .. this.GetColorTooltipText()
+
     -- HelpButton
     return
     {
         invisible_name = "Popups_Text_Primary_Help",
 
-        tooltip = this.GetColorTooltipText(),
+        tooltip = tooltip,
 
         position =
         {
@@ -952,12 +983,17 @@ function this.Refresh_Text_Secondary_Value(def, popups)
     end
 end
 function this.Define_Text_Secondary_Help(relative_to, const)
+    local tooltip =
+[[Color of the bottom text of the mode switch panel
+
+]] .. this.GetColorTooltipText()
+
     -- HelpButton
     return
     {
         invisible_name = "Popups_Text_Secondary_Help",
 
-        tooltip = this.GetColorTooltipText(),
+        tooltip = tooltip,
 
         position =
         {
@@ -1053,7 +1089,7 @@ function this.Define_Defaults(vars_ui, const)
         CalcSize = CalcSize_Button,
     }
 end
-function this.Restore_Defaults(def_visibility_checkbox, def_visibility_slider, def_scale_slider, def_energy_background_value, def_energy_border_value, def_switch_background_value, def_switch_border_value, def_text_primary_value, def_text_secondary_value)
+function this.Restore_Defaults(def_visibility_checkbox, def_visibility_slider, def_scale_slider, def_energy_background_value, def_energy_foreground_value, def_switch_background_value, def_switch_border_value, def_text_primary_value, def_text_secondary_value)
     local popups = popups_util.GetDefault()
 
     def_visibility_checkbox.isChecked = popups.energy_visible
@@ -1062,14 +1098,14 @@ function this.Restore_Defaults(def_visibility_checkbox, def_visibility_slider, d
     def_scale_slider.value = popups.switch_scale
 
     def_energy_background_value.text = popups.energy_background
-    def_energy_border_value.text = popups.energy_border
+    def_energy_foreground_value.text = popups.energy_foreground
     def_switch_background_value.text = popups.switch_background
     def_switch_border_value.text = popups.switch_border
     def_text_primary_value.text = popups.text_primary
     def_text_secondary_value.text = popups.text_secondary
 end
 
-function this.Refresh_IsDirty(def, popups, def_visibility_checkbox, def_visibility_slider, def_scale_slider, def_energy_background_value, def_energy_border_value, def_switch_background_value, def_switch_border_value, def_text_primary_value, def_text_secondary_value)
+function this.Refresh_IsDirty(def, popups, def_visibility_checkbox, def_visibility_slider, def_scale_slider, def_energy_background_value, def_energy_foreground_value, def_switch_background_value, def_switch_border_value, def_text_primary_value, def_text_secondary_value)
     local isDirty = false
 
     if def_visibility_checkbox.isChecked then
@@ -1092,7 +1128,7 @@ function this.Refresh_IsDirty(def, popups, def_visibility_checkbox, def_visibili
     elseif def_energy_background_value.text ~= popups.energy_background then
         isDirty = true
 
-    elseif def_energy_border_value.text ~= popups.energy_border then
+    elseif def_energy_foreground_value.text ~= popups.energy_foreground then
         isDirty = true
 
     elseif def_switch_background_value.text ~= popups.switch_background then
@@ -1111,12 +1147,12 @@ function this.Refresh_IsDirty(def, popups, def_visibility_checkbox, def_visibili
     def.isDirty = isDirty
 end
 
-function this.Save(popups, def_visibility_checkbox, def_visibility_slider, def_scale_slider, def_energy_background_value, def_energy_border_value, def_switch_background_value, def_switch_border_value, def_text_primary_value, def_text_secondary_value)
+function this.Save(popups, def_visibility_checkbox, def_visibility_slider, def_scale_slider, def_energy_background_value, def_energy_foreground_value, def_switch_background_value, def_switch_border_value, def_text_primary_value, def_text_secondary_value)
     popups.energy_visible = def_visibility_checkbox.isChecked
     popups.energy_visible_under_percent = def_visibility_slider.value
     popups.switch_scale = def_scale_slider.value
     popups.energy_background = def_energy_background_value.text
-    popups.energy_border = def_energy_border_value.text
+    popups.energy_foreground = def_energy_foreground_value.text
     popups.switch_background = def_switch_background_value.text
     popups.switch_border = def_switch_border_value.text
     popups.text_primary = def_text_primary_value.text
@@ -1127,6 +1163,10 @@ function this.Save(popups, def_visibility_checkbox, def_visibility_slider, def_s
     local popups_json = extern_json.encode(popups)
 
     dal.InsertPopups(popups_json)
+
+    if math.random(72) == 1 then
+        dal.DeleteOldPopupsRows()
+    end
 end
 
 ---------------------------------------------------------------------------------------

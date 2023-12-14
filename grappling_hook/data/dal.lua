@@ -277,12 +277,13 @@ function DAL.DeleteOldPlayerRows(playerID)
                 (
                     SELECT a.PlayerKey
                     FROM Player a
+                    a.PlayerID = ?
                     ORDER BY a.LastUsed DESC
                     LIMIT 12
                 )
         ]]
 
-        local errMsg = this.Bind_NonSelect(stmt, "DeleteOldPlayerRows", playerID)
+        local errMsg = this.Bind_NonSelect(stmt, "DeleteOldPlayerRows", playerID, playerID)
         if errMsg then
             return errMsg
         end

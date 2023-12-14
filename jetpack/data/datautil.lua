@@ -158,8 +158,8 @@ function DataUtil.GetModeList(sounds_thrusting, const)
 end
 
 function DataUtil.DeleteUnusedModes()
-    -- Get the most recent row for each playerID
-    local player_rows, errMsg = dal.GetLatestPlayers()
+    -- Get all player rows
+    local player_rows, errMsg = dal.GetAllPlayers()
     if errMsg then
         LogError(errMsg)
         do return end
@@ -169,7 +169,10 @@ function DataUtil.DeleteUnusedModes()
     local mode_keys = this.GetDistinctModeKeys(player_rows)
 
     -- Delete all modes that aren't in this list of keys
-    dal.DeleteAllModes_ExceptKeys(mode_keys)
+    local errMsg = dal.DeleteAllModes_ExceptKeys(mode_keys)
+    if errMsg then
+        LogError(errMsg)
+    end
 end
 
 ----------------------------------- Private Methods -----------------------------------

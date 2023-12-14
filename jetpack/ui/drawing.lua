@@ -19,7 +19,7 @@ function DrawJetpackProgress(name, remainBurnTime, maxBurnTime, vars_ui_progress
 
         ImGui.PushStyleColor(ImGuiCol.Text, popups.text_secondary_abgr)
         ImGui.PushStyleColor(ImGuiCol.FrameBg, popups.energy_background_abgr)
-        ImGui.PushStyleColor(ImGuiCol.PlotHistogram, popups.energy_border_abgr)
+        ImGui.PushStyleColor(ImGuiCol.PlotHistogram, popups.energy_foreground_abgr)
 
         --ImGui.SetCursorPos(0, 0)
         ImGui.SetCursorPos(0, vars_ui_progressbar.line_heights.line / 2)

@@ -76,13 +76,12 @@ function Player:Save()
         do return end
     end
 
-    --TODO: Test these
-    -- if math.random(72) == 1 then
-    --     dal.DeleteOldPlayerRows(self.playerID)
+    if math.random(72) == 1 then
+        dal.DeleteOldPlayerRows(self.playerID)
 
-    -- elseif math.random(72) == 1 then
-    --     datautil.DeleteUnusedModes()
-    -- end
+    elseif math.random(72) == 1 then
+         datautil.DeleteUnusedModes()
+    end
 
     self.playerKey = primaryKey
 end

@@ -257,7 +257,46 @@ function DAL.GetLatestPlayers()
     if sucess then
         return players, errMsg
     else
-        return nil, "GetLatestPlayer: Unknown Error"
+        return nil, "GetLatestPlayers: Unknown Error"
+    end
+end
+
+function DAL.GetAllPlayers()
+    local sucess, players, errMsg = pcall(function ()
+        local stmt = db:prepare
+        [[
+            SELECT
+                PlayerKey,
+                PlayerID,
+                ModeKeys,
+                ModeIndex,
+                LastUsed,
+                LastUsed_Readable
+            FROM Player
+        ]]
+
+        local retVal = {}
+
+        for row in this.Bind_Select_MultipleRows_Iterator(stmt, "GetAllPlayers") do
+            if row then
+                -- Don't want to return an internal implementation of the list.  Callers expect a regular array of ints
+                if row.ModeKeys then
+                    row.ModeKeys = this.ModeKeys_String_to_List(row.ModeKeys)
+                end
+
+                table.insert(retVal, row)
+            else
+                return nil, "Unknown error retrieving players"
+            end
+        end
+
+        return retVal, nil
+    end)
+
+    if sucess then
+        return players, errMsg
+    else
+        return nil, "GetAllPlayers: Unknown Error"
     end
 end
 
@@ -314,12 +353,13 @@ function DAL.DeleteOldPlayerRows(playerID)
                 (
                     SELECT a.PlayerKey
                     FROM Player a
+                    WHERE a.PlayerID = ?
                     ORDER BY a.LastUsed DESC
                     LIMIT 12
                 )
         ]]
 
-        local errMsg = this.Bind_NonSelect(stmt, "DeleteOldPlayerRows", playerID)
+        local errMsg = this.Bind_NonSelect(stmt, "DeleteOldPlayerRows", playerID, playerID)
         if errMsg then
             return errMsg
         end
@@ -597,7 +637,7 @@ end
 -- This deletes all but the last 12 rows of popups
 -- Returns
 --  Error Message or nil
-function DAL.DeleteOldPopupsRows(playerID)
+function DAL.DeleteOldPopupsRows()
     local sucess, errMsg = pcall(function ()
         -- Can't use joins, so a subquery seems to be the only option.  There shouldn't be enough rows to really matter anyway
 
@@ -614,7 +654,7 @@ function DAL.DeleteOldPopupsRows(playerID)
                 )
         ]]
 
-        local errMsg = this.Bind_NonSelect(stmt, "DeleteOldPopupsRows", playerID)
+        local errMsg = this.Bind_NonSelect(stmt, "DeleteOldPopupsRows")
         if errMsg then
             return errMsg
         end

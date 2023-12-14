@@ -24,10 +24,10 @@ function PopupsUtil.GetDefault()
         energy_visible = true,
         energy_visible_under_percent = 1,
 
-        switch_scale = 1.2,
+        switch_scale = 1.15,
 
         energy_background = "995EADAD",
-        energy_border = "E673D4D4",
+        energy_foreground = "E673D4D4",
         switch_background = "A02E5454",
         switch_border = "803D6E6E",
         text_primary = "FFFFFF4C",
@@ -42,7 +42,7 @@ end
 -- Populates the _abgr properties based on the corresponding string properties
 function PopupsUtil.ParseColors(popups)
     _, popups.energy_background_abgr = ConvertHexStringToNumbers(popups.energy_background)
-    _, popups.energy_border_abgr = ConvertHexStringToNumbers(popups.energy_border)
+    _, popups.energy_foreground_abgr = ConvertHexStringToNumbers(popups.energy_foreground)
     _, popups.switch_background_abgr = ConvertHexStringToNumbers(popups.switch_background)
     _, popups.switch_border_abgr = ConvertHexStringToNumbers(popups.switch_border)
     _, popups.text_primary_abgr = ConvertHexStringToNumbers(popups.text_primary)

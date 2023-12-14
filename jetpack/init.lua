@@ -433,7 +433,7 @@ registerForEvent("onDraw", function()
 
     if player then
         -- Energy tank (only show when it's not full)
-        if player.mode and vars.remainBurnTime / player.mode.energy.maxBurnTime < const.hide_energy_above_percent then
+        if player.mode and popups.energy_visible and vars.remainBurnTime / player.mode.energy.maxBurnTime < math.min(popups.energy_visible_under_percent, const.hide_energy_above_percent) then
             DrawJetpackProgress(player.mode.name, vars.remainBurnTime, player.mode.energy.maxBurnTime, vars_ui_progressbar, popups, const)
         end
 
