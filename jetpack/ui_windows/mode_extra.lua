@@ -599,7 +599,7 @@ function this.Define_Hover_BurnRate_Value(const)
     {
         invisible_name = "Mode_Extra_Hover_BurnRate_Value",
 
-        min = 0.01,     -- if it's zero, processing will ignore it
+        min = 0.05,     -- if it's zero, processing will ignore it
         max = 2,
 
         decimal_places = 2,
@@ -1003,7 +1003,7 @@ function this.Define_PushUp_BurnRate_Value(const)
     {
         invisible_name = "Mode_Extra_PushUp_BurnRate_Value",
 
-        min = 0.01,
+        min = 0.05,
         max = 4,
 
         decimal_places = 1,
@@ -1139,7 +1139,7 @@ function this.Define_Dash_BurnRate_Value(const)
     {
         invisible_name = "Mode_Extra_Dash_BurnRate_Value",
 
-        min = 0.01,
+        min = 0.05,
         max = 2,
 
         decimal_places = 2,

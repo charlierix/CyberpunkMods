@@ -107,14 +107,17 @@ function this.Refresh_ModeList(def, vars_ui, player, sounds_thrusting, o, const)
     end
 
     if not def.items then       -- cleared during activate
+        print("Refresh_ModeList: not def.items")
         def.items = this.Rebuild_ModeList(player.mode_keys, mode_index, vars_ui, sounds_thrusting, o, const)
 
     elseif #def.items - 1 ~= mode_keys_count then     -- this case should never happen
+        print("Refresh_ModeList: count diff: " .. tostring(#def.items - 1) .. " | " .. tostring(mode_keys_count))
         def.items = this.Rebuild_ModeList(player.mode_keys, mode_index, vars_ui, sounds_thrusting, o, const)
 
     else        -- make sure the stored list matches what the player row has
         for i = 1, mode_keys_count, 1 do
             if def.items[i].mode.mode_key ~= player.mode_keys[i] then
+                print("Refresh_ModeList: mode key diff: " .. tostring(def.items[i].mode.mode_key) .. " | " .. tostring(player.mode_keys[i]))
                 def.items = this.Rebuild_ModeList(player.mode_keys, mode_index, vars_ui, sounds_thrusting, o, const)
                 do break end
             end

@@ -410,37 +410,34 @@ It's a laid back way to play (major tom to ground control usually loops in my he
     mode.sound_type = const.thrust_sound_type.jump
 end
 
-function this.ExtremeSlowMotion()
-    --TODO: this also needs hover on right click
+function this.TimeSpirit(mode, sounds_thrusting, const)
+    mode.name = "time spirit"
 
-    -- {
-    --     "accel": {
-    --         "gravity": -0.7,
-    --         "horz_dash": 9,
-    --         "horz_stand": 2,
-    --         "vert_dash": 5.5,
-    --         "vert_initial": 0.667,
-    --         "vert_stand": 0.85
-    --     },
-    --     "description": "Just for fun, very over powered.  Buzz around, take people out with impunity",
-    --     "energy": {
-    --         "burnRate_dash": 0.1,
-    --         "burnRate_horz": 0.1,
-    --         "maxBurnTime": 999,
-    --         "recoveryRate": 99
-    --     },
-    --     "index": 1,
-    --     "jump_land": {
-    --         "explosiveJumping": false,
-    --         "explosiveLanding": false,
-    --         "holdJumpDelay": 0.22,
-    --         "shouldSafetyFire": false
-    --     },
-    --     "name": "Extreme Slow Motion",
-    --     "sound_type": "levitate",
-    --     "timeDilation": 0.07,
-    --     "useImpulse": false
-    -- }
+    mode.description =
+[[Time is nearly frozen, very low gravity.  Incredibly overpowered, but a fun mode to use every once in a while
+
+Buzz around, shooting, throwing knives.  Some guns work better than others]]
+
+    mode.useImpulse = false
+
+    mode.sound_type = const.thrust_sound_type.levitate
+
+    mode.energy.burnRate_dash = 1
+    mode.energy.burnRate_horz = 0.1
+    mode.energy.maxBurnTime = 999
+    mode.energy.recoveryRate = 99
+
+    mode.accel.gravity = -0.7
+    mode.accel.horz_dash = 9
+    mode.accel.horz_stand = 2
+    mode.accel.vert_dash = 5.5
+    mode.accel.vert_stand = 0.85
+
+    mode.timeDilation = 0.03
+
+    mode.jump_land.shouldSafetyFire = false
+
+    mode.extra_key1 = Extra_Hover:new("extra1", 1.3, 3.5, 1.3, 0.05, 9999, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -456,6 +453,7 @@ function this.EnsurePresetsAssigned()
             this.NPCLauncher,
             this.HulkStomp,
             this.DreamJump,
+            this.TimeSpirit,
         }
     end
 end

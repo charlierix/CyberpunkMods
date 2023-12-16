@@ -627,7 +627,11 @@ function DAL.GetLatestPopups()
     end)
 
     if sucess then
-        return row.JSON, errMsg
+        if row then
+            return row.JSON, errMsg
+        else
+            return nil, errMsg
+        end
     else
         return nil, "GetLatestPopups: Unknown Error"
     end
