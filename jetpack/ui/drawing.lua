@@ -204,7 +204,7 @@ function DrawConfig(isCloseRequested, is_minimized, vars, vars_ui, player, popup
         Refresh_WindowPos(window, vars_ui, const)
 
         if vars_ui.currentWindow == const.windows.main then
-            continueShowing = DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, const)
+            continueShowing = DrawWindow_Main(isCloseRequested, vars, vars_ui, player, popups, window, o, const)
 
         elseif vars_ui.currentWindow == const.windows.mode then
             continueShowing = DrawWindow_Mode(isCloseRequested, vars, vars_ui, player, window, o, const)

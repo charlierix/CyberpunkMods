@@ -35,7 +35,7 @@ function ActivateWindow_Main(vars_ui, const)
 end
 
 -- This gets called each frame from DrawConfig()
-function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, const)
+function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, popups, window, o, const)
     local main = vars_ui.main
 
     ------------------------- Finalize models for this frame -------------------------
@@ -43,6 +43,8 @@ function DrawWindow_Main(isCloseRequested, vars, vars_ui, player, window, o, con
     player:EnsureNotMock()
 
     this.Refresh_ModeList(main.modelist, vars_ui, player, vars.sounds_thrusting, o, const)
+
+    this.Refresh_Popups(main.popups, popups)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -137,16 +139,23 @@ function this.Define_Popups(const)
         content =
         {
             -- the content is presented as sorted by name
-            -- a_horz = { prompt = "horizontal" },
-            -- b_vert = { prompt = "vertical" },
-            -- c_initial = { prompt = "initial" },
-            -- d_gravity = { prompt = "gravity" },
+            a_energy = { prompt = "energy" },
         },
 
         invisible_name = "Main_Popups",
 
         CalcSize = CalcSize_SummaryButton,
     }
+end
+function this.Refresh_Popups(def, popups)
+    local energy = ""
+    if popups.energy_visible then
+        energy = "under " .. tostring(Round(popups.energy_visible_under_percent * 100, 0)) .. "%"
+    else
+        energy = "hidden"
+    end
+
+    def.content.a_energy.value = energy
 end
 
 ---------------------------------------------------------------------------------------
