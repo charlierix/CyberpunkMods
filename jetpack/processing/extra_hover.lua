@@ -68,6 +68,7 @@ function Extra_Hover:Tick(o, vel, keys, vars, deltaTime)
 
     -- Above or below desired altitude
     local offset = -self.gravity / self.mult        -- need to target above the hold altitude, because at a distance of gravity below is where the forces zero out
+    offset = offset * 0.95
     local diff = self.holdAltitude + offset - o.pos.z
 
     -- Get accelerations

@@ -177,6 +177,9 @@ function this.Actions_ModeList(def, vars_ui, player, sounds_thrusting, const)
                 elseif item.action_instruction == const.modelist_actions.move_down then
                     this.Actions_ModeList_MoveUpDown(def, i, 1, player)
 
+                elseif item.action_instruction == const.modelist_actions.selected then
+                    this.Actions_ModeList_Select(def, i, player)
+
                 elseif item.action_instruction == const.modelist_actions.delete then
                     this.Actions_ModeList_Delete(i, player, sounds_thrusting, const)
 
@@ -222,6 +225,15 @@ function this.Actions_ModeList_MoveUpDown(def, index, direction, player)
     player:Save()
 
     -- no need to call this.Rebuild_ModeList, since it will be called next frame
+end
+function this.Actions_ModeList_Select(def, index, player)
+    player:SetMode(index)
+
+    for i, item in ipairs(def.items) do
+        if i < #def.items then
+            item.is_current_mode = i == index
+        end
+    end
 end
 function this.Actions_ModeList_Delete(index, player, sounds_thrusting, const)
     if not player.mode_keys or index > #player.mode_keys then

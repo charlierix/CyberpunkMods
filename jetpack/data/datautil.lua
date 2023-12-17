@@ -79,6 +79,21 @@ function DataUtil.NextMode(playerKey, mode_keys, current_index, sounds_thrusting
         index = 1
     end
 
+    return DataUtil.SetMode(playerKey, mode_keys, index, sounds_thrusting, const)
+end
+-- Sets the index to the desired mode
+-- Returns:
+--  modeIndex (value passed in)
+--  mode (see models\Mode)
+--  Error Message (only populated if first two are nil)
+function DataUtil.SetMode(playerKey, mode_keys, index, sounds_thrusting, const)
+    if not mode_keys or #mode_keys == 0 then
+        return nil, nil, "list of mode keys is empty"
+
+    elseif index < 1 or index > #mode_keys then
+        return nil, nil, "index out of range"
+    end
+
     local mode_json, errMsg = dal.GetMode_ByKey(mode_keys[index])
     if not mode_json then
         return nil, nil, errMsg

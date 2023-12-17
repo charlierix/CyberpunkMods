@@ -47,6 +47,26 @@ function Player:NextMode()
 
     self.vars.showConfigNameUntil = self.o.timer + 3
 end
+function Player:SetMode(index)
+    self:EnsureNotMock()
+
+    if not self.mode_keys or index < 1 or index > #self.mode_keys then
+        self.vars.showConfigNameUntil = self.o.timer + 3
+        do return end
+    end
+
+    -- Jump to the requested index, update db
+    local _, mode, errMsg = datautil.SetMode(self.playerKey, self.mode_keys, index, self.vars.sounds_thrusting, self.const)
+    if errMsg then
+        this.ResetToMock(self, "Error switching modes, loading defaults: " .. tostring(errMsg))
+        do return end
+    end
+
+    self.mode_index = index
+    this.StoreMode(self, mode)
+
+    self.vars.showConfigNameUntil = self.o.timer + 3
+end
 
 function Player:EnsureNotMock()
     if not self.is_mock then

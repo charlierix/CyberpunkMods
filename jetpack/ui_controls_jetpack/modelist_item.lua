@@ -41,10 +41,9 @@ function this.DefineWindow(token, mode, vars_ui, const)
 
     item.description = this.Define_Description(item.modename, const)
 
-    --TODO: indicate if currently selected
-
     item.button_up = this.Define_Button_Up(invisible_name_suffix, const)
     item.button_down = this.Define_Button_Down(item.button_up, invisible_name_suffix, const)
+    item.button_selected = this.Define_Button_Selected(item.button_down, invisible_name_suffix, const)
 
     item.button_delete = this.Define_Button_Delete(item.button_up, invisible_name_suffix, const)
     item.button_clone = this.Define_Button_Clone(item.button_delete, invisible_name_suffix, const)
@@ -63,6 +62,8 @@ function this.DrawWindow(item, mode, is_current_mode, vars_ui, screenOffset_x, s
     this.Refresh_ModeName(item.modename, mode)
 
     this.Refresh_Description(item.description, mode, item.button_edit, width, vars_ui.scale)
+
+    this.Refresh_Button_Selected(item.button_selected, is_current_mode)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -114,6 +115,10 @@ function this.DrawWindow(item, mode, is_current_mode, vars_ui, screenOffset_x, s
 
         if Draw_IconButton(item.button_down, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
             action_instruction = const.modelist_actions.move_down
+        end
+
+        if Draw_IconButton(item.button_selected, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
+            action_instruction = const.modelist_actions.selected
         end
 
         if Draw_IconButton(item.button_delete, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
@@ -344,6 +349,54 @@ function this.Define_Button_Down(relative_to, invisible_name_suffix, const)
 
         CalcSize = CalcSize_IconButton,
     }
+end
+
+function this.Define_Button_Selected(relative_to, invisible_name_suffix, const)
+    -- IconButton
+    return
+    {
+        invisible_name = "ModeList_Item_" .. invisible_name_suffix .. "_Selected",
+
+        tooltip = "Set currently selected",
+
+        icon_data = "",
+
+        isEnabled = true,
+
+        is_circle = false,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 4,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_IconButton,
+    }
+end
+function this.Refresh_Button_Selected(def, is_current_mode)
+    -- 125,290 220,380, 387,135
+    -- 0.244140625, 0.56640625
+    -- 0.4296875, 0.7421875
+    -- 0.755859375, 0.263671875
+
+    if is_current_mode then
+        def.icon_data =
+        [[
+            line 0.244 0.566 0.43 0.742 3
+            line 0.43 0.742 0.756 0.264 3
+        ]]
+    else
+        def.icon_data = ""
+    end
 end
 
 function this.Define_Button_Delete(relative_to, invisible_name_suffix, const)
