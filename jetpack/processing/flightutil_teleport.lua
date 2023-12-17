@@ -11,7 +11,8 @@ local up = nil
 --      vect4 hit's normal
 function IsTeleportPointSafe(fromPos, toPos, velocity, deltaTime, o)
     -- test a bit above the teleport point
-    --NOTE: pos is at the character's feet
+    -- NOTE: toPos is at the character's feet
+    -- NOTE: this works, because water is removed from the list of raycast targets
     local hit_pos, hit_norm = o:RayCast(fromPos, Vector4.new(toPos.x, toPos.y, toPos.z + 2.3, toPos.w))
 
     if hit_pos and not this.IsHitUpFromTheGrave(velocity, hit_norm) then

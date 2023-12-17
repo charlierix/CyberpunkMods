@@ -1,6 +1,6 @@
 local this = {}
 
-function PopulateDebug(debug, o, keys, vars)
+function PopulateDebug(debug, o, keys, player, vars, deltaTime)
     debug.inFlight = vars.isInFlight
 
     local quest = Game.GetQuestsSystem()
@@ -31,6 +31,10 @@ function PopulateDebug(debug, o, keys, vars)
     -- debug.thrust_isDown = vars.thrust.isDown
     -- debug.thrust_isDashing = vars.thrust.isDashing
     -- debug.thrust_downDuration = Round(vars.thrust.downDuration, 1)
+
+    -- debug.zzz_underwater = tostring(o:HasHeadUnderwater())
+    -- debug.zzz_airborne = IsAirborne(o, true)
+    -- debug.zzz_should_exit = ShouldExitFlight(o, vars, player.mode, deltaTime)
 
     if vars.cur_timeDilation then
         debug.timeDilation = Round(vars.cur_timeDilation, 2)

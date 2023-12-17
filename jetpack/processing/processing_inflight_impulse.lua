@@ -90,7 +90,7 @@ function this.Accelerate(o, vars, const, mode, keys, debug, deltaTime)
     accelZ = accelZ + dragZ
 
     if const.shouldShowDebugWindow then
-        PopulateFlightDebug(vars, debug, accelX, accelY, accelZ, true)
+        PopulateFlightDebug(vars, debug, accelX, accelY, accelZ, true, deltaTime)
     end
 
     accelX = accelX * deltaTime

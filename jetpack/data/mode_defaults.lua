@@ -429,15 +429,16 @@ Buzz around, shooting, throwing knives.  Some guns work better than others]]
 
     mode.accel.gravity = -0.7
     mode.accel.horz_dash = 9
-    mode.accel.horz_stand = 2
+    mode.accel.horz_stand = 1.5
     mode.accel.vert_dash = 5.5
     mode.accel.vert_stand = 0.85
 
     mode.timeDilation = 0.03
 
+    mode.jump_land.holdJumpDelay = 0.35     -- by using a larger value, there won't be any up velocity from initial jump when starting bullet time (0.22 causes the player to jump really high because of the low gravity)
     mode.jump_land.shouldSafetyFire = false
 
-    mode.extra_key1 = Extra_Hover:new("extra1", 1.3, 3.5, 1.3, 0.05, 9999, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
+    mode.extra_key1 = Extra_Hover:new("extra1", 1, 3.2, 1.3, 0.05, 9999, mode.useImpulse, mode.accel.gravity, sounds_thrusting, const)
 end
 
 ----------------------------------- Private Methods -----------------------------------

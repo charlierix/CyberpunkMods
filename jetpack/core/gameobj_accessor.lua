@@ -505,7 +505,7 @@ local raycast_filters =
     "Dynamic",      -- Movable Objects
     "Vehicle",
     "Static",       -- Buildings, Concrete Roads, Crates, etc
-    "Water",
+    --"Water",      -- This just causes problems when trying to jetpack out of water (teleport kept bouncing from the boudary).  Though skipping means that jetpack won't bounce off water (which didn't feel very realistic anyway)
     "Terrain",
     "PlayerBlocker",        -- Trees, Billboards, Barriers
 }

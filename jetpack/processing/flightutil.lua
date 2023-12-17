@@ -262,10 +262,12 @@ function GetVelocity(mode, vars, o)
     end
 end
 
-function PopulateFlightDebug(vars, debug, accelX, accelY, accelZ, is_impulse)
+function PopulateFlightDebug(vars, debug, accelX, accelY, accelZ, is_impulse, deltaTime)
     debug.accelX = Round(accelX, 1)
     debug.accelY = Round(accelY, 1)
     debug.accelZ = Round(accelZ, 1)
+
+    debug.deltaTime = tostring(deltaTime)
 
     if is_impulse then
         debug.accelZ_grav = Round(accelZ - 16, 1)
@@ -278,6 +280,7 @@ function RemoveFlightDebug(debug)
     debug.accelX = nil
     debug.accelY = nil
     debug.accelZ = nil
+    debug.deltaTime = nil
     debug.vel2 = nil
     debug.speed2 = nil
     debug.time_flying_idle = nil

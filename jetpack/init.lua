@@ -358,7 +358,7 @@ registerForEvent("onUpdate", function(deltaTime)
     shouldDraw = true       -- don't want a stopped progress bar while in menu or driving
 
     if const.shouldShowDebugWindow then
-        PopulateDebug(debug, o, keys, vars)
+        PopulateDebug(debug, o, keys, player, vars, deltaTime)
     end
 
     -- Cycle Config
