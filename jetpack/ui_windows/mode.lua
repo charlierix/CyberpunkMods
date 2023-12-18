@@ -686,7 +686,9 @@ function this.Define_FlightMethod_Help(relative_to, const)
 
 Teleport:  The mod does physics and collisions.  Better for high speed, slightly more floaty feeling
 
-It's recommended to use a mod that removes the sepia filter (for impulse based flight)]]
+It's recommended to use a mod that removes the sepia filter (for impulse based flight)
+
+NOTE:  There is a bug with impulse based and holding in tab.  So if you're going to do quickhacks while flying, use teleport based]]
 
     return retVal
 end
