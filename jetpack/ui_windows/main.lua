@@ -1,7 +1,5 @@
 local this = {}
 
-local modes_by_key = {}
-
 local next_token = 0
 
 -- This gets called during activate and sets up as much static inforation as it can for all the
@@ -107,17 +105,14 @@ function this.Refresh_ModeList(def, vars_ui, player, sounds_thrusting, o, const)
     end
 
     if not def.items then       -- cleared during activate
-        print("Refresh_ModeList: not def.items")
         def.items = this.Rebuild_ModeList(player.mode_keys, mode_index, vars_ui, sounds_thrusting, o, const)
 
     elseif #def.items - 1 ~= mode_keys_count then     -- this case should never happen
-        print("Refresh_ModeList: count diff: " .. tostring(#def.items - 1) .. " | " .. tostring(mode_keys_count))
         def.items = this.Rebuild_ModeList(player.mode_keys, mode_index, vars_ui, sounds_thrusting, o, const)
 
     else        -- make sure the stored list matches what the player row has
         for i = 1, mode_keys_count, 1 do
             if def.items[i].mode.mode_key ~= player.mode_keys[i] then
-                print("Refresh_ModeList: mode key diff: " .. tostring(def.items[i].mode.mode_key) .. " | " .. tostring(player.mode_keys[i]))
                 def.items = this.Rebuild_ModeList(player.mode_keys, mode_index, vars_ui, sounds_thrusting, o, const)
                 do break end
             end
@@ -307,28 +302,38 @@ function this.Rebuild_ModeList(mode_keys, mode_index, vars_ui, sounds_thrusting,
         return this.Rebuild_ModeList_AppendAddItem({}, vars_ui, o, const)
     end
 
-    -- Get a list of keys that aren't in the mode cache
-    local missing_keys = {}
-
-    for _, key in ipairs(mode_keys) do
-        if not modes_by_key[tostring(key)] then
-            table.insert(missing_keys, key)
-        end
+    -- Pull json from the database for these keys
+    local mode_rows, errMsg = dal.GetModes_ByKeys(mode_keys)
+    if errMsg then
+        LogError("Couldn't retrieve modes: " .. errMsg)
+        return {}
     end
 
-    -- Fill cache with missing from the database
-    if #missing_keys > 0 then
-        --local missing_modes, errMsg = dal.GetModes_ByKeys(table.unpack(missing_keys))
-        local missing_modes, errMsg = dal.GetModes_ByKeys(missing_keys)
-        if errMsg then
-            LogError("Couldn't retrieve modes: " .. errMsg)
-            return {}
-        end
 
-        for _, mode_row in ipairs(missing_modes) do
-            local mode = mode_defaults.FromJSON(mode_row.JSON, mode_row.ModeKey, sounds_thrusting, const)
-            modes_by_key[tostring(mode_row.ModeKey)] = mode
-        end
+    -- if #mode_keys == #mode_rows then
+    --     local returned_keys = Select(mode_rows, function(a) return a.ModeKey end)
+    --     local skipped_keys = Except(mode_keys, returned_keys)
+    --     if #skipped_keys > 0 then
+    --         print("dal.GetModes_ByKeys didn't get all keys")
+    --         ReportTable(mode_keys)
+    --         print("---------------")
+    --         ReportTable(returned_keys)
+    --     end
+    -- else
+    --     print("Rebuild_ModeList: didn't get the same count back: " .. tostring(#mode_keys) .. " | " .. tostring(#mode_rows))
+    -- end
+
+
+    -- NOTE: at first, I was caching these, but the mode instances were getting corrupted because the child windows were changing
+    -- properties
+    --
+    -- The ModeList_Items will get rebuilt because the act of saving changes to a mode creates a new mode key.  this.Refresh_ModeList
+    -- detects that change and calls this rebuild function
+    local modes_by_key = {}
+
+    for _, mode_row in ipairs(mode_rows) do
+        local mode = mode_defaults.FromJSON(mode_row.JSON, mode_row.ModeKey, sounds_thrusting, const)
+        modes_by_key[tostring(mode_row.ModeKey)] = mode
     end
 
     -- Build the return list

@@ -20,8 +20,6 @@ function ModeDefaults.GetConfigValues(index, sounds_thrusting, const)
     -- Call the preset, which changes some of the values in mode
     presets[index](mode, sounds_thrusting, const)
 
-    mode.index = index
-
     -- The vertical accelerations need to defeat gravity
     mode.accel.vert_stand = ModeDefaults.ImpulseGravityAdjust_ToMode(mode.useImpulse, mode.accel.gravity, mode.accel.vert_stand)
     mode.accel.vert_dash = ModeDefaults.ImpulseGravityAdjust_ToMode(mode.useImpulse, mode.accel.gravity, mode.accel.vert_dash)

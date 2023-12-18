@@ -208,7 +208,11 @@ function this.Define_Type_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[This will slow down time while jetpacking
+
+Constant: The amount that time is slowed is always the same
+
+Gradient: The dilation depends on vertical speed]]
 
     return retVal
 end
@@ -263,7 +267,9 @@ function this.Define_Const_Dilation_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[1 is standard time, 0 would be completely stopped, 0.5 would be 50% speed
+
+I had to speed up the player and guns inverse of the time dilation, but some animations still aren't right when the dilation approaches zero.  Sub machine guns work well, but some with extra animations are terrible]]
 
     return retVal
 end
@@ -274,7 +280,7 @@ function this.Define_Const_Dilation_Value(const)
         invisible_name = "Mode_TimeDilation_Const_Dilation_Value",
 
         min = 0.001,
-        max = 1,
+        max = 0.99,
 
         decimal_places = 3,
 
@@ -300,7 +306,7 @@ function this.Refresh_Const_Dilation_Value(def, mode)
         if mode.timeDilation then
             def.value = mode.timeDilation
         else
-            def.value = 1
+            def.value = def.max
         end
     end
 end
@@ -330,7 +336,11 @@ function this.Define_Gradient_DilationLow_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[The time dilation when vertical speed is at or below low speed
+
+1 is standard time, 0 would be completely stopped, 0.5 would be 50% speed
+
+I had to speed up the player and guns inverse of the time dilation, but some animations still aren't right when the dilation approaches zero.  Sub machine guns work well, but some with extra animations are terrible]]
 
     return retVal
 end
@@ -341,7 +351,7 @@ function this.Define_Gradient_DilationLow_Value(const)
         invisible_name = "Mode_TimeDilation_Gradient_DilationLow_Value",
 
         min = 0.001,
-        max = 1,
+        max = 0.99,
 
         decimal_places = 3,
 
@@ -367,7 +377,7 @@ function this.Refresh_Gradient_DilationLow_Value(def, mode)
         if mode.timeDilation_gradient then
             def.value = mode.timeDilation_gradient.timeDilation_lowZSpeed
         else
-            def.value = 1
+            def.value = def.max
         end
     end
 end
@@ -397,7 +407,11 @@ function this.Define_Gradient_SpeedLow_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[The slowest speed, this would happen at the top of the arc or when hovering
+
+Walking is around 3.5, sprinting is double that.  Lethal speed starts around mid twenties
+
+This is only looking at the vertical part of the player's speed (how fast going up or down)]]
 
     return retVal
 end
@@ -464,7 +478,11 @@ function this.Define_Gradient_DilationHigh_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[The time dilation when vertical speed is at or above high speed
+
+1 is standard time, 0 would be completely stopped, 0.5 would be 50% speed
+
+I had to speed up the player and guns inverse of the time dilation, but some animations still aren't right when the dilation approaches zero.  Sub machine guns work well, but some with extra animations are terrible]]
 
     return retVal
 end
@@ -475,7 +493,7 @@ function this.Define_Gradient_DilationHigh_Value(const)
         invisible_name = "Mode_TimeDilation_Gradient_DilationHigh_Value",
 
         min = 0.001,
-        max = 1,
+        max = 0.99,
 
         decimal_places = 3,
 
@@ -501,7 +519,7 @@ function this.Refresh_Gradient_DilationHigh_Value(def, mode)
         if mode.timeDilation_gradient then
             def.value = mode.timeDilation_gradient.timeDilation_highZSpeed
         else
-            def.value = 1
+            def.value = def.max
         end
     end
 end
@@ -531,7 +549,11 @@ function this.Define_Gradient_SpeedHigh_Help(relative_to, const)
     }
 
     retVal.tooltip =
-[[]]
+[[The fastest speed, this would happen after jumping into the air or falling
+
+Walking is around 3.5, sprinting is double that.  Lethal speed starts around mid twenties
+
+This is only looking at the vertical part of the player's speed (how fast going up or down)]]
 
     return retVal
 end
