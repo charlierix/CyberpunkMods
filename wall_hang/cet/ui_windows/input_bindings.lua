@@ -719,10 +719,10 @@ end
 
 --function this.Save(bind_buttons, startStopTracker, keys)
 function this.Save(vars, const, usecustom_wallhang, bind_buttons, keys)
+    vars.wallhangkey_usecustom = usecustom_wallhang.isChecked
+
     -- Update DB is vars
     dal.SetSetting_Bool(const.settings.WallHangKey_UseCustom, vars.wallhangkey_usecustom)
-
-    vars.wallhangkey_usecustom = usecustom_wallhang.isChecked
 
     -- Update DB and keys
     for i = 1, #bind_buttons do
