@@ -17,8 +17,8 @@ local types_money = { "Gen_Misc" }
 local count_shotgun = 1
 local count_knife = 3
 local count_silencer = 1
-local count_grenade = 1
-local count_weapon_mods = 3
+--local count_grenade = 1
+local count_weapon_mods = 5
 local count_clothes = 6
 local count_money = 12000
 
@@ -45,9 +45,10 @@ function GetUnlockReport(o, const)
     found = this.FindItems(items, types_silencer, nil, false, o)        -- proved that this doesn't return silencers that are attached to weapons
     this.AddToUnlockReport(retVal, "silencer", count_silencer, #found, nil, nil, const.unlockType.silencer, found)
 
-    found = this.FindItems(items, types_grenade, nil, false, o)
+    -- Ever since they changed grenades into regenerating, some people report this as broken.  Requiring more gun mods instead
+    --found = this.FindItems(items, types_grenade, nil, false, o)
     --this.Debug_ReportItems(found, o)
-    this.AddToUnlockReport(retVal, "grenade", count_grenade, #found, nil, nil, const.unlockType.grenade, found)
+    --this.AddToUnlockReport(retVal, "grenade", count_grenade, #found, nil, nil, const.unlockType.grenade, found)
 
     --found = this.FindItems_ByTag(items, "WeaponMod", false, o)      -- too loose (includes scopes, silencers)
     found = this.FindItems(items, types_weapon_mods, nil, false, o)     --NOTE: IsEquipped has no meaning here.  If a mod is attached to a weapon, it won't be in items list
