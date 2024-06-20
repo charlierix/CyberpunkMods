@@ -11,6 +11,8 @@ local MAX_RECURSE_VI = 8
 
 local this = {}
 
+-- NOTE: an alternative to worlduiIWidgetGameController:ProjectWorldToScreen() is Game.GetCameraSystem():ProjectPoint
+
 -- Looks at the high level 3D items, creates 2D circles/lines/triangles that will be shown in the draw event
 function GrappleRender_Frame.RebuildVisuals(controller, items, item_types, visuals_circle, visuals_diamond, visuals_line, visuals_triangle, visuals_text)
     visuals_circle:Clear()
