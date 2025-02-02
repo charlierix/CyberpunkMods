@@ -32,6 +32,8 @@ function Draw_IconButton(def, vars_ui, screenOffset_x, screenOffset_y, scale)
         clickableSize = def.sizes.width_height
     end
 
+    --ImGui.SetNextItemAllowOverlap()     -- looks like only the parent needs to call this so overlapping buttons can see hover and click (look in modelist_item.lua this.DrawWindow)
+
     local isClicked, isHovered = Draw_InvisibleButton(def.invisible_name, left + def.sizes.center_x, top + def.sizes.center_y, clickableSize, clickableSize, 0)
 
     -- Get colors

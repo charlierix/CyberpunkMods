@@ -16,7 +16,7 @@ function Draw_InvisibleButton(name, center_x, center_y, width, height, padding)
 
     local isClicked = ImGui.InvisibleButton(name, width + (padding * 2), height + (padding * 2))        --NOTE: name needs to be unique within the window or isClicked won't work
 
-    local isHovered = ImGui.IsItemHovered()
+    local isHovered = ImGui.IsItemHovered(Get_ImGuiHoveredFlags_AllowOverlap())     -- they changed the way ishovered works.  when there are hoverable on top of each other, the covered section now defaults to false.  need the flag to say allow covered section to still return true
 
     return isClicked, isHovered
 end

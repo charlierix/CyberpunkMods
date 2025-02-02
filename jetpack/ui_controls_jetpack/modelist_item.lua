@@ -76,20 +76,20 @@ function this.DrawWindow(item, mode, is_current_mode, vars_ui, screenOffset_x, s
     local center_x = x + width / 2
     local center_y = y + height / 2
 
+    -- Without this, the iconbuttons won't get click event.  However, it seems to suppress hover when they are hovering over the popup border
+    -- https://github.com/ocornut/imgui/issues/6512
+    ImGui.SetNextItemAllowOverlap()
     local isClicked, isHovered = Draw_InvisibleButton(item.invisbutton_invisname, center_x, center_y, width, height, 0)
-    ImGui.SetItemAllowOverlap()     -- without this, the iconbuttons won't get click event
 
     if isClicked or isHovered then
         item.is_mouse_over = o.timer     -- need the buttons to stay visible for the mouse down and up to occur.  While this works, it has a side effect of leaving the buttons up while they mouse over a different item
     end
 
     if isHovered then
-        --Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, width, height, vars_ui.style.modelistitem.hover_padding, false, vars_ui.style.modelistitem.back_color_hover_abgr, nil, vars_ui.style.modelistitem.border_color_hover_abgr, nil, vars_ui.style.modelistitem.border_cornerRadius, vars_ui.style.modelistitem.border_thickness)
         Draw_Border(screenOffset_x, screenOffset_y, center_x, center_y, width, height, vars_ui.style.modelistitem.hover_padding, false, vars_ui.style.modelistitem.back_color_hover_abgr, nil, vars_ui.style.modelistitem.border_color_hover_abgr, nil, vars_ui.style.modelistitem.border_cornerRadius, vars_ui.style.modelistitem.border_thickness)
     end
 
     Draw_Label(item.modename, vars_ui.style.colors, vars_ui.scale)
-
     Draw_Label(item.description, vars_ui.style.colors, vars_ui.scale)
 
     local action_instruction = nil
@@ -103,29 +103,23 @@ function this.DrawWindow(item, mode, is_current_mode, vars_ui, screenOffset_x, s
 
         if Draw_IconButton(item.button_up, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
             action_instruction = const.modelist_actions.move_up
-        end
 
-        if Draw_IconButton(item.button_down, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
+        elseif Draw_IconButton(item.button_down, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
             action_instruction = const.modelist_actions.move_down
-        end
 
-        if Draw_IconButton(item.button_selected, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
+        elseif Draw_IconButton(item.button_selected, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
             action_instruction = const.modelist_actions.selected
-        end
 
-        if Draw_IconButton(item.button_delete, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
+        elseif Draw_IconButton(item.button_delete, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
             action_instruction = const.modelist_actions.delete
-        end
 
-        if Draw_IconButton(item.button_clone, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
+        elseif Draw_IconButton(item.button_clone, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
             action_instruction = const.modelist_actions.clone
-        end
 
-        if Draw_IconButton(item.button_edit, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
+        elseif Draw_IconButton(item.button_edit, vars_ui, screenOffset_x, screenOffset_y, vars_ui.scale) then
             action_instruction = const.modelist_actions.edit
-        end
 
-        if isClicked then
+        elseif isClicked then      -- this will be true even if they click one of the child buttons, so it must be checked last
             action_instruction = const.modelist_actions.edit        -- if they click on the entry background, also consider that as an edit
         end
     end
