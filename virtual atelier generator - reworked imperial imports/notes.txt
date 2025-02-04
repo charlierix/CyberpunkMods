@@ -1,0 +1,9 @@
+added the cyberpunk install folder to the yaml file
+
+this can now be run from anywhere...
+
+open vscode
+
+drag this !reworked folder onto vscode
+
+use vscode to then run the script

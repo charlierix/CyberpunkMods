@@ -1,0 +1,30 @@
+install_folder: 'D:\SteamLibrary\steamapps\common\Cyberpunk 2077'
+
+# Default store settings (you can modify these or add additional stores for your items)
+Imperial Imports:
+    sources:
+        - 'r6/tweaks/**/*.yml'
+        - 'r6/tweaks/**/*.yaml'
+    filename: 'r6/scripts/ImperialImports-atelier-store.reds'
+    icon: ['base/gameplay/gui/world/internet/templates/atlases/icons_atlas.inkatlas', 'CrystalPalace']  # Some other good icon names: 'home_page', 'NC_guide', 'NC_iquirer', 'EZestate' and 'samurai'
+    filters:    # Filtering can be done by name and base ("$name:" and "$base:" prefix respectively).
+        - '$name:Items.*'   # Add tweaks done under "Items."
+    supply:
+        iconic: [1, 1, 1, 1, 1]     # Stock for iconic items
+        default: [1, 1, 1, 1, 1]    # Stock for items not in categories
+    # In game shops charge 10x the sell price for clothing and weapons (usual loot) and 5x for mods and implants (rare loot)
+    # The default values are intended to simulate the ingame price structure, but make it more way more affordable.
+    # You can also set the price of anything to 0, to let the Virtual Atelier mod pick a price.
+    pricing:
+        multiplier: 3.0
+        iconic: [200, 200, 200, 200, 200]       # Premium for iconic items
+        default: [300, 400, 800, 1800, 2800]    # Generic weapon prices (lv. 50)
+        categories:
+            '$base:Items.Outfit' : [100, 150, 300, 500, 700]   # Has no armor, make it cheap
+            '$base:Items.GenericHeadClothing': [120, 180, 360, 600, 840]    # Calculated for 60 armor (lv. 50)
+            '$base:Items.GenericFaceClothing': [120, 180, 360, 600, 840]    # Calculated for 60 armor (lv. 50)
+            '$base:Items.GenericInnerChestClothing': [400, 600, 1200, 2000, 2800]   # Calculated for 200 armor (lv. 50)
+            '$base:Items.GenericOuterChestClothing': [400, 600, 1200, 2000, 2800]   # Calculated for 200 armor (lv. 50)
+            '$base:Items.GenericLegClothing': [200, 300, 600, 1000, 1400]   # Calculated for 100 armor (lv. 50)
+            '$base:Items.GenericFootClothing': [200, 300, 600, 1000, 1400]  # Calculated for 100 armor (lv. 50)
+    #blacklist: []   # Blacklisted items will not appear in this store
