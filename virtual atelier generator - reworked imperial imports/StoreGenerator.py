@@ -278,12 +278,19 @@ class Store:
 		self.store = None
 
 	def build(self):
-		# Find source files
-		files = sorted(Util.findfiles(self.root, self.config.get('sources', ())))
-		# Load source files into TweakXL simulator
-		self.tweakxl = TweakXLSimulator()
-		for file in files:
-			self.tweakxl.loadf(file)
+		# Find all yaml files for clothes and store in self.tweakxl
+		self.build_loadTweakXL()
+
+		# Extract from store generator's config
+		filters = self.config.get('filters', [])
+		blacklist = set(self.config.get('blacklist', []))
+		price_list = Util.lget(self.config, ['pricing', 'categories'], {})
+		price_multiplier = Util.lget(self.config, ['pricing', 'multiplier'], 1.0)
+		iconic_price = Util.lget(self.config, ['pricing', 'iconic'])
+		default_price = Util.lget(self.config, ['pricing', 'default'], [0, 0, 0, 0, 0])
+		supply_list = Util.lget(self.config, ['supply', 'categories'], {})
+		iconic_supply = Util.lget(self.config, ['supply', 'iconic'])
+		default_supply = Util.lget(self.config, ['supply', 'default'], [1, 1, 1, 1, 1])
 
 		# Build the store
 		self.store = {
@@ -299,59 +306,108 @@ class Store:
 		}
 
 		# Process TweakXL database
-		filters = self.config.get('filters', [])
-		blacklist = set(self.config.get('blacklist', []))
-		price_list = Util.lget(self.config, ['pricing', 'categories'], {})
-		price_multiplier = Util.lget(self.config, ['pricing', 'multiplier'], 1.0)
-		iconic_price = Util.lget(self.config, ['pricing', 'iconic'])
-		default_price = Util.lget(self.config, ['pricing', 'default'], [0, 0, 0, 0, 0])
-		supply_list = Util.lget(self.config, ['supply', 'categories'], {})
-		iconic_supply = Util.lget(self.config, ['supply', 'iconic'])
-		default_supply = Util.lget(self.config, ['supply', 'default'], [1, 1, 1, 1, 1])
-
 		for k, v in self.tweakxl.items():
 			# Keep only full objects
 			if not k or not isinstance(v, dict):
 				continue
+
 			type_name = v.get('$type') or v.get('$base')
 			if type_name is None:
 				continue
+
 			# Apply blacklist
 			if k in blacklist:
 				continue
+
 			# Apply filters
 			if not self.tweakxl.match(k, v, filters):
 				continue
+
 			# Get attributes
-			iconic = ('Quality.IconicItem' in v.get('statModifiers', []))
+			is_iconic = ('Quality.IconicItem' in v.get('statModifiers', []))
 			quality = self.QualityToIndex[v.get('quality')]
-			# Lookup base price
-			price = default_price[quality]
-			for category, entry in price_list.items():
-				if self.tweakxl.match(k, v, [category]):
-					price = entry[quality]
-					break
-			# Apply price modifiers
-			if price > 0:
-				if iconic and iconic_price is not None:
-					price += iconic_price[quality]
-				price = max(1, int(price * price_multiplier))
-			else:
-				price = 0
+
+			# Calculate Price
+			price = self.build_price(k, v, default_price, price_list, iconic_price, price_multiplier, is_iconic, quality)
+
 			# Calculate supply
-			supply = default_supply[quality]
-			for category, entry in supply_list.items():
-				if self.tweakxl.match(k, v, [category]):
-					supply = entry[quality]
-					break
-			if iconic and iconic_supply is not None:
-				supply = iconic_supply[quality]
+			supply = self.build_supply(k, v, default_supply, supply_list, iconic_supply, is_iconic, quality)
+
 			# Add item to store
-			self.store['items'].append(k)
-			self.store['prices'].append(price)
-			self.store['qualities'].append(['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'][quality])
-			self.store['supplies'].append(supply)
-			self.store['types'].append(re.sub(r'^\w+\.', '', type_name[0]))		# strip off 'Items.' from 'Items.GenericFootClothing'
+			if ('$(' in k or '${' in k) and '$instances' in v:
+				# Iterate over each instance in $instances
+				for instance in v.get('$instances', []):
+					# Replace the placeholder with the instance's color value
+					new_k = self.build_getfullname(k, instance)
+					self.build_appendEntry(new_k, price, quality, supply, type_name[0])
+			else:
+				self.build_appendEntry(k, price, quality, supply, type_name[0])
+
+	def build_loadTweakXL(self):
+		# Find source files
+		files = sorted(Util.findfiles(self.root, self.config.get('sources', ())))
+
+		# Load source files into TweakXL simulator
+		self.tweakxl = TweakXLSimulator()
+		for file in files:
+			self.tweakxl.loadf(file)
+
+	def build_price(self, k, v, default_price, price_list, iconic_price, price_multiplier, is_iconic, quality):
+		# Lookup base price
+		price = default_price[quality]
+		for category, entry in price_list.items():
+			if self.tweakxl.match(k, v, [category]):
+				price = entry[quality]
+				break
+
+		# Apply price modifiers
+		if price > 0:
+			if is_iconic and iconic_price is not None:
+				price += iconic_price[quality]
+			price = max(1, int(price * price_multiplier))
+		else:
+			price = 0
+
+		return price
+
+	def build_supply(self, k, v, default_supply, supply_list, iconic_supply, is_iconic, quality):
+		supply = default_supply[quality]
+		for category, entry in supply_list.items():
+			if self.tweakxl.match(k, v, [category]):
+				supply = entry[quality]
+				break
+
+		if is_iconic and iconic_supply is not None:
+			supply = iconic_supply[quality]
+
+		return supply
+
+	def build_getfullname(self, k, instance):
+		retVal = ''
+		index = 0
+
+		pattern = r'\$\((.*?)\)' if '$(' in k else r'\$\{(.*?)\}'		# it's either going to be $(varname) or ${varname}
+
+		for match in re.finditer(pattern, k):
+			# Append the part before the placeholder
+			retVal += k[index:match.start()]
+
+			# extract the match from instance and append to k
+			retVal += str(instance[match.group(1)])
+
+			index = match.end()
+
+		# append index to the end of k
+		retVal += k[index:]
+
+		return retVal
+
+	def build_appendEntry(self, k, price, quality, supply, type_name):
+		self.store['items'].append(k)
+		self.store['prices'].append(price)
+		self.store['qualities'].append(['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'][quality])
+		self.store['supplies'].append(supply)
+		self.store['types'].append(re.sub(r'^\w+\.', '', type_name))		# strip off 'Items.' from 'Items.GenericFootClothing'
 
 	def export(self, prefix):
 		# Build store when needed
