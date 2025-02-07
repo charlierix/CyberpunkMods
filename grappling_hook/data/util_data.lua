@@ -11,7 +11,7 @@ function InitializeKeyTrackers(vars, keys, o, const)
         end
     end
 
-    vars.startStopTracker = InputTracker_StartStop:new(o, keys, const)
+    vars.startStopTracker = InputTracker_StartStop:new(o, vars, keys, const)
 
     for key, value in pairs(bindings) do
         vars.startStopTracker:UpdateBinding(key, value)

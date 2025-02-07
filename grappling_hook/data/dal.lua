@@ -108,6 +108,68 @@ function DAL.SetSetting_Bool(key, value)
     end
 end
 
+-- Returns
+--  integer value, error message
+function DAL.GetSetting_Int(key, default)
+    local sucess, value, errMsg = pcall(function ()
+        local stmt = db:prepare
+        [[
+            SELECT Value
+            FROM Settings_Int
+            WHERE Key = ?
+            LIMIT 1
+        ]]
+
+        local row, _ = this.Bind_Select_SingleRow(stmt, "GetSetting_Int", key)
+        if row then
+            return row.Value
+        else
+            return default, nil     -- no row found or error, pretend it was found and return the default value
+        end
+    end)
+
+    if sucess then
+        return value, errMsg
+    else
+        return default, "GetSetting_Int: Unknown Error"
+    end
+end
+
+-- Inserts/Updates the key/value pair
+-- Returns
+--  error message or nil
+function DAL.SetSetting_Int(key, value)
+    local sucess, errMsg = pcall(function ()
+        -- Insert
+        local stmt = db:prepare
+        [[
+            INSERT OR IGNORE INTO Settings_Int
+            VALUES(?, ?)
+        ]]
+
+        local errMsg = this.Bind_NonSelect(stmt, "SetSetting_Int (insert)", key, value)
+        if errMsg then
+            return errMsg
+        end
+
+        -- Update
+        stmt = db:prepare
+        [[
+            UPDATE Settings_Int
+            SET Value = ?
+            WHERE Key = ?
+        ]]
+
+        return this.Bind_NonSelect(stmt, "SetSetting_Int (update)", value, key)
+    end)
+
+    if sucess then
+        return errMsg
+    else
+        return "SetSetting_Int: Unknown Error"
+    end
+end
+
 ----------------------------------- Input Bindings ------------------------------------
 
 -- Returns { binding1 = {"action1", "action2"}, binding2 = {"action3", "action4"} }

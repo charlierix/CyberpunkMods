@@ -104,7 +104,7 @@ function Player:TransferExperience_EnergyTank(energy_tank, purchaseXP)
 end
 
 function Player:Save()
-    local pkey, errMsg = SavePlayer(self:MapSelfToModel())
+    local pkey, errMsg = datautil.SavePlayer(self:MapSelfToModel())
 
     --TODO: Handle errors
 
@@ -123,7 +123,7 @@ function Player:Load()
     end
 
     -- Retrieve entry from db
-    local playerEntry, primKey, errMsg = GetPlayerEntry(playerID, self.const)
+    local playerEntry, primKey, errMsg = datautil.GetPlayerEntry(playerID, self.const)
     if playerEntry then
         playerEntry.isUnlocked = this.IsPlayerUnlocked(playerEntry)
     else

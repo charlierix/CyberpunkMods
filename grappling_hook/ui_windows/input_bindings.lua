@@ -36,6 +36,10 @@ function DefineWindow_InputBindings(vars_ui, const)
 
     input_bindings.restore_defaults = this.Define_RestoreDefaults(vars_ui, const)
 
+    input_bindings.inputdevice_combo = this.Define_InputDevice_Combo(const)
+    input_bindings.inputdevice_help = this.Define_InputDevice_Help(input_bindings.inputdevice_combo, const)
+    input_bindings.inputdevice_label = this.Define_InputDevice_Label(input_bindings.inputdevice_help, const)
+
     -------------- Changing Binding --------------
 
     input_bindings.instruction1 = this.Define_Instruction1(const)
@@ -63,6 +67,8 @@ function ActivateWindow_InputBindings(vars_ui, const)
         bind_buttons[i].newActions = nil
     end
 
+    vars_ui.input_bindings.inputdevice_combo.selected_item = nil
+
     vars_ui.keys:StartWatching()
 end
 
@@ -77,7 +83,9 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, wi
         this.Refresh_BindButtons_Summary(input_bindings.bind_buttons[i], vars.startStopTracker)
     end
 
-    this.Refresh_IsDirty(input_bindings.okcancel, input_bindings.bind_buttons)
+    this.Refresh_InputDevice_Combo(input_bindings.inputdevice_combo, vars)
+
+    this.Refresh_IsDirty(input_bindings.okcancel, vars, input_bindings.bind_buttons, input_bindings.inputdevice_combo)
 
     ------------------------------ Calculate Positions -------------------------------
 
@@ -144,12 +152,16 @@ function DrawWindow_InputBindings(isCloseRequested, vars, vars_ui, player, o, wi
         if Draw_Button(input_bindings.restore_defaults, vars_ui.style.button, vars_ui.scale) then
             this.RestoreDefaults(input_bindings.bind_buttons, const)
         end
+
+        Draw_ComboBox(input_bindings.inputdevice_combo, vars_ui.style.combobox, vars_ui.scale)
+        Draw_HelpButton(input_bindings.inputdevice_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+        Draw_Label(input_bindings.inputdevice_label, vars_ui.style.colors, vars_ui.scale)
     end
 
     -- OK/Cancel
     local isOKClicked, isCancelClicked = Draw_OkCancelButtons(input_bindings.okcancel, vars_ui.style.okcancelButtons, vars_ui.scale)
     if isOKClicked then
-        this.Save(input_bindings.bind_buttons, vars.startStopTracker, vars_ui.keys)
+        this.Save(input_bindings.bind_buttons, input_bindings.inputdevice_combo, vars.startStopTracker, vars_ui.keys, vars, const)
         TransitionWindows_Main(vars_ui, const)
 
     elseif isCancelClicked then
@@ -561,6 +573,96 @@ function this.RestoreDefaults(bind_buttons, const)
     end
 end
 
+function this.Define_InputDevice_Combo(const)
+    -- ComboBox
+    return
+    {
+        preview_text = const.input_device.Any,
+        selected_item = nil,
+
+        items =
+        {
+            const.input_device.Any,
+            const.input_device.KeyboardMouseOnly,
+            const.input_device.ControllerOnly,
+        },
+
+        width = 180,
+
+        position =
+        {
+            pos_x = 50,
+            pos_y = 28,
+            horizontal = const.alignment_horizontal.center,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        invisible_name = "InputBindings_InputDevice_Combo",
+
+        CalcSize = CalcSize_ComboBox,
+    }
+end
+function this.Refresh_InputDevice_Combo(def, vars)
+    if not def.selected_item then
+        def.selected_item = vars.input_device
+    end
+end
+function this.Define_InputDevice_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "InputBindings_InputDevice_Help",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[This is based on which device last touched the direction (Mouse or Left/Right Sticks)
+
+Useful if you just want to bind to keyboard/mouse, but not controller, or the other way]]
+
+    return retVal
+end
+function this.Define_InputDevice_Label(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Input Device",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 10,
+            pos_y = 0,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.right,
+
+            relative_vert = const.alignment_vertical.center,
+            vertical = const.alignment_vertical.center,
+        },
+
+        color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+
 function this.Define_Instruction1(const)
     -- Label
     return
@@ -641,7 +743,7 @@ function this.Define_CancelBind(const)
     }
 end
 
-function this.Refresh_IsDirty(def, bind_buttons)
+function this.Refresh_IsDirty(def, vars, bind_buttons, def_inputdevice)
     def.isDirty = false
 
     for i = 1, #bind_buttons do
@@ -650,9 +752,13 @@ function this.Refresh_IsDirty(def, bind_buttons)
             break
         end
     end
+
+    if vars.input_device ~= def_inputdevice.selected_item then
+        def.isDirty = true
+    end
 end
 
-function this.Save(bind_buttons, startStopTracker, keys)
+function this.Save(bind_buttons, def_inputdevice, startStopTracker, keys, vars, const)
     -- Update DB and startStopTracker
     for i = 1, #bind_buttons do
         if bind_buttons[i].isDeleteChange then
@@ -671,6 +777,10 @@ function this.Save(bind_buttons, startStopTracker, keys)
     for i=1, #startStopTracker.keynames do
         keys:AddAction(startStopTracker.keynames[i])
     end
+
+    -- Input Device
+    vars.input_device = def_inputdevice.selected_item
+    datautil.SetInputDevice(vars.input_device, const)
 end
 
 function this.GetActionList(def, startStopTracker)

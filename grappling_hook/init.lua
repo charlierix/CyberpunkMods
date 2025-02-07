@@ -30,7 +30,7 @@ require "core/util"
 
 dal = require "data/dal"
 require "data/dal_tests"
-require "data/datautil"
+datautil = require "data/datautil"
 require "data/defaults"
 require "data/player"
 --require "data/serialization"      -- using json instead.  Keeping this around in case there is something that needs the more direct way of encoding
@@ -164,9 +164,14 @@ local const =
 
     bindings = CreateEnum("grapple1", "grapple2", "grapple3", "grapple4", "grapple5", "grapple6", "stop"),
 
-    settings = CreateEnum("AutoShowConfig_WithConsole"),
+    settings = CreateEnum("AutoShowConfig_WithConsole", "InputDevice"),
 
     unlockType = CreateEnum("shotgun", "knife", "silencer", "grenade", "weapon_mod", "clothes", "money"),
+
+    input_device = CreateEnum("Any", "KeyboardMouseOnly", "ControllerOnly"),
+
+    -- instead of calling it activate_deactivate, call it something to do with activation key action
+    activate_deactivate_method = CreateEnum("Activate", "Activate_Deactivate", "Hold"),
 
     Visuals_GrappleLine_Type = CreateEnum("solid_line"),
 
@@ -206,6 +211,8 @@ local vars =
     --grapple = nil,        -- an instance of models.Grapple    -- gets populated in Transition_ToAim (back to nil in Transition_ToStandard)
     --airdash = nil,        -- an instance of models.AirDash    -- gets populated in Transition_ToAirDash (just a copy of grapple.aim_straight.air_dash)
     --airanchor = nil,      -- an instance of models.AirAnchor  -- gets populated in Transition_ToFlight_Straight (back to nil in Transition_ToStandard)
+
+    --input_device = nil,   -- populated in init from Settings_Int table (db)
 
     energy = 1000,          -- start with too much so the progress doesn't show during initial load
 
@@ -311,6 +318,7 @@ registerForEvent("onInit", function()
     dal.EnsureTablesCreated()
     Define_UI_Framework_Constants(const)
     InitializeUI(vars_ui, vars_ui_progressbar, const)       --NOTE: This must be done after db is initialized.  TODO: listen for video settings changing and call this again (it stores the current screen resolution)
+    vars.input_device = datautil.GetInputDevice(const)
     grapple_render.CallFrom_onInit()
     debug_render_screen.CallFrom_onInit(const.shouldShowScreenDebug)
 

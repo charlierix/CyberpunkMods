@@ -54,6 +54,8 @@ function PopulateDebug(debug, o, keys, vars)
     -- end
     -- debug.action_held = vars.startStopTracker:IsPrevActionHeldDown()
 
+    debug.input_device = keys:GetCurrentInputDevice_Display()
+    
     debug.timer = Round(o.timer, 1)
 end
 

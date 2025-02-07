@@ -10,7 +10,7 @@ InputTracker_StartStop = {}
 local this = {}
 
 -- The arrays passed in are in the form: keynames[i]=actionname
-function InputTracker_StartStop:new(o, keys, const)
+function InputTracker_StartStop:new(o, vars, keys, const)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -19,6 +19,7 @@ function InputTracker_StartStop:new(o, keys, const)
     obj.max_elapsed = 0.06
 
     obj.o = o
+    obj.vars = vars
     obj.keys = keys
     obj.const = const
 
@@ -50,6 +51,10 @@ function InputTracker_StartStop:new(o, keys, const)
 end
 
 function InputTracker_StartStop:Tick()
+    if not self.keys:IsMatchingInputDevice(self.vars.input_device, self.const) then
+        do return end
+    end
+
     -- Standard key tracking
     for i=1, #self.keynames do
         local name = self.keynames[i]
@@ -65,7 +70,7 @@ function InputTracker_StartStop:Tick()
     end
 
     -- Special list that is the previous set that triggered an action.  Needs to keep reporting as held down
-    -- until the let go of one of the keys
+    -- until they let go of one of the keys
     if self.held_names then
         for i = 1, #self.held_names, 1 do
             if not self.keys.actions[self.held_names[i]] then

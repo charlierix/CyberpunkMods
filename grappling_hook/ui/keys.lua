@@ -1,6 +1,10 @@
 Keys = {}
 
-local this = {}
+local this =
+{
+    INPUTDEVICE_KEYBOARDMOUSE = 0,
+    INPUTDEVICE_CONTROLLER = 1,
+}
 
 function Keys:new(o, const)
     local obj = {}
@@ -51,6 +55,8 @@ function Keys:new(o, const)
     obj.isWatching = false
     obj.isWatching_latch = false        -- while latching, this won't remove unpressed buttons.  Without this, the input binding will miss quickly pressed buttons
 
+    obj.current_inputdevice = nil
+
     return obj
 end
 
@@ -80,6 +86,8 @@ function Keys:MapAction(action)
     self:MapAction_Movement(action, actionName, pressed, released)
     self:MapAction_Fixed(action, actionName, pressed, released)
     self:MapAction_List(actionName, pressed, released)
+
+    self:DetectInputDevice(action, actionName)
 
     if self.isWatching then
         self:MapAction_Watching(actionName, pressed, released)
@@ -130,6 +138,36 @@ end
 function Keys:StopLatchingWatched()
     self.isWatching_latch = false
     self:ClearWatching()
+end
+
+function Keys:IsMatchingInputDevice(input_device, const)
+    if input_device == const.input_device.Any then
+        return true     -- doesn't matter what the current state is
+
+    elseif input_device == const.input_device.KeyboardMouseOnly then
+        return self.current_inputdevice == this.INPUTDEVICE_KEYBOARDMOUSE        -- it might make sense to return true when nil, but who's going to grapple around without moving?
+
+    elseif input_device == const.input_device.ControllerOnly then
+        return self.current_inputdevice == this.INPUTDEVICE_CONTROLLER
+
+    else
+        LogError("Unknown const.input_device: " .. tostring(input_device))
+        return false
+    end
+end
+function Keys:GetCurrentInputDevice_Display()
+    if self.current_inputdevice == nil then
+        return "none"
+
+    elseif self.current_inputdevice == this.INPUTDEVICE_KEYBOARDMOUSE then
+        return "keyboard/mouse"
+
+    elseif self.current_inputdevice == this.INPUTDEVICE_CONTROLLER then
+        return "controller"
+
+    else
+        return "unknown"
+    end
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -210,6 +248,17 @@ function Keys:MapAction_List(actionName, pressed, released)
             end
 
             do return end       -- no need to loop through the rest of the list
+        end
+    end
+end
+
+function Keys:DetectInputDevice(action, actionName)
+    if actionName == "mouse_x" or actionName == "mouse_y" then      -- there doesn't seem to be a keyboard specific action
+        self.current_inputdevice = this.INPUTDEVICE_KEYBOARDMOUSE
+
+    elseif actionName == "left_stick_x" or actionName == "left_stick_y" or actionName == "right_stick_x" or actionName == "right_stick_x" then
+        if math.abs(tonumber(action:GetValue())) > 0.25 then      -- this event seems to fire constantly, so only trigger when it's not near zero
+            self.current_inputdevice = this.INPUTDEVICE_CONTROLLER
         end
     end
 end

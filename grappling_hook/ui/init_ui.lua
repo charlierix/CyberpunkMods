@@ -1,7 +1,7 @@
 local this = {}
 
 function InitializeUI(vars_ui, vars_ui_progressbar, const)
-    vars_ui.autoshow_withconsole = dal.GetSetting_Bool(const.settings.AutoShowConfig_WithConsole)
+    vars_ui.autoshow_withconsole = dal.GetSetting_Bool(const.settings.AutoShowConfig_WithConsole, true)
     if vars_ui.autoshow_withconsole == nil then     -- this will only happen if there's a db error
         vars_ui.autoshow_withconsole = true
     end

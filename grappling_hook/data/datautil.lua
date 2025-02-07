@@ -1,11 +1,18 @@
-local this = {}
+local DataUtil = {}
+
+local this =
+{
+    INPUTDEVICE_ANY = 0,                -- these are the values in the int table
+    INPUTDEVICE_KEYBOARDMOUSEONLY = 1,
+    INPUTDEVICE_CONTROLLERONLY = 2,
+}
 
 -- Returns the latest player by ID (or nil)
 -- Returns:
 --    PlayerEntry (the type returned is defined in models\Player)
 --    PrimaryKey of player
 --    Error Message (only populated if the first two are nil)
-function GetPlayerEntry(playerID, const)
+function DataUtil.GetPlayerEntry(playerID, const)
     local row, errMsg = dal.GetLatestPlayer(playerID)
     if not row then
         return nil, nil, errMsg
@@ -39,7 +46,7 @@ end
 -- Returns:
 --    Primary Key of inserted row
 --    Error Message if primkey came back nil, or nil if primkey is populated
-function SavePlayer(playerEntry)
+function DataUtil.SavePlayer(playerEntry)
     local grappleKeys, errMsg, grapplesChanged = this.SaveGrapples(playerEntry)
     if not grappleKeys then
         return nil, errMsg
@@ -57,6 +64,47 @@ function SavePlayer(playerEntry)
     end
 
     return playerKey, errMsg
+end
+
+function DataUtil.GetInputDevice(const)
+    local value_int = dal.GetSetting_Int(const.settings.InputDevice, this.INPUTDEVICE_ANY)
+    if value_int == nil then        -- this will only happen if there's a db error
+        value_int = this.INPUTDEVICE_ANY
+    end
+
+    if value_int == this.INPUTDEVICE_ANY then
+        return const.input_device.Any
+
+    elseif value_int == this.INPUTDEVICE_KEYBOARDMOUSEONLY then
+        return const.input_device.KeyboardMouseOnly
+
+    elseif value_int == this.INPUTDEVICE_CONTROLLERONLY then
+        return const.input_device.ControllerOnly
+
+    else
+        LogError("Unknown value for " .. const.settings.InputDevice .. ": " .. tostring(value_int) .. ".  Defaulting to Any")
+        return const.input_device.Any
+    end
+end
+function DataUtil.SetInputDevice(input_device, const)
+    local value_int = nil
+
+    if input_device == const.input_device.Any then
+        value_int = this.INPUTDEVICE_ANY
+
+    elseif input_device == const.input_device.KeyboardMouseOnly then
+        value_int = this.INPUTDEVICE_KEYBOARDMOUSEONLY
+
+    elseif input_device == const.input_device.ControllerOnly then
+        value_int = this.INPUTDEVICE_CONTROLLERONLY
+
+    else
+        LogError("Unknown value for const.input_device: " .. tostring(input_device) .. ".  Skipping the save to db")
+    end
+
+    if value_int ~= nil then
+        dal.SetSetting_Int(const.settings.InputDevice, value_int)
+    end
 end
 
 ----------------------------------- Private Methods -----------------------------------
@@ -363,3 +411,5 @@ function this.Contains(list, value)
 
     return false
 end
+
+return DataUtil
