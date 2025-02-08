@@ -23,43 +23,50 @@ function ConsumeEnergy(current, burnRate, deltaTime)
 end
 
 -- This is called while in flight.  It looks for the user wanting to switch flight modes
-function HasSwitchedFlightMode(o, player, vars, const, watchForStop)
+function HasSwitchedFlightMode(o, player, vars, const, watchForStop, activation_key_action)
     local action = vars.startStopTracker:GetRequestedAction()
     if not action then
         return false
     end
 
+    if activation_key_action == const.activation_key_action.Activate_Deactivate and action == vars.grapple_binding_slot then
+        action = const.bindings.stop
+    end
+
     if action == const.bindings.grapple1 then
-        return this.TryStartFlight(o, vars, const, player.grapple1)
+        return this.TryStartFlight(o, vars, const, player.grapple1, action)
 
     elseif action == const.bindings.grapple2 then
-        return this.TryStartFlight(o, vars, const, player.grapple2)
+        return this.TryStartFlight(o, vars, const, player.grapple2, action)
 
     elseif action == const.bindings.grapple3 then
-        return this.TryStartFlight(o, vars, const, player.grapple3)
+        return this.TryStartFlight(o, vars, const, player.grapple3, action)
 
     elseif action == const.bindings.grapple4 then
-        return this.TryStartFlight(o, vars, const, player.grapple4)
+        return this.TryStartFlight(o, vars, const, player.grapple4, action)
 
     elseif action == const.bindings.grapple5 then
-        return this.TryStartFlight(o, vars, const, player.grapple5)
+        return this.TryStartFlight(o, vars, const, player.grapple5, action)
 
     elseif action == const.bindings.grapple6 then
-        return this.TryStartFlight(o, vars, const, player.grapple6)
+        return this.TryStartFlight(o, vars, const, player.grapple6, action)
 
     elseif watchForStop and action == const.bindings.stop then
         -- Told to stop swinging, back to standard
-        if (vars.flightMode == const.flightModes.airdash or vars.flightMode == const.flightModes.flight_straight or vars.flightMode == const.flightModes.flight_swing) and vars.grapple and vars.grapple.anti_gravity then
-            Transition_ToAntiGrav(vars, const, o)
-        else
-            Transition_ToStandard(vars, const, debug, o)
-        end
-
+        Transition_To_AntiGrav_or_Standard(o, vars, const)
         return true
     end
 
     -- Execution should never get here
     return false
+end
+
+function Transition_To_AntiGrav_or_Standard(o, vars, const)
+    if (vars.flightMode == const.flightModes.airdash or vars.flightMode == const.flightModes.flight_straight or vars.flightMode == const.flightModes.flight_swing) and vars.grapple and vars.grapple.anti_gravity then
+        Transition_ToAntiGrav(vars, const, o)
+    else
+        Transition_ToStandard(vars, const, debug, o)
+    end
 end
 
 -- This will return true as long as there is some air below the player
@@ -432,12 +439,12 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.TryStartFlight(o, vars, const, grapple)
+function this.TryStartFlight(o, vars, const, grapple, binding_slot)
     if not grapple then     -- they might have input bindings set up, but no grapple assigned
         return false
     end
 
-    if Transition_ToAim(grapple, vars, const, o, true) then
+    if Transition_ToAim(grapple, binding_slot, vars, const, o, true) then
         return true
     else
         -- There wasn't enough energy or another mod was flying (unlikely that another mod was flying, because

@@ -14,6 +14,7 @@ function Transition_ToStandard(vars, const, debug, o)
     o:Custom_CurrentlyFlying_Clear()
 
     vars.grapple = nil
+    vars.grapple_binding_slot = nil
     vars.airdash = nil
     vars.airanchor = nil
 
@@ -27,7 +28,7 @@ end
 
 -- This can come from any state into aiming
 -- Returns false if there's not enough energy
-function Transition_ToAim(grapple, vars, const, o, shouldConsumeEnergy)
+function Transition_ToAim(grapple, binding_slot, vars, const, o, shouldConsumeEnergy)
     if shouldConsumeEnergy then
         if vars.energy < grapple.energy_cost then
             -- Notify the player that energy is too low
@@ -60,6 +61,7 @@ function Transition_ToAim(grapple, vars, const, o, shouldConsumeEnergy)
     vars.flightMode = const.flightModes.aim
 
     vars.grapple = grapple
+    vars.grapple_binding_slot = binding_slot
 
     -- Don't want this misreporting.  Force the user to let go of the keys before this sees any new
     -- action attempt

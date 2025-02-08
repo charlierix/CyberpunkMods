@@ -4,7 +4,7 @@ function Process_AntiGrav(o, player, vars, const, debug, deltaTime)
     -- Doing a standard recovery rate
     vars.energy = RecoverEnergy(vars.energy, player.energy_tank.max_energy, player.energy_tank.recovery_rate, deltaTime)
 
-    if HasSwitchedFlightMode(o, player, vars, const, true) then
+    if HasSwitchedFlightMode(o, player, vars, const, true, const.activation_key_action.Activate) then       -- antgrav is a period of freefall after grapple has ended, so a key press should kick off a new grapple
         do return end
     end
 

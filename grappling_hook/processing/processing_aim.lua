@@ -54,7 +54,12 @@ function Process_Aim(o, player, vars, const, debug, deltaTime)
 end
 
 function this.Aim_Straight(aim, o, player, vars, const, debug)
-    if this.RecoverEnergy_Switch(o, player, vars, const) then
+    if this.RecoverEnergy_Switch(o, player, vars, const, vars.grapple.activation_key_action) then
+        do return end
+    end
+
+    if vars.grapple.activation_key_action == const.activation_key_action.Hold and not vars.startStopTracker:IsPrevActionHeldDown() then
+        Transition_To_AntiGrav_or_Standard(o, vars, const)
         do return end
     end
 
@@ -142,7 +147,7 @@ function this.Aim_Swing(aim, o, player, vars, const, debug)
     this.EnsureDebugCategoriesSet()
     debug_render_screen.Clear()
 
-    if this.RecoverEnergy_Switch(o, player, vars, const) then
+    if this.RecoverEnergy_Switch(o, player, vars, const, const.activation_key_action.Activate) then     -- hardcoding to activate, since swing always kicks off a new grapple every time they click the activate keys
         debug_render_screen.Add_Text2D(nil, nil, "exit early", debug_categories.AIM_action)
         do return end
     end
@@ -727,13 +732,13 @@ end
 
 ----------------------------------- Private Methods -----------------------------------
 
-function this.RecoverEnergy_Switch(o, player, vars, const)
+function this.RecoverEnergy_Switch(o, player, vars, const, activation_key_action)
     if vars.startStopTracker:GetRequestedAction() then
         -- Something different was requested, recover the energy that was used for this current grapple
         local existingEnergy = vars.energy
         vars.energy = math.min(vars.energy + vars.grapple.energy_cost, player.energy_tank.max_energy)
 
-        if HasSwitchedFlightMode(o, player, vars, const, true) then        -- this function looks at the same bindings as above
+        if HasSwitchedFlightMode(o, player, vars, const, true, activation_key_action) then        -- this function looks at the same bindings as above
             return true
         else
             -- There was some reason why the switch didn't work.  Take the energy back

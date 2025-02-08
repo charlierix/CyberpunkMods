@@ -20,7 +20,12 @@ function Process_Flight_Straight(o, player, vars, const, debug, deltaTime)
         do return end
     end
 
-    if HasSwitchedFlightMode(o, player, vars, const, true) then
+    if HasSwitchedFlightMode(o, player, vars, const, true, vars.grapple.activation_key_action) then
+        do return end
+    end
+
+    if vars.grapple.activation_key_action == const.activation_key_action.Hold and not vars.startStopTracker:IsPrevActionHeldDown() then
+        Transition_To_AntiGrav_or_Standard(o, vars, const)
         do return end
     end
 

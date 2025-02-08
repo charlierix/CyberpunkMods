@@ -11,7 +11,7 @@ function Process_Flight_Swing(o, player, vars, const, keys, debug, deltaTime)
 
     vars.swingprops_override:Tick(deltaTime)
 
-    if HasSwitchedFlightMode(o, player, vars, const, true) then
+    if HasSwitchedFlightMode(o, player, vars, const, true, const.activation_key_action.Activate) then       -- swing should always kick off new when they press the key
         do return end
     end
 

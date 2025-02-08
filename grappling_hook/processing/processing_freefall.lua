@@ -13,7 +13,7 @@ function Process_FreeFall(o, player, vars, const, keys, debug, deltaTime)
 
     vars.swingprops_override:Tick(deltaTime)
 
-    if HasSwitchedFlightMode(o, player, vars, const, true) then
+    if HasSwitchedFlightMode(o, player, vars, const, true, const.activation_key_action.Activate) then
         do return end
     end
 

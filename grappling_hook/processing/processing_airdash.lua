@@ -27,7 +27,7 @@ function Process_AirDash(o, player, vars, const, debug, deltaTime)
         vars.energy = newEnergy
     end
 
-    if HasSwitchedFlightMode(o, player, vars, const, true) then
+    if HasSwitchedFlightMode(o, player, vars, const, true, vars.grapple.activation_key_action) then
         do return end
     end
 

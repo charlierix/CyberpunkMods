@@ -208,6 +208,8 @@ local vars =
 {
     flightMode = const.flightModes.standard,
     --grapple = nil,        -- an instance of models.Grapple    -- gets populated in Transition_ToAim (back to nil in Transition_ToStandard)
+    --grapple_binding_slot  -- const.bindings that the grapple belongs to.  Populated in Transition_ToAim (back to nil in Transition_ToStandard)
+
     --airdash = nil,        -- an instance of models.AirDash    -- gets populated in Transition_ToAirDash (just a copy of grapple.aim_straight.air_dash)
     --airanchor = nil,      -- an instance of models.AirAnchor  -- gets populated in Transition_ToFlight_Straight (back to nil in Transition_ToStandard)
 
