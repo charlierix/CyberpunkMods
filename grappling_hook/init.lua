@@ -170,8 +170,7 @@ local const =
 
     input_device = CreateEnum("Any", "KeyboardMouseOnly", "ControllerOnly"),
 
-    -- instead of calling it activate_deactivate, call it something to do with activation key action
-    activate_deactivate_method = CreateEnum("Activate", "Activate_Deactivate", "Hold"),
+    activation_key_action = CreateEnum("Activate", "Activate_Deactivate", "Hold"),
 
     Visuals_GrappleLine_Type = CreateEnum("solid_line"),
 

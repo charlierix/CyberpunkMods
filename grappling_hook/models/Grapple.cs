@@ -20,6 +20,8 @@
 
         public string mappin_name { get; init; }
 
+        public Grapple_ActivationKeyAction activation_key_action { get; init; }
+
         /// <summary>
         /// Grapple will disengage when dot product of look direction and grapple line is less than this
         /// </summary>
@@ -123,5 +125,15 @@
         //  FrontBack: This would make it feel like a pole stabbed into the wall.  If used, it would make most sense to be the same value as SideToSide
 
 
+    }
+
+    public enum Grapple_ActivationKeyAction
+    {
+        // Fires a new grapple every time the user presses the key(s)
+        Activate,
+        // Pressing again while grapple is active will deactivate it
+        Activate_Deactivate,
+        // Grapple is only active while holding in the activation key(s)
+        Hold,
     }
 }

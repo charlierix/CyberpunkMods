@@ -42,6 +42,11 @@ function DefineWindow_GrappleStraight_StopEarly(vars_ui, const)
     gst8_stop.should_stopOnWallHit = this.Define_ShouldStopOnWallHit(const)
     gst8_stop.stopOnWallHit_help = this.Define_StopOnWallHit_Help(gst8_stop.should_stopOnWallHit, const)
 
+    -- Activation Key Action
+    gst8_stop.activationkey_combo = this.Define_ActivationKey_Combo(gst8_stop.has_stopDistance, const)
+    gst8_stop.activationkey_label = this.Define_ActivationKey_Label(gst8_stop.activationkey_combo, const)
+    gst8_stop.activationkey_help = this.Define_ActivationKey_Help(gst8_stop.activationkey_label, const)
+
     gst8_stop.okcancel = Define_OkCancelButtons(false, vars_ui, const)
 
     FinishDefiningWindow(gst8_stop)
@@ -53,6 +58,8 @@ function ActivateWindow_GrappleStraight_StopEarly(vars_ui, const)
     end
 
     vars_ui.gst8_stop.changes:Clear()
+
+    vars_ui.gst8_stop.activationkey_combo.selected_item = nil
 
     vars_ui.gst8_stop.has_stopDistance.isChecked = nil
     vars_ui.gst8_stop.stopDistance_value.value = nil
@@ -87,6 +94,8 @@ function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player,
     Refresh_GrappleDesiredLength(gst8_stop.desired_line, grapple, nil, changes, false)
     this.Refresh_GrappleAccelToDesired_Custom(gst8_stop.desired_extra, grapple, gst8_stop.has_stopDistance, gst8_stop.stopDistance_value, gst8_stop.has_stopPlane, gst8_stop.stopPlane_value, isHovered_stopdistance_checkbox or isHovered_stopplane_checkbox or isHovered_stopdistance_slider or isHovered_stopplane_slider)
 
+    this.Refresh_ActivationKey_Combo(gst8_stop.activationkey_combo, grapple)
+
     this.Refresh_HasStopAngle(gst8_stop.has_stopAngle, grapple)
     this.Refresh_StopAngle_Value(gst8_stop.stopAngle_value, grapple)
     this.Refresh_StopAngle_Graphic(gst8_stop.stopAngle_graphic, gst8_stop.stopAngle_value)
@@ -116,6 +125,10 @@ function DrawWindow_GrappleStraight_StopEarly(isCloseRequested, vars_ui, player,
     Draw_GrappleArrows(gst8_stop.arrows, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
     Draw_GrappleDesiredLength(gst8_stop.desired_line, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
     Draw_GrappleAccelToDesired(gst8_stop.desired_extra, vars_ui.style.graphics, window.left, window.top, window.width, window.height, vars_ui.scale)
+
+    Draw_ComboBox(gst8_stop.activationkey_combo, vars_ui.style.combobox, vars_ui.scale)
+    Draw_HelpButton(gst8_stop.activationkey_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
+    Draw_Label(gst8_stop.activationkey_label, vars_ui.style.colors, vars_ui.scale)
 
     _, isHovered_stopAngle_checkbox = Draw_CheckBox(gst8_stop.has_stopAngle, vars_ui.style.checkbox, vars_ui.style.colors)
     Draw_HelpButton(gst8_stop.stopAngle_help, vars_ui.style.helpButton, window.left, window.top, vars_ui, const)
@@ -576,8 +589,104 @@ function this.Define_StopOnWallHit_Help(relative_to, const)
     return retVal
 end
 
+-- Activation Key Action
+function this.Define_ActivationKey_Combo(relative_to, const)
+    -- ComboBox
+    return
+    {
+        preview_text = const.activation_key_action.Activate,
+        selected_item = nil,
+
+        items =
+        {
+            const.activation_key_action.Activate,
+            const.activation_key_action.Activate_Deactivate,
+            const.activation_key_action.Hold,
+        },
+
+        width = 180,
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 100,
+
+            relative_horz = const.alignment_horizontal.center,
+            horizontal = const.alignment_horizontal.center,
+
+            relative_vert = const.alignment_vertical.top,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        invisible_name = "GrappleStraight_StopEarly_ActivationKey_Combo",
+
+        CalcSize = CalcSize_ComboBox,
+    }
+end
+function this.Refresh_ActivationKey_Combo(def, grapple)
+    if not def.selected_item then
+        def.selected_item = grapple.activation_key_action
+    end
+end
+function this.Define_ActivationKey_Label(relative_to, const)
+    -- Label
+    return
+    {
+        text = "Activation Key Action",
+
+        position =
+        {
+            relative_to = relative_to,
+
+            pos_x = 0,
+            pos_y = 16,
+
+            relative_horz = const.alignment_horizontal.left,
+            horizontal = const.alignment_horizontal.left,
+
+            relative_vert = const.alignment_vertical.top,
+            vertical = const.alignment_vertical.bottom,
+        },
+
+        color = "edit_prompt",
+
+        CalcSize = CalcSize_Label,
+    }
+end
+function this.Define_ActivationKey_Help(relative_to, const)
+    -- HelpButton
+    local retVal =
+    {
+        invisible_name = "GrappleStraight_StopEarly_ActivationKey_Help",
+
+        position = GetRelativePosition_HelpButton(relative_to, const),
+
+        CalcSize = CalcSize_HelpButton,
+    }
+
+    retVal.tooltip =
+[[How pressing the activation key(s) starts/stops a grapple.  Note that pressing jump will cancel a grapple, as well as the other settings in this window
+
+Activate: Every time it's pressed, a new grapple is fired, even when in the middle of a grapple
+
+Activate_Deactivate: Pressing activation key(s) while grapple is active will cancel it
+
+Hold: Grapple is only active while the activation key(s) are held in.  Be careful to not use unbalanced direction keys, or your character will drift in that direction]]
+
+    return retVal
+end
+
 -- Saving
 function this.Refresh_IsDirty(def, grapple, gst8_stop)
+    -- Activation Key Action
+    local isDirty_activationkey = false
+
+    if gst8_stop.activationkey_combo.selected_item ~= grapple.activation_key_action then
+        isDirty_activationkey = true
+    end
+
     -- Distance
     local isDirty_dist = false
 
@@ -621,6 +730,7 @@ function this.Refresh_IsDirty(def, grapple, gst8_stop)
     end
 
     def.isDirty =
+        isDirty_activationkey or
         isDirty_dist or
         isDirty_plane or
         isDirty_wall or
@@ -628,6 +738,9 @@ function this.Refresh_IsDirty(def, grapple, gst8_stop)
 end
 
 function this.Save(player, grapple, gst8_stop)
+    -- Activation Key Action
+    grapple.activation_key_action = gst8_stop.activationkey_combo.selected_item
+
     -- Distance
     if gst8_stop.has_stopDistance.isChecked then
         grapple.stop_distance = GetSliderValue(gst8_stop.stopDistance_value)

@@ -333,6 +333,7 @@ Also, post a message on nexus, so it can be fixed for everyone]]
     return retVal
 end
 
+-- Watched Actions
 function this.Define_WatchedActions(const)
     -- MultiItemDisplayList
     return
@@ -377,6 +378,7 @@ function this.Refresh_WatchedActions(def, keys)
     MultiItemDisplayList_SetsChanged(def)
 end
 
+-- Bind Buttons
 function this.Define_BindButtons(const)
     local base_x = 160
     local base_y = -30
@@ -530,6 +532,7 @@ function this.Draw_Summary_Tooltips(current, vars, vars_ui, window)
     end
 end
 
+-- Restore Defaults
 function this.Define_RestoreDefaults(vars_ui, const)
     -- Button
     return
@@ -573,6 +576,7 @@ function this.RestoreDefaults(bind_buttons, const)
     end
 end
 
+-- Input Device
 function this.Define_InputDevice_Combo(const)
     -- ComboBox
     return
@@ -663,6 +667,7 @@ function this.Define_InputDevice_Label(relative_to, const)
     }
 end
 
+-- Changing Binding
 function this.Define_Instruction1(const)
     -- Label
     return
@@ -743,6 +748,7 @@ function this.Define_CancelBind(const)
     }
 end
 
+-- Saving
 function this.Refresh_IsDirty(def, vars, bind_buttons, def_inputdevice)
     def.isDirty = false
 
@@ -783,6 +789,7 @@ function this.Save(bind_buttons, def_inputdevice, startStopTracker, keys, vars, 
     datautil.SetInputDevice(vars.input_device, const)
 end
 
+-- Misc Functions
 function this.GetActionList(def, startStopTracker)
     if def.isDeleteChange then
         return nil

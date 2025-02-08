@@ -167,10 +167,10 @@ end
 
 -- If the player has old versions of data, this will bring it up to new versions
 function this.RepairPlayer(player, const)
-    -- Refund airdash
     for i = 1, 6 do
         local grapple = player["grapple" .. tostring(i)]
 
+        this.EnsureActivationKeyAction(grapple, const)
         this.RefundAirDash(player, grapple)
         this.RepairVisuals(grapple, const)
     end
@@ -178,6 +178,16 @@ function this.RepairPlayer(player, const)
     -- The original update wasn't as generous.  Just swap out with the new
     -- default.  Don't bother refunding any possible xp gap
     player.energy_tank.max_energy_update = GetDefault_EnergyTank().max_energy_update
+end
+
+function this.EnsureActivationKeyAction(grapple, const)
+    if not grapple then
+        do return end
+    end
+
+    if not grapple.activation_key_action then
+        grapple.activation_key_action = const.activation_key_action.Activate
+    end
 end
 
 function this.RefundAirDash(player, grapple)
