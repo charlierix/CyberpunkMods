@@ -21,6 +21,11 @@ local visuals_line = StickyList:new()
 local visuals_triangle = StickyList:new()
 local visuals_text = StickyList:new()
 
+local linefrom_from = nil
+local linefrom_to = nil
+local linefrom_duration = nil
+local linefrom_duration_pow = nil
+
 local line_starttime = nil
 local line_duration = nil
 -- Each item in this list has these props.  These points control a bezier.  Using functions like this instead of positions and
@@ -97,7 +102,7 @@ end
 function GrappleRender.StraightLine_INSTANT(from, to, visuals, const)
     if visuals.grappleline_type == const.Visuals_GrappleLine_Type.solid_line then
         local item = items:GetNewItem()
-        this.SetItemBase(item, item_types.line, nil, visuals.grappleline_color_primary, 4, nil, nil, true)
+        this.SetItemBase(item, item_types.line, nil, visuals.grappleline_color_primary, 2, nil, nil, true)
         item.point1 = from
         item.point2 = to
 
@@ -174,6 +179,11 @@ end
 function GrappleRender.Clear()
     items:Clear()
 
+    linefrom_from = nil
+    linefrom_to = nil
+    linefrom_duration = nil
+    linefrom_duration_pow = nil
+
     line_starttime = nil
     line_controlpoints:Clear()
     line_controlpoints_forbezier = nil
@@ -188,17 +198,43 @@ function GrappleRender.Clear()
 end
 
 function GrappleRender.GetGrappleFrom(eye_pos, look_dir)
-    local OFFSET_HORZ = 0.075
-    local OFFSET_VERT = -0.2
+    if not linefrom_from then
+        this.Initialize_SolidLine_FromPoint()
+    end
+
+    -- Figure out the percent between from and to points
+    local percent = 0
+
+    if line_starttime then      -- GetGrappleFrom could get called before the caller to this.SolidLine (the function that inits line_starttime).  In that case, it's zero time
+        local elapsed = timer - line_starttime
+
+        if elapsed < 0 then     -- should never happen
+            percent = 0
+        elseif elapsed < linefrom_duration then
+            percent = (elapsed / linefrom_duration) ^ linefrom_duration_pow     -- go faster at the beginning (this is emulating pulling the hand back toward the side of the ribs)
+        else
+            percent = 1
+        end
+    end
+
+    -- Figure out the point between start and end of arm pull
+    local left_right = LERP(linefrom_from.x, linefrom_to.x, percent)
+    local forward_back = LERP(linefrom_from.y, linefrom_to.y, percent)
+    local up_down = LERP(linefrom_from.z, linefrom_to.z, percent)
 
     if not up then
         up = Vector4.new(0, 0, 1, 1)
     end
 
+    -- Transform that from player to world coords
     local right = CrossProduct3D(look_dir, up)
     local forward = CrossProduct3D(up, right)
 
-    return Vector4.new(eye_pos.x + forward.x * OFFSET_HORZ, eye_pos.y + forward.y * OFFSET_HORZ, eye_pos.z + OFFSET_VERT, 1)
+    return Vector4.new(
+        eye_pos.x + (right.x * left_right) + (forward.x * forward_back),
+        eye_pos.y + (right.y * left_right) + (forward.y * forward_back),
+        eye_pos.z + up_down,      -- ignoring right and forward vectors, since spine is always up and down, regardless if the player is looking along the vertical direction
+        1)
 end
 
 ----------------------------- Private Methods (solid line) ----------------------------
@@ -222,6 +258,60 @@ function this.SolidLine(from, to, visuals, const)
 
         this.SolidLine_Add(from, to, visuals)
     end
+end
+
+function this.Initialize_SolidLine_FromPoint()
+    -- Start centered in front of the player, a little high
+    local START_LEFTRIGHT_MIN = 0
+    local START_LEFTRIGHT_MAX = 0.01
+
+    local START_FORWARD_MIN = 0.07
+    local START_FORWARD_MAX = 0.12
+
+    local START_DOWN_MIN = -0.1
+    local START_DOWN_MAX = -0.13
+
+    -- Pull down and to the side, ribcage
+    local STOP_LEFTRIGHT_MIN = 0.035
+    local STOP_LEFTRIGHT_MAX = 0.055
+
+    local STOP_FORWARD_MIN = 0
+    local STOP_FORWARD_MAX = 0.03
+
+    local STOP_DOWN_MIN = -0.2
+    local STOP_DOWN_MAX = -0.25
+
+    -- Figure out how long this arm pull should take
+    local DURATION_MIN = 0.75
+    local DURATION_MAX = 2
+
+    -- local POW_MIN = 0.5      -- in reality, a person would start pulling quickly, then get to the resting point, but that not noticed, it just appears to always be on the side
+    -- local POW_MAX = 1
+    local POW_MIN = 0.7     -- so instead spend more time in front, then pull back more quickly toward the end
+    local POW_MAX = 3
+
+    -- Randomly pick left or right side of the body
+    local leftright_sign = 1
+    if math.random(2) == 1 then
+        leftright_sign = -1
+    end
+
+    -- Set the member variables
+    linefrom_from = Vector4.new(
+        LERP(START_LEFTRIGHT_MIN, START_LEFTRIGHT_MAX, math.random()) * leftright_sign,
+        LERP(START_FORWARD_MIN, START_FORWARD_MAX, math.random()),
+        LERP(START_DOWN_MIN, START_DOWN_MAX, math.random()),
+        1)
+
+    linefrom_to = Vector4.new(
+        LERP(STOP_LEFTRIGHT_MIN, STOP_LEFTRIGHT_MAX, math.random()) * leftright_sign,
+        LERP(STOP_FORWARD_MIN, STOP_FORWARD_MAX, math.random()),
+        LERP(STOP_DOWN_MIN, STOP_DOWN_MAX, math.random()),
+        1)
+
+    linefrom_duration = LERP(DURATION_MIN, DURATION_MAX, math.random())
+
+    linefrom_duration_pow = LERP(POW_MIN, POW_MAX, math.random())
 end
 
 function this.Initialize_SolidLine_Bezier(from, to)
@@ -354,7 +444,7 @@ end
 
 function this.SolidLine_Add(from, to, visuals)
     local item = items:GetNewItem()
-    this.SetItemBase(item, item_types.line, nil, visuals.grappleline_color_primary, 4, nil, nil, true)
+    this.SetItemBase(item, item_types.line, nil, visuals.grappleline_color_primary, 2, nil, nil, true)
     item.point1 = from
     item.point2 = to
 end
