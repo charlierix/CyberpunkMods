@@ -339,7 +339,7 @@ function DAL.DeleteOldPlayerRows(playerID)
                 (
                     SELECT a.PlayerKey
                     FROM Player a
-                    a.PlayerID = ?
+                    WHERE a.PlayerID = ?
                     ORDER BY a.LastUsed DESC
                     LIMIT 12
                 )
