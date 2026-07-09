@@ -1,0 +1,79 @@
+# State-Machines
+
+112 concepts in state-machines
+
+- [Aicombatrelatedcommand](./aicombat-related-command-408.md) — 19 types in AICombatRelatedCommand. Includes: AIInjectCombatThreatCommand, AIMeleeAttackCommand, AIForceShootCommand.
+- [Aisearchinglookat](./aisearching-lookat-864.md) — 3 types in AISearchingLookat. Includes: SearchPatternMappingLookat, SearchInFrontPatternLookat.
+- [Basevehiclehudgamecontroller](./base-vehicle-hudgame-controller-808.md) — 2 types in BaseVehicleHUDGameController. Includes: inkMotorcycleHUDGameController, vehicleDebugUIGameController.
+- [Chaosweaponcustomeffector](./chaos-weapon-custom-effector-1086.md) — 2 types in ChaosWeaponCustomEffector. Includes: ChaosWeaponDamageTypeEffector.
+- [Chargeeventsabstract](./charge-events-abstract-531.md) — 6 types in ChargeEventsAbstract. Includes: ChargeEvents, ChargeReadyEvents, ChargeMaxEvents.
+- [Combatrestrictmovementareascriptcondition](./combat-restrict-movement-area-script-condition-787.md) — 4 types in CombatRestrictMovementAreaScriptCondition. Includes: CombatRestrictMovementAreaPlayerEnterMainRMACondition, CombatRestrictMovementAreaAllDeadCondition.
+- [Combatsquadscriptinterface](./combat-squad-script-interface-1011.md) — 2 types in CombatSquadScriptInterface. Includes: PuppetSquadInterface.
+- [Coveractioneventstransition](./cover-action-events-transition-504.md) — 7 types in CoverActionEventsTransition. Includes: InactiveCoverEvents, ActivateCoverEvents.
+- [Coveractiontransition](./cover-action-transition-477.md) — 9 types in CoverActionTransition. Includes: CoverActionEventsTransition, InactiveCoverDecisions, ActivateCoverDecisions.
+- [Crosshairgamecontroller Melee](./crosshair-game-controller-melee-921.md) — 2 types in CrosshairGameController_Melee. Includes: Crosshair_Melee_Nano_Wire.
+- [Defaulttest](./default-test-468.md) — 10 types in DefaultTest. Includes: BeginOne, MiddleOne, EndOne.
+- [Equipmentbasedecisions](./equipment-base-decisions-438.md) — 13 types in EquipmentBaseDecisions. Includes: UnequippedDecisions, UnequippedWaitingForExternalFactorsDecisions, EquippedDecisions.
+- [Equipmentbaseevents](./equipment-base-events-439.md) — 13 types in EquipmentBaseEvents. Includes: UnequippedEvents, UnequippedWaitingForExternalFactorsEvents, EquippedEvents.
+- [Failedlandingabstractdecisions](./failed-landing-abstract-decisions-549.md) — 5 types in FailedLandingAbstractDecisions. Includes: HardLandDecisions, VeryHardLandDecisions, DeathLandDecisions.
+- [Failedlandingabstractevents](./failed-landing-abstract-events-550.md) — 5 types in FailedLandingAbstractEvents. Includes: HardLandEvents, VeryHardLandEvents, DeathLandEvents.
+- [Gameitimesystem](./game-itime-system-1114.md) — 1 types in gameITimeSystem. Includes: TimeSystem.
+- [Icovermanager](./icover-manager-1005.md) — 2 types in ICoverManager. Includes: CoverManager.
+- [Iscenesystem](./iscene-system-1053.md) — 2 types in ISceneSystem. Includes: SceneSystem.
+- [Ivehiclesystem](./ivehicle-system-1056.md) — 2 types in IVehicleSystem. Includes: VehicleSystem.
+- [Ladderdecisions](./ladder-decisions-872.md) — 3 types in LadderDecisions. Includes: LadderSprintDecisions, LadderSlideDecisions.
+- [Ladderevents](./ladder-events-548.md) — 5 types in LadderEvents. Includes: SwimmingLadderEvents, LadderSprintEvents, LadderSlideEvents.
+- [Lefthandcyberwareactionabstractdecisions](./left-hand-cyberware-action-abstract-decisions-528.md) — 6 types in LeftHandCyberwareActionAbstractDecisions. Includes: LeftHandCyberwareQuickActionDecisions, LeftHandCyberwareChargeActionDecisions, LeftHandCyberwareCatchActionDecisions.
+- [Lefthandcyberwareactionabstractevents](./left-hand-cyberware-action-abstract-events-529.md) — 6 types in LeftHandCyberwareActionAbstractEvents. Includes: LeftHandCyberwareQuickActionEvents, LeftHandCyberwareChargeActionEvents, LeftHandCyberwareCatchActionEvents.
+- [Lefthandcyberwareeventstransition](./left-hand-cyberware-events-transition-423.md) — 15 types in LeftHandCyberwareEventsTransition. Includes: LeftHandCyberwareSafeEvents, LeftHandCyberwareEquipEvents, LeftHandCyberwareChargeEvents.
+- [Locomotionairdecisions](./locomotion-air-decisions-405.md) — 21 types in LocomotionAirDecisions. Includes: FallDecisions, SlideFallDecisions, AirThrustersDecisions.
+- [Locomotionairevents](./locomotion-air-events-395.md) — 23 types in LocomotionAirEvents. Includes: SlideFallEvents, LadderJumpEvents, AirThrustersEvents.
+- [Locomotionairlowgravitydecisions](./locomotion-air-low-gravity-decisions-493.md) — 8 types in LocomotionAirLowGravityDecisions. Includes: SprintJumpLowGravityDecisions, JumpLowGravityDecisions, FallLowGravityDecisions.
+- [Locomotionairlowgravityevents](./locomotion-air-low-gravity-events-494.md) — 8 types in LocomotionAirLowGravityEvents. Includes: SprintJumpLowGravityEvents, JumpLowGravityEvents, FallLowGravityEvents.
+- [Locomotionbraindance](./locomotion-braindance-866.md) — 3 types in LocomotionBraindance. Includes: BraindanceFlyDecisions, BraindanceFastFlyDecisions.
+- [Locomotionbraindanceevents](./locomotion-braindance-events-822.md) — 4 types in LocomotionBraindanceEvents. Includes: BraindanceFlyEvents, BraindanceFastFlyEvents.
+- [Locomotioneventstransition](./locomotion-events-transition-463.md) — 10 types in LocomotionEventsTransition. Includes: LocomotionBraindanceEvents, LocomotionSwimmingEvents, LocomotionGroundEvents.
+- [Locomotiongrounddecisions](./locomotion-ground-decisions-370.md) — 50 types in LocomotionGroundDecisions. Includes: SwimmingClimbDecisions, SwimmingLadderDecisions, ForceIdleDecisions.
+- [Locomotiongroundevents](./locomotion-ground-events-371.md) — 48 types in LocomotionGroundEvents. Includes: ClimbEvents, LadderEvents, ForceIdleEvents.
+- [Locomotionswimming](./locomotion-swimming-448.md) — 12 types in LocomotionSwimming. Includes: SwimmingSurfaceDecisions, SwimmingSurfaceFastDecisions, SwimmingTransitionDecisions.
+- [Locomotionswimmingevents](./locomotion-swimming-events-449.md) — 12 types in LocomotionSwimmingEvents. Includes: SwimmingSurfaceEvents, SwimmingSurfaceFastEvents, SwimmingTransitionEvents.
+- [Locomotiontakedowndecisions](./locomotion-takedown-decisions-383.md) — 28 types in LocomotionTakedownDecisions. Includes: TakedownBeginDecisions, TakedownLeapToPreyDecisions, TakedownSlideToPreyDecisions.
+- [Locomotiontakedownevents](./locomotion-takedown-events-384.md) — 28 types in LocomotionTakedownEvents. Includes: TakedownBeginEvents, TakedownLeapToPreyEvents, TakedownSlideToPreyEvents.
+- [Lookatpresetgunbasedecisions](./look-at-preset-gun-base-decisions-404.md) — 21 types in lookAtPresetGunBaseDecisions. Includes: AssualtRifleLookAtDecisions, HandgunLookAtDecisions, HmgLookAtDecisions.
+- [Lookatpresetgunbaseevents](./look-at-preset-gun-base-events-401.md) — 22 types in lookAtPresetGunBaseEvents. Includes: AssualtRifleLookAtEvents, HandgunLookAtEvents, HmgLookAtEvents.
+- [Lookatpresetitembasedecisions](./look-at-preset-item-base-decisions-956.md) — 2 types in lookAtPresetItemBaseDecisions. Includes: GrenadeLookAtDecisions.
+- [Lookatpresetitembaseevents](./look-at-preset-item-base-events-957.md) — 2 types in lookAtPresetItemBaseEvents. Includes: GrenadeLookAtEvents.
+- [Lookatpresetmeleebasedecisions](./look-at-preset-melee-base-decisions-421.md) — 16 types in LookAtPresetMeleeBaseDecisions. Includes: FistsLookAtDecisions, HammerLookAtDecisions, KatanaLookAtDecisions.
+- [Lookatpresetmeleebaseevents](./look-at-preset-melee-base-events-416.md) — 17 types in LookAtPresetMeleeBaseEvents. Includes: FistsLookAtEvents, HammerLookAtEvents, KatanaLookAtEvents.
+- [Lookatcombattarget](./lookat-combat-target-926.md) — 2 types in LookatCombatTarget. Includes: HeadLookatCombatTarget.
+- [Meleeattackgenericdecisions](./melee-attack-generic-decisions-402.md) — 22 types in MeleeAttackGenericDecisions. Includes: MeleeComboAttackDecisions, MeleeFinalAttackDecisions, MeleeSafeAttackDecisions.
+- [Meleeattackgenericevents](./melee-attack-generic-events-403.md) — 22 types in MeleeAttackGenericEvents. Includes: MeleeComboAttackEvents, MeleeFinalAttackEvents, MeleeSafeAttackEvents.
+- [Meleeeventstransition](./melee-events-transition-396.md) — 23 types in MeleeEventsTransition. Includes: MeleeNotReadyEvents, MeleeParriedEvents, MeleeIdleEvents.
+- [Meleenotreadyevents](./melee-not-ready-events-967.md) — 2 types in MeleeNotReadyEvents. Includes: MeleeRecoveryEvents.
+- [Meleepublicsafeevents](./melee-public-safe-events-1110.md) — 1 types in MeleePublicSafeEvents. Includes: MeleeSafeEvents.
+- [Minedispensereventstransition](./mine-dispenser-events-transition-495.md) — 8 types in MineDispenserEventsTransition. Includes: MineDispenserIdleEvents, MineDispenserCycleItemEvents, MineDispenserPlaceEvents.
+- [Oldupperbodyeventstransition](./old-upper-body-events-transition-955.md) — 2 types in OldUpperBodyEventsTransition. Includes: CarriedObjectEvents.
+- [Ref 4 3 Defaults](./ref-4-3-defaults-1133.md) — 1 unnamed types in Ref_4_3_Defaults.
+- [Runtimemappin](./runtime-mappin-431.md) — 14 types in RuntimeMappin. Includes: FastTravelMappin, VehicleMappin, InteractionMappin.
+- [Scannerweaponbasic](./scanner-weapon-basic-1048.md) — 2 types in ScannerWeaponBasic. Includes: ScannerWeaponDetailed.
+- [Scenetierabstract](./scene-tier-abstract-547.md) — 5 types in SceneTierAbstract. Includes: SceneTierInitialDecisions, SceneTierInitialEvents, SceneTierAbstractDecisions.
+- [Scenetierabstractdecisions](./scene-tier-abstract-decisions-773.md) — 4 types in SceneTierAbstractDecisions. Includes: SceneTierIIDecisions, SceneTierIIIDecisions, SceneTierIVDecisions.
+- [Scenetierabstractevents](./scene-tier-abstract-events-505.md) — 7 types in SceneTierAbstractEvents. Includes: SceneTierIIEvents, SceneTierIIIEvents, SceneTierIVEvents.
+- [Scenetierdatamotionconstrained](./scene-tier-data-motion-constrained-513.md) — 6 types in SceneTierDataMotionConstrained. Includes: SceneTier4Data, SceneTier5Data, SceneTier3Data.
+- [Stackchangehighlevelstateabstract](./stack-change-high-level-state-abstract-811.md) — 4 types in StackChangeHighLevelStateAbstract. Includes: StackRelaxedState, StackAlertedState.
+- [Staminaeventstransition](./stamina-events-transition-823.md) — 4 types in StaminaEventsTransition. Includes: RestedEvents, ExhaustedEvents.
+- [Timedilationeventstransitions](./time-dilation-events-transitions-498.md) — 8 types in TimeDilationEventsTransitions. Includes: SandevistanEvents, KerenzikovEvents, TimeDilationProgressWithInputEvents.
+- [Timedilationlistener](./time-dilation-listener-817.md) — 4 types in TimeDilationListener. Includes: BreachViewTimeListener, sampleTimeListener.
+- [Upperbodyeventstransition](./upper-body-events-transition-424.md) — 15 types in UpperBodyEventsTransition. Includes: ForceEmptyHandsEvents, ForceSafeEvents, EmptyHandsEvents.
+- [Vehicleeventstransition](./vehicle-events-transition-386.md) — 27 types in VehicleEventsTransition. Includes: IdleEvents, EnteringEvents, PassengerEvents.
+- [Vehiclegameplaycontextdecisions](./vehicle-gameplay-context-decisions-1104.md) — 1 types in VehicleGameplayContextDecisions. Includes: VehiclePassengerContextDecisions.
+- [Vehiclenodrivecontextevents](./vehicle-no-drive-context-events-958.md) — 2 types in VehicleNoDriveContextEvents. Includes: VehicleQuestRestrictedContextEvents.
+- [Weaponeventstransition](./weapon-events-transition-379.md) — 32 types in WeaponEventsTransition. Includes: ReadyEvents, NotReadyEvents, SafeEvents.
+- [Weapongrenade](./weapon-grenade-1016.md) — 2 types in WeaponGrenade. Includes: BaseGrenade.
+- [Weaponobject](./weapon-object-420.md) — 16 types in WeaponObject. Includes: AntiRadar, grenadeSpawner, ClaymoreMine.
+- [Weaponradialslot](./weapon-radial-slot-919.md) — 2 types in WeaponRadialSlot. Includes: CyclableRadialSlot.
+- [Weaponreadylistenertransition](./weapon-ready-listener-transition-873.md) — 3 types in WeaponReadyListenerTransition. Includes: ReadyDecisions, NotReadyDecisions, PublicSafeDecisions.
+- [Zoomdecisionstransition](./zoom-decisions-transition-450.md) — 12 types in ZoomDecisionsTransition. Includes: ZoomBlockedDecisions, ZoomLevelBaseDecisions, ZoomLevelAimDecisions.
+- [Zoomeventstransition](./zoom-events-transition-451.md) — 12 types in ZoomEventsTransition. Includes: ZoomBlockedEvents, ZoomLevelBaseEvents, ZoomLevelAimEvents.
+
+- [Default-Transition](./default-transition/) — 39 concepts in state-machines/default-transition

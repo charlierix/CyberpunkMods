@@ -1,0 +1,62 @@
+# Events
+
+58 concepts in events
+
+- [Event / Aievent](./event-aievent-40.md) — 27 types in Event / AIEvent. Includes: AIEvent, BaseStimuliEvent, MountAIEvent.
+- [Event / Animinputsetter](./event-anim-input-setter-46.md) — 7 types in Event / AnimInputSetter. Includes: AnimInputSetter, AnimInputSetterVector, AnimInputSetterAnimFeature.
+- [Event / Attachmentslotevent](./event-attachment-slot-event-55.md) — 5 types in Event / AttachmentSlotEvent. Includes: AttachmentSlotEvent, UnequipStart, UnequipEnd.
+- [Event / Drillscanpostprocessevent](./event-drill-scan-post-process-event-51.md) — 5 types in Event / DrillScanPostProcessEvent. Includes: DrillScanPostProcessEvent.
+- [Event / Exitworkspotsequenceevent](./event-exit-workspot-sequence-event-54.md) — 5 types in Event / ExitWorkspotSequenceEvent. Includes: ExitWorkspotSequenceEvent.
+- [Event / Gamehitevent](./event-game-hit-event-47.md) — 6 types in Event / gameHitEvent. Includes: gameHitEvent, gameTargetHitEvent, gameRagdollHitEvent.
+- [Event / Gameprojectilespawnerpreviewevent](./event-gameprojectile-spawner-preview-event-50.md) — 6 types in Event / gameprojectileSpawnerPreviewEvent. Includes: gameprojectileSpawnerPreviewEvent, gameprojectileProjectilePreviewEvent.
+- [Event /  Merged 0](./event-merged-0-740.md) — 50 types in Event / _merged-0. Includes: QuickSlotButtonHoldEndEvent, ProcessDevicesEvent, RefreshSlavesEvent.
+- [Event /  Merged 1](./event-merged-1-741.md) — 50 types in Event / _merged-1. Includes: IKTargetAddEvent, QuestSecuritySystemInput, QuestIllegalActionNotification.
+- [Event /  Merged 2](./event-merged-2-742.md) — 25 types in Event / _merged-2. Includes: DelayedCrowdReactionEvent, TriggerDelayedReactionEvent, ScanningEvent.
+- [Event /  Misc 0](./event-misc-0-1.md) — 50 types in Event / _misc-0. Includes: VoiceOverQuickHackFeedbackEvent, ForceResetAmmoEvent, EffectInfoEvent.
+- [Event /  Misc 1](./event-misc-1-2.md) — 50 types in Event / _misc-1. Includes: gameuiPuppetPreview_ReadyToBeDisplayed, gameuiPuppetPreview_SetCameraSetupEvent, inkMenuInstance_SwitchToScenario.
+- [Event /  Misc 10](./event-misc-10-11.md) — 50 types in Event / _misc-10. Includes: AnimExternalEvent, AnimInputSetterUsesSleepMode, HUDInstruction.
+- [Event /  Misc 11](./event-misc-11-12.md) — 50 types in Event / _misc-11. Includes: UpdateWeaponChargeEvent, UpdateDamageChangeEvent, WeaponSetMaxChargeEvent.
+- [Event /  Misc 12](./event-misc-12-13.md) — 50 types in Event / _misc-12. Includes: DelayedDeviceActionEvent, ExplosiveDeviceDelayedEvent, SoundStopEvent.
+- [Event /  Misc 13](./event-misc-13-14.md) — 50 types in Event / _misc-13. Includes: PlayerSpotted, ReactoToPreventionSystem, PlayerEnteredNewDistrictEvent.
+- [Event /  Misc 14](./event-misc-14-15.md) — 50 types in Event / _misc-14. Includes: TerminalSetState, LiftDepartedEvent, RefreshFloorAuthorizationDataEvent.
+- [Event /  Misc 15](./event-misc-15-16.md) — 50 types in Event / _misc-15. Includes: CameraTagLockEvent, RevealRequestEvent, RevealNetworkGridEvent.
+- [Event /  Misc 16](./event-misc-16-17.md) — 50 types in Event / _misc-16. Includes: CuttingGrenadeSpawnBlinkEffectEvent, GrenadeDetonateRequestEvent, gameprojectileHitEvent.
+- [Event /  Misc 17](./event-misc-17-18.md) — 50 types in Event / _misc-17. Includes: LastHitDataEvent, NewHitDataEvent, DismembermentDebrisEvent.
+- [Event /  Misc 18](./event-misc-18-19.md) — 50 types in Event / _misc-18. Includes: ToggleVisibilityInAnimSystemEvent, AIAttackAttemptEvent, TurretShootingIntervalEvent.
+- [Event /  Misc 19](./event-misc-19-20.md) — 50 types in Event / _misc-19. Includes: TCSInputXYAxisEvent, NetworkLinkQuickhackEvent, NPCKillDelayEvent.
+- [Event /  Misc 2](./event-misc-2-3.md) — 50 types in Event / _misc-2. Includes: ShardSelectedEvent, ShardEntrySelectedEvent, ShardSyncBackEvent.
+- [Event /  Misc 20](./event-misc-20-21.md) — 50 types in Event / _misc-20. Includes: SecurityGateForceUnlock, InitiateScanner, RevokeAuthorization.
+- [Event /  Misc 21](./event-misc-21-22.md) — 50 types in Event / _misc-21. Includes: VehiclePanzerBootupUIQuestEvent, MountingEvent, UnmountingEvent.
+- [Event /  Misc 22](./event-misc-22-23.md) — 50 types in Event / _misc-22. Includes: VehicleQuestVisualDestructionEvent, KnockOverBikeEvent, VehicleWaterEvent.
+- [Event /  Misc 23](./event-misc-23-24.md) — 50 types in Event / _misc-23. Includes: AddForceHighlightTargetEvent, QHackWheelItemChangedEvent, ChangeHalfLights.
+- [Event /  Misc 24](./event-misc-24-25.md) — 50 types in Event / _misc-24. Includes: AddActiveContextEvent, RemoveActiveContextEvent, UpdateDropPointEvent.
+- [Event /  Misc 25](./event-misc-25-26.md) — 50 types in Event / _misc-25. Includes: ToggleFocusClueEvent, FocusClueStateChangeEvent, ToggleClueConclusionEvent.
+- [Event /  Misc 26](./event-misc-26-27.md) — 50 types in Event / _misc-26. Includes: ToggleOperationEvent, UpdateWillingInvestigators, AccessPointMiniGameStatus.
+- [Event /  Misc 27](./event-misc-27-28.md) — 50 types in Event / _misc-27. Includes: StalkEvent, DisturbingComfortZone, CheckComfortZoneEvent.
+- [Event /  Misc 28](./event-misc-28-29.md) — 50 types in Event / _misc-28. Includes: ExperiencePointsEvent, BountyCompletionEvent, SetBountyEvent.
+- [Event /  Misc 29](./event-misc-29-30.md) — 50 types in Event / _misc-29. Includes: NPCAfterDeathOrDefeatEvent, FinisherEffectorActionOn, TerminateReactionLookatEvent.
+- [Event /  Misc 3](./event-misc-3-4.md) — 50 types in Event / _misc-3. Includes: QuestListItemHoverOverEvent, CraftingNotificationEvent, TarotCardAdded.
+- [Event /  Misc 30](./event-misc-30-31.md) — 50 types in Event / _misc-30. Includes: NCPDJobDoneEvent, QuickSlotButtonTap, DPADActionPerformed.
+- [Event /  Misc 31](./event-misc-31-32.md) — 50 types in Event / _misc-31. Includes: ClearBeingNoticedBB, BeingTargetByLaserSightUpdateEvent, RequestBuyAttribute.
+- [Event /  Misc 32](./event-misc-32-33.md) — 50 types in Event / _misc-32. Includes: PerkBoughtEvent, TraitBoughtEvent, AttributeBoughtEvent.
+- [Event /  Misc 33](./event-misc-33-34.md) — 50 types in Event / _misc-33. Includes: inkMenuLayer_SetCursorVisibility, ItemChooserItemChanged, ItemChooserUnequipItem.
+- [Event /  Misc 34](./event-misc-34-35.md) — 50 types in Event / _misc-34. Includes: PSMFall, vehicleCameraResetEvent, PSMStopStateMachine.
+- [Event /  Misc 35](./event-misc-35-36.md) — 50 types in Event / _misc-35. Includes: gameprojectileForceActivationEvent, ApplyDiodeLightPresetEvent, AttitudeGroupChangedEvent.
+- [Event /  Misc 36](./event-misc-36-37.md) — 50 types in Event / _misc-36. Includes: BlackboardChangedEvent, InCrowd, OutOfCrowd.
+- [Event /  Misc 37](./event-misc-37-38.md) — 50 types in Event / _misc-37. Includes: SenseInitializeEvent, OnBeingDetectedEvent, ClearAllRevealRequestsEvent.
+- [Event /  Misc 38](./event-misc-38-39.md) — 18 types in Event / _misc-38. Includes: StimuliEffectEvent, VehicleRepairEvent, HasVehicleBeenFlippedOverForSomeTimeEvent.
+- [Event /  Misc 4](./event-misc-4-5.md) — 50 types in Event / _misc-4. Includes: gameuiCharacterCustomizationSystem_OnRandomizeCompleteEvent, RefreshGOGState, LinkClickedEvent.
+- [Event /  Misc 5](./event-misc-5-6.md) — 50 types in Event / _misc-5. Includes: NPCStoppingDetectionEvent, MiniGameStateUpdateEventAdvanced, GameFinishEventAdvanced.
+- [Event /  Misc 6](./event-misc-6-7.md) — 50 types in Event / _misc-6. Includes: SetDocumentStateEvent, GoToMenuEvent, OpenDocumentEvent.
+- [Event /  Misc 7](./event-misc-7-8.md) — 50 types in Event / _misc-7. Includes: ExplosiveTriggerDeviceProximityEvent, ForkliftCompleteActivateEvent, SecretOpenAnimationEvent.
+- [Event /  Misc 8](./event-misc-8-9.md) — 50 types in Event / _misc-8. Includes: DispenseFreeItem, GrenadeProximitySensorTargetAcquiredEvent, CuttingGrenadeDespawnEffectsEvent.
+- [Event /  Misc 9](./event-misc-9-10.md) — 50 types in Event / _misc-9. Includes: ProjectileLauncherRoundDelayEvent, ProjectileLauncherRoundDetonationDelayEvent, ProjectileLauncherRoundBreachEvent.
+- [Event / Requestwidgetupdateevent](./event-request-widget-update-event-44.md) — 10 types in Event / RequestWidgetUpdateEvent. Includes: RequestWidgetUpdateEvent, RequestBannerWidgetUpdateEvent, RequestComputerMenuWidgetsUpdateEvent.
+- [Event / Sensevisibilityevent](./event-sense-visibility-event-49.md) — 6 types in Event / SenseVisibilityEvent. Includes: SenseVisibilityEvent, SensePresetChangeEvent, DetectionRiseEvent.
+- [Event / Tickableevent](./event-tickable-event-42.md) — 10 types in Event / TickableEvent. Includes: TickableEvent, ProjectileLauncherRoundTickEvent, FakeUpdateEvent.
+- [Event / Unnamed 17047](./event-unnamed-17047-48.md) — 6 unnamed types in Event.
+- [Event / Unnamed 17397](./event-unnamed-17397-41.md) — 21 unnamed types in Event.
+- [Event / Unnamed 21993](./event-unnamed-21993-52.md) — 5 unnamed types in Event.
+- [Event / Unnamed 26056](./event-unnamed-26056-45.md) — 9 unnamed types in Event.
+- [Event / Unnamed 27423](./event-unnamed-27423-53.md) — 5 unnamed types in Event.
+- [Event / Unnamed 33945](./event-unnamed-33945-43.md) — 10 unnamed types in Event.

@@ -1,0 +1,150 @@
+# Iscriptable
+
+146 concepts in references/iscriptable
+
+- [Iscriptable / Abstractdatasource](./iscriptable-abstract-data-source-186.md) — 5 types in IScriptable / AbstractDataSource. Includes: AbstractDataSource, BaseItemDataSource, BaseWeakScriptableDataSource.
+- [Iscriptable / Aibehaviorscriptbase](./iscriptable-aibehavior-script-base-188.md) — 5 types in IScriptable / AIBehaviorScriptBase. Includes: AIBehaviorScriptBase, AIbehaviortaskScript, AIbehaviorexpressionScript.
+- [Iscriptable / Aicommand](./iscriptable-aicommand-123.md) — 18 types in IScriptable / AICommand. Includes: AICommand, AIBackgroundCombatCommand, AIBaseMountCommand.
+- [Iscriptable / Animfeature 0](./iscriptable-anim-feature-0-100.md) — 50 types in IScriptable / AnimFeature-0. Includes: AnimFeature, AnimFeature_ChestPress, AnimFeature_WeaponScopeData.
+- [Iscriptable / Animfeature 1](./iscriptable-anim-feature-1-101.md) — 50 types in IScriptable / AnimFeature-1. Includes: AnimFeature_PlayerCoverActionWeaponHolster, AnimFeature_Mounting, AnimFeature_Zoom.
+- [Iscriptable / Animfeature 2](./iscriptable-anim-feature-2-102.md) — 15 types in IScriptable / AnimFeature-2. Includes: AnimFeature_SafeAction, AnimFeature_StimReactions, AnimFeature_ConsumableAnimation.
+- [Iscriptable / Atooltipdata](./iscriptable-atooltip-data-146.md) — 9 types in IScriptable / ATooltipData. Includes: ATooltipData, CyberwareTooltipData, CyberwareSlotTooltipData.
+- [Iscriptable / Attachmentslotsscriptcallback](./iscriptable-attachment-slots-script-callback-174.md) — 6 types in IScriptable / AttachmentSlotsScriptCallback. Includes: AttachmentSlotsScriptCallback, ItemInSlotCallback, ItemInPaperdollSlotCallback.
+- [Iscriptable / Basehitprereqcondition](./iscriptable-base-hit-prereq-condition-119.md) — 22 types in IScriptable / BaseHitPrereqCondition. Includes: BaseHitPrereqCondition, DismembermentTriggeredHitPrereqCondition, AttackSubtypeHitPrereqCondition.
+- [Iscriptable / Baseskillcheckcontainer](./iscriptable-base-skill-check-container-165.md) — 7 types in IScriptable / BaseSkillCheckContainer. Includes: BaseSkillCheckContainer, DemolitionContainer, EngineeringContainer.
+- [Iscriptable / Blackboarddefinition 0](./iscriptable-blackboard-definition-0-106.md) — 50 types in IScriptable / BlackboardDefinition-0. Includes: BlackboardDefinition, AIBlackboardDef, DeviceBaseBlackboardDef.
+- [Iscriptable / Blackboarddefinition 1](./iscriptable-blackboard-definition-1-107.md) — 42 types in IScriptable / BlackboardDefinition-1. Includes: PhotoModeDef, AdHocAnimationDef, UI_CrosshairDef.
+- [Iscriptable / Cactionscriptproxy](./iscriptable-caction-script-proxy-173.md) — 6 types in IScriptable / CActionScriptProxy. Includes: CActionScriptProxy, ActionHitReactionScriptProxy, ActionAnimationScriptProxy.
+- [Iscriptable / Configvar](./iscriptable-config-var-149.md) — 9 types in IScriptable / ConfigVar. Includes: ConfigVar, ConfigVarName, ConfigVarInt.
+- [Iscriptable / Configvarlistener](./iscriptable-config-var-listener-157.md) — 8 types in IScriptable / ConfigVarListener. Includes: ConfigVarListener, HDRSettingsVarListener, BrightnessSettingsVarListener.
+- [Iscriptable / Deviceoperationbase](./iscriptable-device-operation-base-124.md) — 17 types in IScriptable / DeviceOperationBase. Includes: DeviceOperationBase, GenericDeviceOperation, ToggleComponentsDeviceOperation.
+- [Iscriptable / Deviceoperationtriggerdata](./iscriptable-device-operation-trigger-data-134.md) — 12 types in IScriptable / DeviceOperationTriggerData. Includes: DeviceOperationTriggerData, ActivatorOperationTriggerData, FactOperationTriggerData.
+- [Iscriptable / Deviceoperations](./iscriptable-device-operations-141.md) — 10 types in IScriptable / DeviceOperations. Includes: DeviceOperations, FocusModeOperations, SensesOperations.
+- [Iscriptable / Deviceoperationstrigger](./iscriptable-device-operations-trigger-133.md) — 12 types in IScriptable / DeviceOperationsTrigger. Includes: DeviceOperationsTrigger, ActivatorOperationsTrigger, FactOperationsTrigger.
+- [Iscriptable / Effectnode](./iscriptable-effect-node-190.md) — 5 types in IScriptable / EffectNode. Includes: EffectNode, EffectObjectFilter, EffectObjectProvider.
+- [Iscriptable / Effector](./iscriptable-effector-110.md) — 73 types in IScriptable / Effector. Includes: Effector, PlaySFXEffector, ApplyObjectActionEffector.
+- [Iscriptable / Gameplayconditionbase](./iscriptable-gameplay-condition-base-164.md) — 7 types in IScriptable / GameplayConditionBase. Includes: GameplayConditionBase, GameplaySkillCondition, GameplayPerkCondition.
+- [Iscriptable / Gameprojectiletrajectoryparams](./iscriptable-gameprojectile-trajectory-params-167.md) — 7 types in IScriptable / gameprojectileTrajectoryParams. Includes: gameprojectileTrajectoryParams, AccelerateTowardsTrajectoryParams, ParabolicTrajectoryParams.
+- [Iscriptable / Genericnotificationbaseaction](./iscriptable-generic-notification-base-action-161.md) — 8 types in IScriptable / GenericNotificationBaseAction. Includes: GenericNotificationBaseAction, OpenTarotCollectionNotificationAction, OpenShardNotificationAction.
+- [Iscriptable / Genericnotificationviewdata](./iscriptable-generic-notification-view-data-127.md) — 17 types in IScriptable / GenericNotificationViewData. Includes: GenericNotificationViewData, AuthorisationNotificationViewData, BountyCollectedNotificationViewData.
+- [Iscriptable / Hudactor](./iscriptable-hudactor-179.md) — 5 types in IScriptable / HUDActor. Includes: HUDActor, GAMEOBJECT_Actor, VEHICLE_Actor.
+- [Iscriptable / Hudmodule](./iscriptable-hudmodule-153.md) — 8 types in IScriptable / HUDModule. Includes: HUDModule, ScannerModule, BraindanceModule.
+- [Iscriptable / Icomponent](./iscriptable-icomponent-122.md) — 20 types in IScriptable / IComponent. Includes: IComponent, TrafficLightListenerComponent, IPlacedComponent.
+- [Iscriptable / Idisplaydata](./iscriptable-idisplay-data-169.md) — 7 types in IScriptable / IDisplayData. Includes: IDisplayData, ProficiencyDisplayData, AttributeData.
+- [Iscriptable / Igamesystem](./iscriptable-igame-system-111.md) — 72 types in IScriptable / IGameSystem. Includes: IGameSystem, gameIGameRulesSystem, gameuiIUIObjectsLoaderSystem.
+- [Iscriptable / Inkaniminterpolator](./iscriptable-ink-anim-interpolator-131.md) — 14 types in IScriptable / inkAnimInterpolator. Includes: inkAnimInterpolator, inkAnimColor, inkAnimMargin.
+- [Iscriptable / Inkmenuscenario](./iscriptable-ink-menu-scenario-192.md) — 5 types in IScriptable / inkMenuScenario. Includes: inkMenuScenario, MenuScenario_ClippedMenu, MenuScenario_BaseMenu.
+- [Iscriptable / Inkuserdata](./iscriptable-ink-user-data-137.md) — 11 types in IScriptable / inkUserData. Includes: inkUserData, inkCursorInfo, LabeledCursorData.
+- [Iscriptable / Inkvirtualitemtemplateclassifier](./iscriptable-ink-virtual-item-template-classifier-160.md) — 8 types in IScriptable / inkVirtualItemTemplateClassifier. Includes: inkVirtualItemTemplateClassifier, ItemDisplayTemplateClassifier, CyberwareTemplateClassifier.
+- [Iscriptable / Interactionchoicecaptionpart](./iscriptable-interaction-choice-caption-part-178.md) — 5 types in IScriptable / InteractionChoiceCaptionPart. Includes: InteractionChoiceCaptionPart, InteractionChoiceCaptionScriptPart, InteractionChoiceCaptionStringPart.
+- [Iscriptable / Interactionscriptedcondition](./iscriptable-interaction-scripted-condition-139.md) — 11 types in IScriptable / InteractionScriptedCondition. Includes: InteractionScriptedCondition, PlayerCanTakeCPOMissionDataPrereq, PlayerCanGiveCPOMissionDataPrereq.
+- [Iscriptable / Inventoryscriptcallback](./iscriptable-inventory-script-callback-136.md) — 11 types in IScriptable / InventoryScriptCallback. Includes: InventoryScriptCallback, DropPointCallback, BackpackInventoryListenerCallback.
+- [Iscriptable / Isenseshape](./iscriptable-isense-shape-181.md) — 5 types in IScriptable / ISenseShape. Includes: ISenseShape, SenseCone, SenseBox.
+- [Iscriptable / Journalentry](./iscriptable-journal-entry-126.md) — 17 types in IScriptable / JournalEntry. Includes: JournalEntry, JournalQuestGuidanceMarker, JournalQuestMapPinLink.
+- [Iscriptable / Journalinternetbase](./iscriptable-journal-internet-base-185.md) — 5 types in IScriptable / JournalInternetBase. Includes: JournalInternetBase, JournalInternetText, JournalInternetRectangle.
+- [Iscriptable / Listitemdata](./iscriptable-list-item-data-187.md) — 5 types in IScriptable / ListItemData. Includes: ListItemData, PhotoModeMenuListItemData, SettingsCategoryItemData.
+- [Iscriptable /  Merged 0](./iscriptable-merged-0-743.md) — 50 types in IScriptable / _merged-0. Includes: SmartHousePreset, MorningPreset, EveningPreset.
+- [Iscriptable /  Merged 1](./iscriptable-merged-1-744.md) — 50 types in IScriptable / _merged-1. Includes: DeviceReplicatedState, WindowBlindersReplicatedState, SecurityTurretReplicatedState.
+- [Iscriptable /  Merged 2](./iscriptable-merged-2-745.md) — 50 types in IScriptable / _merged-2. Includes: SceneTierData, SceneTier1Data, SceneTier2Data.
+- [Iscriptable /  Merged 3](./iscriptable-merged-3-746.md) — 50 types in IScriptable / _merged-3. Includes: HitShapeUserData, HitShapeUserDataBase, HitData_Base.
+- [Iscriptable /  Merged 4](./iscriptable-merged-4-747.md) — 50 types in IScriptable / _merged-4. Includes: MusicSettings, PlayRadio, PlaySoundEvent.
+- [Iscriptable /  Merged 5](./iscriptable-merged-5-748.md) — 50 types in IScriptable / _merged-5. Includes: ScriptedRandomizationSupervisor, IScriptableSystem, ScriptableSystem.
+- [Iscriptable /  Merged 6](./iscriptable-merged-6-749.md) — 50 types in IScriptable / _merged-6. Includes: inkIconReference, UIIconReference, IMovingPlatformMovement.
+- [Iscriptable /  Merged 7](./iscriptable-merged-7-750.md) — 50 types in IScriptable / _merged-7. Includes: inkItemPositionProvider, ItemPositionProvider, WrappedInventoryItemData.
+- [Iscriptable /  Merged 8](./iscriptable-merged-8-751.md) — 5 types in IScriptable / _merged-8. Includes: Event.
+- [Iscriptable / Minigamegenerationrule](./iscriptable-minigame-generation-rule-138.md) — 11 types in IScriptable / MinigameGenerationRule. Includes: MinigameGenerationRule, GridNoiseGenRule, MainProgramGenRule.
+- [Iscriptable /  Misc 0](./iscriptable-misc-0-56.md) — 50 types in IScriptable / _misc-0. Includes: gameScriptedPrereqPSChangeListenerWrapper, gameScriptedPrereqMountingListenerWrapper, ItemCreationPrereqDataWrapper.
+- [Iscriptable /  Misc 1](./iscriptable-misc-1-57.md) — 50 types in IScriptable / _misc-1. Includes: inkFIFOQueue, inkHashMap, inkIntHashMap.
+- [Iscriptable /  Misc 10](./iscriptable-misc-10-66.md) — 50 types in IScriptable / _misc-10. Includes: NavigationFindWallResult, AIReactionData, AIActionChecks.
+- [Iscriptable /  Misc 11](./iscriptable-misc-11-67.md) — 50 types in IScriptable / _misc-11. Includes: LoSFinderParams, TweakAIActionRecord, TimeDilationHelper.
+- [Iscriptable /  Misc 12](./iscriptable-misc-12-68.md) — 50 types in IScriptable / _misc-12. Includes: ItemCompareBuilder, CompareBuilder, DamageEffectUIEntry.
+- [Iscriptable /  Misc 13](./iscriptable-misc-13-69.md) — 50 types in IScriptable / _misc-13. Includes: DropdownItemData, SortingDropdownData, ItemDisplayUtils.
+- [Iscriptable /  Misc 14](./iscriptable-misc-14-70.md) — 50 types in IScriptable / _misc-14. Includes: GameplayCameraData, LeftHandCyberwareHelper, CyberwareUtility.
+- [Iscriptable /  Misc 15](./iscriptable-misc-15-71.md) — 50 types in IScriptable / _misc-15. Includes: AISubActionSetUnequipWeaponsUtils, AISubActionSetUnequipPrimaryWeapons_Record_Implementation, AISubActionSetUnequipSecondaryWeapons_Record_Implementation.
+- [Iscriptable /  Misc 16](./iscriptable-misc-16-72.md) — 50 types in IScriptable / _misc-16. Includes: AISubActionSetStimSource_Record_Implementation, AISubActionWorkspot_Record_Implementation, AISubActionChangeCoverSelectionPreset_Record_Implementation.
+- [Iscriptable /  Misc 17](./iscriptable-misc-17-73.md) — 50 types in IScriptable / _misc-17. Includes: AISubActionGeneratePointOfInterestTarget_Record_Implementation, AISubActionDroneModifyAltitude_Record_Implementation, AISubActionScaleDurationWithDistance_Record_Implementation.
+- [Iscriptable /  Misc 18](./iscriptable-misc-18-74.md) — 12 unnamed types in IScriptable.
+- [Iscriptable /  Misc 2](./iscriptable-misc-2-58.md) — 50 types in IScriptable / _misc-2. Includes: ItemFilters, ItemCategoryFliterManager, BackpackCraftingMaterialItemCallbackData.
+- [Iscriptable /  Misc 3](./iscriptable-misc-3-59.md) — 50 types in IScriptable / _misc-3. Includes: CharacterCustomizationOption, MorphMenuUserData, CharacterCreationAttributeData.
+- [Iscriptable /  Misc 4](./iscriptable-misc-4-60.md) — 50 types in IScriptable / _misc-4. Includes: ItemsPoolItemSpawnData, ItemsPoolCachedData, MinimalLootingListItemData.
+- [Iscriptable /  Misc 5](./iscriptable-misc-5-61.md) — 50 types in IScriptable / _misc-5. Includes: ItemsLocalizationHelper, UILocalizationKeys, StatsManager.
+- [Iscriptable /  Misc 6](./iscriptable-misc-6-62.md) — 50 types in IScriptable / _misc-6. Includes: EquipmentSystemPlayerData, Hotkey, InventoryDataManagerV2.
+- [Iscriptable /  Misc 7](./iscriptable-misc-7-63.md) — 50 types in IScriptable / _misc-7. Includes: DeviceActionProperty, DeviceActionPropertyFunctions, Clearance.
+- [Iscriptable /  Misc 8](./iscriptable-misc-8-64.md) — 50 types in IScriptable / _misc-8. Includes: StatusEffectHelper, IconsNameResolver, DeviceOperationsContainer.
+- [Iscriptable /  Misc 9](./iscriptable-misc-9-65.md) — 50 types in IScriptable / _misc-9. Includes: DoorViabilityInterpreter, BasicViabilityInterpreter, PointData.
+- [Iscriptable / Moduleinstance](./iscriptable-module-instance-154.md) — 8 types in IScriptable / ModuleInstance. Includes: ModuleInstance, Crosshair, AimAssist.
+- [Iscriptable / Morphdata](./iscriptable-morph-data-177.md) — 6 types in IScriptable / MorphData. Includes: MorphData, State, Blacklist.
+- [Iscriptable / Prereqstate](./iscriptable-prereq-state-114.md) — 54 types in IScriptable / PrereqState. Includes: PrereqState, IsNpcMountedInSlotPrereqState, CanPlayerHijackMountedNpcPrereqState.
+- [Iscriptable / Scannerchunk](./iscriptable-scanner-chunk-118.md) — 30 types in IScriptable / ScannerChunk. Includes: ScannerChunk, ScannerDescription, ScannerSquadInfo.
+- [Iscriptable / Scripttaskdata](./iscriptable-script-task-data-162.md) — 8 types in IScriptable / ScriptTaskData. Includes: ScriptTaskData, DeathTaskData, StimEventTaskData.
+- [Iscriptable / Scriptablesystemrequest 0](./iscriptable-scriptable-system-request-0-92.md) — 50 types in IScriptable / ScriptableSystemRequest-0. Includes: ScriptableSystemRequest, UnregisterTimetableRequest, RemoveCooldownRequest.
+- [Iscriptable / Scriptablesystemrequest 1](./iscriptable-scriptable-system-request-1-93.md) — 50 types in IScriptable / ScriptableSystemRequest-1. Includes: ResetNPCDefeatedDelayedRequest, ResetNPCIncapacitatedDelayedRequest, ResetNPCDownedDelayedRequest.
+- [Iscriptable / Scriptablesystemrequest 2](./iscriptable-scriptable-system-request-2-94.md) — 50 types in IScriptable / ScriptableSystemRequest-2. Includes: PreventionRegisterRequest, PreventionSecurityAreaRequest, PreventionPoliceSecuritySystemRequest.
+- [Iscriptable / Scriptablesystemrequest 3](./iscriptable-scriptable-system-request-3-95.md) — 26 types in IScriptable / ScriptableSystemRequest-3. Includes: BlockHealingConsumableDrop, AddItemToVendorRequest, SetVendorPriceMultiplierRequest.
+- [Iscriptable / Statefunctor](./iscriptable-state-functor-189.md) — 5 types in IScriptable / StateFunctor. Includes: StateFunctor, SelfRemovalDecisions, SelfRemovalEvents.
+- [Iscriptable / Tweakdbrecord 0](./iscriptable-tweak-dbrecord-0-75.md) — 50 types in IScriptable / TweakDBRecord-0. Includes: TweakDBRecord, BaseObject_Record, AITicketCondition_Record.
+- [Iscriptable / Tweakdbrecord 1](./iscriptable-tweak-dbrecord-1-76.md) — 50 types in IScriptable / TweakDBRecord-1. Includes: Craftable_Record, CraftingResult_Record, ItemCategory_Record.
+- [Iscriptable / Tweakdbrecord 2](./iscriptable-tweak-dbrecord-2-77.md) — 50 types in IScriptable / TweakDBRecord-2. Includes: VehicleDataPackage_Record, VehicleSeatSet_Record, VehicleSeat_Record.
+- [Iscriptable / Tweakdbrecord 3](./iscriptable-tweak-dbrecord-3-78.md) — 50 types in IScriptable / TweakDBRecord-3. Includes: DeviceUIDefinition_Record, StimPriority_Record, PresetMapper_Record.
+- [Iscriptable / Tweakdbrecord 4](./iscriptable-tweak-dbrecord-4-79.md) — 50 types in IScriptable / TweakDBRecord-4. Includes: AIActionLookAtData_Record, LookAtPart_Record, AIActionChangeNPCState_Record.
+- [Iscriptable / Tweakdbrecord 5](./iscriptable-tweak-dbrecord-5-80.md) — 50 types in IScriptable / TweakDBRecord-5. Includes: CompoundSelectionPreset_Record, CooldownType_Record, CoverSelectionPreset_Record.
+- [Iscriptable / Tweakdbrecord 6](./iscriptable-tweak-dbrecord-6-81.md) — 50 types in IScriptable / TweakDBRecord-6. Includes: MappinUIParamGroup_Record, MappinUISpawnProfile_Record, MappinVariant_Record.
+- [Iscriptable / Tweakdbrecord 7](./iscriptable-tweak-dbrecord-7-82.md) — 50 types in IScriptable / TweakDBRecord-7. Includes: SenseObjectType_Record, SlotItemPartElement_Record, SmartGunMissParams_Record.
+- [Iscriptable / Tweakdbrecord 8](./iscriptable-tweak-dbrecord-8-83.md) — 36 types in IScriptable / TweakDBRecord-8. Includes: VehicleFxWheelsParticles_Record, VehicleFxWheelsParticlesMaterial_Record, VehicleGear_Record.
+- [Iscriptable / Unnamed 10095 0](./iscriptable-unnamed-10095-0-84.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 10095 1](./iscriptable-unnamed-10095-1-85.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 10095 2](./iscriptable-unnamed-10095-2-86.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 10095 3](./iscriptable-unnamed-10095-3-87.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 10095 4](./iscriptable-unnamed-10095-4-88.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 10095 5](./iscriptable-unnamed-10095-5-89.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 10095 6](./iscriptable-unnamed-10095-6-90.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 10095 7](./iscriptable-unnamed-10095-7-91.md) — 37 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 101727](./iscriptable-unnamed-101727-151.md) — 8 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 14338 0](./iscriptable-unnamed-14338-0-108.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 14338 1](./iscriptable-unnamed-14338-1-109.md) — 33 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 15366 0](./iscriptable-unnamed-15366-0-96.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 15366 1](./iscriptable-unnamed-15366-1-97.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 15366 2](./iscriptable-unnamed-15366-2-98.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 15366 3](./iscriptable-unnamed-15366-3-99.md) — 6 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 15852](./iscriptable-unnamed-15852-120.md) — 21 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 16576](./iscriptable-unnamed-16576-163.md) — 7 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 16593](./iscriptable-unnamed-16593-152.md) — 8 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 18018](./iscriptable-unnamed-18018-128.md) — 16 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 18435](./iscriptable-unnamed-18435-140.md) — 10 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 19242](./iscriptable-unnamed-19242-147.md) — 9 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 20141](./iscriptable-unnamed-20141-148.md) — 9 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 22904](./iscriptable-unnamed-22904-170.md) — 6 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 23198](./iscriptable-unnamed-23198-171.md) — 6 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 23346](./iscriptable-unnamed-23346-172.md) — 6 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 25392](./iscriptable-unnamed-25392-129.md) — 16 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 25449](./iscriptable-unnamed-25449-132.md) — 12 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 26173](./iscriptable-unnamed-26173-115.md) — 47 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 27034](./iscriptable-unnamed-27034-166.md) — 7 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 28408](./iscriptable-unnamed-28408-130.md) — 15 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 29198](./iscriptable-unnamed-29198-125.md) — 17 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 29252](./iscriptable-unnamed-29252-180.md) — 5 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 32599](./iscriptable-unnamed-32599-135.md) — 12 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 34822](./iscriptable-unnamed-34822-155.md) — 8 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 49704](./iscriptable-unnamed-49704-117.md) — 30 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 54231](./iscriptable-unnamed-54231-175.md) — 6 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 54291](./iscriptable-unnamed-54291-150.md) — 9 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 67402](./iscriptable-unnamed-67402-142.md) — 10 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 72895](./iscriptable-unnamed-72895-121.md) — 21 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 73639](./iscriptable-unnamed-73639-182.md) — 5 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 73863](./iscriptable-unnamed-73863-183.md) — 5 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 73971](./iscriptable-unnamed-73971-184.md) — 5 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 74119](./iscriptable-unnamed-74119-168.md) — 7 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 74169](./iscriptable-unnamed-74169-158.md) — 8 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 75147](./iscriptable-unnamed-75147-159.md) — 8 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 77104](./iscriptable-unnamed-77104-143.md) — 10 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 80925](./iscriptable-unnamed-80925-176.md) — 6 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 82091](./iscriptable-unnamed-82091-112.md) — 65 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 82144](./iscriptable-unnamed-82144-144.md) — 10 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 83070](./iscriptable-unnamed-83070-191.md) — 5 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 9012 0](./iscriptable-unnamed-9012-0-103.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 9012 1](./iscriptable-unnamed-9012-1-104.md) — 50 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 9012 2](./iscriptable-unnamed-9012-2-105.md) — 11 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 9091](./iscriptable-unnamed-9091-113.md) — 58 unnamed types in IScriptable.
+- [Iscriptable / Unnamed 9800](./iscriptable-unnamed-9800-116.md) — 32 unnamed types in IScriptable.
+- [Iscriptable / Widgetcustomdata](./iscriptable-widget-custom-data-156.md) — 8 types in IScriptable / WidgetCustomData. Includes: WidgetCustomData, ImageButtonCustomData, DoorWidgetCustomData.
+- [Iscriptable / Workspotcondition](./iscriptable-workspot-condition-145.md) — 9 types in IScriptable / WorkspotCondition. Includes: WorkspotCondition, TestConditon, TestFalseConditon.

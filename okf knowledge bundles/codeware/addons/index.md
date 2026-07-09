@@ -1,0 +1,51 @@
+# Addons
+
+59 concepts in addons
+
+- [Ai Addons](./ai.md) — Field additions to ai types via @addField (10 types).
+- [Animation Addons](./animation.md) — Field additions to animation types via @addField (16 types).
+- [Audio Addons](./audio.md) — Field additions to audio types via @addField (2 types).
+- [Blackboards Addons](./blackboards.md) — Field additions to blackboards types via @addField (2 types).
+- [Bump Addons](./bump.md) — Field additions to bump types via @addField (1 types).
+- [Camera Addons](./camera.md) — Field additions to camera types via @addField (1 types).
+- [Effects Addons](./effects.md) — Field additions to effects types via @addField (18 types).
+- [Entity Addons](./entity.md) — Field additions to entity types via @addField (5 types).
+- [Event-Handlers Addons](./event-handlers.md) — Field additions to event-handlers types via @addField (5 types).
+- [Game-Systems Addons](./game-systems.md) — Field additions to game-systems types via @addField (19 types).
+- [Game-Ui Addons](./game-ui.md) — Field additions to game-ui types via @addField (22 types).
+- [Geometry Addons](./geometry.md) — Field additions to geometry types via @addField (1 types).
+- [Ink Addons](./ink.md) — Field additions to ink types via @addField (71 types).
+- [Input Addons](./input.md) — Field additions to input types via @addField (1 types).
+- [Inventory Addons](./inventory.md) — Field additions to inventory types via @addField (1 types).
+- [Items Addons](./items.md) — Field additions to items types via @addField (2 types).
+- [Localization Addons](./localization.md) — Field additions to localization types via @addField (1 types).
+- [Look-At Addons](./look-at.md) — Field additions to look-at types via @addField (2 types).
+- [Mesh Addons](./mesh.md) — Field additions to mesh types via @addField (1 types).
+- [Minigames Addons](./minigames.md) — Field additions to minigames types via @addField (7 types).
+- [Minimap Addons](./minimap.md) — Field additions to minimap types via @addField (5 types).
+- [Movement Addons](./movement.md) — Field additions to movement types via @addField (1 types).
+- [Moving-Platforms Addons](./moving-platforms.md) — Field additions to moving-platforms types via @addField (1 types).
+- [Netrunning Addons](./netrunning.md) — Field additions to netrunning types via @addField (2 types).
+- [Network Addons](./network.md) — Field additions to network types via @addField (2 types).
+- [Physics Addons](./physics.md) — Field additions to physics types via @addField (4 types).
+- [Projectiles Addons](./projectiles.md) — Field additions to projectiles types via @addField (1 types).
+- [Quest Addons](./quest.md) — Field additions to quest types via @addField (37 types).
+- [Reactions Addons](./reactions.md) — Field additions to reactions types via @addField (1 types).
+- [Rendering Addons](./rendering.md) — Field additions to rendering types via @addField (5 types).
+- [Resources Addons](./resources.md) — Field additions to resources types via @addField (1 types).
+- [Scanning Addons](./scanning.md) — Field additions to scanning types via @addField (1 types).
+- [Senses Addons](./senses.md) — Field additions to senses types via @addField (2 types).
+- [State-Machines Addons](./state-machines.md) — Field additions to state-machines types via @addField (1 types).
+- [Stats Addons](./stats.md) — Field additions to stats types via @addField (1 types).
+- [Targeting Addons](./targeting.md) — Field additions to targeting types via @addField (2 types).
+- [Threats Addons](./threats.md) — Field additions to threats types via @addField (2 types).
+- [Tools Addons](./tools.md) — Field additions to tools types via @addField (1 types).
+- [Traffic Addons](./traffic.md) — Field additions to traffic types via @addField (1 types).
+- [Ui Addons](./ui.md) — Field additions to ui types via @addField (1 types).
+- [Vehicle Addons](./vehicle.md) — Field additions to vehicle types via @addField (9 types).
+- [Weapons Addons](./weapons.md) — Field additions to weapons types via @addField (1 types).
+- [Workspot Addons](./workspot.md) — Field additions to workspot types via @addField (3 types).
+- [World-Ui Addons](./world-ui.md) — Field additions to world-ui types via @addField (2 types).
+- [World Addons](./world.md) — Field additions to world types via @addField (7 types).
+
+- [Misc](./misc/) — 14 concepts in addons/misc

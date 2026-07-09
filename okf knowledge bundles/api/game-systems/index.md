@@ -1,0 +1,54 @@
+# Game-Systems
+
+57 concepts in game-systems
+
+- [Abasequestobjectivewrapper](./abase-quest-objective-wrapper-803.md) — 4 types in ABaseQuestObjectiveWrapper. Includes: QuestObjectiveWrapper, QuestSubObjectiveWrapper.
+- [Ajournalentrywrapper](./ajournal-entry-wrapper-802.md) — 4 types in AJournalEntryWrapper. Includes: QuestDataWrapper, ABaseQuestObjectiveWrapper.
+- [Ammostatehitcallback](./ammo-state-hit-callback-1064.md) — 2 types in AmmoStateHitCallback. Includes: AmmoStateHitTriggeredCallback.
+- [Animfeature Npcstate](./anim-feature-npcstate-1072.md) — 2 types in AnimFeature_NPCState. Includes: AnimFeature_NPCCoverStanceState.
+- [Applystatuseffecteffector](./apply-status-effect-effector-1085.md) — 2 types in ApplyStatusEffectEffector. Includes: FinisherEffector.
+- [Basecrosshairstateevents](./base-crosshair-state-events-821.md) — 4 types in BaseCrosshairStateEvents. Includes: SafeCrosshairStateEvents, QuickHackCrosshairStateEvents.
+- [Basequestmappincontroller](./base-quest-mappin-controller-518.md) — 6 types in BaseQuestMappinController. Includes: QuestMappinController, CyberspaceMappinController, QuestAnimationMappinController.
+- [Basestatpoolprereqlistener](./base-stat-pool-prereq-listener-539.md) — 5 types in BaseStatPoolPrereqListener. Includes: ConstantStatPoolPrereqListener, StatPoolSpentPrereqListener, StatPoolPrereqListener.
+- [Customvaluestatpoolslistener](./custom-value-stat-pools-listener-385.md) — 28 types in CustomValueStatPoolsListener. Includes: ActionUploadListener, WeaponChargeStatListener, BaseStatPoolPrereqListener.
+- [Despawnuniquesubcharacterrequest](./despawn-unique-sub-character-request-980.md) — 2 types in DespawnUniqueSubCharacterRequest. Includes: DespawnSubCharacterRequest.
+- [Gameiscriptablesystemscontainer](./game-iscriptable-systems-container-985.md) — 2 types in gameIScriptableSystemsContainer. Includes: ScriptableSystemsContainer.
+- [Generichitprereqstate](./generic-hit-prereq-state-374.md) — 40 types in GenericHitPrereqState. Includes: HitAttackSubtypePrereqState, DamageTypePrereqState, HitDistanceCoveredPrereqState.
+- [Hittriggeredprereq](./hit-triggered-prereq-1063.md) — 2 types in HitTriggeredPrereq. Includes: AmmoStateHitTriggeredPrereq.
+- [Ijournalmanager](./ijournal-manager-1024.md) — 2 types in IJournalManager. Includes: JournalManager.
+- [Imarketsystem](./imarket-system-1000.md) — 2 types in IMarketSystem. Includes: MarketSystem.
+- [Iprereqmanager](./iprereq-manager-897.md) — 2 types in IPrereqManager. Includes: PrereqManager.
+- [Ireplicatedgamesystem](./ireplicated-game-system-422.md) — 16 types in IReplicatedGameSystem. Includes: IMappinSystem, questIQuestsSystem, IGodModeSystem.
+- [Istatpoolssystem](./istat-pools-system-966.md) — 2 types in IStatPoolsSystem. Includes: StatPoolsSystem.
+- [Istatsdatasystem](./istats-data-system-982.md) — 2 types in IStatsDataSystem. Includes: StatsDataSystem.
+- [Istatssystem](./istats-system-981.md) — 2 types in IStatsSystem. Includes: StatsSystem.
+- [Istatuseffectsystem](./istatus-effect-system-998.md) — 2 types in IStatusEffectSystem. Includes: StatusEffectSystem.
+- [Itransactionsystem](./itransaction-system-997.md) — 2 types in ITransactionSystem. Includes: TransactionSystem.
+- [Journalbriefingbasesection](./journal-briefing-base-section-541.md) — 5 types in JournalBriefingBaseSection. Includes: JournalBriefingMapSection, JournalBriefingVideoSection, JournalBriefingPaperDollSection.
+- [Journalcontainerentry](./journal-container-entry-417.md) — 16 types in JournalContainerEntry. Includes: JournalQuestPhase, JournalPhoneChoiceGroup, JournalPhoneConversation.
+- [Journalentrylistitemcontroller](./journal-entry-list-item-controller-801.md) — 4 types in JournalEntryListItemController. Includes: MessangerReplyItemRenderer, MessangerItemRenderer.
+- [Journalfileentry](./journal-file-entry-409.md) — 18 types in JournalFileEntry. Includes: JournalTarotGroup, JournalInternetSite, JournalOnscreenGroup.
+- [Journalnotification](./journal-notification-800.md) — 4 types in JournalNotification. Includes: NewLocationNotification, NCPDJobDoneNotification.
+- [Journalquestmappinbase](./journal-quest-map-pin-base-896.md) — 2 types in JournalQuestMapPinBase. Includes: JournalQuestMapPin.
+- [Journalquestobjectivebase](./journal-quest-objective-base-786.md) — 4 types in JournalQuestObjectiveBase. Includes: JournalQuestSubObjective, JournalQuestObjective.
+- [Marketsystemrequest](./market-system-request-533.md) — 6 types in MarketSystemRequest. Includes: AttachVendorRequest, DispenseRequest, TransactionRequest.
+- [Npcstateprereqstate](./npcstate-prereq-state-542.md) — 5 types in NPCStatePrereqState. Includes: HighLevelNPCStatePrereqState, StanceNPCStatePrereqState, UpperBodyNPCStatePrereqState.
+- [Questiphonemanager](./quest-iphone-manager-1121.md) — 1 types in questIPhoneManager. Includes: questPhoneManager.
+- [Questiquestssystem](./quest-iquests-system-989.md) — 2 types in questIQuestsSystem. Includes: QuestsSystem.
+- [Questitutorialmanager](./quest-itutorial-manager-898.md) — 2 types in questITutorialManager. Includes: questTutorialManager.
+- [Questmappincontroller](./quest-mappin-controller-917.md) — 2 types in QuestMappinController. Includes: GameplayMappinController.
+- [Questupdatenotificationviewdata](./quest-update-notification-view-data-911.md) — 2 types in QuestUpdateNotificationViewData. Includes: PhoneMessageNotificationViewData.
+- [Scriptstatpoolslistener](./script-stat-pools-listener-398.md) — 22 types in ScriptStatPoolsListener. Includes: OxygenListener, StaminaPoolListener, MeleeResourcePoolListener.
+- [Scriptstatslistener](./script-stats-listener-389.md) — 25 types in ScriptStatsListener. Includes: GodModeStatListener, InventoryStatsListener, ChargebarStatsListener.
+- [Scriptstatuseffectlistener](./script-status-effect-listener-478.md) — 9 types in ScriptStatusEffectListener. Includes: LinkedStatusEffectListener, StatusEffectPrereqListener, HotkeyWidgetStatsListener.
+- [Scriptablesystem](./scriptable-system-365.md) — 33 types in ScriptableSystem. Includes: SideScrollerMiniGameScoreSystemAdvanced, SideScrollerMiniGameScoreSystem, CodexSystem.
+- [Securityaccesslevelentry](./security-access-level-entry-1012.md) — 2 types in SecurityAccessLevelEntry. Includes: SecurityAccessLevelEntryClient.
+- [Securitysysteminput](./security-system-input-975.md) — 2 types in SecuritySystemInput. Includes: SecurityBreachPuppetNotificationEvent.
+- [Spawnuniquesubcharacterrequest](./spawn-unique-sub-character-request-979.md) — 2 types in SpawnUniqueSubCharacterRequest. Includes: SpawnSubCharacterRequest.
+- [Statpoolprereqstate](./stat-pool-prereq-state-895.md) — 2 types in StatPoolPrereqState. Includes: ConstantStatPoolPrereqState.
+- [Statuseffectdecisions](./status-effect-decisions-1107.md) — 1 types in StatusEffectDecisions. Includes: KnockdownDecisions.
+- [Statuseffectevents](./status-effect-events-972.md) — 2 types in StatusEffectEvents. Includes: KnockdownEvents.
+- [Statuseffectprereqstate](./status-effect-prereq-state-792.md) — 4 types in StatusEffectPrereqState. Includes: StatusEffectAbsentPrereqState, StatusEffectRemovedPrereqState.
+- [Transactionrequest](./transaction-request-514.md) — 6 types in TransactionRequest. Includes: BuyRequest, BuybackRequest, SellRequest.
+
+- [Iscriptable-Prereq](./iscriptable-prereq/) — 9 concepts in game-systems/iscriptable-prereq

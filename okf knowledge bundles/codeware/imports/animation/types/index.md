@@ -1,0 +1,75 @@
+# Types
+
+71 concepts in imports/animation/types
+
+- [Animation Types/Additional](./additional.md) — Imported animation types/additional types (2 types).
+- [Animation Types/Anim 1](./anim-1.md) — Imported animation types/anim 1 types (80 types).
+- [Animation Types/Anim 2](./anim-2.md) — Imported animation types/anim 2 types (80 types).
+- [Animation Types/Anim 3](./anim-3.md) — Imported animation types/anim 3 types (80 types).
+- [Animation Types/Anim 4](./anim-4.md) — Imported animation types/anim 4 types (54 types).
+- [Animation Types/Animation](./animation.md) — Imported animation types/animation types (6 types).
+- [Animation Types/Animset](./animset.md) — Imported animation types/animset types (2 types).
+- [Animation Types/Axis](./axis.md) — Imported animation types/axis types (1 types).
+- [Animation Types/Bone](./bone.md) — Imported animation types/bone types (2 types).
+- [Animation Types/Bool](./bool.md) — Imported animation types/bool types (1 types).
+- [Animation Types/Buffer](./buffer.md) — Imported animation types/buffer types (1 types).
+- [Animation Types/C](./c.md) — Imported animation types/c types (2 types).
+- [Animation Types/Clamp](./clamp.md) — Imported animation types/clamp types (1 types).
+- [Animation Types/Collision](./collision.md) — Imported animation types/collision types (2 types).
+- [Animation Types/Compare](./compare.md) — Imported animation types/compare types (2 types).
+- [Animation Types/Conditional](./conditional.md) — Imported animation types/conditional types (1 types).
+- [Animation Types/Constraint](./constraint.md) — Imported animation types/constraint types (1 types).
+- [Animation Types/Cover](./cover.md) — Imported animation types/cover types (2 types).
+- [Animation Types/Curve](./curve.md) — Imported animation types/curve types (3 types).
+- [Animation Types/Dangle](./dangle.md) — Imported animation types/dangle types (6 types).
+- [Animation Types/Duration](./duration.md) — Imported animation types/duration types (1 types).
+- [Animation Types/Dyng](./dyng.md) — Imported animation types/dyng types (8 types).
+- [Animation Types/E](./e.md) — Imported animation types/e types (17 types).
+- [Animation Types/Event](./event.md) — Imported animation types/event types (2 types).
+- [Animation Types/Events](./events.md) — Imported animation types/events types (1 types).
+- [Animation Types/Facial](./facial.md) — Imported animation types/facial types (8 types).
+- [Animation Types/Feature](./feature.md) — Imported animation types/feature types (17 types).
+- [Animation Types/Float](./float.md) — Imported animation types/float types (4 types).
+- [Animation Types/Framerate](./framerate.md) — Imported animation types/framerate types (1 types).
+- [Animation Types/Function](./function.md) — Imported animation types/function types (1 types).
+- [Animation Types/Graph](./graph.md) — Imported animation types/graph types (1 types).
+- [Animation Types/Has](./has.md) — Imported animation types/has types (1 types).
+- [Animation Types/I](./i.md) — Imported animation types/i types (16 types).
+- [Animation Types/Import](./import.md) — Imported animation types/import types (9 types).
+- [Animation Types/Inertialization](./inertialization.md) — Imported animation types/inertialization types (2 types).
+- [Animation Types/Input](./input.md) — Imported animation types/input types (1 types).
+- [Animation Types/Int](./int.md) — Imported animation types/int types (1 types).
+- [Animation Types/Leg](./leg.md) — Imported animation types/leg types (1 types).
+- [Animation Types/Linear](./linear.md) — Imported animation types/linear types (1 types).
+- [Animation Types/Locomotion](./locomotion.md) — Imported animation types/locomotion types (3 types).
+- [Animation Types/Look](./look.md) — Imported animation types/look types (16 types).
+- [Animation Types/Motion](./motion.md) — Imported animation types/motion types (8 types).
+- [Animation Types/Multiple](./multiple.md) — Imported animation types/multiple types (1 types).
+- [Animation Types/Named](./named.md) — Imported animation types/named types (1 types).
+- [Animation Types/Node](./node.md) — Imported animation types/node types (2 types).
+- [Animation Types/Obstacle](./obstacle.md) — Imported animation types/obstacle types (1 types).
+- [Animation Types/Override](./override.md) — Imported animation types/override types (3 types).
+- [Animation Types/Parent](./parent.md) — Imported animation types/parent types (1 types).
+- [Animation Types/Pendulum](./pendulum.md) — Imported animation types/pendulum types (2 types).
+- [Animation Types/Plane](./plane.md) — Imported animation types/plane types (1 types).
+- [Animation Types/Pole](./pole.md) — Imported animation types/pole types (1 types).
+- [Animation Types/Pose](./pose.md) — Imported animation types/pose types (7 types).
+- [Animation Types/Position](./position.md) — Imported animation types/position types (1 types).
+- [Animation Types/Prop](./prop.md) — Imported animation types/prop types (1 types).
+- [Animation Types/Quality](./quality.md) — Imported animation types/quality types (1 types).
+- [Animation Types/Quaternion](./quaternion.md) — Imported animation types/quaternion types (2 types).
+- [Animation Types/Rig](./rig.md) — Imported animation types/rig types (8 types).
+- [Animation Types/S](./s.md) — Imported animation types/s types (10 types).
+- [Animation Types/Sermo](./sermo.md) — Imported animation types/sermo types (1 types).
+- [Animation Types/Set](./set.md) — Imported animation types/set types (1 types).
+- [Animation Types/Simple](./simple.md) — Imported animation types/simple types (3 types).
+- [Animation Types/Smooth](./smooth.md) — Imported animation types/smooth types (1 types).
+- [Animation Types/Spline](./spline.md) — Imported animation types/spline types (1 types).
+- [Animation Types/Spring](./spring.md) — Imported animation types/spring types (1 types).
+- [Animation Types/Stack](./stack.md) — Imported animation types/stack types (3 types).
+- [Animation Types/Sync](./sync.md) — Imported animation types/sync types (3 types).
+- [Animation Types/Transform](./transform.md) — Imported animation types/transform types (5 types).
+- [Animation Types/Twist](./twist.md) — Imported animation types/twist types (1 types).
+- [Animation Types/Uncompressed](./uncompressed.md) — Imported animation types/uncompressed types (2 types).
+- [Animation Types/Vector](./vector.md) — Imported animation types/vector types (2 types).
+- [Animation Types/Visual](./visual.md) — Imported animation types/visual types (1 types).

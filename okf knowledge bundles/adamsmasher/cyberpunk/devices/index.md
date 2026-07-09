@@ -1,0 +1,65 @@
+# Devices
+
+64 concepts in cyberpunk/devices
+
+- [Activated Devices](./activated.md) — Activated devices: controller, cover, industrial arm, NPC, NPC controller, transform anim, trap, and trap destruction.
+- [AOE System](./aoe-system.md) — Area of effect system: area, area controller, effector, and effector controller.
+- [Apartment Screen Device](./apartment-screen.md) — Apartment screen device and controller.
+- [Arcade Machines](./arcade-machines.md) — Arcade machines: arcade machine, controller, pachinko machine, and pachinko controller.
+- [Barbed Wire](./barbed-wire.md) — Barbed wire device and controller.
+- [Basic Distraction Devices](./basic-distraction-device.md) — Basic distraction devices: base, controller, netrunner control panel, and netrunner control panel controller.
+- [Billboard Device](./billboard.md) — Billboard device and controller.
+- [Blinding Lights](./blinding-lights.md) — Blinding lights: blinding light, controller, reflector, and reflector controller.
+- [Camera Devices](./cameras.md) — Camera devices: CCTV camera, surveillance camera, surveillance camera actions, and surveillance camera controller.
+- [Candle Device](./candle.md) — Candle: candle, candle controller, and candle device.
+- [Cleaning Machine](./cleaning-machine.md) — Cleaning machine device and controller.
+- [Device Components](./components.md) — Device components: area effect visualization, device connection highlight, and input controller.
+- [Confession Booth](./confession-booth.md) — Confession booth device and controller.
+- [Conveyor](./conveyor.md) — Conveyor controller.
+- [Device Core Framework](./core.md) — Device core: action parameters holder, base device actions, device base, device component base, device operations (operations, container, triggers), device operations component, effectors, filters, interaction interpreters, interactive device, interactive master, master controller, peripherals (mappins, timetable, objective data, notifier), scriptable device PS, and sensor device/controller.
+- [Destructible Devices](./destructible.md) — Destructible devices: base, base controller, master device, master controller, master light, master light controller, and road sign.
+- [Disassemblable Devices](./disassemblable.md) — Disassemblable devices: component, entity simple, maintenance panel, and maintenance panel controller.
+- [Disposal Device](./disposal.md) — Disposal device and controller.
+- [Door Devices](./door.md) — Door devices: bunker door, bunker door controller, door, door actions, door controller, fake door, and Judy door.
+- [Drop Point Device](./drop-point.md) — Drop point device and controller.
+- [Elevator Devices](./elevator.md) — Elevator: floor terminal, floor terminal controller, lift, lift controller, and numeric display.
+- [Exit Light](./exit-light.md) — Exit light device and controller.
+- [Explosive Devices](./explosive.md) — Explosive devices: base, PS, laser mine, laser mine PS, C4, and C4 controller.
+- [Fact Invoker Device](./fact-invoker.md) — Fact invoker device and controller.
+- [Fast Travel Devices](./fast-travel.md) — Fast travel: data term controller, data term device, and NCART station marker.
+- [Forklift](./forklift.md) — Forklift device and controller.
+- [Frame Device](./frame.md) — Frame device and controller.
+- [Generic Devices](./generic-device.md) — Generic device: generic device, generic device controller, simple on turn on play effect device, and simple on turn on play effect controller.
+- [Holo Signs](./holo-signs.md) — Holo signs: interactive sign and interactive sign controller.
+- [Holo Device](./holodevice.md) — Holo device and controller.
+- [Intercom Device](./intercom.md) — Intercom device and controller.
+- [Device Interpreters](./interpreters.md) — Viability interpreters for device interaction.
+- [Ladder Devices](./ladders.md) — Ladders: ladder, ladder controller, sliding ladder, and sliding ladder controller.
+- [LCD Screens](./lcd-screens.md) — LCD screen device and controller.
+- [Loot Container](./loot-container.md) — Loot container access point and controller.
+- [Master Devices](./masters.md) — Master devices: access point, access point controller, actions sequencer, actions sequencer controller, activator, activator controller, computer, computer controller, electric box, electric box controller, fuse, fuse box, fuse box controller, fuse controller, network area, network area controller, security alarm, security alarm controller, smart house, smart house controller, smart house presets, smart window, smart window controller, sound system, sound system controller, switch, switch controller, terminal, terminal controller, and security system.
+- [Movable Devices](./movable.md) — Movable device and controller.
+- [Open Path Devices](./open-path.md) — Weak fence device and controller.
+- [Platform Devices](./platform.md) — Platform: platform actions, platform controller, platform device, static platform, and static platform controller.
+- [Portal Device](./portal.md) — Portal device and controller.
+- [Recreation Device](./recreation.md) — Casino table device.
+- [Road Block Devices](./road-block.md) — Road block devices: base animated device, base animated controller, mainframe, mainframe controller, retractable ad, retractable ad controller, road block, road block controller, road block trap, road block trap controller, and unstable platform.
+- [Robotic Arms](./robotic-arms.md) — Robotic arms device and controller.
+- [Security Turrets](./security-turret.md) — Security turrets: security turret, security turret controller, glitched turret, and glitched turret controller.
+- [Security Devices](./security.md) — Security devices: coder, coder controller, door proximity detector, door proximity detector controller, laser detector, laser detector controller, proximity detector, proximity detector controller, security gate, security gate controller, security gate lock, security gate lock controller, security locker, and security locker controller.
+- [Device Skill Checks](./skill-checks.md) — Device skill checks: base and container.
+- [Smoke Machine](./smoke-machine.md) — Smoke machine device and controller.
+- [Sniper Nest](./sniper-nest.md) — Sniper nest device and controller.
+- [Speakers](./speakers.md) — Speaker device and controller.
+- [Stash Devices](./stash.md) — Stash: invisible scene stash, invisible scene stash controller, and stash.
+- [Traffic Devices](./traffic.md) — Traffic devices: crossing light, crossing light controller, intersection manager controller, NCART timetable, NCART timetable controller, traffic light, traffic light controller, traffic zebra, and traffic zebra controller.
+- [Device UI](./ui.md) — Device UI: access point, action buttons, apartment screen, arcade machine, backdoor, backdoor data stream, computer (banner, bunker, document, document thumbnail, full banner, game controller, inner bunker, main layout, main menu, menu button, menu, Yaiba showroom, news feed), confessional, core (action controller, button logic, device controller, game controller, logic controller, thumbnail controller, master game controller), data term, door, drop point terminal, electric box, elevator (arrows, game controller, numeric display), interactive signs, intercom, internet (Yaiba showroom, browser, vehicle brand filter, vehicle details, vehicle offer, vehicle shop), jukebox (big screen, main), keypad, visibility, LCD screen (game controller, logic controller, sign), NCART timetable, network (controlled device logic, controlled devices), radio, smart house, smart window, systems, terminal (elevator, game controller, main layout), TV (display glass, scene screen, device logic, game controller), vending machine (simple bink, ice machine, image action, interactive ad, vending machine, weapon machine).
+- [Utility Devices](./utilities.md) — Utility devices: chest press, electric light (alarm light, electric light, gameplay light), fan, netrunner chair, perk training, relic perk system, and weapon training.
+- [Various Devices](./various.md) — Various devices: Oda cement bag, Oda cement bag controller, server node, server node actions, server node controller, server node health change listener, and stillage.
+- [Vehicle Device Actions](./vehicles.md) — Vehicle device actions.
+- [Vending Machines](./vending-machines.md) — Vending machines: animated sign, ice machine, ice machine controller, interactive ad, interactive ad controller, vending machine, vending machine controller, vending terminal, vending terminal controller, weapon vending machine, and weapon vending machine controller.
+- [Ventilation System](./ventilation-system.md) — Ventilation: ventilation area, ventilation area controller, ventilation effector, and ventilation effector controller.
+- [Virtual Devices](./virtual.md) — Virtual devices: virtual controller and virtual surveillance system.
+- [Wardrobe Device](./wardrobe.md) — Wardrobe device and controller.
+
+- [Home-Appliances](./home-appliances/) — 5 concepts in cyberpunk/devices/home-appliances

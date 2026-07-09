@@ -1,0 +1,61 @@
+# Misc-Native
+
+58 concepts in references/misc-native
+
+- [Misc Native / Anim](./misc-native-anim-673.md) — 18 types in misc-native / anim. Includes: animAnimFeatureEntry, animAimState, animStanceState.
+- [Misc Native / Apply](./misc-native-apply-681.md) — 8 types in misc-native / Apply. Includes: ApplyGLP, ApplyRegenData, ApplyStatPoolModifier.
+- [Misc Native / Change](./misc-native-change-695.md) — 6 types in misc-native / Change. Includes: ChangeArea, ChangeZoneIndicatorDanger, ChangeZoneIndicatorSafe.
+- [Misc Native / Damage](./misc-native-damage-699.md) — 5 types in misc-native / Damage. Includes: DamageEntry, DamageHistoryEntry, DamagePlayer.
+- [Misc Native / Device](./misc-native-device-692.md) — 6 types in misc-native / Device. Includes: DeviceRef, DeviceLink, DeviceHelper.
+- [Misc Native / Entity](./misc-native-entity-682.md) — 7 types in misc-native / Entity. Includes: EntityReference, EntityRequestComponentsInterface, EntityResolveComponentsInterface.
+- [Misc Native / Enum](./misc-native-enum-686.md) — 7 types in misc-native / Enum. Includes: EnumGetMin, EnumValueToString, EnumValueFromString.
+- [Misc Native / Equipment](./misc-native-equipment-701.md) — 5 types in misc-native / Equipment. Includes: EquipmentWidgets, EquipmentManipulationRequestType, EquipmentManipulationRequestSlot.
+- [Misc Native / Generic](./misc-native-generic-707.md) — 5 types in misc-native / Generic. Includes: GenericDataContent, GenericDeviceActionsData, GenericNotificationType.
+- [Misc Native / Hit](./misc-native-hit-705.md) — 5 types in misc-native / Hit. Includes: HitShape_Type, HitHistoryItem, HitRepresentationQueryResult.
+- [Misc Native / Hub](./misc-native-hub-698.md) — 6 types in misc-native / Hub. Includes: HubMenuItems, HubMenuCraftingItems, HubMenuInventoryItems.
+- [Misc Native / Interaction](./misc-native-interaction-684.md) — 7 types in misc-native / Interaction. Includes: InteractionChoiceData, InteractionLayerData, InteractionChoiceMetaData.
+- [Misc Native / Inventory](./misc-native-inventory-676.md) — 12 types in misc-native / Inventory. Includes: InventoryComboBoxData, InventoryItemData, InventoryTooltipData_StatData.
+- [Misc Native / Item](./misc-native-item-674.md) — 16 types in misc-native / Item. Includes: ItemActionsHelper_ConsumeItem, ItemRecipe, ItemID.
+- [Misc Native / Journal](./misc-native-journal-690.md) — 6 types in misc-native / Journal. Includes: JournalFactNameValue, JournalMetaQuestScriptedData, JournalRequestStateFilter.
+- [Misc Native / Kill](./misc-native-kill-696.md) — 6 types in misc-native / Kill. Includes: Kill, KillAll, KillEffect.
+- [Misc Native / Look](./misc-native-look-679.md) — 10 types in misc-native / Look. Includes: LookAtAdd, LookAtAddWithOffset, LookAtAddPlayerCameraSlot.
+- [Misc Native /  Merged 0](./misc-native-merged-0-1151.md) — 50 types in misc-native / _merged-0. Includes: RequestInstallLanguagePackDialog, RequestItem, RequestType.
+- [Misc Native /  Merged 1](./misc-native-merged-1-1152.md) — 50 types in misc-native / _merged-1. Includes: Vector3, VectorToString, LootChoiceActionWrapper.
+- [Misc Native /  Merged 10](./misc-native-merged-10-1161.md) — 50 types in misc-native / _merged-10. Includes: PowF, CuttingGrenadePotentialTarget, previewTargetStruct.
+- [Misc Native /  Merged 11](./misc-native-merged-11-1162.md) — 50 types in misc-native / _merged-11. Includes: AttachmentSlotCacheData, AbilityData, VehEntityPlayerStateData.
+- [Misc Native /  Merged 12](./misc-native-merged-12-1163.md) — 3 types in misc-native / _merged-12. Includes: TacticRatio, AmmoData, WrappedEntIDArray.
+- [Misc Native /  Merged 2](./misc-native-merged-2-1153.md) — 50 types in misc-native / _merged-2. Includes: ActivatedDeviceNPCSetup, ActivatedDeviceSetup, ActivatedDeviceAnimSetup.
+- [Misc Native /  Merged 3](./misc-native-merged-3-1154.md) — 50 types in misc-native / _merged-3. Includes: ScriptHitData, Condition, ConditionGroupData.
+- [Misc Native /  Merged 4](./misc-native-merged-4-1155.md) — 50 types in misc-native / _merged-4. Includes: scannerDataStructure, Abs, AbsF.
+- [Misc Native /  Merged 5](./misc-native-merged-5-1156.md) — 50 types in misc-native / _merged-5. Includes: t2, LevelUp, LevelUpData.
+- [Misc Native /  Merged 6](./misc-native-merged-6-1157.md) — 50 types in misc-native / _merged-6. Includes: GlobalNodeID, DropInstruction, DropPointPackageStatus.
+- [Misc Native /  Merged 7](./misc-native-merged-7-1158.md) — 50 types in misc-native / _merged-7. Includes: ScrollingText, BuildWidgetPath, HandIKDescriptionResult.
+- [Misc Native /  Merged 8](./misc-native-merged-8-1159.md) — 50 types in misc-native / _merged-8. Includes: AsinF, ExpF, CalcSeed.
+- [Misc Native /  Merged 9](./misc-native-merged-9-1160.md) — 50 types in misc-native / _merged-9. Includes: Color, InnerItemData, LocKeyToString.
+- [Misc Native / Move](./misc-native-move-697.md) — 6 types in misc-native / move. Includes: moveMovementType, moveCirclingDirection, moveLineOfSight.
+- [Misc Native /  Other 0](./misc-native-other-0-663.md) — 50 types in misc-native / _other-0. Includes: SCooldown, GOGRewardPack, FTLog.
+- [Misc Native /  Other 1](./misc-native-other-1-664.md) — 50 types in misc-native / _other-1. Includes: OP, IDDQD, SAttribute.
+- [Misc Native /  Other 2](./misc-native-other-2-665.md) — 50 types in misc-native / _other-2. Includes: EMovementDirection, EVehicleDoor, EVehicleWindowState.
+- [Misc Native /  Other 3](./misc-native-other-3-666.md) — 50 types in misc-native / _other-3. Includes: TSF_All, TSF_Not, TSF_Any.
+- [Misc Native /  Other 4](./misc-native-other-4-667.md) — 50 types in misc-native / _other-4. Includes: EPreventionSystemInstruction, EKnockdownStates, SItemStackRequirementData.
+- [Misc Native /  Other 5](./misc-native-other-5-668.md) — 50 types in misc-native / _other-5. Includes: EComputerMenuType, EDocumentType, EWidgetPlacementType.
+- [Misc Native /  Other 6](./misc-native-other-6-669.md) — 50 types in misc-native / _other-6. Includes: EComputerAnimationState, ELightSwitchRandomizerType, ESmartHousePreset.
+- [Misc Native /  Other 7](./misc-native-other-7-670.md) — 50 types in misc-native / _other-7. Includes: EReactionValue, EAICoverAction, EAICoverActionDirection.
+- [Misc Native /  Other 8](./misc-native-other-8-671.md) — 10 types in misc-native / _other-8. Includes: FTNpcMountingState, ECameraDirectionFunctionalTestsUtil, ATUIComputerTestStepMode.
+- [Misc Native / Quest](./misc-native-quest-680.md) — 8 types in misc-native / quest. Includes: questPaymentConditionData, questObjectInspectEventType, questJournalSizeEventType.
+- [Misc Native / Quick](./misc-native-quick-685.md) — 7 types in misc-native / Quick. Includes: QuickWheelEndUIStructure, QuickMeleeAttackData, QuickSlotCommand.
+- [Misc Native / Rand](./misc-native-rand-704.md) — 5 types in misc-native / Rand. Includes: RandF, RandRange, RandRangeF.
+- [Misc Native / Scn](./misc-native-scn-688.md) — 7 types in misc-native / scn. Includes: scnFastForwardMode, scnPlayDirection, scnPlaySpeed.
+- [Misc Native / Security](./misc-native-security-677.md) — 12 types in misc-native / Security. Includes: SecuritySystemMorphData, SecurityLockerProperties, SecurityLockerUserEntry.
+- [Misc Native / Select](./misc-native-select-703.md) — 5 types in misc-native / Select. Includes: SelectWidgets2, SelectWidgets3, SelectWidgets4.
+- [Misc Native / Spawn](./misc-native-spawn-693.md) — 6 types in misc-native / Spawn. Includes: SpawnTestEffect, SpawnLoot, SpawnFlathead.
+- [Misc Native / State](./misc-native-state-678.md) — 10 types in misc-native / State. Includes: StateSnapshot, StateSnapshotsContainer, StateResultVector.
+- [Misc Native / Str](./misc-native-str-672.md) — 24 types in misc-native / Str. Includes: StrMid, StrSplitLast, StrSplitFirst.
+- [Misc Native / String](./misc-native-string-691.md) — 6 types in misc-native / String. Includes: StringToHex, StringToBool, StringToUint64.
+- [Misc Native / Target](./misc-native-target-689.md) — 6 types in misc-native / Target. Includes: TargetSearchFilter, TargetFilterTicket, TargetHitInfo.
+- [Misc Native / Telemetry](./misc-native-telemetry-683.md) — 7 types in misc-native / Telemetry. Includes: TelemetryQuickHack, TelemetryInventoryItem, TelemetryLevelGained.
+- [Misc Native / Vehicle](./misc-native-vehicle-675.md) — 13 types in misc-native / vehicle. Includes: vehicleQuestUIEnable, vehicleRaceUI, vehicleQuestWindowDestruction.
+- [Misc Native / Workspot](./misc-native-workspot-687.md) — 7 types in misc-native / Workspot. Includes: WorkspotEnableVisualLog, WorkspotDisableVisualLog, WorkspotEnableStateView.
+
+- [Test](./test/) — 2 concepts in references/misc-native/test
+- [World](./world/) — 2 concepts in references/misc-native/world

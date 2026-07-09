@@ -1,0 +1,62 @@
+# Tweakdb-Records
+
+58 concepts in tweakdb-records
+
+- [Accuracy Record](./accuracy-record-778.md) — 4 types in Accuracy_Record. Includes: LinearAccuracy_Record, NonLinearAccuracy_Record.
+- [Ainode Record](./ainode-record-536.md) — 6 types in AINode_Record. Includes: AIAction_Record, AIActionSelector_Record, AIActionSequence_Record.
+- [Airecord Record](./airecord-record-785.md) — 4 types in AIRecord_Record. Includes: AIActionSmartComposite_Record, AINode_Record.
+- [Aisquaddistancerelationtosectorcheck Record](./aisquad-distance-relation-to-sector-check-record-852.md) — 4 types in AISquadDistanceRelationToSectorCheck_Record. Includes: AISquadClosestToSectorCheck_Record, AISquadFurthestToSectorCheck_Record.
+- [Aisquaddistancerelationtotargetcheck Record](./aisquad-distance-relation-to-target-check-record-880.md) — 3 types in AISquadDistanceRelationToTargetCheck_Record. Includes: AISquadClosestToTargetCheck_Record, AISquadFurthestToTargetCheck_Record.
+- [Aisquaditempriorityfilter Record](./aisquad-item-priority-filter-record-877.md) — 3 types in AISquadItemPriorityFilter_Record. Includes: AISquadItemTypePriorityFilter_Record, AISquadItemCategoryPriorityFilter_Record.
+- [Attack Gameeffect Record](./attack-game-effect-record-553.md) — 5 types in Attack_GameEffect_Record. Includes: Attack_Melee_Record, Attack_Landing_Record, DeviceAreaAttack_Record.
+- [Attack Record](./attack-record-804.md) — 4 types in Attack_Record. Includes: Attack_GameEffect_Record, Attack_Projectile_Record.
+- [Base Mappindefinition Record](./base-mappin-definition-record-1091.md) — 2 types in Base_MappinDefinition_Record. Includes: MappinDefinition_Record.
+- [Baseobject Record](./base-object-record-481.md) — 8 types in BaseObject_Record. Includes: SpawnableObject_Record, Item_Record, Device_Record.
+- [Basesign Record](./base-sign-record-474.md) — 9 types in BaseSign_Record. Includes: LCDScreen_Record, GenericHighwaySign_Record, GenericMetroSign_Record.
+- [Character Record](./character-record-1117.md) — 1 types in Character_Record. Includes: SubCharacter_Record.
+- [Choicecaptionpart Record](./choice-caption-part-record-878.md) — 3 types in ChoiceCaptionPart_Record. Includes: ChoiceCaptionIconPart_Record, ChoiceCaptionTagPart_Record.
+- [Combinedstatmodifier Record](./combined-stat-modifier-record-1126.md) — 1 unnamed types in CombinedStatModifier_Record.
+- [Constantstatmodifier Record](./constant-stat-modifier-record-473.md) — 9 types in ConstantStatModifier_Record. Includes: Clothing_inline0_Record, CurrencyReward_inline0_Record, RewardBase_inline0_Record.
+- [Contentassignment Record](./content-assignment-record-1125.md) — 1 types in ContentAssignment_Record. Includes: DeviceContentAssignment_Record.
+- [Continuouseffector Record](./continuous-effector-record-1020.md) — 2 types in ContinuousEffector_Record. Includes: ContinuousAttackEffector_Record.
+- [Coverselectionparameters Record](./cover-selection-parameters-record-375.md) — 38 types in CoverSelectionParameters_Record. Includes: AbsoluteZLimiterCoverSelectionParameters_Record, AngleDistanceCoverSelectionParameters_Record, AvoidLineOfSightSelectionParameters_Record.
+- [Device Record](./device-record-1061.md) — 2 types in Device_Record. Includes: TVBase_Record.
+- [Devicescreentype Record](./device-screen-type-record-783.md) — 4 types in DeviceScreenType_Record. Includes: ComputerScreenType_Record, TerminalScreenType_Record.
+- [Drivehelper Record](./drive-helper-record-426.md) — 14 types in DriveHelper_Record. Includes: DriveWheelsAccelerateNoise_Record, DynamicDownforceHelper_Record, HandbrakeFrictionModifier_Record.
+- [Effector Record](./effector-record-388.md) — 26 types in Effector_Record. Includes: ContinuousEffector_Record, TriggerAttackEffector_Record, AddItemsEffector_Record.
+- [Equipmentarea Record](./equipment-area-record-1087.md) — 2 types in EquipmentArea_Record. Includes: CyberwareArea_Record.
+- [Gadget Record](./gadget-record-1017.md) — 2 types in Gadget_Record. Includes: Grenade_Record.
+- [Grenadedeliverymethod Record](./grenade-delivery-method-record-507.md) — 6 types in GrenadeDeliveryMethod_Record. Includes: HomingGDM_Record, RegularGDM_Record, StickyGDM_Record.
+- [Interactionbase Record](./interaction-base-record-1077.md) — 2 types in InteractionBase_Record. Includes: InteractionMountBase_Record.
+- [Iprereq Record](./iprereq-record-407.md) — 19 types in IPrereq_Record. Includes: StatPrereq_Record, StatPoolPrereq_Record, HitPrereq_Record.
+- [Itemaction Record](./item-action-record-1025.md) — 2 types in ItemAction_Record. Includes: CrackAction_Record.
+- [Itemquery Record](./item-query-record-1088.md) — 2 types in ItemQuery_Record. Includes: ItemArrayQuery_Record.
+- [Item Record](./item-record-476.md) — 9 types in Item_Record. Includes: WeaponItem_Record, ItemRecipe_Record, ConsumableItem_Record.
+- [Lcdscreen Record](./lcdscreen-record-779.md) — 4 types in LCDScreen_Record. Includes: NumberPlate_Record, RaceCheckpoint_Record.
+- [Loottableelement Record](./loot-table-element-record-853.md) — 4 types in LootTableElement_Record. Includes: ItemQueryElement_Record, LootItem_Record.
+- [Mappinuiruntimeprofile Record](./mappin-uiruntime-profile-record-1092.md) — 2 types in MappinUIRuntimeProfile_Record. Includes: MappinUISettings_Record.
+- [Minigame Symbolswithrarity Record](./mini-game-symbols-with-rarity-record-472.md) — 10 types in MiniGame_SymbolsWithRarity_Record. Includes: MiniGame_AllSymbols_inline0_Record, MiniGame_AllSymbols_inline1_Record, MiniGame_AllSymbols_inline2_Record.
+- [Npcequipmentgroupentry Record](./npcequipment-group-entry-record-840.md) — 4 types in NPCEquipmentGroupEntry_Record. Includes: NPCEquipmentItemPool_Record, NPCEquipmentItem_Record.
+- [Objectactioncost Record](./object-action-cost-record-876.md) — 3 types in ObjectActionCost_Record. Includes: StatPoolCost_Record, ItemCost_Record.
+- [Objectaction Record](./object-action-record-519.md) — 6 types in ObjectAction_Record. Includes: ItemAction_Record, MinigameAction_Record, ActionPayment_Record.
+- [Photomodeitem Record](./photo-mode-item-record-441.md) — 12 types in PhotoModeItem_Record. Includes: PhotoModeBackground_Record, PhotoModeEffect_Record, PhotoModeFace_Record.
+- [Poolvaluemodifier Record](./pool-value-modifier-record-882.md) — 2 types in PoolValueModifier_Record. Includes: MutablePoolValueModifier_Record.
+- [Projectilecollision Record](./projectile-collision-record-457.md) — 10 types in ProjectileCollision_Record. Includes: Bounce_Record, Pierce_Record, Stop_Record.
+- [Projectilelaunch Record](./projectile-launch-record-854.md) — 3 types in ProjectileLaunch_Record. Includes: Regular_Record, Tracking_Record.
+- [Query Record](./query-record-922.md) — 2 types in Query_Record. Includes: ItemQuery_Record.
+- [Reactionpreset Record](./reaction-preset-record-442.md) — 12 types in ReactionPreset_Record. Includes: ReactionPresetCivilian_Record, ReactionPresetCorpo_Record, ReactionPresetGanger_Record.
+- [Scannabledata Record](./scannable-data-record-454.md) — 11 types in ScannableData_Record. Includes: FocusClue_Record, ObjectActionGameplayCategory_Record, device_gameplay_role_Record.
+- [Senseshape Record](./sense-shape-record-555.md) — 5 types in SenseShape_Record. Includes: AngleRange_Record, Box_Record, Cone_Record.
+- [Spawnableobject Record](./spawnable-object-record-436.md) — 13 types in SpawnableObject_Record. Includes: Character_Record, Vehicle_Record, Weakspot_Record.
+- [Statmodifiergroup Record](./stat-modifier-group-record-885.md) — 2 types in StatModifierGroup_Record. Includes: StatusEffect_inline0_Record.
+- [Statmodifier Record](./stat-modifier-record-458.md) — 10 types in StatModifier_Record. Includes: ConstantStatModifier_Record, CurveStatModifier_Record, CombinedStatModifier_Record.
+- [Statprereq Record](./stat-prereq-record-1089.md) — 2 types in StatPrereq_Record. Includes: ItemCreationPrereq_Record.
+- [Stat Record](./stat-record-881.md) — 3 types in Stat_Record. Includes: Attribute_Record, Substat_Record.
+- [Statuseffect Record](./status-effect-record-879.md) — 3 types in StatusEffect_Record. Includes: GameplayRestrictionStatusEffect_Record, WorkspotStatusEffect_Record.
+- [Tweakdbinterface](./tweak-dbinterface-1010.md) — 1 unnamed types in TweakDBInterface.
+- [Uiicon Record](./uiicon-record-1090.md) — 2 types in UIIcon_Record. Includes: JournalIcon_Record.
+- [Vehiclefxwheelsdecalsmaterial Record](./vehicle-fx-wheels-decals-material-record-893.md) — 2 types in VehicleFxWheelsDecalsMaterial_Record. Includes: VehicleFxWheelsDecalsMaterialSmear_Record.
+- [Vehiclewheeldrivingsetup Record](./vehicle-wheel-driving-setup-record-855.md) — 3 types in VehicleWheelDrivingSetup_Record. Includes: VehicleWheelDrivingSetup_2_Record, VehicleWheelDrivingSetup_4_Record.
+- [Vendorware Record](./vendor-ware-record-540.md) — 5 types in VendorWare_Record. Includes: VendorItem_Record, VendorCraftable_Record, VendorExperience_Record.
+- [Weaponitem Record](./weapon-item-record-1102.md) — 1 types in WeaponItem_Record. Includes: Gadget_Record.
+- [Widgetdefinition Record](./widget-definition-record-508.md) — 6 types in WidgetDefinition_Record. Includes: ActionWidgetDefinition_Record, DeviceWidgetDefinition_Record, ThumbnailWidgetDefinition_Record.
