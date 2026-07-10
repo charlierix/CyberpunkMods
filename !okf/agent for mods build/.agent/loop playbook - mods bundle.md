@@ -2,7 +2,7 @@
 
 **Version 0.1**
 
-This playbook builds an OKF knowledge bundle from the `mods` source
+This playbook builds an OKF knowledge bundle from the `!mods` source
 folder. Unlike a standard codebase playbook, this one is **goal-driven**:
 it defines what the finished bundle must look like and lets you plan your
 own path there.
@@ -110,7 +110,7 @@ criteria. You decide how many iterations you need and what each one focuses on.
 
 You don't have to follow this exactly, but it's a reasonable path:
 
-1. **Survey** — Scan the source `mods/` directory structure. Read the
+1. **Survey** — Scan the source `!mods/` directory structure. Read the
    previous bundle's concept files to get the existing taxonomy and API
    surface tables. Note which concepts had the most mods (those need the
    deepest sub-clustering).
@@ -206,7 +206,7 @@ The bundle is done when **all** of these are true:
 - [ ] `okf_validate.py` passes with zero errors.
 - [ ] `okf_visualize.py` generates `viz.html` successfully.
 - [ ] Spot-check: pick 3 random concept files and verify the file references
-      point to real files in `mods/`.
+      point to real files in `!mods/`.
 - [ ] Spot-check: pick 3 random source mods and verify they appear in at
       least one concept file.
 
@@ -214,7 +214,7 @@ The bundle is done when **all** of these are true:
 
 ## Tips
 
-- **Use `set +H` in shell scripts** — the `!` in `mods` triggers bash
+- **Use `set +H` in shell scripts** — the `!` in `!mods` triggers bash
   history expansion.
 - **Most mod source files are small** (under 100 lines). For these, just the
   filename is enough — don't waste time on exact line numbers.

@@ -1,0 +1,3 @@
+the other source folders could use the build playbook.md, which is a rigid set of instructions with sub tasks.  but when run against mods, it was stopping early and kept pointing to entire mods in the examples section
+
+so, I made different instructions in the form of a loop.  there was also a reduced set of skills to minimize the chance of it getting confused and stopping early
