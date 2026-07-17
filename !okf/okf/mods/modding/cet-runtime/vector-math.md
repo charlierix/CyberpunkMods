@@ -15,7 +15,7 @@ CET exposes native REDengine math types as Lua-accessible userdata objects. Thes
 ```lua
 -- Construct vectors
 local pos = Vector4.new(x, y, z, 1.0)  -- w=1 for positions, w=0 for directions
-local angle = EulerAngles.new(0, 0, yaw)  -- pitch, roll, yaw in degrees
+local angle = EulerAngles.new(0, 0, yaw)  -- roll, pitch, yaw in degrees
 
 -- Vector operations via singleton
 local dist = GetSingleton('Vector4'):Distance(pos1, pos2)
@@ -39,7 +39,7 @@ table.insert(points, Vector4.new(time, value, 0, 1))
 Key characteristics:
 - `Vector4.new(x, y, z, w)` — w=1 for positions, w=0 for direction vectors
 - `Vector3.new(x, y, z)` — 3-component variant, less common than Vector4
-- `EulerAngles.new(pitch, roll, yaw)` — rotation in degrees (note: pitch, roll, yaw order)
+- `EulerAngles.new(roll, pitch, yaw)` — rotation in degrees (note: roll, pitch, yaw order)
 - `Quaternion` — accessed as singleton for static methods (SetAxisAngle, Transform, Slerp)
 - Quaternion methods use out-parameter pattern converted to return values by CET
 - Vector math is frequently combined with Observe hooks and Cron timers for frame-by-frame updates
