@@ -21,12 +21,23 @@ focus on...
 
 	heal player
 
+	regen stamina
+
 	crit chance / amount
 
 	damage reduction
 
 	time freeze
 
+	teleport player (when overwelmed and taking too much damage)
+
+	throw objects
+
+	refill containers
+
+	clone npcs
+
+	antigrav bubbles
 
 
 Very low chance and when conditions are right...
