@@ -1,0 +1,1119 @@
+[2026-07-28 22:25:30 UTC-05:00] [12632] Mod entity scanner loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\entity scanner')
+[2026-07-28 22:25:30 UTC-05:00] [12632] Mod GameEntityExaminerTool loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\GameEntityExaminerTool')
+[2026-07-28 22:25:30 UTC-05:00] [12632] Mod ghost_forward loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\ghost_forward')
+[2026-07-28 22:25:30 UTC-05:00] [12632] Mod grappling_hook loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\grappling_hook')
+[2026-07-28 22:25:30 UTC-05:00] [12632] Mod HeavyMG loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\HeavyMG')
+[2026-07-28 22:25:30 UTC-05:00] [12632] Mod hundred_grand loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hundred_grand')
+[2026-07-28 22:25:30 UTC-05:00] [12632] Mod jetpack loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\jetpack')
+[2026-07-28 22:25:30 UTC-05:00] [12632] Mod low_flying_v loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\low_flying_v')
+[2026-07-28 22:25:30 UTC-05:00] [12632] Mod statuseffect_tester3 loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\statuseffect_tester3')
+[2026-07-28 22:25:31 UTC-05:00] [12632] Mod wall_hang loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\wall_hang')
+[2026-07-28 22:25:50 UTC-05:00] [27280] [SETester3] Status Effect Tester 3 initialized
+[2026-07-28 22:25:50 UTC-05:00] [27280] [SETester3]   NPC effects:    41
+[2026-07-28 22:25:50 UTC-05:00] [27280] [SETester3]   Device effects: 5
+[2026-07-28 22:25:50 UTC-05:00] [27280] [SETester3]   Hotkeys: SE3_TOGGLE_WINDOW, SE3_APPLY
+[2026-07-28 22:25:50 UTC-05:00] [27280] [SETester3]   Bind in Settings > Key Bindings > SETester3
+[2026-07-28 22:25:50 UTC-05:00] [27280] [SETester3] 
+[2026-07-28 22:25:50 UTC-05:00] [27280] [SETester3] Usage: Look at NPC/device, press APPLY HACK for random weighted hack.
+[2026-07-28 22:25:50 UTC-05:00] [27280] [SETester3]        Toggle info window to see target details and hack list.
+[2026-07-28 22:25:50 UTC-05:00] [27280] [EntityScanner] Initialized. Bind the toggle key in Settings > Key Bindings.
+[2026-07-28 22:25:50 UTC-05:00] [27280] LuaVM: initialization finished!
+[2026-07-28 22:28:28 UTC-05:00] [12632] [SETester3] Info window ON
+[2026-07-28 22:29:06 UTC-05:00] [12632] [SETester3] Info window OFF
+[2026-07-28 22:29:28 UTC-05:00] [12632] [SETester3] Info window ON
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3] === NEW ENTITY REPORT ===
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]   Name:       <unknown>
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]   Class:      AccessPoint
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]   RecordID:   <unknown>
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]   EntityHash: 11894884149723678632ULL
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]   Type:       NPC=false Device=true
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]   Distance:   1.94 m
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]   Available device hacks: 5
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]     [ 1] Distraction Duration           (BaseStatusEffect.DistractionDuration) [VALID]
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]     [ 2] EMP                            (BaseStatusEffect.EMP) [VALID]
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]     [ 3] Base EMP                       (BaseStatusEffect.BaseEMP) [VALID]
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]     [ 4] Overload EMP                   (BaseStatusEffect.OverloadEMP) [VALID]
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]     [ 5] Base Overload                  (BaseStatusEffect.BaseOverload) [VALID]
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=AccessPoint, recordID=<unknown>) ===
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:29:46 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 1
+[2026-07-28 22:29:53 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=AccessPoint, recordID=<unknown>) ===
+[2026-07-28 22:29:53 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:29:53 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 2
+[2026-07-28 22:29:55 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=AccessPoint, recordID=<unknown>) ===
+[2026-07-28 22:29:55 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:29:55 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 1
+[2026-07-28 22:29:55 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=AccessPoint, recordID=<unknown>) ===
+[2026-07-28 22:29:55 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:29:55 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 1
+[2026-07-28 22:29:56 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=AccessPoint, recordID=<unknown>) ===
+[2026-07-28 22:29:56 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:29:56 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 1
+[2026-07-28 22:29:57 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=AccessPoint, recordID=<unknown>) ===
+[2026-07-28 22:29:57 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:29:57 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 2
+[2026-07-28 22:29:58 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=AccessPoint, recordID=<unknown>) ===
+[2026-07-28 22:29:58 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:29:58 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 2
+[2026-07-28 22:29:58 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=AccessPoint, recordID=<unknown>) ===
+[2026-07-28 22:29:58 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:29:58 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 2
+[2026-07-28 22:29:59 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=AccessPoint, recordID=<unknown>) ===
+[2026-07-28 22:29:59 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:29:59 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 1
+[2026-07-28 22:30:10 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:10 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:30:10 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 3
+[2026-07-28 22:30:11 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:11 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:30:11 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 3
+[2026-07-28 22:30:12 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:12 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:30:12 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 3
+[2026-07-28 22:30:13 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:13 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:30:13 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 4
+[2026-07-28 22:30:14 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:14 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:30:14 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 3
+[2026-07-28 22:30:15 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:15 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:30:15 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 4
+[2026-07-28 22:30:16 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:16 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:30:16 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 2
+[2026-07-28 22:30:16 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:16 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:30:16 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 3
+[2026-07-28 22:30:17 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:17 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:30:17 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 4
+[2026-07-28 22:30:18 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:18 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:30:18 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 5
+[2026-07-28 22:30:19 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:19 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:30:19 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 5
+[2026-07-28 22:30:19 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:19 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:30:19 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 4
+[2026-07-28 22:30:20 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:20 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:30:20 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 5
+[2026-07-28 22:30:21 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:21 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:30:21 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 4
+[2026-07-28 22:30:22 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:30:22 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:30:22 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 6
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3] === NEW ENTITY REPORT ===
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]   Name:       Character.lch_maelstrom_grunt1_ranged1_copperhead_ma
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]   Class:      NPCPuppet
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]   RecordID:   Character.lch_maelstrom_grunt1_ranged1_copperhead_ma
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]   EntityHash: 9002315ULL
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]   Type:       NPC=true Device=false
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]   Distance:   1.82 m
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]   Available NPC hacks: 41
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [ 1] Overheat                       (BaseStatusEffect.Overheat) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [ 2] Burning                        (BaseStatusEffect.Burning) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [ 3] Blind                          (BaseStatusEffect.Blind) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [ 4] Stun                           (BaseStatusEffect.Stun) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [ 5] Ping                           (BaseStatusEffect.Ping) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [ 6] Pain                           (BaseStatusEffect.Pain) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [ 7] NPCForceStagger                (BaseStatusEffect.NPCForceStagger) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [ 8] LocomotionMalfunction          (BaseStatusEffect.LocomotionMalfunction) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [ 9] CyberwareMalfunction           (BaseStatusEffect.CyberwareMalfunction) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [10] CW Malfunction Blackwall       (BaseStatusEffect.CyberwareMalfunctionBlackwall) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [11] Madness                        (BaseStatusEffect.Madness) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [12] BlackwallHackUpload            (BaseStatusEffect.SoMi_Q306_BlackwallHackUpload) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [13] Contagion Poison               (BaseStatusEffect.ContagionPoison) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [14] Base Contagion Poison          (BaseStatusEffect.BaseContagionPoison) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [15] EMP                            (BaseStatusEffect.EMP) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [16] Base EMP                       (BaseStatusEffect.BaseEMP) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [17] QuickHack Blind                (BaseStatusEffect.QuickHackBlind) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [18] Base QuickHack Blind           (BaseStatusEffect.BaseQuickHackBlind) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [19] Poisoned                       (BaseStatusEffect.Poisoned) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [20] Base BrainMelt                 (BaseStatusEffect.BaseBrainMelt) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [21] Base CommsNoise                (BaseStatusEffect.BaseCommsNoise) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [22] Base Overheat                  (BaseStatusEffect.BaseOverheat) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [23] Locomotion Lvl2                (BaseStatusEffect.LocomotionMalfunctionLevel2) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [24] Locomotion Lvl3                (BaseStatusEffect.LocomotionMalfunctionLevel3) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [25] Locomotion Lvl4                (BaseStatusEffect.LocomotionMalfunctionLevel4) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [26] CW Malfunction Lvl1            (BaseStatusEffect.CyberwareMalfunctionLvl1) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [27] CW Malfunction Lvl2            (BaseStatusEffect.CyberwareMalfunctionLvl2) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [28] CW Malfunction Lvl3            (BaseStatusEffect.CyberwareMalfunctionLvl3) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [29] CW Malfunction Lvl4            (BaseStatusEffect.CyberwareMalfunctionLvl4) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [30] Overheat Lvl1                  (BaseStatusEffect.OverheatLevel1) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [31] Overheat Lvl2                  (BaseStatusEffect.OverheatLevel2) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [32] Overheat Lvl3                  (BaseStatusEffect.OverheatLevel3) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [33] Overheat Lvl4                  (BaseStatusEffect.OverheatLevel4) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [34] Ping Lvl2                      (BaseStatusEffect.PingLevel2) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [35] Ping Lvl3                      (BaseStatusEffect.PingLevel3) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [36] Ping Lvl4                      (BaseStatusEffect.PingLevel4) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [37] Moderate Blind                 (BaseStatusEffect.ModerateBlind) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [38] Major Blind                    (BaseStatusEffect.MajorBlind) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [39] Minor Blind                    (BaseStatusEffect.MinorBlind) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [40] Legendary Blind                (BaseStatusEffect.LegendaryEffectBlind) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]     [41] Major QH Blind                 (BaseStatusEffect.MajorQuickHackBlind) [VALID]
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3] === APPLY [1/41]: Overheat -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Overheat)
+[2026-07-28 22:30:31 UTC-05:00] [12632] [SETester3]   Attempts on 'Overheat': 1
+[2026-07-28 22:30:39 UTC-05:00] [12632] [SETester3] === APPLY [34/41]: Ping Lvl2 -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:30:39 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.PingLevel2)
+[2026-07-28 22:30:39 UTC-05:00] [12632] [SETester3]   Attempts on 'Ping Lvl2': 1
+[2026-07-28 22:30:41 UTC-05:00] [12632] [SETester3] === APPLY [3/41]: Blind -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:30:41 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Blind)
+[2026-07-28 22:30:41 UTC-05:00] [12632] [SETester3]   Attempts on 'Blind': 1
+[2026-07-28 22:30:43 UTC-05:00] [12632] [SETester3] === APPLY [37/41]: Moderate Blind -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:30:43 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.ModerateBlind)
+[2026-07-28 22:30:43 UTC-05:00] [12632] [SETester3]   Attempts on 'Moderate Blind': 1
+[2026-07-28 22:30:44 UTC-05:00] [12632] [SETester3] === APPLY [14/41]: Base Contagion Poison -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:30:44 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseContagionPoison)
+[2026-07-28 22:30:44 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Contagion Poison': 1
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3] === NEW ENTITY REPORT ===
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]   Name:       Character.lch_maelstrom_grunt1_ranged1_lexington_wa
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]   Class:      NPCPuppet
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]   RecordID:   Character.lch_maelstrom_grunt1_ranged1_lexington_wa
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]   EntityHash: 9002319ULL
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]   Type:       NPC=true Device=false
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]   Distance:   1.29 m
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]   Available NPC hacks: 41
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [ 1] Overheat                       (BaseStatusEffect.Overheat) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [ 2] Burning                        (BaseStatusEffect.Burning) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [ 3] Blind                          (BaseStatusEffect.Blind) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [ 4] Stun                           (BaseStatusEffect.Stun) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [ 5] Ping                           (BaseStatusEffect.Ping) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [ 6] Pain                           (BaseStatusEffect.Pain) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [ 7] NPCForceStagger                (BaseStatusEffect.NPCForceStagger) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [ 8] LocomotionMalfunction          (BaseStatusEffect.LocomotionMalfunction) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [ 9] CyberwareMalfunction           (BaseStatusEffect.CyberwareMalfunction) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [10] CW Malfunction Blackwall       (BaseStatusEffect.CyberwareMalfunctionBlackwall) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [11] Madness                        (BaseStatusEffect.Madness) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [12] BlackwallHackUpload            (BaseStatusEffect.SoMi_Q306_BlackwallHackUpload) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [13] Contagion Poison               (BaseStatusEffect.ContagionPoison) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [14] Base Contagion Poison          (BaseStatusEffect.BaseContagionPoison) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [15] EMP                            (BaseStatusEffect.EMP) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [16] Base EMP                       (BaseStatusEffect.BaseEMP) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [17] QuickHack Blind                (BaseStatusEffect.QuickHackBlind) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [18] Base QuickHack Blind           (BaseStatusEffect.BaseQuickHackBlind) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [19] Poisoned                       (BaseStatusEffect.Poisoned) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [20] Base BrainMelt                 (BaseStatusEffect.BaseBrainMelt) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [21] Base CommsNoise                (BaseStatusEffect.BaseCommsNoise) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [22] Base Overheat                  (BaseStatusEffect.BaseOverheat) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [23] Locomotion Lvl2                (BaseStatusEffect.LocomotionMalfunctionLevel2) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [24] Locomotion Lvl3                (BaseStatusEffect.LocomotionMalfunctionLevel3) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [25] Locomotion Lvl4                (BaseStatusEffect.LocomotionMalfunctionLevel4) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [26] CW Malfunction Lvl1            (BaseStatusEffect.CyberwareMalfunctionLvl1) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [27] CW Malfunction Lvl2            (BaseStatusEffect.CyberwareMalfunctionLvl2) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [28] CW Malfunction Lvl3            (BaseStatusEffect.CyberwareMalfunctionLvl3) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [29] CW Malfunction Lvl4            (BaseStatusEffect.CyberwareMalfunctionLvl4) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [30] Overheat Lvl1                  (BaseStatusEffect.OverheatLevel1) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [31] Overheat Lvl2                  (BaseStatusEffect.OverheatLevel2) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [32] Overheat Lvl3                  (BaseStatusEffect.OverheatLevel3) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [33] Overheat Lvl4                  (BaseStatusEffect.OverheatLevel4) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [34] Ping Lvl2                      (BaseStatusEffect.PingLevel2) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [35] Ping Lvl3                      (BaseStatusEffect.PingLevel3) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [36] Ping Lvl4                      (BaseStatusEffect.PingLevel4) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [37] Moderate Blind                 (BaseStatusEffect.ModerateBlind) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [38] Major Blind                    (BaseStatusEffect.MajorBlind) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [39] Minor Blind                    (BaseStatusEffect.MinorBlind) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [40] Legendary Blind                (BaseStatusEffect.LegendaryEffectBlind) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]     [41] Major QH Blind                 (BaseStatusEffect.MajorQuickHackBlind) [VALID]
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3] === APPLY [21/41]: Base CommsNoise -> Character.lch_maelstrom_grunt1_ranged1_lexington_wa (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_lexington_wa) ===
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseCommsNoise)
+[2026-07-28 22:30:54 UTC-05:00] [12632] [SETester3]   Attempts on 'Base CommsNoise': 1
+[2026-07-28 22:31:04 UTC-05:00] [12632] [SETester3] Target 'Vehicle.hackable_villefort_columbus' is neither NPC nor Device (class=vehicleCarBaseObject)
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3] === NEW ENTITY REPORT ===
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]   Name:       Character.LowlifeMale
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]   Class:      NPCPuppet
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]   RecordID:   Character.LowlifeMale
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]   EntityHash: 10060107ULL
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]   Type:       NPC=true Device=false
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]   Distance:   2.93 m
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]   Available NPC hacks: 41
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [ 1] Overheat                       (BaseStatusEffect.Overheat) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [ 2] Burning                        (BaseStatusEffect.Burning) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [ 3] Blind                          (BaseStatusEffect.Blind) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [ 4] Stun                           (BaseStatusEffect.Stun) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [ 5] Ping                           (BaseStatusEffect.Ping) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [ 6] Pain                           (BaseStatusEffect.Pain) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [ 7] NPCForceStagger                (BaseStatusEffect.NPCForceStagger) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [ 8] LocomotionMalfunction          (BaseStatusEffect.LocomotionMalfunction) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [ 9] CyberwareMalfunction           (BaseStatusEffect.CyberwareMalfunction) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [10] CW Malfunction Blackwall       (BaseStatusEffect.CyberwareMalfunctionBlackwall) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [11] Madness                        (BaseStatusEffect.Madness) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [12] BlackwallHackUpload            (BaseStatusEffect.SoMi_Q306_BlackwallHackUpload) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [13] Contagion Poison               (BaseStatusEffect.ContagionPoison) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [14] Base Contagion Poison          (BaseStatusEffect.BaseContagionPoison) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [15] EMP                            (BaseStatusEffect.EMP) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [16] Base EMP                       (BaseStatusEffect.BaseEMP) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [17] QuickHack Blind                (BaseStatusEffect.QuickHackBlind) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [18] Base QuickHack Blind           (BaseStatusEffect.BaseQuickHackBlind) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [19] Poisoned                       (BaseStatusEffect.Poisoned) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [20] Base BrainMelt                 (BaseStatusEffect.BaseBrainMelt) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [21] Base CommsNoise                (BaseStatusEffect.BaseCommsNoise) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [22] Base Overheat                  (BaseStatusEffect.BaseOverheat) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [23] Locomotion Lvl2                (BaseStatusEffect.LocomotionMalfunctionLevel2) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [24] Locomotion Lvl3                (BaseStatusEffect.LocomotionMalfunctionLevel3) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [25] Locomotion Lvl4                (BaseStatusEffect.LocomotionMalfunctionLevel4) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [26] CW Malfunction Lvl1            (BaseStatusEffect.CyberwareMalfunctionLvl1) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [27] CW Malfunction Lvl2            (BaseStatusEffect.CyberwareMalfunctionLvl2) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [28] CW Malfunction Lvl3            (BaseStatusEffect.CyberwareMalfunctionLvl3) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [29] CW Malfunction Lvl4            (BaseStatusEffect.CyberwareMalfunctionLvl4) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [30] Overheat Lvl1                  (BaseStatusEffect.OverheatLevel1) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [31] Overheat Lvl2                  (BaseStatusEffect.OverheatLevel2) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [32] Overheat Lvl3                  (BaseStatusEffect.OverheatLevel3) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [33] Overheat Lvl4                  (BaseStatusEffect.OverheatLevel4) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [34] Ping Lvl2                      (BaseStatusEffect.PingLevel2) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [35] Ping Lvl3                      (BaseStatusEffect.PingLevel3) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [36] Ping Lvl4                      (BaseStatusEffect.PingLevel4) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [37] Moderate Blind                 (BaseStatusEffect.ModerateBlind) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [38] Major Blind                    (BaseStatusEffect.MajorBlind) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [39] Minor Blind                    (BaseStatusEffect.MinorBlind) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [40] Legendary Blind                (BaseStatusEffect.LegendaryEffectBlind) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]     [41] Major QH Blind                 (BaseStatusEffect.MajorQuickHackBlind) [VALID]
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3] === APPLY [35/41]: Ping Lvl3 -> Character.LowlifeMale (class=NPCPuppet, recordID=Character.LowlifeMale) ===
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.PingLevel3)
+[2026-07-28 22:31:18 UTC-05:00] [12632] [SETester3]   Attempts on 'Ping Lvl3': 1
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3] === NEW ENTITY REPORT ===
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]   Name:       Character.prevention_police_handgun_ma
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]   Class:      NPCPuppet
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]   RecordID:   Character.prevention_police_handgun_ma
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]   EntityHash: 10060035ULL
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]   Type:       NPC=true Device=false
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]   Distance:   3.37 m
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]   Available NPC hacks: 41
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [ 1] Overheat                       (BaseStatusEffect.Overheat) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [ 2] Burning                        (BaseStatusEffect.Burning) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [ 3] Blind                          (BaseStatusEffect.Blind) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [ 4] Stun                           (BaseStatusEffect.Stun) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [ 5] Ping                           (BaseStatusEffect.Ping) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [ 6] Pain                           (BaseStatusEffect.Pain) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [ 7] NPCForceStagger                (BaseStatusEffect.NPCForceStagger) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [ 8] LocomotionMalfunction          (BaseStatusEffect.LocomotionMalfunction) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [ 9] CyberwareMalfunction           (BaseStatusEffect.CyberwareMalfunction) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [10] CW Malfunction Blackwall       (BaseStatusEffect.CyberwareMalfunctionBlackwall) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [11] Madness                        (BaseStatusEffect.Madness) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [12] BlackwallHackUpload            (BaseStatusEffect.SoMi_Q306_BlackwallHackUpload) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [13] Contagion Poison               (BaseStatusEffect.ContagionPoison) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [14] Base Contagion Poison          (BaseStatusEffect.BaseContagionPoison) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [15] EMP                            (BaseStatusEffect.EMP) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [16] Base EMP                       (BaseStatusEffect.BaseEMP) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [17] QuickHack Blind                (BaseStatusEffect.QuickHackBlind) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [18] Base QuickHack Blind           (BaseStatusEffect.BaseQuickHackBlind) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [19] Poisoned                       (BaseStatusEffect.Poisoned) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [20] Base BrainMelt                 (BaseStatusEffect.BaseBrainMelt) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [21] Base CommsNoise                (BaseStatusEffect.BaseCommsNoise) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [22] Base Overheat                  (BaseStatusEffect.BaseOverheat) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [23] Locomotion Lvl2                (BaseStatusEffect.LocomotionMalfunctionLevel2) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [24] Locomotion Lvl3                (BaseStatusEffect.LocomotionMalfunctionLevel3) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [25] Locomotion Lvl4                (BaseStatusEffect.LocomotionMalfunctionLevel4) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [26] CW Malfunction Lvl1            (BaseStatusEffect.CyberwareMalfunctionLvl1) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [27] CW Malfunction Lvl2            (BaseStatusEffect.CyberwareMalfunctionLvl2) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [28] CW Malfunction Lvl3            (BaseStatusEffect.CyberwareMalfunctionLvl3) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [29] CW Malfunction Lvl4            (BaseStatusEffect.CyberwareMalfunctionLvl4) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [30] Overheat Lvl1                  (BaseStatusEffect.OverheatLevel1) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [31] Overheat Lvl2                  (BaseStatusEffect.OverheatLevel2) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [32] Overheat Lvl3                  (BaseStatusEffect.OverheatLevel3) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [33] Overheat Lvl4                  (BaseStatusEffect.OverheatLevel4) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [34] Ping Lvl2                      (BaseStatusEffect.PingLevel2) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [35] Ping Lvl3                      (BaseStatusEffect.PingLevel3) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [36] Ping Lvl4                      (BaseStatusEffect.PingLevel4) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [37] Moderate Blind                 (BaseStatusEffect.ModerateBlind) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [38] Major Blind                    (BaseStatusEffect.MajorBlind) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [39] Minor Blind                    (BaseStatusEffect.MinorBlind) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [40] Legendary Blind                (BaseStatusEffect.LegendaryEffectBlind) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]     [41] Major QH Blind                 (BaseStatusEffect.MajorQuickHackBlind) [VALID]
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3] === APPLY [20/41]: Base BrainMelt -> Character.prevention_police_handgun_ma (class=NPCPuppet, recordID=Character.prevention_police_handgun_ma) ===
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseBrainMelt)
+[2026-07-28 22:31:22 UTC-05:00] [12632] [SETester3]   Attempts on 'Base BrainMelt': 1
+[2026-07-28 22:31:32 UTC-05:00] [12632] [SETester3] === APPLY [32/41]: Overheat Lvl3 -> Character.prevention_police_handgun_ma (class=NPCPuppet, recordID=Character.prevention_police_handgun_ma) ===
+[2026-07-28 22:31:32 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverheatLevel3)
+[2026-07-28 22:31:32 UTC-05:00] [12632] [SETester3]   Attempts on 'Overheat Lvl3': 1
+[2026-07-28 22:31:40 UTC-05:00] [12632] [SETester3] === APPLY [30/41]: Overheat Lvl1 -> Character.prevention_police_handgun_ma (class=NPCPuppet, recordID=Character.prevention_police_handgun_ma) ===
+[2026-07-28 22:31:40 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverheatLevel1)
+[2026-07-28 22:31:40 UTC-05:00] [12632] [SETester3]   Attempts on 'Overheat Lvl1': 1
+[2026-07-28 22:31:49 UTC-05:00] [12632] [SETester3] === APPLY [9/41]: CyberwareMalfunction -> Character.prevention_police_handgun_ma (class=NPCPuppet, recordID=Character.prevention_police_handgun_ma) ===
+[2026-07-28 22:31:49 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.CyberwareMalfunction)
+[2026-07-28 22:31:49 UTC-05:00] [12632] [SETester3]   Attempts on 'CyberwareMalfunction': 1
+[2026-07-28 22:31:52 UTC-05:00] [12632] [SETester3] === APPLY [32/41]: Overheat Lvl3 -> Character.prevention_police_handgun_ma (class=NPCPuppet, recordID=Character.prevention_police_handgun_ma) ===
+[2026-07-28 22:31:52 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverheatLevel3)
+[2026-07-28 22:31:52 UTC-05:00] [12632] [SETester3]   Attempts on 'Overheat Lvl3': 2
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3] === NEW ENTITY REPORT ===
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]   Name:       Character.lch_tyger_claws_gangster1_melee1_knife_wa
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]   Class:      NPCPuppet
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]   RecordID:   Character.lch_tyger_claws_gangster1_melee1_knife_wa
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]   EntityHash: 9004152ULL
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]   Type:       NPC=true Device=false
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]   Distance:   11.84 m
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]   Available NPC hacks: 41
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [ 1] Overheat                       (BaseStatusEffect.Overheat) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [ 2] Burning                        (BaseStatusEffect.Burning) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [ 3] Blind                          (BaseStatusEffect.Blind) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [ 4] Stun                           (BaseStatusEffect.Stun) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [ 5] Ping                           (BaseStatusEffect.Ping) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [ 6] Pain                           (BaseStatusEffect.Pain) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [ 7] NPCForceStagger                (BaseStatusEffect.NPCForceStagger) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [ 8] LocomotionMalfunction          (BaseStatusEffect.LocomotionMalfunction) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [ 9] CyberwareMalfunction           (BaseStatusEffect.CyberwareMalfunction) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [10] CW Malfunction Blackwall       (BaseStatusEffect.CyberwareMalfunctionBlackwall) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [11] Madness                        (BaseStatusEffect.Madness) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [12] BlackwallHackUpload            (BaseStatusEffect.SoMi_Q306_BlackwallHackUpload) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [13] Contagion Poison               (BaseStatusEffect.ContagionPoison) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [14] Base Contagion Poison          (BaseStatusEffect.BaseContagionPoison) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [15] EMP                            (BaseStatusEffect.EMP) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [16] Base EMP                       (BaseStatusEffect.BaseEMP) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [17] QuickHack Blind                (BaseStatusEffect.QuickHackBlind) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [18] Base QuickHack Blind           (BaseStatusEffect.BaseQuickHackBlind) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [19] Poisoned                       (BaseStatusEffect.Poisoned) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [20] Base BrainMelt                 (BaseStatusEffect.BaseBrainMelt) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [21] Base CommsNoise                (BaseStatusEffect.BaseCommsNoise) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [22] Base Overheat                  (BaseStatusEffect.BaseOverheat) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [23] Locomotion Lvl2                (BaseStatusEffect.LocomotionMalfunctionLevel2) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [24] Locomotion Lvl3                (BaseStatusEffect.LocomotionMalfunctionLevel3) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [25] Locomotion Lvl4                (BaseStatusEffect.LocomotionMalfunctionLevel4) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [26] CW Malfunction Lvl1            (BaseStatusEffect.CyberwareMalfunctionLvl1) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [27] CW Malfunction Lvl2            (BaseStatusEffect.CyberwareMalfunctionLvl2) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [28] CW Malfunction Lvl3            (BaseStatusEffect.CyberwareMalfunctionLvl3) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [29] CW Malfunction Lvl4            (BaseStatusEffect.CyberwareMalfunctionLvl4) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [30] Overheat Lvl1                  (BaseStatusEffect.OverheatLevel1) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [31] Overheat Lvl2                  (BaseStatusEffect.OverheatLevel2) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [32] Overheat Lvl3                  (BaseStatusEffect.OverheatLevel3) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [33] Overheat Lvl4                  (BaseStatusEffect.OverheatLevel4) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [34] Ping Lvl2                      (BaseStatusEffect.PingLevel2) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [35] Ping Lvl3                      (BaseStatusEffect.PingLevel3) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [36] Ping Lvl4                      (BaseStatusEffect.PingLevel4) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [37] Moderate Blind                 (BaseStatusEffect.ModerateBlind) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [38] Major Blind                    (BaseStatusEffect.MajorBlind) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [39] Minor Blind                    (BaseStatusEffect.MinorBlind) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [40] Legendary Blind                (BaseStatusEffect.LegendaryEffectBlind) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]     [41] Major QH Blind                 (BaseStatusEffect.MajorQuickHackBlind) [VALID]
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3] === APPLY [39/41]: Minor Blind -> Character.lch_tyger_claws_gangster1_melee1_knife_wa (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_melee1_knife_wa) ===
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.MinorBlind)
+[2026-07-28 22:32:08 UTC-05:00] [12632] [SETester3]   Attempts on 'Minor Blind': 1
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3] === NEW ENTITY REPORT ===
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]   Name:       Character.lch_tyger_claws_biker2_melee2_baseball_ma
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]   Class:      NPCPuppet
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]   RecordID:   Character.lch_tyger_claws_biker2_melee2_baseball_ma
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]   EntityHash: 9004153ULL
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]   Type:       NPC=true Device=false
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]   Distance:   10.13 m
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]   Available NPC hacks: 41
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [ 1] Overheat                       (BaseStatusEffect.Overheat) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [ 2] Burning                        (BaseStatusEffect.Burning) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [ 3] Blind                          (BaseStatusEffect.Blind) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [ 4] Stun                           (BaseStatusEffect.Stun) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [ 5] Ping                           (BaseStatusEffect.Ping) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [ 6] Pain                           (BaseStatusEffect.Pain) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [ 7] NPCForceStagger                (BaseStatusEffect.NPCForceStagger) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [ 8] LocomotionMalfunction          (BaseStatusEffect.LocomotionMalfunction) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [ 9] CyberwareMalfunction           (BaseStatusEffect.CyberwareMalfunction) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [10] CW Malfunction Blackwall       (BaseStatusEffect.CyberwareMalfunctionBlackwall) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [11] Madness                        (BaseStatusEffect.Madness) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [12] BlackwallHackUpload            (BaseStatusEffect.SoMi_Q306_BlackwallHackUpload) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [13] Contagion Poison               (BaseStatusEffect.ContagionPoison) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [14] Base Contagion Poison          (BaseStatusEffect.BaseContagionPoison) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [15] EMP                            (BaseStatusEffect.EMP) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [16] Base EMP                       (BaseStatusEffect.BaseEMP) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [17] QuickHack Blind                (BaseStatusEffect.QuickHackBlind) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [18] Base QuickHack Blind           (BaseStatusEffect.BaseQuickHackBlind) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [19] Poisoned                       (BaseStatusEffect.Poisoned) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [20] Base BrainMelt                 (BaseStatusEffect.BaseBrainMelt) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [21] Base CommsNoise                (BaseStatusEffect.BaseCommsNoise) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [22] Base Overheat                  (BaseStatusEffect.BaseOverheat) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [23] Locomotion Lvl2                (BaseStatusEffect.LocomotionMalfunctionLevel2) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [24] Locomotion Lvl3                (BaseStatusEffect.LocomotionMalfunctionLevel3) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [25] Locomotion Lvl4                (BaseStatusEffect.LocomotionMalfunctionLevel4) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [26] CW Malfunction Lvl1            (BaseStatusEffect.CyberwareMalfunctionLvl1) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [27] CW Malfunction Lvl2            (BaseStatusEffect.CyberwareMalfunctionLvl2) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [28] CW Malfunction Lvl3            (BaseStatusEffect.CyberwareMalfunctionLvl3) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [29] CW Malfunction Lvl4            (BaseStatusEffect.CyberwareMalfunctionLvl4) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [30] Overheat Lvl1                  (BaseStatusEffect.OverheatLevel1) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [31] Overheat Lvl2                  (BaseStatusEffect.OverheatLevel2) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [32] Overheat Lvl3                  (BaseStatusEffect.OverheatLevel3) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [33] Overheat Lvl4                  (BaseStatusEffect.OverheatLevel4) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [34] Ping Lvl2                      (BaseStatusEffect.PingLevel2) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [35] Ping Lvl3                      (BaseStatusEffect.PingLevel3) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [36] Ping Lvl4                      (BaseStatusEffect.PingLevel4) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [37] Moderate Blind                 (BaseStatusEffect.ModerateBlind) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [38] Major Blind                    (BaseStatusEffect.MajorBlind) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [39] Minor Blind                    (BaseStatusEffect.MinorBlind) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [40] Legendary Blind                (BaseStatusEffect.LegendaryEffectBlind) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]     [41] Major QH Blind                 (BaseStatusEffect.MajorQuickHackBlind) [VALID]
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3] === APPLY [30/41]: Overheat Lvl1 -> Character.lch_tyger_claws_biker2_melee2_baseball_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_biker2_melee2_baseball_ma) ===
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverheatLevel1)
+[2026-07-28 22:32:16 UTC-05:00] [12632] [SETester3]   Attempts on 'Overheat Lvl1': 2
+[2026-07-28 22:32:27 UTC-05:00] [12632] [SETester3] === APPLY [24/41]: Locomotion Lvl3 -> Character.lch_tyger_claws_gangster1_melee1_knife_wa (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_melee1_knife_wa) ===
+[2026-07-28 22:32:27 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.LocomotionMalfunctionLevel3)
+[2026-07-28 22:32:27 UTC-05:00] [12632] [SETester3]   Attempts on 'Locomotion Lvl3': 1
+[2026-07-28 22:32:31 UTC-05:00] [12632] [SETester3] === APPLY [29/41]: CW Malfunction Lvl4 -> Character.lch_tyger_claws_biker2_melee2_baseball_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_biker2_melee2_baseball_ma) ===
+[2026-07-28 22:32:31 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.CyberwareMalfunctionLvl4)
+[2026-07-28 22:32:31 UTC-05:00] [12632] [SETester3]   Attempts on 'CW Malfunction Lvl4': 1
+[2026-07-28 22:32:33 UTC-05:00] [12632] [SETester3] === APPLY [31/41]: Overheat Lvl2 -> Character.lch_tyger_claws_biker2_melee2_baseball_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_biker2_melee2_baseball_ma) ===
+[2026-07-28 22:32:33 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverheatLevel2)
+[2026-07-28 22:32:33 UTC-05:00] [12632] [SETester3]   Attempts on 'Overheat Lvl2': 1
+[2026-07-28 22:32:34 UTC-05:00] [12632] [SETester3] === APPLY [9/41]: CyberwareMalfunction -> Character.lch_tyger_claws_gangster1_melee1_knife_wa (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_melee1_knife_wa) ===
+[2026-07-28 22:32:34 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.CyberwareMalfunction)
+[2026-07-28 22:32:34 UTC-05:00] [12632] [SETester3]   Attempts on 'CyberwareMalfunction': 2
+[2026-07-28 22:32:35 UTC-05:00] [12632] [SETester3] === APPLY [7/41]: NPCForceStagger -> Character.lch_tyger_claws_gangster1_melee1_knife_wa (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_melee1_knife_wa) ===
+[2026-07-28 22:32:35 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.NPCForceStagger)
+[2026-07-28 22:32:35 UTC-05:00] [12632] [SETester3]   Attempts on 'NPCForceStagger': 1
+[2026-07-28 22:32:36 UTC-05:00] [12632] [SETester3] === APPLY [15/41]: EMP -> Character.lch_tyger_claws_gangster1_melee1_knife_wa (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_melee1_knife_wa) ===
+[2026-07-28 22:32:36 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:32:36 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 1
+[2026-07-28 22:32:37 UTC-05:00] [12632] [SETester3] === APPLY [30/41]: Overheat Lvl1 -> Character.lch_tyger_claws_gangster1_melee1_knife_wa (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_melee1_knife_wa) ===
+[2026-07-28 22:32:37 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverheatLevel1)
+[2026-07-28 22:32:37 UTC-05:00] [12632] [SETester3]   Attempts on 'Overheat Lvl1': 3
+[2026-07-28 22:32:38 UTC-05:00] [12632] [SETester3] === APPLY [5/41]: Ping -> Character.lch_tyger_claws_gangster1_melee1_knife_wa (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_melee1_knife_wa) ===
+[2026-07-28 22:32:38 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Ping)
+[2026-07-28 22:32:38 UTC-05:00] [12632] [SETester3]   Attempts on 'Ping': 1
+[2026-07-28 22:32:40 UTC-05:00] [12632] [SETester3] === APPLY [34/41]: Ping Lvl2 -> Character.lch_tyger_claws_biker2_melee2_baseball_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_biker2_melee2_baseball_ma) ===
+[2026-07-28 22:32:40 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.PingLevel2)
+[2026-07-28 22:32:40 UTC-05:00] [12632] [SETester3]   Attempts on 'Ping Lvl2': 2
+[2026-07-28 22:33:20 UTC-05:00] [12632] [SETester3] Info window OFF
+[2026-07-28 22:34:08 UTC-05:00] [12632] [SETester3] Info window ON
+[2026-07-28 22:34:09 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:34:09 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:34:09 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 5
+[2026-07-28 22:34:11 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:34:11 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:34:11 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 6
+[2026-07-28 22:34:13 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:34:13 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:34:13 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 5
+[2026-07-28 22:34:14 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:34:14 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:34:14 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 6
+[2026-07-28 22:34:15 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:34:15 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:34:15 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 6
+[2026-07-28 22:34:16 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:34:16 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:34:16 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 7
+[2026-07-28 22:34:17 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:34:17 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:34:17 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 7
+[2026-07-28 22:34:18 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:34:18 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:34:18 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 7
+[2026-07-28 22:34:45 UTC-05:00] [12632] [SETester3] === APPLY [12/41]: BlackwallHackUpload -> Character.lch_tyger_claws_gangster1_melee1_knife_wa (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_melee1_knife_wa) ===
+[2026-07-28 22:34:45 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.SoMi_Q306_BlackwallHackUpload)
+[2026-07-28 22:34:45 UTC-05:00] [12632] [SETester3]   Attempts on 'BlackwallHackUpload': 1
+[2026-07-28 22:37:08 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:08 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:37:08 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 6
+[2026-07-28 22:37:09 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:09 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:37:09 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 8
+[2026-07-28 22:37:10 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:10 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:37:10 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 8
+[2026-07-28 22:37:10 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:10 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:37:10 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 7
+[2026-07-28 22:37:11 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:11 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:37:11 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 7
+[2026-07-28 22:37:12 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:12 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:37:12 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 8
+[2026-07-28 22:37:13 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:13 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:37:13 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 9
+[2026-07-28 22:37:13 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:13 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:37:13 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 8
+[2026-07-28 22:37:27 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:27 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:37:27 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 9
+[2026-07-28 22:37:28 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:28 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:37:28 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 8
+[2026-07-28 22:37:28 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:28 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:37:28 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 9
+[2026-07-28 22:37:29 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:29 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:37:29 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 10
+[2026-07-28 22:37:30 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:37:30 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:37:30 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 11
+[2026-07-28 22:37:51 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=VendingMachine, recordID=<unknown>) ===
+[2026-07-28 22:37:51 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:37:51 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 10
+[2026-07-28 22:37:51 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=VendingMachine, recordID=<unknown>) ===
+[2026-07-28 22:37:51 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:37:51 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 9
+[2026-07-28 22:37:52 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=VendingMachine, recordID=<unknown>) ===
+[2026-07-28 22:37:52 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:37:52 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 10
+[2026-07-28 22:37:53 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=VendingMachine, recordID=<unknown>) ===
+[2026-07-28 22:37:53 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:37:53 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 9
+[2026-07-28 22:37:54 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=VendingMachine, recordID=<unknown>) ===
+[2026-07-28 22:37:54 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:37:54 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 11
+[2026-07-28 22:37:55 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=VendingMachine, recordID=<unknown>) ===
+[2026-07-28 22:37:55 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:37:55 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 10
+[2026-07-28 22:37:55 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=VendingMachine, recordID=<unknown>) ===
+[2026-07-28 22:37:55 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:37:55 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 11
+[2026-07-28 22:37:56 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=VendingMachine, recordID=<unknown>) ===
+[2026-07-28 22:37:56 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:37:56 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 11
+[2026-07-28 22:37:56 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=VendingMachine, recordID=<unknown>) ===
+[2026-07-28 22:37:56 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:37:56 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 12
+[2026-07-28 22:37:57 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=VendingMachine, recordID=<unknown>) ===
+[2026-07-28 22:37:57 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:37:57 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 10
+[2026-07-28 22:37:58 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=VendingMachine, recordID=<unknown>) ===
+[2026-07-28 22:37:58 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:37:58 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 12
+[2026-07-28 22:37:58 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=VendingMachine, recordID=<unknown>) ===
+[2026-07-28 22:37:58 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:37:58 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 11
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3] === NEW ENTITY REPORT ===
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]   Name:       Character.HomelessFemale
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]   Class:      NPCPuppet
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]   RecordID:   Character.HomelessFemale
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]   EntityHash: 10058083ULL
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]   Type:       NPC=true Device=false
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]   Distance:   2.90 m
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]   Available NPC hacks: 41
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [ 1] Overheat                       (BaseStatusEffect.Overheat) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [ 2] Burning                        (BaseStatusEffect.Burning) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [ 3] Blind                          (BaseStatusEffect.Blind) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [ 4] Stun                           (BaseStatusEffect.Stun) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [ 5] Ping                           (BaseStatusEffect.Ping) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [ 6] Pain                           (BaseStatusEffect.Pain) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [ 7] NPCForceStagger                (BaseStatusEffect.NPCForceStagger) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [ 8] LocomotionMalfunction          (BaseStatusEffect.LocomotionMalfunction) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [ 9] CyberwareMalfunction           (BaseStatusEffect.CyberwareMalfunction) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [10] CW Malfunction Blackwall       (BaseStatusEffect.CyberwareMalfunctionBlackwall) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [11] Madness                        (BaseStatusEffect.Madness) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [12] BlackwallHackUpload            (BaseStatusEffect.SoMi_Q306_BlackwallHackUpload) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [13] Contagion Poison               (BaseStatusEffect.ContagionPoison) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [14] Base Contagion Poison          (BaseStatusEffect.BaseContagionPoison) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [15] EMP                            (BaseStatusEffect.EMP) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [16] Base EMP                       (BaseStatusEffect.BaseEMP) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [17] QuickHack Blind                (BaseStatusEffect.QuickHackBlind) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [18] Base QuickHack Blind           (BaseStatusEffect.BaseQuickHackBlind) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [19] Poisoned                       (BaseStatusEffect.Poisoned) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [20] Base BrainMelt                 (BaseStatusEffect.BaseBrainMelt) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [21] Base CommsNoise                (BaseStatusEffect.BaseCommsNoise) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [22] Base Overheat                  (BaseStatusEffect.BaseOverheat) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [23] Locomotion Lvl2                (BaseStatusEffect.LocomotionMalfunctionLevel2) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [24] Locomotion Lvl3                (BaseStatusEffect.LocomotionMalfunctionLevel3) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [25] Locomotion Lvl4                (BaseStatusEffect.LocomotionMalfunctionLevel4) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [26] CW Malfunction Lvl1            (BaseStatusEffect.CyberwareMalfunctionLvl1) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [27] CW Malfunction Lvl2            (BaseStatusEffect.CyberwareMalfunctionLvl2) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [28] CW Malfunction Lvl3            (BaseStatusEffect.CyberwareMalfunctionLvl3) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [29] CW Malfunction Lvl4            (BaseStatusEffect.CyberwareMalfunctionLvl4) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [30] Overheat Lvl1                  (BaseStatusEffect.OverheatLevel1) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [31] Overheat Lvl2                  (BaseStatusEffect.OverheatLevel2) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [32] Overheat Lvl3                  (BaseStatusEffect.OverheatLevel3) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [33] Overheat Lvl4                  (BaseStatusEffect.OverheatLevel4) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [34] Ping Lvl2                      (BaseStatusEffect.PingLevel2) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [35] Ping Lvl3                      (BaseStatusEffect.PingLevel3) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [36] Ping Lvl4                      (BaseStatusEffect.PingLevel4) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [37] Moderate Blind                 (BaseStatusEffect.ModerateBlind) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [38] Major Blind                    (BaseStatusEffect.MajorBlind) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [39] Minor Blind                    (BaseStatusEffect.MinorBlind) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [40] Legendary Blind                (BaseStatusEffect.LegendaryEffectBlind) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]     [41] Major QH Blind                 (BaseStatusEffect.MajorQuickHackBlind) [VALID]
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3] === APPLY [15/41]: EMP -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:38:20 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 2
+[2026-07-28 22:38:27 UTC-05:00] [12632] [SETester3] === APPLY [35/41]: Ping Lvl3 -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:27 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.PingLevel3)
+[2026-07-28 22:38:27 UTC-05:00] [12632] [SETester3]   Attempts on 'Ping Lvl3': 2
+[2026-07-28 22:38:29 UTC-05:00] [12632] [SETester3] === APPLY [34/41]: Ping Lvl2 -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:29 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.PingLevel2)
+[2026-07-28 22:38:29 UTC-05:00] [12632] [SETester3]   Attempts on 'Ping Lvl2': 3
+[2026-07-28 22:38:31 UTC-05:00] [12632] [SETester3] === APPLY [6/41]: Pain -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:31 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Pain)
+[2026-07-28 22:38:31 UTC-05:00] [12632] [SETester3]   Attempts on 'Pain': 1
+[2026-07-28 22:38:33 UTC-05:00] [12632] [SETester3] === APPLY [19/41]: Poisoned -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:33 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Poisoned)
+[2026-07-28 22:38:33 UTC-05:00] [12632] [SETester3]   Attempts on 'Poisoned': 1
+[2026-07-28 22:38:36 UTC-05:00] [12632] [SETester3] === APPLY [2/41]: Burning -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:36 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Burning)
+[2026-07-28 22:38:36 UTC-05:00] [12632] [SETester3]   Attempts on 'Burning': 1
+[2026-07-28 22:38:39 UTC-05:00] [12632] [SETester3] === APPLY [27/41]: CW Malfunction Lvl2 -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:39 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.CyberwareMalfunctionLvl2)
+[2026-07-28 22:38:39 UTC-05:00] [12632] [SETester3]   Attempts on 'CW Malfunction Lvl2': 1
+[2026-07-28 22:38:41 UTC-05:00] [12632] [SETester3] === APPLY [19/41]: Poisoned -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:41 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Poisoned)
+[2026-07-28 22:38:41 UTC-05:00] [12632] [SETester3]   Attempts on 'Poisoned': 2
+[2026-07-28 22:38:44 UTC-05:00] [12632] [SETester3] === APPLY [35/41]: Ping Lvl3 -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:44 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.PingLevel3)
+[2026-07-28 22:38:44 UTC-05:00] [12632] [SETester3]   Attempts on 'Ping Lvl3': 3
+[2026-07-28 22:38:46 UTC-05:00] [12632] [SETester3] === APPLY [5/41]: Ping -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:46 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Ping)
+[2026-07-28 22:38:46 UTC-05:00] [12632] [SETester3]   Attempts on 'Ping': 2
+[2026-07-28 22:38:47 UTC-05:00] [12632] [SETester3] === APPLY [20/41]: Base BrainMelt -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:47 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseBrainMelt)
+[2026-07-28 22:38:47 UTC-05:00] [12632] [SETester3]   Attempts on 'Base BrainMelt': 2
+[2026-07-28 22:38:51 UTC-05:00] [12632] [SETester3] === APPLY [5/41]: Ping -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:51 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Ping)
+[2026-07-28 22:38:51 UTC-05:00] [12632] [SETester3]   Attempts on 'Ping': 3
+[2026-07-28 22:38:53 UTC-05:00] [12632] [SETester3] === APPLY [21/41]: Base CommsNoise -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:53 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseCommsNoise)
+[2026-07-28 22:38:53 UTC-05:00] [12632] [SETester3]   Attempts on 'Base CommsNoise': 2
+[2026-07-28 22:38:54 UTC-05:00] [12632] [SETester3] === APPLY [28/41]: CW Malfunction Lvl3 -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:54 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.CyberwareMalfunctionLvl3)
+[2026-07-28 22:38:54 UTC-05:00] [12632] [SETester3]   Attempts on 'CW Malfunction Lvl3': 1
+[2026-07-28 22:38:56 UTC-05:00] [12632] [SETester3] === APPLY [38/41]: Major Blind -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:56 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.MajorBlind)
+[2026-07-28 22:38:56 UTC-05:00] [12632] [SETester3]   Attempts on 'Major Blind': 1
+[2026-07-28 22:38:57 UTC-05:00] [12632] [SETester3] === APPLY [37/41]: Moderate Blind -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:57 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.ModerateBlind)
+[2026-07-28 22:38:57 UTC-05:00] [12632] [SETester3]   Attempts on 'Moderate Blind': 2
+[2026-07-28 22:38:59 UTC-05:00] [12632] [SETester3] === APPLY [3/41]: Blind -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:38:59 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Blind)
+[2026-07-28 22:38:59 UTC-05:00] [12632] [SETester3]   Attempts on 'Blind': 2
+[2026-07-28 22:39:01 UTC-05:00] [12632] [SETester3] === APPLY [12/41]: BlackwallHackUpload -> Character.HomelessFemale (class=NPCPuppet, recordID=Character.HomelessFemale) ===
+[2026-07-28 22:39:01 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.SoMi_Q306_BlackwallHackUpload)
+[2026-07-28 22:39:01 UTC-05:00] [12632] [SETester3]   Attempts on 'BlackwallHackUpload': 2
+[2026-07-28 22:43:16 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=CleaningMachine, recordID=<unknown>) ===
+[2026-07-28 22:43:16 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:43:16 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 12
+[2026-07-28 22:43:17 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=CleaningMachine, recordID=<unknown>) ===
+[2026-07-28 22:43:17 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:43:17 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 12
+[2026-07-28 22:43:17 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=CleaningMachine, recordID=<unknown>) ===
+[2026-07-28 22:43:17 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:43:17 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 13
+[2026-07-28 22:43:18 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=CleaningMachine, recordID=<unknown>) ===
+[2026-07-28 22:43:18 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:43:18 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 13
+[2026-07-28 22:43:18 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=CleaningMachine, recordID=<unknown>) ===
+[2026-07-28 22:43:18 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:43:18 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 14
+[2026-07-28 22:43:19 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=CleaningMachine, recordID=<unknown>) ===
+[2026-07-28 22:43:19 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:43:19 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 12
+[2026-07-28 22:43:52 UTC-05:00] [12632] [SETester3] === APPLY [23/41]: Locomotion Lvl2 -> Character.prevention_police_handgun_ma (class=NPCPuppet, recordID=Character.prevention_police_handgun_ma) ===
+[2026-07-28 22:43:52 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.LocomotionMalfunctionLevel2)
+[2026-07-28 22:43:52 UTC-05:00] [12632] [SETester3]   Attempts on 'Locomotion Lvl2': 1
+[2026-07-28 22:43:54 UTC-05:00] [12632] [SETester3] === APPLY [40/41]: Legendary Blind -> Character.prevention_police_handgun_ma (class=NPCPuppet, recordID=Character.prevention_police_handgun_ma) ===
+[2026-07-28 22:43:54 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.LegendaryEffectBlind)
+[2026-07-28 22:43:54 UTC-05:00] [12632] [SETester3]   Attempts on 'Legendary Blind': 1
+[2026-07-28 22:43:55 UTC-05:00] [12632] [SETester3] === APPLY [10/41]: CW Malfunction Blackwall -> Character.prevention_police_handgun_ma (class=NPCPuppet, recordID=Character.prevention_police_handgun_ma) ===
+[2026-07-28 22:43:55 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.CyberwareMalfunctionBlackwall)
+[2026-07-28 22:43:55 UTC-05:00] [12632] [SETester3]   Attempts on 'CW Malfunction Blackwall': 1
+[2026-07-28 22:43:56 UTC-05:00] [12632] [SETester3] === APPLY [40/41]: Legendary Blind -> Character.prevention_police_handgun_ma (class=NPCPuppet, recordID=Character.prevention_police_handgun_ma) ===
+[2026-07-28 22:43:56 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.LegendaryEffectBlind)
+[2026-07-28 22:43:56 UTC-05:00] [12632] [SETester3]   Attempts on 'Legendary Blind': 2
+[2026-07-28 22:43:57 UTC-05:00] [12632] [SETester3] === APPLY [22/41]: Base Overheat -> Character.prevention_police_handgun_ma (class=NPCPuppet, recordID=Character.prevention_police_handgun_ma) ===
+[2026-07-28 22:43:57 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverheat)
+[2026-07-28 22:43:57 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overheat': 1
+[2026-07-28 22:43:59 UTC-05:00] [12632] [SETester3] === APPLY [27/41]: CW Malfunction Lvl2 -> Character.prevention_police_handgun_ma (class=NPCPuppet, recordID=Character.prevention_police_handgun_ma) ===
+[2026-07-28 22:43:59 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.CyberwareMalfunctionLvl2)
+[2026-07-28 22:43:59 UTC-05:00] [12632] [SETester3]   Attempts on 'CW Malfunction Lvl2': 2
+[2026-07-28 22:44:00 UTC-05:00] [12632] [SETester3] === APPLY [10/41]: CW Malfunction Blackwall -> Character.prevention_police_handgun_ma (class=NPCPuppet, recordID=Character.prevention_police_handgun_ma) ===
+[2026-07-28 22:44:00 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.CyberwareMalfunctionBlackwall)
+[2026-07-28 22:44:00 UTC-05:00] [12632] [SETester3]   Attempts on 'CW Malfunction Blackwall': 2
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3] === NEW ENTITY REPORT ===
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]   Name:       Character.lch_maelstrom_grunt1_ranged1_lexington_ma
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]   Class:      NPCPuppet
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]   RecordID:   Character.lch_maelstrom_grunt1_ranged1_lexington_ma
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]   EntityHash: 9002138ULL
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]   Type:       NPC=true Device=false
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]   Distance:   19.54 m
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]   Available NPC hacks: 41
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [ 1] Overheat                       (BaseStatusEffect.Overheat) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [ 2] Burning                        (BaseStatusEffect.Burning) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [ 3] Blind                          (BaseStatusEffect.Blind) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [ 4] Stun                           (BaseStatusEffect.Stun) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [ 5] Ping                           (BaseStatusEffect.Ping) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [ 6] Pain                           (BaseStatusEffect.Pain) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [ 7] NPCForceStagger                (BaseStatusEffect.NPCForceStagger) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [ 8] LocomotionMalfunction          (BaseStatusEffect.LocomotionMalfunction) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [ 9] CyberwareMalfunction           (BaseStatusEffect.CyberwareMalfunction) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [10] CW Malfunction Blackwall       (BaseStatusEffect.CyberwareMalfunctionBlackwall) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [11] Madness                        (BaseStatusEffect.Madness) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [12] BlackwallHackUpload            (BaseStatusEffect.SoMi_Q306_BlackwallHackUpload) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [13] Contagion Poison               (BaseStatusEffect.ContagionPoison) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [14] Base Contagion Poison          (BaseStatusEffect.BaseContagionPoison) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [15] EMP                            (BaseStatusEffect.EMP) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [16] Base EMP                       (BaseStatusEffect.BaseEMP) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [17] QuickHack Blind                (BaseStatusEffect.QuickHackBlind) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [18] Base QuickHack Blind           (BaseStatusEffect.BaseQuickHackBlind) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [19] Poisoned                       (BaseStatusEffect.Poisoned) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [20] Base BrainMelt                 (BaseStatusEffect.BaseBrainMelt) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [21] Base CommsNoise                (BaseStatusEffect.BaseCommsNoise) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [22] Base Overheat                  (BaseStatusEffect.BaseOverheat) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [23] Locomotion Lvl2                (BaseStatusEffect.LocomotionMalfunctionLevel2) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [24] Locomotion Lvl3                (BaseStatusEffect.LocomotionMalfunctionLevel3) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [25] Locomotion Lvl4                (BaseStatusEffect.LocomotionMalfunctionLevel4) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [26] CW Malfunction Lvl1            (BaseStatusEffect.CyberwareMalfunctionLvl1) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [27] CW Malfunction Lvl2            (BaseStatusEffect.CyberwareMalfunctionLvl2) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [28] CW Malfunction Lvl3            (BaseStatusEffect.CyberwareMalfunctionLvl3) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [29] CW Malfunction Lvl4            (BaseStatusEffect.CyberwareMalfunctionLvl4) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [30] Overheat Lvl1                  (BaseStatusEffect.OverheatLevel1) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [31] Overheat Lvl2                  (BaseStatusEffect.OverheatLevel2) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [32] Overheat Lvl3                  (BaseStatusEffect.OverheatLevel3) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [33] Overheat Lvl4                  (BaseStatusEffect.OverheatLevel4) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [34] Ping Lvl2                      (BaseStatusEffect.PingLevel2) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [35] Ping Lvl3                      (BaseStatusEffect.PingLevel3) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [36] Ping Lvl4                      (BaseStatusEffect.PingLevel4) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [37] Moderate Blind                 (BaseStatusEffect.ModerateBlind) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [38] Major Blind                    (BaseStatusEffect.MajorBlind) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [39] Minor Blind                    (BaseStatusEffect.MinorBlind) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [40] Legendary Blind                (BaseStatusEffect.LegendaryEffectBlind) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]     [41] Major QH Blind                 (BaseStatusEffect.MajorQuickHackBlind) [VALID]
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3] === APPLY [31/41]: Overheat Lvl2 -> Character.lch_maelstrom_grunt1_ranged1_lexington_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_lexington_ma) ===
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverheatLevel2)
+[2026-07-28 22:44:08 UTC-05:00] [12632] [SETester3]   Attempts on 'Overheat Lvl2': 2
+[2026-07-28 22:44:10 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=forklift, recordID=<unknown>) ===
+[2026-07-28 22:44:10 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:44:10 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 13
+[2026-07-28 22:44:11 UTC-05:00] [12632] [SETester3] === APPLY [18/41]: Base QuickHack Blind -> Character.lch_maelstrom_grunt1_ranged1_lexington_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_lexington_ma) ===
+[2026-07-28 22:44:11 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseQuickHackBlind)
+[2026-07-28 22:44:11 UTC-05:00] [12632] [SETester3]   Attempts on 'Base QuickHack Blind': 1
+[2026-07-28 22:44:14 UTC-05:00] [12632] [SETester3] === APPLY [11/41]: Madness -> Character.lch_maelstrom_grunt1_ranged1_lexington_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_lexington_ma) ===
+[2026-07-28 22:44:14 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Madness)
+[2026-07-28 22:44:14 UTC-05:00] [12632] [SETester3]   Attempts on 'Madness': 1
+[2026-07-28 22:44:16 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=forklift, recordID=<unknown>) ===
+[2026-07-28 22:44:16 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:44:16 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 13
+[2026-07-28 22:44:18 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=forklift, recordID=<unknown>) ===
+[2026-07-28 22:44:18 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:44:18 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 14
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3] === NEW ENTITY REPORT ===
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]   Name:       Character.lch_maelstrom_grunt2_ranged2_ajax_ma
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]   Class:      NPCPuppet
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]   RecordID:   Character.lch_maelstrom_grunt2_ranged2_ajax_ma
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]   EntityHash: 9002135ULL
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]   Type:       NPC=true Device=false
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]   Distance:   31.34 m
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]   Available NPC hacks: 41
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [ 1] Overheat                       (BaseStatusEffect.Overheat) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [ 2] Burning                        (BaseStatusEffect.Burning) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [ 3] Blind                          (BaseStatusEffect.Blind) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [ 4] Stun                           (BaseStatusEffect.Stun) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [ 5] Ping                           (BaseStatusEffect.Ping) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [ 6] Pain                           (BaseStatusEffect.Pain) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [ 7] NPCForceStagger                (BaseStatusEffect.NPCForceStagger) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [ 8] LocomotionMalfunction          (BaseStatusEffect.LocomotionMalfunction) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [ 9] CyberwareMalfunction           (BaseStatusEffect.CyberwareMalfunction) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [10] CW Malfunction Blackwall       (BaseStatusEffect.CyberwareMalfunctionBlackwall) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [11] Madness                        (BaseStatusEffect.Madness) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [12] BlackwallHackUpload            (BaseStatusEffect.SoMi_Q306_BlackwallHackUpload) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [13] Contagion Poison               (BaseStatusEffect.ContagionPoison) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [14] Base Contagion Poison          (BaseStatusEffect.BaseContagionPoison) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [15] EMP                            (BaseStatusEffect.EMP) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [16] Base EMP                       (BaseStatusEffect.BaseEMP) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [17] QuickHack Blind                (BaseStatusEffect.QuickHackBlind) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [18] Base QuickHack Blind           (BaseStatusEffect.BaseQuickHackBlind) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [19] Poisoned                       (BaseStatusEffect.Poisoned) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [20] Base BrainMelt                 (BaseStatusEffect.BaseBrainMelt) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [21] Base CommsNoise                (BaseStatusEffect.BaseCommsNoise) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [22] Base Overheat                  (BaseStatusEffect.BaseOverheat) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [23] Locomotion Lvl2                (BaseStatusEffect.LocomotionMalfunctionLevel2) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [24] Locomotion Lvl3                (BaseStatusEffect.LocomotionMalfunctionLevel3) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [25] Locomotion Lvl4                (BaseStatusEffect.LocomotionMalfunctionLevel4) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [26] CW Malfunction Lvl1            (BaseStatusEffect.CyberwareMalfunctionLvl1) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [27] CW Malfunction Lvl2            (BaseStatusEffect.CyberwareMalfunctionLvl2) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [28] CW Malfunction Lvl3            (BaseStatusEffect.CyberwareMalfunctionLvl3) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [29] CW Malfunction Lvl4            (BaseStatusEffect.CyberwareMalfunctionLvl4) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [30] Overheat Lvl1                  (BaseStatusEffect.OverheatLevel1) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [31] Overheat Lvl2                  (BaseStatusEffect.OverheatLevel2) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [32] Overheat Lvl3                  (BaseStatusEffect.OverheatLevel3) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [33] Overheat Lvl4                  (BaseStatusEffect.OverheatLevel4) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [34] Ping Lvl2                      (BaseStatusEffect.PingLevel2) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [35] Ping Lvl3                      (BaseStatusEffect.PingLevel3) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [36] Ping Lvl4                      (BaseStatusEffect.PingLevel4) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [37] Moderate Blind                 (BaseStatusEffect.ModerateBlind) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [38] Major Blind                    (BaseStatusEffect.MajorBlind) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [39] Minor Blind                    (BaseStatusEffect.MinorBlind) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [40] Legendary Blind                (BaseStatusEffect.LegendaryEffectBlind) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]     [41] Major QH Blind                 (BaseStatusEffect.MajorQuickHackBlind) [VALID]
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3] === APPLY [11/41]: Madness -> Character.lch_maelstrom_grunt2_ranged2_ajax_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt2_ranged2_ajax_ma) ===
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Madness)
+[2026-07-28 22:44:46 UTC-05:00] [12632] [SETester3]   Attempts on 'Madness': 2
+[2026-07-28 22:46:33 UTC-05:00] [12632] [SETester3] === APPLY [41/41]: Major QH Blind -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:46:33 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.MajorQuickHackBlind)
+[2026-07-28 22:46:33 UTC-05:00] [12632] [SETester3]   Attempts on 'Major QH Blind': 1
+[2026-07-28 22:46:40 UTC-05:00] [12632] [SETester3] === APPLY [33/41]: Overheat Lvl4 -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:46:40 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverheatLevel4)
+[2026-07-28 22:46:40 UTC-05:00] [12632] [SETester3]   Attempts on 'Overheat Lvl4': 1
+[2026-07-28 22:46:54 UTC-05:00] [12632] [SETester3] Target 'Vehicle.hackable_villefort_columbus' is neither NPC nor Device (class=vehicleCarBaseObject)
+[2026-07-28 22:47:16 UTC-05:00] [12632] [SETester3] === APPLY [8/41]: LocomotionMalfunction -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:47:16 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.LocomotionMalfunction)
+[2026-07-28 22:47:16 UTC-05:00] [12632] [SETester3]   Attempts on 'LocomotionMalfunction': 1
+[2026-07-28 22:47:22 UTC-05:00] [12632] [SETester3] === APPLY [17/41]: QuickHack Blind -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:47:22 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.QuickHackBlind)
+[2026-07-28 22:47:22 UTC-05:00] [12632] [SETester3]   Attempts on 'QuickHack Blind': 1
+[2026-07-28 22:47:29 UTC-05:00] [12632] [SETester3] === APPLY [33/41]: Overheat Lvl4 -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:47:29 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverheatLevel4)
+[2026-07-28 22:47:29 UTC-05:00] [12632] [SETester3]   Attempts on 'Overheat Lvl4': 2
+[2026-07-28 22:47:38 UTC-05:00] [12632] [SETester3] === APPLY [41/41]: Major QH Blind -> Character.lch_maelstrom_grunt2_ranged2_ajax_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt2_ranged2_ajax_ma) ===
+[2026-07-28 22:47:38 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.MajorQuickHackBlind)
+[2026-07-28 22:47:38 UTC-05:00] [12632] [SETester3]   Attempts on 'Major QH Blind': 2
+[2026-07-28 22:47:44 UTC-05:00] [12632] [SETester3] === APPLY [33/41]: Overheat Lvl4 -> Character.lch_maelstrom_grunt2_ranged2_ajax_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt2_ranged2_ajax_ma) ===
+[2026-07-28 22:47:44 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverheatLevel4)
+[2026-07-28 22:47:44 UTC-05:00] [12632] [SETester3]   Attempts on 'Overheat Lvl4': 3
+[2026-07-28 22:47:49 UTC-05:00] [12632] [SETester3] === APPLY [4/41]: Stun -> Character.lch_maelstrom_grunt2_ranged2_ajax_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt2_ranged2_ajax_ma) ===
+[2026-07-28 22:47:49 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Stun)
+[2026-07-28 22:47:49 UTC-05:00] [12632] [SETester3]   Attempts on 'Stun': 1
+[2026-07-28 22:47:57 UTC-05:00] [12632] [SETester3] === APPLY [40/41]: Legendary Blind -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:47:57 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.LegendaryEffectBlind)
+[2026-07-28 22:47:57 UTC-05:00] [12632] [SETester3]   Attempts on 'Legendary Blind': 3
+[2026-07-28 22:48:03 UTC-05:00] [12632] [SETester3] === APPLY [15/41]: EMP -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:48:03 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:48:03 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 3
+[2026-07-28 22:48:11 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:48:11 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 22:48:11 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 13
+[2026-07-28 22:48:37 UTC-05:00] [12632] [SETester3] === APPLY [17/41]: QuickHack Blind -> Character.lch_maelstrom_grunt2_ranged2_ajax_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt2_ranged2_ajax_ma) ===
+[2026-07-28 22:48:37 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.QuickHackBlind)
+[2026-07-28 22:48:37 UTC-05:00] [12632] [SETester3]   Attempts on 'QuickHack Blind': 2
+[2026-07-28 22:48:42 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=ExplosiveDevice, recordID=<unknown>) ===
+[2026-07-28 22:48:42 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:48:42 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 14
+[2026-07-28 22:49:06 UTC-05:00] [12632] [SETester3] === APPLY [9/41]: CyberwareMalfunction -> Character.lch_maelstrom_grunt2_ranged2_ajax_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt2_ranged2_ajax_ma) ===
+[2026-07-28 22:49:06 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.CyberwareMalfunction)
+[2026-07-28 22:49:06 UTC-05:00] [12632] [SETester3]   Attempts on 'CyberwareMalfunction': 3
+[2026-07-28 22:49:25 UTC-05:00] [12632] [SETester3] === APPLY [6/41]: Pain -> Character.lch_maelstrom_grunt2_ranged2_ajax_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt2_ranged2_ajax_ma) ===
+[2026-07-28 22:49:25 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Pain)
+[2026-07-28 22:49:25 UTC-05:00] [12632] [SETester3]   Attempts on 'Pain': 2
+[2026-07-28 22:49:37 UTC-05:00] [12632] [SETester3] === APPLY [23/41]: Locomotion Lvl2 -> Character.lch_maelstrom_grunt2_ranged2_ajax_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt2_ranged2_ajax_ma) ===
+[2026-07-28 22:49:37 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.LocomotionMalfunctionLevel2)
+[2026-07-28 22:49:37 UTC-05:00] [12632] [SETester3]   Attempts on 'Locomotion Lvl2': 2
+[2026-07-28 22:49:43 UTC-05:00] [12632] [SETester3] === APPLY [14/41]: Base Contagion Poison -> Character.lch_maelstrom_grunt2_ranged2_ajax_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt2_ranged2_ajax_ma) ===
+[2026-07-28 22:49:43 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseContagionPoison)
+[2026-07-28 22:49:43 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Contagion Poison': 2
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3] === NEW ENTITY REPORT ===
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]   Name:       Character.lch_maelstom_strong_shotgun2_carnage_ma_rare
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]   Class:      NPCPuppet
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]   RecordID:   Character.lch_maelstom_strong_shotgun2_carnage_ma_rare
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]   EntityHash: 9002134ULL
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]   Type:       NPC=true Device=false
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]   Distance:   40.42 m
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]   Available NPC hacks: 41
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [ 1] Overheat                       (BaseStatusEffect.Overheat) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [ 2] Burning                        (BaseStatusEffect.Burning) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [ 3] Blind                          (BaseStatusEffect.Blind) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [ 4] Stun                           (BaseStatusEffect.Stun) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [ 5] Ping                           (BaseStatusEffect.Ping) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [ 6] Pain                           (BaseStatusEffect.Pain) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [ 7] NPCForceStagger                (BaseStatusEffect.NPCForceStagger) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [ 8] LocomotionMalfunction          (BaseStatusEffect.LocomotionMalfunction) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [ 9] CyberwareMalfunction           (BaseStatusEffect.CyberwareMalfunction) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [10] CW Malfunction Blackwall       (BaseStatusEffect.CyberwareMalfunctionBlackwall) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [11] Madness                        (BaseStatusEffect.Madness) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [12] BlackwallHackUpload            (BaseStatusEffect.SoMi_Q306_BlackwallHackUpload) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [13] Contagion Poison               (BaseStatusEffect.ContagionPoison) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [14] Base Contagion Poison          (BaseStatusEffect.BaseContagionPoison) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [15] EMP                            (BaseStatusEffect.EMP) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [16] Base EMP                       (BaseStatusEffect.BaseEMP) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [17] QuickHack Blind                (BaseStatusEffect.QuickHackBlind) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [18] Base QuickHack Blind           (BaseStatusEffect.BaseQuickHackBlind) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [19] Poisoned                       (BaseStatusEffect.Poisoned) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [20] Base BrainMelt                 (BaseStatusEffect.BaseBrainMelt) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [21] Base CommsNoise                (BaseStatusEffect.BaseCommsNoise) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [22] Base Overheat                  (BaseStatusEffect.BaseOverheat) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [23] Locomotion Lvl2                (BaseStatusEffect.LocomotionMalfunctionLevel2) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [24] Locomotion Lvl3                (BaseStatusEffect.LocomotionMalfunctionLevel3) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [25] Locomotion Lvl4                (BaseStatusEffect.LocomotionMalfunctionLevel4) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [26] CW Malfunction Lvl1            (BaseStatusEffect.CyberwareMalfunctionLvl1) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [27] CW Malfunction Lvl2            (BaseStatusEffect.CyberwareMalfunctionLvl2) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [28] CW Malfunction Lvl3            (BaseStatusEffect.CyberwareMalfunctionLvl3) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [29] CW Malfunction Lvl4            (BaseStatusEffect.CyberwareMalfunctionLvl4) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [30] Overheat Lvl1                  (BaseStatusEffect.OverheatLevel1) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [31] Overheat Lvl2                  (BaseStatusEffect.OverheatLevel2) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [32] Overheat Lvl3                  (BaseStatusEffect.OverheatLevel3) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [33] Overheat Lvl4                  (BaseStatusEffect.OverheatLevel4) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [34] Ping Lvl2                      (BaseStatusEffect.PingLevel2) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [35] Ping Lvl3                      (BaseStatusEffect.PingLevel3) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [36] Ping Lvl4                      (BaseStatusEffect.PingLevel4) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [37] Moderate Blind                 (BaseStatusEffect.ModerateBlind) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [38] Major Blind                    (BaseStatusEffect.MajorBlind) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [39] Minor Blind                    (BaseStatusEffect.MinorBlind) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [40] Legendary Blind                (BaseStatusEffect.LegendaryEffectBlind) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]     [41] Major QH Blind                 (BaseStatusEffect.MajorQuickHackBlind) [VALID]
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3] ========================================================
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3] === APPLY [36/41]: Ping Lvl4 -> Character.lch_maelstom_strong_shotgun2_carnage_ma_rare (class=NPCPuppet, recordID=Character.lch_maelstom_strong_shotgun2_carnage_ma_rare) ===
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.PingLevel4)
+[2026-07-28 22:49:57 UTC-05:00] [12632] [SETester3]   Attempts on 'Ping Lvl4': 1
+[2026-07-28 22:50:31 UTC-05:00] [12632] [SETester3] === APPLY [40/41]: Legendary Blind -> Character.lch_maelstrom_grunt2_ranged2_ajax_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt2_ranged2_ajax_ma) ===
+[2026-07-28 22:50:31 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.LegendaryEffectBlind)
+[2026-07-28 22:50:31 UTC-05:00] [12632] [SETester3]   Attempts on 'Legendary Blind': 4
+[2026-07-28 22:50:48 UTC-05:00] [12632] [SETester3] === APPLY [10/41]: CW Malfunction Blackwall -> Character.lch_maelstrom_grunt2_ranged2_ajax_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt2_ranged2_ajax_ma) ===
+[2026-07-28 22:50:48 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.CyberwareMalfunctionBlackwall)
+[2026-07-28 22:50:48 UTC-05:00] [12632] [SETester3]   Attempts on 'CW Malfunction Blackwall': 3
+[2026-07-28 22:51:13 UTC-05:00] [12632] [SETester3] === APPLY [20/41]: Base BrainMelt -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:51:13 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseBrainMelt)
+[2026-07-28 22:51:13 UTC-05:00] [12632] [SETester3]   Attempts on 'Base BrainMelt': 3
+[2026-07-28 22:51:51 UTC-05:00] [12632] [SETester3] === APPLY [30/41]: Overheat Lvl1 -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:51:51 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverheatLevel1)
+[2026-07-28 22:51:51 UTC-05:00] [12632] [SETester3]   Attempts on 'Overheat Lvl1': 4
+[2026-07-28 22:52:17 UTC-05:00] [12632] [SETester3] === APPLY [7/41]: NPCForceStagger -> Character.lch_maelstom_strong_shotgun2_carnage_ma_rare (class=NPCPuppet, recordID=Character.lch_maelstom_strong_shotgun2_carnage_ma_rare) ===
+[2026-07-28 22:52:17 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.NPCForceStagger)
+[2026-07-28 22:52:17 UTC-05:00] [12632] [SETester3]   Attempts on 'NPCForceStagger': 2
+[2026-07-28 22:52:24 UTC-05:00] [12632] [SETester3] === APPLY [39/41]: Minor Blind -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:52:24 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.MinorBlind)
+[2026-07-28 22:52:24 UTC-05:00] [12632] [SETester3]   Attempts on 'Minor Blind': 2
+[2026-07-28 22:52:39 UTC-05:00] [12632] [SETester3] === APPLY [37/41]: Moderate Blind -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:52:39 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.ModerateBlind)
+[2026-07-28 22:52:39 UTC-05:00] [12632] [SETester3]   Attempts on 'Moderate Blind': 3
+[2026-07-28 22:52:40 UTC-05:00] [12632] [SETester3] === APPLY [35/41]: Ping Lvl3 -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:52:40 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.PingLevel3)
+[2026-07-28 22:52:40 UTC-05:00] [12632] [SETester3]   Attempts on 'Ping Lvl3': 4
+[2026-07-28 22:52:43 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=ActivatedDeviceTrapDestruction, recordID=<unknown>) ===
+[2026-07-28 22:52:43 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:52:43 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 15
+[2026-07-28 22:52:56 UTC-05:00] [12632] [SETester3] === APPLY [11/41]: Madness -> Character.lch_maelstrom_grunt2_ranged2_ajax_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt2_ranged2_ajax_ma) ===
+[2026-07-28 22:52:56 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Madness)
+[2026-07-28 22:52:56 UTC-05:00] [12632] [SETester3]   Attempts on 'Madness': 3
+[2026-07-28 22:53:20 UTC-05:00] [12632] [SETester3] === APPLY [28/41]: CW Malfunction Lvl3 -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:53:20 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.CyberwareMalfunctionLvl3)
+[2026-07-28 22:53:20 UTC-05:00] [12632] [SETester3]   Attempts on 'CW Malfunction Lvl3': 2
+[2026-07-28 22:53:33 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=Radio, recordID=<unknown>) ===
+[2026-07-28 22:53:33 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:53:33 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 15
+[2026-07-28 22:53:34 UTC-05:00] [12632] [SETester3] === APPLY [17/41]: QuickHack Blind -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:53:34 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.QuickHackBlind)
+[2026-07-28 22:53:34 UTC-05:00] [12632] [SETester3]   Attempts on 'QuickHack Blind': 3
+[2026-07-28 22:53:37 UTC-05:00] [12632] [SETester3] === APPLY [41/41]: Major QH Blind -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:53:37 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.MajorQuickHackBlind)
+[2026-07-28 22:53:37 UTC-05:00] [12632] [SETester3]   Attempts on 'Major QH Blind': 3
+[2026-07-28 22:53:48 UTC-05:00] [12632] [SETester3] === APPLY [26/41]: CW Malfunction Lvl1 -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:53:48 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.CyberwareMalfunctionLvl1)
+[2026-07-28 22:53:48 UTC-05:00] [12632] [SETester3]   Attempts on 'CW Malfunction Lvl1': 1
+[2026-07-28 22:53:56 UTC-05:00] [12632] [SETester3] === APPLY [39/41]: Minor Blind -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:53:56 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.MinorBlind)
+[2026-07-28 22:53:56 UTC-05:00] [12632] [SETester3]   Attempts on 'Minor Blind': 3
+[2026-07-28 22:53:58 UTC-05:00] [12632] [SETester3] === APPLY [8/41]: LocomotionMalfunction -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:53:58 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.LocomotionMalfunction)
+[2026-07-28 22:53:58 UTC-05:00] [12632] [SETester3]   Attempts on 'LocomotionMalfunction': 2
+[2026-07-28 22:54:02 UTC-05:00] [12632] [SETester3] === APPLY [24/41]: Locomotion Lvl3 -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:54:02 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.LocomotionMalfunctionLevel3)
+[2026-07-28 22:54:02 UTC-05:00] [12632] [SETester3]   Attempts on 'Locomotion Lvl3': 2
+[2026-07-28 22:54:36 UTC-05:00] [12632] [SETester3] === APPLY [19/41]: Poisoned -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:54:36 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.Poisoned)
+[2026-07-28 22:54:36 UTC-05:00] [12632] [SETester3]   Attempts on 'Poisoned': 3
+[2026-07-28 22:54:57 UTC-05:00] [12632] [SETester3] === APPLY [22/41]: Base Overheat -> Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_maelstrom_grunt1_ranged1_copperhead_ma) ===
+[2026-07-28 22:54:57 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverheat)
+[2026-07-28 22:54:57 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overheat': 2
+[2026-07-28 22:56:40 UTC-05:00] [12632] [SETester3] Info window OFF
+[2026-07-28 22:58:38 UTC-05:00] [12632] [SETester3] Info window ON
+[2026-07-28 22:58:39 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=ActivatedDeviceTrapDestruction, recordID=<unknown>) ===
+[2026-07-28 22:58:39 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:58:39 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 14
+[2026-07-28 22:58:41 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=ActivatedDeviceTrapDestruction, recordID=<unknown>) ===
+[2026-07-28 22:58:41 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 22:58:41 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 16
+[2026-07-28 22:58:42 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=ActivatedDeviceTrapDestruction, recordID=<unknown>) ===
+[2026-07-28 22:58:42 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 22:58:42 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 15
+[2026-07-28 22:58:42 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=ActivatedDeviceTrapDestruction, recordID=<unknown>) ===
+[2026-07-28 22:58:42 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:58:42 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 15
+[2026-07-28 22:58:42 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=ActivatedDeviceTrapDestruction, recordID=<unknown>) ===
+[2026-07-28 22:58:42 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 22:58:42 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 16
+[2026-07-28 22:58:43 UTC-05:00] [12632] [SETester3] === APPLY [4/5]: Overload EMP -> <unknown> (class=ActivatedDeviceTrapDestruction, recordID=<unknown>) ===
+[2026-07-28 22:58:43 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.OverloadEMP)
+[2026-07-28 22:58:43 UTC-05:00] [12632] [SETester3]   Attempts on 'Overload EMP': 16
+[2026-07-28 22:58:46 UTC-05:00] [12632] [SETester3] Info window OFF
+[2026-07-28 23:01:02 UTC-05:00] [12632] [SETester3] Info window ON
+[2026-07-28 23:01:06 UTC-05:00] [12632] [SETester3] === APPLY [1/5]: Distraction Duration -> <unknown> (class=Reflector, recordID=<unknown>) ===
+[2026-07-28 23:01:06 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.DistractionDuration)
+[2026-07-28 23:01:06 UTC-05:00] [12632] [SETester3]   Attempts on 'Distraction Duration': 17
+[2026-07-28 23:01:07 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=Reflector, recordID=<unknown>) ===
+[2026-07-28 23:01:07 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 23:01:07 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 14
+[2026-07-28 23:01:07 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=Reflector, recordID=<unknown>) ===
+[2026-07-28 23:01:07 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 23:01:07 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 16
+[2026-07-28 23:01:07 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=Reflector, recordID=<unknown>) ===
+[2026-07-28 23:01:07 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 23:01:07 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 15
+[2026-07-28 23:01:07 UTC-05:00] [12632] [SETester3] === APPLY [2/5]: EMP -> <unknown> (class=Reflector, recordID=<unknown>) ===
+[2026-07-28 23:01:07 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.EMP)
+[2026-07-28 23:01:07 UTC-05:00] [12632] [SETester3]   Attempts on 'EMP': 16
+[2026-07-28 23:01:08 UTC-05:00] [12632] [SETester3] === APPLY [3/5]: Base EMP -> <unknown> (class=Reflector, recordID=<unknown>) ===
+[2026-07-28 23:01:08 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseEMP)
+[2026-07-28 23:01:08 UTC-05:00] [12632] [SETester3]   Attempts on 'Base EMP': 17
+[2026-07-28 23:01:08 UTC-05:00] [12632] [SETester3] === APPLY [5/5]: Base Overload -> <unknown> (class=Reflector, recordID=<unknown>) ===
+[2026-07-28 23:01:08 UTC-05:00] [12632] [SETester3]   Result: SUCCESS (BaseStatusEffect.BaseOverload)
+[2026-07-28 23:01:08 UTC-05:00] [12632] [SETester3]   Attempts on 'Base Overload': 17
+[2026-07-28 23:01:15 UTC-05:00] [12632] [SETester3] Info window OFF
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3] === Final Hack Attempt Statistics ===
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3] -- NPC Effects --
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Overheat                       BaseStatusEffect.Overheat: 1 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Burning                        BaseStatusEffect.Burning: 1 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Blind                          BaseStatusEffect.Blind: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Stun                           BaseStatusEffect.Stun: 1 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Ping                           BaseStatusEffect.Ping: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Pain                           BaseStatusEffect.Pain: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   NPCForceStagger                BaseStatusEffect.NPCForceStagger: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   LocomotionMalfunction          BaseStatusEffect.LocomotionMalfunction: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   CyberwareMalfunction           BaseStatusEffect.CyberwareMalfunction: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   CW Malfunction Blackwall       BaseStatusEffect.CyberwareMalfunctionBlackwall: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Madness                        BaseStatusEffect.Madness: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   BlackwallHackUpload            BaseStatusEffect.SoMi_Q306_BlackwallHackUpload: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Contagion Poison               BaseStatusEffect.ContagionPoison: 0 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Base Contagion Poison          BaseStatusEffect.BaseContagionPoison: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   EMP                            BaseStatusEffect.EMP: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Base EMP                       BaseStatusEffect.BaseEMP: 0 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   QuickHack Blind                BaseStatusEffect.QuickHackBlind: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Base QuickHack Blind           BaseStatusEffect.BaseQuickHackBlind: 1 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Poisoned                       BaseStatusEffect.Poisoned: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Base BrainMelt                 BaseStatusEffect.BaseBrainMelt: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Base CommsNoise                BaseStatusEffect.BaseCommsNoise: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Base Overheat                  BaseStatusEffect.BaseOverheat: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Locomotion Lvl2                BaseStatusEffect.LocomotionMalfunctionLevel2: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Locomotion Lvl3                BaseStatusEffect.LocomotionMalfunctionLevel3: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Locomotion Lvl4                BaseStatusEffect.LocomotionMalfunctionLevel4: 0 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   CW Malfunction Lvl1            BaseStatusEffect.CyberwareMalfunctionLvl1: 1 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   CW Malfunction Lvl2            BaseStatusEffect.CyberwareMalfunctionLvl2: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   CW Malfunction Lvl3            BaseStatusEffect.CyberwareMalfunctionLvl3: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   CW Malfunction Lvl4            BaseStatusEffect.CyberwareMalfunctionLvl4: 1 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Overheat Lvl1                  BaseStatusEffect.OverheatLevel1: 4 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Overheat Lvl2                  BaseStatusEffect.OverheatLevel2: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Overheat Lvl3                  BaseStatusEffect.OverheatLevel3: 2 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Overheat Lvl4                  BaseStatusEffect.OverheatLevel4: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Ping Lvl2                      BaseStatusEffect.PingLevel2: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Ping Lvl3                      BaseStatusEffect.PingLevel3: 4 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Ping Lvl4                      BaseStatusEffect.PingLevel4: 1 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Moderate Blind                 BaseStatusEffect.ModerateBlind: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Major Blind                    BaseStatusEffect.MajorBlind: 1 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Minor Blind                    BaseStatusEffect.MinorBlind: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Legendary Blind                BaseStatusEffect.LegendaryEffectBlind: 4 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Major QH Blind                 BaseStatusEffect.MajorQuickHackBlind: 3 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3] -- Device Effects --
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Distraction Duration           BaseStatusEffect.DistractionDuration: 17 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   EMP                            BaseStatusEffect.EMP: 16 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Base EMP                       BaseStatusEffect.BaseEMP: 17 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Overload EMP                   BaseStatusEffect.OverloadEMP: 16 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3]   Base Overload                  BaseStatusEffect.BaseOverload: 17 attempts
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3] -- Totals: NPC=87 Device=83 --
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3] === End Statistics ===
+[2026-07-28 23:04:54 UTC-05:00] [12632] [SETester3] Status Effect Tester 3 shut down

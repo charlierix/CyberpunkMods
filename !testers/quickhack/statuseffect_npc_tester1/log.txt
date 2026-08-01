@@ -1,0 +1,478 @@
+[2026-07-31 14:50:47 UTC-05:00] [27716] [SENpcT1] Status Effect NPC Tester 1 initialized
+[2026-07-31 14:50:47 UTC-05:00] [27716] [SENpcT1]   Effects to test: 25
+[2026-07-31 14:50:47 UTC-05:00] [27716] [SENpcT1]   Hotkeys: SE_NPC1_TOGGLE_WINDOW, SE_NPC1_APPLY
+[2026-07-31 14:50:47 UTC-05:00] [27716] [SENpcT1]   Bind in Settings > Key Bindings > SENpcT1
+[2026-07-31 14:50:47 UTC-05:00] [27716] [SENpcT1] 
+[2026-07-31 14:50:47 UTC-05:00] [27716] [SENpcT1] Usage: Look at NPC, press APPLY for random weighted effect.
+[2026-07-31 14:50:47 UTC-05:00] [27716] [SENpcT1]        Toggle window to see target details and coverage stats.
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1] === Final Effect Statistics ===
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   QH Overheat                      [qh_attack] Attacks.QuickHack.Overheat: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   QH Contagion                     [qh_attack] Attacks.QuickHack.Contagion: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   QH ShortCircuit                  [qh_attack] Attacks.QuickHack.ShortCircuit: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   QH Suicide                       [qh_attack] Attacks.QuickHack.Suicide: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   QH CyberPsychosis                [qh_attack] Attacks.QuickHack.CyberPsychosis: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Base Overheat                    [base_se] BaseStatusEffect.Overheat: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Base Burning                     [base_se] BaseStatusEffect.Burning: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Base ContagionPoison             [base_se] BaseStatusEffect.ContagionPoison: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Base EMP                         [base_se] BaseStatusEffect.EMP: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Base Stun                        [base_se] BaseStatusEffect.Stun: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Base Blind                       [base_se] BaseStatusEffect.Blind: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Base Madness                     [base_se] BaseStatusEffect.Madness: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Base Ping                        [base_se] BaseStatusEffect.Ping: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Base LocomotionMalfunction       [base_se] BaseStatusEffect.LocomotionMalfunction: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Base CyberwareMalfunction        [base_se] BaseStatusEffect.CyberwareMalfunction: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Base NPCForceStagger             [base_se] BaseStatusEffect.NPCForceStagger: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Blackwall HackUpload             [blackwall] BaseStatusEffect.SoMi_Q306_BlackwallHackUpload: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Blackwall CWMalfunction          [blackwall] BaseStatusEffect.CyberwareMalfunctionBlackwall: 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Hit Physical 100                 [hit_event] (code): 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Hit Thermal 100                  [hit_event] (code): 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Hit Chemical 100                 [hit_event] (code): 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Hit EMP 100                      [hit_event] (code): 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Hit Mixed 50each                 [hit_event] (code): 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Hit Physical 500                 [hit_event] (code): 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   StatPool Health 0 + Collapse     [statpool] (code): 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1] -- Coverage: 0/25 tried (0%) --
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1] === End Statistics ===
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1] Status Effect NPC Tester 1 shut down
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1] Status Effect NPC Tester 1 initialized
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Effects to test: 25
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Hotkeys: SE_NPC1_TOGGLE_WINDOW, SE_NPC1_APPLY
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]   Bind in Settings > Key Bindings > SENpcT1
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1] 
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1] Usage: Look at NPC, press APPLY for random weighted effect.
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SENpcT1]        Toggle window to see target details and coverage stats.
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1] === Final Effect Statistics ===
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   QH Overheat                      [qh_attack] Attacks.QuickHack.Overheat: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   QH Contagion                     [qh_attack] Attacks.QuickHack.Contagion: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   QH ShortCircuit                  [qh_attack] Attacks.QuickHack.ShortCircuit: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   QH Suicide                       [qh_attack] Attacks.QuickHack.Suicide: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   QH CyberPsychosis                [qh_attack] Attacks.QuickHack.CyberPsychosis: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Base Overheat                    [base_se] BaseStatusEffect.Overheat: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Base Burning                     [base_se] BaseStatusEffect.Burning: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Base ContagionPoison             [base_se] BaseStatusEffect.ContagionPoison: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Base EMP                         [base_se] BaseStatusEffect.EMP: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Base Stun                        [base_se] BaseStatusEffect.Stun: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Base Blind                       [base_se] BaseStatusEffect.Blind: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Base Madness                     [base_se] BaseStatusEffect.Madness: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Base Ping                        [base_se] BaseStatusEffect.Ping: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Base LocomotionMalfunction       [base_se] BaseStatusEffect.LocomotionMalfunction: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Base CyberwareMalfunction        [base_se] BaseStatusEffect.CyberwareMalfunction: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Base NPCForceStagger             [base_se] BaseStatusEffect.NPCForceStagger: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Blackwall HackUpload             [blackwall] BaseStatusEffect.SoMi_Q306_BlackwallHackUpload: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Blackwall CWMalfunction          [blackwall] BaseStatusEffect.CyberwareMalfunctionBlackwall: 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Hit Physical 100                 [hit_event] (code): 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Hit Thermal 100                  [hit_event] (code): 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Hit Chemical 100                 [hit_event] (code): 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Hit EMP 100                      [hit_event] (code): 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Hit Mixed 50each                 [hit_event] (code): 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Hit Physical 500                 [hit_event] (code): 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   StatPool Health 0 + Collapse     [statpool] (code): 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1] -- Coverage: 0/25 tried (0%) --
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1] === End Statistics ===
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1] Status Effect NPC Tester 1 shut down
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1] Status Effect NPC Tester 1 initialized
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Effects to test: 25
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Hotkeys: SE_NPC1_TOGGLE_WINDOW, SE_NPC1_APPLY
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]   Bind in Settings > Key Bindings > SENpcT1
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1] 
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1] Usage: Look at NPC, press APPLY for random weighted effect.
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SENpcT1]        Toggle window to see target details and coverage stats.
+[2026-07-31 15:07:36 UTC-05:00] [8996] [SENpcT1] Info window ON
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1] === Final Effect Statistics ===
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   QH Overheat                      [qh_attack] Attacks.QuickHack.Overheat: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   QH Contagion                     [qh_attack] Attacks.QuickHack.Contagion: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   QH ShortCircuit                  [qh_attack] Attacks.QuickHack.ShortCircuit: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   QH Suicide                       [qh_attack] Attacks.QuickHack.Suicide: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   QH CyberPsychosis                [qh_attack] Attacks.QuickHack.CyberPsychosis: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Base Overheat                    [base_se] BaseStatusEffect.Overheat: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Base Burning                     [base_se] BaseStatusEffect.Burning: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Base ContagionPoison             [base_se] BaseStatusEffect.ContagionPoison: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Base EMP                         [base_se] BaseStatusEffect.EMP: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Base Stun                        [base_se] BaseStatusEffect.Stun: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Base Blind                       [base_se] BaseStatusEffect.Blind: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Base Madness                     [base_se] BaseStatusEffect.Madness: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Base Ping                        [base_se] BaseStatusEffect.Ping: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Base LocomotionMalfunction       [base_se] BaseStatusEffect.LocomotionMalfunction: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Base CyberwareMalfunction        [base_se] BaseStatusEffect.CyberwareMalfunction: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Base NPCForceStagger             [base_se] BaseStatusEffect.NPCForceStagger: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Blackwall HackUpload             [blackwall] BaseStatusEffect.SoMi_Q306_BlackwallHackUpload: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Blackwall CWMalfunction          [blackwall] BaseStatusEffect.CyberwareMalfunctionBlackwall: 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Hit Physical 100                 [hit_event] (code): 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Hit Thermal 100                  [hit_event] (code): 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Hit Chemical 100                 [hit_event] (code): 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Hit EMP 100                      [hit_event] (code): 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Hit Mixed 50each                 [hit_event] (code): 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Hit Physical 500                 [hit_event] (code): 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   StatPool Health 0 + Collapse     [statpool] (code): 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1] -- Coverage: 0/25 tried (0%) --
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1] === End Statistics ===
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1] Status Effect NPC Tester 1 shut down
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1] Status Effect NPC Tester 1 initialized
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Effects to test: 25
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Hotkeys: SE_NPC1_TOGGLE_WINDOW, SE_NPC1_APPLY
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]   Bind in Settings > Key Bindings > SENpcT1
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1] 
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1] Usage: Look at NPC, press APPLY for random weighted effect.
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SENpcT1]        Toggle window to see target details and coverage stats.
+[2026-07-31 15:08:38 UTC-05:00] [8996] [SENpcT1] Info window ON
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1] ========================================================
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1] === NEW ENTITY REPORT ===
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1]   Name:       Character.lch_tyger_claws_gangster1_ranged1_nue_wa
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1]   Class:      NPCPuppet
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1]   RecordID:   Character.lch_tyger_claws_gangster1_ranged1_nue_wa
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1]   EntityHash: 9004655ULL
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1]   Distance:   29.69 m
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1]   Effects to test: 25
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1] ========================================================
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1] === APPLY [12/25]: Base Madness (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_wa (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_wa) ===
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Madness': 1
+[2026-07-31 15:08:55 UTC-05:00] [8996] [SENpcT1]   Coverage: 1/25 tried (4%)
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1] ========================================================
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1] === NEW ENTITY REPORT ===
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1]   Name:       Character.lch_tyger_claws_gangster1_ranged1_nue_ma
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1]   Class:      NPCPuppet
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1]   RecordID:   Character.lch_tyger_claws_gangster1_ranged1_nue_ma
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1]   EntityHash: 9004658ULL
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1]   Distance:   13.59 m
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1]   Effects to test: 25
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1] ========================================================
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1] === APPLY [24/25]: Hit Physical 500 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Physical 500': 1
+[2026-07-31 15:09:27 UTC-05:00] [8996] [SENpcT1]   Coverage: 2/25 tried (8%)
+[2026-07-31 15:09:29 UTC-05:00] [8996] [SENpcT1] === APPLY [15/25]: Base CyberwareMalfunction (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:09:29 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:09:29 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base CyberwareMalfunction': 1
+[2026-07-31 15:09:29 UTC-05:00] [8996] [SENpcT1]   Coverage: 3/25 tried (12%)
+[2026-07-31 15:09:57 UTC-05:00] [8996] [SENpcT1] === APPLY [23/25]: Hit Mixed 50each (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:09:57 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:09:57 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Mixed 50each': 1
+[2026-07-31 15:09:57 UTC-05:00] [8996] [SENpcT1]   Coverage: 4/25 tried (16%)
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1] ========================================================
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1] === NEW ENTITY REPORT ===
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1]   Name:       Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1]   Class:      NPCPuppet
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1]   RecordID:   Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1]   EntityHash: 9004656ULL
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1]   Distance:   33.33 m
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1]   Effects to test: 25
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1] ========================================================
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1] === APPLY [18/25]: Blackwall CWMalfunction (blackwall) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Blackwall CWMalfunction': 1
+[2026-07-31 15:11:07 UTC-05:00] [8996] [SENpcT1]   Coverage: 5/25 tried (20%)
+[2026-07-31 15:11:18 UTC-05:00] [8996] [SENpcT1] === APPLY [2/25]: QH Contagion (qh_attack) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:11:18 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:11:18 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH Contagion': 1
+[2026-07-31 15:11:18 UTC-05:00] [8996] [SENpcT1]   Coverage: 6/25 tried (24%)
+[2026-07-31 15:11:24 UTC-05:00] [8996] [SENpcT1] === APPLY [2/25]: QH Contagion (qh_attack) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:11:24 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:11:24 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH Contagion': 2
+[2026-07-31 15:11:24 UTC-05:00] [8996] [SENpcT1]   Coverage: 6/25 tried (24%)
+[2026-07-31 15:11:27 UTC-05:00] [8996] [SENpcT1] === APPLY [7/25]: Base Burning (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:11:27 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:11:27 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Burning': 1
+[2026-07-31 15:11:27 UTC-05:00] [8996] [SENpcT1]   Coverage: 7/25 tried (28%)
+[2026-07-31 15:12:19 UTC-05:00] [8996] [SENpcT1] === APPLY [16/25]: Base NPCForceStagger (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:12:19 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:12:19 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base NPCForceStagger': 1
+[2026-07-31 15:12:19 UTC-05:00] [8996] [SENpcT1]   Coverage: 8/25 tried (32%)
+[2026-07-31 15:12:25 UTC-05:00] [8996] [SENpcT1] === APPLY [21/25]: Hit Chemical 100 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:12:25 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:12:25 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Chemical 100': 1
+[2026-07-31 15:12:25 UTC-05:00] [8996] [SENpcT1]   Coverage: 9/25 tried (36%)
+[2026-07-31 15:12:31 UTC-05:00] [8996] [SENpcT1] === APPLY [3/25]: QH ShortCircuit (qh_attack) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:12:31 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:12:31 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH ShortCircuit': 1
+[2026-07-31 15:12:31 UTC-05:00] [8996] [SENpcT1]   Coverage: 10/25 tried (40%)
+[2026-07-31 15:12:33 UTC-05:00] [8996] [SENpcT1] === APPLY [23/25]: Hit Mixed 50each (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:12:33 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:12:33 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Mixed 50each': 2
+[2026-07-31 15:12:33 UTC-05:00] [8996] [SENpcT1]   Coverage: 10/25 tried (40%)
+[2026-07-31 15:12:34 UTC-05:00] [8996] [SENpcT1] === APPLY [21/25]: Hit Chemical 100 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:12:34 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:12:34 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Chemical 100': 2
+[2026-07-31 15:12:34 UTC-05:00] [8996] [SENpcT1]   Coverage: 10/25 tried (40%)
+[2026-07-31 15:12:35 UTC-05:00] [8996] [SENpcT1] === APPLY [14/25]: Base LocomotionMalfunction (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:12:35 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:12:35 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base LocomotionMalfunction': 1
+[2026-07-31 15:12:35 UTC-05:00] [8996] [SENpcT1]   Coverage: 11/25 tried (44%)
+[2026-07-31 15:12:43 UTC-05:00] [8996] [SENpcT1] === APPLY [3/25]: QH ShortCircuit (qh_attack) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:12:43 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:12:43 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH ShortCircuit': 2
+[2026-07-31 15:12:43 UTC-05:00] [8996] [SENpcT1]   Coverage: 11/25 tried (44%)
+[2026-07-31 15:12:45 UTC-05:00] [8996] [SENpcT1] === APPLY [6/25]: Base Overheat (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:12:45 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:12:45 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Overheat': 1
+[2026-07-31 15:12:45 UTC-05:00] [8996] [SENpcT1]   Coverage: 12/25 tried (48%)
+[2026-07-31 15:14:03 UTC-05:00] [8996] [SENpcT1] === APPLY [20/25]: Hit Thermal 100 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:14:03 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:14:03 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Thermal 100': 1
+[2026-07-31 15:14:03 UTC-05:00] [8996] [SENpcT1]   Coverage: 13/25 tried (52%)
+[2026-07-31 15:14:07 UTC-05:00] [8996] [SENpcT1] === APPLY [15/25]: Base CyberwareMalfunction (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:14:07 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:14:07 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base CyberwareMalfunction': 2
+[2026-07-31 15:14:07 UTC-05:00] [8996] [SENpcT1]   Coverage: 13/25 tried (52%)
+[2026-07-31 15:14:14 UTC-05:00] [8996] [SENpcT1] === APPLY [7/25]: Base Burning (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:14:14 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:14:14 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Burning': 2
+[2026-07-31 15:14:14 UTC-05:00] [8996] [SENpcT1]   Coverage: 13/25 tried (52%)
+[2026-07-31 15:14:25 UTC-05:00] [8996] [SENpcT1] === APPLY [10/25]: Base Stun (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:14:25 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:14:25 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Stun': 1
+[2026-07-31 15:14:25 UTC-05:00] [8996] [SENpcT1]   Coverage: 14/25 tried (56%)
+[2026-07-31 15:14:29 UTC-05:00] [8996] [SENpcT1] === APPLY [21/25]: Hit Chemical 100 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:14:29 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:14:29 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Chemical 100': 3
+[2026-07-31 15:14:29 UTC-05:00] [8996] [SENpcT1]   Coverage: 14/25 tried (56%)
+[2026-07-31 15:14:33 UTC-05:00] [8996] [SENpcT1] === APPLY [4/25]: QH Suicide (qh_attack) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:14:33 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:14:33 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH Suicide': 1
+[2026-07-31 15:14:33 UTC-05:00] [8996] [SENpcT1]   Coverage: 15/25 tried (60%)
+[2026-07-31 15:14:35 UTC-05:00] [8996] [SENpcT1] === APPLY [19/25]: Hit Physical 100 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:14:35 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:14:35 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Physical 100': 1
+[2026-07-31 15:14:35 UTC-05:00] [8996] [SENpcT1]   Coverage: 16/25 tried (64%)
+[2026-07-31 15:14:43 UTC-05:00] [8996] [SENpcT1] === APPLY [11/25]: Base Blind (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:14:43 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:14:43 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Blind': 1
+[2026-07-31 15:14:43 UTC-05:00] [8996] [SENpcT1]   Coverage: 17/25 tried (68%)
+[2026-07-31 15:14:51 UTC-05:00] [8996] [SENpcT1] === APPLY [18/25]: Blackwall CWMalfunction (blackwall) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:14:51 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:14:51 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Blackwall CWMalfunction': 2
+[2026-07-31 15:14:51 UTC-05:00] [8996] [SENpcT1]   Coverage: 17/25 tried (68%)
+[2026-07-31 15:15:01 UTC-05:00] [8996] [SENpcT1] === APPLY [2/25]: QH Contagion (qh_attack) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:15:01 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:15:01 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH Contagion': 3
+[2026-07-31 15:15:01 UTC-05:00] [8996] [SENpcT1]   Coverage: 17/25 tried (68%)
+[2026-07-31 15:15:07 UTC-05:00] [8996] [SENpcT1] === APPLY [15/25]: Base CyberwareMalfunction (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:15:07 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:15:07 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base CyberwareMalfunction': 3
+[2026-07-31 15:15:07 UTC-05:00] [8996] [SENpcT1]   Coverage: 17/25 tried (68%)
+[2026-07-31 15:15:14 UTC-05:00] [8996] [SENpcT1] === APPLY [1/25]: QH Overheat (qh_attack) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:15:14 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:15:14 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH Overheat': 1
+[2026-07-31 15:15:14 UTC-05:00] [8996] [SENpcT1]   Coverage: 18/25 tried (72%)
+[2026-07-31 15:15:16 UTC-05:00] [8996] [SENpcT1] === APPLY [7/25]: Base Burning (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:15:16 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:15:16 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Burning': 3
+[2026-07-31 15:15:16 UTC-05:00] [8996] [SENpcT1]   Coverage: 18/25 tried (72%)
+[2026-07-31 15:15:22 UTC-05:00] [8996] [SENpcT1] === APPLY [9/25]: Base EMP (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:15:22 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:15:22 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base EMP': 1
+[2026-07-31 15:15:22 UTC-05:00] [8996] [SENpcT1]   Coverage: 19/25 tried (76%)
+[2026-07-31 15:15:28 UTC-05:00] [8996] [SENpcT1] === APPLY [19/25]: Hit Physical 100 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:15:28 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:15:28 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Physical 100': 2
+[2026-07-31 15:15:28 UTC-05:00] [8996] [SENpcT1]   Coverage: 19/25 tried (76%)
+[2026-07-31 15:15:29 UTC-05:00] [8996] [SENpcT1] === APPLY [7/25]: Base Burning (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:15:29 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:15:29 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Burning': 4
+[2026-07-31 15:15:29 UTC-05:00] [8996] [SENpcT1]   Coverage: 19/25 tried (76%)
+[2026-07-31 15:15:38 UTC-05:00] [8996] [SENpcT1] === APPLY [1/25]: QH Overheat (qh_attack) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:15:38 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:15:38 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH Overheat': 2
+[2026-07-31 15:15:38 UTC-05:00] [8996] [SENpcT1]   Coverage: 19/25 tried (76%)
+[2026-07-31 15:15:43 UTC-05:00] [8996] [SENpcT1] === APPLY [2/25]: QH Contagion (qh_attack) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:15:43 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:15:43 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH Contagion': 4
+[2026-07-31 15:15:43 UTC-05:00] [8996] [SENpcT1]   Coverage: 19/25 tried (76%)
+[2026-07-31 15:15:44 UTC-05:00] [8996] [SENpcT1] === APPLY [23/25]: Hit Mixed 50each (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:15:44 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:15:44 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Mixed 50each': 3
+[2026-07-31 15:15:44 UTC-05:00] [8996] [SENpcT1]   Coverage: 19/25 tried (76%)
+[2026-07-31 15:15:45 UTC-05:00] [8996] [SENpcT1] === APPLY [20/25]: Hit Thermal 100 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:15:45 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:15:45 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Thermal 100': 2
+[2026-07-31 15:15:45 UTC-05:00] [8996] [SENpcT1]   Coverage: 19/25 tried (76%)
+[2026-07-31 15:15:46 UTC-05:00] [8996] [SENpcT1] === APPLY [1/25]: QH Overheat (qh_attack) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:15:46 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:15:46 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH Overheat': 3
+[2026-07-31 15:15:46 UTC-05:00] [8996] [SENpcT1]   Coverage: 19/25 tried (76%)
+[2026-07-31 15:15:47 UTC-05:00] [8996] [SENpcT1] === APPLY [25/25]: StatPool Health 0 + Collapse (statpool) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:15:47 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: StatPool: init.lua:312: Function GetQuestSystem is not a GameInstance member and is not a global.
+[2026-07-31 15:15:47 UTC-05:00] [8996] [SENpcT1]   Attempts on 'StatPool Health 0 + Collapse': 1
+[2026-07-31 15:15:47 UTC-05:00] [8996] [SENpcT1]   Coverage: 20/25 tried (80%)
+[2026-07-31 15:15:48 UTC-05:00] [8996] [SENpcT1] === APPLY [16/25]: Base NPCForceStagger (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:15:48 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:15:48 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base NPCForceStagger': 2
+[2026-07-31 15:15:48 UTC-05:00] [8996] [SENpcT1]   Coverage: 20/25 tried (80%)
+[2026-07-31 15:15:49 UTC-05:00] [8996] [SENpcT1] === APPLY [13/25]: Base Ping (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:15:49 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:15:49 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Ping': 1
+[2026-07-31 15:15:49 UTC-05:00] [8996] [SENpcT1]   Coverage: 21/25 tried (84%)
+[2026-07-31 15:16:12 UTC-05:00] [8996] [SENpcT1] === APPLY [6/25]: Base Overheat (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:16:12 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:16:12 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Overheat': 2
+[2026-07-31 15:16:12 UTC-05:00] [8996] [SENpcT1]   Coverage: 21/25 tried (84%)
+[2026-07-31 15:16:18 UTC-05:00] [8996] [SENpcT1] === APPLY [17/25]: Blackwall HackUpload (blackwall) -> Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_copperhead_ma) ===
+[2026-07-31 15:16:18 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:16:18 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Blackwall HackUpload': 1
+[2026-07-31 15:16:18 UTC-05:00] [8996] [SENpcT1]   Coverage: 22/25 tried (88%)
+[2026-07-31 15:16:59 UTC-05:00] [8996] [SENpcT1] === APPLY [10/25]: Base Stun (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:16:59 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:16:59 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Stun': 2
+[2026-07-31 15:16:59 UTC-05:00] [8996] [SENpcT1]   Coverage: 22/25 tried (88%)
+[2026-07-31 15:17:02 UTC-05:00] [8996] [SENpcT1] === APPLY [25/25]: StatPool Health 0 + Collapse (statpool) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:02 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: StatPool: init.lua:312: Function GetQuestSystem is not a GameInstance member and is not a global.
+[2026-07-31 15:17:02 UTC-05:00] [8996] [SENpcT1]   Attempts on 'StatPool Health 0 + Collapse': 2
+[2026-07-31 15:17:02 UTC-05:00] [8996] [SENpcT1]   Coverage: 22/25 tried (88%)
+[2026-07-31 15:17:05 UTC-05:00] [8996] [SENpcT1] === APPLY [20/25]: Hit Thermal 100 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:05 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:17:05 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Thermal 100': 3
+[2026-07-31 15:17:05 UTC-05:00] [8996] [SENpcT1]   Coverage: 22/25 tried (88%)
+[2026-07-31 15:17:07 UTC-05:00] [8996] [SENpcT1] === APPLY [7/25]: Base Burning (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:07 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:17:07 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Burning': 5
+[2026-07-31 15:17:07 UTC-05:00] [8996] [SENpcT1]   Coverage: 22/25 tried (88%)
+[2026-07-31 15:17:10 UTC-05:00] [8996] [SENpcT1] === APPLY [22/25]: Hit EMP 100 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:10 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:17:10 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit EMP 100': 1
+[2026-07-31 15:17:10 UTC-05:00] [8996] [SENpcT1]   Coverage: 23/25 tried (92%)
+[2026-07-31 15:17:14 UTC-05:00] [8996] [SENpcT1] === APPLY [8/25]: Base ContagionPoison (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:14 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:17:14 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base ContagionPoison': 1
+[2026-07-31 15:17:14 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:17:22 UTC-05:00] [8996] [SENpcT1] === APPLY [14/25]: Base LocomotionMalfunction (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:22 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:17:22 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base LocomotionMalfunction': 2
+[2026-07-31 15:17:22 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:17:25 UTC-05:00] [8996] [SENpcT1] === APPLY [4/25]: QH Suicide (qh_attack) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:25 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:17:25 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH Suicide': 2
+[2026-07-31 15:17:25 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:17:29 UTC-05:00] [8996] [SENpcT1] === APPLY [21/25]: Hit Chemical 100 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:29 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:17:29 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Chemical 100': 4
+[2026-07-31 15:17:29 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:17:33 UTC-05:00] [8996] [SENpcT1] === APPLY [12/25]: Base Madness (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:33 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:17:33 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Madness': 2
+[2026-07-31 15:17:33 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:17:37 UTC-05:00] [8996] [SENpcT1] === APPLY [13/25]: Base Ping (base_se) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:37 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:17:37 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base Ping': 2
+[2026-07-31 15:17:37 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:17:39 UTC-05:00] [8996] [SENpcT1] === APPLY [22/25]: Hit EMP 100 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:39 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:17:39 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit EMP 100': 2
+[2026-07-31 15:17:39 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:17:41 UTC-05:00] [8996] [SENpcT1] === APPLY [22/25]: Hit EMP 100 (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:41 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:17:41 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit EMP 100': 3
+[2026-07-31 15:17:41 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:17:45 UTC-05:00] [8996] [SENpcT1] === APPLY [23/25]: Hit Mixed 50each (hit_event) -> Character.lch_tyger_claws_gangster1_ranged1_nue_ma (class=NPCPuppet, recordID=Character.lch_tyger_claws_gangster1_ranged1_nue_ma) ===
+[2026-07-31 15:17:45 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:17:45 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Mixed 50each': 4
+[2026-07-31 15:17:45 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:17:53 UTC-05:00] [8996] [SENpcT1] Info window OFF
+[2026-07-31 15:20:07 UTC-05:00] [8996] [SENpcT1] Info window ON
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1] ========================================================
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1] === NEW ENTITY REPORT ===
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1]   Name:       Character.LowlifeWoman
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1]   Class:      NPCPuppet
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1]   RecordID:   Character.LowlifeWoman
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1]   EntityHash: 10064045ULL
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1]   Distance:   4.54 m
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1]   Effects to test: 25
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1] ========================================================
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1] === APPLY [24/25]: Hit Physical 500 (hit_event) -> Character.LowlifeWoman (class=NPCPuppet, recordID=Character.LowlifeWoman) ===
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: init.lua:299: attempt to index global 'HitEvent' (a nil value)
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Hit Physical 500': 2
+[2026-07-31 15:20:13 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:20:14 UTC-05:00] [8996] [SENpcT1] === APPLY [9/25]: Base EMP (base_se) -> Character.LowlifeWoman (class=NPCPuppet, recordID=Character.LowlifeWoman) ===
+[2026-07-31 15:20:14 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:20:14 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base EMP': 2
+[2026-07-31 15:20:14 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:20:21 UTC-05:00] [8996] [SENpcT1] === APPLY [16/25]: Base NPCForceStagger (base_se) -> Character.LowlifeWoman (class=NPCPuppet, recordID=Character.LowlifeWoman) ===
+[2026-07-31 15:20:21 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:20:21 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base NPCForceStagger': 3
+[2026-07-31 15:20:21 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:20:23 UTC-05:00] [8996] [SENpcT1] === APPLY [8/25]: Base ContagionPoison (base_se) -> Character.LowlifeWoman (class=NPCPuppet, recordID=Character.LowlifeWoman) ===
+[2026-07-31 15:20:23 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:20:23 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base ContagionPoison': 2
+[2026-07-31 15:20:23 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:20:31 UTC-05:00] [8996] [SENpcT1] === APPLY [1/25]: QH Overheat (qh_attack) -> Character.LowlifeWoman (class=NPCPuppet, recordID=Character.LowlifeWoman) ===
+[2026-07-31 15:20:31 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:20:31 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH Overheat': 4
+[2026-07-31 15:20:31 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:20:33 UTC-05:00] [8996] [SENpcT1] === APPLY [9/25]: Base EMP (base_se) -> Character.LowlifeWoman (class=NPCPuppet, recordID=Character.LowlifeWoman) ===
+[2026-07-31 15:20:33 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:20:33 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Base EMP': 3
+[2026-07-31 15:20:33 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1] ========================================================
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1] === NEW ENTITY REPORT ===
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1]   Name:       Character.ObeseMaleCorpo
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1]   Class:      NPCPuppet
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1]   RecordID:   Character.ObeseMaleCorpo
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1]   EntityHash: 10066091ULL
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1]   Distance:   3.94 m
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1]   Effects to test: 25
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1] ========================================================
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1] === APPLY [4/25]: QH Suicide (qh_attack) -> Character.ObeseMaleCorpo (class=NPCPuppet, recordID=Character.ObeseMaleCorpo) ===
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1]   Result: FAIL: TweakDB record missing
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1]   Attempts on 'QH Suicide': 3
+[2026-07-31 15:20:47 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:20:50 UTC-05:00] [8996] [SENpcT1] === APPLY [17/25]: Blackwall HackUpload (blackwall) -> Character.ObeseMaleCorpo (class=NPCPuppet, recordID=Character.ObeseMaleCorpo) ===
+[2026-07-31 15:20:50 UTC-05:00] [8996] [SENpcT1]   Result: SUCCESS
+[2026-07-31 15:20:50 UTC-05:00] [8996] [SENpcT1]   Attempts on 'Blackwall HackUpload': 2
+[2026-07-31 15:20:50 UTC-05:00] [8996] [SENpcT1]   Coverage: 24/25 tried (96%)
+[2026-07-31 15:21:20 UTC-05:00] [8996] [SENpcT1] Info window OFF
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1] === Final Effect Statistics ===
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   QH Overheat                      [qh_attack] Attacks.QuickHack.Overheat: 4 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   QH Contagion                     [qh_attack] Attacks.QuickHack.Contagion: 4 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   QH ShortCircuit                  [qh_attack] Attacks.QuickHack.ShortCircuit: 2 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   QH Suicide                       [qh_attack] Attacks.QuickHack.Suicide: 3 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   QH CyberPsychosis                [qh_attack] Attacks.QuickHack.CyberPsychosis: 0 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Base Overheat                    [base_se] BaseStatusEffect.Overheat: 2 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Base Burning                     [base_se] BaseStatusEffect.Burning: 5 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Base ContagionPoison             [base_se] BaseStatusEffect.ContagionPoison: 2 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Base EMP                         [base_se] BaseStatusEffect.EMP: 3 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Base Stun                        [base_se] BaseStatusEffect.Stun: 2 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Base Blind                       [base_se] BaseStatusEffect.Blind: 1 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Base Madness                     [base_se] BaseStatusEffect.Madness: 2 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Base Ping                        [base_se] BaseStatusEffect.Ping: 2 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Base LocomotionMalfunction       [base_se] BaseStatusEffect.LocomotionMalfunction: 2 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Base CyberwareMalfunction        [base_se] BaseStatusEffect.CyberwareMalfunction: 3 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Base NPCForceStagger             [base_se] BaseStatusEffect.NPCForceStagger: 3 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Blackwall HackUpload             [blackwall] BaseStatusEffect.SoMi_Q306_BlackwallHackUpload: 2 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Blackwall CWMalfunction          [blackwall] BaseStatusEffect.CyberwareMalfunctionBlackwall: 2 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Hit Physical 100                 [hit_event] (code): 2 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Hit Thermal 100                  [hit_event] (code): 3 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Hit Chemical 100                 [hit_event] (code): 4 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Hit EMP 100                      [hit_event] (code): 3 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Hit Mixed 50each                 [hit_event] (code): 4 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   Hit Physical 500                 [hit_event] (code): 2 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1]   StatPool Health 0 + Collapse     [statpool] (code): 2 attempts
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1] -- Coverage: 24/25 tried (96%) --
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1] === End Statistics ===
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SENpcT1] Status Effect NPC Tester 1 shut down
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

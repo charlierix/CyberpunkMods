@@ -1,0 +1,868 @@
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] GetPlayerStateMachineBlackboard() SUCCESS
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] GetAllBlackboardDefs().PlayerStateMachine SUCCESS
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] PSM values saved
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] === Probing gamestateMachineComponent ===
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] FindComponentByType('gamestateMachineComponent') SUCCESS
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a]   GetSnapshotContainer() SUCCESS: userdata: 0x02284b00f120
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a]   IsStateMachinePresent('Locomotion') [nameOnly] = false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a]   IsStateMachinePresent('Locomotion') [isOnOwner] = false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a]   IsStateMachinePresent('UpperBody') [nameOnly] = false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a]   IsStateMachinePresent('UpperBody') [isOnOwner] = false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a]   IsStateMachinePresent('HighLevel') [nameOnly] = false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a]   IsStateMachinePresent('HighLevel') [isOnOwner] = false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a]   IsStateMachinePresent('Combat') [nameOnly] = false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a]   IsStateMachinePresent('Combat') [isOnOwner] = false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a]   IsStateMachinePresent('Vehicle') [nameOnly] = false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a]   IsStateMachinePresent('Vehicle') [isOnOwner] = false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a]   SM component Dump() attempt:
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] === End SM Probe ===
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] FPPCameraComponent locked
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] === ACTIVE === mode=NONE (No PSM manipulation (control))
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] Rotation method: Teleport
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] target z=86.6 (initial z=36.6)
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] Re-teleport when z < 46.6 — FIXED: will teleport back to z=86.6
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] Press 'Cycle State Mode' to try different PSM states
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] Press 'Dump PSM State' to see all PSM blackboard values
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] z=36.6 below threshold 46.6 — re-teleporting to z=86.6 (count=1)
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:42 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=NONE] Rot -> roll=0 pitch=0 yaw=172
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=false
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:52 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=NONE] Rot -> roll=0 pitch=-0 yaw=-158
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=-0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=false
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=-0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=-0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=-0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=-0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-158.5
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:53 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=NONE] Rot -> roll=0 pitch=0 yaw=172
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-158.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-158.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=false
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=NONE] Rot -> roll=0 pitch=0 yaw=142
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=171.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=false
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:54 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=NONE] Rot -> roll=0 pitch=30 yaw=142
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=30.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=30.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=30.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=30.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=0.0 pitch=30.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=NONE] Rot -> roll=-0 pitch=60 yaw=142
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-0.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-0.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-0.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-0.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-0.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=NONE] Rot -> roll=-30 pitch=60 yaw=142
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:55 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=NONE] Rot -> roll=-60 pitch=60 yaw=142
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-60.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-60.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-60.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-60.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-60.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=NONE] Rot -> roll=-30 pitch=60 yaw=142
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=NONE method=Teleport z=36.6
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=0 Felled=false
+[2026-07-25 14:22:56 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] ########################################
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] # STATE MODE 2/9: DEAD
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] # Vitals=Dead — dead bodies don't enforce upright
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] # Method: Teleport
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] ########################################
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:22:57 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=DEAD] Rot -> roll=27 pitch=61 yaw=-155
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=DEAD] Rot -> roll=55 pitch=41 yaw=-119
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=55.3 pitch=40.5 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=55.3 pitch=40.5 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=55.3 pitch=40.5 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=55.3 pitch=40.5 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=55.3 pitch=40.5 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=DEAD] Rot -> roll=27 pitch=61 yaw=-155
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:08 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=DEAD method=Teleport z=36.6
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:09 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] ########################################
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] # STATE MODE 3/9: SWIMMING
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] # HighLevel=Swimming — swimming has different physics
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] # Method: Teleport
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] ########################################
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SWIMMING method=Teleport z=36.6
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=6 Vitals=1 Felled=false
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SWIMMING method=Teleport z=36.6
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=6 Vitals=1 Felled=false
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SWIMMING method=Teleport z=36.6
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=6 Vitals=1 Felled=false
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SWIMMING method=Teleport z=36.6
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=6 Vitals=1 Felled=false
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SWIMMING method=Teleport z=36.6
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=6 Vitals=1 Felled=false
+[2026-07-25 14:23:10 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=SWIMMING] Rot -> roll=-30 pitch=60 yaw=142
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SWIMMING method=Teleport z=36.6
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=false
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=6 Vitals=1 Felled=false
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SWIMMING method=Teleport z=36.6
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=6 Vitals=1 Felled=false
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SWIMMING method=Teleport z=36.6
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=6 Vitals=1 Felled=false
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SWIMMING method=Teleport z=36.6
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=6 Vitals=1 Felled=false
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SWIMMING method=Teleport z=36.6
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=6 Vitals=1 Felled=false
+[2026-07-25 14:23:12 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] ########################################
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] # STATE MODE 4/9: SCENE
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] # HighLevel=SceneTier1 — cutscene/scene state
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] # Method: Teleport
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] ########################################
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=-30.0 pitch=60.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:18 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=SCENE] Rot -> roll=27 pitch=61 yaw=-155
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=141.5
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=SCENE] Rot -> roll=55 pitch=41 yaw=-119
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=55.3 pitch=40.5 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=55.3 pitch=40.5 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=55.3 pitch=40.5 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=55.3 pitch=40.5 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=55.3 pitch=40.5 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] [mode=SCENE] Rot -> roll=27 pitch=61 yaw=-155
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-119.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG mode=SCENE method=Teleport z=36.6
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG target: roll=26.6 pitch=61.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG BEFORE: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG Teleport SUCCESS
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG AFTER: roll=0.0 pitch=0.0 yaw=-155.0
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG PSM: LocDetailed=1 HighLevel=1 Vitals=1 Felled=false
+[2026-07-25 14:23:21 UTC-05:00] [17288] [HoverRotTesterPlayer6a] DIAG pos: (-581.7, 1161.5, 36.6)
+[2026-07-25 14:23:24 UTC-05:00] [17288] [HoverRotTesterPlayer6a] Deactivating...
+[2026-07-25 14:23:24 UTC-05:00] [17288] [HoverRotTesterPlayer6a] PSM values restored
+[2026-07-25 14:23:24 UTC-05:00] [17288] [HoverRotTesterPlayer6a] Deactivated (PSM + camera restored)

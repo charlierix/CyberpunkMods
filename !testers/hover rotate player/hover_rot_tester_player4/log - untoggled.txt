@@ -1,0 +1,290 @@
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] FPPCameraComponent locked (sensitivity=0, pitch/yaw limits expanded)
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] Active -- hovering at (-2063.7, -2706.4, 40.5) groundZ=37.5 height=3.0 (camFound=true)
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] Starting yaw=-66.4 roll=0.0 pitch=0.0
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 37.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:05 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=0 yaw=-36
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=false
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:09 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=0 yaw=-6
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=-6.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=false
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=-6.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-6.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-6.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=-6.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-6.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-6.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=0 yaw=-36
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-6.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-6.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=false
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:10 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=0 yaw=-66
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-36.4
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=false
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:11 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] Rot -> roll=-0 pitch=30 yaw=-66
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=-0.0 pitch=30.0 yaw=-66.4
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=-0.0 pitch=30.0 yaw=-66.4
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=-0.0 pitch=30.0 yaw=-66.4
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-20 23:29:12 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=60 yaw=-66
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=60.0 yaw=-66.4
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=60.0 yaw=-66.4
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=60.0 yaw=-66.4
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-20 23:29:13 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:14 UTC-05:00] [26132] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=30 yaw=-66
+[2026-07-20 23:29:14 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=30.0 yaw=-66.4
+[2026-07-20 23:29:14 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:14 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:14 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:14 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:14 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-20 23:29:14 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=30.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=30.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=-0 yaw=-66
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:15 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] Rot -> roll=30 pitch=-0 yaw=-66
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=true yaw=true
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=true yaw=true
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=true yaw=true
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] Rot -> roll=60 pitch=-0 yaw=-66
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=60.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=true yaw=true
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=60.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=true yaw=true
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=60.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=true yaw=true
+[2026-07-20 23:29:16 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] Rot -> roll=30 pitch=-0 yaw=-66
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=true yaw=true
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=true yaw=true
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=true yaw=true
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=-0 yaw=-66
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=-0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=-66.4
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG pos after: (-2063.7, -2706.4, 40.5) target: (-2063.7, -2706.4, 40.5)
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-20 23:29:17 UTC-05:00] [26132] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-20 23:29:21 UTC-05:00] [26132] [HoverRotTesterPlayer4] Deactivating...
+[2026-07-20 23:29:21 UTC-05:00] [26132] [HoverRotTesterPlayer4] Deactivated

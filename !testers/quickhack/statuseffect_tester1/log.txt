@@ -1,0 +1,101 @@
+[2026-07-26 23:00:57 UTC-05:00] [7896] [SETester1] Status Effect Tester 1 initialized
+[2026-07-26 23:00:57 UTC-05:00] [7896] [SETester1] Loaded 24 status effects. Default duration: 10.0s
+[2026-07-26 23:00:57 UTC-05:00] [7896] [SETester1] Default effect: Overheat (Lvl1) — Burns target, deals damage over time
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1] === Available Status Effects ===
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]  >>>[1] Overheat (Lvl1) (npc) — Burns target, deals damage over time
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [2] Overheat (Lvl2) (npc) — Stronger burning damage
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [3] Overheat (Lvl3) (npc) — Maximum burning damage
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [4] Short Circuit (Lvl1) (npc) — EMP stun, disables cyberware briefly
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [5] Short Circuit (Lvl2) (npc) — Stronger EMP
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [6] Short Circuit (Lvl3) (npc) — Maximum EMP
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [7] Cyberware Malfunction (Lvl1) (npc) — Disables target cyberware
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [8] Cyberware Malfunction (Lvl2) (npc) — Longer cyberware disable
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [9] Cyberware Malfunction (Lvl3) (npc) — Maximum cyberware disable
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [10] Contagion (Lvl1) (npc) — Poison damage, can spread
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [11] Contagion (Lvl2) (npc) — Stronger poison
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [12] Contagion (Lvl3) (npc) — Maximum poison
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [13] Ping (Lvl1) (npc) — Highlights target through walls
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [14] Ping (Lvl2) (npc) — Highlights more enemies
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [15] Ping (Lvl3) (npc) — Maximum highlighting
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [16] Reboot Optics (Lvl1) (npc) — Blinds target
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [17] Reboot Optics (Lvl2) (npc) — Longer blindness
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [18] Reboot Optics (Lvl3) (npc) — Maximum blindness
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [19] Madness (Lvl1) (npc) — Target attacks allies
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [20] Madness (Lvl2) (npc) — Longer madness
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [21] Madness (Lvl3) (npc) — Maximum madness
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [22] Distraction (Lvl1) (device) — Distracts device
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [23] Distraction (Lvl2) (device) — Longer distraction
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1]     [24] Distraction (Lvl3) (device) — Maximum distraction
+[2026-07-26 23:06:37 UTC-05:00] [27644] [SETester1] Total: 24 effects
+[2026-07-26 23:07:11 UTC-05:00] [27644] [SETester1] Target: <unknown> (NPC=false, Device=true)
+[2026-07-26 23:07:11 UTC-05:00] [27644] [SETester1] Effect 'Overheat (Lvl1)' is for npc targets but target is NPC=false Device=true
+[2026-07-26 23:07:11 UTC-05:00] [27644] [SETester1] Applying 'Overheat (Lvl1)' (BaseStatusEffect.QH_Overheat_Lvl1) with duration 10.0
+[2026-07-26 23:07:11 UTC-05:00] [27644] [SETester1] SUCCESS: Applied 'Overheat (Lvl1)' via StatusEffectHelper
+[2026-07-26 23:07:44 UTC-05:00] [27644] [SETester1] Selected effect [2/24]: Overheat (Lvl2) — Stronger burning damage
+[2026-07-26 23:07:45 UTC-05:00] [27644] [SETester1] Selected effect [3/24]: Overheat (Lvl3) — Maximum burning damage
+[2026-07-26 23:07:45 UTC-05:00] [27644] [SETester1] Selected effect [4/24]: Short Circuit (Lvl1) — EMP stun, disables cyberware briefly
+[2026-07-26 23:07:45 UTC-05:00] [27644] [SETester1] Selected effect [5/24]: Short Circuit (Lvl2) — Stronger EMP
+[2026-07-26 23:07:46 UTC-05:00] [27644] [SETester1] Selected effect [6/24]: Short Circuit (Lvl3) — Maximum EMP
+[2026-07-26 23:07:50 UTC-05:00] [27644] [SETester1] Selected effect [7/24]: Cyberware Malfunction (Lvl1) — Disables target cyberware
+[2026-07-26 23:07:50 UTC-05:00] [27644] [SETester1] Selected effect [8/24]: Cyberware Malfunction (Lvl2) — Longer cyberware disable
+[2026-07-26 23:07:50 UTC-05:00] [27644] [SETester1] Selected effect [9/24]: Cyberware Malfunction (Lvl3) — Maximum cyberware disable
+[2026-07-26 23:07:51 UTC-05:00] [27644] [SETester1] Selected effect [10/24]: Contagion (Lvl1) — Poison damage, can spread
+[2026-07-26 23:07:55 UTC-05:00] [27644] [SETester1] Selected effect [11/24]: Contagion (Lvl2) — Stronger poison
+[2026-07-26 23:07:56 UTC-05:00] [27644] [SETester1] Selected effect [12/24]: Contagion (Lvl3) — Maximum poison
+[2026-07-26 23:08:01 UTC-05:00] [27644] [SETester1] Selected effect [13/24]: Ping (Lvl1) — Highlights target through walls
+[2026-07-26 23:08:01 UTC-05:00] [27644] [SETester1] Selected effect [14/24]: Ping (Lvl2) — Highlights more enemies
+[2026-07-26 23:08:01 UTC-05:00] [27644] [SETester1] Selected effect [15/24]: Ping (Lvl3) — Maximum highlighting
+[2026-07-26 23:08:01 UTC-05:00] [27644] [SETester1] Selected effect [16/24]: Reboot Optics (Lvl1) — Blinds target
+[2026-07-26 23:08:02 UTC-05:00] [27644] [SETester1] Selected effect [17/24]: Reboot Optics (Lvl2) — Longer blindness
+[2026-07-26 23:08:05 UTC-05:00] [27644] [SETester1] Selected effect [18/24]: Reboot Optics (Lvl3) — Maximum blindness
+[2026-07-26 23:08:06 UTC-05:00] [27644] [SETester1] Selected effect [19/24]: Madness (Lvl1) — Target attacks allies
+[2026-07-26 23:08:08 UTC-05:00] [27644] [SETester1] Selected effect [20/24]: Madness (Lvl2) — Longer madness
+[2026-07-26 23:08:10 UTC-05:00] [27644] [SETester1] Selected effect [21/24]: Madness (Lvl3) — Maximum madness
+[2026-07-26 23:08:13 UTC-05:00] [27644] [SETester1] Selected effect [22/24]: Distraction (Lvl1) — Distracts device
+[2026-07-26 23:08:19 UTC-05:00] [27644] [SETester1] Target: <unknown> (NPC=false, Device=true)
+[2026-07-26 23:08:19 UTC-05:00] [27644] [SETester1] Applying 'Distraction (Lvl1)' (BaseStatusEffect.QH_Distraction_Lvl1) with duration 10.0
+[2026-07-26 23:08:19 UTC-05:00] [27644] [SETester1] SUCCESS: Applied 'Distraction (Lvl1)' via StatusEffectHelper
+[2026-07-26 23:08:39 UTC-05:00] [27644] [SETester1] === Active Status Effects on <unknown> ===
+[2026-07-26 23:08:39 UTC-05:00] [27644] [SETester1]   No tracked status effects active on target
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1] === Available Status Effects ===
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [1] Overheat (Lvl1) (npc) — Burns target, deals damage over time
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [2] Overheat (Lvl2) (npc) — Stronger burning damage
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [3] Overheat (Lvl3) (npc) — Maximum burning damage
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [4] Short Circuit (Lvl1) (npc) — EMP stun, disables cyberware briefly
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [5] Short Circuit (Lvl2) (npc) — Stronger EMP
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [6] Short Circuit (Lvl3) (npc) — Maximum EMP
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [7] Cyberware Malfunction (Lvl1) (npc) — Disables target cyberware
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [8] Cyberware Malfunction (Lvl2) (npc) — Longer cyberware disable
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [9] Cyberware Malfunction (Lvl3) (npc) — Maximum cyberware disable
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [10] Contagion (Lvl1) (npc) — Poison damage, can spread
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [11] Contagion (Lvl2) (npc) — Stronger poison
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [12] Contagion (Lvl3) (npc) — Maximum poison
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [13] Ping (Lvl1) (npc) — Highlights target through walls
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [14] Ping (Lvl2) (npc) — Highlights more enemies
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [15] Ping (Lvl3) (npc) — Maximum highlighting
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [16] Reboot Optics (Lvl1) (npc) — Blinds target
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [17] Reboot Optics (Lvl2) (npc) — Longer blindness
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [18] Reboot Optics (Lvl3) (npc) — Maximum blindness
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [19] Madness (Lvl1) (npc) — Target attacks allies
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [20] Madness (Lvl2) (npc) — Longer madness
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [21] Madness (Lvl3) (npc) — Maximum madness
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]  >>>[22] Distraction (Lvl1) (device) — Distracts device
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [23] Distraction (Lvl2) (device) — Longer distraction
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1]     [24] Distraction (Lvl3) (device) — Maximum distraction
+[2026-07-26 23:10:36 UTC-05:00] [27644] [SETester1] Total: 24 effects
+[2026-07-26 23:10:57 UTC-05:00] [27644] [SETester1] Target: <unknown> (NPC=false, Device=true)
+[2026-07-26 23:10:57 UTC-05:00] [27644] [SETester1] Applying 'Distraction (Lvl1)' (BaseStatusEffect.QH_Distraction_Lvl1) with duration 10.0
+[2026-07-26 23:10:57 UTC-05:00] [27644] [SETester1] SUCCESS: Applied 'Distraction (Lvl1)' via StatusEffectHelper
+[2026-07-26 23:11:39 UTC-05:00] [27644] [SETester1] Selected effect [23/24]: Distraction (Lvl2) — Longer distraction
+[2026-07-26 23:11:43 UTC-05:00] [27644] [SETester1] Target: <unknown> (NPC=false, Device=true)
+[2026-07-26 23:11:43 UTC-05:00] [27644] [SETester1] Applying 'Distraction (Lvl2)' (BaseStatusEffect.QH_Distraction_Lvl2) with duration 10.0
+[2026-07-26 23:11:43 UTC-05:00] [27644] [SETester1] SUCCESS: Applied 'Distraction (Lvl2)' via StatusEffectHelper
+[2026-07-26 23:11:47 UTC-05:00] [27644] [SETester1] === Active Status Effects on <unknown> ===
+[2026-07-26 23:11:47 UTC-05:00] [27644] [SETester1]   No tracked status effects active on target
+[2026-07-26 23:11:51 UTC-05:00] [27644] [SETester1] Selected effect [24/24]: Distraction (Lvl3) — Maximum distraction
+[2026-07-26 23:11:55 UTC-05:00] [27644] [SETester1] Target: <unknown> (NPC=false, Device=true)
+[2026-07-26 23:11:55 UTC-05:00] [27644] [SETester1] Applying 'Distraction (Lvl3)' (BaseStatusEffect.QH_Distraction_Lvl3) with duration 10.0
+[2026-07-26 23:11:55 UTC-05:00] [27644] [SETester1] SUCCESS: Applied 'Distraction (Lvl3)' via StatusEffectHelper
+[2026-07-26 23:11:55 UTC-05:00] [27644] [SETester1] === Active Status Effects on <unknown> ===
+[2026-07-26 23:11:55 UTC-05:00] [27644] [SETester1]   No tracked status effects active on target
+[2026-07-26 23:12:24 UTC-05:00] [27644] [SETester1] Status Effect Tester 1 shut down

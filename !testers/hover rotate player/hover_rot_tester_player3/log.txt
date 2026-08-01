@@ -1,0 +1,1782 @@
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] =========================================
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] ===== PLAYER ENTITY INTERROGATION =====
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] =========================================
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- IDENTITY ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetEntityID: userdata: 0x02cf99324620
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetRecordID: ToTweakDBID{ hash = 0x15982ADF, length = 28 --[[ Character.Player_Puppet_Base --]] }
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetRecord: userdata: 0x02cf993247d0
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] IsAttached: true
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- CLASS HIERARCHY (IsA) ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] IsA(PlayerPuppet): true
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] IsA(ScriptedPuppet): true
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] IsA(gamePuppet): true
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] IsA(gamePuppetBase): true
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] IsA(GameObject): false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] IsA(GameEntity): false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] IsA(Entity): false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] IsA(TimeDilatable): false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] IsA(IScriptable): true
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] IsA(PersistentState): false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- CLASS NAME ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetClassName(): ToCName{ hash_lo = 0x98E55B86, hash_hi = 0xCEBECAE8 --[[ PlayerPuppet --]] }
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetClassName(player): not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- TRANSFORM ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Position: (-1321.854, -1685.447, 44.206, 1.000)
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetWorldOrientation: ToQuaternion{ i = 0, j = 0, k = 0.99878526, r = 0.04927561 }
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Orientation Euler: roll=0.00 pitch=0.00 yaw=174.35
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetWorldYaw: 174.35113525391
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Velocity: (0.000, 0.000, -0.000, 1.000)
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetLocalPosition: ERROR: init.lua:25: attempt to call a nil value
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetLocalOrientation: ERROR: init.lua:25: attempt to call a nil value
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- COMPONENT GETTERS ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetFPPCameraComponent: FOUND -> userdata: 0x02cf99325168
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetCameraComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetAnimationController: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetAnimatedComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetMorphedMesh: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetMeshComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetMeshComponents: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetAIComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetPlayerControlledComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetStateMachineComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetMovementComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetLocomotionComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetTargetTrackerComponent: FOUND -> userdata: 0x02cf99325380
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetSenseComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetHealthStatPoolComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetStaminaStatPoolComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetCombatController: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetVisionModeController: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetInventoryComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetEquipmentComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetAttachmentSlotsComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetVehicleComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetMountedVehicle: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetPSM: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetMappinComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetCrowdMemberComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetSquadMemberComponent: FOUND -> userdata: 0x02cf99325598
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetHitReactionComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetStatusEffectManagerComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetSoundComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetRagdollComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetPhysicsComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetPhysicalMeshComponent: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetScriptableComponents: nil/not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- FIND COMPONENT BY NAME ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('ragdoll'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('Ragdoll'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('RagdollComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('gameRagdollComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('physics'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('Physics'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('PhysicsComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('AnimatedComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('AnimationController'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('MorphedMesh'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('MeshComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('PhysicalMeshComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('FPPCameraComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('gamePlayerControlledComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('gameStateMachineComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('gameTargetTrackerComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('gameSenseManagerComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('NPCPuppet'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('PlayerPuppet'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] FindComponentByName('gamePuppet'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- GET COMPONENT BY TYPE ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetComponent('gameRagdollComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetComponent('entAnimatedComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetComponent('gameAnimationController'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetComponent('entMeshComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetComponent('entPhysicalMeshComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetComponent('gameFPPCameraComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetComponent('gameAIComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetComponent('gamePlayerControlledComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetComponent('gameStateMachineComponent'): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- ENUMERATE ALL COMPONENTS ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetAllComponents(): not available (init.lua:305: attempt to call method 'GetAllComponents' (a nil value))
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetComponents() returned 174 items
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [1] userdata: 0x02cf99325a38 (className=ToCName{ hash_lo = 0x102B5452, hash_hi = 0x281345CD --[[ entAnimatedComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [2] userdata: 0x02cf99325af8 (className=ToCName{ hash_lo = 0x102B5452, hash_hi = 0x281345CD --[[ entAnimatedComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [3] userdata: 0x02cf99325bb8 (className=ToCName{ hash_lo = 0x102B5452, hash_hi = 0x281345CD --[[ entAnimatedComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [4] userdata: 0x02cf99325c78 (className=ToCName{ hash_lo = 0x102B5452, hash_hi = 0x281345CD --[[ entAnimatedComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [5] userdata: 0x02cf99325d38 (className=ToCName{ hash_lo = 0x102B5452, hash_hi = 0x281345CD --[[ entAnimatedComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [6] userdata: 0x02cf99325e48 (className=ToCName{ hash_lo = 0x210804AF, hash_hi = 0xE66E0FA1 --[[ gameObjectCarrierComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [7] userdata: 0x02cf99325f08 (className=ToCName{ hash_lo = 0x20EF7310, hash_hi = 0x78436074 --[[ entEffectSpawnerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [8] userdata: 0x02cf99325fc8 (className=ToCName{ hash_lo = 0xABA09EC9, hash_hi = 0x5819FD2A --[[ gameStatsComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [9] userdata: 0x02cf99326088 (className=ToCName{ hash_lo = 0x20EF7310, hash_hi = 0x78436074 --[[ entEffectSpawnerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [10] userdata: 0x02cf99326148 (className=ToCName{ hash_lo = 0x9F4B1059, hash_hi = 0x4E4529C8 --[[ entAnimationSetupExtensionComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [11] userdata: 0x02cf99326208 (className=ToCName{ hash_lo = 0x0340506D, hash_hi = 0x0A880B8B --[[ entSlotComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [12] userdata: 0x02cf993262c8 (className=ToCName{ hash_lo = 0x3B67AA0D, hash_hi = 0x20576DB0 --[[ entLightComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [13] userdata: 0x02cf99326388 (className=ToCName{ hash_lo = 0x562D10DF, hash_hi = 0x86AA83B4 --[[ entAnimationControllerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [14] userdata: 0x02cf99326448 (className=ToCName{ hash_lo = 0x0340506D, hash_hi = 0x0A880B8B --[[ entSlotComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [15] userdata: 0x02cf99326508 (className=ToCName{ hash_lo = 0x03F64E95, hash_hi = 0x426BF45D --[[ gameVisionActivatorComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [16] userdata: 0x02cf993265c8 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [17] userdata: 0x02cf99326688 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [18] userdata: 0x02cf99326858 (className=ToCName{ hash_lo = 0x3F0BEC49, hash_hi = 0xE36E015D --[[ gameInventory --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [19] userdata: 0x02cf99326918 (className=ToCName{ hash_lo = 0x0340506D, hash_hi = 0x0A880B8B --[[ entSlotComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [20] userdata: 0x02cf993269d8 (className=ToCName{ hash_lo = 0x20EF7310, hash_hi = 0x78436074 --[[ entEffectSpawnerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [21] userdata: 0x02cf99326a98 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [22] userdata: 0x02cf99326b58 (className=ToCName{ hash_lo = 0x0E1921DF, hash_hi = 0x148533DA --[[ gameAttachmentSlots --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [23] userdata: 0x02cf99326c18 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [24] userdata: 0x02cf99326cd8 (className=ToCName{ hash_lo = 0x78661158, hash_hi = 0x1837D581 --[[ gamestateMachineComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [25] userdata: 0x02cf99326d98 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [26] userdata: 0x02cf99326e58 (className=ToCName{ hash_lo = 0x6BC8E9FC, hash_hi = 0x01E894DF --[[ PlayerPhone --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [27] userdata: 0x02cf99326f18 (className=ToCName{ hash_lo = 0x71E22E95, hash_hi = 0xEBB82A15 --[[ WeaponPositionComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [28] userdata: 0x02cf99326fd8 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [29] userdata: 0x02cf99327098 (className=ToCName{ hash_lo = 0xA656148E, hash_hi = 0x996F3FFE --[[ InspectionComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [30] userdata: 0x02cf99327158 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [31] userdata: 0x02cf99327218 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [32] userdata: 0x02cf993272d8 (className=ToCName{ hash_lo = 0x19BCA0C4, hash_hi = 0xA2503EA8 --[[ DEBUG_VisualizerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [33] userdata: 0x02cf99327398 (className=ToCName{ hash_lo = 0x633CCCD8, hash_hi = 0xF6D31724 --[[ gameHumanoidBody --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [34] userdata: 0x02cf99327668 (className=ToCName{ hash_lo = 0x20EF7310, hash_hi = 0x78436074 --[[ entEffectSpawnerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [35] userdata: 0x02cf99327728 (className=ToCName{ hash_lo = 0x888CF4D3, hash_hi = 0x5CD23AF8 --[[ moveComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [36] userdata: 0x02cf993277e8 (className=ToCName{ hash_lo = 0x0340506D, hash_hi = 0x0A880B8B --[[ entSlotComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [37] userdata: 0x02cf993278a8 (className=ToCName{ hash_lo = 0x0340506D, hash_hi = 0x0A880B8B --[[ entSlotComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [38] userdata: 0x02cf99327968 (className=ToCName{ hash_lo = 0xBE84781A, hash_hi = 0x4D402860 --[[ gameAttitudeAgent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [39] userdata: 0x02cf99327a28 (className=ToCName{ hash_lo = 0x16C31409, hash_hi = 0xF0C0A3E3 --[[ gamePuppetMountableComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [40] userdata: 0x02cf99327ae8 (className=ToCName{ hash_lo = 0xCD9313A7, hash_hi = 0x7F445B13 --[[ gameScanningComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [41] userdata: 0x02cf99327ba8 (className=ToCName{ hash_lo = 0x1603993B, hash_hi = 0x046599D9 --[[ gameTPPRepresentationComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [42] userdata: 0x02cf99327c68 (className=ToCName{ hash_lo = 0xC14F80B7, hash_hi = 0xEBAEF5B3 --[[ gameStatusEffectComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [43] userdata: 0x02cf99327d28 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [44] userdata: 0x02cf99327de8 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [45] userdata: 0x02cf99327ea8 (className=ToCName{ hash_lo = 0xF5C7AD01, hash_hi = 0xF7B569E4 --[[ CombatHUDManager --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [46] userdata: 0x02cf99327f68 (className=ToCName{ hash_lo = 0x2625F17C, hash_hi = 0x4529D9AC --[[ entTriggerActivatorComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [47] userdata: 0x02cf99328028 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [48] userdata: 0x02cf993280e8 (className=ToCName{ hash_lo = 0x15C971F4, hash_hi = 0xBA9F1BB5 --[[ entAnimGraphResourceContainer --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [49] userdata: 0x02cf993281a8 (className=ToCName{ hash_lo = 0x4E80F1A4, hash_hi = 0x4779798A --[[ scnVoicesetComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [50] userdata: 0x02cf99328268 (className=ToCName{ hash_lo = 0x0340506D, hash_hi = 0x0A880B8B --[[ entSlotComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [51] userdata: 0x02cf99328328 (className=ToCName{ hash_lo = 0x9F4B1059, hash_hi = 0x4E4529C8 --[[ entAnimationSetupExtensionComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [52] userdata: 0x02cf993283e8 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [53] userdata: 0x02cf993284a8 (className=ToCName{ hash_lo = 0xCE06DF40, hash_hi = 0xDD7769CF --[[ entSoundListenerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [54] userdata: 0x02cf99328568 (className=ToCName{ hash_lo = 0x1A1BA3F1, hash_hi = 0x34455B2B --[[ gameaudioSoundComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [55] userdata: 0x02cf99328628 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [56] userdata: 0x02cf993286e8 (className=ToCName{ hash_lo = 0x9F4B1059, hash_hi = 0x4E4529C8 --[[ entAnimationSetupExtensionComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [57] userdata: 0x02cf993287a8 (className=ToCName{ hash_lo = 0x20EF7310, hash_hi = 0x78436074 --[[ entEffectSpawnerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [58] userdata: 0x02cf99328868 (className=ToCName{ hash_lo = 0x231C5379, hash_hi = 0xCB849B3F --[[ cpGameplayLightComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [59] userdata: 0x02cf99328928 (className=ToCName{ hash_lo = 0xDD12BFB5, hash_hi = 0x0033EF31 --[[ WidgetHudComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [60] userdata: 0x02cf993289e8 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [61] userdata: 0x02cf99328aa8 (className=ToCName{ hash_lo = 0x3B67AA0D, hash_hi = 0x20576DB0 --[[ entLightComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [62] userdata: 0x02cf99328b68 (className=ToCName{ hash_lo = 0x9E9689FB, hash_hi = 0x8DAFDF1E --[[ gameFPPCameraComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [63] userdata: 0x02cf99328c28 (className=ToCName{ hash_lo = 0x6339B256, hash_hi = 0xEEF8823F --[[ gameuiCharacterCustomizationGenitalsController --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [64] userdata: 0x02cf99328ce8 (className=ToCName{ hash_lo = 0x2625F17C, hash_hi = 0x4529D9AC --[[ entTriggerActivatorComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [65] userdata: 0x02cf99328da8 (className=ToCName{ hash_lo = 0x893302B9, hash_hi = 0x567DF189 --[[ WidgetMenuComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [66] userdata: 0x02cf99329278 (className=ToCName{ hash_lo = 0x2625F17C, hash_hi = 0x4529D9AC --[[ entTriggerActivatorComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [67] userdata: 0x02cf99329338 (className=ToCName{ hash_lo = 0xA3CC4811, hash_hi = 0xE2F89C98 --[[ entDynamicActorRepellingComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [68] userdata: 0x02cf993293f8 (className=ToCName{ hash_lo = 0xA3CC4811, hash_hi = 0xE2F89C98 --[[ entDynamicActorRepellingComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [69] userdata: 0x02cf993294b8 (className=ToCName{ hash_lo = 0xA3CC4811, hash_hi = 0xE2F89C98 --[[ entDynamicActorRepellingComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [70] userdata: 0x02cf99329578 (className=ToCName{ hash_lo = 0xBEA61D31, hash_hi = 0x70539F5F --[[ entColliderComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [71] userdata: 0x02cf99329638 (className=ToCName{ hash_lo = 0xF9EE82B8, hash_hi = 0x6E44D86B --[[ gameHitRepresentationComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [72] userdata: 0x02cf993296f8 (className=ToCName{ hash_lo = 0x0340506D, hash_hi = 0x0A880B8B --[[ entSlotComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [73] userdata: 0x02cf993297b8 (className=ToCName{ hash_lo = 0x3210F1A5, hash_hi = 0x44B1D330 --[[ gameTargetingComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [74] userdata: 0x02cf99329878 (className=ToCName{ hash_lo = 0x3210F1A5, hash_hi = 0x44B1D330 --[[ gameTargetingComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [75] userdata: 0x02cf99329938 (className=ToCName{ hash_lo = 0x20EF7310, hash_hi = 0x78436074 --[[ entEffectSpawnerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [76] userdata: 0x02cf993299f8 (className=ToCName{ hash_lo = 0x655EBC66, hash_hi = 0x300CC1B1 --[[ gameScanningActivatorComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [77] userdata: 0x02cf99329ab8 (className=ToCName{ hash_lo = 0xCF6FEB4A, hash_hi = 0x54BA8C07 --[[ gamePlayerMappinComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [78] userdata: 0x02cf99329b78 (className=ToCName{ hash_lo = 0x49458AB9, hash_hi = 0x317D49A7 --[[ vehicleGarageComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [79] userdata: 0x02cf99329c38 (className=ToCName{ hash_lo = 0xDFF04151, hash_hi = 0x6C4BCE8A --[[ SquadMemberBaseComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [80] userdata: 0x02cf99329cf8 (className=ToCName{ hash_lo = 0x1BCC8E41, hash_hi = 0x0512F4A3 --[[ gameinteractionsComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [81] userdata: 0x02cf99329db8 (className=ToCName{ hash_lo = 0xD8454F78, hash_hi = 0x7981215B --[[ QuickSlotsManager --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [82] userdata: 0x02cf99329e78 (className=ToCName{ hash_lo = 0xED2C2F71, hash_hi = 0x04405B52 --[[ entEffectAttachmentComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [83] userdata: 0x02cf99329f38 (className=ToCName{ hash_lo = 0x0B49345B, hash_hi = 0xA99993E3 --[[ gameEntityStubComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [84] userdata: 0x02cf99329ff8 (className=ToCName{ hash_lo = 0x0EC8741E, hash_hi = 0x021C1215 --[[ gameEntityStubComponentPlacedProxy --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [85] userdata: 0x02cf9932a0b8 (className=ToCName{ hash_lo = 0x0340506D, hash_hi = 0x0A880B8B --[[ entSlotComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [86] userdata: 0x02cf9932a178 (className=ToCName{ hash_lo = 0xD8BECC4A, hash_hi = 0xFA6E05CD --[[ gamePlayerCommandConsumerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [87] userdata: 0x02cf9932a238 (className=ToCName{ hash_lo = 0x74D899F5, hash_hi = 0x59D1729C --[[ gameinfluenceBumpComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [88] userdata: 0x02cf9932a2f8 (className=ToCName{ hash_lo = 0x20EF7310, hash_hi = 0x78436074 --[[ entEffectSpawnerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [89] userdata: 0x02cf9932a3b8 (className=ToCName{ hash_lo = 0xB7847963, hash_hi = 0x53422C18 --[[ StimBroadcasterComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [90] userdata: 0x02cf9932a478 (className=ToCName{ hash_lo = 0xDC09D0B0, hash_hi = 0x029A1583 --[[ gameTargetingActivatorComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [91] userdata: 0x02cf9932a538 (className=ToCName{ hash_lo = 0x20EF7310, hash_hi = 0x78436074 --[[ entEffectSpawnerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [92] userdata: 0x02cf9932a5f8 (className=ToCName{ hash_lo = 0x556C84CF, hash_hi = 0x550FB0E3 --[[ ResourceLibraryComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [93] userdata: 0x02cf9932a6b8 (className=ToCName{ hash_lo = 0x822EC164, hash_hi = 0x1DFE6283 --[[ gameTargetShootComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [94] userdata: 0x02cf9932a778 (className=ToCName{ hash_lo = 0x5C44D8ED, hash_hi = 0x7A4FE4DE --[[ gamePlayerTierComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [95] userdata: 0x02cf9932a838 (className=ToCName{ hash_lo = 0x8C590736, hash_hi = 0x4EBC0BE3 --[[ TargetTrackingExtension --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [96] userdata: 0x02cf9932a8f8 (className=ToCName{ hash_lo = 0x1A26F593, hash_hi = 0xBA0C975C --[[ senseSensorObjectComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [97] userdata: 0x02cf9932a9b8 (className=ToCName{ hash_lo = 0xC5D18392, hash_hi = 0xAC975AAA --[[ DisarmComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [98] userdata: 0x02cf9932aa78 (className=ToCName{ hash_lo = 0x8B8A4D21, hash_hi = 0x10F8A519 --[[ entTransformHistoryComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [99] userdata: 0x02cf9932ab38 (className=ToCName{ hash_lo = 0x020941FB, hash_hi = 0x5E05A6D2 --[[ entMorphTargetManagerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [100] userdata: 0x02cf9932abf8 (className=ToCName{ hash_lo = 0x20EF7310, hash_hi = 0x78436074 --[[ entEffectSpawnerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [101] userdata: 0x02cf9932acb8 (className=ToCName{ hash_lo = 0xD00FA879, hash_hi = 0x8050E44D --[[ senseVisibleObjectComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [102] userdata: 0x02cf9932ad78 (className=ToCName{ hash_lo = 0x606B65D2, hash_hi = 0x34F52896 --[[ gameinfluenceObstacleComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [103] userdata: 0x02cf9932ae38 (className=ToCName{ hash_lo = 0x20EF7310, hash_hi = 0x78436074 --[[ entEffectSpawnerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [104] userdata: 0x02cf9932aef8 (className=ToCName{ hash_lo = 0x0340506D, hash_hi = 0x0A880B8B --[[ entSlotComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [105] userdata: 0x02cf9932afb8 (className=ToCName{ hash_lo = 0xD3CD609E, hash_hi = 0x6A0D494D --[[ entMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [106] userdata: 0x02cf9932b078 (className=ToCName{ hash_lo = 0x1293714B, hash_hi = 0x973537F7 --[[ gameEnvironmentDamageReceiverComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [107] userdata: 0x02cf9932b138 (className=ToCName{ hash_lo = 0xEE5DF16D, hash_hi = 0x70DB88AA --[[ gameuiCharacterCustomizationFeetController --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [108] userdata: 0x02cf9932b1f8 (className=ToCName{ hash_lo = 0x367F63E7, hash_hi = 0x91FBC2D6 --[[ gameWorldSpaceBlendCamera --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [109] userdata: 0x02cf9932b2b8 (className=ToCName{ hash_lo = 0x157E5B41, hash_hi = 0xF97230DA --[[ vehicleTPPCameraComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [110] userdata: 0x02cf9932b378 (className=ToCName{ hash_lo = 0x5CC8A19A, hash_hi = 0xFEEC02CF --[[ vehicleCameraManagerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [111] userdata: 0x02cf9932b438 (className=ToCName{ hash_lo = 0xDA379FD9, hash_hi = 0x55F456E1 --[[ vehicleVehicleProxyBlendCamera --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [112] userdata: 0x02cf9932b4f8 (className=ToCName{ hash_lo = 0xA3CC4811, hash_hi = 0xE2F89C98 --[[ entDynamicActorRepellingComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [113] userdata: 0x02cf9932b5b8 (className=ToCName{ hash_lo = 0x0117DD65, hash_hi = 0xA1DC7F12 --[[ entVisualControllerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [114] userdata: 0x02cf9932b678 (className=ToCName{ hash_lo = 0x5697C14C, hash_hi = 0x8245BE88 --[[ gameComponentsStateSaveComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [115] userdata: 0x02cf9932b738 (className=ToCName{ hash_lo = 0x1B27DD18, hash_hi = 0x2F1E7FA7 --[[ gamePuppetTriggerDestructionComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [116] userdata: 0x02cf9932b7f8 (className=ToCName{ hash_lo = 0x7549D88E, hash_hi = 0x0B9A84DB --[[ gameuiCharacterCustomizationHairstyleController --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [117] userdata: 0x02cf9932b8b8 (className=ToCName{ hash_lo = 0x9A6D753C, hash_hi = 0x8156F36B --[[ gameLightComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [118] userdata: 0x02cf9932b978 (className=ToCName{ hash_lo = 0x79104C31, hash_hi = 0x2649DFBF --[[ gameBreachFinderComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [119] userdata: 0x02cf9932ba38 (className=ToCName{ hash_lo = 0x18FF2078, hash_hi = 0x44EC0A12 --[[ gameuiCharacterCustomizationFaceController --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [120] userdata: 0x02cf9932baf8 (className=ToCName{ hash_lo = 0xE2DB8CEE, hash_hi = 0x4AA068CC --[[ gameuiCharacterCustomizationNailsController --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [121] userdata: 0x02cf9932bbb8 (className=ToCName{ hash_lo = 0xA387CE35, hash_hi = 0xCD29F8F3 --[[ gameuiCharacterCustomizationBeardController --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [122] userdata: 0x02cf9932bc78 (className=ToCName{ hash_lo = 0x16243987, hash_hi = 0xCCC59137 --[[ gameuiCharacterCustomizationArmCyberwareController --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [123] userdata: 0x02cf9932bd38 (className=ToCName{ hash_lo = 0x1D9B3F4E, hash_hi = 0x73561450 --[[ gameAudioEmitterComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [124] userdata: 0x02cf9932bdf8 (className=ToCName{ hash_lo = 0x1A2AE047, hash_hi = 0xCF44DD29 --[[ vehicleVisualCustomizationComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [125] userdata: 0x02cf9932beb8 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [126] userdata: 0x02cf9932bf78 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [127] userdata: 0x02cf9932c038 (className=ToCName{ hash_lo = 0x202D3BEA, hash_hi = 0x86C64F09 --[[ entPlaceholderComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [128] userdata: 0x02cf9932c0f8 (className=ToCName{ hash_lo = 0xAB2F7E5D, hash_hi = 0xDB290230 --[[ gameChaseSpawnComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [129] userdata: 0x02cf9932c1b8 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [130] userdata: 0x02cf9932ca88 (className=ToCName{ hash_lo = 0x9F4B1059, hash_hi = 0x4E4529C8 --[[ entAnimationSetupExtensionComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [131] userdata: 0x02cf9932cb48 (className=ToCName{ hash_lo = 0x9F4B1059, hash_hi = 0x4E4529C8 --[[ entAnimationSetupExtensionComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [132] userdata: 0x02cf9932cc08 (className=ToCName{ hash_lo = 0x9F4B1059, hash_hi = 0x4E4529C8 --[[ entAnimationSetupExtensionComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [133] userdata: 0x02cf9932ccc8 (className=ToCName{ hash_lo = 0x815D2918, hash_hi = 0x9043B3A1 --[[ entLightBlockingComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [134] userdata: 0x02cf9932cd88 (className=ToCName{ hash_lo = 0x9F4B1059, hash_hi = 0x4E4529C8 --[[ entAnimationSetupExtensionComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [135] userdata: 0x02cf9932ce48 (className=ToCName{ hash_lo = 0x0340506D, hash_hi = 0x0A880B8B --[[ entSlotComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [136] userdata: 0x02cf9932cf08 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [137] userdata: 0x02cf9932cfc8 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [138] userdata: 0x02cf9932d088 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [139] userdata: 0x02cf9932d148 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [140] userdata: 0x02cf9932d208 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [141] userdata: 0x02cf9932d2c8 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [142] userdata: 0x02cf9932d388 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [143] userdata: 0x02cf9932d448 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [144] userdata: 0x02cf9932d508 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [145] userdata: 0x02cf9932d5c8 (className=ToCName{ hash_lo = 0xD3299D2E, hash_hi = 0xBF9D4133 --[[ gameWeaponAudioComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [146] userdata: 0x02cf9932d688 (className=ToCName{ hash_lo = 0x20EF7310, hash_hi = 0x78436074 --[[ entEffectSpawnerComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [147] userdata: 0x02cf9932d748 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [148] userdata: 0x02cf9932d808 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [149] userdata: 0x02cf9932d8c8 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [150] userdata: 0x02cf9932d988 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [151] userdata: 0x02cf9932da48 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [152] userdata: 0x02cf9932db08 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [153] userdata: 0x02cf9932dbc8 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [154] userdata: 0x02cf9932dc88 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [155] userdata: 0x02cf9932dd48 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [156] userdata: 0x02cf9932de08 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [157] userdata: 0x02cf9932dec8 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [158] userdata: 0x02cf9932df88 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [159] userdata: 0x02cf9932e048 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [160] userdata: 0x02cf9932e108 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [161] userdata: 0x02cf9932e1c8 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [162] userdata: 0x02cf9932e288 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [163] userdata: 0x02cf9932e348 (className=ToCName{ hash_lo = 0x064BDF48, hash_hi = 0x8614AF5B --[[ entGarmentSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [164] userdata: 0x02cf9932e408 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [165] userdata: 0x02cf9932e4c8 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [166] userdata: 0x02cf9932e588 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [167] userdata: 0x02cf9932e648 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [168] userdata: 0x02cf9932e708 (className=ToCName{ hash_lo = 0x9F4B1059, hash_hi = 0x4E4529C8 --[[ entAnimationSetupExtensionComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [169] userdata: 0x02cf9932e7c8 (className=ToCName{ hash_lo = 0xE4CF4DC6, hash_hi = 0x97ABB7C6 --[[ entSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [170] userdata: 0x02cf9932e888 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [171] userdata: 0x02cf9932e948 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [172] userdata: 0x02cf9932ea08 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [173] userdata: 0x02cf9932eac8 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   [174] userdata: 0x02cf9932eb88 (className=ToCName{ hash_lo = 0x7B4BF975, hash_hi = 0x8971059B --[[ entMorphTargetSkinnedMeshComponent --]] })
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- RAGDOLL EVENT ATTEMPTS ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] CreateForceRagdollEvent: ERROR: init.lua:334: Function 'CreateForceRagdollEvent' requires 1 parameter(s).
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] RagdollActivationRequestEvent: QUEUED OK
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] RagdollApplyImpulseEvent: QUEUED OK
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] RagdollDisableEvent: QUEUED OK
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- RAGDOLL METHOD PROBES ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] has IsRagdolling(): false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] has CanRagdoll(): true
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   CanRagdoll() -> false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] has ForceRagdoll(): false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] has DisableRagdoll(): false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] has IsRagdolled(): false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] has GetRagdollComponent(): false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] has EnableRagdoll(): false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] has ToggleRagdoll(): false
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- STATE MACHINE / BLACKBOARD ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetBlackboard: userdata: 0x02cf993425b8
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetActiveState: ERROR: init.lua:25: attempt to call a nil value
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetPSM: ERROR: init.lua:25: attempt to call a nil value
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetStateMachine: ERROR: init.lua:25: attempt to call a nil value
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetStateMachineComponent: ERROR: init.lua:25: attempt to call a nil value
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- APPEARANCE / MESH ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetCurrentAppearanceName: ToCName{ hash_lo = 0x00000000, hash_hi = 0x00000000 --[[ None --]] }
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetAppearanceName: ERROR: init.lua:25: attempt to call a nil value
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetDisplayName: LocKey#48683
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetTweakDBDisplayName: ERROR: Function 'GetTweakDBDisplayName' requires 1 parameter(s).
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- SETWORLDTRANSFORM IDENTITY TEST ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] SetWorldTransform(identity) returned: nil
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Position before: (-1321.85, -1685.45, 44.21)  after: (-1321.85, -1685.45, 44.21)
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Orientation after: roll=0.00 pitch=0.00 yaw=174.35
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- TELEPORT PROBE ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetTeleportationFacility: FOUND -> userdata: 0x02cf99343678
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   TPFacility.Teleport(): EXISTS
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- METHOD EXISTENCE CHECK ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetWorldPosition
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetWorldOrientation
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetWorldYaw
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetVelocity
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: SetWorldTransform
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetEntityID
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetRecordID
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetRecord
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: IsAttached
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: QueueEvent
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetFPPCameraComponent
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: FindComponentByName
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetComponents
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: CanRagdoll
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetBlackboard
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetMountedVehicle
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetCurrentAppearanceName
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetDisplayName
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: Kill
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: OnGameAttached
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetEntity
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] HAS: GetGame
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- FOUND 22 METHODS ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- GAME SYSTEMS ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetStatsSystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetStatPoolsSystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetStatusEffectSystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetSpatialQueriesSystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetTeleportationFacility(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetTargetingSystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetVehicleSystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetAnimationSystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetFxSystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetGodModeSystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetDamageSystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetTimeSystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetDelaySystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetPlayerSystem(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Game.GetScriptableSystemsContainer(): nil/error
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- COMPONENT DETAILS ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Examining GetFPPCameraComponent (userdata: 0x02cf99325168)
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   ClassName: ToCName{ hash_lo = 0x9E9689FB, hash_hi = 0x8DAFDF1E --[[ gameFPPCameraComponent --]] }
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: GetLocalPosition
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: GetLocalOrientation
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: SetLocalPosition
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: SetLocalOrientation
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: GetClassName
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: GetName
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: IsEnabled
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: GetEntity
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Examining GetTargetTrackerComponent (userdata: 0x02cf99325380)
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   ClassName: ToCName{ hash_lo = 0x8C590736, hash_hi = 0x4EBC0BE3 --[[ TargetTrackingExtension --]] }
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: GetClassName
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: GetName
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: IsEnabled
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: GetEntity
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Examining GetSquadMemberComponent (userdata: 0x02cf99325598)
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   ClassName: ToCName{ hash_lo = 0xDFF04151, hash_hi = 0x6C4BCE8A --[[ SquadMemberBaseComponent --]] }
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: GetClassName
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: GetName
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: IsEnabled
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3]   HAS: GetEntity
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] --- CET REFLECTION DUMP ---
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] Dump(player): {
+	name: PlayerPuppet,
+	functions: {
+		IsPlayer() => (Bool),
+		IsReplacer() => (Bool),
+		IsVRReplacer() => (Bool),
+		IsInGyroTutorial() => (Bool),
+		IsInReplayTutorial() => (Bool),
+		IsJohnnyReplacer() => (Bool),
+		IsReplicable() => (Bool),
+		GetReplicatedStateClass() => (CName),
+		IsCoverModifierAdded() => (Bool),
+		IsWorkspotDamageReductionAdded() => (Bool),
+		IsWorkspotVisibilityReductionActive() => (Bool),
+		GetOverlappedSecurityZones() => (array:gamePersistentID),
+		GetIsInWorkspotFinisher() => (Bool),
+		GetPS() => (handle:PlayerPuppetPS),
+		GetCombatExitTimestamp() => (Float),
+		IsPuppetInCombat() => (Bool),
+		SetPermanentFoodBonus(type: gamedataStatType, value: Float),
+		GetPermanentFoodBonus(type: gamedataStatType) => (Float),
+		OnRequestComponents(ri: entEntityRequestComponentsInterface) => (Bool),
+		FindVehicleCameraManager() => (handle:vehicleCameraManager),
+		OnTakeControl(ri: entEntityResolveComponentsInterface) => (Bool),
+		OnReleaseControl() => (Bool),
+		GracePeriodAfterSpawn(),
+		GetVehicleVisualCustomizationComponent() => (handle:vehicleVisualCustomizationComponent),
+		UnlockAccessPointPrograms(),
+		OnMakePlayerVisibleAfterSpawn(evt: handle:EndGracePeriodAfterSpawn) => (Bool),
+		IsAimingAtFriendly() => (Bool),
+		IsAimingAtChild() => (Bool),
+		DistanceFromTargetSquared() => (Float),
+		ReevaluateLookAtTarget(),
+		UpdateLookAtObject(target: handle:gameObject),
+		OnLookAtObjectChangedEvent(evt: handle:gametargetingSystemLookAtObjectChangedEvent) => (Bool),
+		OnWeaponEquipEvent(evt: handle:WeaponEquipEvent) => (Bool),
+		OnSetUpEquipmentOverlayEvent(evt: handle:SetUpEquipmentOverlayEvent) => (Bool),
+		OnAppearanceChangeFinishEvent(evt: handle:entAppearanceChangeFinishEvent) => (Bool),
+		OnSetSlowMoForOnePunchAttackEvent(evt: handle:SetSlowMoForOnePunchAttackEvent) => (Bool),
+		SetSlowMo(slowMoAmount: Float, slowMoDuration: Float),
+		OnDodgeToAvoidCombatEvent(evt: handle:DodgeToAvoidCombatEvent) => (Bool),
+		CanAvoidCombat() => (Bool),
+		CanAvoidCombatWithDodge() => (Bool),
+		CanAvoidCombatWithGag() => (Bool),
+		IsCombatStartBufferActive(buffer: Float) => (Bool),
+		OnActivateOpticalCamoToExitCombatEvent(evt: handle:ExitCombatOnOpticalCamoActivatedEvent) => (Bool),
+		OnEnablePlayerVisibilityEvent(evt: handle:EnablePlayerVisibilityEvent) => (Bool),
+		RemoveInteractionChoices(),
+		EvaluateApplyingReplacerGameplayRestrictions(),
+		ResolveCachedGameplayRestrictions(),
+		AddGameplayRestriction(psmBB: handle:gameIBlackboard, actionRestrictionRecordID: TweakDBID),
+		RemoveGameplayRestriction(psmBB: handle:gameIBlackboard, actionRestrictionRecordID: TweakDBID),
+		CacheGameplayRestriction(actionRestrictionRecordID: TweakDBID),
+		PlayerAttachedCallback(playerPuppet: handle:gameObject),
+		PlayerDetachedCallback(playerPuppet: handle:gameObject),
+		OnGameAttached() => (Bool),
+		OnGameLoadedFactReset(evt: handle:GameLoadedFactReset) => (Bool),
+		OnDetach() => (Bool),
+		ShouldRegisterToHUD() => (Bool),
+		GetCWMaskID() => (gameItemID),
+		HasCWMask() => (Bool),
+		ExecuteCWMask(),
+		OnAction(action: gameinputScriptListenerAction, consumer: gameinputScriptListenerActionConsumer) => (Bool),
+		KeybaordAndMouseControlsActive() => (Bool),
+		HasPrimaryOrSecondaryEquipment() => (Bool),
+		ProcessToggleWalkInput(),
+		IconicCyberwareActivated(),
+		ActivateIconicCyberware(),
+		IsPhoneCallActive() => (Bool),
+		ShowSandevistanBlockedNotification(),
+		ProcessCallVehicleAction(type: gameinputActionType),
+		OnMountingEvent(evt: handle:gamemountingMountingEvent) => (Bool),
+		OnUnmountingEvent(evt: handle:gamemountingUnmountingEvent) => (Bool),
+		GetMountedVehicle() => (handle:vehicleBaseObject),
+		IsCallingVehicleRestricted() => (Bool),
+		IsInPoliceVehicle() => (Bool),
+		GetUnlockedVehiclesSize() => (Int32),
+		SendSummonVehicleQuickSlotsManagerRequest(),
+		CheckVehicleSystemGarageState() => (Bool),
+		CheckRadialContextRequest() => (Bool),
+		OnActionMultiplayer(action: gameinputScriptListenerAction, consumer: gameinputScriptListenerActionConsumer),
+		GetCPOQuickSlotID(action: gameinputScriptListenerAction) => (Int32),
+		UpdatePlayerSettings(),
+		GetQuickSlotsManager() => (handle:QuickSlotsManager),
+		GetInspectionComponent() => (handle:InspectionComponent),
+		GetFPPCameraComponent() => (handle:gameFPPCameraComponent),
+		GetBufferModifier() => (Int32),
+		SetBufferModifier(i: Int32),
+		GetPlayerWeaponHandler() => (handle:PlayerWeaponHandlingModifiers),
+		GetPocketRadio() => (handle:PocketRadio),
+		GetPlayerStateMachineBlackboard() => (handle:gameIBlackboard),
+		GetPlayerPerkDataBlackboard() => (handle:gameIBlackboard),
+		GetHackingDataBlackboard() => (handle:gameIBlackboard),
+		GetDamageThresholdParams(),
+		EnableUIBlackboardListener(enable: Bool),
+		SetupInPlayerDevelopmentSystem(),
+		UpdateVisibilityModifier(),
+		OnBeingNoticed(evt: handle:OnBeingNoticed) => (Bool),
+		SetEntityNoticedPlayerBBValue(b: Bool),
+		OnClearBeingNoticedBB(evt: handle:ClearBeingNoticedBB) => (Bool),
+		IsBeingRevealed() => (Bool),
+		SetIsBeingRevealed(isBeingRevealed: Bool),
+		OnBeingTargetByLaserSight(evt: handle:BeingTargetByLaserSightUpdateEvent) => (Bool),
+		OnBeingTarget(evt: handle:OnBeingTarget) => (Bool),
+		OnInteractionStateChange(value: Variant) => (Bool),
+		OnUpdateVisibilityModifierEvent(evt: handle:UpdateVisibilityModifierEvent) => (Bool),
+		OnUpdateAutoRevealStatEvent(evt: handle:UpdateAutoRevealStatEvent) => (Bool),
+		HasAutoReveal() => (Bool),
+		OnUIContextChange(value: Bool) => (Bool),
+		OnUIRadialContextChange(value: Bool) => (Bool),
+		OnCurrentVisibleTargetChanged(targetId: entEntityID) => (Bool),
+		OnUIContactListContextChanged(value: Bool) => (Bool),
+		OnUISmsMessengerContextChanged(value: Bool) => (Bool),
+		OnUIVendorContextChange(value: Bool) => (Bool),
+		OnExperienceGained(evt: handle:ExperiencePointsEvent) => (Bool),
+		OnLevelUp(evt: handle:LevelUpdateEvent) => (Bool),
+		OnRequestStats(evt: handle:gameRequestStats) => (Bool),
+		OnBuyAttribute(evt: handle:RequestBuyAttribute) => (Bool),
+		OnItemAddedToSlot(evt: handle:gameAttachmentSlotEventsItemAddedToSlot) => (Bool),
+		OnPartAddedToSlotEvent(evt: handle:gameAttachmentSlotEventsPartAddedToSlotEvent) => (Bool),
+		OnClearItemAppearanceEvent(evt: handle:ClearItemAppearanceEvent) => (Bool),
+		OnResetItemAppearanceEvent(evt: handle:ResetItemAppearanceEvent) => (Bool),
+		OnUnderwearEquipFailsafeEvent(evt: handle:UnderwearEquipFailsafeEvent) => (Bool),
+		OnItemRemovedFromSlot(evt: handle:gameAttachmentSlotEventsItemRemovedFromSlot) => (Bool),
+		OnPartRemovedFromSlotEvent(evt: handle:gameAttachmentSlotEventsPartRemovedFromSlotEvent) => (Bool),
+		OnItemChangedEvent(evt: handle:gameItemChangedEvent) => (Bool),
+		OnPartRemovedEvent(evt: handle:gamePartRemovedEvent) => (Bool),
+		OnPrepareForForcedVehicleCombat(evt: handle:PrepareForForcedVehicleCombat) => (Bool),
+		OnItemAddedToInventory(evt: handle:gameItemAddedEvent) => (Bool),
+		OnRefreshItemPlayerScalingEvent(evt: handle:RefreshItemPlayerScalingEvent) => (Bool),
+		TryScaleItemToPlayer(itemData: handle:gameItemData),
+		OnRestoreCybWeaponQualitiesEvent(evt: handle:RestoreCybWeaponQualitiesEvent) => (Bool),
+		OnRescaleNonIconicWeaponsEvent(evt: handle:RescaleNonIconicWeaponsEvent) => (Bool),
+		RetroRescaleNonIconicWeapons(itemData: handle:gameItemData),
+		OnConsumablesChargesRework(evt: handle:ConsumablesChargesReworkEvent) => (Bool),
+		OnBlockAndCompensateScalingEvent(evt: handle:BlockAndCompensateScalingEvent) => (Bool),
+		BlockScaling(itemData: handle:gameItemData),
+		CompensateExceedScaling(itemData: handle:gameItemData),
+		SetIconicWeaponsTier(itemData: handle:gameItemData),
+		LockItemPlusOnNonIconicWeapons(itemData: handle:gameItemData),
+		OnIconicsReworkCompensateEvent(evt: handle:IconicsReworkCompensateEvent) => (Bool),
+		RescaleOwnedIconicsToPlayerLevel(itemData: handle:gameItemData),
+		OnRasetsuToPlayerScalingEvent(evt: handle:RasetsuToPlayerScalingEvent) => (Bool),
+		ScaleRasetsuToProperTier(itemData: handle:gameItemData),
+		OnUnifyIconicsUpgradeCountWithEffectiveTierEvent(evt: handle:UnifyIconicsUpgradeCountWithEffectiveTierEvent) => (Bool),
+		UnifyIconicWeaponsUpgradesCountWithEffectiveTier(itemData: handle:gameItemData),
+		GetItemCapacityRequirement(itemID: gameItemID) => (Float),
+		OnRetrofixQuickhacksEvent(evt: handle:RetrofixQuickhacksEvent) => (Bool),
+		GetGlitchedEquippedCyberware() => (items: array:gameItemID),
+		PrioritizeCyberwareOnRetrofix(itemID: gameItemID, equipmentArea: gamedataEquipmentArea, beforeVikVisit: Bool) => (Bool, p1: array:gameItemID, p2: array:gameItemID, p3: array:gameItemID),
+		RemoveCyberwareParts(item: gameItemID) => (array:gameItemID),
+		OnRetrofixCyberwaresEvent(evt: handle:RetrofixCyberwaresEvent) => (Bool),
+		GetAppropriateCWByQuality(quality: Int32, baseCWRecord: TweakDBID) => (handle:gamedataItem_Record),
+		EquipNewCyberware(items: array:gameItemID, availableCapacity: Float, addToInventoryIfOverallocated: Bool, [opt] stashedQuickhacks: array:gameItemID) => (Float),
+		OnRetrofixOverallocatedCyberwareEvent(evt: handle:RetrofixOverallocatedCyberwareEvent) => (Bool),
+		UnequipOverallocatedCyberware(items: array:gameItemID, availableCapacity: Float) => (Float),
+		UpdateInventoryWeight(weightChange: Float, [opt] isLootBroken: Bool),
+		OnItemBeingRemovedFromInventory(evt: handle:gameItemBeingRemovedEvent) => (Bool),
+		OnInventoryEmpty(evt: handle:gameOnInventoryEmptyEvent) => (Bool),
+		EvaluateEncumbrance([opt] isLootBroken: Bool),
+		CalculateEncumbrance(),
+		OnEvaluateEncumbranceEvent(evt: handle:EvaluateEncumbranceEvent) => (Bool),
+		SendCheckRemovedItemWithSlotActiveItemRequest(item: gameItemID),
+		OnTakedownOrder(evt: handle:OrderTakedownEvent) => (Bool),
+		OnSpiderbotOrderTargetEvent(evt: handle:SpiderbotOrderDeviceEvent) => (Bool),
+		OnHitBlockedOrDeflected(hitEvent: handle:gameeventsHitEvent),
+		PushDeflectEvent(isBulletDeflect: Bool),
+		OnKatanaMagFieldHitDelayEvent(evt: handle:KatanaMagFieldHitDelayEvent) => (Bool),
+		OnHitAnimation(hitEvent: handle:gameeventsHitEvent),
+		AddOnHitRumble(hitEvent: handle:gameeventsHitEvent),
+		PushHitDataToGraph(hitEvent: handle:gameeventsHitEvent),
+		OnCameraShakeEvent(evt: handle:gameeventsCameraShakeEvent) => (Bool),
+		SendCameraShakeDataToGraph([opt] hitEvent: handle:gameeventsHitEvent, shakeStrength: Float),
+		OnHitUI(hitEvent: handle:gameeventsHitEvent),
+		OnHitSounds(hitEvent: handle:gameeventsHitEvent),
+		OnDamageInflicted(evt: handle:DamageInflictedEvent) => (Bool),
+		GetLastDamageInflictedTime() => (EngineTime),
+		OnInteraction(choiceEvent: handle:gameinteractionsChoiceEvent) => (Bool),
+		OnTogglePlayerFlashlightEvent(evt: handle:TogglePlayerFlashlightEvent) => (Bool),
+		OnToggleNewPlayerFlashlightEvent(evt: handle:ToggleNewPlayerFlashlightEvent) => (Bool),
+		InitializeTweakDBRecords(),
+		DefineModifierGroups(),
+		RegisterStatListeners(self: handle:PlayerPuppet),
+		UnregisterStatListeners(self: handle:PlayerPuppet),
+		OnCleanUpTimeDilationEvent(evt: handle:CleanUpTimeDilationEvent) => (Bool),
+		OnHealthUpdateEvent(evt: handle:HealthUpdateEvent) => (Bool),
+		UpdateHealthStateSFX(healthValue: Float),
+		OnStopCritHealthRumble(evt: handle:StopCritHealthRumble) => (Bool),
+		PlayCritHealthRumble(),
+		StopCritHealthRumble(),
+		UpdateHealthStateVFX(healthValue: Float),
+		SetZoomBlackboardValues(newState: Bool),
+		GetZoomBlackboardValues() => (Bool),
+		OnRewardEvent(evt: handle:questRewardEvent) => (Bool),
+		OnManagePersonalLinkChangeEvent(evt: handle:ManagePersonalLinkChangeEvent) => (Bool),
+		IsBlackwallForceEquippedOnPlayer() => (Bool),
+		GetPhoneCallFactName(contactName1: CName, contactName2: CName) => (String),
+		TriggerInspect(itemID: String, offset: Float, adsOffset: Float, timeToScan: Float),
+		SetInvisible(isInvisible: Bool),
+		IsInvisible() => (Bool),
+		OnHeavyFootstepEvent(evt: handle:HeavyFootstepEvent) => (Bool),
+		PlayFootstepCameraShakeBasedOnProximity(evt: handle:HeavyFootstepEvent),
+		UpdateVisibility(),
+		UpdateSecondaryVisibilityOffset(isCrouching: Bool),
+		EnableCombatVisibilityDistances(enable: Bool),
+		OnZoomLevelChange(newLevel: Float) => (Bool),
+		OnLocomotionStateChanged(newState: Int32) => (Bool),
+		OnCombatStateChanged(newState: Int32) => (Bool),
+		OnStatChanged(ownerID: gameStatsObjectID, statType: gamedataStatType, diff: Float, total: Float),
+		UpdateWeaponRightEquippedItemInfo(),
+		OnItemEquipped(slot: TweakDBID, item: gameItemID),
+		OnItemUnequipped(slot: TweakDBID, item: gameItemID),
+		OnLeftHandCyberwareStateChange(newState: Int32) => (Bool),
+		OnVisionStateChange(newState: Int32) => (Bool),
+		OnMeleeWeaponStateChange(newState: Int32) => (Bool),
+		OnBodySlamStateChange(newState: Bool) => (Bool),
+		OnUpperBodyStateChange(newState: Int32) => (Bool),
+		OnCombatGadgetStateChange(newState: Int32) => (Bool),
+		OnSceneTierChange(newState: Int32) => (Bool),
+		OnPlayerTakedownStateChange(takedownState: Int32) => (Bool),
+		OnEnterAimState(),
+		OnVehicleStateChange(newState: Int32) => (Bool),
+		HandleDoorsForCombat(vehicle: whandle:vehicleBaseObject),
+		OnDriverCombatCameraChange(inTPP: Bool) => (Bool),
+		OnDriverCombatWeaponTypeChange(newWeaponType: Int32) => (Bool),
+		OnWeaponStateChange(newState: Int32) => (Bool),
+		OnControllingDeviceChange(controllingId: entEntityID) => (Bool),
+		OnNumberOfCombatantsChanged(value: Uint32) => (Bool),
+		ApplyNoMovementStatGroupModifiers(),
+		OnPlayerCoverStatusChangedEvent(evt: handle:gamePlayerCoverStatusChangedEvent) => (Bool),
+		OnStatusEffectApplied(evt: handle:gameeventsApplyStatusEffectEvent) => (Bool),
+		DisableScanningFromInput(),
+		SetCustomFastForwardEnabled(enabled: Bool),
+		SetStatPoolEnabled(statpool: gamedataStatPoolType, statpooltype: gameStatPoolModificationTypes, enabled: Bool),
+		GetEquippedItemIdInArea(equipArea: gamedataEquipmentArea, [opt] slot: Int32) => (gameItemID),
+		DisableFootstepAudio(b: Bool),
+		DisableCameraBobbing(b: Bool),
+		OnAdditiveCameraMovementsSettingChanged(),
+		ProcessBreathingEffectApplication(evt: handle:gameeventsStatusEffectEvent),
+		ProcessTieredDrunkEffect(evt: handle:gameeventsStatusEffectEvent),
+		ProcessTieredDruggedEffect(evt: handle:gameeventsStatusEffectEvent),
+		OnStatusEffectUsedHealingItemOrCyberwareApplied(),
+		OnNewPerkSold(evt: handle:NewPerkSoldEvent) => (Bool),
+		OnStatusEffectRemoved(evt: handle:gameeventsRemoveStatusEffect) => (Bool),
+		OnUpdateEquippedWeaponsHandling(evt: handle:UpdateEquippedWeaponsHandlingEvent) => (Bool),
+		RegisterFriendlyDeviceHostileToEnemies(deviceID: entEntityID),
+		UnregisterFriendlyDeviceHostileToEnemies(deviceID: entEntityID),
+		OnAttitudeChanged(evt: handle:gameeventsAttitudeChangedEvent) => (Bool),
+		OnAdHocAnimationRequest(evt: handle:AdHocAnimationEvent) => (Bool),
+		OnSceneForceWeaponAimEvent(evt: handle:SceneForceWeaponAim) => (Bool),
+		OnFelledEvent(evt: handle:FelledEvent) => (Bool),
+		OnClearAnimFeatureCarryEvent(evt: handle:ClearAnimFeatureCarryEvent) => (Bool),
+		OnSceneForceWeaponSafeEvent(evt: handle:SceneForceWeaponSafe) => (Bool),
+		OnSceneFirstEquipState(evt: handle:SceneFirstEquipState) => (Bool),
+		OnEnableBraindanceActions(evt: handle:EnableBraindanceActions) => (Bool),
+		OnDisableBraindanceActions(evt: handle:DisableBraindanceActions) => (Bool),
+		OnForceBraindanceCameraToggle(evt: handle:ForceBraindanceCameraToggle) => (Bool),
+		OnPauseBraindance(evt: handle:PauseBraindance) => (Bool),
+		OnModifyOverlappedSecurityArease(evt: handle:ModifyOverlappedSecurityAreas) => (Bool),
+		AddOverrlappedSecurityZone(zone: gamePersistentID),
+		RemoveOverrlappedSecurityZone(zone: gamePersistentID),
+		SendSceneOverridesAnimFeature(sceneOverridesBlackboard: handle:gameIBlackboard),
+		OnWorkspotStartedEvent(evt: handle:workWorkspotStartedEvent) => (Bool),
+		OnWorkspotFinishedEvent(evt: handle:workWorkspotFinishedEvent) => (Bool),
+		GetPlayerCurrentWorkspotTags() => (array:CName),
+		PlayerContainsWorkspotTag(tag: CName) => (Bool),
+		IsCooldownForActionActive(actionID: TweakDBID) => (Bool),
+		CreateFactCallbackData(factName: CName) => (FactCallbackData),
+		RegisterToFacts(),
+		UnregisterToFacts(),
+		OnFactChangedEvent(evt: handle:gameFactChangedEvent) => (Bool),
+		OnSysDebuggerEvent(evt: handle:SysDebuggerEvent) => (Bool),
+		AllowOuterwearClothing(),
+		DisallowOuterwearClothing(),
+		InitializeFocusModeTagging(),
+		UnInitializeFocusModeTagging(),
+		OnRequestEquipHeavyWeapon(evt: handle:RequestEquipHeavyWeapon) => (Bool),
+		OnFillAnimWrapperInfoBasedOnEquippedItem(evt: handle:FillAnimWrapperInfoBasedOnEquippedItem) => (Bool),
+		OnIncapacitated(),
+		RefreshCPOVisionAppearance(),
+		OnResurrected(),
+		IsIncapacitated() => (Bool),
+		RegisterCPOMissionDataCallback(),
+		UnregisterCPOMissionDataCallback(),
+		OnCPOMissionDataTransferred(evt: handle:CPOMissionDataTransferred) => (Bool),
+		OnCPOMissionDataTransferredServer(evt: handle:CPOMissionDataTransferred),
+		OnCPOMissionDataTransferredClient(evt: handle:CPOMissionDataTransferred),
+		OnCPOMissionDataTransferredChoiceTokenClient(evt: handle:CPOMissionDataTransferred),
+		OnCPOChoiceTokenDrawTextEvent(evt: handle:CPOChoiceTokenDrawTextEvent) => (Bool),
+		CPOMissionDataOnPlayerDetach(),
+		OnCPOMissionPlayerVotedEvent(evt: handle:CPOMissionPlayerVotedEvent) => (Bool),
+		OnPlayerDamageFromDataEvent(e: handle:PlayerDamageFromDataEvent) => (Bool),
+		OnCPOMissionDataUpdateEvent(e: handle:CPOMissionDataUpdateEvent) => (Bool),
+		GetCompatibleCPOMissionDeviceName() => (CName),
+		OnCPOMissionDataChanged(hasData: Bool) => (Bool),
+		SetHasCPOMissionData(setHasData: Bool, damagesPreset: CName, compatibleDeviceName: CName, ownerDecidesOnTransfer: Bool),
+		OnCPOGiveChoiceTokenEvent(e: handle:questMultiplayerGiveChoiceTokenEvent) => (Bool),
+		ProcessDamageEvents(addDamage: Bool, damagesPreset: CName),
+		OnDeath(evt: handle:gameeventsDeathEvent) => (Bool),
+		ForceCloseRadialWheel(),
+		Revive(percAmount: Float),
+		OnTargetNeutraliziedEvent(evt: handle:TargetNeutraliziedEvent) => (Bool),
+		OnRewindableSectionEvent(evt: handle:scnRewindableSectionEvent) => (Bool),
+		IsInCombat() => (Bool),
+		IsNaked() => (Bool),
+		IsMoving() => (Bool),
+		IsMovingHorizontally() => (Bool),
+		IsMovingVertically() => (Bool),
+		OnZoneChange(value: Variant) => (Bool),
+		SetWarningMessage(message: script_ref:String, [opt] msgType: gameSimpleMessageType),
+		StartProcessingVForVendettaAchievement(deathInstigator: handle:gameObject),
+		CreateVendettaTimeDelayEvent(),
+		OnFinishedVendettaTimeEvent(evt: handle:FinishedVendettaTimeEvent) => (Bool),
+		CheckVForVendettaAchievement(evt: handle:TargetNeutraliziedEvent),
+		OnProcessVendettaAchievementEvent(evt: handle:ProcessVendettaAchievementEvent) => (Bool),
+		GetNetworkLinkSlotName() => (CName),
+		IsNetworkLinkDynamic() => (Bool),
+		RegisterRemoteMappin(),
+		UnregisterRemoteMappin(),
+		OnRegisterFastTravelPoints(evt: handle:RegisterFastTravelPointsEvent) => (Bool),
+		ShouldShowScanner() => (Bool),
+		OnWoundedInstigated(evt: handle:WoundedInstigated) => (Bool),
+		OnDismembermentInstigated(evt: handle:DismembermentInstigated) => (Bool),
+		ToggleFocusedGrenadeShootingPerk(activate: Bool),
+		GetPrimaryTargetingComponent() => (handle:gameTargetingComponent),
+		GetBreachFinderComponent() => (handle:gameBreachFinderComponent),
+		ApplyNPCLevelAndProgressionBuild(npc: whandle:gameObject, actionName: CName),
+		OnMeleeHitEvent(evt: handle:MeleeHitEvent) => (Bool),
+		OnMeleeHitSloMo(evt: handle:MeleeHitSlowMoEvent) => (Bool),
+		FindBuildSpacing(enumType: script_ref:String, buildNameStringPart: script_ref:String) => (Int32),
+		GotKeycardNotification(),
+		OnHackTargetEvent(evt: handle:HackTargetEvent) => (Bool),
+		OnCarHitPlayer(evt: handle:gameOnCarHitPlayer) => (Bool),
+		OnDistrictChanged(evt: handle:PlayerEnteredNewDistrictEvent) => (Bool),
+		GetGunshotRange() => (Float),
+		GetExplosionRange() => (Float),
+		GetMinigamePrograms() => (array:gameuiMinigameProgramData),
+		OnUpdateMiniGameProgramsEvent(evt: handle:UpdateMiniGameProgramsEvent) => (Bool),
+		UpdateMinigamePrograms(program: gameuiMinigameProgramData, add: Bool),
+		RestoreMinigamePrograms(),
+		GetMinigameBlackboard() => (handle:gameIBlackboard),
+		InitInterestingFacts(),
+		UpdateAimAssist(),
+		UpdateAimAssistDelayedTask(data: handle:gameScriptTaskData),
+		UpdateAimAssistImmediate(),
+		GetAimAssistLevel() => (EAimAssistLevel),
+		IsAimSnapEnabled() => (Bool),
+		ApplyAimAssistSettings(config: AimAssistSettingConfig),
+		ShouldAllowCycleToFistCyberware() => (Bool),
+		RegisterInterestingFactsListeners(),
+		UnregisterInterestingFactsListeners(),
+		SetBlackboardIntVariable(id: gamebbScriptID_Int32, value: Int32),
+		InvalidateZone(),
+		GetStaminaValueUnsafe() => (Float),
+		GetStaminaPercUnsafe() => (Float),
+		IsExhausted() => (Bool),
+		GetHealingItemCharges() => (Int32),
+		GetHealingItemUseCost() => (Int32),
+		HealingItemChargesAreOnMax() => (Bool),
+		GetGrenadeCharges() => (Int32),
+		GetGrenadeCharges(item: handle:gamedataGrenade_Record) => (Int32),
+		GrenadeChargesAreOnMax() => (Bool),
+		GetGrenadeThrowCost() => (Int32),
+		GetGrenadeThrowCostClean() => (Int32),
+		GetProjectileLauncherCharges() => (Int32),
+		GetProjectileLauncherShootCost() => (Int32),
+		OnZoneFactChanged(val: Int32),
+		SetSecurityAreaTypeE3HACK(securityAreaType: ESecurityAreaType),
+		OnEnterUndefinedZone(),
+		OnEnterPublicZone(),
+		OnExitPublicZone(),
+		OnEnterSafeZone(),
+		OnExitSafeZone(),
+		OnEnterRestrictedZone(),
+		OnEnterDangerousZone(),
+		GetCurrentZoneType(factValue: Int32) => (gameCityAreaType),
+		GetCurrentSecurityZoneType(owner: handle:gameObject) => (gameCityAreaType),
+		OnInvalidateVisionModeController(evt: handle:PlayerVisionModeControllerInvalidateEvent) => (Bool),
+		OnInvalidateCombatController(evt: handle:PlayerCombatControllerInvalidateEvent) => (Bool),
+		OnStartedBeingTrackedAsHostile(evt: handle:AIStartedBeingTrackedAsHostile) => (Bool),
+		OnStoppedBeingTrackedAsHostile(evt: handle:AIStoppedBeingTrackedAsHostile) => (Bool),
+		OnCrouchDelayEvent(evt: handle:CrouchDelayEvent) => (Bool),
+		GetCachedQuickHackList() => (array:PlayerQuickhackData),
+		OnDisableVisualOverride(evt: handle:DisableVisualOverride) => (Bool),
+		OnRestoreVisualOverride(evt: handle:RestoreVisualOverride) => (Bool),
+		OnEnableVisualOverride(evt: handle:EnableVisualOverride) => (Bool),
+		GetEquipmentSystem() => (handle:EquipmentSystem),
+		OnHideVisualSlot(evt: handle:HideVisualSlot) => (Bool),
+		OnRestoreVisualSlot(evt: handle:RestoreVisualSlot) => (Bool),
+		GetAreaFromEnum(slot: TransmogSlots) => (gamedataEquipmentArea),
+		OnRefreshQuickhackMenuEvent(evt: handle:RefreshQuickhackMenuEvent) => (Bool),
+		OnHalloweenEvent(evt: handle:gameHalloweenEvent) => (Bool),
+		OnVehicleRadioEvent(evt: handle:VehicleRadioEvent) => (Bool),
+		OnVehicleRadioStationChanged(evt: handle:vehicleRadioStationChanged) => (Bool),
+		OnRadioToggleEvent(evt: handle:RadioToggleEvent) => (Bool),
+		PSIsInDriverCombat() => (Bool),
+		SetPSIsInDriverCombat(isInDriverCombat: Bool),
+		PSGetPocketRadioStation() => (Int32),
+		PSSetPocketRadioStation(value: Int32),
+		OnExplosiveDeviceExploded(),
+		PromoteOpticalCamoEffectorToCompletelyBlocking(),
+		wrapper$201227(newWeaponType: Int32) => (Bool),
+		wrapper$201268() => (Int32),
+		proxy$201228(newWeaponType: Int32) => (Bool),
+		proxy$201269() => (Int32),
+		DetermineInteractionStateByTask(),
+		DetermineInteractionStateTask(data: handle:gameScriptTaskData),
+		HandleDeath(instigator: whandle:gameObject),
+		HandleDefeatedByTask(),
+		HandleDefeatedTask(data: handle:gameScriptTaskData),
+		HandleDefeated(),
+		EvaluateLootQualityByTask(),
+		EvaluateLootQualityTask(data: handle:gameScriptTaskData),
+		ResolveConnectionWithDeviceSystem(),
+		ResolveConnectionWithDeviceSystemTask(data: handle:gameScriptTaskData),
+		EquipSavedLoadout(),
+		EquipSavedLoadoutTask(data: handle:gameScriptTaskData),
+		GetKiller() => (whandle:entEntity),
+		SetKiller(killer: whandle:entEntity),
+		OnRequestComponents(ri: entEntityRequestComponentsInterface) => (Bool),
+		OnTakeControl(ri: entEntityResolveComponentsInterface) => (Bool),
+		OnGameAttached() => (Bool),
+		OnDetach() => (Bool),
+		OnEvaluateMinigame(evt: handle:EvaluateMinigame) => (Bool),
+		ProcessLootMinigame(baseMoney: Float, baseUncommonMaterials: Float, baseRareMaterials: Float, baseEpicMaterials: Float, baseLegendaryMaterials: Float, baseShardDropChance: Float, TS: handle:gameTransactionSystem),
+		GenerateMaterialDrops(baseUncommonMaterials: Float, baseRareMaterials: Float, baseEpicMaterials: Float, baseLegendaryMaterials: Float, TS: handle:gameTransactionSystem),
+		GetWeakspotComponent() => (handle:gameWeakspotComponent),
+		GetBreachControllerComponent() => (handle:gameBreachControllerComponent),
+		IsAimAssistEnabled() => (Bool),
+		Update(dt: Float),
+		UpdateQuickHackableState(isQuickHackable: Bool),
+		GetCooldownStorage() => (handle:CooldownStorage),
+		GetItemMinigameAttempted(itemID: gameItemID) => (Bool),
+		SetItemMinigameAttempted(itemID: gameItemID),
+		GetLinkedStatusEffect() => (LinkedStatusEffect),
+		AddLinkedStatusEffect(netrunner: entEntityID, target: entEntityID, [opt] actionEffects: array:whandle:gamedataObjectActionEffect_Record),
+		RemoveLinkedStatusEffects([opt] ssAction: Bool) => (Bool),
+		ClearLinkedStatusEffect(),
+		RemoveLinkedStatusEffectsFromTarget(sourceID: entEntityID, [opt] ssAction: Bool) => (Bool),
+		RemoveLink(),
+		OnExitShapeEvent(evt: handle:senseOnExitShapeEvent) => (Bool),
+		ToggleInteractionLayers(),
+		CreateListeners(),
+		RemoveListeners(),
+		GetMasterConnectedClassTypes() => (ConnectedClassTypes),
+		OnCreateCustomBlackboard(evt: handle:CreateCustomBlackboardEvent) => (Bool),
+		GetCustomBlackboard() => (handle:gameIBlackboard),
+		OnAddOrRemoveListener(evt: handle:AddOrRemoveListenerEvent) => (Bool),
+		NotifyHitReactionTypeChanged(hitType: Int32),
+		NotifyHitReactionSourceChanged(hitSource: Int32),
+		GetAIControllerComponent() => (handle:AIHumanComponent),
+		GetMovePolicesComponent() => (handle:movePoliciesComponent),
+		GetSignalHandlerComponent() => (handle:AISignalHandlerComponent),
+		GetHitReactionComponent() => (handle:HitReactionComponent),
+		GetStimReactionComponent() => (handle:ReactionManagerComponent),
+		GetDismembermentComponent() => (handle:gameDismembermentComponent),
+		GetCrowdMemberComponent() => (handle:CrowdMemberBaseComponent),
+		GetTargetTrackerComponent() => (handle:AITargetTrackerComponent),
+		GetTargetTrackingExension() => (handle:TargetTrackingExtension),
+		GetObjectSelectionComponent() => (handle:AIObjectSelectionComponent),
+		GetPuppetStateBlackboard() => (handle:gameIBlackboard),
+		GetHitRepresantationSlotComponent() => (handle:entSlotComponent),
+		GetSlotComponent() => (handle:entSlotComponent),
+		GetCombatHUDManagerComponent() => (handle:CombatHUDManager),
+		GetSensesComponent() => (handle:senseComponent),
+		GetVisibleObjectComponent() => (handle:senseVisibleObjectComponent),
+		GetSensorObjectComponent() => (handle:senseSensorObjectComponent),
+		GetAttitudeAgent() => (handle:gameAttitudeAgent),
+		GetStatesComponent() => (handle:NPCStatesComponent),
+		GetBumpComponent() => (handle:gameinfluenceBumpComponent),
+		GetSignalTable() => (handle:gameBoolSignalTable),
+		GetTransformHistoryComponent() => (handle:entTransformHistoryComponent),
+		GetAnimationControllerComponent() => (handle:entAnimationControllerComponent),
+		GetAreIncomingSecuritySystemEventsSuppressed() => (Bool),
+		GetRecord() => (handle:gamedataCharacter_Record),
+		GetNPCType() => (gamedataNPCType),
+		IsAndroid() => (Bool),
+		IsMech() => (Bool),
+		IsHuman() => (Bool),
+		IsCerberus() => (Bool),
+		IsHumanoid() => (Bool),
+		IsNetrunnerPuppet() => (Bool),
+		IsMechanical() => (Bool),
+		IsResistantToTakedown() => (Bool),
+		IsFinisherSoundPlayed() => (Bool),
+		SetFinisherSoundPlayed(value: Bool),
+		GetPS() => (handle:ScriptedPuppetPS),
+		GetPuppetPS() => (handle:ScriptedPuppetPS),
+		GetHighLevelStateFromBlackboard() => (gamedataNPCHighLevelState),
+		GetUpperBodyStateFromBlackboard() => (gamedataNPCUpperBodyState),
+		GetDefenseModeStateFromBlackboard() => (gamedataDefenseMode),
+		GetStanceStateFromBlackboard() => (gamedataNPCStanceState),
+		GetHitReactionModeFromBlackboard() => (EHitReactionMode),
+		GetCurrentWorkspotTags() => (array:CName),
+		HasWorkspotTag(tag: CName) => (Bool),
+		IsPuppet() => (Bool),
+		IsPuppetInCombat() => (Bool),
+		IsOfficer() => (Bool),
+		RegisterSubCharacter(),
+		UnregisterSubCharacter(),
+		IsBoss() => (Bool),
+		IsMaxTac() => (Bool),
+		AllowFinisherThreshold() => (Bool),
+		IsElite() => (Bool),
+		IsMassive() => (Bool),
+		IsDrone() => (Bool),
+		IsVendor() => (Bool),
+		GetVendorType() => (gamedataVendorType),
+		RefreshCachedReactionPresetData(),
+		IsCivilian() => (Bool),
+		TryRegisterToPrevention(),
+		RefreshCachedDataCharacterTags(),
+		StopPoliceBehaviour(),
+		IsCharacterCyberpsycho() => (Bool),
+		IsCharacterCivilian() => (Bool),
+		IsCharacterPolice() => (Bool),
+		IsCharacterGanger() => (Bool),
+		IsCharacterChildren() => (Bool),
+		GetCrowd() => (Bool),
+		IsCrowd() => (Bool),
+		GetWasAggressiveCrowd() => (Bool),
+		SetWasIncapacitatedOnAttach(value: Bool),
+		WasIncapacitatedOnAttach() => (Bool),
+		AwardsExperience() => (Bool),
+		IsTurnedOffNoStatusEffect() => (Bool),
+		IsActiveInternal() => (Bool),
+		IsActive() => (Bool),
+		IsPrevention() => (Bool),
+		IsDead() => (Bool),
+		IsDeadNoStatPool() => (Bool),
+		GetReactionPresetID() => (TweakDBID),
+		SetReactionPresetID(presetID: TweakDBID),
+		IsEnemy() => (Bool),
+		IsAggressive() => (Bool),
+		IsOnAutonomousAI() => (Bool),
+		CanBeTagged() => (Bool),
+		IsPlayerCompanion() => (Bool),
+		Kill([opt] instigator: whandle:gameObject, [opt] skipNPCDeathAnim: Bool, [opt] disableNPCRagdoll: Bool),
+		SoftKill([opt] instigator: whandle:gameObject, [opt] skipNPCDeathAnim: Bool, [opt] disableNPCRagdoll: Bool),
+		HasHeadUnderwater() => (Bool),
+		IsUnderwater([opt] howDeep: Float) => (Bool),
+		OnReevaluateOxygenEvent(evt: handle:ReevaluateOxygenEvent) => (Bool),
+		PuppetSubmergedRequestRemovingStatusEffects(obj: whandle:gameObject),
+		StartOxygenDecay(),
+		StopOxygenDecay(),
+		OnRequestDismemberment(evt: handle:RequestDismembermentEvent) => (Bool),
+		OnResetSignalAIEventReceived(evt: handle:ResetSignal) => (Bool),
+		OnStatusEffectApplied(evt: handle:gameeventsApplyStatusEffectEvent) => (Bool),
+		EvaluateQuickhacksCount(),
+		SendAIDeathSignal(),
+		OnStatusEffectRemoved(evt: handle:gameeventsRemoveStatusEffect) => (Bool),
+		OnSetLootInteractionAccessEvent(evt: handle:gameSetLootInteractionAccessibilityEvent) => (Bool),
+		OnDefeated(evt: handle:gameeventsDefeatedEvent) => (Bool),
+		OnDeath(evt: handle:gameeventsDeathEvent) => (Bool),
+		OnDied(),
+		ProcessQuickHackQueueOnDefeat(),
+		SquadUpdate(leaveSquad: Bool, squadType: AISquadType),
+		OnIncapacitated(),
+		OnResurrect(evt: handle:gameeventsResurrectEvent) => (Bool),
+		OnResurrected(),
+		RewardKiller(killer: whandle:gameObject, killType: gameKillType, isAnyDamageNonlethal: Bool),
+		OnDamageReceived(evt: handle:gameeventsDamageReceivedEvent) => (Bool),
+		LogDamageReceived(evt: handle:gameeventsDamageReceivedEvent, instigator: handle:gameObject, dmgSituation: gameTelemetryDamageSituation),
+		OnDamageDealt(evt: handle:gameeventsTargetDamageEvent) => (Bool),
+		OnKillRewardEvent(evt: handle:gameeventsKillRewardEvent) => (Bool),
+		LogEnemyDown(evt: handle:gameeventsKillRewardEvent, dmgSituation: gameTelemetryDamageSituation),
+		HasCalculatedEquipment(equipmentPriority: EquipmentPriority, characterRecord: handle:gamedataCharacter_Record) => (Bool),
+		HasEquipment(equipmentPriority: EquipmentPriority) => (Bool),
+		GiveEquipment(equipmentPriority: EquipmentPriority, characterRecord: handle:gamedataCharacter_Record, powerLevel: Int32),
+		AddRecordEquipment(equipmentPriority: EquipmentPriority, [opt] powerLevel: Int32),
+		DropHeldItems() => (Bool),
+		OnAttitudeChanged(evt: handle:gameeventsAttitudeChangedEvent) => (Bool),
+		RevokeAllTickets(),
+		RevokeAllTicketsForPreventionSquad(),
+		OnHackTargetEvent(evt: handle:HackTargetEvent) => (Bool),
+		ProcessEnemyNetrunnerTutorialFact(),
+		OnRemoveLinkEvent(evt: handle:RemoveLinkEvent) => (Bool),
+		OnRemoveLinkedStatusEffectsEvent(evt: handle:RemoveLinkedStatusEffectsEvent) => (Bool),
+		OnNetworkLinkQuickhackEvent(evt: handle:NetworkLinkQuickhackEvent) => (Bool),
+		EnableLootInteractionWithDelay(puppet: handle:gamePuppet),
+		OnLootPickupDelayEvent(evt: handle:LootPickupDelayEvent) => (Bool),
+		OnInteractionActivated(evt: handle:gameinteractionsInteractionActivationEvent) => (Bool),
+		OnInteractionUsed(evt: handle:gameinteractionsChoiceEvent) => (Bool),
+		ProcessNewPerkFinisherLayer(evt: handle:gameinteractionsChoiceEvent, playerPuppet: handle:PlayerPuppet, npcPuppet: handle:NPCPuppet),
+		TriggerNewPerkFinisher(evt: handle:gameinteractionsChoiceEvent, playerPuppet: handle:PlayerPuppet),
+		TriggerNewPerkFinisherBluntHold(playerPuppet: handle:PlayerPuppet, npcPuppet: handle:NPCPuppet),
+		ExecuteAction(choice: script_ref:gameinteractionsChoice),
+		OnExecutePuppetAction(evt: handle:ExecutePuppetActionEvent) => (Bool),
+		OnCommunicationEvent(evt: handle:CommunicationEvent) => (Bool),
+		ShowQuickHackDuration(action: handle:ScriptableDeviceAction),
+		ExecuteAction(action: handle:ScriptableDeviceAction),
+		OnInteraction(choiceEvent: handle:gameinteractionsChoiceEvent) => (Bool),
+		LootAllItems(choiceEvent: handle:gameinteractionsChoiceEvent),
+		OnWorkspotStartedEvent(evt: handle:workWorkspotStartedEvent) => (Bool),
+		OnWorkspotFinishedEvent(evt: handle:workWorkspotFinishedEvent) => (Bool),
+		ProcessSyncedAnimationPuppetActions(evt: handle:gameinteractionsChoiceEvent),
+		PushFinisherActionEventToPSM(evt: handle:gameinteractionsChoiceEvent, isFastFinisher: Bool),
+		PushTakedownActionEventToPSM(evt: handle:gameinteractionsChoiceEvent),
+		CreateTakedownEventOnLayerActivation(evt: handle:gameinteractionsInteractionActivationEvent),
+		OrderChoice(choiceEvent: handle:gameinteractionsChoiceEvent),
+		OnDelayedTakedownGameEffectEvent(evt: handle:DelayedGameEffectEvent) => (Bool),
+		SendInteractionChoiceToPSM(choiceEvent: handle:gameinteractionsChoiceEvent, id: CName, isChoiceActive: Bool),
+		EnableSensesComponent(b: Bool),
+		EnableInteraction(layer: CName, b: Bool),
+		IsQuest() => (Bool),
+		OnRegisterPostion(evt: handle:RegisterPostionEvent) => (Bool),
+		OnRevealRequest(evt: handle:RevealRequestEvent) => (Bool),
+		RequestRevealOutline(shouldIncreaseCounter: Bool, requester: entEntityID),
+		ForceVisionAppearanceNetrunner(target: handle:gameObject, sourceID: entEntityID, sourceName: CName, toggle: Bool),
+		HasQuestItems() => (Bool),
+		IsRevealed() => (Bool),
+		GetPuppetReactionPresetType() => (gamedataReactionPresetType),
+		CreateClearOutlinesRequest(),
+		OnClearOutlinesRequest(evt: handle:ClearOutlinesRequestEvent),
+		OnOutlineRequestEvent(evt: handle:OutlineRequestEvent) => (Bool),
+		PropagateOutlineToCurrentlyUsedItems(evt: handle:OutlineRequestEvent),
+		PropagateFadeOutlinesRequestToItems(),
+		GetCurrentlyEquippedItems(heldObjects: script_ref:array:handle:gameItemObject) => (Bool),
+		OnToggleTargetingComponentsEvent(evt: handle:ToggleTargetingComponentsEvent) => (Bool),
+		OnPulseEvent(evt: handle:gameVisionModeUpdateVisuals) => (Bool),
+		OnScanningEvent(evt: handle:gameScanningEvent) => (Bool),
+		OnScanningLookAtEvent(evt: handle:gameScanningLookAtEvent) => (Bool),
+		UpdateScannerLookAtBB(b: Bool),
+		ShouldPulseNetwork() => (Bool),
+		IsBackdoor() => (Bool),
+		IsActiveBackdoor() => (Bool),
+		IsConnectedToBackdoorDevice() => (Bool),
+		IsNetworkKnownToPlayer() => (Bool),
+		IsHackingPlayer() => (Bool),
+		IsQuickHackAble() => (Bool),
+		IsQuickHacksExposed() => (Bool),
+		IsBreached() => (Bool),
+		GetNetworkLinkSlotName() => (CName),
+		GetNetworkLinkSlotName() => (CName, transform: WorldTransform),
+		IsNetworkLinkDynamic() => (Bool),
+		ShouldShowScanner() => (Bool),
+		StartPingingNetwork(),
+		PulseNetwork(revealNetworkAtEnd: Bool),
+		OnRevealNetworkGridOnPulse(evt: handle:RevealNetworkGridOnPulse) => (Bool),
+		CanOverrideNetworkContext() => (Bool),
+		StopPingingNetwork(),
+		GetFxResourceByKey(key: CName) => (gameFxResource),
+		OnSetExposeQuickHacks(evt: handle:SetExposeQuickHacks) => (Bool),
+		GetDeviceLink() => (handle:PuppetDeviceLinkPS),
+		OnAccessPointMiniGameStatus(evt: handle:gameuiAccessPointMiniGameStatus) => (Bool),
+		OnDiveFinished(reason: CName),
+		GetNetworkBlackboard() => (handle:gameIBlackboard),
+		GetNetworkBlackboardDef() => (handle:NetworkBlackboardDef),
+		OnRevealDeviceRequest(evt: handle:RevealDeviceRequest) => (Bool),
+		OnSetBloodPuddleSettingsEvent(evt: handle:SetBloodPuddleSettingsEvent) => (Bool),
+		ShouldSpawnBloodPuddle() => (Bool),
+		OnBloodPuddleEvent(evt: handle:BloodPuddleEvent) => (Bool),
+		ShouldSkipDeathAnimation() => (Bool),
+		SetSkipDeathAnimation(value: Bool),
+		IsConnectedToSecuritySystem() => (Bool),
+		IsTargetTresspassingMyZone(target: handle:gameObject) => (Bool),
+		GetDeterminatedSecurityAreaType() => (ESecurityAreaType),
+		MySecuritySystemState() => (ESecuritySystemState),
+		GetSecuritySystem() => (handle:SecuritySystemControllerPS),
+		OnSuppressNPCInSecuritySystem(evt: handle:SuppressNPCInSecuritySystem) => (Bool),
+		TriggerSecuritySystemNotification(lastKnownPosition: Vector4, threat: whandle:gameObject, type: ESecurityNotificationType, [opt] stimType: gamedataStimType),
+		OnSecuritySupportThreshold(above: Bool),
+		OnSecurityAreaCrossingPerimeter(evt: handle:SecurityAreaCrossingPerimeter) => (Bool),
+		OnItemAddedToSlot(evt: handle:gameAttachmentSlotEventsItemAddedToSlot) => (Bool),
+		OnItemRemovedFromSlot(evt: handle:gameAttachmentSlotEventsItemRemovedFromSlot) => (Bool),
+		HandleSquadAction(actionName: CName, verb: EAISquadVerb),
+		OnSignalSquadActionSignal(signalId: Uint16, newValue: Bool),
+		OnSignalNPCStateChangeSignal(signalId: Uint16, newValue: Bool, userData: handle:NPCStateChangeSignal),
+		OnSignalForcedRagdollDeathSignal(signalId: Uint16, newValue: Bool, userData: handle:ForcedRagdollDeathSignal),
+		DeterminGameplayRole() => (EGameplayRole),
+		ResolveQualityRangeInteractionLayer(),
+		IsQualityRangeInteractionLayer(layerTag: CName) => (Bool),
+		UpdateLootInteraction(),
+		EvaluateLootQualityEvent(),
+		OnEvaluateLootQuality(evt: handle:gameeventsEvaluateLootQualityEvent) => (Bool),
+		EvaluateLootQuality() => (Bool),
+		GetLootQuality() => (gamedataQuality),
+		GetIsIconic() => (Bool),
+		IsContainer() => (Bool),
+		HasLoot() => (Bool),
+		HasValidLootQuality() => (Bool),
+		OnInventoryEmptyEvent(evt: handle:gameOnInventoryEmptyEvent) => (Bool),
+		OnItemRemovedEvent(evt: handle:gameItemBeingRemovedEvent) => (Bool),
+		OnItemAddedEvent(evt: handle:gameItemAddedEvent) => (Bool),
+		OnInventoryChangedEvent(evt: handle:gameInventoryChangedEvent) => (Bool),
+		GetDefaultHighlight() => (handle:FocusForcedHighlightData),
+		IsChimera() => (Bool),
+		GetChimeraHighlight() => (handle:FocusForcedHighlightData),
+		GetCurrentOutline() => (EFocusOutlineType),
+		OnRevealStateChanged(evt: handle:RevealStateChangedEvent) => (Bool),
+		OnHUDInstruction(evt: handle:HUDInstruction) => (Bool),
+		OnHit(evt: handle:gameeventsHitEvent) => (Bool),
+		DamagePipelineFinalized(evt: handle:gameeventsHitEvent),
+		PuppetDamagePipelineFinalized(evt: handle:gameeventsHitEvent),
+		HandleStimsOnHit(evt: handle:gameeventsHitEvent),
+		GetLastDamageTimeFrom(threat: handle:gameObject) => (Float, isMelee: Bool),
+		GetGender() => (CName),
+		ShouldRegisterToHUD() => (Bool),
+		CanRevealRemoteActionsWheel() => (Bool),
+		HasDirectActionsActive() => (Bool),
+		GetBlackboardIntVariable(id: gamebbScriptID_Int32) => (Int32),
+		SendQuickhackCommands(shouldOpen: Bool),
+		GetPingDuration() => (Float),
+		GetQuickHackDuration(quickHackID: TweakDBID, rootObject: whandle:gameObject, targetID: gameStatsObjectID, instigatorID: entEntityID) => (Float),
+		GetQuickHackDuration(quickHackRecord: whandle:gamedataObjectAction_Record, rootObject: whandle:gameObject, targetID: gameStatsObjectID, instigatorID: entEntityID) => (Float),
+		GetObjectActionEffectDurationValue(category: gamedataHackCategory, durationMods: script_ref:array:whandle:gamedataObjectActionEffect_Record, rootObject: whandle:gameObject, targetID: gameStatsObjectID, instigatorID: entEntityID) => (Float),
+		GetQuickHackDurationFromLongestEffect(quickHackRecord: whandle:gamedataObjectAction_Record, rootObject: whandle:gameObject, targetID: gameStatsObjectID, instigatorID: entEntityID) => (Float),
+		TranslateChoicesIntoQuickSlotCommands(puppetActions: script_ref:array:handle:PuppetAction, commands: script_ref:array:handle:QuickhackData),
+		GetIgnoredDurationStats() => (array:whandle:gamedataStatusEffect_Record),
+		GetICELevel() => (Float),
+		OnQuickSlotCommandUsed(evt: handle:QuickSlotCommandUsed) => (Bool),
+		OnQuickHackPanelStateChanged(evt: handle:QuickHackPanelStateEvent) => (Bool),
+		HasActiveQuickHackUpload() => (Bool),
+		IsInvestigating() => (Bool),
+		IsInvestigatingObject(object: handle:gameObject) => (Bool),
+		DetermineInteractionState(),
+		ShouldEnableRemoteLayer() => (Bool),
+		GetObjectToForwardHighlight() => (array:whandle:gameObject),
+		SetSenseObjectType(type: gamedataSenseObjectType),
+		HasPrimaryOrSecondaryEquipment() => (Bool),
+		SetMainTrackedObject(target: handle:gameObject),
+		GetDistToTraceEndFromPosToMainTrackedObject(traceSource: senseAdditionalTraceType) => (Float),
+		OnStartEndPhoneCallEvent(evt: handle:StartEndPhoneCallEvent) => (Bool),
+		OnPauseResumePhoneCallEvent(evt: handle:PauseResumePhoneCallEvent) => (Bool),
+		ShowPhoneCallDuration(duration: Float, statType: gamedataStatType, statPoolType: gamedataStatPoolType, statPoolID: TweakDBID),
+		PausePhoneCallDuration(statPoolType: gamedataStatPoolType),
+		ResumePhoneCallDuration(statPoolType: gamedataStatPoolType, initialDuration: Float),
+		HidePhoneCallDuration(statPoolType: gamedataStatPoolType),
+		OnUploadProgressStateChanged(evt: handle:UploadProgramProgressEvent) => (Bool),
+		ActivateIntelligencePerks(action: handle:ScriptableDeviceAction),
+		GetPhoneCallIndicatorSlotName() => (CName),
+		IsPerformingCallReinforcements() => (Bool),
+		OnMinigameFailEvent(evt: handle:MinigameFailEvent) => (Bool),
+		CreateObjectActionsCallbackController(instigator: whandle:entEntity),
+		DestroyObjectActionsCallbackController(),
+		OnObjectActionRefreshEvent(evt: handle:gameObjectActionRefreshEvent) => (Bool),
+		HandleChainLightningEffectAndDamageTask(data: handle:gameScriptTaskData),
+		GetGameplayRoleComponent() => (handle:GameplayRoleComponent),
+		GetDeviceActionQueueSize() => (Int32),
+		GetDeviceActionMaxQueueSize() => (Int32),
+		GetDeviceActionQueueNames() => (array:CName),
+		IsActionQueueEnabled() => (Bool),
+		SetCurrentlyUploadingAction(action: handle:ScriptableDeviceAction),
+		GetCurrentlyUploadingAction() => (handle:ScriptableDeviceAction),
+		IsActionCurrentlyUploading() => (Bool),
+		IsActionQueueFull() => (Bool),
+		CanNewActionBeQueued() => (Bool),
+		GetActiveQuickhackActionHistory() => (array:handle:ScriptableDeviceAction),
+		GetCompletedQuickhackActionHistory() => (array:handle:ScriptableDeviceAction),
+		SetAnimWrappersOnItem(item: whandle:gameItemObject),
+		OnApplyNewStatusEffect(evt: handle:ApplyNewStatusEffectEvent) => (Bool),
+		OnRemoveStatusEffect(evt: handle:RemoveStatusEffectEvent) => (Bool),
+		OnRemoveAllStatusEffectOfTypeEvent(evt: handle:RemoveAllStatusEffectOfTypeEvent) => (Bool),
+		GetVelocity() => (Vector4),
+		GetSenses() => (handle:senseComponent),
+		GetAttitude() => (handle:gameAttitudeAgent),
+		GetVisibleObject() => (handle:senseVisibleObjectComponent),
+		GetBlackboard() => (handle:gameIBlackboard),
+		GetTargetTracker() => (handle:AITargetTrackerComponent),
+		HideIrreversibly(),
+		SetCPOMissionData(hasCPOMissionData: Bool),
+		HasCPOMissionData() => (Bool),
+		SetCPOMissionVoted(deviceGroup: CName, hasVoted: Bool),
+		GetCPOMissionVoted(deviceGroup: CName) => (Bool),
+		GetResolvedGenderName() => (CName),
+		GetBodyType() => (CName),
+		GenerateLoot(),
+		GenerateLootWithStats(lootModifiers: array:handle:gameStatModifierData_Deprecated),
+		DropWeapons(),
+		DropAmmo(),
+		HasRuntimeAnimsetTags(tagList: array:CName) => (Bool),
+		HasCrowdStaticLOD() => (Bool),
+		CacheLootForDropping(),
+		DropLootBag(),
+		IsLooted() => (Bool),
+		CheckIsStandingOnVehicle(vehicleID: entEntityID) => (Bool),
+		TryGetVehicleBelow() => (entEntityID),
+		InitializeBaseInventory(),
+		WasLootGenerated() => (Bool),
+		GetCurrentNavmeshPosition(position: script_ref:Vector4) => (navNaviPositionType),
+		CanRagdoll() => (Bool),
+		GetLastValidNavmeshPoint() => (Vector4),
+		GetNPCRarity() => (gamedataNPCRarity),
+		GetNPCRarityRecord() => (handle:gamedataNPCRarity_Record),
+		ProcessLoot(),
+		HasMechanicalImpactComponent() => (Bool),
+		GetRecordID() => (TweakDBID),
+		GetTweakDBDisplayName(useDisplayNameAsFallback: Bool) => (String),
+		GetTweakDBFullDisplayName(useDisplayNameAsFallback: Bool) => (String),
+		GetIntFromCharacterTweak(varName: script_ref:String, [opt] defaultValue: Int32) => (Int32),
+		GetFloatFromCharacterTweak(varName: script_ref:String, [opt] defaultValue: Float) => (Float),
+		GetStringFromCharacterTweak(varName: script_ref:String, [opt] defaultValue: String) => (String),
+		GetBoolFromCharacterTweak(varName: script_ref:String, [opt] defaultValue: Bool) => (Bool),
+		GetCNameFromCharacterTweak(varName: script_ref:String, [opt] defaultValue: CName) => (CName),
+		IsIncapacitated() => (Bool),
+		HasIndividualTimeDilation([opt] reason: CName) => (Bool),
+		SetIndividualTimeDilation(reason: CName, dilation: Float, [opt] duration: Float, [opt] easeInCurve: CName, [opt] easeOutCurve: CName, [opt] ignoreGlobalDilation: Bool, [opt] useRealTime: Bool),
+		UnsetIndividualTimeDilation([opt] easeOutCurve: CName),
+		GetTimeDilationValue() => (Float),
+		IsIgnoringGlobalTimeDilation() => (Bool),
+		IsIgnoringTimeDilation() => (Bool),
+		GetName() => (CName),
+		GetAudioName(),
+		GetDisplayName() => (String),
+		GetDisplayDescription() => (String),
+		GetGame() => (ScriptGameInstance),
+		EnableTransformUpdates(enable: Bool),
+		IsSelectedForDebugging() => (Bool),
+		IsPlayerControlled() => (Bool),
+		GetOwner() => (whandle:gameObject),
+		GetTracedActionName() => (String),
+		RegisterInputListener(listener: handle:IScriptable, [opt] name: CName),
+		RegisterInputListenerWithOwner(listener: handle:IScriptable, name: CName),
+		UnregisterInputListener(listener: handle:IScriptable, [opt] name: CName),
+		GetCurveValue(curveName: CName, isDebug: Bool) => (x: Float, y: Float),
+		GetCurrentContext() => (CName),
+		PlayerLastUsedPS5Pad() => (Bool),
+		PlayerLastUsedPad() => (Bool),
+		PlayerLastUsedKBM() => (Bool),
+		TriggerEvent(eventName: CName, [opt] data: handle:IScriptable, [opt] flags: Int32) => (Bool),
+		GetPS() => (handle:gameObjectPS),
+		GetBasePS() => (handle:gameObjectPS),
+		HasTag(tag: CName) => (Bool),
+		ReplicateAnimFeature(obj: handle:gameObject, inputName: CName, value: handle:animAnimFeature),
+		ReplicateAnimEvent(obj: handle:gameObject, eventName: CName),
+		QueueReplicatedEvent(evt: handle:redEvent),
+		ReplicateInputFloat(obj: handle:gameObject, inputName: CName, value: Float),
+		ReplicateInputBool(obj: handle:gameObject, inputName: CName, value: Bool),
+		ReplicateInputInt(obj: handle:gameObject, inputName: CName, value: Int32),
+		ReplicateInputVector(obj: handle:gameObject, inputName: CName, value: Vector4),
+		GetUISlotComponent() => (handle:entSlotComponent),
+		AddTag(tag: CName),
+		RegisterToHUDManagerByTask(shouldRegister: Bool),
+		RegisterToHUDManagerTask(data: handle:gameScriptTaskData),
+		RegisterToHUDManager(shouldRegister: Bool),
+		HandleDeathByTask(instigator: whandle:gameObject),
+		HandleDeathTask(data: handle:gameScriptTaskData),
+		HandleDeath(instigator: whandle:gameObject),
+		OnDeviceLinkRequest(evt: handle:DeviceLinkRequest) => (Bool),
+		GetDeviceLink() => (handle:DeviceLinkComponentPS),
+		OnTransformUpdated(),
+		GetPersistentID() => (gamePersistentID),
+		GetPSOwnerData() => (PSOwnerData),
+		GetPSClassName() => (CName),
+		SendEventToDefaultPS(evt: handle:redEvent),
+		IsConnectedToSecuritySystem() => (Bool),
+		GetSecuritySystem() => (handle:SecuritySystemControllerPS),
+		IsTargetTresspassingMyZone(target: handle:gameObject) => (Bool),
+		OnAddOrRemoveListenerForGameObject(evt: handle:AddOrRemoveListenerForGOEvent) => (Bool),
+		OnAddStatusEffectTriggerListener(evt: handle:AddStatusEffectListenerEvent) => (Bool),
+		OnRemoveStatusEffectTriggerListener(evt: handle:RemoveStatusEffectListenerEvent) => (Bool),
+		OnRequestComponents(ri: entEntityRequestComponentsInterface) => (Bool),
+		OnTakeControl(ri: entEntityResolveComponentsInterface) => (Bool),
+		OnPostInitialize(evt: handle:entPostInitializeEvent) => (Bool),
+		OnPreUninitialize(evt: handle:entPreUninitializeEvent) => (Bool),
+		OnGameAttached() => (Bool),
+		OnDetach() => (Bool),
+		ShouldForceRegisterInHUDManager() => (Bool),
+		ShouldRegisterToHUD() => (Bool),
+		RequestHUDRefresh([opt] updateData: handle:HUDActorUpdateData),
+		RequestHUDRefresh(targetID: entEntityID, [opt] updateData: handle:HUDActorUpdateData),
+		CanPlayerScanThroughWalls() => (Bool),
+		IsScannerDataDirty() => (Bool),
+		SetScannerDirty(dirty: Bool),
+		CanRevealRemoteActionsWheel() => (Bool),
+		IsInitialized() => (Bool),
+		ShouldReactToTarget(targetID: entEntityID) => (Bool),
+		GetSensesComponent() => (handle:senseComponent),
+		GetAttitudeAgent() => (handle:gameAttitudeAgent),
+		GetScannerAttitudeTweak() => (TweakDBID),
+		GetAttitudeTowards(target: handle:gameObject) => (EAIAttitude),
+		HasAttitude(attitude: EAIAttitude) => (Bool),
+		IsHostile() => (Bool),
+		IsNeutral() => (Bool),
+		GetTargetTrackerComponent() => (handle:AITargetTrackerComponent),
+		GetEntitiesAroundObject([opt] range: Float, [opt] searchFilter: gameTargetSearchFilter) => (array:handle:entEntity),
+		GetNPCsAroundObject([opt] range: Float) => (array:handle:NPCPuppet),
+		OnEventReplicated(evt: handle:redEvent),
+		PassUpdate(dt: Float),
+		Update(dt: Float),
+		OnStatusEffectApplied(evt: handle:gameeventsApplyStatusEffectEvent) => (Bool),
+		HandleICEBreakerUpdate(evt: handle:gameeventsApplyStatusEffectEvent),
+		StartStatusEffectVFX(evt: handle:gameeventsApplyStatusEffectEvent),
+		StartStatusEffectSFX(evt: handle:gameeventsApplyStatusEffectEvent),
+		OnStatusEffectRemoved(evt: handle:gameeventsRemoveStatusEffect) => (Bool),
+		StopStatusEffectVFX(evt: handle:gameeventsRemoveStatusEffect),
+		StopStatusEffectSFX(evt: handle:gameeventsRemoveStatusEffect),
+		OnHit(evt: handle:gameeventsHitEvent) => (Bool),
+		OnMiss(evt: handle:gameeventsMissEvent) => (Bool),
+		DamagePipelineFinalized(evt: handle:gameeventsHitEvent),
+		ResolveHitIstigatorCooldown(instigatorID: entEntityID) => (Bool),
+		OnHitInstigatorCooldown(evt: handle:HitInstigatorCooldownEvent) => (Bool),
+		HandleStimsOnHit(evt: handle:gameeventsHitEvent),
+		OnVehicleHit(evt: handle:gameeventsVehicleHitEvent) => (Bool),
+		OnHitProjection(evt: handle:gameeventsProjectedHitEvent) => (Bool),
+		OnAttitudeChanged(evt: handle:gameeventsAttitudeChangedEvent) => (Bool),
+		ProcessDamagePipeline(evt: handle:gameeventsHitEvent),
+		ReactToHitProcess(hitEvent: handle:gameeventsHitEvent),
+		OnHitBlockedOrDeflected(hitEvent: handle:gameeventsHitEvent),
+		OnHitAnimation(hitEvent: handle:gameeventsHitEvent),
+		OnHitUI(hitEvent: handle:gameeventsHitEvent),
+		DisplayHitUI(dmgInfos: script_ref:array:gameuiDamageInfo),
+		DisplayKillUI(killInfo: gameuiKillInfo),
+		OnHitSounds(hitEvent: handle:gameeventsHitEvent),
+		OnHitVFX(hitEvent: handle:gameeventsHitEvent),
+		OnDamageReceived(evt: handle:gameeventsDamageReceivedEvent) => (Bool),
+		GetReceivedDamageByPlayerLastTimeStamp() => (Float),
+		ProcessDamageReceived(evt: handle:gameeventsDamageReceivedEvent),
+		Record1DamageInHistory(source: handle:gameObject),
+		OnRecord1DamageInHistoryEvent(evt: handle:Record1DamageInHistoryEvent) => (Bool),
+		FindAndRewardKiller(killType: gameKillType, [opt] instigator: whandle:gameObject),
+		RewardKiller(killer: whandle:gameObject, killType: gameKillType, isAnyDamageNonlethal: Bool),
+		ForceDefeatReward(value: Bool),
+		DisableKillReward(value: Bool),
+		OnChangeRewardSettingsEvent(evt: handle:ChangeRewardSettingsEvent) => (Bool),
+		OnWillDieSoonEventEvent(evt: handle:WillDieSoonEvent) => (Bool),
+		CheckIfPreventionShouldReact(damageDealers: script_ref:array:whandle:gameObject),
+		IsVehicle() => (Bool),
+		IsPuppet() => (Bool),
+		IsPlayer() => (Bool),
+		IsPaperdoll() => (Bool),
+		IsReplacer() => (Bool),
+		IsVRReplacer() => (Bool),
+		IsJohnnyReplacer() => (Bool),
+		IsNPC() => (Bool),
+		IsContainer() => (Bool),
+		IsShardContainer() => (Bool),
+		IsPlayerStash() => (Bool),
+		IsDevice() => (Bool),
+		IsSensor() => (Bool),
+		IsTurret() => (Bool),
+		IsActive() => (Bool),
+		IsPrevention() => (Bool),
+		IsDropPoint() => (Bool),
+		IsWardrobe() => (Bool),
+		IsDrone() => (Bool),
+		IsValidHostileTarget() => (Bool),
+		IsItem() => (Bool),
+		IsDead() => (Bool),
+		IsDeadNoStatPool() => (Bool),
+		UpdateAdditionalScanningData(),
+		OnOutlineRequestEvent(evt: handle:OutlineRequestEvent) => (Bool),
+		OnDebugOutlineEvent(evt: handle:DebugOutlineEvent) => (Bool),
+		OnScanningModeChanged(evt: handle:gameScanningModeEvent) => (Bool),
+		OnScanningLookedAt(evt: handle:gameScanningLookAtEvent) => (Bool),
+		OnLookedAtEvent(evt: handle:LookedAtEvent) => (Bool),
+		OnPulseEvent(evt: handle:gameVisionModeUpdateVisuals) => (Bool),
+		PulseNetwork(revealNetworkAtEnd: Bool),
+		GetTakeOverControlSystem() => (handle:TakeOverControlSystem),
+		TryGetControlledProxy() => (handle:gameObject),
+		GetTaggingSystem() => (handle:FocusModeTaggingSystem),
+		CanBeTagged() => (Bool),
+		OnTagObjectEvent(evt: handle:TagObjectEvent) => (Bool),
+		GetDefaultHighlight() => (handle:FocusForcedHighlightData),
+		UpdateDefaultHighlight(),
+		GetCurrentOutline() => (EFocusOutlineType),
+		GetDefaultHighlightType() => (EFocusForcedHighlightType),
+		HasHighlight(highlightType: EFocusForcedHighlightType, outlineType: EFocusOutlineType) => (Bool),
+		HasOutlineOrFill(highlightType: EFocusForcedHighlightType, outlineType: EFocusOutlineType) => (Bool),
+		HasHighlight(highlightType: EFocusForcedHighlightType, outlineType: EFocusOutlineType, sourceID: entEntityID) => (Bool),
+		HasHighlight(highlightType: EFocusForcedHighlightType, outlineType: EFocusOutlineType, sourceID: entEntityID, sourceName: CName) => (Bool),
+		HasRevealRequest(data: gameVisionModeSystemRevealIdentifier) => (Bool),
+		CancelForcedVisionAppearance(data: handle:FocusForcedHighlightData),
+		ForceVisionAppearance(data: handle:FocusForcedHighlightData),
+		SendReactivateHighlightEvent(),
+		GetObjectToForwardHighlight() => (array:whandle:gameObject),
+		OnHUDInstruction(evt: handle:HUDInstruction) => (Bool),
+		TryOpenQuickhackMenu(shouldOpen: Bool),
+		SendQuickhackCommands(shouldOpen: Bool),
+		SetCurrentlyUploadingAction(action: handle:ScriptableDeviceAction),
+		GetCurrentlyUploadingAction() => (handle:ScriptableDeviceAction),
+		SendForceRevealObjectEvent(reveal: Bool, reason: CName, [opt] instigatorID: entEntityID, [opt] lifetime: Float, [opt] delay: Float),
+		RestoreRevealState(),
+		HasFinisherAvailable() => (Bool),
+		BlockWorkspotFinishers() => (Bool),
+		BlockFinisherThreshold() => (Bool),
+		CanReceivePoiseDamage() => (Bool),
+		IsInFinisherHealthThreshold(playerPuppet: whandle:gameObject) => (Bool),
+		GetIsInFastFinisher() => (Bool),
+		IsHighlightedInFocusMode() => (Bool),
+		IsScanned() => (Bool),
+		GetBraindanceLayer() => (braindanceVisionMode),
+		IsObjectRevealed() => (Bool),
+		GetFastTravelSystem() => (handle:FastTravelSystem),
+		GetNetworkSystem() => (handle:NetworkSystem),
+		CanOverrideNetworkContext() => (Bool),
+		IsAccessPoint() => (Bool),
+		StartPingingNetwork(),
+		StopPingingNetwork(),
+		GetNetworkLinkSlotName() => (CName, transform: WorldTransform),
+		GetNetworkLinkSlotName() => (CName),
+		GetRoleMappinSlotName() => (CName),
+		GetQuickHackIndicatorSlotName() => (CName),
+		GetPhoneCallIndicatorSlotName() => (CName),
+		IsNetworkLinkDynamic() => (Bool),
+		GetNetworkBeamEndpoint() => (Vector4),
+		IsNetworkKnownToPlayer() => (Bool),
+		CanPlayerUseQuickHackVulnerability(data: TweakDBID) => (Bool),
+		IsConnectedToBackdoorDevice() => (Bool),
+		IsInIconForcedVisibilityRange() => (Bool),
+		EvaluateMappinsVisualState(),
+		IsGameplayRelevant() => (Bool),
+		ShouldSendGameAttachedEventToPS() => (Bool),
+		GetContentScale() => (TweakDBID),
+		IsGameplayRoleValid(role: EGameplayRole) => (Bool),
+		DeterminGameplayRole() => (EGameplayRole),
+		DeterminGameplayRoleMappinVisuaState(data: script_ref:SDeviceMappinData) => (EMappinVisualState),
+		DeterminGameplayRoleMappinRange(data: script_ref:SDeviceMappinData) => (Float),
+		OnGameplayRoleChangeNotification(evt: handle:GameplayRoleChangeNotification) => (Bool),
+		IsHackingPlayer() => (Bool),
+		IsQuickHackAble() => (Bool),
+		IsQuickHacksExposed() => (Bool),
+		IsBreached() => (Bool),
+		IsBackdoor() => (Bool),
+		IsActiveBackdoor() => (Bool),
+		IsBodyDisposalPossible() => (Bool),
+		IsControllingDevices() => (Bool),
+		HasAnySlaveDevices() => (Bool),
+		IsFastTravelPoint() => (Bool),
+		IsExplosive() => (Bool),
+		HasImportantInteraction() => (Bool),
+		HasAnyDirectInteractionActive() => (Bool),
+		ShouldEnableRemoteLayer() => (Bool),
+		IsTechie() => (Bool),
+		IsSolo() => (Bool),
+		IsNetrunner() => (Bool),
+		IsAnyPlaystyleValid() => (Bool),
+		IsHackingSkillCheckActive() => (Bool),
+		IsDemolitionSkillCheckActive() => (Bool),
+		IsEngineeringSkillCheckActive() => (Bool),
+		CanPassEngineeringSkillCheck() => (Bool),
+		CanPassDemolitionSkillCheck() => (Bool),
+		CanPassHackingSkillCheck() => (Bool),
+		HasDirectActionsActive() => (Bool),
+		HasActiveDistraction() => (Bool),
+		HasActiveQuickHackUpload() => (Bool),
+		IsInvestigating() => (Bool),
+		IsInvestigatingObject(targetID: handle:gameObject) => (Bool),
+		IsTaggedinFocusMode() => (Bool),
+		IsQuest() => (Bool),
+		OnSetAsQuestImportantEvent(evt: handle:gameSetAsQuestImportantEvent) => (Bool),
+		ToggleQuestImportance(isImportant: Bool),
+		MarkAsQuest(isQuest: Bool),
+		IsGrouppedClue() => (Bool),
+		HasAnyClue() => (Bool),
+		IsClueInspected() => (Bool),
+		GetLinkedClueData(clueIndex: Int32) => (LinkedFocusClueData),
+		GetAvailableClueIndex() => (Int32),
+		PurgeScannerBlackboard(),
+		OnlinkedClueTagEvent(evt: handle:linkedClueTagEvent) => (Bool),
+		CompileScannerChunks() => (Bool),
+		FillObjectDescription() => (arr: array:gameScanningTooltipElementDef),
+		GetScannableObjects() => (array:gameScanningTooltipElementDef),
+		ShouldShowScanner() => (Bool),
+		IsScaningCluesBlocked() => (Bool),
+		IsBraindanceBlocked() => (Bool),
+		IsPhotoModeBlocked() => (Bool),
+		ResolveFocusClueExtendedDescription(clueIndex: Int32),
+		ResolveFocusClueConclusion(clueIndex: Int32, conclusionData: gameScanningTooltipElementDef),
+		ResolveFacts(facts: script_ref:array:SFactOperationData),
+		GetFocusClueSystem() => (handle:FocusCluesSystem),
+		IsAnyClueEnabled() => (Bool),
+		HasAnyStoredClues() => (Bool),
+		IsCurrentTarget() => (Bool),
+		IsCurrentlyScanned() => (Bool),
+		GetFreeWorkspotRefForAIAction(aiAction: gamedataWorkspotActionType) => (NodeRef),
+		GetFreeWorkspotDataForAIAction(aiAction: gamedataWorkspotActionType) => (handle:WorkspotEntryData),
+		HasFreeWorkspotForInvestigation() => (Bool),
+		GetFreeWorkspotsCountForAIAction(aiAction: gamedataWorkspotActionType) => (Int32),
+		GetNumberOfWorkpotsForAIAction(aiAction: gamedataWorkspotActionType) => (Int32),
+		GetTotalCountOfInvestigationSlots() => (Int32),
+		GetStimBroadcasterComponent() => (handle:StimBroadcasterComponent),
+		GetSquadMemberComponent() => (handle:SquadMemberBaseComponent),
+		GetStatusEffectComponent() => (handle:gameStatusEffectComponent),
+		GetSourceShootComponent() => (handle:gameSourceShootComponent),
+		GetTargetShootComponent() => (handle:gameTargetShootComponent),
+		OnAnimFeatureReplicated(inputName: CName, value: handle:animAnimFeature),
+		OnAnimEventReplicated(eventName: CName),
+		GetPlaystyleMappinLocalPos() => (Vector4),
+		GetPlaystyleMappinSlotWorldPos() => (Vector4),
+		GetPlaystyleMappinSlotWorldTransform() => (WorldTransform),
+		GetFxResourceByKey(key: CName) => (gameFxResource),
+		OnDelayPrereqEvent(evt: handle:DelayPrereqEvent) => (Bool),
+		OnTriggerAttackEffectorWithDelay(evt: handle:TriggerAttackEffectorWithDelay) => (Bool),
+		OnToggleOffMeshConnections(evt: handle:ToggleOffMeshConnections) => (Bool),
+		EnableOffMeshConnections(player: Bool, npc: Bool),
+		DisableOffMeshConnections(player: Bool, npc: Bool),
+		OnPhysicalDestructionEvent(evt: handle:entPhysicalDestructionEvent) => (Bool),
+		GetHudManager() => (handle:HUDManager),
+		TriggerMenuEvent(eventName: CName),
+		GetAcousticQuerryStartPoint() => (Vector4),
+		CanBeInvestigated() => (Bool),
+		GetPreventionSystem() => (handle:PreventionSystem),
+		GetLootQuality() => (gamedataQuality),
+		GetIsIconic() => (Bool),
+		GetIsBroken() => (Bool),
+		IsAmmoLoot() => (Bool),
+		IsSniperAmmoLoot() => (Bool),
+		IsHandgunAmmoLoot() => (Bool),
+		IsShotgunAmmoLoot() => (Bool),
+		IsRifleAmmoLoot() => (Bool),
+		OnScaleAndLockLeftHandWeaponsCompensateInStashEvent(evt: handle:ScaleAndLockLeftHandWeaponsCompensateInStashEvent) => (Bool),
+		OnUnifyIconicsUpgradeCountWithEffectiveTierInStashEvent(evt: handle:UnifyIconicsUpgradeCountWithEffectiveTierInStashEvent) => (Bool),
+		GetAnimationSystemForcedVisibilityManager() => (handle:AnimationSystemForcedVisibilityManager),
+		ToggleForcedVisibilityInAnimSystem(sourceName: CName, isVisibe: Bool, [opt] transitionTime: Float, [opt] entityID: entEntityID, [opt] forcedVisibleOnlyInFrustum: Bool),
+		ClearForcedVisibilityInAnimSystem(),
+		HasVisibilityForcedInAnimSystem() => (Bool),
+		OnToggleVisibilityInAnimSystemEvent(evt: handle:ToggleVisibilityInAnimSystemEvent) => (Bool),
+		OnCustomUIAnimationEvent(evt: handle:CustomUIAnimationEvent) => (Bool),
+		OnSmartGunLockEvent(evt: handle:gamesmartGunSmartGunLockEvent) => (Bool),
+		IsTargetedWithSmartWeapon() => (Bool),
+		ProlongWeaponGlitchNPCDebuff(player: handle:PlayerPuppet),
+		OnAutoSaveEvent(evt: handle:AutoSaveEvent) => (Bool),
+		RequestAutoSaveWithDelay(value: Float, maxAttempts: Int32, isForced: Bool),
+		RequestAutoSave(isForced: Bool) => (Bool),
+		Dispose(),
+		GetEntity() => (entEntityGameInterface),
+		FindComponentByName(componentName: CName) => (handle:entIComponent),
+		QueueEvent(evt: handle:redEvent),
+		GetEntityID() => (entEntityID),
+		CanServiceEvent(evtName: CName) => (Bool),
+		QueueEventForNodeID(nodeID: worldGlobalNodeRef, evt: handle:redEvent) => (Bool),
+		QueueEventForEntityID(entityID: entEntityID, evt: handle:redEvent) => (Bool),
+		IsControlledByAnyPeer() => (Bool),
+		IsControlledByLocalPeer() => (Bool),
+		IsControlledByAnotherClient() => (Bool),
+		IsAttached() => (Bool),
+		IsReplicated() => (Bool),
+		GetControllingPeerID() => (Uint32),
+		MatchVisualTag(visualTag: CName) => (Bool),
+		MatchVisualTags(visualTags: array:CName) => (Bool),
+		GetWorldPosition() => (Vector4),
+		GetWorldOrientation() => (Quaternion),
+		GetWorldYaw() => (Float),
+		GetWorldForward() => (Vector4),
+		GetWorldRight() => (Vector4),
+		GetWorldUp() => (Vector4),
+		PrefetchAppearanceChange(newAppearanceName: CName),
+		ScheduleAppearanceChange(newAppearanceName: CName),
+		GetCurrentAppearanceName() => (CName),
+		GetCurrentColorVariantName() => (CName),
+		GetTemplatePath() => (redResourceReferenceScriptToken),
+		FindComponentByType(type: CName) => (handle:entIComponent),
+		GetComponents() => (array:handle:entIComponent),
+		AddComponent(component: handle:entIComponent),
+		SetWorldTransform(transform: WorldTransform),
+		ApplyMorphTarget(target: CName, region: CName, value: Float) => (Bool),
+		OnInspectorDebugDraw() => (box: handle:rendInfoBox),
+		GetWorldTransform() => (WorldTransform),
+		OnSetGlitchOnUIEvent(evt: handle:SetGlitchOnUIEvent) => (Bool),
+		ToString() => (String),
+		GetClassName() => (CName),
+		IsA(className: CName) => (Bool),
+		IsExactlyA(className: CName) => (Bool),
+		Clone() => (handle:IScriptable),
+		GetClassName() => (CName),
+		IsA(className: CName) => (Bool),
+		IsExactlyA(className: CName) => (Bool),
+		Clone() => (handle:ISerializable),
+		ProcessPostLoad([opt] disablePreInitialization: Bool),
+		RefreshResource([opt] disablePreInitialization: Bool),
+	},
+	staticFunctions: {
+		HasLootableItems(self: whandle:ScriptedPuppet) => (Bool),
+		DetectScriptableCycles(),
+	},
+	properties: {
+		quickSlotsManager: handle:QuickSlotsManager,
+		inspectionComponent: handle:InspectionComponent,
+		enviroDamageRcvComponent: handle:gameEnvironmentDamageReceiverComponent,
+		mountedVehicle: whandle:vehicleBaseObject,
+		vehicleKnockdownTimestamp: Float,
+		Phone: handle:PlayerPhone,
+		fppCameraComponent: handle:gameFPPCameraComponent,
+		primaryTargetingComponent: handle:gameTargetingComponent,
+		breachFinderComponent: handle:gameBreachFinderComponent,
+		chaseSpawnComponent: handle:gameChaseSpawnComponent,
+		isInFinisher: Bool,
+		DEBUG_Visualizer: handle:DEBUG_VisualizerComponent,
+		Debug_DamageInputRec: handle:DEBUG_DamageInputReceiver,
+		highDamageThreshold: Float,
+		medDamageThreshold: Float,
+		lowDamageThreshold: Float,
+		meleeHighDamageThreshold: Float,
+		meleeMedDamageThreshold: Float,
+		meleeLowDamageThreshold: Float,
+		explosionHighDamageThreshold: Float,
+		explosionMedDamageThreshold: Float,
+		explosionLowDamageThreshold: Float,
+		effectTimeStamp: Float,
+		curInventoryWeight: Float,
+		healthVfxBlackboard: handle:worldEffectBlackboard,
+		laserTargettingVfxBlackboard: handle:worldEffectBlackboard,
+		itemLogBlackboard: whandle:gameIBlackboard,
+		interactionDataListener: handle:redCallbackObject,
+		popupIsModalListener: handle:redCallbackObject,
+		uiVendorContextListener: handle:redCallbackObject,
+		uiRadialContextistener: handle:redCallbackObject,
+		contactsActiveListener: handle:redCallbackObject,
+		smsMessengerActiveListener: handle:redCallbackObject,
+		currentVisibleTargetListener: handle:redCallbackObject,
+		lastScanTarget: whandle:gameObject,
+		meleeSelectInputProcessed: Bool,
+		waitingForDelayEvent: Bool,
+		randomizedTime: Float,
+		isResetting: Bool,
+		delayEventID: gameDelayID,
+		resetTickID: gameDelayID,
+		katanaAnimProgression: Float,
+		coverModifierActive: Bool,
+		workspotDamageReductionActive: Bool,
+		workspotVisibilityReductionActive: Bool,
+		currentPlayerWorkspotTags: array:CName,
+		incapacitated: Bool,
+		remoteMappinId: gameNewMappinID,
+		CPOMissionDataState: handle:CPOMissionDataState,
+		CPOMissionDataBbId: handle:redCallbackObject,
+		visibilityListener: handle:VisibilityStatListener,
+		secondHeartListener: handle:SecondHeartStatListener,
+		armorStatListener: handle:ArmorStatListener,
+		healthStatListener: handle:HealthStatListener,
+		oxygenStatListener: handle:OxygenStatListener,
+		aimAssistListener: handle:AimAssistSettingsListener,
+		autoRevealListener: handle:AutoRevealStatListener,
+		allStatsListener: handle:PlayerPuppetAllStatListener,
+		rightHandAttachmentSlotListener: handle:gameAttachmentSlotsScriptListener,
+		HealingItemsChargeStatListener: handle:HealingItemsChargeStatListener,
+		GrenadesChargeStatListener: handle:GrenadesChargeStatListener,
+		ProjectileLauncherChargeStatListener: handle:ProjectileLauncherChargeStatListener,
+		OpticalCamoChargeStatListener: handle:OpticalCamoChargeStatListener,
+		OverclockChargeListener: handle:OverclockChargeListener,
+		accessibilityControlsListener: handle:AccessibilityControlsListener,
+		isTalkingOnPhone: Bool,
+		DataDamageUpdateID: gameDelayID,
+		playerAttachedCallbackID: Uint32,
+		playerDetachedCallbackID: Uint32,
+		callbackHandles: array:handle:redCallbackObject,
+		numberOfCombatants: Int32,
+		equipmentMeshOverlayEffectName: CName,
+		equipmentMeshOverlayEffectTag: CName,
+		equipmentMeshOverlaySlots: array:TweakDBID,
+		coverVisibilityPerkBlocked: Bool,
+		behindCover: Bool,
+		inCombat: Bool,
+		isBeingRevealed: Bool,
+		hasBeenDetected: Bool,
+		inCrouch: Bool,
+		hasKiroshiOpticsFragment: Bool,
+		doingQuickMelee: Bool,
+		vehicleState: gamePSMVehicle,
+		inMountedWeaponVehicle: Bool,
+		inDriverCombatTPP: Bool,
+		driverCombatWeaponType: gamedataItemType,
+		isAiming: Bool,
+		focusModeActive: Bool,
+		customFastForwardPossible: Bool,
+		equippedRightHandWeapon: whandle:gameweaponObject,
+		aimAssistUpdateQueued: Bool,
+		locomotionState: Int32,
+		leftHandCyberwareState: Int32,
+		meleeWeaponState: Int32,
+		weaponZoomLevel: Float,
+		controllingDeviceID: entEntityID,
+		gunshotRange: Float,
+		explosionRange: Float,
+		isInBodySlam: Bool,
+		combatGadgetState: Int32,
+		sceneTier: GameplayTier,
+		nextBufferModifier: Int32,
+		attackingNetrunnerID: entEntityID,
+		NPCDeathInstigator: whandle:NPCPuppet,
+		bestTargettingWeapon: whandle:gameweaponObject,
+		bestTargettingDot: Float,
+		targettingEnemies: Int32,
+		isAimingAtFriendly: Bool,
+		isAimingAtChild: Bool,
+		distanceFromTargetSquared: Float,
+		coverRecordID: TweakDBID,
+		damageReductionRecordID: TweakDBID,
+		visReductionRecordID: TweakDBID,
+		lastDmgInflicted: EngineTime,
+		critHealthRumblePlayed: Bool,
+		critHealthRumbleDurationID: gameDelayID,
+		lastHealthUpdate: Float,
+		staminaListener: handle:StaminaListener,
+		memoryListener: handle:MemoryListener,
+		securityAreaTypeE3HACK: ESecurityAreaType,
+		overlappedSecurityZones: array:gamePersistentID,
+		interestingFacts: InterestingFacts,
+		interestingFactsListenersIds: InterestingFactsListenersIds,
+		interestingFactsListenersFunctions: InterestingFactsListenersFunctions,
+		visionModeController: handle:PlayerVisionModeController,
+		combatController: handle:PlayerCombatController,
+		handlingModifiers: handle:PlayerWeaponHandlingModifiers,
+		cachedGameplayRestrictions: array:TweakDBID,
+		delayEndGracePeriodAfterSpawnEventID: gameDelayID,
+		CWMaskInVehicleInputHeld: Bool,
+		friendlyDevicesHostileToEnemiesLock: ScriptReentrantRWLock,
+		friendlyDevicesHostileToEnemies: array:entEntityID,
+		pocketRadio: handle:PocketRadio,
+		noMovementModifierData: array:handle:gameStatModifierData_Deprecated,
+		registeredFactListeners: array:FactCallbackData,
+		bossThatTargetsPlayer: entEntityID,
+		choiceTokenTextLayerId: Uint32,
+		choiceTokenTextDrawn: Bool,
+		aiController: handle:AIHumanComponent,
+		movePolicies: handle:movePoliciesComponent,
+		aiStateHandlerComponent: handle:AIPhaseStateEventHandlerComponent,
+		hitReactionComponent: handle:HitReactionComponent,
+		signalHandlerComponent: handle:AISignalHandlerComponent,
+		reactionComponent: handle:ReactionManagerComponent,
+		dismembermentComponent: handle:gameDismembermentComponent,
+		hitRepresantation: handle:entSlotComponent,
+		interactionComponent: handle:gameinteractionsComponent,
+		slotComponent: handle:entSlotComponent,
+		sensesComponent: handle:senseComponent,
+		visibleObjectComponent: handle:senseVisibleObjectComponent,
+		visibleObjectPositionUpdated: Bool,
+		sensorObjectComponent: handle:senseSensorObjectComponent,
+		targetTrackerComponent: handle:AITargetTrackerComponent,
+		targetingComponentsArray: array:handle:gameTargetingComponent,
+		statesComponent: handle:NPCStatesComponent,
+		fxResourceMapper: handle:FxResourceMapperComponent,
+		linkedStatusEffect: LinkedStatusEffect,
+		resourceLibraryComponent: handle:ResourceLibraryComponent,
+		crowdMemberComponent: handle:CrowdMemberBaseComponent,
+		inventoryComponent: whandle:gameInventory,
+		objectSelectionComponent: handle:AIObjectSelectionComponent,
+		transformHistoryComponent: handle:entTransformHistoryComponent,
+		animationControllerComponent: handle:entAnimationControllerComponent,
+		bumpComponent: handle:gameinfluenceBumpComponent,
+		isCrowd: Bool,
+		incapacitatedOnAttach: Bool,
+		isIconic: Bool,
+		combatHUDManager: handle:CombatHUDManager,
+		exposePosition: Bool,
+		puppetStateBlackboard: handle:gameIBlackboard,
+		customBlackboard: handle:gameIBlackboard,
+		securityAreaCallbackID: Uint32,
+		customAIComponents: array:handle:AICustomComponents,
+		listeners: array:handle:PuppetListener,
+		securitySupportListener: handle:SecuritySupportListener,
+		shouldBeRevealedStorage: handle:RevealRequestsStorage,
+		inputProcessed: Bool,
+		shouldSpawnBloodPuddle: Bool,
+		bloodPuddleSpawned: Bool,
+		skipDeathAnimation: Bool,
+		hitHistory: handle:HitHistory,
+		currentWorkspotTags: array:CName,
+		lootQuality: gamedataQuality,
+		hasQuestItems: Bool,
+		activeQualityRangeInteraction: CName,
+		droppedWeapons: Bool,
+		weakspotComponent: handle:gameWeakspotComponent,
+		breachControllerComponent: handle:gameBreachControllerComponent,
+		highlightData: handle:FocusForcedHighlightData,
+		currentTagsStack: Uint32,
+		killer: whandle:entEntity,
+		objectActionsCallbackCtrl: handle:gameObjectActionsCallbackController,
+		isActiveCached: AIUtilsCachedBoolValue,
+		isCyberpsycho: Bool,
+		isCivilian: Bool,
+		isPolice: Bool,
+		isGanger: Bool,
+		currentlyUploadingAction: whandle:ScriptableDeviceAction,
+		gameplayRoleComponent: whandle:GameplayRoleComponent,
+		activeQuickhackActionHistory: array:handle:ScriptableDeviceAction,
+		completedQuickhackHistory: array:handle:ScriptableDeviceAction,
+		isFinsherSoundPlayed: Bool,
+		attemptedShards: array:gameItemID,
+		persistentState: handle:gamePersistentState,
+		playerSocket: gamePlayerSocket,
+		uiSlotComponent: handle:entSlotComponent,
+		tags: redTagList,
+		displayName: LocalizationString,
+		displayDescription: LocalizationString,
+		audioResourceName: CName,
+		visibilityCheckDistance: Float,
+		forceRegisterInHudManager: Bool,
+		prereqListeners: array:handle:GameObjectListener,
+		statusEffectListeners: array:handle:StatusEffectTriggerListener,
+		lastEngineTime: Float,
+		accumulatedTimePasssed: Float,
+		scanningComponent: handle:gameScanningComponent,
+		visionComponent: handle:gameVisionModeComponent,
+		isHighlightedInFocusMode: Bool,
+		statusEffectComponent: handle:gameStatusEffectComponent,
+		markAsQuest: Bool,
+		e3ObjectRevealed: Bool,
+		workspotMapper: handle:WorkspotMapperComponent,
+		stimBroadcaster: handle:StimBroadcasterComponent,
+		squadMemberComponent: handle:SquadMemberBaseComponent,
+		sourceShootComponent: handle:gameSourceShootComponent,
+		targetShootComponent: handle:gameTargetShootComponent,
+		receivedDamageHistory: array:DamageHistoryEntry,
+		forceDefeatReward: Bool,
+		killRewardDisabled: Bool,
+		willDieSoon: Bool,
+		isScannerDataDirty: Bool,
+		hasVisibilityForcedInAnimSystem: Bool,
+		isDead: Bool,
+		lastHitInstigatorID: entEntityID,
+		hitInstigatorCooldownID: gameDelayID,
+		isTargetedWithSmartWeapon: Bool,
+		customCameraTarget: ECustomCameraTarget,
+		renderSceneLayerMask: RenderSceneLayerMask,
+	}
+}
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] GetClass(player): not available
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] =========================================
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] ===== INTERROGATION COMPLETE =====
+[2026-07-19 23:13:37 UTC-05:00] [9424] [PlayerInterrogator3] =========================================

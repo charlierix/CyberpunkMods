@@ -1,0 +1,50 @@
+[2026-07-26 11:27:46 UTC-05:00] [30072] [QHTester2] Initialized | debug: true | maxDistance: 20.0
+[2026-07-26 11:27:46 UTC-05:00] [30072] [QHTester2] Bind keys in: Settings > Key Bindings > QHTester2
+[2026-07-26 11:27:46 UTC-05:00] [30072] [QHTester2] Hotkeys: Apply Quickhack, Cycle Hack, List Available Hacks
+[2026-07-26 11:27:46 UTC-05:00] [30072] [QHTester2] Cycle Hack now rotates through the DEVICE's available quickhacks
+[2026-07-26 11:35:25 UTC-05:00] [12340] [QHTester2] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:35:25 UTC-05:00] [12340] [QHTester2]   Could not retrieve quickhack actions from device PS
+[2026-07-26 11:35:25 UTC-05:00] [12340] [QHTester2] No quickhack actions available for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:35:25 UTC-05:00] [12340] [QHTester2] No quickhack actions available for this device
+[2026-07-26 11:35:35 UTC-05:00] [12340] [QHTester2] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:35:35 UTC-05:00] [12340] [QHTester2]   Could not retrieve quickhack actions from device PS
+[2026-07-26 11:35:35 UTC-05:00] [12340] [QHTester2] No quickhack actions available for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:35:35 UTC-05:00] [12340] [QHTester2] No quickhack actions available
+[2026-07-26 11:35:56 UTC-05:00] [12340] [QHTester2] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:35:56 UTC-05:00] [12340] [QHTester2]   Could not retrieve quickhack actions from device PS
+[2026-07-26 11:35:56 UTC-05:00] [12340] [QHTester2] No quickhack actions available for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:35:56 UTC-05:00] [12340] [QHTester2] No quickhack actions available
+[2026-07-26 11:36:05 UTC-05:00] [12340] [QHTester2] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:36:05 UTC-05:00] [12340] [QHTester2]   Could not retrieve quickhack actions from device PS
+[2026-07-26 11:36:05 UTC-05:00] [12340] [QHTester2] No quickhack actions available for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:36:05 UTC-05:00] [12340] [QHTester2] No quickhack actions available for this device
+[2026-07-26 11:36:07 UTC-05:00] [12340] [QHTester2] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:36:07 UTC-05:00] [12340] [QHTester2]   Could not retrieve quickhack actions from device PS
+[2026-07-26 11:36:07 UTC-05:00] [12340] [QHTester2] No quickhack actions available for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:36:07 UTC-05:00] [12340] [QHTester2] No quickhack actions available
+[2026-07-26 11:39:23 UTC-05:00] [12340] [QHTester2] No quickhackable target under crosshair
+[2026-07-26 11:39:23 UTC-05:00] [12340] [QHTester2] No hackable device targeted
+[2026-07-26 11:40:29 UTC-05:00] [12340] [QHTester2] Target: ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-07-26 11:40:29 UTC-05:00] [12340] [QHTester2]   Could not retrieve quickhack actions from device PS
+[2026-07-26 11:40:29 UTC-05:00] [12340] [QHTester2] No quickhack actions available for ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-07-26 11:40:29 UTC-05:00] [12340] [QHTester2] No quickhack actions available
+[2026-07-26 11:40:50 UTC-05:00] [12340] [QHTester2] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:40:50 UTC-05:00] [12340] [QHTester2]   Could not retrieve quickhack actions from device PS
+[2026-07-26 11:40:50 UTC-05:00] [12340] [QHTester2] No quickhack actions available for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:40:50 UTC-05:00] [12340] [QHTester2] No quickhack actions available
+[2026-07-26 11:48:12 UTC-05:00] [12340] [QHTester2] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:48:12 UTC-05:00] [12340] [QHTester2]   Could not retrieve quickhack actions from device PS
+[2026-07-26 11:48:12 UTC-05:00] [12340] [QHTester2] No quickhack actions available for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:48:12 UTC-05:00] [12340] [QHTester2] No quickhack actions available
+[2026-07-26 11:48:18 UTC-05:00] [12340] [QHTester2] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:48:18 UTC-05:00] [12340] [QHTester2]   Could not retrieve quickhack actions from device PS
+[2026-07-26 11:48:18 UTC-05:00] [12340] [QHTester2] No quickhack actions available for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:48:18 UTC-05:00] [12340] [QHTester2] No quickhack actions available for this device
+[2026-07-26 11:48:30 UTC-05:00] [12340] [QHTester2] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:48:30 UTC-05:00] [12340] [QHTester2]   Could not retrieve quickhack actions from device PS
+[2026-07-26 11:48:30 UTC-05:00] [12340] [QHTester2] No quickhack actions available for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:48:30 UTC-05:00] [12340] [QHTester2] No quickhack actions available
+[2026-07-26 11:50:16 UTC-05:00] [12340] [QHTester2] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:50:16 UTC-05:00] [12340] [QHTester2]   Could not retrieve quickhack actions from device PS
+[2026-07-26 11:50:16 UTC-05:00] [12340] [QHTester2] No quickhack actions available for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 11:50:16 UTC-05:00] [12340] [QHTester2] No quickhack actions available

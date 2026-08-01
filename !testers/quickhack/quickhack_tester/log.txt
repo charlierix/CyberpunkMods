@@ -1,0 +1,29 @@
+[2026-07-25 23:29:14 UTC-05:00] [11600] [QHTester] Initialized | hacks: 7 | debug: true
+[2026-07-25 23:29:14 UTC-05:00] [11600] [QHTester] Current hack: Distraction (1/7)
+[2026-07-25 23:29:14 UTC-05:00] [11600] [QHTester] Bind keys in: Settings > Key Bindings > QHTester
+[2026-07-25 23:29:14 UTC-05:00] [11600] [QHTester] Hotkeys: Apply Quickhack, Cycle Hack Type, List Available
+[2026-07-25 23:48:12 UTC-05:00] [26712] [QHTester] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-25 23:48:12 UTC-05:00] [26712] [QHTester] Available quickhacks (4):
+[2026-07-25 23:48:12 UTC-05:00] [26712]   [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-25 23:48:12 UTC-05:00] [26712]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-25 23:48:12 UTC-05:00] [26712]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-25 23:48:12 UTC-05:00] [26712]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] })
+[2026-07-25 23:48:39 UTC-05:00] [26712] [QHTester] Hack type: Toggle On/Off (2/7)
+[2026-07-25 23:48:43 UTC-05:00] [26712] [QHTester] Hack type: Toggle Open (Doors) (3/7)
+[2026-07-25 23:48:45 UTC-05:00] [26712] [QHTester] Hack type: Call Elevator (4/7)
+[2026-07-25 23:48:48 UTC-05:00] [26712] [QHTester] Hack type: Self-Destruct (Explosives) (5/7)
+[2026-07-25 23:48:50 UTC-05:00] [26712] [QHTester] Hack type: Distract (Explosives) (6/7)
+[2026-07-25 23:48:52 UTC-05:00] [26712] [QHTester] Hack type: Authorization (7/7)
+[2026-07-25 23:48:55 UTC-05:00] [26712] [QHTester] Hack type: Distraction (1/7)
+[2026-07-25 23:48:59 UTC-05:00] [26712] [QHTester] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-25 23:48:59 UTC-05:00] [26712] [QHTester] Found 4 quickhack actions:
+[2026-07-25 23:48:59 UTC-05:00] [26712] [QHTester]   [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-25 23:48:59 UTC-05:00] [26712] [QHTester]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-25 23:48:59 UTC-05:00] [26712] [QHTester]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-25 23:48:59 UTC-05:00] [26712] [QHTester]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] })
+[2026-07-25 23:48:59 UTC-05:00] [26712] [QHTester] Selected hack 'Distraction' not available, using first: ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] }
+[2026-07-25 23:48:59 UTC-05:00] [26712] [QHTester] Executing: ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-25 23:48:59 UTC-05:00] [26712] [QHTester]   StartAction failed (continuing anyway)
+[2026-07-25 23:48:59 UTC-05:00] [26712] [QHTester]   Falling back to CompleteAction (may give small XP)
+[2026-07-25 23:48:59 UTC-05:00] [26712] [QHTester]   CompleteAction failed — hack may not have applied
+[2026-07-25 23:48:59 UTC-05:00] [26712] [QHTester] Quickhack applied: ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] }

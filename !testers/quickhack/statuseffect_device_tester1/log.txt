@@ -1,0 +1,388 @@
+[2026-07-31 14:50:46 UTC-05:00] [27716] [SEDevT1] Status Effect Device Tester 1 initialized
+[2026-07-31 14:50:46 UTC-05:00] [27716] [SEDevT1]   Uses dynamic action discovery (no static effect list)
+[2026-07-31 14:50:46 UTC-05:00] [27716] [SEDevT1]   Hotkeys: SE_DEV1_TOGGLE_WINDOW, SE_DEV1_APPLY
+[2026-07-31 14:50:46 UTC-05:00] [27716] [SEDevT1]   Bind in Settings > Key Bindings > SEDevT1
+[2026-07-31 14:50:46 UTC-05:00] [27716] [SEDevT1] 
+[2026-07-31 14:50:46 UTC-05:00] [27716] [SEDevT1] Usage: Look at a device, press APPLY for random weighted quickhack.
+[2026-07-31 14:50:46 UTC-05:00] [27716] [SEDevT1]        Toggle window to see target details and coverage stats.
+[2026-07-31 14:50:46 UTC-05:00] [27716] [SEDevT1]        Walk around hitting APPLY on different device types.
+[2026-07-31 14:54:13 UTC-05:00] [8996] [SEDevT1] Info window ON
+[2026-07-31 14:54:13 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-31 14:54:13 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-31 14:54:13 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-31 14:54:13 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] })
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1] === Final Action Statistics ===
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }): 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }): 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }): 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] }): 0 attempts
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1] -- Coverage: 0/4 tried (0%) --
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1] -- Device types encountered: 0 --
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1] === End Statistics ===
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1] Status Effect Device Tester 1 shut down
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1] Status Effect Device Tester 1 initialized
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1]   Uses dynamic action discovery (no static effect list)
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1]   Hotkeys: SE_DEV1_TOGGLE_WINDOW, SE_DEV1_APPLY
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1]   Bind in Settings > Key Bindings > SEDevT1
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1] 
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1] Usage: Look at a device, press APPLY for random weighted quickhack.
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1]        Toggle window to see target details and coverage stats.
+[2026-07-31 14:57:53 UTC-05:00] [8996] [SEDevT1]        Walk around hitting APPLY on different device types.
+[2026-07-31 14:57:57 UTC-05:00] [8996] [SEDevT1] Info window ON
+[2026-07-31 14:57:57 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-31 14:57:57 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-31 14:57:57 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-31 14:57:57 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] })
+[2026-07-31 14:57:58 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0x1679BE37, hash_hi = 0x1697D571 --[[ ToggleStateClassHack --]] } (class: ToCName{ hash_lo = 0x96A1FCFA, hash_hi = 0x11F151BE --[[ ActivateDevice --]] }, record: ToTweakDBID{ hash = 0x2E30A45F, length = 33 --[[ DeviceAction.ToggleStateClassHack --]] })
+[2026-07-31 14:58:01 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0x44616F4D, hash_hi = 0x6013CB77 --[[ OverloadDevice --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] })
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1] ========================================================
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1] === NEW DEVICE TYPE REPORT ===
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1]   Name:       <unknown>
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1]   Class:      ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1]   RecordID:   <unknown>
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1]   EntityHash: 5300149664833463988ULL
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1]   Distance:   3.60 m
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1]   Available quickhack actions: 3
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1]     [ 1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }) [global attempts: 0]
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1]     [ 2] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }) [global attempts: 0]
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1]     [ 3] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }) [global attempts: 0]
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1] ========================================================
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1] === APPLY [2/3]: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } -> <unknown> (class=ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }) ===
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }': 1
+[2026-07-31 14:58:13 UTC-05:00] [8996] [SEDevT1]   Coverage: 1/6 tried (17%)
+[2026-07-31 14:58:18 UTC-05:00] [8996] [SEDevT1] Info window OFF
+[2026-07-31 14:58:26 UTC-05:00] [8996] [SEDevT1] Info window ON
+[2026-07-31 14:58:28 UTC-05:00] [8996] [SEDevT1] === APPLY [3/3]: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } -> <unknown> (class=ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }) ===
+[2026-07-31 14:58:28 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 14:58:28 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }': 1
+[2026-07-31 14:58:28 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/6 tried (33%)
+[2026-07-31 14:58:31 UTC-05:00] [8996] [SEDevT1] === APPLY [1/3]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 14:58:31 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 14:58:31 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 1
+[2026-07-31 14:58:31 UTC-05:00] [8996] [SEDevT1]   Coverage: 3/6 tried (50%)
+[2026-07-31 14:58:33 UTC-05:00] [8996] [SEDevT1] === APPLY [3/3]: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } -> <unknown> (class=ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }) ===
+[2026-07-31 14:58:33 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 14:58:33 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }': 2
+[2026-07-31 14:58:33 UTC-05:00] [8996] [SEDevT1]   Coverage: 3/6 tried (50%)
+[2026-07-31 14:58:33 UTC-05:00] [8996] [SEDevT1] === APPLY [1/3]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 14:58:33 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 14:58:33 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 2
+[2026-07-31 14:58:33 UTC-05:00] [8996] [SEDevT1]   Coverage: 3/6 tried (50%)
+[2026-07-31 14:58:34 UTC-05:00] [8996] [SEDevT1] === APPLY [3/3]: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } -> <unknown> (class=ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }) ===
+[2026-07-31 14:58:34 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 14:58:34 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }': 3
+[2026-07-31 14:58:34 UTC-05:00] [8996] [SEDevT1]   Coverage: 3/6 tried (50%)
+[2026-07-31 14:58:35 UTC-05:00] [8996] [SEDevT1] === APPLY [2/3]: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } -> <unknown> (class=ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }) ===
+[2026-07-31 14:58:35 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 14:58:35 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }': 2
+[2026-07-31 14:58:35 UTC-05:00] [8996] [SEDevT1]   Coverage: 3/6 tried (50%)
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1] ========================================================
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1] === NEW DEVICE TYPE REPORT ===
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]   Name:       <unknown>
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]   Class:      ToCName{ hash_lo = 0x533AEC3B, hash_hi = 0x9DEF182F --[[ CleaningMachine --]] }
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]   RecordID:   <unknown>
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]   EntityHash: 8057863009040220493ULL
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]   Distance:   1.40 m
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]   Available quickhack actions: 5
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]     [ 1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }) [global attempts: 2]
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]     [ 2] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }) [global attempts: 3]
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]     [ 3] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }) [global attempts: 2]
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]     [ 4] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }) [global attempts: 2]
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]     [ 5] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }) [global attempts: 3]
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1] ========================================================
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1] === APPLY [5/5]: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } -> <unknown> (class=ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }) ===
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }': 4
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]   Coverage: 3/6 tried (50%)
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1] === APPLY [3/5]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 3
+[2026-07-31 14:58:51 UTC-05:00] [8996] [SEDevT1]   Coverage: 3/6 tried (50%)
+[2026-07-31 14:58:52 UTC-05:00] [8996] [SEDevT1] === APPLY [1/5]: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } -> <unknown> (class=ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }) ===
+[2026-07-31 14:58:52 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 14:58:52 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }': 3
+[2026-07-31 14:58:52 UTC-05:00] [8996] [SEDevT1]   Coverage: 3/6 tried (50%)
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1] ========================================================
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1] === NEW DEVICE TYPE REPORT ===
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]   Name:       <unknown>
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]   Class:      ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]   RecordID:   <unknown>
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]   EntityHash: 1075548879853295145ULL
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]   Distance:   5.31 m
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]   Available quickhack actions: 5
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]     [ 1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }) [global attempts: 3]
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]     [ 2] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }) [global attempts: 4]
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]     [ 3] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] }) [global attempts: 0]
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]     [ 4] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }) [global attempts: 3]
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]     [ 5] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }) [global attempts: 4]
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1] ========================================================
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1] === APPLY [4/5]: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } -> <unknown> (class=ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }) ===
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }': 4
+[2026-07-31 14:59:05 UTC-05:00] [8996] [SEDevT1]   Coverage: 3/6 tried (50%)
+[2026-07-31 15:01:31 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] } (class: ToCName{ hash_lo = 0x33E28E05, hash_hi = 0x868DEF10 --[[ QuickHackHighPitchNoise --]] }, record: ToTweakDBID{ hash = 0x45E40D3A, length = 36 --[[ DeviceAction.HighPitchNoiseQuickHack --]] })
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1] ========================================================
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1] === NEW DEVICE TYPE REPORT ===
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1]   Name:       <unknown>
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1]   Class:      ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1]   RecordID:   <unknown>
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1]   EntityHash: 3768895682748519322ULL
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1]   Distance:   14.46 m
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1]   Available quickhack actions: 3
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1]     [ 1] ToCName{ hash_lo = 0x1679BE37, hash_hi = 0x1697D571 --[[ ToggleStateClassHack --]] } (class: ToCName{ hash_lo = 0x96A1FCFA, hash_hi = 0x11F151BE --[[ ActivateDevice --]] }, record: ToTweakDBID{ hash = 0x2E30A45F, length = 33 --[[ DeviceAction.ToggleStateClassHack --]] }) [global attempts: 0]
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1]     [ 2] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }) [global attempts: 4]
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1]     [ 3] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }) [global attempts: 4]
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1] ========================================================
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1] === APPLY [1/3]: ToCName{ hash_lo = 0x1679BE37, hash_hi = 0x1697D571 --[[ ToggleStateClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0x96A1FCFA, hash_hi = 0x11F151BE --[[ ActivateDevice --]] }) ===
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x96A1FCFA, hash_hi = 0x11F151BE --[[ ActivateDevice --]] }': 1
+[2026-07-31 15:01:41 UTC-05:00] [8996] [SEDevT1]   Coverage: 4/7 tried (57%)
+[2026-07-31 15:01:42 UTC-05:00] [8996] [SEDevT1] === APPLY [3/3]: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } -> <unknown> (class=ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }) ===
+[2026-07-31 15:01:42 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:01:42 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }': 5
+[2026-07-31 15:01:42 UTC-05:00] [8996] [SEDevT1]   Coverage: 4/7 tried (57%)
+[2026-07-31 15:01:43 UTC-05:00] [8996] [SEDevT1] === APPLY [1/3]: ToCName{ hash_lo = 0x1679BE37, hash_hi = 0x1697D571 --[[ ToggleStateClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0x96A1FCFA, hash_hi = 0x11F151BE --[[ ActivateDevice --]] }) ===
+[2026-07-31 15:01:43 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:01:43 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x96A1FCFA, hash_hi = 0x11F151BE --[[ ActivateDevice --]] }': 2
+[2026-07-31 15:01:43 UTC-05:00] [8996] [SEDevT1]   Coverage: 4/7 tried (57%)
+[2026-07-31 15:01:44 UTC-05:00] [8996] [SEDevT1] === APPLY [3/3]: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } -> <unknown> (class=ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }) ===
+[2026-07-31 15:01:44 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:01:44 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }': 6
+[2026-07-31 15:01:44 UTC-05:00] [8996] [SEDevT1]   Coverage: 4/7 tried (57%)
+[2026-07-31 15:01:44 UTC-05:00] [8996] [SEDevT1] === APPLY [3/3]: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } -> <unknown> (class=ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }) ===
+[2026-07-31 15:01:44 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:01:44 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }': 7
+[2026-07-31 15:01:44 UTC-05:00] [8996] [SEDevT1]   Coverage: 4/7 tried (57%)
+[2026-07-31 15:01:45 UTC-05:00] [8996] [SEDevT1] === APPLY [1/3]: ToCName{ hash_lo = 0x1679BE37, hash_hi = 0x1697D571 --[[ ToggleStateClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0x96A1FCFA, hash_hi = 0x11F151BE --[[ ActivateDevice --]] }) ===
+[2026-07-31 15:01:45 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:01:45 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x96A1FCFA, hash_hi = 0x11F151BE --[[ ActivateDevice --]] }': 3
+[2026-07-31 15:01:45 UTC-05:00] [8996] [SEDevT1]   Coverage: 4/7 tried (57%)
+[2026-07-31 15:01:46 UTC-05:00] [8996] [SEDevT1] === APPLY [2/3]: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } -> <unknown> (class=ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }) ===
+[2026-07-31 15:01:46 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:01:46 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }': 5
+[2026-07-31 15:01:46 UTC-05:00] [8996] [SEDevT1]   Coverage: 4/7 tried (57%)
+[2026-07-31 15:01:51 UTC-05:00] [8996] [SEDevT1] === APPLY [1/3]: ToCName{ hash_lo = 0x1679BE37, hash_hi = 0x1697D571 --[[ ToggleStateClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0x96A1FCFA, hash_hi = 0x11F151BE --[[ ActivateDevice --]] }) ===
+[2026-07-31 15:01:51 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:01:51 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x96A1FCFA, hash_hi = 0x11F151BE --[[ ActivateDevice --]] }': 4
+[2026-07-31 15:01:51 UTC-05:00] [8996] [SEDevT1]   Coverage: 4/7 tried (57%)
+[2026-07-31 15:01:52 UTC-05:00] [8996] [SEDevT1] === APPLY [3/3]: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } -> <unknown> (class=ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }) ===
+[2026-07-31 15:01:52 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:01:52 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }': 8
+[2026-07-31 15:01:52 UTC-05:00] [8996] [SEDevT1]   Coverage: 4/7 tried (57%)
+[2026-07-31 15:01:53 UTC-05:00] [8996] [SEDevT1] === APPLY [2/3]: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } -> <unknown> (class=ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }) ===
+[2026-07-31 15:01:53 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:01:53 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }': 6
+[2026-07-31 15:01:53 UTC-05:00] [8996] [SEDevT1]   Coverage: 4/7 tried (57%)
+[2026-07-31 15:02:03 UTC-05:00] [8996] [SEDevT1] === APPLY [6/8]: ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }) ===
+[2026-07-31 15:02:03 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:02:03 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }': 1
+[2026-07-31 15:02:03 UTC-05:00] [8996] [SEDevT1]   Coverage: 5/7 tried (71%)
+[2026-07-31 15:02:04 UTC-05:00] [8996] [SEDevT1] === APPLY [5/8]: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } -> <unknown> (class=ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }) ===
+[2026-07-31 15:02:04 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:02:04 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }': 9
+[2026-07-31 15:02:04 UTC-05:00] [8996] [SEDevT1]   Coverage: 5/7 tried (71%)
+[2026-07-31 15:02:06 UTC-05:00] [8996] [SEDevT1] === APPLY [3/8]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:02:06 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:02:06 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 4
+[2026-07-31 15:02:06 UTC-05:00] [8996] [SEDevT1]   Coverage: 5/7 tried (71%)
+[2026-07-31 15:02:07 UTC-05:00] [8996] [SEDevT1] === APPLY [1/8]: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } -> <unknown> (class=ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }) ===
+[2026-07-31 15:02:07 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:02:07 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }': 7
+[2026-07-31 15:02:07 UTC-05:00] [8996] [SEDevT1]   Coverage: 5/7 tried (71%)
+[2026-07-31 15:03:03 UTC-05:00] [8996] [SEDevT1] === APPLY [6/8]: ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }) ===
+[2026-07-31 15:03:03 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:03:03 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }': 2
+[2026-07-31 15:03:03 UTC-05:00] [8996] [SEDevT1]   Coverage: 5/7 tried (71%)
+[2026-07-31 15:03:08 UTC-05:00] [8996] [SEDevT1] === APPLY [6/8]: ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }) ===
+[2026-07-31 15:03:08 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:03:08 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }': 3
+[2026-07-31 15:03:08 UTC-05:00] [8996] [SEDevT1]   Coverage: 5/7 tried (71%)
+[2026-07-31 15:03:08 UTC-05:00] [8996] [SEDevT1] === APPLY [5/8]: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } -> <unknown> (class=ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }) ===
+[2026-07-31 15:03:08 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:03:08 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }': 10
+[2026-07-31 15:03:08 UTC-05:00] [8996] [SEDevT1]   Coverage: 5/7 tried (71%)
+[2026-07-31 15:03:09 UTC-05:00] [8996] [SEDevT1] === APPLY [3/8]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:03:09 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:03:09 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 5
+[2026-07-31 15:03:09 UTC-05:00] [8996] [SEDevT1]   Coverage: 5/7 tried (71%)
+[2026-07-31 15:03:16 UTC-05:00] [8996] [SEDevT1] Info window OFF
+[2026-07-31 15:04:10 UTC-05:00] [8996] [SEDevT1] Info window ON
+[2026-07-31 15:05:24 UTC-05:00] [8996] [SEDevT1] Info window OFF
+[2026-07-31 15:05:25 UTC-05:00] [8996] [SEDevT1] Info window ON
+[2026-07-31 15:05:28 UTC-05:00] [8996] [SEDevT1] Info window OFF
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1] === Final Action Statistics ===
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }): 7 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }): 10 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }): 5 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] }): 3 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0x1679BE37, hash_hi = 0x1697D571 --[[ ToggleStateClassHack --]] } (class: ToCName{ hash_lo = 0x96A1FCFA, hash_hi = 0x11F151BE --[[ ActivateDevice --]] }, record: ToTweakDBID{ hash = 0x2E30A45F, length = 33 --[[ DeviceAction.ToggleStateClassHack --]] }): 4 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0x44616F4D, hash_hi = 0x6013CB77 --[[ OverloadDevice --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] }): 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] } (class: ToCName{ hash_lo = 0x33E28E05, hash_hi = 0x868DEF10 --[[ QuickHackHighPitchNoise --]] }, record: ToTweakDBID{ hash = 0x45E40D3A, length = 36 --[[ DeviceAction.HighPitchNoiseQuickHack --]] }): 0 attempts
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1] -- Coverage: 5/7 tried (71%) --
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1] -- Device types encountered: 0 --
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]     ToCName{ hash_lo = 0x533AEC3B, hash_hi = 0x9DEF182F --[[ CleaningMachine --]] }
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]     ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]     ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]     ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1] === End Statistics ===
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1] Status Effect Device Tester 1 shut down
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1] Status Effect Device Tester 1 initialized
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]   Uses dynamic action discovery (no static effect list)
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]   Hotkeys: SE_DEV1_TOGGLE_WINDOW, SE_DEV1_APPLY
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]   Bind in Settings > Key Bindings > SEDevT1
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1] 
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1] Usage: Look at a device, press APPLY for random weighted quickhack.
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]        Toggle window to see target details and coverage stats.
+[2026-07-31 15:05:30 UTC-05:00] [8996] [SEDevT1]        Walk around hitting APPLY on different device types.
+[2026-07-31 15:05:38 UTC-05:00] [8996] [SEDevT1] Info window ON
+[2026-07-31 15:05:39 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-31 15:05:39 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] } (class: ToCName{ hash_lo = 0x33E28E05, hash_hi = 0x868DEF10 --[[ QuickHackHighPitchNoise --]] }, record: ToTweakDBID{ hash = 0x45E40D3A, length = 36 --[[ DeviceAction.HighPitchNoiseQuickHack --]] })
+[2026-07-31 15:05:39 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-31 15:05:39 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-31 15:05:51 UTC-05:00] [8996] [SEDevT1] No hackable device targeted
+[2026-07-31 15:06:01 UTC-05:00] [8996] [SEDevT1]   [NEW ACTION TYPE] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] })
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1] ========================================================
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1] === NEW DEVICE TYPE REPORT ===
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]   Name:       <unknown>
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]   Class:      ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]   RecordID:   <unknown>
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]   EntityHash: 13162931147953811703ULL
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]   Distance:   8.22 m
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]   Available quickhack actions: 4
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]     [ 1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] }) [global attempts: 0]
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]     [ 2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] }) [global attempts: 0]
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]     [ 3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] }) [global attempts: 0]
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]     [ 4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }) [global attempts: 0]
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1] ========================================================
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1] === APPLY [3/4]: ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } -> <unknown> (class=ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }) ===
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }': 1
+[2026-07-31 15:06:10 UTC-05:00] [8996] [SEDevT1]   Coverage: 1/5 tried (20%)
+[2026-07-31 15:06:14 UTC-05:00] [8996] [SEDevT1] === APPLY [2/4]: ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } -> <unknown> (class=ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }) ===
+[2026-07-31 15:06:14 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:14 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }': 2
+[2026-07-31 15:06:14 UTC-05:00] [8996] [SEDevT1]   Coverage: 1/5 tried (20%)
+[2026-07-31 15:06:15 UTC-05:00] [8996] [SEDevT1] === APPLY [2/4]: ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } -> <unknown> (class=ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }) ===
+[2026-07-31 15:06:15 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:15 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }': 3
+[2026-07-31 15:06:15 UTC-05:00] [8996] [SEDevT1]   Coverage: 1/5 tried (20%)
+[2026-07-31 15:06:16 UTC-05:00] [8996] [SEDevT1] === APPLY [4/4]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:06:16 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:16 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 1
+[2026-07-31 15:06:16 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:06:17 UTC-05:00] [8996] [SEDevT1] === APPLY [4/4]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:06:17 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:17 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 2
+[2026-07-31 15:06:17 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:06:18 UTC-05:00] [8996] [SEDevT1] === APPLY [4/4]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:06:18 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:18 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 3
+[2026-07-31 15:06:18 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:06:24 UTC-05:00] [8996] [SEDevT1] === APPLY [2/4]: ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } -> <unknown> (class=ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }) ===
+[2026-07-31 15:06:24 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:24 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }': 4
+[2026-07-31 15:06:24 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1] ========================================================
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1] === NEW DEVICE TYPE REPORT ===
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1]   Name:       <unknown>
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1]   Class:      ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1]   RecordID:   <unknown>
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1]   EntityHash: 14247470815107703787ULL
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1]   Distance:   19.43 m
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1]   Available quickhack actions: 1
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1]     [ 1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }) [global attempts: 3]
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1] ========================================================
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1] === APPLY [1/1]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 4
+[2026-07-31 15:06:38 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:06:40 UTC-05:00] [8996] [SEDevT1] === APPLY [1/1]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:06:40 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:40 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 5
+[2026-07-31 15:06:40 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:06:40 UTC-05:00] [8996] [SEDevT1] === APPLY [1/1]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:06:40 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:40 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 6
+[2026-07-31 15:06:40 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:06:52 UTC-05:00] [8996] [SEDevT1] === APPLY [1/1]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:06:52 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:52 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 7
+[2026-07-31 15:06:52 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:06:53 UTC-05:00] [8996] [SEDevT1] === APPLY [1/1]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:06:53 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:53 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 8
+[2026-07-31 15:06:53 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:06:54 UTC-05:00] [8996] [SEDevT1] === APPLY [1/1]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:06:54 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:54 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 9
+[2026-07-31 15:06:54 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:06:54 UTC-05:00] [8996] [SEDevT1] === APPLY [1/1]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:06:54 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:54 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 10
+[2026-07-31 15:06:54 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:06:55 UTC-05:00] [8996] [SEDevT1] === APPLY [1/1]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:06:55 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:55 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 11
+[2026-07-31 15:06:55 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:06:55 UTC-05:00] [8996] [SEDevT1] === APPLY [1/1]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:06:55 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:06:55 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 12
+[2026-07-31 15:06:55 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:07:05 UTC-05:00] [8996] [SEDevT1] === APPLY [4/4]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:07:05 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:07:05 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 13
+[2026-07-31 15:07:05 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:07:05 UTC-05:00] [8996] [SEDevT1] === APPLY [4/4]: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }) ===
+[2026-07-31 15:07:05 UTC-05:00] [8996] [SEDevT1]   Result: SUCCESS: ProcessRPGAction OK [A:FullChain]
+[2026-07-31 15:07:05 UTC-05:00] [8996] [SEDevT1]   Attempts on 'ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }': 14
+[2026-07-31 15:07:05 UTC-05:00] [8996] [SEDevT1]   Coverage: 2/5 tried (40%)
+[2026-07-31 15:07:11 UTC-05:00] [8996] [SEDevT1] Info window OFF
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1] === Final Action Statistics ===
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }): 14 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] } (class: ToCName{ hash_lo = 0x33E28E05, hash_hi = 0x868DEF10 --[[ QuickHackHighPitchNoise --]] }, record: ToTweakDBID{ hash = 0x45E40D3A, length = 36 --[[ DeviceAction.HighPitchNoiseQuickHack --]] }): 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }): 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }): 0 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1]   ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] }): 4 attempts
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1] -- Coverage: 2/5 tried (40%) --
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1] -- Device types encountered: 0 --
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1]     ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1]     ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1] === End Statistics ===
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1] Status Effect Device Tester 1 shut down
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1] Status Effect Device Tester 1 initialized
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1]   Uses dynamic action discovery (no static effect list)
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1]   Hotkeys: SE_DEV1_TOGGLE_WINDOW, SE_DEV1_APPLY
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1]   Bind in Settings > Key Bindings > SEDevT1
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1] 
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1] Usage: Look at a device, press APPLY for random weighted quickhack.
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1]        Toggle window to see target details and coverage stats.
+[2026-07-31 15:08:34 UTC-05:00] [8996] [SEDevT1]        Walk around hitting APPLY on different device types.
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SEDevT1] === Final Action Statistics ===
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SEDevT1] -- Coverage: 0/0 tried (0%) --
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SEDevT1] -- Device types encountered: 0 --
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SEDevT1] === End Statistics ===
+[2026-07-31 15:36:54 UTC-05:00] [8996] [SEDevT1] Status Effect Device Tester 1 shut down
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

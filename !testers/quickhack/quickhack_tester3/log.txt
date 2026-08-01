@@ -1,0 +1,200 @@
+[2026-07-26 12:39:52 UTC-05:00] [10944] [QHTester3] Initialized | debug: true | maxDistance: 20.0
+[2026-07-26 12:39:52 UTC-05:00] [10944] [QHTester3] Bind keys in: Settings > Key Bindings > QHTester3
+[2026-07-26 12:39:52 UTC-05:00] [10944] [QHTester3] Hotkeys: Apply Quickhack, Cycle Hack, List Available Hacks, Clear Cache
+[2026-07-26 12:39:52 UTC-05:00] [10944] [QHTester3] Cycles through DEVICE's actual available quickhacks
+[2026-07-26 12:44:52 UTC-05:00] [4524] [QHTester3] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:44:52 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:44:52 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:44:52 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:44:52 UTC-05:00] [4524] [QHTester3] Available quickhacks (4):
+[2026-07-26 12:44:52 UTC-05:00] [4524]   [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] }) <-
+[2026-07-26 12:44:52 UTC-05:00] [4524]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:44:52 UTC-05:00] [4524]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:44:52 UTC-05:00] [4524]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3] Found 4 quickhack actions:
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3]  *[1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] })
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3] Selected: [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3]   StartAction failed — trying fallbacks
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 12:44:59 UTC-05:00] [4524] [QHTester3] Quickhack applied: ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] }
+[2026-07-26 12:45:01 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:45:01 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:45:01 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:01 UTC-05:00] [4524] [QHTester3] Hack: ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (2/4) [class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }]
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3] Found 4 quickhack actions:
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3]   [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] })
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3]  *[2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3] Selected: [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3]   StartAction failed — trying fallbacks
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 12:45:02 UTC-05:00] [4524] [QHTester3] Quickhack applied: ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] }
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3] Hack: ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (3/4) [class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }]
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3] Found 4 quickhack actions:
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3]   [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] })
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3]  *[3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3] Selected: [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3]   StartAction failed — trying fallbacks
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 12:45:03 UTC-05:00] [4524] [QHTester3] Quickhack applied: ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] }
+[2026-07-26 12:45:04 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:45:04 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:45:04 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:04 UTC-05:00] [4524] [QHTester3] Hack: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (4/4) [class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }]
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3] Found 4 quickhack actions:
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3]   [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] })
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3]  *[4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3] Selected: [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] })
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3]   StartAction failed — trying fallbacks
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 12:45:05 UTC-05:00] [4524] [QHTester3] Quickhack applied: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 12:45:20 UTC-05:00] [4524] [EntityScanner] Enabled
+[2026-07-26 12:45:37 UTC-05:00] [4524] [QHTester3] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:37 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:45:37 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:45:37 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:37 UTC-05:00] [4524] [QHTester3] Available quickhacks (4):
+[2026-07-26 12:45:37 UTC-05:00] [4524]   [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] })
+[2026-07-26 12:45:37 UTC-05:00] [4524]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:45:37 UTC-05:00] [4524]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:45:37 UTC-05:00] [4524]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }) <-
+[2026-07-26 12:45:41 UTC-05:00] [4524] [QHTester3] Cache cleared
+[2026-07-26 12:45:49 UTC-05:00] [4524] [QHTester3] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:49 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:45:49 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:45:49 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:49 UTC-05:00] [4524] [QHTester3] Available quickhacks (4):
+[2026-07-26 12:45:49 UTC-05:00] [4524]   [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] }) <-
+[2026-07-26 12:45:49 UTC-05:00] [4524]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:45:49 UTC-05:00] [4524]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:45:49 UTC-05:00] [4524]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3] Found 4 quickhack actions:
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3]  *[1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] })
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3] Selected: [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3]   StartAction failed — trying fallbacks
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 12:45:54 UTC-05:00] [4524] [QHTester3] Quickhack applied: ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] }
+[2026-07-26 12:46:06 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:46:06 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:46:06 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:46:06 UTC-05:00] [4524] [QHTester3] Hack: ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (2/4) [class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }]
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3] Found 4 quickhack actions:
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3]   [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] })
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3]  *[2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3] Selected: [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3]   StartAction failed — trying fallbacks
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3] Quickhack applied: ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] }
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:46:11 UTC-05:00] [4524] [QHTester3] Hack: ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (3/4) [class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }]
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3] Found 4 quickhack actions:
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3]   [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] })
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3]  *[3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3] Selected: [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3]   StartAction failed — trying fallbacks
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3] Quickhack applied: ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] }
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:46:12 UTC-05:00] [4524] [QHTester3] Hack: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (4/4) [class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }]
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Found 4 quickhack actions:
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] })
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]  *[4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Selected: [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] })
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   StartAction failed — trying fallbacks
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Quickhack applied: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Hack: ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (1/4) [class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }]
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Found 4 quickhack actions:
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]  *[1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] })
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Selected: [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   StartAction failed — trying fallbacks
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 12:46:13 UTC-05:00] [4524] [QHTester3] Quickhack applied: ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] }
+[2026-07-26 12:47:07 UTC-05:00] [4524] [QHTester3] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:47:07 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:47:07 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:47:07 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:47:07 UTC-05:00] [4524] [QHTester3] Available quickhacks (4):
+[2026-07-26 12:47:07 UTC-05:00] [4524]   [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] }) <-
+[2026-07-26 12:47:07 UTC-05:00] [4524]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:47:07 UTC-05:00] [4524]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:47:07 UTC-05:00] [4524]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:47:13 UTC-05:00] [4524] [QHTester3] Target device: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:47:13 UTC-05:00] [4524] [QHTester3] Querying ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } for quickhack actions...
+[2026-07-26 12:47:13 UTC-05:00] [4524] [QHTester3]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 12:47:13 UTC-05:00] [4524] [QHTester3] Cached 4 quickhack actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-26 12:47:13 UTC-05:00] [4524] [QHTester3] Found 4 quickhack actions:
+[2026-07-26 12:47:13 UTC-05:00] [4524] [QHTester3]  *[1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x48DD0408, length = 32 --[[ DeviceAction.GlitchScreenSuicide --]] })
+[2026-07-26 12:47:13 UTC-05:00] [4524] [QHTester3]   [2] ToCName{ hash_lo = 0xDDAA586B, hash_hi = 0x1FA7D857 --[[ GlitchScreenBlind --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0x5C59E50A, length = 30 --[[ DeviceAction.GlitchScreenBlind --]] })
+[2026-07-26 12:47:14 UTC-05:00] [4524] [QHTester3]   [3] ToCName{ hash_lo = 0xFB21C2EA, hash_hi = 0x03A6B37D --[[ GlitchScreenGrenade --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] }, record: ToTweakDBID{ hash = 0xFFC0E809, length = 32 --[[ DeviceAction.GlitchScreenGrenade --]] })
+[2026-07-26 12:47:14 UTC-05:00] [4524] [QHTester3]   [4] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 12:47:14 UTC-05:00] [4524] [QHTester3] Selected: [1] ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] } (class: ToCName{ hash_lo = 0x3A59603C, hash_hi = 0x0437CC33 --[[ GlitchScreen --]] })
+[2026-07-26 12:47:14 UTC-05:00] [4524] [QHTester3]   StartAction failed — trying fallbacks
+[2026-07-26 12:47:14 UTC-05:00] [4524] [QHTester3]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 12:47:14 UTC-05:00] [4524] [QHTester3] Quickhack applied: ToCName{ hash_lo = 0x1C4A9E08, hash_hi = 0xCEC7D2B7 --[[ GlitchScreenSuicide --]] }

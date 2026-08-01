@@ -1,0 +1,710 @@
+[2026-07-26 17:14:22 UTC-05:00] [4192] [QHTester4] Initialized | debug: true | maxDistance: 20.0
+[2026-07-26 17:14:22 UTC-05:00] [4192] [QHTester4] Bind keys in: Settings > Key Bindings > QHTester4
+[2026-07-26 17:14:22 UTC-05:00] [4192] [QHTester4] Hotkeys: Apply Quickhack, Cycle Hack, Clear Cache, Execute via PS, Get Report
+[2026-07-26 17:14:22 UTC-05:00] [4192] [QHTester4] New in v4: xpcall error capture, SetObjectActionID, PS handler bypass, DeviceSystem direct, Get Report
+[2026-07-26 17:14:22 UTC-05:00] [4192] LuaVM: initialization finished!
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] === GET REPORT — Target: ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] } ===
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] } for quickhack actions...
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 8 actions (return-value convention)
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] Cached 8 quickhack actions for ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] --- Action [1/8] ---
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297a2415870
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] --- Action [2/8] ---
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297a2416548
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] --- Action [3/8] ---
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetActivationTime: 0.5
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetCost: 3
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetBaseCost: 3
+[2026-07-26 17:17:56 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297a2417220
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] --- Action [4/8] ---
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297a2417be0
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] --- Action [5/8] ---
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297a2418a50
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] --- Action [6/8] ---
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0x44616F4D, hash_hi = 0x6013CB77 --[[ OverloadDevice --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297a241a100
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] --- Action [7/8] ---
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297a241b498
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] --- Action [8/8] ---
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:17:56 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:17:56 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297a241c830
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] ============================================
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] REPORT SUMMARY: 8 hacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }:
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4]   [1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4]   [2] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4]   [3] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4]   [4] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4]   [5] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4]   [6] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4]   [7] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4]   [8] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] }
+[2026-07-26 17:17:56 UTC-05:00] [7464] [QHTester4] ============================================
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] } for quickhack actions...
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 8 actions (return-value convention)
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4] Cached 8 quickhack actions for ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4] Found 8 quickhack actions:
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]  *[1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   [2] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   [3] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   [4] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   [5] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   [6] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0x44616F4D, hash_hi = 0x6013CB77 --[[ OverloadDevice --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] })
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   [7] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   [8] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4] Selected: [1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] })
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:19:53 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] } for quickhack actions...
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 8 actions (return-value convention)
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4] Cached 8 quickhack actions for ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4] Found 8 quickhack actions:
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]  *[1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   [2] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   [3] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   [4] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   [5] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   [6] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0x44616F4D, hash_hi = 0x6013CB77 --[[ OverloadDevice --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] })
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   [7] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   [8] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4] Selected: [1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] })
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:20:06 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:20:36 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] } for quickhack actions...
+[2026-07-26 17:20:36 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 8 actions (return-value convention)
+[2026-07-26 17:20:36 UTC-05:00] [7464] [QHTester4] Cached 8 quickhack actions for ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:20:36 UTC-05:00] [7464] [QHTester4] Hack: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (2/8) [class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }]
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] } for quickhack actions...
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 8 actions (return-value convention)
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4] Cached 8 quickhack actions for ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4] Found 8 quickhack actions:
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   [1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]  *[2] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   [3] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   [4] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   [5] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   [6] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0x44616F4D, hash_hi = 0x6013CB77 --[[ OverloadDevice --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] })
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   [7] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   [8] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4] Selected: [2] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] })
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:20:45 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] }
+[2026-07-26 17:20:53 UTC-05:00] [7464] [QHTester4] Cache cleared
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] } for quickhack actions...
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 8 actions (return-value convention)
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4] Cached 8 quickhack actions for ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4] Found 8 quickhack actions:
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]  *[1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   [2] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   [3] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   [4] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   [5] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   [6] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0x44616F4D, hash_hi = 0x6013CB77 --[[ OverloadDevice --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] })
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   [7] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   [8] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4] Selected: [1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] })
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:20:59 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:21:16 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] } for quickhack actions...
+[2026-07-26 17:21:16 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 8 actions (return-value convention)
+[2026-07-26 17:21:16 UTC-05:00] [7464] [QHTester4] Cached 8 quickhack actions for ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:21:16 UTC-05:00] [7464] [QHTester4] PS Execute: [1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] })
+[2026-07-26 17:21:16 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:21:16 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:21:16 UTC-05:00] [7464] [QHTester4]   No PS handler mapped for class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:21:16 UTC-05:00] [7464] [QHTester4]   Available mappings: QuickHackDistraction, QuickHackAuthorization, QuickHackToggleON, GlitchScreen*
+[2026-07-26 17:21:16 UTC-05:00] [7464] [QHTester4] --- PS failed, trying DeviceSystem ---
+[2026-07-26 17:21:16 UTC-05:00] [7464] [QHTester4]   Trying DeviceSystem direct access...
+[2026-07-26 17:21:16 UTC-05:00] [7464] [QHTester4]   GetDeviceById FAILED: error in error handling
+[2026-07-26 17:21:16 UTC-05:00] [7464] [QHTester4] PS execution failed: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:21:24 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] } for quickhack actions...
+[2026-07-26 17:21:24 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 8 actions (return-value convention)
+[2026-07-26 17:21:24 UTC-05:00] [7464] [QHTester4] Cached 8 quickhack actions for ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:21:24 UTC-05:00] [7464] [QHTester4] Hack: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (2/8) [class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }]
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] } for quickhack actions...
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 8 actions (return-value convention)
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4] Cached 8 quickhack actions for ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4] Found 8 quickhack actions:
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   [1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]  *[2] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   [3] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   [4] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   [5] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   [6] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0x44616F4D, hash_hi = 0x6013CB77 --[[ OverloadDevice --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] })
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   [7] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   [8] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4] Selected: [2] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] })
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:21:37 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] }
+[2026-07-26 17:21:43 UTC-05:00] [7464] [QHTester4] Cache cleared
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] } for quickhack actions...
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 8 actions (return-value convention)
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4] Cached 8 quickhack actions for ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4] Found 8 quickhack actions:
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]  *[1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   [2] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   [3] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   [4] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   [5] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   [6] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0x44616F4D, hash_hi = 0x6013CB77 --[[ OverloadDevice --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] })
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   [7] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   [8] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4] Selected: [1] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] })
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:21:44 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:22:14 UTC-05:00] [7464] [QHTester4] === GET REPORT — Target: ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] } ===
+[2026-07-26 17:22:14 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] } for quickhack actions...
+[2026-07-26 17:22:14 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 1 actions (return-value convention)
+[2026-07-26 17:22:14 UTC-05:00] [7464] [QHTester4] Cached 1 quickhack actions for ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] }
+[2026-07-26 17:22:14 UTC-05:00] [7464] [QHTester4] --- Action [1/1] ---
+[2026-07-26 17:22:14 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:22:14 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:22:14 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:22:14 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:22:14 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:22:14 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:22:14 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:22:14 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:22:14 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:22:14 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:22:14 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:22:14 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:22:14 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:22:14 UTC-05:00] [7464]   Target EntityID: userdata: 0x027272c45ac8
+[2026-07-26 17:22:14 UTC-05:00] [7464] [QHTester4] ============================================
+[2026-07-26 17:22:14 UTC-05:00] [7464] [QHTester4] REPORT SUMMARY: 1 hacks on ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] }:
+[2026-07-26 17:22:14 UTC-05:00] [7464] [QHTester4]   [1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:22:14 UTC-05:00] [7464] [QHTester4] ============================================
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4] === GET REPORT — Target: ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] } ===
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] } for quickhack actions...
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4] Cached 4 quickhack actions for ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4] --- Action [1/4] ---
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:22:49 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:22:49 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:22:49 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297717474b8
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4] --- Action [2/4] ---
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0x33E28E05, hash_hi = 0x868DEF10 --[[ QuickHackHighPitchNoise --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0x45E40D3A, length = 36 --[[ DeviceAction.HighPitchNoiseQuickHack --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:22:49 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:22:49 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:22:49 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0x45E40D3A, length = 36 --[[ DeviceAction.HighPitchNoiseQuickHack --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Target EntityID: userdata: 0x029771748068
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4] --- Action [3/4] ---
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:22:49 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:22:49 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:22:49 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297693d1300
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4] --- Action [4/4] ---
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:22:49 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:22:49 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:22:49 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:22:49 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:22:49 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297693d1ce8
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4] ============================================
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4] REPORT SUMMARY: 4 hacks on ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }:
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4]   [1] ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4]   [2] ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4]   [3] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4]   [4] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] }
+[2026-07-26 17:22:49 UTC-05:00] [7464] [QHTester4] ============================================
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] } for quickhack actions...
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4] Cached 4 quickhack actions for ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4] Found 4 quickhack actions:
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]  *[1] ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   [2] ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] } (class: ToCName{ hash_lo = 0x33E28E05, hash_hi = 0x868DEF10 --[[ QuickHackHighPitchNoise --]] }, record: ToTweakDBID{ hash = 0x45E40D3A, length = 36 --[[ DeviceAction.HighPitchNoiseQuickHack --]] })
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   [3] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   [4] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4] Selected: [1] ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] })
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:22:54 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:22:57 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] } for quickhack actions...
+[2026-07-26 17:22:57 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 17:22:57 UTC-05:00] [7464] [QHTester4] Cached 4 quickhack actions for ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-26 17:22:57 UTC-05:00] [7464] [QHTester4] Hack: ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] } (2/4) [class: ToCName{ hash_lo = 0x33E28E05, hash_hi = 0x868DEF10 --[[ QuickHackHighPitchNoise --]] }]
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] } for quickhack actions...
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4] Cached 4 quickhack actions for ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4] Found 4 quickhack actions:
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   [1] ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]  *[2] ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] } (class: ToCName{ hash_lo = 0x33E28E05, hash_hi = 0x868DEF10 --[[ QuickHackHighPitchNoise --]] }, record: ToTweakDBID{ hash = 0x45E40D3A, length = 36 --[[ DeviceAction.HighPitchNoiseQuickHack --]] })
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   [3] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   [4] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4] Selected: [2] ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] } (class: ToCName{ hash_lo = 0x33E28E05, hash_hi = 0x868DEF10 --[[ QuickHackHighPitchNoise --]] })
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0x45E40D3A, length = 36 --[[ DeviceAction.HighPitchNoiseQuickHack --]] }
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] }
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] } for quickhack actions...
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4] Cached 4 quickhack actions for ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-26 17:22:58 UTC-05:00] [7464] [QHTester4] Hack: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (3/4) [class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }]
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] } for quickhack actions...
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4] Cached 4 quickhack actions for ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4] Found 4 quickhack actions:
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   [1] ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   [2] ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] } (class: ToCName{ hash_lo = 0x33E28E05, hash_hi = 0x868DEF10 --[[ QuickHackHighPitchNoise --]] }, record: ToTweakDBID{ hash = 0x45E40D3A, length = 36 --[[ DeviceAction.HighPitchNoiseQuickHack --]] })
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]  *[3] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   [4] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4] Selected: [3] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] })
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] }
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:22:59 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }
+[2026-07-26 17:24:27 UTC-05:00] [7464] [QHTester4] Cache cleared
+[2026-07-26 17:24:28 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] } for quickhack actions...
+[2026-07-26 17:24:28 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 17:24:28 UTC-05:00] [7464] [QHTester4] Cached 4 quickhack actions for ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-26 17:24:28 UTC-05:00] [7464] [QHTester4] PS Execute: [1] ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] })
+[2026-07-26 17:24:28 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:24:28 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:24:28 UTC-05:00] [7464] [QHTester4]   No PS handler mapped for class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:24:28 UTC-05:00] [7464] [QHTester4]   Available mappings: QuickHackDistraction, QuickHackAuthorization, QuickHackToggleON, GlitchScreen*
+[2026-07-26 17:24:28 UTC-05:00] [7464] [QHTester4] --- PS failed, trying DeviceSystem ---
+[2026-07-26 17:24:28 UTC-05:00] [7464] [QHTester4]   Trying DeviceSystem direct access...
+[2026-07-26 17:24:28 UTC-05:00] [7464] [QHTester4]   GetDeviceById FAILED: error in error handling
+[2026-07-26 17:24:28 UTC-05:00] [7464] [QHTester4] PS execution failed: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] } for quickhack actions...
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 4 actions (return-value convention)
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4] Cached 4 quickhack actions for ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4] Found 4 quickhack actions:
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]  *[1] ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   [2] ToCName{ hash_lo = 0x942CF2C5, hash_hi = 0x3FA3CC06 --[[ HighPitchNoiseQuickHack --]] } (class: ToCName{ hash_lo = 0x33E28E05, hash_hi = 0x868DEF10 --[[ QuickHackHighPitchNoise --]] }, record: ToTweakDBID{ hash = 0x45E40D3A, length = 36 --[[ DeviceAction.HighPitchNoiseQuickHack --]] })
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   [3] ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] } (class: ToCName{ hash_lo = 0x16B408A2, hash_hi = 0x80E6276C --[[ RemoteBreach --]] }, record: ToTweakDBID{ hash = 0xD0E95C09, length = 25 --[[ DeviceAction.RemoteBreach --]] })
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   [4] ToCName{ hash_lo = 0xC6A37B89, hash_hi = 0xE9BEE119 --[[ Ping --]] } (class: ToCName{ hash_lo = 0x29EF1A67, hash_hi = 0xCB8CEEF4 --[[ PingDevice --]] }, record: ToTweakDBID{ hash = 0x99E0226D, length = 23 --[[ DeviceAction.PingDevice --]] })
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4] Selected: [1] ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] })
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:24:32 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:24:55 UTC-05:00] [7464] [QHTester4] === GET REPORT — Target: ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] } ===
+[2026-07-26 17:24:55 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] } for quickhack actions...
+[2026-07-26 17:24:55 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 1 actions (return-value convention)
+[2026-07-26 17:24:55 UTC-05:00] [7464] [QHTester4] Cached 1 quickhack actions for ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] }
+[2026-07-26 17:24:55 UTC-05:00] [7464] [QHTester4] --- Action [1/1] ---
+[2026-07-26 17:24:55 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:24:55 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:24:55 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:24:55 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:24:55 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:24:55 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:24:55 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:24:55 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:24:55 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:24:55 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:24:55 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:24:55 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:24:55 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:24:55 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297aa396938
+[2026-07-26 17:24:55 UTC-05:00] [7464] [QHTester4] ============================================
+[2026-07-26 17:24:55 UTC-05:00] [7464] [QHTester4] REPORT SUMMARY: 1 hacks on ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] }:
+[2026-07-26 17:24:55 UTC-05:00] [7464] [QHTester4]   [1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:24:55 UTC-05:00] [7464] [QHTester4] ============================================
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] }
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] } for quickhack actions...
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 1 actions (return-value convention)
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4] Cached 1 quickhack actions for ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] }
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4] Found 1 quickhack actions:
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4]  *[1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4] Selected: [1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] })
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:24:59 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:25:08 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] } for quickhack actions...
+[2026-07-26 17:25:08 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 1 actions (return-value convention)
+[2026-07-26 17:25:08 UTC-05:00] [7464] [QHTester4] Cached 1 quickhack actions for ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] }
+[2026-07-26 17:25:08 UTC-05:00] [7464] [QHTester4] PS Execute: [1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] })
+[2026-07-26 17:25:08 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:25:08 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:25:08 UTC-05:00] [7464] [QHTester4]   No PS handler mapped for class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:25:08 UTC-05:00] [7464] [QHTester4]   Available mappings: QuickHackDistraction, QuickHackAuthorization, QuickHackToggleON, GlitchScreen*
+[2026-07-26 17:25:08 UTC-05:00] [7464] [QHTester4] --- PS failed, trying DeviceSystem ---
+[2026-07-26 17:25:08 UTC-05:00] [7464] [QHTester4]   Trying DeviceSystem direct access...
+[2026-07-26 17:25:08 UTC-05:00] [7464] [QHTester4]   GetDeviceById FAILED: error in error handling
+[2026-07-26 17:25:08 UTC-05:00] [7464] [QHTester4] PS execution failed: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:25:14 UTC-05:00] [7464] [QHTester4] Cache cleared
+[2026-07-26 17:25:23 UTC-05:00] [7464] [QHTester4] === GET REPORT — Target: ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] } ===
+[2026-07-26 17:25:23 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] } for quickhack actions...
+[2026-07-26 17:25:23 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 1 actions (return-value convention)
+[2026-07-26 17:25:23 UTC-05:00] [7464] [QHTester4] Cached 1 quickhack actions for ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] }
+[2026-07-26 17:25:23 UTC-05:00] [7464] [QHTester4] --- Action [1/1] ---
+[2026-07-26 17:25:23 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:25:23 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:25:23 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:25:23 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:25:23 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:25:23 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:25:23 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:25:23 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:25:23 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:25:23 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:25:23 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:25:23 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:25:23 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:25:23 UTC-05:00] [7464]   Target EntityID: userdata: 0x0297aa3b2eb8
+[2026-07-26 17:25:23 UTC-05:00] [7464] [QHTester4] ============================================
+[2026-07-26 17:25:23 UTC-05:00] [7464] [QHTester4] REPORT SUMMARY: 1 hacks on ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] }:
+[2026-07-26 17:25:23 UTC-05:00] [7464] [QHTester4]   [1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:25:23 UTC-05:00] [7464] [QHTester4] ============================================
+[2026-07-26 17:25:27 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] } for quickhack actions...
+[2026-07-26 17:25:27 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 1 actions (return-value convention)
+[2026-07-26 17:25:27 UTC-05:00] [7464] [QHTester4] Cached 1 quickhack actions for ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] }
+[2026-07-26 17:25:27 UTC-05:00] [7464] [QHTester4] PS Execute: [1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] })
+[2026-07-26 17:25:27 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:25:27 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:25:27 UTC-05:00] [7464] [QHTester4]   No PS handler mapped for class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:25:27 UTC-05:00] [7464] [QHTester4]   Available mappings: QuickHackDistraction, QuickHackAuthorization, QuickHackToggleON, GlitchScreen*
+[2026-07-26 17:25:27 UTC-05:00] [7464] [QHTester4] --- PS failed, trying DeviceSystem ---
+[2026-07-26 17:25:27 UTC-05:00] [7464] [QHTester4]   Trying DeviceSystem direct access...
+[2026-07-26 17:25:27 UTC-05:00] [7464] [QHTester4]   GetDeviceById FAILED: error in error handling
+[2026-07-26 17:25:27 UTC-05:00] [7464] [QHTester4] PS execution failed: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:53:59 UTC-05:00] [7464] [QHTester4] === GET REPORT — Target: ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] } ===
+[2026-07-26 17:53:59 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] } for quickhack actions...
+[2026-07-26 17:53:59 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 2 actions (return-value convention)
+[2026-07-26 17:53:59 UTC-05:00] [7464] [QHTester4] Cached 2 quickhack actions for ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-07-26 17:53:59 UTC-05:00] [7464] [QHTester4] --- Action [1/2] ---
+[2026-07-26 17:53:59 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:53:59 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:53:59 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:53:59 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:53:59 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:53:59 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:53:59 UTC-05:00] [7464]   GetActivationTime: 0.5
+[2026-07-26 17:53:59 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:53:59 UTC-05:00] [7464]   GetCost: 3
+[2026-07-26 17:53:59 UTC-05:00] [7464]   GetBaseCost: 3
+[2026-07-26 17:53:59 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:53:59 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:53:59 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:53:59 UTC-05:00] [7464]   Target EntityID: userdata: 0x02977aedd648
+[2026-07-26 17:53:59 UTC-05:00] [7464] [QHTester4] --- Action [2/2] ---
+[2026-07-26 17:53:59 UTC-05:00] [7464]   Label:   ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] }
+[2026-07-26 17:53:59 UTC-05:00] [7464]   Class:   ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }
+[2026-07-26 17:53:59 UTC-05:00] [7464]   Record:  ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] }
+[2026-07-26 17:53:59 UTC-05:00] [7464]   IsPossible: ERROR: error in error handling
+[2026-07-26 17:53:59 UTC-05:00] [7464]   CanInterrupt: ERROR: error in error handling
+[2026-07-26 17:53:59 UTC-05:00] [7464]   IsVisible: ERROR: error in error handling
+[2026-07-26 17:53:59 UTC-05:00] [7464]   GetActivationTime: 0
+[2026-07-26 17:53:59 UTC-05:00] [7464]   GetDurationTime: 0
+[2026-07-26 17:53:59 UTC-05:00] [7464]   GetCost: 0
+[2026-07-26 17:53:59 UTC-05:00] [7464]   GetBaseCost: 0
+[2026-07-26 17:53:59 UTC-05:00] [7464]   ObjectActionRecord: defined=true
+[2026-07-26 17:53:59 UTC-05:00] [7464]     Record:GetID: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] }
+[2026-07-26 17:53:59 UTC-05:00] [7464]     Record:HackCategory.Type: gamedataHackCategory : DeviceHack (4)
+[2026-07-26 17:53:59 UTC-05:00] [7464]   Target EntityID: userdata: 0x02977aeddd70
+[2026-07-26 17:53:59 UTC-05:00] [7464] [QHTester4] ============================================
+[2026-07-26 17:53:59 UTC-05:00] [7464] [QHTester4] REPORT SUMMARY: 2 hacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }:
+[2026-07-26 17:53:59 UTC-05:00] [7464] [QHTester4]   [1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:53:59 UTC-05:00] [7464] [QHTester4]   [2] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] }
+[2026-07-26 17:53:59 UTC-05:00] [7464] [QHTester4] ============================================
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] } for quickhack actions...
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 2 actions (return-value convention)
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4] Cached 2 quickhack actions for ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4] Found 2 quickhack actions:
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4]  *[1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4]   [2] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] })
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4] Selected: [1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] })
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:54:09 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:54:15 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] } for quickhack actions...
+[2026-07-26 17:54:15 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 2 actions (return-value convention)
+[2026-07-26 17:54:15 UTC-05:00] [7464] [QHTester4] Cached 2 quickhack actions for ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-07-26 17:54:15 UTC-05:00] [7464] [QHTester4] Hack: ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (2/2) [class: ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }]
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4] Target device: ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] } for quickhack actions...
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 2 actions (return-value convention)
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4] Cached 2 quickhack actions for ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4] Found 2 quickhack actions:
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4]   [1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }, record: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] })
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4]  *[2] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }, record: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] })
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4] Selected: [2] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] })
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4] --- Strategy A: Full action chain ---
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4]   Setting up action properties...
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] }
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4]   IsPossible error: error in error handling
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4]   ResolveAction error: error in error handling
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4]   Attempting StartAction...
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4]   StartAction FAILED: error in error handling
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4]   Trying ProcessRPGAction fallback...
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4]   ProcessRPGAction OK (may have used RAM)
+[2026-07-26 17:54:16 UTC-05:00] [7464] [QHTester4] Quickhack applied: ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] }
+[2026-07-26 17:54:28 UTC-05:00] [7464] [QHTester4] Cache cleared
+[2026-07-26 17:54:31 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] } for quickhack actions...
+[2026-07-26 17:54:31 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 2 actions (return-value convention)
+[2026-07-26 17:54:31 UTC-05:00] [7464] [QHTester4] Cached 2 quickhack actions for ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-07-26 17:54:31 UTC-05:00] [7464] [QHTester4] PS Execute: [1] ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] } (class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] })
+[2026-07-26 17:54:31 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:54:31 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0xE50350B9, length = 33 --[[ DeviceAction.MalfunctionClassHack --]] }
+[2026-07-26 17:54:31 UTC-05:00] [7464] [QHTester4]   No PS handler mapped for class: ToCName{ hash_lo = 0xF2B27E53, hash_hi = 0x87BCE853 --[[ QuickHackDistraction --]] }
+[2026-07-26 17:54:31 UTC-05:00] [7464] [QHTester4]   Available mappings: QuickHackDistraction, QuickHackAuthorization, QuickHackToggleON, GlitchScreen*
+[2026-07-26 17:54:31 UTC-05:00] [7464] [QHTester4] --- PS failed, trying DeviceSystem ---
+[2026-07-26 17:54:31 UTC-05:00] [7464] [QHTester4]   Trying DeviceSystem direct access...
+[2026-07-26 17:54:31 UTC-05:00] [7464] [QHTester4]   GetDeviceById FAILED: error in error handling
+[2026-07-26 17:54:31 UTC-05:00] [7464] [QHTester4] PS execution failed: ToCName{ hash_lo = 0xF7853486, hash_hi = 0x2F31AF86 --[[ MalfunctionClassHack --]] }
+[2026-07-26 17:54:35 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] } for quickhack actions...
+[2026-07-26 17:54:35 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 2 actions (return-value convention)
+[2026-07-26 17:54:35 UTC-05:00] [7464] [QHTester4] Cached 2 quickhack actions for ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-07-26 17:54:35 UTC-05:00] [7464] [QHTester4] Hack: ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (2/2) [class: ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }]
+[2026-07-26 17:54:37 UTC-05:00] [7464] [QHTester4] Querying ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] } for quickhack actions...
+[2026-07-26 17:54:37 UTC-05:00] [7464] [QHTester4]   GetQuickHackActions(ctx) returned 2 actions (return-value convention)
+[2026-07-26 17:54:37 UTC-05:00] [7464] [QHTester4] Cached 2 quickhack actions for ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-07-26 17:54:37 UTC-05:00] [7464] [QHTester4] PS Execute: [2] ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] } (class: ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] })
+[2026-07-26 17:54:37 UTC-05:00] [7464] [QHTester4]   SetRequesterID error: error in error handling
+[2026-07-26 17:54:37 UTC-05:00] [7464] [QHTester4]   SetObjectActionID OK: ToTweakDBID{ hash = 0x21C978BD, length = 30 --[[ DeviceAction.OverloadClassHack --]] }
+[2026-07-26 17:54:37 UTC-05:00] [7464] [QHTester4]   No PS handler mapped for class: ToCName{ hash_lo = 0xEB094EA5, hash_hi = 0x72F1FE6B --[[ QuickHackExplodeExplosive --]] }
+[2026-07-26 17:54:37 UTC-05:00] [7464] [QHTester4]   Available mappings: QuickHackDistraction, QuickHackAuthorization, QuickHackToggleON, GlitchScreen*
+[2026-07-26 17:54:37 UTC-05:00] [7464] [QHTester4] --- PS failed, trying DeviceSystem ---
+[2026-07-26 17:54:37 UTC-05:00] [7464] [QHTester4]   Trying DeviceSystem direct access...
+[2026-07-26 17:54:37 UTC-05:00] [7464] [QHTester4]   GetDeviceById FAILED: error in error handling
+[2026-07-26 17:54:37 UTC-05:00] [7464] [QHTester4] PS execution failed: ToCName{ hash_lo = 0x000A38AC, hash_hi = 0x67311CF5 --[[ OverloadClassHack --]] }

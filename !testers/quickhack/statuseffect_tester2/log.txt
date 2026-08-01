@@ -1,0 +1,1802 @@
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2] Status Effect Tester 2 initialized
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2] Loaded 23 status effects. Default duration: 10.0s
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2] FIXES FROM TESTER 1:
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2]   1. Target detection: uses target.IsNPC(target) (Blackwall pattern)
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2]   2. Real effect IDs: no QH_ prefix (those were fake, caused silent no-ops)
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2]   3. Instigator: passes player as 3rd arg (GameEntityExaminerTool pattern)
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2]   4. TweakDB validation: checks record exists before applying
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2]   5. Multiple API overloads: tries 5 different call patterns
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2]   6. New hotkeys: DUMP (all BaseStatusEffect records), DUMP_QH (quickhack-related), TARGET_INFO (debug)
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2] 
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2] IMPORTANT: Use SE2_DUMP or SE2_DUMP_QH hotkey first to discover valid effect IDs!
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2] Some effect IDs in the catalog are marked 'needs verification' and may not exist.
+[2026-07-27 00:12:39 UTC-05:00] [19396] [SETester2] Default effect: Overheat (BaseStatusEffect.Overheat) — TweakDB exists: true
+[2026-07-27 00:12:39 UTC-05:00] [19396] LuaVM: initialization finished!
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2] === Status Effect Catalog (with TweakDB validation) ===
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]  >>>[1] Overheat (npc) [VALID] — Burns target, deals damage over time
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [2] Burning (npc) [VALID] — Fire burning effect
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [3] Blind (Reboot Optics) (npc) [VALID] — Blinds target (Reboot Optics effect)
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [4] Stun (npc) [VALID] — Stuns target
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [5] Ping (npc) [VALID] — Highlights target through walls
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [6] Pain (npc) [VALID] — Pain effect
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [7] NPCForceStagger (npc) [VALID] — Forces stagger animation
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [8] LocomotionMalfunction (npc) [VALID] — Disables locomotion (Cyberware Malfunction-style)
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [9] LocomotionMalfunction Lvl2 (npc) [VALID] — Stronger locomotion disable
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [10] CyberwareMalfunctionBlackwall (npc) [VALID] — Blackwall-style cyberware malfunction
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [11] ShortCircuit (npc) [MISSING] — EMP stun (needs verification)
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [12] Contagion (npc) [MISSING] — Poison damage (needs verification)
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [13] Madness (npc) [VALID] — Target attacks allies (needs verification)
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [14] CyberwareMalfunction (npc) [VALID] — Disables cyberware (needs verification)
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [15] RebootOptics (npc) [MISSING] — Blinds target (needs verification)
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [16] Distraction (device) [MISSING] — Distracts device (needs verification)
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [17] BlackwallHackUpload (npc) [VALID] — Blackwall hack upload (quest effect, confirmed working)
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [18] LegendaryFragGrenade (any) [VALID] — Frag grenade explosion effect
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [19] RoyceForceStagger (npc) [VALID] — Royce force stagger
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [20] Sandstorm (npc) [VALID] — Sandstorm effect
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [21] ReconGrenadeLegendaryPlus (any) [VALID] — Recon grenade highlight
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [22] ForceDive (npc) [VALID] — Force dive effect
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2]     [23] JohnnySicknessHeavy (npc) [VALID] — Johnny sickness heavy
+[2026-07-27 00:43:12 UTC-05:00] [12460] [SETester2] Total: 23 effects
+[2026-07-27 00:43:44 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:43:44 UTC-05:00] [12460] [SETester2] === Active Status Effects on Character.Chinese_Food_Woman (class=NPCPuppet, entityID=9004551ULL) ===
+[2026-07-27 00:43:44 UTC-05:00] [12460] [SETester2]   No tracked status effects active on target
+[2026-07-27 00:44:01 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:44:01 UTC-05:00] [12460] [SETester2] === APPLY: Character.Chinese_Food_Woman (class=NPCPuppet, entityID=9004551ULL) ===
+[2026-07-27 00:44:01 UTC-05:00] [12460] [SETester2] Applying 'Overheat' (BaseStatusEffect.Overheat) duration=10.0 instigator=1ULL
+[2026-07-27 00:44:01 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Overheat' exists: true
+[2026-07-27 00:44:01 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:44:01 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:44:01 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:44:01 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:44:01 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:44:01 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:44:01 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2] === Status Effect Catalog (with TweakDB validation) ===
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]  >>>[1] Overheat (npc) [VALID] — Burns target, deals damage over time
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [2] Burning (npc) [VALID] — Fire burning effect
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [3] Blind (Reboot Optics) (npc) [VALID] — Blinds target (Reboot Optics effect)
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [4] Stun (npc) [VALID] — Stuns target
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [5] Ping (npc) [VALID] — Highlights target through walls
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [6] Pain (npc) [VALID] — Pain effect
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [7] NPCForceStagger (npc) [VALID] — Forces stagger animation
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [8] LocomotionMalfunction (npc) [VALID] — Disables locomotion (Cyberware Malfunction-style)
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [9] LocomotionMalfunction Lvl2 (npc) [VALID] — Stronger locomotion disable
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [10] CyberwareMalfunctionBlackwall (npc) [VALID] — Blackwall-style cyberware malfunction
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [11] ShortCircuit (npc) [MISSING] — EMP stun (needs verification)
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [12] Contagion (npc) [MISSING] — Poison damage (needs verification)
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [13] Madness (npc) [VALID] — Target attacks allies (needs verification)
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [14] CyberwareMalfunction (npc) [VALID] — Disables cyberware (needs verification)
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [15] RebootOptics (npc) [MISSING] — Blinds target (needs verification)
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [16] Distraction (device) [MISSING] — Distracts device (needs verification)
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [17] BlackwallHackUpload (npc) [VALID] — Blackwall hack upload (quest effect, confirmed working)
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [18] LegendaryFragGrenade (any) [VALID] — Frag grenade explosion effect
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [19] RoyceForceStagger (npc) [VALID] — Royce force stagger
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [20] Sandstorm (npc) [VALID] — Sandstorm effect
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [21] ReconGrenadeLegendaryPlus (any) [VALID] — Recon grenade highlight
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [22] ForceDive (npc) [VALID] — Force dive effect
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2]     [23] JohnnySicknessHeavy (npc) [VALID] — Johnny sickness heavy
+[2026-07-27 00:44:23 UTC-05:00] [12460] [SETester2] Total: 23 effects
+[2026-07-27 00:44:32 UTC-05:00] [12460] [SETester2] Selected [2/23]: Burning (BaseStatusEffect.Burning) — TweakDB exists: true
+[2026-07-27 00:44:33 UTC-05:00] [12460] [SETester2] Selected [3/23]: Blind (Reboot Optics) (BaseStatusEffect.Blind) — TweakDB exists: true
+[2026-07-27 00:44:38 UTC-05:00] [12460] [SETester2] Selected [4/23]: Stun (BaseStatusEffect.Stun) — TweakDB exists: true
+[2026-07-27 00:44:47 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:44:47 UTC-05:00] [12460] [SETester2] === APPLY: Character.Chinese_Food_Woman (class=NPCPuppet, entityID=9004551ULL) ===
+[2026-07-27 00:44:47 UTC-05:00] [12460] [SETester2] Applying 'Stun' (BaseStatusEffect.Stun) duration=10.0 instigator=1ULL
+[2026-07-27 00:44:47 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Stun' exists: true
+[2026-07-27 00:44:47 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:44:47 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:44:47 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:44:47 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:44:47 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:44:47 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:44:47 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:45:08 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:45:08 UTC-05:00] [12460] [SETester2] === APPLY: Character.CorpoWomanCorporat (class=NPCPuppet, entityID=10054513ULL) ===
+[2026-07-27 00:45:08 UTC-05:00] [12460] [SETester2] Applying 'Stun' (BaseStatusEffect.Stun) duration=10.0 instigator=1ULL
+[2026-07-27 00:45:08 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Stun' exists: true
+[2026-07-27 00:45:08 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:45:08 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:45:08 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:45:08 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:45:08 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:45:08 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:45:08 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:45:25 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:45:25 UTC-05:00] [12460] [SETester2] === APPLY: Character.prevention_police_handgun_wa (class=NPCPuppet, entityID=10056626ULL) ===
+[2026-07-27 00:45:25 UTC-05:00] [12460] [SETester2] Applying 'Stun' (BaseStatusEffect.Stun) duration=10.0 instigator=1ULL
+[2026-07-27 00:45:25 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Stun' exists: true
+[2026-07-27 00:45:25 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:45:25 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:45:25 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:45:25 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:45:25 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:45:25 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:45:25 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:45:37 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:45:37 UTC-05:00] [12460] [SETester2] === APPLY: Character.prevention_police_handgun_wa (class=NPCPuppet, entityID=10056659ULL) ===
+[2026-07-27 00:45:37 UTC-05:00] [12460] [SETester2] Applying 'Stun' (BaseStatusEffect.Stun) duration=10.0 instigator=1ULL
+[2026-07-27 00:45:37 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Stun' exists: true
+[2026-07-27 00:45:37 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:45:37 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:45:37 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:45:37 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:45:37 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:45:37 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:45:37 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2] === Status Effect Catalog (with TweakDB validation) ===
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [1] Overheat (npc) [VALID] — Burns target, deals damage over time
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [2] Burning (npc) [VALID] — Fire burning effect
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [3] Blind (Reboot Optics) (npc) [VALID] — Blinds target (Reboot Optics effect)
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]  >>>[4] Stun (npc) [VALID] — Stuns target
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [5] Ping (npc) [VALID] — Highlights target through walls
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [6] Pain (npc) [VALID] — Pain effect
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [7] NPCForceStagger (npc) [VALID] — Forces stagger animation
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [8] LocomotionMalfunction (npc) [VALID] — Disables locomotion (Cyberware Malfunction-style)
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [9] LocomotionMalfunction Lvl2 (npc) [VALID] — Stronger locomotion disable
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [10] CyberwareMalfunctionBlackwall (npc) [VALID] — Blackwall-style cyberware malfunction
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [11] ShortCircuit (npc) [MISSING] — EMP stun (needs verification)
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [12] Contagion (npc) [MISSING] — Poison damage (needs verification)
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [13] Madness (npc) [VALID] — Target attacks allies (needs verification)
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [14] CyberwareMalfunction (npc) [VALID] — Disables cyberware (needs verification)
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [15] RebootOptics (npc) [MISSING] — Blinds target (needs verification)
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [16] Distraction (device) [MISSING] — Distracts device (needs verification)
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [17] BlackwallHackUpload (npc) [VALID] — Blackwall hack upload (quest effect, confirmed working)
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [18] LegendaryFragGrenade (any) [VALID] — Frag grenade explosion effect
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [19] RoyceForceStagger (npc) [VALID] — Royce force stagger
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [20] Sandstorm (npc) [VALID] — Sandstorm effect
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [21] ReconGrenadeLegendaryPlus (any) [VALID] — Recon grenade highlight
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [22] ForceDive (npc) [VALID] — Force dive effect
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2]     [23] JohnnySicknessHeavy (npc) [VALID] — Johnny sickness heavy
+[2026-07-27 00:45:49 UTC-05:00] [12460] [SETester2] Total: 23 effects
+[2026-07-27 00:46:02 UTC-05:00] [12460] [SETester2] Selected [5/23]: Ping (BaseStatusEffect.Ping) — TweakDB exists: true
+[2026-07-27 00:46:13 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:46:13 UTC-05:00] [12460] [SETester2] === APPLY: Character.ChildAverage (class=NPCPuppet, entityID=10054561ULL) ===
+[2026-07-27 00:46:13 UTC-05:00] [12460] [SETester2] Applying 'Ping' (BaseStatusEffect.Ping) duration=10.0 instigator=1ULL
+[2026-07-27 00:46:13 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Ping' exists: true
+[2026-07-27 00:46:13 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:46:13 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:46:13 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:46:13 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:46:13 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:46:13 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:46:13 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:46:23 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:46:23 UTC-05:00] [12460] [SETester2] === APPLY: Character.ObeseMaleCorpo (class=NPCPuppet, entityID=10054346ULL) ===
+[2026-07-27 00:46:23 UTC-05:00] [12460] [SETester2] Applying 'Ping' (BaseStatusEffect.Ping) duration=10.0 instigator=1ULL
+[2026-07-27 00:46:23 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Ping' exists: true
+[2026-07-27 00:46:23 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:46:23 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:46:23 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:46:23 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:46:23 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:46:23 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:46:23 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:47:53 UTC-05:00] [12460] [SETester2] Target: class=Reflector NPC=false Device=true Vehicle=false Active=true
+[2026-07-27 00:47:53 UTC-05:00] [12460] [SETester2] === APPLY: <unknown> (class=Reflector, entityID=2361294508367971680ULL) ===
+[2026-07-27 00:47:53 UTC-05:00] [12460] [SETester2]   NOTE: Effect 'Ping' is for npc targets but target is NPC=false Device=true
+[2026-07-27 00:47:53 UTC-05:00] [12460] [SETester2] Applying 'Ping' (BaseStatusEffect.Ping) duration=10.0 instigator=1ULL
+[2026-07-27 00:47:53 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Ping' exists: true
+[2026-07-27 00:47:53 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:47:53 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:47:53 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:47:53 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:47:53 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:47:53 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:47:53 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:48:09 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:48:09 UTC-05:00] [12460] [SETester2] === APPLY: Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, entityID=9002320ULL) ===
+[2026-07-27 00:48:09 UTC-05:00] [12460] [SETester2] Applying 'Ping' (BaseStatusEffect.Ping) duration=10.0 instigator=1ULL
+[2026-07-27 00:48:09 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Ping' exists: true
+[2026-07-27 00:48:09 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:48:09 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:48:09 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:48:09 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:48:09 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:48:09 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:48:09 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:48:32 UTC-05:00] [12460] [SETester2] Target: class=Reflector NPC=false Device=true Vehicle=false Active=true
+[2026-07-27 00:48:32 UTC-05:00] [12460] [SETester2] === APPLY: <unknown> (class=Reflector, entityID=2361294508367971680ULL) ===
+[2026-07-27 00:48:32 UTC-05:00] [12460] [SETester2]   NOTE: Effect 'Ping' is for npc targets but target is NPC=false Device=true
+[2026-07-27 00:48:32 UTC-05:00] [12460] [SETester2] Applying 'Ping' (BaseStatusEffect.Ping) duration=10.0 instigator=1ULL
+[2026-07-27 00:48:32 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Ping' exists: true
+[2026-07-27 00:48:32 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:48:32 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:48:32 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:48:32 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:48:32 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:48:32 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:48:32 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:48:38 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:48:38 UTC-05:00] [12460] [SETester2] === APPLY: Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, entityID=9002320ULL) ===
+[2026-07-27 00:48:38 UTC-05:00] [12460] [SETester2] Applying 'Ping' (BaseStatusEffect.Ping) duration=10.0 instigator=1ULL
+[2026-07-27 00:48:38 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Ping' exists: true
+[2026-07-27 00:48:38 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:48:38 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:48:38 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:48:38 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:48:38 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:48:38 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:48:38 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2] === Status Effect Catalog (with TweakDB validation) ===
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [1] Overheat (npc) [VALID] — Burns target, deals damage over time
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [2] Burning (npc) [VALID] — Fire burning effect
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [3] Blind (Reboot Optics) (npc) [VALID] — Blinds target (Reboot Optics effect)
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [4] Stun (npc) [VALID] — Stuns target
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]  >>>[5] Ping (npc) [VALID] — Highlights target through walls
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [6] Pain (npc) [VALID] — Pain effect
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [7] NPCForceStagger (npc) [VALID] — Forces stagger animation
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [8] LocomotionMalfunction (npc) [VALID] — Disables locomotion (Cyberware Malfunction-style)
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [9] LocomotionMalfunction Lvl2 (npc) [VALID] — Stronger locomotion disable
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [10] CyberwareMalfunctionBlackwall (npc) [VALID] — Blackwall-style cyberware malfunction
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [11] ShortCircuit (npc) [MISSING] — EMP stun (needs verification)
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [12] Contagion (npc) [MISSING] — Poison damage (needs verification)
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [13] Madness (npc) [VALID] — Target attacks allies (needs verification)
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [14] CyberwareMalfunction (npc) [VALID] — Disables cyberware (needs verification)
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [15] RebootOptics (npc) [MISSING] — Blinds target (needs verification)
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [16] Distraction (device) [MISSING] — Distracts device (needs verification)
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [17] BlackwallHackUpload (npc) [VALID] — Blackwall hack upload (quest effect, confirmed working)
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [18] LegendaryFragGrenade (any) [VALID] — Frag grenade explosion effect
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [19] RoyceForceStagger (npc) [VALID] — Royce force stagger
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [20] Sandstorm (npc) [VALID] — Sandstorm effect
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [21] ReconGrenadeLegendaryPlus (any) [VALID] — Recon grenade highlight
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [22] ForceDive (npc) [VALID] — Force dive effect
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2]     [23] JohnnySicknessHeavy (npc) [VALID] — Johnny sickness heavy
+[2026-07-27 00:48:49 UTC-05:00] [12460] [SETester2] Total: 23 effects
+[2026-07-27 00:49:24 UTC-05:00] [12460] [SETester2] Selected [6/23]: Pain (BaseStatusEffect.Pain) — TweakDB exists: true
+[2026-07-27 00:49:24 UTC-05:00] [12460] [SETester2] Selected [7/23]: NPCForceStagger (BaseStatusEffect.NPCForceStagger) — TweakDB exists: true
+[2026-07-27 00:49:25 UTC-05:00] [12460] [SETester2] Selected [8/23]: LocomotionMalfunction (BaseStatusEffect.LocomotionMalfunction) — TweakDB exists: true
+[2026-07-27 00:49:25 UTC-05:00] [12460] [SETester2] Selected [9/23]: LocomotionMalfunction Lvl2 (BaseStatusEffect.LocomotionMalfunctionLevel2) — TweakDB exists: true
+[2026-07-27 00:49:26 UTC-05:00] [12460] [SETester2] Selected [10/23]: CyberwareMalfunctionBlackwall (BaseStatusEffect.CyberwareMalfunctionBlackwall) — TweakDB exists: true
+[2026-07-27 00:49:26 UTC-05:00] [12460] [SETester2] Selected [11/23]: ShortCircuit (BaseStatusEffect.ShortCircuit) — TweakDB exists: false
+[2026-07-27 00:49:27 UTC-05:00] [12460] [SETester2] Selected [12/23]: Contagion (BaseStatusEffect.Contagion) — TweakDB exists: false
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2] === APPLY: Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, entityID=9002320ULL) ===
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2] Applying 'Contagion' (BaseStatusEffect.Contagion) duration=10.0 instigator=1ULL
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Contagion' exists: false
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2]   WARNING: Record 'BaseStatusEffect.Contagion' does not exist in TweakDB! API will silently no-op.
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2]   Use the DUMP hotkey to enumerate valid BaseStatusEffect records.
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:49:38 UTC-05:00] [12460] [SETester2]   >>> FAILED: Record does not exist in TweakDB. Use DUMP hotkey to find valid IDs.
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2] === Quickhack-related BaseStatusEffect records ===
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2] Found 223 quickhack-related records:
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [1] BaseStatusEffect.AirDrop_Burning
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [2] BaseStatusEffect.AndroidHeadRemovedBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [3] BaseStatusEffect.AutoBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [4] BaseStatusEffect.AutoLocomotion
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [5] BaseStatusEffect.BaseContagionPoison
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [6] BaseStatusEffect.BaseEMP
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [7] BaseStatusEffect.BaseEmpGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [8] BaseStatusEffect.BaseOverheat
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [9] BaseStatusEffect.BaseQuickHackBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [10] BaseStatusEffect.Blind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [11] BaseStatusEffect.BorgStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [12] BaseStatusEffect.BossBaseQuickHackBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [13] BaseStatusEffect.BossCyberwareMalfunction
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [14] BaseStatusEffect.BossCyberwareMalfunctionLvl1
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [15] BaseStatusEffect.BossCyberwareMalfunctionLvl2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [16] BaseStatusEffect.BossCyberwareMalfunctionLvl3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [17] BaseStatusEffect.BossCyberwareMalfunctionLvl4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [18] BaseStatusEffect.BossCyberwareMalfunctionLvl4PlusPlus
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [19] BaseStatusEffect.BossLocomotionMalfunction
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [20] BaseStatusEffect.BossLocomotionMalfunctionLevel2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [21] BaseStatusEffect.BossLocomotionMalfunctionLevel3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [22] BaseStatusEffect.BossLocomotionMalfunctionLevel4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [23] BaseStatusEffect.BossMadness
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [24] BaseStatusEffect.BossModerateBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [25] BaseStatusEffect.BossOverheatLevel1
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [26] BaseStatusEffect.BossOverheatLevel2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [27] BaseStatusEffect.BossOverheatLevel3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [28] BaseStatusEffect.BossOverheatLevel4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [29] BaseStatusEffect.BossOverheatLevel4PlusPlus
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [30] BaseStatusEffect.BossQuickHackBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [31] BaseStatusEffect.BossQuickHackBlindLevel2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [32] BaseStatusEffect.BossQuickHackBlindLevel3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [33] BaseStatusEffect.BossQuickHackBlindLevel4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [34] BaseStatusEffect.BossShortBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [35] BaseStatusEffect.BossWeaponMalfunction
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [36] BaseStatusEffect.BossWeaponMalfunctionLvl2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [37] BaseStatusEffect.BossWeaponMalfunctionLvl3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [38] BaseStatusEffect.BossWeaponMalfunctionLvl4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [39] BaseStatusEffect.BossWeaponMalfunctionLvl4PlusPlus
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [40] BaseStatusEffect.BrickStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [41] BaseStatusEffect.BurnGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [42] BaseStatusEffect.Burning
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [43] BaseStatusEffect.BurningParticleStatus
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [44] BaseStatusEffect.Burning_Tech_55
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [45] BaseStatusEffect.ChimeraBaseQuickHackBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [46] BaseStatusEffect.ChimeraMadness
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [47] BaseStatusEffect.ChimeraMadnessCooldown
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [48] BaseStatusEffect.ChimeraQuickHackBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [49] BaseStatusEffect.ChimeraQuickHackBlindLevel2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [50] BaseStatusEffect.ChimeraQuickHackBlindLevel3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [51] BaseStatusEffect.ChimeraQuickHackBlindLevel4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [52] BaseStatusEffect.ChimeraWeaponMalfunctionLvl2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [53] BaseStatusEffect.ChimeraWeaponMalfunctionLvl3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [54] BaseStatusEffect.ChimeraWeaponMalfunctionLvl4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [55] BaseStatusEffect.ChimeraWeaponMalfunctionLvl4PlusPlus
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [56] BaseStatusEffect.CommonEmpGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [57] BaseStatusEffect.CommonLastingEffectBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [58] BaseStatusEffect.ComradeStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [59] BaseStatusEffect.ConsumablePoison
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [60] BaseStatusEffect.ContagionCooldown
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [61] BaseStatusEffect.ContagionPoison
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [62] BaseStatusEffect.ContagionPoisonBounce2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [63] BaseStatusEffect.ContagionPoisonBounce3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [64] BaseStatusEffect.ContagionPoisonBounce4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [65] BaseStatusEffect.ContagionPoisonLvl2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [66] BaseStatusEffect.ContagionPoisonLvl3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [67] BaseStatusEffect.ContagionPoisonLvl4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [68] BaseStatusEffect.ContagionPoisonLvl4PlusPlus
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [69] BaseStatusEffect.CyberwareBreachStreak
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [70] BaseStatusEffect.CyberwareCooldownNotification
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [71] BaseStatusEffect.CyberwareInstallationAnimation
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [72] BaseStatusEffect.CyberwareInstallationAnimationBlackout
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [73] BaseStatusEffect.CyberwareInstallationAnimationEnd
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [74] BaseStatusEffect.CyberwareInstallationAnimationEndFast
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [75] BaseStatusEffect.CyberwareInstallationAnimationFastForwardPossible
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [76] BaseStatusEffect.CyberwareInstallationAnimationSFX
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [77] BaseStatusEffect.CyberwareMalfunction
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [78] BaseStatusEffect.CyberwareMalfunctionBlackwall
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [79] BaseStatusEffect.CyberwareMalfunctionDamageOverTime
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [80] BaseStatusEffect.CyberwareMalfunctionLvl1
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [81] BaseStatusEffect.CyberwareMalfunctionLvl2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [82] BaseStatusEffect.CyberwareMalfunctionLvl3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [83] BaseStatusEffect.CyberwareMalfunctionLvl4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [84] BaseStatusEffect.CyberwareMalfunctionLvl4PlusPlus
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [85] BaseStatusEffect.CyberwareShutdown
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [86] BaseStatusEffect.CyberwareTutorialAdjustments
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [87] BaseStatusEffect.Definition_Of_Madness_Rook_Buff
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [88] BaseStatusEffect.DisableCyberware
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [89] BaseStatusEffect.DisableCyberwareAndCyberwareStatusEffects
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [90] BaseStatusEffect.DistractionDuration
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [91] BaseStatusEffect.EMP
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [92] BaseStatusEffect.EMPReed
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [93] BaseStatusEffect.EdgerunnersStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [94] BaseStatusEffect.EmpCyberwareTurnedOff
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [95] BaseStatusEffect.EmpHighDamage
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [96] BaseStatusEffect.EmpJamWeaponAccuracyDebuff
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [97] BaseStatusEffect.EmpJamWeaponChance
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [98] BaseStatusEffect.EmpLowDamage
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [99] BaseStatusEffect.EmpVeryHighDamage
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [100] BaseStatusEffect.EmpVeryLowDamage
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [101] BaseStatusEffect.EmpVeryLowDamageQuickhack
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [102] BaseStatusEffect.EnemyNetrunnerEmpHighDamage
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [103] BaseStatusEffect.EpicBurnGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [104] BaseStatusEffect.EpicEmpGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [105] BaseStatusEffect.EpicLastingEffectBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [106] BaseStatusEffect.EpicPlusBurnGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [107] BaseStatusEffect.ExhaustionStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [108] BaseStatusEffect.ExplosionStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [109] BaseStatusEffect.FatigueStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [110] BaseStatusEffect.HackingTutorialStage01PingUsed
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [111] BaseStatusEffect.HealingItemPlusFood
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [112] BaseStatusEffect.HeavyStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [113] BaseStatusEffect.Hercules_Poison
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [114] BaseStatusEffect.IconicCyberwareCooldown
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [115] BaseStatusEffect.Intelligence_60_Ping
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [116] BaseStatusEffect.Intelligence_60_Ping_Aura
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [117] BaseStatusEffect.KnifePoison
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [118] BaseStatusEffect.LegendaryBurnGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [119] BaseStatusEffect.LegendaryEffectBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [120] BaseStatusEffect.LegendaryEmpGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [121] BaseStatusEffect.LegendaryPlusBurnGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [122] BaseStatusEffect.Liberty_Padre_Burning
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [123] BaseStatusEffect.Liberty_Padre_BurningChanceBuff
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [124] BaseStatusEffect.LightBurning_Tech_55
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [125] BaseStatusEffect.LocomotionExpHarvested
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [126] BaseStatusEffect.LocomotionMalfunction
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [127] BaseStatusEffect.LocomotionMalfunctionKappa
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [128] BaseStatusEffect.LocomotionMalfunctionLevel2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [129] BaseStatusEffect.LocomotionMalfunctionLevel3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [130] BaseStatusEffect.LocomotionMalfunctionLevel4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [131] BaseStatusEffect.LongEmpCyberwareTurnedOff
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [132] BaseStatusEffect.LongLastingPoisonDebuff
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [133] BaseStatusEffect.LongerLastingPoisonDebuff
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [134] BaseStatusEffect.Madness
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [135] BaseStatusEffect.MadnessCooldown
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [136] BaseStatusEffect.MajorBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [137] BaseStatusEffect.MajorQuickHackBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [138] BaseStatusEffect.MediumBurning
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [139] BaseStatusEffect.MeleePerkStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [140] BaseStatusEffect.MinorBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [141] BaseStatusEffect.ModerateBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [142] BaseStatusEffect.NeurotoxinDelayedStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [143] BaseStatusEffect.NeurotoxinHeadshotDelayedStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [144] BaseStatusEffect.NewPerkFinisherStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [145] BaseStatusEffect.NicolasStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [146] BaseStatusEffect.NoCooldownedSandevistanGlitch
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [147] BaseStatusEffect.NoCyberware
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [148] BaseStatusEffect.NoSandevistanGlitch
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [149] BaseStatusEffect.NpcMeleeAttackStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [150] BaseStatusEffect.NpcSMasherMeleeAttackStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [151] BaseStatusEffect.Overheat
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [152] BaseStatusEffect.OverheatCooldown
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [153] BaseStatusEffect.OverheatGrisGris
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [154] BaseStatusEffect.OverheatLevel1
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [155] BaseStatusEffect.OverheatLevel2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [156] BaseStatusEffect.OverheatLevel3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [157] BaseStatusEffect.OverheatLevel4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [158] BaseStatusEffect.OverheatLevel4PlusPlus
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [159] BaseStatusEffect.OverloadEMP
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [160] BaseStatusEffect.Ping
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [161] BaseStatusEffect.PingLevel2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [162] BaseStatusEffect.PingLevel3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [163] BaseStatusEffect.PingLevel4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [164] BaseStatusEffect.PingLevel4PlusPlus
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [165] BaseStatusEffect.PingLvl2MarkStatusEffect
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [166] BaseStatusEffect.PingLvl4MarkStatusEffect
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [167] BaseStatusEffect.PingLvl4PlusPlusMarkStatusEffect
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [168] BaseStatusEffect.PingMarkStatusEffect
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [169] BaseStatusEffect.PlatingGlitchBuffCommon
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [170] BaseStatusEffect.PlatingGlitchBuffEpic
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [171] BaseStatusEffect.PlatingGlitchBuffLegendary
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [172] BaseStatusEffect.PlatingGlitchBuffRare
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [173] BaseStatusEffect.PlatingGlitchBuffUncommon
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [174] BaseStatusEffect.PlayerBurning
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [175] BaseStatusEffect.PlayerCyberwareCooldown
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [176] BaseStatusEffect.PlayerJustDodgedLocomotionBuffer
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [177] BaseStatusEffect.PlayerJustVaultedLocomotionBuffer
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [178] BaseStatusEffect.PlayerMadDashLocomotionBuffer
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [179] BaseStatusEffect.PlayerPoisonSlow
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [180] BaseStatusEffect.PlayerPoisoned
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [181] BaseStatusEffect.PlayerRippingOffTurretWorkspotInv
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [182] BaseStatusEffect.Poisoned
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [183] BaseStatusEffect.QuickHackBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [184] BaseStatusEffect.QuickHackBlindLevel2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [185] BaseStatusEffect.QuickHackBlindLevel3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [186] BaseStatusEffect.QuickHackBlindLevel4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [187] BaseStatusEffect.QuickHackBlindLvl1
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [188] BaseStatusEffect.QuickMeleeBodyPerkStunCooldown
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [189] BaseStatusEffect.QuickMeleeStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [190] BaseStatusEffect.RareBurnGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [191] BaseStatusEffect.RareEmpGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [192] BaseStatusEffect.RareLastingEffectBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [193] BaseStatusEffect.RarePlusBurnGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [194] BaseStatusEffect.RebootOpticsBossCooldown
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [195] BaseStatusEffect.RebootOpticsCooldown
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [196] BaseStatusEffect.ReversePoisonNewPerkRegeneration
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [197] BaseStatusEffect.ShortBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [198] BaseStatusEffect.StrongLongLastingPoisonDebuff
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [199] BaseStatusEffect.StrongerLongLastingPoisonDebuff
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [200] BaseStatusEffect.Stun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [201] BaseStatusEffect.StunImmunity
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [202] BaseStatusEffect.StunReed
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [203] BaseStatusEffect.TechAbility_60_EMP_Blast
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [204] BaseStatusEffect.TemporarilyBlockMovement
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [205] BaseStatusEffect.Testera_Nicolas_SelfBurning
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [206] BaseStatusEffect.UncommonBurnGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [207] BaseStatusEffect.UncommonEmpGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [208] BaseStatusEffect.UncommonLastingEffectBlind
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [209] BaseStatusEffect.UncommonPlusBurnGrenade
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [210] BaseStatusEffect.UsedHealingItemOrCyberwareStatusEffect
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [211] BaseStatusEffect.VBAxeEMPAttackStatusEffect
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [212] BaseStatusEffect.WeakExplosionStun
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [213] BaseStatusEffect.WeaponGlitchLvl4Buff
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [214] BaseStatusEffect.WeaponGlitchLvl4PlusPlusBuff
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [215] BaseStatusEffect.WeaponMalfunction
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [216] BaseStatusEffect.WeaponMalfunctionLvl2
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [217] BaseStatusEffect.WeaponMalfunctionLvl3
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [218] BaseStatusEffect.WeaponMalfunctionLvl4
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [219] BaseStatusEffect.WeaponMalfunctionLvl4PlusPlus
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [220] BaseStatusEffect.WeaponMalfunctionReactionBlocker
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [221] BaseStatusEffect.WeaponMalfunctionReapply
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [222] BaseStatusEffect.WeaponMalfunctionRepeat
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2]   [223] BaseStatusEffect.WeaponMalfunctionSmartLock
+[2026-07-27 00:50:20 UTC-05:00] [12460] [SETester2] === Total: 223 records ===
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2] === Enumerating all BaseStatusEffect records in TweakDB ===
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2] Found 1172 BaseStatusEffect records:
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1] BaseStatusEffect.AdvancedBerserk
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [2] BaseStatusEffect.AdvancedBerserkDamageBonusStack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [3] BaseStatusEffect.AdvancedBerserkPlayerBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [4] BaseStatusEffect.AirDrop_Burning
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [5] BaseStatusEffect.AirDrop_Red_Effect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [6] BaseStatusEffect.AlcoholDebuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [7] BaseStatusEffect.AllIconicCWFromTreasureChestPurchased
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [8] BaseStatusEffect.AndroidHeadRemovedBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [9] BaseStatusEffect.AndroidTurnOff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [10] BaseStatusEffect.AndroidTurnOn
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [11] BaseStatusEffect.Angelica_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [12] BaseStatusEffect.AntiVirusCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [13] BaseStatusEffect.Assault_Area_04_Perk_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [14] BaseStatusEffect.Assault_Area_04_Perk_1_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [15] BaseStatusEffect.Assault_Area_07_Perk_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [16] BaseStatusEffect.Assault_Trait_01_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [17] BaseStatusEffect.Athletics_Trait_01_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [18] BaseStatusEffect.AutoBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [19] BaseStatusEffect.AutoJam
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [20] BaseStatusEffect.AutoLocomotion
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [21] BaseStatusEffect.AutomaticReplenishmentCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [22] BaseStatusEffect.AxeWeaponStealthBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [23] BaseStatusEffect.BarbedWireKnockdown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [24] BaseStatusEffect.BaseBlackWallHackEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [25] BaseStatusEffect.BaseBrainMelt
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [26] BaseStatusEffect.BaseCommsNoise
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [27] BaseStatusEffect.BaseContagionPoison
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [28] BaseStatusEffect.BaseEMP
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [29] BaseStatusEffect.BaseEmpGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [30] BaseStatusEffect.BaseOverheat
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [31] BaseStatusEffect.BaseOverload
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [32] BaseStatusEffect.BasePermaStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [33] BaseStatusEffect.BaseQuickHackBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [34] BaseStatusEffect.BaseQuickHackStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [35] BaseStatusEffect.Bat_Malina_Frenzy_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [36] BaseStatusEffect.Baton_Murphy_Brutality_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [37] BaseStatusEffect.BeingCarried
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [38] BaseStatusEffect.Berserk
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [39] BaseStatusEffect.BerserkCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [40] BaseStatusEffect.BerserkNPCBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [41] BaseStatusEffect.BerserkNPCDownState
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [42] BaseStatusEffect.BerserkPlayerBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [43] BaseStatusEffect.Berserker
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [44] BaseStatusEffect.BikeKnockdown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [45] BaseStatusEffect.BioGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [46] BaseStatusEffect.BlackLaceV0
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [47] BaseStatusEffect.BlackLaceV1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [48] BaseStatusEffect.BlackWallLight
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [49] BaseStatusEffect.BlackWallMechanicalOverload
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [50] BaseStatusEffect.BlackWallUploadActive
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [51] BaseStatusEffect.Blackmarket_CarryCapacityBooster
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [52] BaseStatusEffect.Blackmarket_HealthBooster
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [53] BaseStatusEffect.Blackmarket_MemoryBooster
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [54] BaseStatusEffect.Blackmarket_StaminaBooster
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [55] BaseStatusEffect.BlackwallCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [56] BaseStatusEffect.BlackwallHackBrainVFX
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [57] BaseStatusEffect.BlackwallHack_FactHelper
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [58] BaseStatusEffect.BlackwallSQCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [59] BaseStatusEffect.BladeMod2_FinisherBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [60] BaseStatusEffect.Bleeding
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [61] BaseStatusEffect.BleedingInfinite
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [62] BaseStatusEffect.Blind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [63] BaseStatusEffect.BlockBodyDisposal
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [64] BaseStatusEffect.BlockBroken
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [65] BaseStatusEffect.BlockCoverVisibilityReduction
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [66] BaseStatusEffect.BlockFinisherStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [67] BaseStatusEffect.BlockGrapple
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [68] BaseStatusEffect.BlockNPCGrenadeBark
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [69] BaseStatusEffect.BlockSkillProgressionTutorial
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [70] BaseStatusEffect.BlockTargetingPlayer
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [71] BaseStatusEffect.BlockTargetingPlayerAutoRemove
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [72] BaseStatusEffect.BlockWorkspotFinisherStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [73] BaseStatusEffect.BloodPumpBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [74] BaseStatusEffect.BloodswellPerkCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [75] BaseStatusEffect.BoatRocking
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [76] BaseStatusEffect.Body_Central_Perk_1_1_HealthRegenBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [77] BaseStatusEffect.Body_Central_Perk_1_2_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [78] BaseStatusEffect.Body_Central_Perk_1_3_HealthRegenBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [79] BaseStatusEffect.Body_Central_Perk_1_4_MitigationBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [80] BaseStatusEffect.Body_DismemberExecuteChance_Stack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [81] BaseStatusEffect.Body_Left_Perk_3_3_Vulnerable
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [82] BaseStatusEffect.Body_Right_Perk_2_3_Cooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [83] BaseStatusEffect.Body_Right_Perk_2_4_Vulnerable
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [84] BaseStatusEffect.BonesMcCoy70V0
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [85] BaseStatusEffect.BonesMcCoy70V1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [86] BaseStatusEffect.BonesMcCoy70V2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [87] BaseStatusEffect.BonesMcCoy70VEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [88] BaseStatusEffect.BonesMcCoy70VUncommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [89] BaseStatusEffect.BoostAccuracyStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [90] BaseStatusEffect.BorgStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [91] BaseStatusEffect.BorisWardenUpgrade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [92] BaseStatusEffect.BossBaseBlackWallHackEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [93] BaseStatusEffect.BossBaseQuickHackBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [94] BaseStatusEffect.BossBlackWallHack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [95] BaseStatusEffect.BossControlhackReactionImmunity
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [96] BaseStatusEffect.BossCyberwareMalfunction
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [97] BaseStatusEffect.BossCyberwareMalfunctionLvl1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [98] BaseStatusEffect.BossCyberwareMalfunctionLvl2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [99] BaseStatusEffect.BossCyberwareMalfunctionLvl3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [100] BaseStatusEffect.BossCyberwareMalfunctionLvl4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [101] BaseStatusEffect.BossCyberwareMalfunctionLvl4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [102] BaseStatusEffect.BossGrenadeHackEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [103] BaseStatusEffect.BossHauntedBlackwallHackForceKill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [104] BaseStatusEffect.BossLocomotionMalfunction
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [105] BaseStatusEffect.BossLocomotionMalfunctionLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [106] BaseStatusEffect.BossLocomotionMalfunctionLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [107] BaseStatusEffect.BossLocomotionMalfunctionLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [108] BaseStatusEffect.BossMadness
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [109] BaseStatusEffect.BossMemoryWipe
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [110] BaseStatusEffect.BossMemoryWipeLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [111] BaseStatusEffect.BossMemoryWipeLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [112] BaseStatusEffect.BossMemoryWipeLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [113] BaseStatusEffect.BossModerateBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [114] BaseStatusEffect.BossNoInterrupt
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [115] BaseStatusEffect.BossNoTakeDown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [116] BaseStatusEffect.BossNoTakeDownInfinite
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [117] BaseStatusEffect.BossOverheatLevel1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [118] BaseStatusEffect.BossOverheatLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [119] BaseStatusEffect.BossOverheatLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [120] BaseStatusEffect.BossOverheatLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [121] BaseStatusEffect.BossOverheatLevel4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [122] BaseStatusEffect.BossQuickHackBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [123] BaseStatusEffect.BossQuickHackBlindLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [124] BaseStatusEffect.BossQuickHackBlindLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [125] BaseStatusEffect.BossQuickHackBlindLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [126] BaseStatusEffect.BossShortBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [127] BaseStatusEffect.BossSuicide
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [128] BaseStatusEffect.BossSystemCollapse
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [129] BaseStatusEffect.BossSystemCollapseHackReactionImmunity
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [130] BaseStatusEffect.BossTakedownCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [131] BaseStatusEffect.BossWeaponMalfunction
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [132] BaseStatusEffect.BossWeaponMalfunctionLvl2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [133] BaseStatusEffect.BossWeaponMalfunctionLvl3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [134] BaseStatusEffect.BossWeaponMalfunctionLvl4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [135] BaseStatusEffect.BossWeaponMalfunctionLvl4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [136] BaseStatusEffect.BoxingGym
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [137] BaseStatusEffect.BrainMeltCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [138] BaseStatusEffect.BrainMeltCostReductionSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [139] BaseStatusEffect.BrainMeltLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [140] BaseStatusEffect.BrainMeltLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [141] BaseStatusEffect.BrainMeltLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [142] BaseStatusEffect.BrainMeltLevel4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [143] BaseStatusEffect.BrainMeltQuestForceKill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [144] BaseStatusEffect.Brawling_Area_02_Perk_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [145] BaseStatusEffect.Brawling_Area_02_Perk_1_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [146] BaseStatusEffect.Brawling_Area_02_Perk_1_Buff_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [147] BaseStatusEffect.Brawling_Area_03_Perk_2_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [148] BaseStatusEffect.Brawling_Area_03_Perk_2_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [149] BaseStatusEffect.Brawling_Area_03_Perk_2_Buff_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [150] BaseStatusEffect.Brawling_Area_03_Perk_4_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [151] BaseStatusEffect.Brawling_Area_03_Perk_4_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [152] BaseStatusEffect.Brawling_Area_03_Perk_4_Buff_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [153] BaseStatusEffect.Brawling_Area_04_Perk_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [154] BaseStatusEffect.Brawling_Area_04_Perk_1_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [155] BaseStatusEffect.Brawling_Area_04_Perk_1_Buff_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [156] BaseStatusEffect.Brawling_Area_04_Perk_2_Vulnerable_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [157] BaseStatusEffect.Brawling_Area_04_Perk_2_Vulnerable_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [158] BaseStatusEffect.Brawling_Area_04_Perk_2_Vulnerable_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [159] BaseStatusEffect.Brawling_Area_04_Perk_3_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [160] BaseStatusEffect.Brawling_Area_04_Perk_3_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [161] BaseStatusEffect.Brawling_Area_04_Perk_3_Buff_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [162] BaseStatusEffect.Brawling_Area_04_Perk_4_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [163] BaseStatusEffect.Brawling_Area_04_Perk_4_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [164] BaseStatusEffect.Brawling_Area_04_Perk_4_Buff_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [165] BaseStatusEffect.Brawling_Area_07_Perk_2_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [166] BaseStatusEffect.Brawling_Area_07_Perk_2_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [167] BaseStatusEffect.Brawling_Area_08_Perk_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [168] BaseStatusEffect.Brawling_Area_08_Perk_2_Buff_Level_1_Player
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [169] BaseStatusEffect.Brawling_Area_08_Perk_2_Buff_Level_1_Weapon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [170] BaseStatusEffect.Brawling_Trait_01_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [171] BaseStatusEffect.BreathingAbstract
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [172] BaseStatusEffect.BreathingHeavy
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [173] BaseStatusEffect.BreathingLow
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [174] BaseStatusEffect.BreathingMedium
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [175] BaseStatusEffect.BreathingSick
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [176] BaseStatusEffect.BrickStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [177] BaseStatusEffect.BuffStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [178] BaseStatusEffect.BurnGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [179] BaseStatusEffect.Burning
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [180] BaseStatusEffect.BurningParticleStatus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [181] BaseStatusEffect.Burning_Tech_55
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [182] BaseStatusEffect.Butchers_Cleaver_Bloodlust_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [183] BaseStatusEffect.CPO_FirstAidWhiff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [184] BaseStatusEffect.CPO_Shocked
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [185] BaseStatusEffect.CWCapacity_DEBUGbuild_lvl20_PermaBonus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [186] BaseStatusEffect.CWCapacity_DEBUGbuild_lvl30_PermaBonus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [187] BaseStatusEffect.CWCapacity_Tier2_PermaBonus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [188] BaseStatusEffect.CWCapacity_Tier3_PermaBonus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [189] BaseStatusEffect.CWCapacity_Tier4_PermaBonus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [190] BaseStatusEffect.CWCapacity_Tier5_PermaBonus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [191] BaseStatusEffect.CallInCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [192] BaseStatusEffect.CallReinforcement
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [193] BaseStatusEffect.CameraAnimationAbstract
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [194] BaseStatusEffect.CameraShakeAbstract
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [195] BaseStatusEffect.CanDeflectTutorial
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [196] BaseStatusEffect.CarFood
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [197] BaseStatusEffect.Carnage_Edgerunners_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [198] BaseStatusEffect.CarryCapacityBooster
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [199] BaseStatusEffect.CarryCapacityPermaBonus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [200] BaseStatusEffect.Cassidy_Swap_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [201] BaseStatusEffect.CatchMeIfYouCanBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [202] BaseStatusEffect.CatchMeIfYouCanCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [203] BaseStatusEffect.CementPowder
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [204] BaseStatusEffect.CerberusGrabAttackEffect01
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [205] BaseStatusEffect.CerberusGrabAttackEffectBack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [206] BaseStatusEffect.CerberusGrabCheckPlayerOrientationEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [207] BaseStatusEffect.CerberusInPreAlerted
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [208] BaseStatusEffect.CerberusRemovedDetection
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [209] BaseStatusEffect.CerberusScanningVFXOff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [210] BaseStatusEffect.CerberusScanningVFXOn
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [211] BaseStatusEffect.CerberusSkipPreAlerted
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [212] BaseStatusEffect.Chao_Slaughter_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [213] BaseStatusEffect.ChargeSystemCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [214] BaseStatusEffect.CheckStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [215] BaseStatusEffect.ChemicalResistanceFromChemicalDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [216] BaseStatusEffect.ChimeraBaseQuickHackBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [217] BaseStatusEffect.ChimeraBlackWallHack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [218] BaseStatusEffect.ChimeraMadness
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [219] BaseStatusEffect.ChimeraMadnessCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [220] BaseStatusEffect.ChimeraMeleeMod_BladeDismembers
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [221] BaseStatusEffect.ChimeraMeleeMod_BluntDismembers
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [222] BaseStatusEffect.ChimeraMeleeMod_HeadBlade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [223] BaseStatusEffect.ChimeraMeleeMod_HeadBlunt
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [224] BaseStatusEffect.ChimeraMeleeMod_LeftArmBlade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [225] BaseStatusEffect.ChimeraMeleeMod_LeftArmBlunt
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [226] BaseStatusEffect.ChimeraMeleeMod_LeftLegBlade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [227] BaseStatusEffect.ChimeraMeleeMod_LeftLegBlunt
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [228] BaseStatusEffect.ChimeraMeleeMod_RightArmBlade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [229] BaseStatusEffect.ChimeraMeleeMod_RightArmBlunt
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [230] BaseStatusEffect.ChimeraMeleeMod_RightLegBlade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [231] BaseStatusEffect.ChimeraMeleeMod_RightLegBlunt
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [232] BaseStatusEffect.ChimeraQuickHackBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [233] BaseStatusEffect.ChimeraQuickHackBlindLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [234] BaseStatusEffect.ChimeraQuickHackBlindLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [235] BaseStatusEffect.ChimeraQuickHackBlindLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [236] BaseStatusEffect.ChimeraSmartMod_Arms_Hack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [237] BaseStatusEffect.ChimeraSmartMod_Head_Hack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [238] BaseStatusEffect.ChimeraSmartMod_Legs_Hack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [239] BaseStatusEffect.ChimeraSmartMod_Torso_Hack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [240] BaseStatusEffect.ChimeraStompShake
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [241] BaseStatusEffect.ChimeraSuicideCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [242] BaseStatusEffect.ChimeraSystemCollapseCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [243] BaseStatusEffect.ChimeraWeaponMalfunctionLvl2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [244] BaseStatusEffect.ChimeraWeaponMalfunctionLvl3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [245] BaseStatusEffect.ChimeraWeaponMalfunctionLvl4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [246] BaseStatusEffect.ChimeraWeaponMalfunctionLvl4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [247] BaseStatusEffect.Chingada_Madre_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [248] BaseStatusEffect.Chingada_Madre_Fire_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [249] BaseStatusEffect.Chingada_Madre_Helper_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [250] BaseStatusEffect.ChokingHighDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [251] BaseStatusEffect.ChokingLowDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [252] BaseStatusEffect.ClimbingKnockdown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [253] BaseStatusEffect.Cloaked
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [254] BaseStatusEffect.CloakedOda
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [255] BaseStatusEffect.CloakedSoMiSQ
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [256] BaseStatusEffect.Cloaked_Exit
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [257] BaseStatusEffect.Cloaked_Exit_SoMiSQ
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [258] BaseStatusEffect.CloudComputingUploadTimeReduction
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [259] BaseStatusEffect.CocktailBleeding
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [260] BaseStatusEffect.CogitoFrameArmorBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [261] BaseStatusEffect.ColdBlood
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [262] BaseStatusEffect.ColdBloodEnteringCritUpgrade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [263] BaseStatusEffect.ColdBloodEnteringResistancesUpgrade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [264] BaseStatusEffect.CombatFood3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [265] BaseStatusEffect.CombatHacking_Area_02_Perk_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [266] BaseStatusEffect.CombatHacking_Area_04_Perk_2_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [267] BaseStatusEffect.CombatQuickHackStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [268] BaseStatusEffect.CombatStim
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [269] BaseStatusEffect.CombatStim_Hard
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [270] BaseStatusEffect.CombatStim_VeryHard
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [271] BaseStatusEffect.CommonEmpGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [272] BaseStatusEffect.CommonFlashGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [273] BaseStatusEffect.CommonFragGrenadeExplosion
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [274] BaseStatusEffect.CommonLastingEffectBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [275] BaseStatusEffect.CommonPlusFlashGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [276] BaseStatusEffect.CommsCallCombatTargetHelper
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [277] BaseStatusEffect.CommsCallInLvl1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [278] BaseStatusEffect.CommsCallInLvl2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [279] BaseStatusEffect.CommsCallInLvl3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [280] BaseStatusEffect.CommsCallInLvl4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [281] BaseStatusEffect.CommsCallInLvl4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [282] BaseStatusEffect.CommsNoise
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [283] BaseStatusEffect.CommsNoiseCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [284] BaseStatusEffect.CommsNoiseLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [285] BaseStatusEffect.CommsNoiseLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [286] BaseStatusEffect.CommsNoiseLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [287] BaseStatusEffect.ComradeStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [288] BaseStatusEffect.ConsumableBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [289] BaseStatusEffect.ConsumablePoison
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [290] BaseStatusEffect.ContagionCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [291] BaseStatusEffect.ContagionPoison
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [292] BaseStatusEffect.ContagionPoisonBounce2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [293] BaseStatusEffect.ContagionPoisonBounce3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [294] BaseStatusEffect.ContagionPoisonBounce4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [295] BaseStatusEffect.ContagionPoisonLvl2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [296] BaseStatusEffect.ContagionPoisonLvl3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [297] BaseStatusEffect.ContagionPoisonLvl4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [298] BaseStatusEffect.ContagionPoisonLvl4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [299] BaseStatusEffect.ControlQuickHackStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [300] BaseStatusEffect.Cool_55_ExtendedStealth_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [301] BaseStatusEffect.CooldownedSandevistanPlayerBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [302] BaseStatusEffect.CovertQuickHackStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [303] BaseStatusEffect.Crippled
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [304] BaseStatusEffect.CrippledArm
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [305] BaseStatusEffect.CrippledArmLeft
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [306] BaseStatusEffect.CrippledArmRight
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [307] BaseStatusEffect.CrippledHandLeft
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [308] BaseStatusEffect.CrippledHandRight
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [309] BaseStatusEffect.CrippledLeg
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [310] BaseStatusEffect.CrippledLegLeft
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [311] BaseStatusEffect.CrippledLegRight
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [312] BaseStatusEffect.CritChanceFood
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [313] BaseStatusEffect.CuttingGrenadeAttack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [314] BaseStatusEffect.CuttingGrenadeAttackPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [315] BaseStatusEffect.CyberspacePresence
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [316] BaseStatusEffect.CyberwareBreachStreak
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [317] BaseStatusEffect.CyberwareCooldownNotification
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [318] BaseStatusEffect.CyberwareInstallationAnimation
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [319] BaseStatusEffect.CyberwareInstallationAnimationBlackout
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [320] BaseStatusEffect.CyberwareInstallationAnimationEnd
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [321] BaseStatusEffect.CyberwareInstallationAnimationEndFast
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [322] BaseStatusEffect.CyberwareInstallationAnimationFastForwardPossible
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [323] BaseStatusEffect.CyberwareInstallationAnimationSFX
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [324] BaseStatusEffect.CyberwareMalfunction
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [325] BaseStatusEffect.CyberwareMalfunctionBlackwall
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [326] BaseStatusEffect.CyberwareMalfunctionDamageOverTime
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [327] BaseStatusEffect.CyberwareMalfunctionLvl1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [328] BaseStatusEffect.CyberwareMalfunctionLvl2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [329] BaseStatusEffect.CyberwareMalfunctionLvl3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [330] BaseStatusEffect.CyberwareMalfunctionLvl4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [331] BaseStatusEffect.CyberwareMalfunctionLvl4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [332] BaseStatusEffect.CyberwareShutdown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [333] BaseStatusEffect.CyberwareTutorialAdjustments
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [334] BaseStatusEffect.DamageBoostFromDamageReceived
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [335] BaseStatusEffect.DamageHackNoReaction
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [336] BaseStatusEffect.Dante_Long_Range_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [337] BaseStatusEffect.DeadeyeJustEndedSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [338] BaseStatusEffect.DeadeyeQuickReloadSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [339] BaseStatusEffect.DeadeyeSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [340] BaseStatusEffect.Deaf
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [341] BaseStatusEffect.DebuffStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [342] BaseStatusEffect.Debug_EnableFinisher
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [343] BaseStatusEffect.DecreaseSmartWeaponHitProbability
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [344] BaseStatusEffect.Defeated
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [345] BaseStatusEffect.DefeatedFinisherWorkspot
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [346] BaseStatusEffect.DefeatedWithRecover
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [347] BaseStatusEffect.Definition_Of_Madness_Rook_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [348] BaseStatusEffect.Demolition_Area_02_Perk_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [349] BaseStatusEffect.Demolition_Area_05_Perk_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [350] BaseStatusEffect.Demolition_Area_05_Perk_1_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [351] BaseStatusEffect.Demolition_Area_05_Perk_1_Buff_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [352] BaseStatusEffect.Demolition_Area_07_Perk_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [353] BaseStatusEffect.Demolition_Area_07_Perk_2_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [354] BaseStatusEffect.Demolition_Trait_01_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [355] BaseStatusEffect.DetectorRushAvailableStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [356] BaseStatusEffect.DetectorRushCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [357] BaseStatusEffect.DetectorRushPlayerBuffCommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [358] BaseStatusEffect.DetectorRushPlayerBuffCommonPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [359] BaseStatusEffect.DetectorRushPlayerBuffEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [360] BaseStatusEffect.DetectorRushPlayerBuffEpicPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [361] BaseStatusEffect.DetectorRushPlayerBuffLegendary
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [362] BaseStatusEffect.DetectorRushPlayerBuffLegendaryPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [363] BaseStatusEffect.DetectorRushPlayerBuffLegendaryPlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [364] BaseStatusEffect.DetectorRushPlayerBuffRare
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [365] BaseStatusEffect.DetectorRushPlayerBuffRarePlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [366] BaseStatusEffect.DetectorRushPlayerBuffUncommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [367] BaseStatusEffect.DetectorRushPlayerBuffUncommonPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [368] BaseStatusEffect.DeviceExplosionInvulnerability
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [369] BaseStatusEffect.DeviceTrapHit
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [370] BaseStatusEffect.DieInOneHit
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [371] BaseStatusEffect.Dino_Slaughter_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [372] BaseStatusEffect.DisableCyberware
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [373] BaseStatusEffect.DisableCyberwareAndCyberwareStatusEffects
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [374] BaseStatusEffect.Dismembered
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [375] BaseStatusEffect.DismemberedArm
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [376] BaseStatusEffect.DismemberedArmLeft
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [377] BaseStatusEffect.DismemberedArmRight
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [378] BaseStatusEffect.DismemberedHandLeft
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [379] BaseStatusEffect.DismemberedHandRight
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [380] BaseStatusEffect.DismemberedLeg
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [381] BaseStatusEffect.DismemberedLegLeft
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [382] BaseStatusEffect.DismemberedLegRight
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [383] BaseStatusEffect.DistractionDuration
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [384] BaseStatusEffect.DoNotBlockShootingOnFriendlyFire
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [385] BaseStatusEffect.DoNotUseVehicle
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [386] BaseStatusEffect.DoTStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [387] BaseStatusEffect.DodgeAirBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [388] BaseStatusEffect.DodgeAirCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [389] BaseStatusEffect.DodgeBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [390] BaseStatusEffect.DodgeBuffCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [391] BaseStatusEffect.DodgeCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [392] BaseStatusEffect.DodgeInvulnerability
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [393] BaseStatusEffect.DodgeOutOfSightCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [394] BaseStatusEffect.DontShootAtMe
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [395] BaseStatusEffect.DrillingShakeHeavy
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [396] BaseStatusEffect.DrillingShakeMedium
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [397] BaseStatusEffect.DrillingShakeNormal
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [398] BaseStatusEffect.DriverCombat
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [399] BaseStatusEffect.DriverCombatHandgunFPPVFXScale
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [400] BaseStatusEffect.DriverCombatHandgunVFXScale
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [401] BaseStatusEffect.DriverCombatMountedWeaponVFXScale
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [402] BaseStatusEffect.DriverCombatPistol
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [403] BaseStatusEffect.DriverCombatRevolverFPPVFXScale
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [404] BaseStatusEffect.DriverCombatRevolverVFXScale
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [405] BaseStatusEffect.DriverCombatSMGFPPVFXScale
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [406] BaseStatusEffect.DriverCombatSMGVFXScale
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [407] BaseStatusEffect.DriverCombatSwayPause
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [408] BaseStatusEffect.DriverCombatSwayRemoval
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [409] BaseStatusEffect.DriverCombatVehicleManeuvers
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [410] BaseStatusEffect.Drugged
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [411] BaseStatusEffect.DruggedSevere
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [412] BaseStatusEffect.Drunk
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [413] BaseStatusEffect.EMP
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [414] BaseStatusEffect.EMPReed
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [415] BaseStatusEffect.EdgerunnersStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [416] BaseStatusEffect.ElectricResistanceFromElectricDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [417] BaseStatusEffect.ElectrifiedWaterElectrocute
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [418] BaseStatusEffect.Electrocuted
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [419] BaseStatusEffect.ElectrocutedNoDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [420] BaseStatusEffect.ElectrocutedParticleStatus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [421] BaseStatusEffect.ElectroshockMechanismCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [422] BaseStatusEffect.EmpCyberwareTurnedOff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [423] BaseStatusEffect.EmpHighDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [424] BaseStatusEffect.EmpJamWeaponAccuracyDebuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [425] BaseStatusEffect.EmpJamWeaponChance
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [426] BaseStatusEffect.EmpLowDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [427] BaseStatusEffect.EmpVeryHighDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [428] BaseStatusEffect.EmpVeryLowDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [429] BaseStatusEffect.EmpVeryLowDamageQuickhack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [430] BaseStatusEffect.Encumbered
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [431] BaseStatusEffect.EnemyNetrunnerEmpHighDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [432] BaseStatusEffect.EpicBioGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [433] BaseStatusEffect.EpicBurnGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [434] BaseStatusEffect.EpicEmpGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [435] BaseStatusEffect.EpicFlashGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [436] BaseStatusEffect.EpicFragGrenadeExplosion
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [437] BaseStatusEffect.EpicLastingEffectBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [438] BaseStatusEffect.EpicPlusBioGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [439] BaseStatusEffect.EpicPlusBurnGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [440] BaseStatusEffect.EpicPlusFlashGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [441] BaseStatusEffect.Espionage_Central_Milestone_1_Buff_MantisBlades
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [442] BaseStatusEffect.Exhausted
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [443] BaseStatusEffect.ExhaustionStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [444] BaseStatusEffect.ExplosionStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [445] BaseStatusEffect.FastFinisherSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [446] BaseStatusEffect.FatalElectrocutedParticleStatus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [447] BaseStatusEffect.FatigueStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [448] BaseStatusEffect.FinisherActiveStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [449] BaseStatusEffect.Finisher_Healing_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [450] BaseStatusEffect.FirstAidWhiff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [451] BaseStatusEffect.FirstAidWhiffV0
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [452] BaseStatusEffect.FirstAidWhiffV1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [453] BaseStatusEffect.FirstAidWhiffV2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [454] BaseStatusEffect.FirstAidWhiffVEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [455] BaseStatusEffect.FirstAidWhiffVUncommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [456] BaseStatusEffect.FlatheadControl
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [457] BaseStatusEffect.FocusedCoolPerkSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [458] BaseStatusEffect.FocusedDelayedStaminaConsumptionSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [459] BaseStatusEffect.FollowerDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [460] BaseStatusEffect.FollowerDefeatedEasy
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [461] BaseStatusEffect.FollowerDefeatedHard
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [462] BaseStatusEffect.FollowerDefeatedStory
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [463] BaseStatusEffect.FollowerDefeatedVeryHard
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [464] BaseStatusEffect.FollowerDontLeaveStealth
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [465] BaseStatusEffect.FollowerVisibilityTargeting
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [466] BaseStatusEffect.ForceAllowAnyDirectionDodge
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [467] BaseStatusEffect.ForceAllowTechWeaponDodge
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [468] BaseStatusEffect.ForceCritOnNextThrowSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [469] BaseStatusEffect.ForceDive
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [470] BaseStatusEffect.ForceKill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [471] BaseStatusEffect.ForceKillFromRagdoll
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [472] BaseStatusEffect.ForceShoot
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [473] BaseStatusEffect.ForceStagger
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [474] BaseStatusEffect.ForceSwim
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [475] BaseStatusEffect.ForceVisibility
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [476] BaseStatusEffect.ForcedQHUploadAwarenessBumps
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [477] BaseStatusEffect.Gag
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [478] BaseStatusEffect.GagOpportunity
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [479] BaseStatusEffect.GenericTalkDisabled
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [480] BaseStatusEffect.GlowingTattoos
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [481] BaseStatusEffect.GorillaArmsOnePunchNPCMark
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [482] BaseStatusEffect.GorillaArmsSpyBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [483] BaseStatusEffect.Grad_Buck_Demolition_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [484] BaseStatusEffect.Grappled
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [485] BaseStatusEffect.GreaterReducedVisibility
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [486] BaseStatusEffect.GreaterSpreadFear
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [487] BaseStatusEffect.GreaterSuppressNoise
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [488] BaseStatusEffect.GrenadeCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [489] BaseStatusEffect.GroundSlamCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [490] BaseStatusEffect.GunRange
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [491] BaseStatusEffect.GunslingerArea04Perk3Cooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [492] BaseStatusEffect.GunslingerProficiencyTutorial
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [493] BaseStatusEffect.Gunslinger_Area_04_Perk_3_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [494] BaseStatusEffect.Gunslinger_Area_08_Perk_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [495] BaseStatusEffect.Gunslinger_Area_10_Perk_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [496] BaseStatusEffect.Gunslinger_Trait_01_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [497] BaseStatusEffect.HGMod1_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [498] BaseStatusEffect.HGMod2_EquipBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [499] BaseStatusEffect.HackingTutorialStage01PingUsed
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [500] BaseStatusEffect.HauntedBlackwallAfterKill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [501] BaseStatusEffect.HauntedBlackwallForceKill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [502] BaseStatusEffect.HauntedGunBlackWallForceKill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [503] BaseStatusEffect.HauntedGunBlackwallUpload
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [504] BaseStatusEffect.HauntedQuickHackBlackwallUpload
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [505] BaseStatusEffect.Haunted_Deck_Equipped
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [506] BaseStatusEffect.Haunted_Weapon_Kill_Human
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [507] BaseStatusEffect.Haunted_Weapon_Kill_Mechanical
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [508] BaseStatusEffect.Headsman_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [509] BaseStatusEffect.HealFood3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [510] BaseStatusEffect.HealingItemMinusFood
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [511] BaseStatusEffect.HealingItemPlusFood
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [512] BaseStatusEffect.HealthBooster
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [513] BaseStatusEffect.HealthMonitor
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [514] BaseStatusEffect.HealthMonitorCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [515] BaseStatusEffect.HealthRegeneration
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [516] BaseStatusEffect.Health_Regen
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [517] BaseStatusEffect.HearingImpaired
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [518] BaseStatusEffect.HeartAttack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [519] BaseStatusEffect.HeatUsingBoosterDummyEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [520] BaseStatusEffect.HeavyPoision
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [521] BaseStatusEffect.HeavyStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [522] BaseStatusEffect.Hercules_Poison
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [523] BaseStatusEffect.HighPitchNoiseCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [524] BaseStatusEffect.HitReactionKnockdown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [525] BaseStatusEffect.HitReactionStagger
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [526] BaseStatusEffect.HitReactionTBHCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [527] BaseStatusEffect.Hitman_Combat_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [528] BaseStatusEffect.HoverJumpCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [529] BaseStatusEffect.HoverJumpPlayerBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [530] BaseStatusEffect.HumanShield
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [531] BaseStatusEffect.ICECounterHackCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [532] BaseStatusEffect.IconicCyberwareCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [533] BaseStatusEffect.IconicDetectorRushPlayerBuffEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [534] BaseStatusEffect.IconicDetectorRushPlayerBuffEpicPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [535] BaseStatusEffect.IconicDetectorRushPlayerBuffLegendary
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [536] BaseStatusEffect.IconicDetectorRushPlayerBuffLegendaryPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [537] BaseStatusEffect.IconicDetectorRushPlayerBuffLegendaryPlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [538] BaseStatusEffect.IconicDetectorRushPlayerBuffRare
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [539] BaseStatusEffect.IconicDetectorRushPlayerBuffRarePlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [540] BaseStatusEffect.IconicPunkKnifeRemoveCooldownsSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [541] BaseStatusEffect.IconicPunkKnifeTag
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [542] BaseStatusEffect.IgnoreWeaponSafe
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [543] BaseStatusEffect.ImpactedThrownNPC
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [544] BaseStatusEffect.IncreaseDamageOfNextMeleeAttackWithThrownWeaponSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [545] BaseStatusEffect.IncreaseSmartTargetingDisruptionProbability
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [546] BaseStatusEffect.InhalerBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [547] BaseStatusEffect.InjectorBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [548] BaseStatusEffect.Intelligence_60_Ping
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [549] BaseStatusEffect.Intelligence_60_Ping_Aura
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [550] BaseStatusEffect.Intelligence_Central_Milestone_3_Overclock_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [551] BaseStatusEffect.Intelligence_Central_Perk_3_3_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [552] BaseStatusEffect.Intelligence_Inbetween_Left_2_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [553] BaseStatusEffect.Intelligence_Inbetween_Left_2_lvl2_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [554] BaseStatusEffect.Intelligence_Master_Perk_2_Queue_Lock
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [555] BaseStatusEffect.Intelligence_Master_Perk_4_Overclock_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [556] BaseStatusEffect.Intelligence_Master_Perk_4_Overclock_Target_Weakspot
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [557] BaseStatusEffect.Intelligence_Right_Perk_3_2_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [558] BaseStatusEffect.InterruptableWithKnives
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [559] BaseStatusEffect.InvisibleKillMovementSpeedBonusSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [560] BaseStatusEffect.Invulnerable
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [561] BaseStatusEffect.InvulnerableAfterDefeated
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [562] BaseStatusEffect.InvulnerableShort
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [563] BaseStatusEffect.JamCommuniations
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [564] BaseStatusEffect.JenkinsCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [565] BaseStatusEffect.JenkinsPlayerBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [566] BaseStatusEffect.JohnnySicknessAbstract
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [567] BaseStatusEffect.JohnnySicknessHeavy
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [568] BaseStatusEffect.JohnnySicknessLow
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [569] BaseStatusEffect.JohnnySicknessMedium
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [570] BaseStatusEffect.JohnnySicknessMediumQuest
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [571] BaseStatusEffect.JuggernautBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [572] BaseStatusEffect.JugglerCriticalDamageBonusSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [573] BaseStatusEffect.JugglerPerkRemoveKnifeCooldownsSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [574] BaseStatusEffect.JustDestroyedWeakspot
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [575] BaseStatusEffect.JustDodgedBuffer
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [576] BaseStatusEffect.JustLootedAmazonIconicFromAirdrop
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [577] BaseStatusEffect.JustLootedIconicCWFromAirdrop
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [578] BaseStatusEffect.JustLootedIconicCWFromTreasureChest
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [579] BaseStatusEffect.JustPurchasedBodySkillBookAtShankVendor
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [580] BaseStatusEffect.JustPurchasedCoolSkillBookAtShankVendor
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [581] BaseStatusEffect.JustPurchasedIntSkillBookAtShankVendor
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [582] BaseStatusEffect.JustPurchasedNueJackieAtBM
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [583] BaseStatusEffect.JustPurchasedRefSkillBookAtShankVendor
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [584] BaseStatusEffect.JustPurchasedSkillBookAtShankVendorBase
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [585] BaseStatusEffect.JustPurchasedTechSkillBookAtShankVendor
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [586] BaseStatusEffect.Kappa_George_Motionless_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [587] BaseStatusEffect.Kappa_George_Swap_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [588] BaseStatusEffect.Katana_Saburo_Bleeding
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [589] BaseStatusEffect.KenjutsuBleeding
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [590] BaseStatusEffect.Kenjutsu_Area_02_Perk_4_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [591] BaseStatusEffect.Kenjutsu_Area_02_Perk_4_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [592] BaseStatusEffect.Kenjutsu_Area_02_Perk_4_Buff_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [593] BaseStatusEffect.Kenjutsu_Area_03_Perk_2_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [594] BaseStatusEffect.Kenjutsu_Area_03_Perk_2_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [595] BaseStatusEffect.Kenjutsu_Area_03_Perk_2_Buff_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [596] BaseStatusEffect.Kenjutsu_Area_03_Perk_3_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [597] BaseStatusEffect.Kenjutsu_Area_03_Perk_3_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [598] BaseStatusEffect.Kenjutsu_Area_03_Perk_3_Buff_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [599] BaseStatusEffect.Kenjutsu_Area_03_Perk_4_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [600] BaseStatusEffect.Kenjutsu_Area_03_Perk_4_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [601] BaseStatusEffect.Kenjutsu_Area_03_Perk_4_Buff_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [602] BaseStatusEffect.Kenjutsu_Area_04_Perk_3_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [603] BaseStatusEffect.Kenjutsu_Area_04_Perk_4_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [604] BaseStatusEffect.Kenjutsu_Area_04_Perk_4_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [605] BaseStatusEffect.Kenjutsu_Area_04_Perk_4_Buff_Level_3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [606] BaseStatusEffect.Kenjutsu_Area_05_Perk_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [607] BaseStatusEffect.Kenjutsu_Area_05_Perk_1_Buff_Level_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [608] BaseStatusEffect.Kenjutsu_Area_06_Perk_2_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [609] BaseStatusEffect.Kenjutsu_Area_06_Perk_3_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [610] BaseStatusEffect.KenshinWeaponChargedBurst_Effect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [611] BaseStatusEffect.KenshinWeaponChargedBurst_Trigger
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [612] BaseStatusEffect.KerenzikovBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [613] BaseStatusEffect.KerenzikovCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [614] BaseStatusEffect.KerenzikovPlayerBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [615] BaseStatusEffect.KerenzikovsBoostSystemBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [616] BaseStatusEffect.Kerry_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [617] BaseStatusEffect.KiroshiCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [618] BaseStatusEffect.KiroshiHighlightsBase
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [619] BaseStatusEffect.KnifeNeurotoxin
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [620] BaseStatusEffect.KnifePoison
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [621] BaseStatusEffect.KnifeSharpenerBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [622] BaseStatusEffect.KnifeWeaponStealthBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [623] BaseStatusEffect.Knockdown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [624] BaseStatusEffect.KnockdownInfinite
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [625] BaseStatusEffect.KurtKnifeRemoveCooldownsSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [626] BaseStatusEffect.KurtKnifeStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [627] BaseStatusEffect.KurtMeleeTakedownCooldownSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [628] BaseStatusEffect.KurtSuicideWithGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [629] BaseStatusEffect.KurtTakedownKnifeStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [630] BaseStatusEffect.KurtTakedownKnockdown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [631] BaseStatusEffect.KurtTakedown_01_Effect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [632] BaseStatusEffect.KurtTakedown_02_Effect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [633] BaseStatusEffect.Kurtz_Knife_Crippled
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [634] BaseStatusEffect.Kurtz_Knife_CrippledLegLeft
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [635] BaseStatusEffect.Kurtz_Knife_CrippledLegRight
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [636] BaseStatusEffect.Kurtz_Metel_DismemberedLegLeft
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [637] BaseStatusEffect.Kurtz_Metel_DismemberedLegRight
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [638] BaseStatusEffect.KyubiMyersTag
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [639] BaseStatusEffect.LeapWithMantisBladesCheck
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [640] BaseStatusEffect.LegendaryBioGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [641] BaseStatusEffect.LegendaryBurnGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [642] BaseStatusEffect.LegendaryEffectBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [643] BaseStatusEffect.LegendaryEmpGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [644] BaseStatusEffect.LegendaryFlashGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [645] BaseStatusEffect.LegendaryFragGrenadeExplosion
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [646] BaseStatusEffect.LegendaryPlusBioGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [647] BaseStatusEffect.LegendaryPlusBurnGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [648] BaseStatusEffect.LegendaryPlusFlashGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [649] BaseStatusEffect.Liberty_Padre_Burning
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [650] BaseStatusEffect.Liberty_Padre_BurningChanceBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [651] BaseStatusEffect.LightBurning_Tech_55
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [652] BaseStatusEffect.LightPoision
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [653] BaseStatusEffect.LimfaticNanoChargeSystemBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [654] BaseStatusEffect.LocomotionExpHarvested
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [655] BaseStatusEffect.LocomotionMalfunction
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [656] BaseStatusEffect.LocomotionMalfunctionKappa
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [657] BaseStatusEffect.LocomotionMalfunctionLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [658] BaseStatusEffect.LocomotionMalfunctionLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [659] BaseStatusEffect.LocomotionMalfunctionLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [660] BaseStatusEffect.LongEmpCyberwareTurnedOff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [661] BaseStatusEffect.LongLastingPoisonDebuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [662] BaseStatusEffect.LongerLastingPoisonDebuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [663] BaseStatusEffect.LoreAnim
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [664] BaseStatusEffect.LoreVictimSaved
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [665] BaseStatusEffect.LoseControlPerkCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [666] BaseStatusEffect.LowAccuracy
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [667] BaseStatusEffect.Madness
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [668] BaseStatusEffect.MadnessCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [669] BaseStatusEffect.MagnetDeviceHit
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [670] BaseStatusEffect.MagnetDevice_NPC
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [671] BaseStatusEffect.MainBossSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [672] BaseStatusEffect.MajorBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [673] BaseStatusEffect.MajorQuickHackBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [674] BaseStatusEffect.MajorVulnerable
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [675] BaseStatusEffect.MandessLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [676] BaseStatusEffect.MandessLevel4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [677] BaseStatusEffect.MantisBladesGrandFinaleBleeding
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [678] BaseStatusEffect.MantisBladesGrandFinaleNPCMark
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [679] BaseStatusEffect.MantisBladesInstantDismembermentSpyBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [680] BaseStatusEffect.MantisBladesInvulnerableLeapRelicBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [681] BaseStatusEffect.MantisBladesRelicDismemberment
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [682] BaseStatusEffect.MantisBladesSpecialAttackSpyBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [683] BaseStatusEffect.MaxTacAlone
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [684] BaseStatusEffect.MaxtacCloaked
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [685] BaseStatusEffect.MaxtacFightStartHelperStatus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [686] BaseStatusEffect.MediumBurning
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [687] BaseStatusEffect.MeleeDamageFood
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [688] BaseStatusEffect.MeleeMod1_InAirBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [689] BaseStatusEffect.MeleeMod1_SpamStopper
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [690] BaseStatusEffect.MeleeMod1_SpamZone
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [691] BaseStatusEffect.MeleeMod2_AttackSpeedBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [692] BaseStatusEffect.MeleeMod2_InfiniteCombo
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [693] BaseStatusEffect.MeleeMod2_JustFinishedSprint
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [694] BaseStatusEffect.MeleeMod2_Listener
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [695] BaseStatusEffect.MeleeMod3_CritBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [696] BaseStatusEffect.MeleeMod3_Listener
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [697] BaseStatusEffect.MeleePerkStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [698] BaseStatusEffect.MemoryBooster
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [699] BaseStatusEffect.MemoryWipe
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [700] BaseStatusEffect.MemoryWipeCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [701] BaseStatusEffect.MemoryWipeExitCombat
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [702] BaseStatusEffect.MemoryWipeImmunity
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [703] BaseStatusEffect.MemoryWipeLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [704] BaseStatusEffect.MemoryWipeLevel2Police
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [705] BaseStatusEffect.MemoryWipeLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [706] BaseStatusEffect.MemoryWipeLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [707] BaseStatusEffect.MemoryWipeOnDodge
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [708] BaseStatusEffect.MemoryWipeOnOpticalCamoActivated
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [709] BaseStatusEffect.MemoryWipeSquad
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [710] BaseStatusEffect.MetelKurtMod_Dismembers
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [711] BaseStatusEffect.MetelKurtMod_Head
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [712] BaseStatusEffect.MetelKurtMod_LeftArm
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [713] BaseStatusEffect.MetelKurtMod_LeftLeg
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [714] BaseStatusEffect.MetelKurtMod_RightArm
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [715] BaseStatusEffect.MetelKurtMod_RightLeg
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [716] BaseStatusEffect.MinorBleeding
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [717] BaseStatusEffect.MinorBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [718] BaseStatusEffect.ModerateBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [719] BaseStatusEffect.MonoWireQuickhackApliedBySpread
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [720] BaseStatusEffect.MonoWireQuickhackContagiousHittableTarget
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [721] BaseStatusEffect.MonowireGrapple
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [722] BaseStatusEffect.Moron_Slaughter_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [723] BaseStatusEffect.Moron_Slow_Down
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [724] BaseStatusEffect.Moron_Slow_Down2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [725] BaseStatusEffect.Moron_Speed_Up
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [726] BaseStatusEffect.Mox_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [727] BaseStatusEffect.MuteAudioStims
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [728] BaseStatusEffect.MyersNoCarCombat
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [729] BaseStatusEffect.MyersNoTeleport
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [730] BaseStatusEffect.NPCBaseMeleeDebuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [731] BaseStatusEffect.NPCForceEquipPrimaryWeapon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [732] BaseStatusEffect.NPCForceEquipSecondaryWeapon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [733] BaseStatusEffect.NPCForceStagger
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [734] BaseStatusEffect.NanoTechPlatesBlockIndication
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [735] BaseStatusEffect.NanoTechPlatesMainEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [736] BaseStatusEffect.NanoTechPlatesUnavailableStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [737] BaseStatusEffect.NetrunnerRAMFood
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [738] BaseStatusEffect.NetrunnerRAMRegenFood
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [739] BaseStatusEffect.NetwatcherGeneral
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [740] BaseStatusEffect.NeurotoxinDelayedStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [741] BaseStatusEffect.NeurotoxinHeadshotDelayedStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [742] BaseStatusEffect.NewMicrogeneratorBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [743] BaseStatusEffect.NewMicrogeneratorBuffLinger
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [744] BaseStatusEffect.NewPerkFinisherStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [745] BaseStatusEffect.NicolasStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [746] BaseStatusEffect.NoCooldownedSandevistanGlitch
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [747] BaseStatusEffect.NoCover
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [748] BaseStatusEffect.NoCyberware
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [749] BaseStatusEffect.NoPainNoGainBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [750] BaseStatusEffect.NoSandevistanGlitch
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [751] BaseStatusEffect.NoShoot
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [752] BaseStatusEffect.NonInteractable
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [753] BaseStatusEffect.NpcMeleeAttackBleeding
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [754] BaseStatusEffect.NpcMeleeAttackStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [755] BaseStatusEffect.NpcSMasherMeleeAttackStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [756] BaseStatusEffect.OdaSuicideWithGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [757] BaseStatusEffect.OnAdvancedBerserkEndedStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [758] BaseStatusEffect.OpticalCamoCoolPerkShort
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [759] BaseStatusEffect.OpticalCamoCooldownNotification
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [760] BaseStatusEffect.OpticalCamoPerkRestriction
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [761] BaseStatusEffect.OpticalCamoPlayerBuffBase
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [762] BaseStatusEffect.OpticalCamoPlayerBuffBaseEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [763] BaseStatusEffect.OpticalCamoPlayerBuffBaseLegendary
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [764] BaseStatusEffect.OpticalCamoPlayerBuffBaseRare
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [765] BaseStatusEffect.OpticalCamoPlayerBuffBaseUncommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [766] BaseStatusEffect.OpticalCamoPlayerBuffBase_HighTier
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [767] BaseStatusEffect.OpticalCamoPlayerBuffBase_LowTier
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [768] BaseStatusEffect.OpticalCamoPlayerBuffCommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [769] BaseStatusEffect.OpticalCamoPlayerBuffEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [770] BaseStatusEffect.OpticalCamoPlayerBuffLegendary
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [771] BaseStatusEffect.OpticalCamoPlayerBuffRare
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [772] BaseStatusEffect.OpticalCamoPlayerBuffUncommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [773] BaseStatusEffect.OpticalCamo_Cool_40
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [774] BaseStatusEffect.OpticalCamo_Cool_40_Cooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [775] BaseStatusEffect.Osprey_Headshot_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [776] BaseStatusEffect.Osprey_Multikill_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [777] BaseStatusEffect.OutOfOxygen
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [778] BaseStatusEffect.Overheat
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [779] BaseStatusEffect.OverheatCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [780] BaseStatusEffect.OverheatGrisGris
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [781] BaseStatusEffect.OverheatLevel1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [782] BaseStatusEffect.OverheatLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [783] BaseStatusEffect.OverheatLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [784] BaseStatusEffect.OverheatLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [785] BaseStatusEffect.OverheatLevel4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [786] BaseStatusEffect.Overload
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [787] BaseStatusEffect.OverloadCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [788] BaseStatusEffect.OverloadEMP
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [789] BaseStatusEffect.OverloadGrisGris
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [790] BaseStatusEffect.OverloadLevel1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [791] BaseStatusEffect.OverloadLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [792] BaseStatusEffect.OverloadLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [793] BaseStatusEffect.OverloadLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [794] BaseStatusEffect.OverloadLevel4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [795] BaseStatusEffect.OverloadShort
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [796] BaseStatusEffect.OxyBooster
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [797] BaseStatusEffect.PRSRMod2_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [798] BaseStatusEffect.PRSRMod2_DoubleKill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [799] BaseStatusEffect.PRSRMod2_FactToggler
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [800] BaseStatusEffect.PRSRMod2_Kill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [801] BaseStatusEffect.PRSRMod2_PentaKill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [802] BaseStatusEffect.PRSRMod2_QuadraKill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [803] BaseStatusEffect.PRSRMod2_TrippleKill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [804] BaseStatusEffect.Pain
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [805] BaseStatusEffect.PainDistributorBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [806] BaseStatusEffect.PainInhibitors
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [807] BaseStatusEffect.PanamRestoreDefaultHealth
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [808] BaseStatusEffect.Parry
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [809] BaseStatusEffect.ParryExpHarvested
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [810] BaseStatusEffect.PersonalSoundSilencerPlayerBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [811] BaseStatusEffect.PhoneInterrupted
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [812] BaseStatusEffect.PhotoModeForceFPPCamera
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [813] BaseStatusEffect.PhysicalResistanceFromPhysicalDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [814] BaseStatusEffect.Ping
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [815] BaseStatusEffect.PingLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [816] BaseStatusEffect.PingLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [817] BaseStatusEffect.PingLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [818] BaseStatusEffect.PingLevel4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [819] BaseStatusEffect.PingLvl2MarkStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [820] BaseStatusEffect.PingLvl4MarkStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [821] BaseStatusEffect.PingLvl4PlusPlusMarkStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [822] BaseStatusEffect.PingMarkStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [823] BaseStatusEffect.PlatingGlitchBuffCommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [824] BaseStatusEffect.PlatingGlitchBuffEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [825] BaseStatusEffect.PlatingGlitchBuffLegendary
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [826] BaseStatusEffect.PlatingGlitchBuffRare
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [827] BaseStatusEffect.PlatingGlitchBuffUncommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [828] BaseStatusEffect.PlayerAiming
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [829] BaseStatusEffect.PlayerBleeding
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [830] BaseStatusEffect.PlayerBurning
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [831] BaseStatusEffect.PlayerCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [832] BaseStatusEffect.PlayerCyberwareCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [833] BaseStatusEffect.PlayerElectrocuted
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [834] BaseStatusEffect.PlayerExhausted
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [835] BaseStatusEffect.PlayerInFinisherWorkspot
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [836] BaseStatusEffect.PlayerInvulnerable
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [837] BaseStatusEffect.PlayerJustAirDashed
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [838] BaseStatusEffect.PlayerJustDashed
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [839] BaseStatusEffect.PlayerJustDodged
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [840] BaseStatusEffect.PlayerJustDodgedLocomotionBuffer
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [841] BaseStatusEffect.PlayerJustEnteredCombat
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [842] BaseStatusEffect.PlayerJustVaultedLocomotionBuffer
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [843] BaseStatusEffect.PlayerMadDashLocomotionBuffer
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [844] BaseStatusEffect.PlayerMemoryReplenishmentCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [845] BaseStatusEffect.PlayerMemoryReplenishmentIconicEpicCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [846] BaseStatusEffect.PlayerMemoryReplenishmentIconicEpicPlusCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [847] BaseStatusEffect.PlayerMemoryReplenishmentIconicLegendaryCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [848] BaseStatusEffect.PlayerMemoryReplenishmentIconicLegendaryPlusCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [849] BaseStatusEffect.PlayerMemoryReplenishmentIconicLegendaryPlusPlusCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [850] BaseStatusEffect.PlayerMovementLocked
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [851] BaseStatusEffect.PlayerPoisonSlow
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [852] BaseStatusEffect.PlayerPoisoned
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [853] BaseStatusEffect.PlayerRippingOffTurretWorkspotInv
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [854] BaseStatusEffect.PocketRadioRestrictionUnlockDelay
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [855] BaseStatusEffect.PoiseRegenStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [856] BaseStatusEffect.Poisoned
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [857] BaseStatusEffect.PostManiacStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [858] BaseStatusEffect.PowerOfThePackSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [859] BaseStatusEffect.Prejudice_Free_Ammo_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [860] BaseStatusEffect.Prejudice_Pass
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [861] BaseStatusEffect.PreventQHStaggerAnimation
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [862] BaseStatusEffect.Pride_Free_Ammo_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [863] BaseStatusEffect.Pride_Pass
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [864] BaseStatusEffect.ProjectileLauncherCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [865] BaseStatusEffect.ProjectileLauncherCooldownNotification
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [866] BaseStatusEffect.QuickHackBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [867] BaseStatusEffect.QuickHackBlindLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [868] BaseStatusEffect.QuickHackBlindLevel3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [869] BaseStatusEffect.QuickHackBlindLevel4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [870] BaseStatusEffect.QuickHackBlindLvl1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [871] BaseStatusEffect.QuickHackCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [872] BaseStatusEffect.QuickHackTutorialReset
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [873] BaseStatusEffect.QuickHackUploaded
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [874] BaseStatusEffect.QuickMeleeBodyPerkStunCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [875] BaseStatusEffect.QuickMeleeStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [876] BaseStatusEffect.QuickhackExpHarvested
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [877] BaseStatusEffect.RapidMuscleNurishBuffCommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [878] BaseStatusEffect.RapidMuscleNurishBuffEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [879] BaseStatusEffect.RapidMuscleNurishBuffLegendary
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [880] BaseStatusEffect.RapidMuscleNurishBuffRare
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [881] BaseStatusEffect.RapidMuscleNurishBuffUncommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [882] BaseStatusEffect.RareBioGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [883] BaseStatusEffect.RareBurnGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [884] BaseStatusEffect.RareEmpGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [885] BaseStatusEffect.RareFlashGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [886] BaseStatusEffect.RareFragGrenadeExplosion
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [887] BaseStatusEffect.RareLastingEffectBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [888] BaseStatusEffect.RarePlusBioGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [889] BaseStatusEffect.RarePlusBurnGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [890] BaseStatusEffect.RarePlusFlashGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [891] BaseStatusEffect.Rasetsu_Chain_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [892] BaseStatusEffect.Rasetsu_Chain_2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [893] BaseStatusEffect.RebootOpticsBossCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [894] BaseStatusEffect.RebootOpticsCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [895] BaseStatusEffect.ReconGrenadeAttack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [896] BaseStatusEffect.ReconGrenadeAttackEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [897] BaseStatusEffect.ReconGrenadeAttackEpicPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [898] BaseStatusEffect.ReconGrenadeAttackLegendary
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [899] BaseStatusEffect.ReconGrenadeAttackLegendaryPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [900] BaseStatusEffect.ReconGrenadeAttackRare
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [901] BaseStatusEffect.ReconGrenadeAttackRarePlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [902] BaseStatusEffect.ReconGrenadeAttackUncommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [903] BaseStatusEffect.ReconGrenadeAttackUncommonPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [904] BaseStatusEffect.ReduceDamageTransition
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [905] BaseStatusEffect.ReduceStaminaCostOfFocused
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [906] BaseStatusEffect.ReduceUltimateHackCost
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [907] BaseStatusEffect.ReduceUltimateSuicideWithGrenadeCost
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [908] BaseStatusEffect.ReduceUltimateSuicideWithGrenadeCostPlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [909] BaseStatusEffect.ReducedDetection
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [910] BaseStatusEffect.ReducedVisibility
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [911] BaseStatusEffect.ReflexRecorderCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [912] BaseStatusEffect.ReflexRecorderCooldownNotification
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [913] BaseStatusEffect.ReflexRecorderIconicPlayerBuffEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [914] BaseStatusEffect.ReflexRecorderIconicPlayerBuffEpicPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [915] BaseStatusEffect.ReflexRecorderIconicPlayerBuffLegendary
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [916] BaseStatusEffect.ReflexRecorderIconicPlayerBuffLegendaryPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [917] BaseStatusEffect.ReflexRecorderIconicPlayerBuffRare
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [918] BaseStatusEffect.ReflexRecorderIconicPlayerBuffRarePlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [919] BaseStatusEffect.ReflexRecorderListener
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [920] BaseStatusEffect.ReflexRecorderPlayerBuffBase
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [921] BaseStatusEffect.ReflexRecorderPlayerBuffCommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [922] BaseStatusEffect.ReflexRecorderPlayerBuffCommonPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [923] BaseStatusEffect.ReflexRecorderPlayerBuffEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [924] BaseStatusEffect.ReflexRecorderPlayerBuffEpicPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [925] BaseStatusEffect.ReflexRecorderPlayerBuffLegendary
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [926] BaseStatusEffect.ReflexRecorderPlayerBuffLegendaryPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [927] BaseStatusEffect.ReflexRecorderPlayerBuffRare
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [928] BaseStatusEffect.ReflexRecorderPlayerBuffRarePlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [929] BaseStatusEffect.ReflexRecorderPlayerBuffUncommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [930] BaseStatusEffect.ReflexRecorderPlayerBuffUncommonPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [931] BaseStatusEffect.Reflexes_20_Accuracy_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [932] BaseStatusEffect.Reflexes_Left_Perk_2_2_Swap_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [933] BaseStatusEffect.Reflexes_Master_Perk_5_Bleeding
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [934] BaseStatusEffect.Reflexes_Master_Perk_5_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [935] BaseStatusEffect.Reflexes_Right_Perk_3_1_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [936] BaseStatusEffect.Reflexes_Sharpshooter_AP_Stack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [937] BaseStatusEffect.Reflexes_Sharpshooter_Crit_Stack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [938] BaseStatusEffect.Reflexes_Sharpshooter_Stamina_Stack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [939] BaseStatusEffect.RelaxedCoolPerkSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [940] BaseStatusEffect.RemoteBreachCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [941] BaseStatusEffect.ResistanceFromDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [942] BaseStatusEffect.RevealInterrupted
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [943] BaseStatusEffect.ReversePoisonNewPerkRegeneration
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [944] BaseStatusEffect.RoyceForceStagger
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [945] BaseStatusEffect.SE_Q302_ChimeraProvoke
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [946] BaseStatusEffect.SE_Q302_ChimeraTerrorize
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [947] BaseStatusEffect.SE_Q305_ForceTerror
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [948] BaseStatusEffect.Saburo_Healing
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [949] BaseStatusEffect.Saburo_Hemorrhage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [950] BaseStatusEffect.Sandevistan
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [951] BaseStatusEffect.SandevistanBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [952] BaseStatusEffect.SandevistanBuffHumanoidRanged
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [953] BaseStatusEffect.SandevistanCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [954] BaseStatusEffect.SandevistanPlayerBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [955] BaseStatusEffect.SandevistanVersusSandevistanDelayBase
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [956] BaseStatusEffect.SandevistanVersusSandevistanDelayEasy
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [957] BaseStatusEffect.SandevistanVersusSandevistanDelayHard
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [958] BaseStatusEffect.SandevistanVersusSandevistanDelayHelper
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [959] BaseStatusEffect.SandevistanVersusSandevistanDelayNormal
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [960] BaseStatusEffect.SandevistanVersusSandevistanDelayVeryHard
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [961] BaseStatusEffect.Sandstorm
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [962] BaseStatusEffect.SandstormAbstract
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [963] BaseStatusEffect.SasquatchGrabAttackEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [964] BaseStatusEffect.SasquatchSuicideWithGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [965] BaseStatusEffect.Sated
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [966] BaseStatusEffect.SecondChancePerkCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [967] BaseStatusEffect.SecondChancePerkTDBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [968] BaseStatusEffect.SecondChancePerkTimeDilation
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [969] BaseStatusEffect.SecondHeart
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [970] BaseStatusEffect.SecondHeartCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [971] BaseStatusEffect.SecondaryKnockdown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [972] BaseStatusEffect.SecurityTurretTurnedOff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [973] BaseStatusEffect.SeeThroughWalls
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [974] BaseStatusEffect.SetFriendly
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [975] BaseStatusEffect.SeverelyHearingImpaired
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [976] BaseStatusEffect.ShortBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [977] BaseStatusEffect.ShotgunMod1_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [978] BaseStatusEffect.ShotgunMod2_LeftLeg
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [979] BaseStatusEffect.ShotgunMod2_RightLeg
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [980] BaseStatusEffect.Sleep
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [981] BaseStatusEffect.SmartStorageCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [982] BaseStatusEffect.SmartStorageRevengeTarget
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [983] BaseStatusEffect.SmasherICE_Damage_Base
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [984] BaseStatusEffect.SmasherICE_Damage_Easy
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [985] BaseStatusEffect.SmasherICE_Damage_Hard
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [986] BaseStatusEffect.SmasherICE_Damage_Story
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [987] BaseStatusEffect.SmasherICE_Damage_VeryHard
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [988] BaseStatusEffect.SmasherICE_DisableCyberdeck
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [989] BaseStatusEffect.SmasherStatusCleanse
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [990] BaseStatusEffect.SmokeBomb
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [991] BaseStatusEffect.SmokeScreen
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [992] BaseStatusEffect.SoMi_Q306_BlackwallHackQuestForceKill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [993] BaseStatusEffect.SoMi_Q306_BlackwallHackUpload
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [994] BaseStatusEffect.SoMi_Q306_BlackwallMark
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [995] BaseStatusEffect.SoftKill
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [996] BaseStatusEffect.Sovereign_Reload_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [997] BaseStatusEffect.Sovereign_Speed_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [998] BaseStatusEffect.SpreadFear
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [999] BaseStatusEffect.StaminaBooster
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1000] BaseStatusEffect.StaminaRatioCalculator
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1001] BaseStatusEffect.StaminaResetTutorial
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1002] BaseStatusEffect.Stat_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1003] BaseStatusEffect.Stat_Debuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1004] BaseStatusEffect.StealthArea09Perk2Cooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1005] BaseStatusEffect.StealthEnteringCritUpgrade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1006] BaseStatusEffect.StealthEnteringCritUpgradeLevel2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1007] BaseStatusEffect.StealthFood
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1008] BaseStatusEffect.StealthKillMovementSpeedStackSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1009] BaseStatusEffect.StealthPerkAntidoteSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1010] BaseStatusEffect.StealthThrowingMeleeDamageIncrease
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1011] BaseStatusEffect.Stealth_Area_03_Perk_3_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1012] BaseStatusEffect.Stealth_Area_08_Perk_2_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1013] BaseStatusEffect.Stealth_Area_09_Perk_2_Buff_Level_1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1014] BaseStatusEffect.StrongArmsActive
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1015] BaseStatusEffect.StrongArmsChemicalActive
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1016] BaseStatusEffect.StrongArmsElecricActive
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1017] BaseStatusEffect.StrongArmsPhysicalActive
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1018] BaseStatusEffect.StrongArmsThermalActive
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1019] BaseStatusEffect.StrongLongLastingPoisonDebuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1020] BaseStatusEffect.Strong_Arms_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1021] BaseStatusEffect.StrongerLongLastingPoisonDebuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1022] BaseStatusEffect.Stun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1023] BaseStatusEffect.StunImmunity
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1024] BaseStatusEffect.StunReed
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1025] BaseStatusEffect.SuccessfullICEBreakerTutorial
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1026] BaseStatusEffect.SuddenAidBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1027] BaseStatusEffect.SuddenAidBuff_inline7
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1028] BaseStatusEffect.SuddenAidCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1029] BaseStatusEffect.SuicideCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1030] BaseStatusEffect.SuicideHackMemoryCostReduction
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1031] BaseStatusEffect.SuicideWithGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1032] BaseStatusEffect.SuicideWithGrenadeDummy
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1033] BaseStatusEffect.SuicideWithWeapon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1034] BaseStatusEffect.SuppressNoise
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1035] BaseStatusEffect.SuppressVisibility
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1036] BaseStatusEffect.SupressPresence
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1037] BaseStatusEffect.SwordWitcherCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1038] BaseStatusEffect.SwordWitcherTDBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1039] BaseStatusEffect.SynapticAcceleratorCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1040] BaseStatusEffect.SynapticAcceleratorCooldownNotification
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1041] BaseStatusEffect.SynapticAcceleratorPlayerBuffCommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1042] BaseStatusEffect.SynapticAcceleratorPlayerBuffEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1043] BaseStatusEffect.SynapticAcceleratorPlayerBuffEpicPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1044] BaseStatusEffect.SynapticAcceleratorPlayerBuffLegendary
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1045] BaseStatusEffect.SynapticAcceleratorPlayerBuffLegendaryPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1046] BaseStatusEffect.SynapticAcceleratorPlayerBuffLegendaryPlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1047] BaseStatusEffect.SynapticAcceleratorPlayerBuffRare
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1048] BaseStatusEffect.SynapticAcceleratorPlayerBuffRarePlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1049] BaseStatusEffect.SynapticAcceleratorPlayerBuffUncommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1050] BaseStatusEffect.SynapticAcceleratorPlayerBuffUncommonPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1051] BaseStatusEffect.SystemCollapse
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1052] BaseStatusEffect.SystemCollapseCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1053] BaseStatusEffect.SystemCollapseMemoryCostReduction
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1054] BaseStatusEffect.TE2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1055] BaseStatusEffect.TakedownsUnequipWeapons
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1056] BaseStatusEffect.Takemura_Katana_Optical_Camo_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1057] BaseStatusEffect.TalkCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1058] BaseStatusEffect.Tanto_Saburo_Bleeding
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1059] BaseStatusEffect.TargetOfGrenadeDetonationTutorial
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1060] BaseStatusEffect.TargetOfICEBreakerTutorial
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1061] BaseStatusEffect.TechAbility_60_EMP_Blast
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1062] BaseStatusEffect.TechWeaponChargedBurst_Effect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1063] BaseStatusEffect.TechWeaponChargedBurst_Trigger
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1064] BaseStatusEffect.TechWeaponChargedFullAuto_Effect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1065] BaseStatusEffect.Tech_Left_Milestone_3_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1066] BaseStatusEffect.Tech_Master_Perk_2_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1067] BaseStatusEffect.Tech_Master_Perk_2_Explosion
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1068] BaseStatusEffect.Tech_Master_Perk_3_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1069] BaseStatusEffect.Tech_Master_Perk_3_VFX
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1070] BaseStatusEffect.Tech_Master_Perk_5_Buff_Chain_Lightning
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1071] BaseStatusEffect.Tech_Right_Milestone_3_Block
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1072] BaseStatusEffect.Tech_Right_Milestone_3_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1073] BaseStatusEffect.Tech_Right_Perk_3_4_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1074] BaseStatusEffect.TemporarilyBlockMovement
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1075] BaseStatusEffect.TestEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1076] BaseStatusEffect.Testera_Nicolas_SelfBurning
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1077] BaseStatusEffect.Testera_Runner_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1078] BaseStatusEffect.ThermalResistanceFromThermalDamage
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1079] BaseStatusEffect.ThreeOrMoreProgramsCooldownRedPerk
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1080] BaseStatusEffect.ThreeOrMoreProgramsMemoryRegPerk1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1081] BaseStatusEffect.ThreeOrMoreProgramsMemoryRegPerk2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1082] BaseStatusEffect.ThrowMod1_RemoveCooldownsSE
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1083] BaseStatusEffect.ThrowMod3_ThrowPeneration
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1084] BaseStatusEffect.ThrownNPC
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1085] BaseStatusEffect.Ticon_Projectile_Pattern_Change_Ability
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1086] BaseStatusEffect.Ticon_Reeds_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1087] BaseStatusEffect.Ticon_Stealth_Multiplier_Helper
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1088] BaseStatusEffect.TimeDilationStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1089] BaseStatusEffect.TimedImmunity
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1090] BaseStatusEffect.TogglePlayerFlashlight
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1091] BaseStatusEffect.TrainingBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1092] BaseStatusEffect.TranquilizerUnconscious
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1093] BaseStatusEffect.TroubleFinderCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1094] BaseStatusEffect.TroubleFinderPlayerBuffCommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1095] BaseStatusEffect.TroubleFinderPlayerBuffCommonPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1096] BaseStatusEffect.TroubleFinderPlayerBuffEpic
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1097] BaseStatusEffect.TroubleFinderPlayerBuffEpicPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1098] BaseStatusEffect.TroubleFinderPlayerBuffLegendary
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1099] BaseStatusEffect.TroubleFinderPlayerBuffLegendaryPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1100] BaseStatusEffect.TroubleFinderPlayerBuffLegendaryPlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1101] BaseStatusEffect.TroubleFinderPlayerBuffRare
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1102] BaseStatusEffect.TroubleFinderPlayerBuffRarePlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1103] BaseStatusEffect.TroubleFinderPlayerBuffUncommon
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1104] BaseStatusEffect.TroubleFinderPlayerBuffUncommonPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1105] BaseStatusEffect.TyrosineInjectorBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1106] BaseStatusEffect.UltimateQuickHackStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1107] BaseStatusEffect.UncommonBurnGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1108] BaseStatusEffect.UncommonEmpGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1109] BaseStatusEffect.UncommonFlashGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1110] BaseStatusEffect.UncommonFragGrenadeExplosion
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1111] BaseStatusEffect.UncommonLastingEffectBlind
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1112] BaseStatusEffect.UncommonPlusBurnGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1113] BaseStatusEffect.UncommonPlusFlashGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1114] BaseStatusEffect.Unconscious
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1115] BaseStatusEffect.UncontrolledMovement_Base
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1116] BaseStatusEffect.UncontrolledMovement_Default
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1117] BaseStatusEffect.UncontrolledMovement_RagdollOffLedge
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1118] BaseStatusEffect.Uninterested
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1119] BaseStatusEffect.UnstoppableBennett
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1120] BaseStatusEffect.UploadingBossHack
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1121] BaseStatusEffect.UsedHealingItemOrCyberwareStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1122] BaseStatusEffect.UtilityGrenadeRewardHarvested
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1123] BaseStatusEffect.VBAxeCooldownStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1124] BaseStatusEffect.VBAxeEMPAttackStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1125] BaseStatusEffect.VehicleBaseDamageOverTimeEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1126] BaseStatusEffect.VehicleExitKnockdownProtection
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1127] BaseStatusEffect.VehicleHighDamageOverTimeEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1128] BaseStatusEffect.VehicleKnockdown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1129] BaseStatusEffect.VehicleTrunkBodyPickup
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1130] BaseStatusEffect.VehicleVisualModCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1131] BaseStatusEffect.VehicleVisualModCooldownInstant
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1132] BaseStatusEffect.VehicleVisualModDeescalationCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1133] BaseStatusEffect.VisionDebuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1134] BaseStatusEffect.Vulnerable
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1135] BaseStatusEffect.VulnerableStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1136] BaseStatusEffect.Wakako_Tiger_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1137] BaseStatusEffect.Warden_Effect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1138] BaseStatusEffect.Warden_Stealth_Multiplier_Helper
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1139] BaseStatusEffect.WasQuickHacked
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1140] BaseStatusEffect.WaterCollision
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1141] BaseStatusEffect.Weak
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1142] BaseStatusEffect.WeakExplosionStun
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1143] BaseStatusEffect.WeakspotDestructionStatusEffect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1144] BaseStatusEffect.WeaponChargeRatioCalculator
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1145] BaseStatusEffect.WeaponGlitchLvl4Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1146] BaseStatusEffect.WeaponGlitchLvl4PlusPlusBuff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1147] BaseStatusEffect.WeaponMalfunction
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1148] BaseStatusEffect.WeaponMalfunctionLvl2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1149] BaseStatusEffect.WeaponMalfunctionLvl3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1150] BaseStatusEffect.WeaponMalfunctionLvl4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1151] BaseStatusEffect.WeaponMalfunctionLvl4PlusPlus
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1152] BaseStatusEffect.WeaponMalfunctionReactionBlocker
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1153] BaseStatusEffect.WeaponMalfunctionReapply
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1154] BaseStatusEffect.WeaponMalfunctionRepeat
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1155] BaseStatusEffect.WeaponMalfunctionSmartLock
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1156] BaseStatusEffect.WellFed
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1157] BaseStatusEffect.WhistleCooldown
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1158] BaseStatusEffect.WhistleLvl0
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1159] BaseStatusEffect.WhistleLvl1
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1160] BaseStatusEffect.WhistleLvl2
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1161] BaseStatusEffect.WhistleLvl3
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1162] BaseStatusEffect.WhistleLvl4
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1163] BaseStatusEffect.WhistleLvl4_TurnAway
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1164] BaseStatusEffect.WildBoar_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1165] BaseStatusEffect.Witcher_Multikill_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1166] BaseStatusEffect.Witcher_Wounded_Buff
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1167] BaseStatusEffect.Wounded
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1168] BaseStatusEffect.YashaBioGrenade
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1169] BaseStatusEffect.mws_se5_03_damage_vfx
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1170] BaseStatusEffect.mws_se5_03_katana_vfx
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1171] BaseStatusEffect.q304_helicopter_rotor_effect
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2]   [1172] BaseStatusEffect.q304_songbird_relic_shock
+[2026-07-27 00:50:25 UTC-05:00] [12460] [SETester2] === Total: 1172 records ===
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2] === Status Effect Catalog (with TweakDB validation) ===
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [1] Overheat (npc) [VALID] — Burns target, deals damage over time
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [2] Burning (npc) [VALID] — Fire burning effect
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [3] Blind (Reboot Optics) (npc) [VALID] — Blinds target (Reboot Optics effect)
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [4] Stun (npc) [VALID] — Stuns target
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [5] Ping (npc) [VALID] — Highlights target through walls
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [6] Pain (npc) [VALID] — Pain effect
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [7] NPCForceStagger (npc) [VALID] — Forces stagger animation
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [8] LocomotionMalfunction (npc) [VALID] — Disables locomotion (Cyberware Malfunction-style)
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [9] LocomotionMalfunction Lvl2 (npc) [VALID] — Stronger locomotion disable
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [10] CyberwareMalfunctionBlackwall (npc) [VALID] — Blackwall-style cyberware malfunction
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [11] ShortCircuit (npc) [MISSING] — EMP stun (needs verification)
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]  >>>[12] Contagion (npc) [MISSING] — Poison damage (needs verification)
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [13] Madness (npc) [VALID] — Target attacks allies (needs verification)
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [14] CyberwareMalfunction (npc) [VALID] — Disables cyberware (needs verification)
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [15] RebootOptics (npc) [MISSING] — Blinds target (needs verification)
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [16] Distraction (device) [MISSING] — Distracts device (needs verification)
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [17] BlackwallHackUpload (npc) [VALID] — Blackwall hack upload (quest effect, confirmed working)
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [18] LegendaryFragGrenade (any) [VALID] — Frag grenade explosion effect
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [19] RoyceForceStagger (npc) [VALID] — Royce force stagger
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [20] Sandstorm (npc) [VALID] — Sandstorm effect
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [21] ReconGrenadeLegendaryPlus (any) [VALID] — Recon grenade highlight
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [22] ForceDive (npc) [VALID] — Force dive effect
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2]     [23] JohnnySicknessHeavy (npc) [VALID] — Johnny sickness heavy
+[2026-07-27 00:50:36 UTC-05:00] [12460] [SETester2] Total: 23 effects
+[2026-07-27 00:50:43 UTC-05:00] [12460] [SETester2] Selected [13/23]: Madness (BaseStatusEffect.Madness) — TweakDB exists: true
+[2026-07-27 00:50:57 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:50:57 UTC-05:00] [12460] [SETester2] === APPLY: Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, entityID=9002320ULL) ===
+[2026-07-27 00:50:57 UTC-05:00] [12460] [SETester2] Applying 'Madness' (BaseStatusEffect.Madness) duration=10.0 instigator=1ULL
+[2026-07-27 00:50:57 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Madness' exists: true
+[2026-07-27 00:50:57 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:50:57 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:50:57 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:50:57 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:50:57 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:50:57 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:50:57 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:51:21 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:51:21 UTC-05:00] [12460] [SETester2] === APPLY: Character.lch_maelstrom_grunt1_ranged1_lexington_wa (class=NPCPuppet, entityID=9002319ULL) ===
+[2026-07-27 00:51:21 UTC-05:00] [12460] [SETester2] Applying 'Madness' (BaseStatusEffect.Madness) duration=10.0 instigator=1ULL
+[2026-07-27 00:51:21 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Madness' exists: true
+[2026-07-27 00:51:21 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:51:21 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:51:21 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:51:21 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:51:21 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:51:21 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:51:21 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:51:26 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:51:26 UTC-05:00] [12460] [SETester2] === APPLY: Character.ma_wat_lch_07_maelstrom_onscreen_02 (class=NPCPuppet, entityID=9002318ULL) ===
+[2026-07-27 00:51:26 UTC-05:00] [12460] [SETester2] Applying 'Madness' (BaseStatusEffect.Madness) duration=10.0 instigator=1ULL
+[2026-07-27 00:51:26 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Madness' exists: true
+[2026-07-27 00:51:26 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:51:26 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:51:26 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:51:26 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:51:26 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:51:26 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:51:26 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:51:43 UTC-05:00] [12460] [SETester2] Target: class=NPCPuppet NPC=true Device=false Vehicle=false Active=true
+[2026-07-27 00:51:43 UTC-05:00] [12460] [SETester2] === APPLY: Character.lch_maelstrom_grunt1_ranged1_copperhead_ma (class=NPCPuppet, entityID=9002317ULL) ===
+[2026-07-27 00:51:43 UTC-05:00] [12460] [SETester2] Applying 'Madness' (BaseStatusEffect.Madness) duration=10.0 instigator=1ULL
+[2026-07-27 00:51:43 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Madness' exists: true
+[2026-07-27 00:51:43 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:51:43 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:51:43 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:51:43 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:51:43 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:51:43 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:51:43 UTC-05:00] [12460] [SETester2]   >>> PARTIAL: API calls succeeded but ObjectHasStatusEffect=false. Effect may still be active.
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2] === Status Effect Catalog (with TweakDB validation) ===
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [1] Overheat (npc) [VALID] — Burns target, deals damage over time
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [2] Burning (npc) [VALID] — Fire burning effect
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [3] Blind (Reboot Optics) (npc) [VALID] — Blinds target (Reboot Optics effect)
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [4] Stun (npc) [VALID] — Stuns target
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [5] Ping (npc) [VALID] — Highlights target through walls
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [6] Pain (npc) [VALID] — Pain effect
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [7] NPCForceStagger (npc) [VALID] — Forces stagger animation
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [8] LocomotionMalfunction (npc) [VALID] — Disables locomotion (Cyberware Malfunction-style)
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [9] LocomotionMalfunction Lvl2 (npc) [VALID] — Stronger locomotion disable
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [10] CyberwareMalfunctionBlackwall (npc) [VALID] — Blackwall-style cyberware malfunction
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [11] ShortCircuit (npc) [MISSING] — EMP stun (needs verification)
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [12] Contagion (npc) [MISSING] — Poison damage (needs verification)
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]  >>>[13] Madness (npc) [VALID] — Target attacks allies (needs verification)
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [14] CyberwareMalfunction (npc) [VALID] — Disables cyberware (needs verification)
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [15] RebootOptics (npc) [MISSING] — Blinds target (needs verification)
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [16] Distraction (device) [MISSING] — Distracts device (needs verification)
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [17] BlackwallHackUpload (npc) [VALID] — Blackwall hack upload (quest effect, confirmed working)
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [18] LegendaryFragGrenade (any) [VALID] — Frag grenade explosion effect
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [19] RoyceForceStagger (npc) [VALID] — Royce force stagger
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [20] Sandstorm (npc) [VALID] — Sandstorm effect
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [21] ReconGrenadeLegendaryPlus (any) [VALID] — Recon grenade highlight
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [22] ForceDive (npc) [VALID] — Force dive effect
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2]     [23] JohnnySicknessHeavy (npc) [VALID] — Johnny sickness heavy
+[2026-07-27 00:52:03 UTC-05:00] [12460] [SETester2] Total: 23 effects
+[2026-07-27 00:52:19 UTC-05:00] [12460] [SETester2] Selected [14/23]: CyberwareMalfunction (BaseStatusEffect.CyberwareMalfunction) — TweakDB exists: true
+[2026-07-27 00:52:20 UTC-05:00] [12460] [SETester2] Selected [15/23]: RebootOptics (BaseStatusEffect.RebootOptics) — TweakDB exists: false
+[2026-07-27 00:52:20 UTC-05:00] [12460] [SETester2] Selected [16/23]: Distraction (BaseStatusEffect.Distraction) — TweakDB exists: false
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2] Target: class=BasicDistractionDevice NPC=false Device=true Vehicle=false Active=true
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2] === APPLY: <unknown> (class=BasicDistractionDevice, entityID=11070081460738587943ULL) ===
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2] Applying 'Distraction' (BaseStatusEffect.Distraction) duration=10.0 instigator=1ULL
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2]   TweakDB record 'BaseStatusEffect.Distraction' exists: false
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2]   WARNING: Record 'BaseStatusEffect.Distraction' does not exist in TweakDB! API will silently no-op.
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2]   Use the DUMP hotkey to enumerate valid BaseStatusEffect records.
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2]   [OK] Method 1 (3-arg with player instigator): SUCCESS
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2]   [OK] Method 2 (2-arg): SUCCESS
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2]   [OK] Method 3 (with duration 10.0): SUCCESS
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2]   [OK] Method 4 (StatusEffectSystem entityID): SUCCESS
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2]   [OK] Method 5 (TweakDBID.new wrapper + instigator): SUCCESS
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2]   >>> VERIFICATION: ObjectHasStatusEffect = false
+[2026-07-27 00:52:39 UTC-05:00] [12460] [SETester2]   >>> FAILED: Record does not exist in TweakDB. Use DUMP hotkey to find valid IDs.
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2] === Status Effect Catalog (with TweakDB validation) ===
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [1] Overheat (npc) [VALID] — Burns target, deals damage over time
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [2] Burning (npc) [VALID] — Fire burning effect
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [3] Blind (Reboot Optics) (npc) [VALID] — Blinds target (Reboot Optics effect)
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [4] Stun (npc) [VALID] — Stuns target
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [5] Ping (npc) [VALID] — Highlights target through walls
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [6] Pain (npc) [VALID] — Pain effect
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [7] NPCForceStagger (npc) [VALID] — Forces stagger animation
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [8] LocomotionMalfunction (npc) [VALID] — Disables locomotion (Cyberware Malfunction-style)
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [9] LocomotionMalfunction Lvl2 (npc) [VALID] — Stronger locomotion disable
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [10] CyberwareMalfunctionBlackwall (npc) [VALID] — Blackwall-style cyberware malfunction
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [11] ShortCircuit (npc) [MISSING] — EMP stun (needs verification)
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [12] Contagion (npc) [MISSING] — Poison damage (needs verification)
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [13] Madness (npc) [VALID] — Target attacks allies (needs verification)
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [14] CyberwareMalfunction (npc) [VALID] — Disables cyberware (needs verification)
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [15] RebootOptics (npc) [MISSING] — Blinds target (needs verification)
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]  >>>[16] Distraction (device) [MISSING] — Distracts device (needs verification)
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [17] BlackwallHackUpload (npc) [VALID] — Blackwall hack upload (quest effect, confirmed working)
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [18] LegendaryFragGrenade (any) [VALID] — Frag grenade explosion effect
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [19] RoyceForceStagger (npc) [VALID] — Royce force stagger
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [20] Sandstorm (npc) [VALID] — Sandstorm effect
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [21] ReconGrenadeLegendaryPlus (any) [VALID] — Recon grenade highlight
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [22] ForceDive (npc) [VALID] — Force dive effect
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2]     [23] JohnnySicknessHeavy (npc) [VALID] — Johnny sickness heavy
+[2026-07-27 00:52:54 UTC-05:00] [12460] [SETester2] Total: 23 effects
+[2026-07-27 00:53:32 UTC-05:00] [12460] [SETester2] Status Effect Tester 2 shut down

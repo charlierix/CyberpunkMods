@@ -1,0 +1,461 @@
+[2026-07-25 11:51:14 UTC-05:00] [29400] [HoverRotTesterPlayer6] Initialized -- press toggle hotkey to start
+[2026-07-25 11:51:14 UTC-05:00] [29400] [HoverRotTesterPlayer6] Steps 3 & 7: PSM blackboard manipulation + SM component probe
+[2026-07-25 11:51:14 UTC-05:00] [29400] [HoverRotTesterPlayer6] Cycle through 9 state modes to find one that allows full rotation
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] GetPlayerStateMachineBlackboard() SUCCESS
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] GetAllBlackboardDefs().PlayerStateMachine SUCCESS
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] PSM values saved
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] === Probing gamestateMachineComponent ===
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] FindComponentByType('gamestateMachineComponent') SUCCESS
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6]   GetSnapshotContainer() SUCCESS: userdata: 0x0226e6faf8d8
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('Locomotion') = false
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('UpperBody') = false
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('HighLevel') = false
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('Combat') = false
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('Vehicle') = false
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] === End SM Probe ===
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] FPPCameraComponent locked
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] === ACTIVE === mode=NONE (No PSM manipulation (control))
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] Rotation method: Teleport
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] target z=96.5 (initial z=46.5)
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] Re-teleport when z < 56.5
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] Press 'Cycle State Mode' to try different PSM states
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] Press 'Dump PSM State' to see all PSM blackboard values
+[2026-07-25 12:05:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] z=46.5 below threshold 56.5 — re-teleporting (count=1)
+[2026-07-25 12:05:14 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:05:14 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 2/9: DEAD
+[2026-07-25 12:05:14 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Vitals=Dead — dead bodies don't enforce upright
+[2026-07-25 12:05:14 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:05:14 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:05:30 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:05:30 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 3/9: SWIMMING
+[2026-07-25 12:05:30 UTC-05:00] [8224] [HoverRotTesterPlayer6] # HighLevel=Swimming — swimming has different physics
+[2026-07-25 12:05:30 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:05:30 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:05:36 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:05:36 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 4/9: SCENE
+[2026-07-25 12:05:36 UTC-05:00] [8224] [HoverRotTesterPlayer6] # HighLevel=SceneTier1 — cutscene/scene state
+[2026-07-25 12:05:36 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:05:36 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:05:42 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=0 yaw=18
+[2026-07-25 12:05:42 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=0 yaw=48
+[2026-07-25 12:05:43 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=0 yaw=18
+[2026-07-25 12:05:43 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=0 yaw=-12
+[2026-07-25 12:05:44 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=30 yaw=-12
+[2026-07-25 12:05:44 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=60 yaw=-12
+[2026-07-25 12:05:48 UTC-05:00] [8224] [HoverRotTesterPlayer6] Deactivating...
+[2026-07-25 12:05:48 UTC-05:00] [8224] [HoverRotTesterPlayer6] PSM values restored
+[2026-07-25 12:05:48 UTC-05:00] [8224] [HoverRotTesterPlayer6] Deactivated (PSM + camera restored)
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] GetPlayerStateMachineBlackboard() SUCCESS
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] GetAllBlackboardDefs().PlayerStateMachine SUCCESS
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] PSM values saved
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] === Probing gamestateMachineComponent ===
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] FindComponentByType('gamestateMachineComponent') SUCCESS
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6]   GetSnapshotContainer() SUCCESS: userdata: 0x0226c3778bd8
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('Locomotion') = false
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('UpperBody') = false
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('HighLevel') = false
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('Combat') = false
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('Vehicle') = false
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] === End SM Probe ===
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] FPPCameraComponent locked
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] === ACTIVE === mode=SCENE (HighLevel=SceneTier1 — cutscene/scene state)
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] Rotation method: Teleport
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] target z=96.5 (initial z=46.5)
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] Re-teleport when z < 56.5
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] Press 'Cycle State Mode' to try different PSM states
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] Press 'Dump PSM State' to see all PSM blackboard values
+[2026-07-25 12:05:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] z=46.5 below threshold 56.5 — re-teleporting (count=1)
+[2026-07-25 12:06:17 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=0 yaw=6
+[2026-07-25 12:06:18 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=0 yaw=36
+[2026-07-25 12:06:18 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=0 yaw=6
+[2026-07-25 12:06:19 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=0 yaw=-24
+[2026-07-25 12:06:19 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=30 yaw=-24
+[2026-07-25 12:06:20 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=60 yaw=-24
+[2026-07-25 12:06:20 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=30 yaw=-24
+[2026-07-25 12:06:20 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=0 yaw=-24
+[2026-07-25 12:06:21 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=30 pitch=0 yaw=-24
+[2026-07-25 12:06:21 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=60 pitch=-0 yaw=-24
+[2026-07-25 12:06:21 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=30 pitch=-0 yaw=-24
+[2026-07-25 12:06:22 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=0 pitch=-0 yaw=-24
+[2026-07-25 12:06:23 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:06:23 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 5/9: FELLED
+[2026-07-25 12:06:23 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Felled=true, LocomotionDetailed=Felled
+[2026-07-25 12:06:23 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:06:23 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:06:31 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-0 pitch=-0 yaw=6
+[2026-07-25 12:06:31 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-0 pitch=-0 yaw=36
+[2026-07-25 12:06:31 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-0 pitch=-0 yaw=6
+[2026-07-25 12:06:32 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=0 pitch=-0 yaw=-24
+[2026-07-25 12:06:32 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=0 pitch=30 yaw=-24
+[2026-07-25 12:06:32 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=0 pitch=60 yaw=-24
+[2026-07-25 12:06:33 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-30 pitch=60 yaw=-24
+[2026-07-25 12:06:33 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-60 pitch=60 yaw=-24
+[2026-07-25 12:06:33 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-30 pitch=60 yaw=-24
+[2026-07-25 12:06:34 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=0 pitch=60 yaw=-24
+[2026-07-25 12:06:36 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:06:36 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 6/9: KNOCKDOWN
+[2026-07-25 12:06:36 UTC-05:00] [8224] [HoverRotTesterPlayer6] # LocomotionDetailed=Knockdown
+[2026-07-25 12:06:36 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:06:36 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:06:44 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=41 pitch=49 yaw=25
+[2026-07-25 12:06:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=56 pitch=26 yaw=50
+[2026-07-25 12:06:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=41 pitch=49 yaw=25
+[2026-07-25 12:06:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=0 pitch=60 yaw=-24
+[2026-07-25 12:06:46 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=171 pitch=90 yaw=159
+[2026-07-25 12:06:46 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=180 pitch=60 yaw=156
+[2026-07-25 12:06:47 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=180 pitch=30 yaw=156
+[2026-07-25 12:06:48 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=180 pitch=0 yaw=156
+[2026-07-25 12:06:48 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=180 pitch=-0 yaw=126
+[2026-07-25 12:06:49 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=180 pitch=-0 yaw=96
+[2026-07-25 12:06:49 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=180 pitch=-0 yaw=66
+[2026-07-25 12:06:49 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-180 pitch=-0 yaw=36
+[2026-07-25 12:06:50 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-180 pitch=-0 yaw=6
+[2026-07-25 12:06:50 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-180 pitch=-30 yaw=6
+[2026-07-25 12:06:51 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-180 pitch=-0 yaw=6
+[2026-07-25 12:06:52 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-180 pitch=30 yaw=6
+[2026-07-25 12:06:52 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=150 pitch=30 yaw=6
+[2026-07-25 12:06:53 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=120 pitch=30 yaw=6
+[2026-07-25 12:06:53 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=150 pitch=30 yaw=6
+[2026-07-25 12:06:53 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-180 pitch=30 yaw=6
+[2026-07-25 12:06:53 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=164 pitch=26 yaw=-28
+[2026-07-25 12:06:54 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-180 pitch=30 yaw=6
+[2026-07-25 12:06:56 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:06:56 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 7/9: WORKSPOT
+[2026-07-25 12:06:56 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Locomotion=Workspot, IsInWorkspot=1 — workspot takes over transform
+[2026-07-25 12:06:56 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:06:56 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:06:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=164 pitch=26 yaw=-28
+[2026-07-25 12:06:58 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=153 pitch=14 yaw=-57
+[2026-07-25 12:06:58 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=150 pitch=0 yaw=-84
+[2026-07-25 12:06:58 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=153 pitch=-14 yaw=-111
+[2026-07-25 12:06:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=145 pitch=-41 yaw=-94
+[2026-07-25 12:06:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=117 pitch=-61 yaw=-57
+[2026-07-25 12:06:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=60 pitch=-60 yaw=6
+[2026-07-25 12:07:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=30 pitch=-60 yaw=6
+[2026-07-25 12:07:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=60 pitch=-60 yaw=6
+[2026-07-25 12:07:02 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:07:02 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 8/9: MOUNTED
+[2026-07-25 12:07:02 UTC-05:00] [8224] [HoverRotTesterPlayer6] # MountedToVehicle=true — mounted state uses vehicle orientation
+[2026-07-25 12:07:02 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:07:02 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:07:06 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-13 pitch=-75 yaw=83
+[2026-07-25 12:07:06 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-65 pitch=-54 yaw=139
+[2026-07-25 12:07:06 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-35 pitch=-54 yaw=139
+[2026-07-25 12:07:07 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-5 pitch=-54 yaw=139
+[2026-07-25 12:07:07 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-35 pitch=-54 yaw=139
+[2026-07-25 12:07:07 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-65 pitch=-54 yaw=139
+[2026-07-25 12:07:08 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-41 pitch=-35 yaw=105
+[2026-07-25 12:07:08 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-65 pitch=-54 yaw=139
+[2026-07-25 12:07:09 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-109 pitch=-56 yaw=-168
+[2026-07-25 12:07:09 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-137 pitch=-38 yaw=-131
+[2026-07-25 12:07:09 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-147 pitch=-14 yaw=-111
+[2026-07-25 12:07:10 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:07:10 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 9/9: AIR_HOVER
+[2026-07-25 12:07:10 UTC-05:00] [8224] [HoverRotTesterPlayer6] # LocomotionDetailed=AirHover — built-in hover state
+[2026-07-25 12:07:10 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:07:10 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:07:14 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=-137 pitch=-38 yaw=-131
+[2026-07-25 12:07:14 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=-109 pitch=-56 yaw=-168
+[2026-07-25 12:07:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=-102 pitch=-27 yaw=-179
+[2026-07-25 12:07:16 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=-72 pitch=-27 yaw=-179
+[2026-07-25 12:07:16 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=-42 pitch=-27 yaw=-179
+[2026-07-25 12:07:16 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=-72 pitch=-27 yaw=-179
+[2026-07-25 12:07:17 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=-62 pitch=-14 yaw=152
+[2026-07-25 12:07:17 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=-72 pitch=-27 yaw=-179
+[2026-07-25 12:07:17 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=-89 pitch=-32 yaw=-145
+[2026-07-25 12:07:18 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=-106 pitch=-28 yaw=-111
+[2026-07-25 12:07:19 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:07:19 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 1/9: NONE
+[2026-07-25 12:07:19 UTC-05:00] [8224] [HoverRotTesterPlayer6] # No PSM manipulation (control)
+[2026-07-25 12:07:19 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:07:19 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:07:23 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=-104 pitch=1 yaw=-119
+[2026-07-25 12:07:23 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=-107 pitch=30 yaw=-127
+[2026-07-25 12:07:23 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=-104 pitch=1 yaw=-119
+[2026-07-25 12:07:23 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=-106 pitch=-28 yaw=-111
+[2026-07-25 12:07:24 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=-136 pitch=-28 yaw=-111
+[2026-07-25 12:07:24 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=-118 pitch=-46 yaw=-140
+[2026-07-25 12:07:25 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=-148 pitch=-46 yaw=-140
+[2026-07-25 12:07:26 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=-118 pitch=-46 yaw=-140
+[2026-07-25 12:07:29 UTC-05:00] [8224] [HoverRotTesterPlayer6] Deactivating...
+[2026-07-25 12:07:29 UTC-05:00] [8224] [HoverRotTesterPlayer6] PSM values restored
+[2026-07-25 12:07:29 UTC-05:00] [8224] [HoverRotTesterPlayer6] Deactivated (PSM + camera restored)
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] GetPlayerStateMachineBlackboard() SUCCESS
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] GetAllBlackboardDefs().PlayerStateMachine SUCCESS
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] PSM values saved
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] === Probing gamestateMachineComponent ===
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] FindComponentByType('gamestateMachineComponent') SUCCESS
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6]   GetSnapshotContainer() SUCCESS: userdata: 0x0226c37770d8
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('Locomotion') = false
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('UpperBody') = false
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('HighLevel') = false
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('Combat') = false
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6]   IsStateMachinePresent('Vehicle') = false
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] === End SM Probe ===
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] FPPCameraComponent locked
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] === ACTIVE === mode=NONE (No PSM manipulation (control))
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] Rotation method: Teleport
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] target z=96.5 (initial z=46.5)
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] Re-teleport when z < 56.5
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] Press 'Cycle State Mode' to try different PSM states
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] Press 'Dump PSM State' to see all PSM blackboard values
+[2026-07-25 12:07:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] z=46.5 below threshold 56.5 — re-teleporting (count=1)
+[2026-07-25 12:08:02 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=0 pitch=0 yaw=-22
+[2026-07-25 12:08:02 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=0 pitch=0 yaw=8
+[2026-07-25 12:08:03 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=0 pitch=0 yaw=-22
+[2026-07-25 12:08:03 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=0 pitch=0 yaw=-52
+[2026-07-25 12:08:03 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=0 pitch=30 yaw=-52
+[2026-07-25 12:08:03 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=0 pitch=60 yaw=-52
+[2026-07-25 12:08:05 UTC-05:00] [8224] [HoverRotTesterPlayer6] Rotation method: SetWorldTransform
+[2026-07-25 12:08:09 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=41 pitch=49 yaw=-3
+[2026-07-25 12:08:09 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=56 pitch=26 yaw=22
+[2026-07-25 12:08:10 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=41 pitch=49 yaw=-3
+[2026-07-25 12:08:11 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=0 pitch=60 yaw=-52
+[2026-07-25 12:08:11 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=30 pitch=60 yaw=-52
+[2026-07-25 12:08:11 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=60 pitch=60 yaw=-52
+[2026-07-25 12:08:12 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:08:12 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 2/9: DEAD
+[2026-07-25 12:08:12 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Vitals=Dead — dead bodies don't enforce upright
+[2026-07-25 12:08:12 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: SetWorldTransform
+[2026-07-25 12:08:12 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:08:13 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=73 pitch=32 yaw=-35
+[2026-07-25 12:08:13 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=75 pitch=3 yaw=-27
+[2026-07-25 12:08:14 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=79 pitch=10 yaw=3
+[2026-07-25 12:08:14 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=86 pitch=14 yaw=33
+[2026-07-25 12:08:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=79 pitch=10 yaw=3
+[2026-07-25 12:08:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=75 pitch=3 yaw=-27
+[2026-07-25 12:08:16 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=76 pitch=-4 yaw=-56
+[2026-07-25 12:08:16 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=80 pitch=-11 yaw=-85
+[2026-07-25 12:08:17 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=50 pitch=-11 yaw=-85
+[2026-07-25 12:08:17 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=20 pitch=-11 yaw=-85
+[2026-07-25 12:08:17 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=50 pitch=-11 yaw=-85
+[2026-07-25 12:08:22 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:08:22 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 3/9: SWIMMING
+[2026-07-25 12:08:22 UTC-05:00] [8224] [HoverRotTesterPlayer6] # HighLevel=Swimming — swimming has different physics
+[2026-07-25 12:08:22 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: SetWorldTransform
+[2026-07-25 12:08:22 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:08:23 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=49 pitch=12 yaw=-105
+[2026-07-25 12:08:23 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=40 pitch=34 yaw=-128
+[2026-07-25 12:08:24 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=70 pitch=34 yaw=-128
+[2026-07-25 12:08:24 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=100 pitch=34 yaw=-128
+[2026-07-25 12:08:24 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=70 pitch=34 yaw=-128
+[2026-07-25 12:08:25 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=40 pitch=34 yaw=-128
+[2026-07-25 12:08:25 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=63 pitch=53 yaw=-95
+[2026-07-25 12:08:25 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=107 pitch=56 yaw=-42
+[2026-07-25 12:08:27 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=77 pitch=56 yaw=-42
+[2026-07-25 12:08:27 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=107 pitch=56 yaw=-42
+[2026-07-25 12:08:28 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:08:28 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 4/9: SCENE
+[2026-07-25 12:08:28 UTC-05:00] [8224] [HoverRotTesterPlayer6] # HighLevel=SceneTier1 — cutscene/scene state
+[2026-07-25 12:08:28 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: SetWorldTransform
+[2026-07-25 12:08:28 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:08:30 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=101 pitch=27 yaw=-52
+[2026-07-25 12:08:31 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=99 pitch=-3 yaw=-57
+[2026-07-25 12:08:31 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=129 pitch=-3 yaw=-57
+[2026-07-25 12:08:32 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=99 pitch=-3 yaw=-57
+[2026-07-25 12:08:32 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=69 pitch=-3 yaw=-57
+[2026-07-25 12:08:32 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=99 pitch=-3 yaw=-57
+[2026-07-25 12:08:35 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:08:35 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 5/9: FELLED
+[2026-07-25 12:08:35 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Felled=true, LocomotionDetailed=Felled
+[2026-07-25 12:08:35 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: SetWorldTransform
+[2026-07-25 12:08:35 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:08:36 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=101 pitch=27 yaw=-52
+[2026-07-25 12:08:36 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=107 pitch=56 yaw=-42
+[2026-07-25 12:08:37 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=137 pitch=56 yaw=-42
+[2026-07-25 12:08:37 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=167 pitch=56 yaw=-42
+[2026-07-25 12:08:37 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-151 pitch=51 yaw=9
+[2026-07-25 12:08:37 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-130 pitch=32 yaw=40
+[2026-07-25 12:08:38 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-151 pitch=51 yaw=9
+[2026-07-25 12:08:38 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=167 pitch=56 yaw=-42
+[2026-07-25 12:08:38 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=172 pitch=26 yaw=-35
+[2026-07-25 12:08:39 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=173 pitch=-3 yaw=-31
+[2026-07-25 12:08:39 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=143 pitch=-3 yaw=-31
+[2026-07-25 12:08:39 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=113 pitch=-3 yaw=-31
+[2026-07-25 12:08:40 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=117 pitch=-31 yaw=-44
+[2026-07-25 12:08:40 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=133 pitch=-56 yaw=-68
+[2026-07-25 12:08:41 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=79 pitch=-65 yaw=-7
+[2026-07-25 12:08:41 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=38 pitch=-48 yaw=41
+[2026-07-25 12:08:41 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=8 pitch=-48 yaw=41
+[2026-07-25 12:08:41 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=38 pitch=-48 yaw=41
+[2026-07-25 12:08:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:08:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 6/9: KNOCKDOWN
+[2026-07-25 12:08:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] # LocomotionDetailed=Knockdown
+[2026-07-25 12:08:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: SetWorldTransform
+[2026-07-25 12:08:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:08:50 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-2 pitch=-58 yaw=90
+[2026-07-25 12:08:50 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-40 pitch=-47 yaw=136
+[2026-07-25 12:08:50 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-55 pitch=-24 yaw=161
+[2026-07-25 12:08:50 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-25 pitch=-24 yaw=161
+[2026-07-25 12:08:51 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=5 pitch=-24 yaw=161
+[2026-07-25 12:08:51 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-25 pitch=-24 yaw=161
+[2026-07-25 12:08:51 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-23 pitch=3 yaw=149
+[2026-07-25 12:08:52 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-27 pitch=31 yaw=136
+[2026-07-25 12:08:52 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-43 pitch=56 yaw=112
+[2026-07-25 12:08:52 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-99 pitch=67 yaw=51
+[2026-07-25 12:08:52 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=115 pitch=82 yaw=-96
+[2026-07-25 12:08:53 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=96 pitch=53 yaw=-117
+[2026-07-25 12:08:53 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=94 pitch=23 yaw=-120
+[2026-07-25 12:08:53 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=96 pitch=53 yaw=-117
+[2026-07-25 12:08:55 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:08:55 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 7/9: WORKSPOT
+[2026-07-25 12:08:55 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Locomotion=Workspot, IsInWorkspot=1 — workspot takes over transform
+[2026-07-25 12:08:55 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: SetWorldTransform
+[2026-07-25 12:08:55 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:08:56 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=115 pitch=82 yaw=-96
+[2026-07-25 12:08:56 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=-99 pitch=67 yaw=51
+[2026-07-25 12:08:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=-69 pitch=67 yaw=51
+[2026-07-25 12:08:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=-99 pitch=67 yaw=51
+[2026-07-25 12:08:58 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=-143 pitch=50 yaw=0
+[2026-07-25 12:08:58 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=-155 pitch=24 yaw=-19
+[2026-07-25 12:08:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=-143 pitch=50 yaw=0
+[2026-07-25 12:09:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 8/9: MOUNTED
+[2026-07-25 12:09:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] # MountedToVehicle=true — mounted state uses vehicle orientation
+[2026-07-25 12:09:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: SetWorldTransform
+[2026-07-25 12:09:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:03 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=174 pitch=59 yaw=-51
+[2026-07-25 12:09:03 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=137 pitch=46 yaw=-96
+[2026-07-25 12:09:04 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=107 pitch=46 yaw=-96
+[2026-07-25 12:09:04 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=77 pitch=46 yaw=-96
+[2026-07-25 12:09:04 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=108 pitch=44 yaw=-53
+[2026-07-25 12:09:05 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=133 pitch=71 yaw=-25
+[2026-07-25 12:09:05 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-131 pitch=70 yaw=75
+[2026-07-25 12:09:05 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=-101 pitch=70 yaw=75
+[2026-07-25 12:09:06 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=110 pitch=79 yaw=-75
+[2026-07-25 12:09:06 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=80 pitch=79 yaw=-75
+[2026-07-25 12:09:08 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:08 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 9/9: AIR_HOVER
+[2026-07-25 12:09:08 UTC-05:00] [8224] [HoverRotTesterPlayer6] # LocomotionDetailed=AirHover — built-in hover state
+[2026-07-25 12:09:08 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: SetWorldTransform
+[2026-07-25 12:09:08 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:10 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=87 pitch=50 yaw=-68
+[2026-07-25 12:09:11 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=88 pitch=20 yaw=-66
+[2026-07-25 12:09:11 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=118 pitch=20 yaw=-66
+[2026-07-25 12:09:11 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=148 pitch=20 yaw=-66
+[2026-07-25 12:09:12 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=118 pitch=20 yaw=-66
+[2026-07-25 12:09:12 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=88 pitch=20 yaw=-66
+[2026-07-25 12:09:12 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=98 pitch=18 yaw=-35
+[2026-07-25 12:09:13 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=88 pitch=20 yaw=-66
+[2026-07-25 12:09:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 1/9: NONE
+[2026-07-25 12:09:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] # No PSM manipulation (control)
+[2026-07-25 12:09:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: SetWorldTransform
+[2026-07-25 12:09:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:18 UTC-05:00] [8224] [HoverRotTesterPlayer6] Rotation method: Teleport
+[2026-07-25 12:09:28 UTC-05:00] [8224] [HoverRotTesterPlayer6] Rotation method: SetWorldTransform
+[2026-07-25 12:09:30 UTC-05:00] [8224] [HoverRotTesterPlayer6] Rotation method: Teleport
+[2026-07-25 12:09:33 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=88 pitch=-10 yaw=-65
+[2026-07-25 12:09:33 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=118 pitch=-10 yaw=-65
+[2026-07-25 12:09:34 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=88 pitch=-10 yaw=-65
+[2026-07-25 12:09:34 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=58 pitch=-10 yaw=-65
+[2026-07-25 12:09:35 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=28 pitch=-10 yaw=-65
+[2026-07-25 12:09:35 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=58 pitch=-10 yaw=-65
+[2026-07-25 12:09:35 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=51 pitch=-35 yaw=-47
+[2026-07-25 12:09:35 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=27 pitch=-55 yaw=-14
+[2026-07-25 12:09:37 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:37 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 2/9: DEAD
+[2026-07-25 12:09:37 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Vitals=Dead — dead bodies don't enforce upright
+[2026-07-25 12:09:37 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:09:37 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:38 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=-19 pitch=-57 yaw=41
+[2026-07-25 12:09:38 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=-48 pitch=-39 yaw=78
+[2026-07-25 12:09:38 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=-78 pitch=-39 yaw=78
+[2026-07-25 12:09:38 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=-59 pitch=-28 yaw=45
+[2026-07-25 12:09:39 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=-29 pitch=-28 yaw=45
+[2026-07-25 12:09:39 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=DEAD] Rot -> roll=-59 pitch=-28 yaw=45
+[2026-07-25 12:09:40 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:40 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 3/9: SWIMMING
+[2026-07-25 12:09:40 UTC-05:00] [8224] [HoverRotTesterPlayer6] # HighLevel=Swimming — swimming has different physics
+[2026-07-25 12:09:40 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:09:40 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:41 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=-63 pitch=-2 yaw=60
+[2026-07-25 12:09:41 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=-60 pitch=25 yaw=74
+[2026-07-25 12:09:41 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=-46 pitch=49 yaw=97
+[2026-07-25 12:09:42 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=-76 pitch=49 yaw=97
+[2026-07-25 12:09:42 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=-80 pitch=20 yaw=90
+[2026-07-25 12:09:42 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=-81 pitch=-10 yaw=85
+[2026-07-25 12:09:42 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=-78 pitch=-39 yaw=78
+[2026-07-25 12:09:43 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=-65 pitch=-68 yaw=62
+[2026-07-25 12:09:43 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=46 pitch=-76 yaw=-51
+[2026-07-25 12:09:43 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=76 pitch=-49 yaw=-83
+[2026-07-25 12:09:44 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=46 pitch=-76 yaw=-51
+[2026-07-25 12:09:44 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SWIMMING] Rot -> roll=16 pitch=-76 yaw=-51
+[2026-07-25 12:09:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 4/9: SCENE
+[2026-07-25 12:09:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] # HighLevel=SceneTier1 — cutscene/scene state
+[2026-07-25 12:09:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:09:45 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:46 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=-62 pitch=-61 yaw=31
+[2026-07-25 12:09:46 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=-32 pitch=-61 yaw=31
+[2026-07-25 12:09:46 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=-62 pitch=-61 yaw=31
+[2026-07-25 12:09:47 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=-92 pitch=-61 yaw=31
+[2026-07-25 12:09:47 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=-91 pitch=-31 yaw=30
+[2026-07-25 12:09:47 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=-61 pitch=-31 yaw=30
+[2026-07-25 12:09:47 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=-44 pitch=-55 yaw=5
+[2026-07-25 12:09:48 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=-61 pitch=-31 yaw=30
+[2026-07-25 12:09:48 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=SCENE] Rot -> roll=-66 pitch=-4 yaw=44
+[2026-07-25 12:09:49 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:49 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 5/9: FELLED
+[2026-07-25 12:09:49 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Felled=true, LocomotionDetailed=Felled
+[2026-07-25 12:09:49 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:09:49 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:50 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-63 pitch=23 yaw=57
+[2026-07-25 12:09:50 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-51 pitch=49 yaw=76
+[2026-07-25 12:09:50 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-21 pitch=49 yaw=76
+[2026-07-25 12:09:51 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-51 pitch=49 yaw=76
+[2026-07-25 12:09:51 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-10 pitch=65 yaw=125
+[2026-07-25 12:09:52 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-51 pitch=49 yaw=76
+[2026-07-25 12:09:52 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-63 pitch=23 yaw=57
+[2026-07-25 12:09:52 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=FELLED] Rot -> roll=-93 pitch=23 yaw=57
+[2026-07-25 12:09:53 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:53 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 6/9: KNOCKDOWN
+[2026-07-25 12:09:53 UTC-05:00] [8224] [HoverRotTesterPlayer6] # LocomotionDetailed=Knockdown
+[2026-07-25 12:09:53 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:09:53 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:54 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-95 pitch=53 yaw=54
+[2026-07-25 12:09:54 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=-115 pitch=82 yaw=33
+[2026-07-25 12:09:55 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=98 pitch=67 yaw=-115
+[2026-07-25 12:09:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=94 pitch=37 yaw=-120
+[2026-07-25 12:09:57 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=KNOCKDOWN] Rot -> roll=64 pitch=37 yaw=-120
+[2026-07-25 12:09:58 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:58 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 7/9: WORKSPOT
+[2026-07-25 12:09:58 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Locomotion=Workspot, IsInWorkspot=1 — workspot takes over transform
+[2026-07-25 12:09:58 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:09:58 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:09:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=43 pitch=61 yaw=-147
+[2026-07-25 12:09:59 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=-24 pitch=67 yaw=141
+[2026-07-25 12:10:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=-54 pitch=67 yaw=141
+[2026-07-25 12:10:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=40 pitch=73 yaw=-121
+[2026-07-25 12:10:00 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=WORKSPOT] Rot -> roll=71 pitch=47 yaw=-87
+[2026-07-25 12:10:04 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:10:04 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 8/9: MOUNTED
+[2026-07-25 12:10:04 UTC-05:00] [8224] [HoverRotTesterPlayer6] # MountedToVehicle=true — mounted state uses vehicle orientation
+[2026-07-25 12:10:04 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:10:04 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:10:05 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=76 pitch=18 yaw=-77
+[2026-07-25 12:10:05 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=77 pitch=-11 yaw=-70
+[2026-07-25 12:10:05 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=73 pitch=-3 yaw=-41
+[2026-07-25 12:10:06 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=74 pitch=6 yaw=-12
+[2026-07-25 12:10:06 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=MOUNTED] Rot -> roll=104 pitch=6 yaw=-12
+[2026-07-25 12:10:09 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:10:09 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 9/9: AIR_HOVER
+[2026-07-25 12:10:09 UTC-05:00] [8224] [HoverRotTesterPlayer6] # LocomotionDetailed=AirHover — built-in hover state
+[2026-07-25 12:10:09 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:10:09 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:10:10 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=105 pitch=-23 yaw=-20
+[2026-07-25 12:10:10 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=113 pitch=-52 yaw=-32
+[2026-07-25 12:10:10 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=157 pitch=-75 yaw=-80
+[2026-07-25 12:10:11 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=AIR_HOVER] Rot -> roll=-173 pitch=-75 yaw=-80
+[2026-07-25 12:10:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:10:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] # STATE MODE 1/9: NONE
+[2026-07-25 12:10:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] # No PSM manipulation (control)
+[2026-07-25 12:10:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] # Method: Teleport
+[2026-07-25 12:10:15 UTC-05:00] [8224] [HoverRotTesterPlayer6] ########################################
+[2026-07-25 12:10:16 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=-117 pitch=-55 yaw=-141
+[2026-07-25 12:10:16 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=-107 pitch=-27 yaw=-155
+[2026-07-25 12:10:16 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=-137 pitch=-27 yaw=-155
+[2026-07-25 12:10:17 UTC-05:00] [8224] [HoverRotTesterPlayer6] [mode=NONE] Rot -> roll=-142 pitch=-4 yaw=-135
+[2026-07-25 12:10:20 UTC-05:00] [8224] [HoverRotTesterPlayer6] Deactivating...
+[2026-07-25 12:10:20 UTC-05:00] [8224] [HoverRotTesterPlayer6] PSM values restored
+[2026-07-25 12:10:20 UTC-05:00] [8224] [HoverRotTesterPlayer6] Deactivated (PSM + camera restored)

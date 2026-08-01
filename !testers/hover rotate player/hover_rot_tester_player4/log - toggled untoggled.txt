@@ -1,0 +1,489 @@
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] FPPCameraComponent locked (sensitivity=0, pitch/yaw limits expanded)
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] Active -- hovering at (-2034.5, -2462.0, 37.0) groundZ=34.0 height=3.0 (camFound=true)
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] Starting yaw=126.1 roll=0.0 pitch=0.0
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 34.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 10:59:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] Quat-Direct Teleport mode: true
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:00:00 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=0 yaw=156
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=156.1
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=false
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=156.1
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=156.1
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=156.1
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=156.1
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=156.1
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=156.1
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:00:22 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=0 yaw=126
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=156.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=156.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=false
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=30 yaw=126
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=30.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=30.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=30.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:00:24 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=60 yaw=126
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=60.0 yaw=126.1
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=60.0 yaw=126.1
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=60.0 yaw=126.1
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:00:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=30 pitch=60 yaw=126
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=60.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=60.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=60.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=60 pitch=60 yaw=126
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=60.0 pitch=60.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=60.0 pitch=60.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=60.0 pitch=60.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=126.1
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:00:26 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:00:46 UTC-05:00] [13804] [HoverRotTesterPlayer4] Deactivating...
+[2026-07-21 11:00:46 UTC-05:00] [13804] [HoverRotTesterPlayer4] Deactivated
+
+
+**********
+
+
+[2026-07-21 11:01:20 UTC-05:00] [13804] [HoverRotTesterPlayer4] Quat-Direct Teleport mode: true
+[2026-07-21 11:01:25 UTC-05:00] [13804] [HoverRotTesterPlayer4] Quat-Direct Teleport mode: false
+[2026-07-21 11:01:39 UTC-05:00] [13804] Mod ghost_forward loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\ghost_forward')
+[2026-07-21 11:01:39 UTC-05:00] [13804] Mod grappling_hook loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\grappling_hook')
+[2026-07-21 11:01:39 UTC-05:00] [13804] Mod HeavyMG loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\HeavyMG')
+[2026-07-21 11:01:39 UTC-05:00] [13804] Mod hover_rot_tester_player4 loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hover_rot_tester_player4')
+[2026-07-21 11:01:39 UTC-05:00] [13804] Mod hundred_grand loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hundred_grand')
+[2026-07-21 11:01:39 UTC-05:00] [13804] Mod jetpack loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\jetpack')
+[2026-07-21 11:01:39 UTC-05:00] [13804] Mod low_flying_v loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\low_flying_v')
+[2026-07-21 11:01:39 UTC-05:00] [13804] Mod pointlight_tester loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\pointlight_tester')
+[2026-07-21 11:01:39 UTC-05:00] [13804] Mod quickhack_tester loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\quickhack_tester')
+[2026-07-21 11:01:39 UTC-05:00] [13804] Mod wall_hang loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\wall_hang')
+[2026-07-21 11:01:39 UTC-05:00] [13804] [QHTester] Initialized | hacks: 7 | debug: true
+[2026-07-21 11:01:39 UTC-05:00] [13804] [QHTester] Current hack: Distraction (1/7)
+[2026-07-21 11:01:39 UTC-05:00] [13804] [QHTester] Bind keys in: Settings > Key Bindings > QHTester
+[2026-07-21 11:01:39 UTC-05:00] [13804] [QHTester] Hotkeys: Apply Quickhack, Cycle Hack Type, List Available
+[2026-07-21 11:01:39 UTC-05:00] [13804] [HoverRotTesterPlayer4] Initialized -- press toggle hotkey to start hovering
+[2026-07-21 11:01:39 UTC-05:00] [13804] [HoverRotTesterPlayer4] Uses TeleportationFacility:Teleport() with full EulerAngles from quaternion
+[2026-07-21 11:01:39 UTC-05:00] [13804] [PointLightTester] Initialized  |  mode: Player Flashlight  |  intensity: 10.0  |  radius: 15.0m
+[2026-07-21 11:01:39 UTC-05:00] [13804] [PointLightTester] Current color: Warm White (1/10)
+[2026-07-21 11:01:39 UTC-05:00] [13804] [PointLightTester] Player Flashlight component found OK
+[2026-07-21 11:01:39 UTC-05:00] [13804] [PointLightTester] Templates: 9  |  Bind keys in: Settings > Key Bindings > PointLightTester
+[2026-07-21 11:01:39 UTC-05:00] [13804] LuaVM: Reloaded all mods!
+
+
+**********
+
+
+[2026-07-21 11:01:46 UTC-05:00] [13804] [HoverRotTesterPlayer4] Quat-Direct Teleport mode: true
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] FPPCameraComponent locked (sensitivity=0, pitch/yaw limits expanded)
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] Active -- hovering at (-2034.5, -2462.0, 37.0) groundZ=34.0 height=3.0 (camFound=true)
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] Starting yaw=143.0 roll=0.0 pitch=0.0
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 34.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:01:53 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=0 yaw=173
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=173.0
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=false
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=173.0
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=173.0
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=173.0
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=173.0
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=173.0
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=173.0
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:01:55 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=0 yaw=143
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=173.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=173.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=false
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=true yaw=true
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=30 yaw=143
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=30.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=30.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=30.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:01:56 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=0 pitch=60 yaw=143
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=0.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:01:57 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=30 pitch=60 yaw=143
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=60 pitch=60 yaw=143
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=60.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=60.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=60.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:01:58 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=30 pitch=60 yaw=143
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=-0 pitch=60 yaw=143
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=-0.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=-0.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=-0.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=true pitch=false yaw=true
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Rot -> roll=30 pitch=60 yaw=143
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG target euler: roll=30.0 pitch=60.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG BEFORE Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(EulerAngles) SUCCESS
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] Teleport(Quaternion) FAILED: init.lua:408: Function 'Teleport' parameter 3 must be EulerAngles.
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG AFTER Teleport: roll=0.0 pitch=0.0 yaw=143.0
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG pos after: (-2034.5, -2462.0, 37.0) target: (-2034.5, -2462.0, 37.0)
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG MATCH: roll=false pitch=false yaw=true
+[2026-07-21 11:01:59 UTC-05:00] [13804] [HoverRotTesterPlayer4] DIAG CAM: roll=0.0 pitch=0.0 yaw=0.0 | sensX=0.0 sensY=0.0 | heading=false
+[2026-07-21 11:02:03 UTC-05:00] [13804] [HoverRotTesterPlayer4] Deactivating...
+[2026-07-21 11:02:03 UTC-05:00] [13804] [HoverRotTesterPlayer4] Deactivated

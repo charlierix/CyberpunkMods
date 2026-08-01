@@ -1,0 +1,338 @@
+[2026-07-31 18:58:07 UTC-05:00] [37064] [SEDevT2] Status Effect Device Tester 2 initialized
+[2026-07-31 18:58:07 UTC-05:00] [37064] [SEDevT2]   Testing TWO unexplored paths:
+[2026-07-31 18:58:07 UTC-05:00] [37064] [SEDevT2]     Path 1: QuestForce Actions (GetQuestActions, requestType=Quest)
+[2026-07-31 18:58:07 UTC-05:00] [37064] [SEDevT2]     Path 2: Direct StatusEffect on Devices (StatusEffectHelper)
+[2026-07-31 18:58:07 UTC-05:00] [37064] [SEDevT2]   Hotkeys: SE_DEV2_TOGGLE_WINDOW, SE_DEV2_APPLY
+[2026-07-31 18:58:07 UTC-05:00] [37064] [SEDevT2]   Bind in Settings > Key Bindings > SEDevT2
+[2026-07-31 18:58:07 UTC-05:00] [37064] [SEDevT2] 
+[2026-07-31 18:58:07 UTC-05:00] [37064] [SEDevT2] Usage: Look at a device, press APPLY for random effect.
+[2026-07-31 18:58:07 UTC-05:00] [37064] [SEDevT2]        Each press randomly picks a path, then a random effect/action,
+[2026-07-31 18:58:07 UTC-05:00] [37064] [SEDevT2]        then a random execution method within that path.
+[2026-07-31 18:58:07 UTC-05:00] [37064] [SEDevT2]        Log analysis after the fact will show what worked.
+[2026-07-31 18:58:07 UTC-05:00] [37064] LuaVM: initialization finished!
+[2026-07-31 19:04:14 UTC-05:00] [37052] [SEDevT2] Info window ON
+[2026-07-31 19:04:28 UTC-05:00] [37052] [SEDevT2]   [NEW QUEST ACTION] ToCName{ hash_lo = 0x5B60AF16, hash_hi = 0x927D059E --[[ EnableInteraction --]] } (class: ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] }, record: )
+[2026-07-31 19:04:28 UTC-05:00] [37052] [SEDevT2]   [NEW QUEST ACTION] ToCName{ hash_lo = 0x01FA2B59, hash_hi = 0x69CDA804 --[[ DisableInteraction --]] } (class: ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] }, record: )
+[2026-07-31 19:04:28 UTC-05:00] [37052] [SEDevT2]   [NEW QUEST ACTION] ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } (class: ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }, record: )
+[2026-07-31 19:04:28 UTC-05:00] [37052] [SEDevT2]   [NEW QUEST ACTION] ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } (class: ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] }, record: )
+[2026-07-31 19:04:28 UTC-05:00] [37052] [SEDevT2]   [NEW QUEST ACTION] ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] } (class: ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] }, record: )
+[2026-07-31 19:04:28 UTC-05:00] [37052] [SEDevT2]   [NEW QUEST ACTION] ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } (class: ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, record: )
+[2026-07-31 19:04:28 UTC-05:00] [37052] [SEDevT2]   [NEW QUEST ACTION] ToCName{ hash_lo = 0x474379C1, hash_hi = 0x2C2D3D69 --[[ QuestEnableInteractivity --]] } (class: ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }, record: )
+[2026-07-31 19:05:42 UTC-05:00] [37052] [SEDevT2] Info window OFF
+[2026-07-31 19:54:05 UTC-05:00] [37052] [SEDevT2] Info window ON
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2] ========================================================
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2] === NEW DEVICE TYPE REPORT ===
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]   Name:       <unknown>
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]   Class:      ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]   RecordID:   <unknown>
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]   EntityHash: 4970841821511248608ULL
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]   Distance:   4.65 m
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]   Available quest actions: 9
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]     [ 1] ToCName{ hash_lo = 0x5B60AF16, hash_hi = 0x927D059E --[[ EnableInteraction --]] } (class: ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] }, record: ) [attempts: 0]
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]     [ 2] ToCName{ hash_lo = 0x01FA2B59, hash_hi = 0x69CDA804 --[[ DisableInteraction --]] } (class: ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] }, record: ) [attempts: 0]
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]     [ 3] ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } (class: ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }, record: ) [attempts: 0]
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]     [ 4] ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } (class: ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] }, record: ) [attempts: 0]
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]     [ 5] ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] } (class: ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] }, record: ) [attempts: 0]
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]     [ 6] ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } (class: ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, record: ) [attempts: 0]
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]     [ 7] ToCName{ hash_lo = 0xE8E0F5F3, hash_hi = 0xA2DF957A --[[ QuestUnMuteSounds --]] } (class: ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, record: ) [attempts: 0]
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]     [ 8] ToCName{ hash_lo = 0x474379C1, hash_hi = 0x2C2D3D69 --[[ QuestEnableInteractivity --]] } (class: ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }, record: ) [attempts: 0]
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]     [ 9] ToCName{ hash_lo = 0x3848912A, hash_hi = 0x24D2D6DC --[[ QuestDisableInteractivity --]] } (class: ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }, record: ) [attempts: 0]
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2] ========================================================
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2] === APPLY QUEST [5/9]: ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] } -> <unknown> (class=ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] }) ===
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: ProcessRPGAction OK [QA:FullChain]
+[2026-07-31 19:54:24 UTC-05:00] [37052] [SEDevT2]   QuestForce Coverage: 1/7 tried (14%)
+[2026-07-31 19:54:26 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:26 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] QuickHack Overload (record: BaseStatusEffect.QuickHackOverload)
+[2026-07-31 19:54:26 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [10/15]: QuickHack Overload -> <unknown> (record=BaseStatusEffect.QuickHackOverload) ===
+[2026-07-31 19:54:26 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:26 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 1/1 tried (100%)
+[2026-07-31 19:54:27 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:27 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] QuickHack Suicide (record: BaseStatusEffect.QuickHackCommitSuicide)
+[2026-07-31 19:54:27 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [12/15]: QuickHack Suicide -> <unknown> (record=BaseStatusEffect.QuickHackCommitSuicide) ===
+[2026-07-31 19:54:27 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:27 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 2/2 tried (100%)
+[2026-07-31 19:54:28 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:28 UTC-05:00] [37052] [SEDevT2] === APPLY QUEST [4/9]: ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } -> <unknown> (class=ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] }) ===
+[2026-07-31 19:54:28 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: ProcessRPGAction OK [QA:FullChain]
+[2026-07-31 19:54:28 UTC-05:00] [37052] [SEDevT2]   QuestForce Coverage: 2/7 tried (29%)
+[2026-07-31 19:54:29 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:29 UTC-05:00] [37052] [SEDevT2] === APPLY QUEST [5/9]: ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] } -> <unknown> (class=ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] }) ===
+[2026-07-31 19:54:29 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: ProcessRPGAction OK [QA:FullChain]
+[2026-07-31 19:54:29 UTC-05:00] [37052] [SEDevT2]   QuestForce Coverage: 2/7 tried (29%)
+[2026-07-31 19:54:30 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:30 UTC-05:00] [37052] [SEDevT2] === APPLY QUEST [8/9]: ToCName{ hash_lo = 0x474379C1, hash_hi = 0x2C2D3D69 --[[ QuestEnableInteractivity --]] } -> <unknown> (class=ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }) ===
+[2026-07-31 19:54:30 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: ProcessRPGAction OK [QA:FullChain]
+[2026-07-31 19:54:30 UTC-05:00] [37052] [SEDevT2]   QuestForce Coverage: 3/7 tried (43%)
+[2026-07-31 19:54:31 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:31 UTC-05:00] [37052] [SEDevT2] === APPLY QUEST [8/9]: ToCName{ hash_lo = 0x474379C1, hash_hi = 0x2C2D3D69 --[[ QuestEnableInteractivity --]] } -> <unknown> (class=ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }) ===
+[2026-07-31 19:54:31 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: ProcessRPGAction OK [QA:FullChain]
+[2026-07-31 19:54:31 UTC-05:00] [37052] [SEDevT2]   QuestForce Coverage: 3/7 tried (43%)
+[2026-07-31 19:54:32 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:32 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] QuickHack Blind (record: BaseStatusEffect.QuickHackBlind)
+[2026-07-31 19:54:32 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [3/15]: QuickHack Blind -> <unknown> (record=BaseStatusEffect.QuickHackBlind) ===
+[2026-07-31 19:54:32 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:32 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 3/3 tried (100%)
+[2026-07-31 19:54:32 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:32 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] QuickHack Motive (record: BaseStatusEffect.QuickHackMotive)
+[2026-07-31 19:54:32 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [11/15]: QuickHack Motive -> <unknown> (record=BaseStatusEffect.QuickHackMotive) ===
+[2026-07-31 19:54:32 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:32 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 4/4 tried (100%)
+[2026-07-31 19:54:33 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:33 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] Base EMP (record: BaseStatusEffect.BaseEMP)
+[2026-07-31 19:54:33 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [8/15]: Base EMP -> <unknown> (record=BaseStatusEffect.BaseEMP) ===
+[2026-07-31 19:54:33 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:33 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 5/5 tried (100%)
+[2026-07-31 19:54:34 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:34 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] QuickHack Distraction (record: BaseStatusEffect.QuickHackDistraction)
+[2026-07-31 19:54:34 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [1/15]: QuickHack Distraction -> <unknown> (record=BaseStatusEffect.QuickHackDistraction) ===
+[2026-07-31 19:54:34 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:34 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 6/6 tried (100%)
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2] ========================================================
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2] === NEW DEVICE TYPE REPORT ===
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2]   Name:       <unknown>
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2]   Class:      ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2]   RecordID:   <unknown>
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2]   EntityHash: 1007949674293933253ULL
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2]   Distance:   6.27 m
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2]   Available quest actions: 0
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2] ========================================================
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] Overload Device (record: BaseStatusEffect.OverloadDevice)
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [5/15]: Overload Device -> <unknown> (record=BaseStatusEffect.OverloadDevice) ===
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 7/7 tried (100%)
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] QuickHack Ping (record: BaseStatusEffect.QuickHackPing)
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [14/15]: QuickHack Ping -> <unknown> (record=BaseStatusEffect.QuickHackPing) ===
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:47 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 8/8 tried (100%)
+[2026-07-31 19:54:48 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:48 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:48 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:48 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] Glitch Screen (record: BaseStatusEffect.GlitchScreen)
+[2026-07-31 19:54:48 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [9/15]: Glitch Screen -> <unknown> (record=BaseStatusEffect.GlitchScreen) ===
+[2026-07-31 19:54:48 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:48 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 9/9 tried (100%)
+[2026-07-31 19:54:49 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:49 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:49 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:49 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [10/15]: QuickHack Overload -> <unknown> (record=BaseStatusEffect.QuickHackOverload) ===
+[2026-07-31 19:54:49 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:49 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 9/9 tried (100%)
+[2026-07-31 19:54:50 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:50 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] QuickHack Explode Explosive (record: BaseStatusEffect.QuickHackExplodeExplosive)
+[2026-07-31 19:54:50 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [2/15]: QuickHack Explode Explosive -> <unknown> (record=BaseStatusEffect.QuickHackExplodeExplosive) ===
+[2026-07-31 19:54:50 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:50 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 10/10 tried (100%)
+[2026-07-31 19:54:51 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:51 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:51 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:51 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [12/15]: QuickHack Suicide -> <unknown> (record=BaseStatusEffect.QuickHackCommitSuicide) ===
+[2026-07-31 19:54:51 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:51 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 10/10 tried (100%)
+[2026-07-31 19:54:51 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:51 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:51 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:51 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [11/15]: QuickHack Motive -> <unknown> (record=BaseStatusEffect.QuickHackMotive) ===
+[2026-07-31 19:54:51 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:51 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 10/10 tried (100%)
+[2026-07-31 19:54:52 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:52 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:52 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:52 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] QuickHack Disable (record: BaseStatusEffect.QuickHackDisable)
+[2026-07-31 19:54:52 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [13/15]: QuickHack Disable -> <unknown> (record=BaseStatusEffect.QuickHackDisable) ===
+[2026-07-31 19:54:52 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:52 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 11/11 tried (100%)
+[2026-07-31 19:54:53 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:53 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] High Pitch Noise (record: BaseStatusEffect.HighPitchNoise)
+[2026-07-31 19:54:53 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [6/15]: High Pitch Noise -> <unknown> (record=BaseStatusEffect.HighPitchNoise) ===
+[2026-07-31 19:54:53 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:53 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 12/12 tried (100%)
+[2026-07-31 19:54:53 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:53 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:53 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:53 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [11/15]: QuickHack Motive -> <unknown> (record=BaseStatusEffect.QuickHackMotive) ===
+[2026-07-31 19:54:53 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:53 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 12/12 tried (100%)
+[2026-07-31 19:54:54 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:54 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:54 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:54 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [2/15]: QuickHack Explode Explosive -> <unknown> (record=BaseStatusEffect.QuickHackExplodeExplosive) ===
+[2026-07-31 19:54:54 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:54 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 12/12 tried (100%)
+[2026-07-31 19:54:55 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:55 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:55 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:55 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [6/15]: High Pitch Noise -> <unknown> (record=BaseStatusEffect.HighPitchNoise) ===
+[2026-07-31 19:54:55 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:55 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 12/12 tried (100%)
+[2026-07-31 19:54:56 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:56 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] EMP (record: BaseStatusEffect.EMP)
+[2026-07-31 19:54:56 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [7/15]: EMP -> <unknown> (record=BaseStatusEffect.EMP) ===
+[2026-07-31 19:54:56 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:56 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 13/13 tried (100%)
+[2026-07-31 19:54:56 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:56 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [12/15]: QuickHack Suicide -> <unknown> (record=BaseStatusEffect.QuickHackCommitSuicide) ===
+[2026-07-31 19:54:56 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:56 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 13/13 tried (100%)
+[2026-07-31 19:54:57 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:57 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:57 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:57 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [8/15]: Base EMP -> <unknown> (record=BaseStatusEffect.BaseEMP) ===
+[2026-07-31 19:54:57 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:57 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 13/13 tried (100%)
+[2026-07-31 19:54:58 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:58 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:58 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:58 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [11/15]: QuickHack Motive -> <unknown> (record=BaseStatusEffect.QuickHackMotive) ===
+[2026-07-31 19:54:58 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:58 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 13/13 tried (100%)
+[2026-07-31 19:54:58 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:58 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:58 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:58 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [9/15]: Glitch Screen -> <unknown> (record=BaseStatusEffect.GlitchScreen) ===
+[2026-07-31 19:54:58 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:58 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 13/13 tried (100%)
+[2026-07-31 19:54:59 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:54:59 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:54:59 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:54:59 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [12/15]: QuickHack Suicide -> <unknown> (record=BaseStatusEffect.QuickHackCommitSuicide) ===
+[2026-07-31 19:54:59 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:54:59 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 13/13 tried (100%)
+[2026-07-31 19:55:00 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:55:00 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:55:00 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:55:00 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [2/15]: QuickHack Explode Explosive -> <unknown> (record=BaseStatusEffect.QuickHackExplodeExplosive) ===
+[2026-07-31 19:55:00 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:55:00 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 13/13 tried (100%)
+[2026-07-31 19:55:05 UTC-05:00] [37052] [SEDevT2] Info window OFF
+[2026-07-31 19:58:32 UTC-05:00] [37052] [SEDevT2] Info window ON
+[2026-07-31 19:58:35 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:58:35 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:58:35 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:58:35 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [1/15]: QuickHack Distraction -> <unknown> (record=BaseStatusEffect.QuickHackDistraction) ===
+[2026-07-31 19:58:35 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:58:35 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 13/13 tried (100%)
+[2026-07-31 19:58:36 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:58:36 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:58:36 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:58:36 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [7/15]: EMP -> <unknown> (record=BaseStatusEffect.EMP) ===
+[2026-07-31 19:58:36 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:58:36 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 13/13 tried (100%)
+[2026-07-31 19:58:37 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:58:37 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [5/15]: Overload Device -> <unknown> (record=BaseStatusEffect.OverloadDevice) ===
+[2026-07-31 19:58:37 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:58:37 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 13/13 tried (100%)
+[2026-07-31 19:58:38 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:58:38 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:58:38 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:58:38 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [9/15]: Glitch Screen -> <unknown> (record=BaseStatusEffect.GlitchScreen) ===
+[2026-07-31 19:58:38 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:58:38 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 13/13 tried (100%)
+[2026-07-31 19:58:39 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 19:58:39 UTC-05:00] [37052] [SEDevT2] No quest actions for ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] } -- falling back to StatusEffect
+[2026-07-31 19:58:39 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:58:39 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [14/15]: QuickHack Ping -> <unknown> (record=BaseStatusEffect.QuickHackPing) ===
+[2026-07-31 19:58:39 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:58:39 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 13/13 tried (100%)
+[2026-07-31 19:58:39 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:58:39 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] QuickHack Toggle ON (record: BaseStatusEffect.QuickHackToggleOn)
+[2026-07-31 19:58:39 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [4/15]: QuickHack Toggle ON -> <unknown> (record=BaseStatusEffect.QuickHackToggleOn) ===
+[2026-07-31 19:58:39 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:58:39 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 14/14 tried (100%)
+[2026-07-31 19:58:40 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 19:58:40 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [14/15]: QuickHack Ping -> <unknown> (record=BaseStatusEffect.QuickHackPing) ===
+[2026-07-31 19:58:40 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 19:58:40 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 14/14 tried (100%)
+[2026-07-31 19:58:42 UTC-05:00] [37052] [SEDevT2] Info window OFF
+[2026-07-31 20:03:06 UTC-05:00] [37052] [SEDevT2] Info window ON
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2] ========================================================
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2] === NEW DEVICE TYPE REPORT ===
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]   Name:       <unknown>
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]   Class:      ToCName{ hash_lo = 0x437E7F74, hash_hi = 0x47D3BB78 --[[ Radio --]] }
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]   RecordID:   <unknown>
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]   EntityHash: 15585984949683028624ULL
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]   Distance:   2.97 m
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]   Available quest actions: 5
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]     [ 1] ToCName{ hash_lo = 0x5B60AF16, hash_hi = 0x927D059E --[[ EnableInteraction --]] } (class: ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] }, record: ) [attempts: 0]
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]     [ 2] ToCName{ hash_lo = 0x01FA2B59, hash_hi = 0x69CDA804 --[[ DisableInteraction --]] } (class: ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] }, record: ) [attempts: 0]
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]     [ 3] ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } (class: ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }, record: ) [attempts: 0]
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]     [ 4] ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } (class: ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] }, record: ) [attempts: 1]
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]     [ 5] ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] } (class: ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] }, record: ) [attempts: 2]
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2] ========================================================
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [2/15]: QuickHack Explode Explosive -> <unknown> (record=BaseStatusEffect.QuickHackExplodeExplosive) ===
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 20:03:10 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 14/14 tried (100%)
+[2026-07-31 20:03:11 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 20:03:11 UTC-05:00] [37052] [SEDevT2] === APPLY QUEST [3/5]: ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } -> <unknown> (class=ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }) ===
+[2026-07-31 20:03:11 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: ProcessRPGAction OK [QA:FullChain]
+[2026-07-31 20:03:11 UTC-05:00] [37052] [SEDevT2]   QuestForce Coverage: 4/7 tried (57%)
+[2026-07-31 20:03:12 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 20:03:12 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [9/15]: Glitch Screen -> <unknown> (record=BaseStatusEffect.GlitchScreen) ===
+[2026-07-31 20:03:12 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 20:03:12 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 14/14 tried (100%)
+[2026-07-31 20:03:13 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 20:03:13 UTC-05:00] [37052] [SEDevT2] === APPLY QUEST [2/5]: ToCName{ hash_lo = 0x01FA2B59, hash_hi = 0x69CDA804 --[[ DisableInteraction --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] }) ===
+[2026-07-31 20:03:13 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: ProcessRPGAction OK [QA:FullChain]
+[2026-07-31 20:03:13 UTC-05:00] [37052] [SEDevT2]   QuestForce Coverage: 5/7 tried (71%)
+[2026-07-31 20:03:14 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 20:03:14 UTC-05:00] [37052] [SEDevT2] === APPLY QUEST [3/5]: ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } -> <unknown> (class=ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }) ===
+[2026-07-31 20:03:14 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: ProcessRPGAction OK [QA:FullChain]
+[2026-07-31 20:03:14 UTC-05:00] [37052] [SEDevT2]   QuestForce Coverage: 5/7 tried (71%)
+[2026-07-31 20:03:15 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 20:03:15 UTC-05:00] [37052] [SEDevT2] === APPLY QUEST [1/5]: ToCName{ hash_lo = 0x5B60AF16, hash_hi = 0x927D059E --[[ EnableInteraction --]] } -> <unknown> (class=ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] }) ===
+[2026-07-31 20:03:15 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: ProcessRPGAction OK [QA:FullChain]
+[2026-07-31 20:03:15 UTC-05:00] [37052] [SEDevT2]   QuestForce Coverage: 6/7 tried (86%)
+[2026-07-31 20:03:15 UTC-05:00] [37052] [SEDevT2] >>> PATH 2: Direct StatusEffect <<<
+[2026-07-31 20:03:15 UTC-05:00] [37052] [SEDevT2]   [NEW EFFECT] Ping Cyberpsycho (record: BaseStatusEffect.Ping_Cyberpsycho)
+[2026-07-31 20:03:15 UTC-05:00] [37052] [SEDevT2] === APPLY EFFECT [15/15]: Ping Cyberpsycho -> <unknown> (record=BaseStatusEffect.Ping_Cyberpsycho) ===
+[2026-07-31 20:03:15 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: Helper.Apply(target,record) OK [S1:Helper2Arg]
+[2026-07-31 20:03:15 UTC-05:00] [37052] [SEDevT2]   StatusEffect Coverage: 15/15 tried (100%)
+[2026-07-31 20:03:17 UTC-05:00] [37052] [SEDevT2] Info window OFF
+[2026-07-31 20:07:48 UTC-05:00] [37052] [SEDevT2] Info window ON
+[2026-07-31 20:07:48 UTC-05:00] [37052] [SEDevT2]   [NEW QUEST ACTION] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } (class: ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }, record: )
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2] ========================================================
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2] === NEW DEVICE TYPE REPORT ===
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2]   Name:       <unknown>
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2]   Class:      ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2]   RecordID:   <unknown>
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2]   EntityHash: 3781939933995652019ULL
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2]   Distance:   6.53 m
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2]   Available quest actions: 1
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2]     [ 1] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } (class: ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }, record: ) [attempts: 0]
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2] ========================================================
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2] === APPLY QUEST [1/1]: ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }) ===
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2]   Result: SUCCESS: ProcessRPGAction OK [QA:FullChain]
+[2026-07-31 20:07:49 UTC-05:00] [37052] [SEDevT2]   QuestForce Coverage: 7/8 tried (88%)
+[2026-07-31 20:08:18 UTC-05:00] [37052] [SEDevT2] Info window OFF
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2] === Final Statistics ===
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2] 
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2] --- Path Stats ---
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   QuestForce:  10 attempts, 10 API-success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   StatusEffect: 35 attempts, 35 API-success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2] 
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2] --- QuestForce Actions ---
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   ToCName{ hash_lo = 0x5B60AF16, hash_hi = 0x927D059E --[[ EnableInteraction --]] } (class: ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] }): 1 attempts, 1 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   ToCName{ hash_lo = 0x01FA2B59, hash_hi = 0x69CDA804 --[[ DisableInteraction --]] } (class: ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] }): 1 attempts, 1 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } (class: ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }): 2 attempts, 2 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } (class: ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] }): 1 attempts, 1 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] } (class: ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] }): 2 attempts, 2 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } (class: ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }): 0 attempts, 0 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   ToCName{ hash_lo = 0x474379C1, hash_hi = 0x2C2D3D69 --[[ QuestEnableInteractivity --]] } (class: ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }): 2 attempts, 2 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } (class: ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }): 1 attempts, 1 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2] 
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2] --- StatusEffect Candidates ---
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   QuickHack Overload                       (record: BaseStatusEffect.QuickHackOverload): 2 attempts, 2 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   QuickHack Suicide                        (record: BaseStatusEffect.QuickHackCommitSuicide): 4 attempts, 4 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   QuickHack Blind                          (record: BaseStatusEffect.QuickHackBlind): 1 attempts, 1 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   QuickHack Motive                         (record: BaseStatusEffect.QuickHackMotive): 4 attempts, 4 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   Base EMP                                 (record: BaseStatusEffect.BaseEMP): 2 attempts, 2 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   QuickHack Distraction                    (record: BaseStatusEffect.QuickHackDistraction): 2 attempts, 2 success
+[2026-07-31 20:08:31 UTC-05:00] [37052] [SEDevT2]   Overload Device                          (record: BaseStatusEffect.OverloadD
