@@ -1,0 +1,5 @@
+these instructions work for most types of folders
+
+it breaks the task down and does one slice at a time
+
+it kept failing for mods, so mods is a simpler set of instructions, in a loop format
