@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\agent zero\!v2b\projects\cyberpunk\testers\quickhack\customentity2\red4ext\src\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\agent zero\!v2b\projects\cyberpunk\testers\quickhack\customentity2\red4ext\src\OrbHackingBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\agent zero\!v2b\projects\cyberpunk\testers\quickhack\customentity2\red4ext\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{ECF2ED7C-E8A2-3FB8-B21F-57B900DBD5D0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

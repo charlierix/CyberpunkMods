@@ -1,0 +1,8 @@
+{
+    "name": "OrbHackingBridge",
+    "version": "1.0.0",
+    "author": "CustomEntity2",
+    "description": "Red4ext plugin hooking IsPossible for executor validation bypass",
+    "required_version": "1.12.0",
+    "enabled": true
+}

@@ -1,0 +1,55 @@
+[2026-08-09 17:27:22 UTC-05:00] [20840] init.lua:415: Function GetScriptableSystem is not a GameInstance member and is not a global.
+stack traceback:
+	[C]: in function '__index'
+	init.lua:415: in function <init.lua:407>
+
+
+--------
+
+
+
+[2026-08-09 17:27:08 UTC-05:00] [35408] Mod customentity2a loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\customentity2a')
+[2026-08-09 17:27:08 UTC-05:00] [35408] Mod entity scanner loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\entity scanner')
+[2026-08-09 17:27:08 UTC-05:00] [35408] Mod ghost_forward loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\ghost_forward')
+[2026-08-09 17:27:08 UTC-05:00] [35408] Mod grappling_hook loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\grappling_hook')
+[2026-08-09 17:27:08 UTC-05:00] [35408] Mod HeavyMG loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\HeavyMG')
+[2026-08-09 17:27:08 UTC-05:00] [35408] Mod hundred_grand loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hundred_grand')
+[2026-08-09 17:27:08 UTC-05:00] [35408] Mod jetpack loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\jetpack')
+[2026-08-09 17:27:08 UTC-05:00] [35408] Mod low_flying_v loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\low_flying_v')
+[2026-08-09 17:27:08 UTC-05:00] [35408] Mod wall_hang loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\wall_hang')
+[2026-08-09 17:27:22 UTC-05:00] [20840] [2026-08-09 17:27:22] [CE2a] CE2a initialized -- fixed bridge API + phased testing
+[2026-08-09 17:27:22 UTC-05:00] [20840] [2026-08-09 17:27:22] [CE2a] Reuses REDscript + Red4ext from customentity2 (no changes needed)
+[2026-08-09 17:27:22 UTC-05:00] [20840] [EntityScanner] Initialized. Bind the toggle key in Settings > Key Bindings.
+[2026-08-09 17:27:22 UTC-05:00] [20840] LuaVM: initialization finished!
+[2026-08-09 17:28:59 UTC-05:00] [35408] [2026-08-09 17:28:59] [CE2a] ==================================================
+[2026-08-09 17:28:59 UTC-05:00] [35408] [2026-08-09 17:28:59] [CE2a] SPAWN DRONE
+[2026-08-09 17:28:59 UTC-05:00] [35408] [2026-08-09 17:28:59] [CE2a] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 17:28:59 UTC-05:00] [35408] [2026-08-09 17:28:59] [CE2a] Method A SUCCESS: entity ID: userdata: 0x02c4a5e18838 (pending...)
+[2026-08-09 17:28:59 UTC-05:00] [35408] [2026-08-09 17:28:59] [CE2a] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 17:28:59 UTC-05:00] [35408] [2026-08-09 17:28:59] [CE2a] DRONE SPAWNED SUCCESSFULLY! Tick: 12, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 17:28:59 UTC-05:00] [35408] [2026-08-09 17:28:59] [CE2a] Entity: userdata: 0x02c4a9c55e90
+[2026-08-09 17:29:05 UTC-05:00] [35408] [2026-08-09 17:29:05] [CE2a] ==================================================
+[2026-08-09 17:29:05 UTC-05:00] [35408] [2026-08-09 17:29:05] [CE2a] PING QUICKHACK TEST
+[2026-08-09 17:29:05 UTC-05:00] [35408] [2026-08-09 17:29:05] [CE2a] Target found with args (true, false)
+[2026-08-09 17:29:05 UTC-05:00] [35408] [2026-08-09 17:29:05] [CE2a] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-08-09 17:29:05 UTC-05:00] [35408] [2026-08-09 17:29:05] [CE2a] Target distance: 4.2 m
+[2026-08-09 17:29:05 UTC-05:00] [35408] [2026-08-09 17:29:05] [CE2a] Bridge loaded via GetScriptableSystemsContainer():Get("OrbHackingBridge")
+[2026-08-09 17:29:05 UTC-05:00] [35408] [2026-08-09 17:29:05] [CE2a] --- PHASE 1: Player as executor ---
+[2026-08-09 17:29:05 UTC-05:00] [35408] [2026-08-09 17:29:05] [CE2a] Phase 1 result: NO_ACTION
+[2026-08-09 17:29:05 UTC-05:00] [35408] [2026-08-09 17:29:05] [CE2a] --- PHASE 2: Drone as executor ---
+[2026-08-09 17:29:05 UTC-05:00] [35408] [2026-08-09 17:29:05] [CE2a] Phase 2 result: NO_ACTION
+[2026-08-09 17:29:05 UTC-05:00] [35408] [2026-08-09 17:29:05] [CE2a] Test #1 complete
+[2026-08-09 17:29:23 UTC-05:00] [35408] [2026-08-09 17:29:23] [CE2a] ==================================================
+[2026-08-09 17:29:23 UTC-05:00] [35408] [2026-08-09 17:29:23] [CE2a] SPAWN DRONE
+[2026-08-09 17:29:23 UTC-05:00] [35408] [2026-08-09 17:29:23] [CE2a] ==================================================
+[2026-08-09 17:29:23 UTC-05:00] [35408] [2026-08-09 17:29:23] [CE2a] DESPAWN DRONE
+[2026-08-09 17:29:23 UTC-05:00] [35408] [2026-08-09 17:29:23] [CE2a] Drone despawned
+[2026-08-09 17:29:23 UTC-05:00] [35408] [2026-08-09 17:29:23] [CE2a] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 17:29:23 UTC-05:00] [35408] [2026-08-09 17:29:23] [CE2a] Method A SUCCESS: entity ID: userdata: 0x02c35a29c2d0 (pending...)
+[2026-08-09 17:29:23 UTC-05:00] [35408] [2026-08-09 17:29:23] [CE2a] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 17:29:23 UTC-05:00] [35408] [2026-08-09 17:29:23] [CE2a] DRONE SPAWNED SUCCESSFULLY! Tick: 15, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 17:29:23 UTC-05:00] [35408] [2026-08-09 17:29:23] [CE2a] Entity: userdata: 0x02c35a29fb50
+[2026-08-09 17:29:31 UTC-05:00] [35408] [2026-08-09 17:29:31] [CE2a] ==================================================
+[2026-08-09 17:29:31 UTC-05:00] [35408] [2026-08-09 17:29:31] [CE2a] DESPAWN DRONE
+[2026-08-09 17:29:31 UTC-05:00] [35408] [2026-08-09 17:29:31] [CE2a] Drone despawned
+[2026-08-09 17:29:31 UTC-05:00] [35408] [2026-08-09 17:29:31] [CE2a] CE2a stopped

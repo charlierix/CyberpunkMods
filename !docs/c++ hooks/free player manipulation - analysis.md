@@ -595,48 +595,91 @@ Regardless of approach, the camera needs separate handling:
 ### Hook Installation Pattern (Pseudocode)
 
 ```cpp
-// RED4ext plugin skeleton for Approach A
+// RED4ext v1 plugin skeleton for Approach A
+// SDK: https://github.com/WopsS/RED4ext.SDK
 #include <RED4ext/RED4ext.hpp>
-#include <minhook.h>
-
-using namespace RED4ext;
+#include <Windows.h>
 
 // Original function pointer
-typedef void (*Original_OnUpdate_t)(CGameStateMachine*, CEntityID, float);
+typedef void (*Original_OnUpdate_t)(void*, uint64_t, float);
 Original_OnUpdate_t orig_OnUpdate = nullptr;
 
-// Global flight mode state
+// Global SDK + plugin state
+static RED4ext::v1::PluginHandle g_Handle = nullptr;
+static const RED4ext::v1::Sdk* g_Sdk = nullptr;
 bool g_flightModeActive = false;
 
 // Detour: hook the locomotion update loop
-void Hooked_OnUpdate(CGameStateMachine* self, CEntityID entity, float deltaTime)
+void Hooked_OnUpdate(void* self, uint64_t entity, float deltaTime)
 {
     // Call original to get normal locomotion processing
-    orig_OnUpdate(self, entity, deltaTime);
+    if (orig_OnUpdate)
+        orig_OnUpdate(self, entity, deltaTime);
 
     // If flight mode is active, override orientation after locomotion ran
-    if (g_flightModeActive && self->HasFlightOverride()) {
+    if (g_flightModeActive) {
         // 1. Skip the roll/pitch clamp that locomotion applies
         // 2. Write custom quaternion to entTransformComponent
         // 3. Optionally allow position override too
-        ApplyFlightOrientation(self, entity);
+        // ApplyFlightOrientation(self, entity);
     }
 }
 
-// Initialize hooks on plugin load
-void InitHooks()
+// Plugin entry points (v1 API)
+RED4EXT_C_EXPORT bool RED4EXT_CALL Main(RED4ext::v1::PluginHandle aHandle,
+                                        RED4ext::v1::EMainReason aReason,
+                                        const RED4ext::v1::Sdk* aSdk)
 {
-    MH_Initialize();
+    switch (aReason)
+    {
+    case RED4ext::v1::EMainReason::Load:
+    {
+        g_Handle = aHandle;
+        g_Sdk = aSdk;
 
-    // Find gamestateMachineComponent::OnUpdate hash via RTTI scanner
-    uint64_t funcHash = RedHash64("gamestateMachineComponent::OnUpdate");
-    auto* funcAddr = FindNativeFunction(funcHash);
+        // Find the target function address via RTTI
+        // (replace with actual class/method names once identified)
+        auto rtti = RED4ext::CRTTISystem::Get();
+        auto cls = rtti->GetClass(RED4ext::CName("gamestateMachineComponent"));
+        // auto func = cls->GetMethod(RED4ext::CName("OnUpdate"));
+        // void* funcAddr = func->GetAddress();
 
-    orig_OnUpdate = reinterpret_cast<Original_OnUpdate_t>(funcAddr);
-    MH_CreateHook(funcAddr, &Hooked_OnUpdate, reinterpret_cast<LPVOID*>(&orig_OnUpdate));
-    MH_EnableHook(funcAddr);
+        // Attach hook via v1 SDK hooking API
+        // aSdk->hooking->Attach(aHandle, funcAddr,
+        //     reinterpret_cast<void*>(&Hooked_OnUpdate),
+        //     reinterpret_cast<void**>(&orig_OnUpdate));
+
+        if (g_Sdk && g_Sdk->logger)
+            g_Sdk->logger->Info(g_Handle, "[FlightMod] Loaded");
+        break;
+    }
+    case RED4ext::v1::EMainReason::Unload:
+    {
+        // Detach hook if attached
+        // if (g_Sdk && g_Sdk->hooking)
+        //     g_Sdk->hooking->Detach(g_Handle, funcAddr);
+        break;
+    }
+    }
+    return true;
+}
+
+RED4EXT_C_EXPORT void RED4EXT_CALL Query(RED4ext::v1::PluginInfo* aInfo)
+{
+    aInfo->name = L"FlightMod";
+    aInfo->author = L"CE2";
+    aInfo->version = RED4EXT_V1_SEMVER(1, 0, 0);
+    aInfo->runtime = RED4EXT_V1_RUNTIME_VERSION_LATEST;
+    aInfo->sdk = RED4EXT_V1_SDK_VERSION_CURRENT;
+}
+
+RED4EXT_C_EXPORT uint32_t RED4EXT_CALL Supports()
+{
+    return RED4EXT_API_VERSION_1;
 }
 ```
+
+> **Note:** The v1 SDK provides hooking via `aSdk->hooking->Attach(handle, targetAddr, detour, &original)` — do not use raw MinHook directly. Function addresses are resolved via `RED4ext::CRTTISystem::Get()->GetClass(CName("ClassName"))->GetMethod(CName("MethodName"))`. The three exports `Main`, `Query`, and `Supports` are all required.
 
 ---
 

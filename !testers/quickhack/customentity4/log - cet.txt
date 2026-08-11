@@ -1,0 +1,316 @@
+[2026-08-10 19:42:28 UTC-05:00] [30104] Mod customentity4 loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\customentity4')
+[2026-08-10 19:42:28 UTC-05:00] [30104] Mod entity scanner loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\entity scanner')
+[2026-08-10 19:42:28 UTC-05:00] [30104] Mod ghost_forward loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\ghost_forward')
+[2026-08-10 19:42:28 UTC-05:00] [30104] Mod grappling_hook loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\grappling_hook')
+[2026-08-10 19:42:28 UTC-05:00] [30104] Mod HeavyMG loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\HeavyMG')
+[2026-08-10 19:42:28 UTC-05:00] [30104] Mod hundred_grand loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hundred_grand')
+[2026-08-10 19:42:29 UTC-05:00] [30104] Mod jetpack loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\jetpack')
+[2026-08-10 19:42:29 UTC-05:00] [30104] Mod low_flying_v loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\low_flying_v')
+[2026-08-10 19:42:29 UTC-05:00] [30104] Mod wall_hang loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\wall_hang')
+[2026-08-10 19:42:47 UTC-05:00] [35692] [EntityScanner] Initialized. Bind the toggle key in Settings > Key Bindings.
+[2026-08-10 19:42:47 UTC-05:00] [35692] [2026-08-10 19:42:47] [CE4] CE4 initialized -- All Quickhack Tester with ImGui window
+[2026-08-10 19:42:47 UTC-05:00] [35692] [2026-08-10 19:42:47] [CE4] Combines CE3 drone+bridge, CE1 ImGui, SEDevT1 action tracking
+[2026-08-10 19:42:47 UTC-05:00] [35692] [2026-08-10 19:42:47] [CE4] 
+[2026-08-10 19:42:47 UTC-05:00] [35692] [2026-08-10 19:42:47] [CE4] Usage:
+[2026-08-10 19:42:47 UTC-05:00] [35692] [2026-08-10 19:42:47] [CE4]   1. Spawn drone (hotkey) -- window appears
+[2026-08-10 19:42:47 UTC-05:00] [35692] [2026-08-10 19:42:47] [CE4]   2. Look at a hackable device
+[2026-08-10 19:42:47 UTC-05:00] [35692] [2026-08-10 19:42:47] [CE4]   3. List quickhacks (hotkey) -- populates action list
+[2026-08-10 19:42:47 UTC-05:00] [35692] [2026-08-10 19:42:47] [CE4]   4. Apply random quickhack (hotkey) -- executes weighted random
+[2026-08-10 19:42:47 UTC-05:00] [35692] [2026-08-10 19:42:47] [CE4]   5. Repeat step 4 to test all available hacks
+[2026-08-10 19:42:47 UTC-05:00] [35692] [2026-08-10 19:42:47] [CE4] API check: GetScriptableSystemsContainer = true
+[2026-08-10 19:42:47 UTC-05:00] [35692] [2026-08-10 19:42:47] [CE4] Bridge loaded via GetScriptableSystemsContainer():Get("OrbHackingBridge")
+[2026-08-10 19:42:47 UTC-05:00] [35692] LuaVM: initialization finished!
+[2026-08-10 20:08:31 UTC-05:00] [30104] [2026-08-10 20:08:31] [CE4] ==================================================
+[2026-08-10 20:08:31 UTC-05:00] [30104] [2026-08-10 20:08:31] [CE4] SPAWN DRONE
+[2026-08-10 20:08:31 UTC-05:00] [30104] [2026-08-10 20:08:31] [CE4] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-10 20:08:31 UTC-05:00] [30104] [2026-08-10 20:08:31] [CE4] Method A SUCCESS: entity ID: userdata: 0x0238a9a0c3a8 (pending...)
+[2026-08-10 20:08:31 UTC-05:00] [30104] [2026-08-10 20:08:31] [CE4] Drone spawned via Method A (exEntitySpawner)
+[2026-08-10 20:08:31 UTC-05:00] [30104] [2026-08-10 20:08:31] [CE4] Drone spawning... window enabled
+[2026-08-10 20:08:31 UTC-05:00] [30104] [2026-08-10 20:08:31] [CE4] DRONE SPAWNED! Tick: 5, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-10 20:08:31 UTC-05:00] [30104] [2026-08-10 20:08:31] [CE4] Drone spawned (exEntitySpawner)
+[2026-08-10 20:08:31 UTC-05:00] [30104] [2026-08-10 20:08:31] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:08:38 UTC-05:00] [30104] [2026-08-10 20:08:38] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:08:41 UTC-05:00] [30104] [2026-08-10 20:08:41] [CE4] ==================================================
+[2026-08-10 20:08:41 UTC-05:00] [30104] [2026-08-10 20:08:41] [CE4] LIST AVAILABLE QUICKHACKS
+[2026-08-10 20:08:41 UTC-05:00] [30104] [2026-08-10 20:08:41] [CE4] 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }:
+[2026-08-10 20:08:41 UTC-05:00] [30104] [2026-08-10 20:08:41] [CE4]   [1] GlitchScreenSuicide (tried: 0)
+[2026-08-10 20:08:41 UTC-05:00] [30104] [2026-08-10 20:08:41] [CE4]   [2] GlitchScreenBlind (tried: 0)
+[2026-08-10 20:08:41 UTC-05:00] [30104] [2026-08-10 20:08:41] [CE4]   [3] GlitchScreenGrenade (tried: 0)
+[2026-08-10 20:08:41 UTC-05:00] [30104] [2026-08-10 20:08:41] [CE4]   [4] MalfunctionClassHack (tried: 0)
+[2026-08-10 20:08:41 UTC-05:00] [30104] [2026-08-10 20:08:41] [CE4]   [5] RemoteBreach (tried: 0)
+[2026-08-10 20:08:41 UTC-05:00] [30104] [2026-08-10 20:08:41] [CE4]   [6] Ping (tried: 0)
+[2026-08-10 20:08:51 UTC-05:00] [30104] [2026-08-10 20:08:51] [CE4] ==================================================
+[2026-08-10 20:08:51 UTC-05:00] [30104] [2026-08-10 20:08:51] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:08:51 UTC-05:00] [30104] [2026-08-10 20:08:51] [CE4] Applying [5/6]: RemoteBreach -> ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:08:51 UTC-05:00] [30104] [2026-08-10 20:08:51] [CE4] [OK] RemoteBreach -> SUCCESS (action: RemoteBreach) (attempt #1)
+[2026-08-10 20:08:51 UTC-05:00] [30104] [2026-08-10 20:08:51] [CE4] Result: SUCCESS (action: RemoteBreach) (attempt #1 on this device)
+[2026-08-10 20:09:00 UTC-05:00] [30104] [2026-08-10 20:09:00] [CE4] ==================================================
+[2026-08-10 20:09:00 UTC-05:00] [30104] [2026-08-10 20:09:00] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:09:00 UTC-05:00] [30104] [2026-08-10 20:09:00] [CE4] Applying [1/6]: GlitchScreenSuicide -> ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:00 UTC-05:00] [30104] [2026-08-10 20:09:00] [CE4] [OK] GlitchScreenSuicide -> SUCCESS (action: GlitchScreenSuicide) (attempt #1)
+[2026-08-10 20:09:00 UTC-05:00] [30104] [2026-08-10 20:09:00] [CE4] Result: SUCCESS (action: GlitchScreenSuicide) (attempt #1 on this device)
+[2026-08-10 20:09:03 UTC-05:00] [30104] [2026-08-10 20:09:03] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:03 UTC-05:00] [30104] [2026-08-10 20:09:03] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:03 UTC-05:00] [30104] [2026-08-10 20:09:03] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:07 UTC-05:00] [30104] [2026-08-10 20:09:07] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:08 UTC-05:00] [30104] [2026-08-10 20:09:08] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xA1D28DCE, hash_hi = 0x1201BF92 --[[ BillboardDevice --]] }
+[2026-08-10 20:09:09 UTC-05:00] [30104] [2026-08-10 20:09:09] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:10 UTC-05:00] [30104] [2026-08-10 20:09:10] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:11 UTC-05:00] [30104] [2026-08-10 20:09:11] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:15 UTC-05:00] [30104] [2026-08-10 20:09:15] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:15 UTC-05:00] [30104] [2026-08-10 20:09:15] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:09:17 UTC-05:00] [30104] [2026-08-10 20:09:17] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:18 UTC-05:00] [30104] [2026-08-10 20:09:18] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:19 UTC-05:00] [30104] [2026-08-10 20:09:19] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:19 UTC-05:00] [30104] [2026-08-10 20:09:19] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:29 UTC-05:00] [30104] [2026-08-10 20:09:29] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:09:30 UTC-05:00] [30104] [2026-08-10 20:09:30] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:09:36 UTC-05:00] [30104] [2026-08-10 20:09:36] [CE4] ==================================================
+[2026-08-10 20:09:36 UTC-05:00] [30104] [2026-08-10 20:09:36] [CE4] SPAWN DRONE
+[2026-08-10 20:09:36 UTC-05:00] [30104] [2026-08-10 20:09:36] [CE4] ==================================================
+[2026-08-10 20:09:36 UTC-05:00] [30104] [2026-08-10 20:09:36] [CE4] DESPAWN DRONE
+[2026-08-10 20:09:36 UTC-05:00] [30104] [2026-08-10 20:09:36] [CE4] Drone despawned
+[2026-08-10 20:09:37 UTC-05:00] [30104] [2026-08-10 20:09:37] [CE4] ==================================================
+[2026-08-10 20:09:37 UTC-05:00] [30104] [2026-08-10 20:09:37] [CE4] SPAWN DRONE
+[2026-08-10 20:09:37 UTC-05:00] [30104] [2026-08-10 20:09:37] [CE4] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-10 20:09:37 UTC-05:00] [30104] [2026-08-10 20:09:37] [CE4] Method A SUCCESS: entity ID: userdata: 0x0238a9ad0030 (pending...)
+[2026-08-10 20:09:37 UTC-05:00] [30104] [2026-08-10 20:09:37] [CE4] Drone spawned via Method A (exEntitySpawner)
+[2026-08-10 20:09:37 UTC-05:00] [30104] [2026-08-10 20:09:37] [CE4] Drone spawning... window enabled
+[2026-08-10 20:09:37 UTC-05:00] [30104] [2026-08-10 20:09:37] [CE4] DRONE SPAWNED! Tick: 8, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-10 20:09:37 UTC-05:00] [30104] [2026-08-10 20:09:37] [CE4] Drone spawned (exEntitySpawner)
+[2026-08-10 20:09:37 UTC-05:00] [30104] [2026-08-10 20:09:37] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:09:40 UTC-05:00] [30104] [2026-08-10 20:09:40] [CE4] ==================================================
+[2026-08-10 20:09:40 UTC-05:00] [30104] [2026-08-10 20:09:40] [CE4] LIST AVAILABLE QUICKHACKS
+[2026-08-10 20:09:40 UTC-05:00] [30104] [2026-08-10 20:09:40] [CE4] 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }:
+[2026-08-10 20:09:40 UTC-05:00] [30104] [2026-08-10 20:09:40] [CE4]   [1] MalfunctionClassHack (tried: 0)
+[2026-08-10 20:09:40 UTC-05:00] [30104] [2026-08-10 20:09:40] [CE4]   [2] RemoteBreach (tried: 0)
+[2026-08-10 20:09:40 UTC-05:00] [30104] [2026-08-10 20:09:40] [CE4]   [3] Ping (tried: 0)
+[2026-08-10 20:09:42 UTC-05:00] [30104] [2026-08-10 20:09:42] [CE4] ==================================================
+[2026-08-10 20:09:42 UTC-05:00] [30104] [2026-08-10 20:09:42] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:09:42 UTC-05:00] [30104] [2026-08-10 20:09:42] [CE4] Applying [1/3]: MalfunctionClassHack -> ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:09:42 UTC-05:00] [30104] [2026-08-10 20:09:42] [CE4] [OK] MalfunctionClassHack -> SUCCESS (action: MalfunctionClassHack) (attempt #1)
+[2026-08-10 20:09:42 UTC-05:00] [30104] [2026-08-10 20:09:42] [CE4] Result: SUCCESS (action: MalfunctionClassHack) (attempt #1 on this device)
+[2026-08-10 20:09:48 UTC-05:00] [30104] [2026-08-10 20:09:48] [CE4] ==================================================
+[2026-08-10 20:09:48 UTC-05:00] [30104] [2026-08-10 20:09:48] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:09:48 UTC-05:00] [30104] [2026-08-10 20:09:48] [CE4] Applying [2/3]: RemoteBreach -> ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:09:48 UTC-05:00] [30104] [2026-08-10 20:09:48] [CE4] [OK] RemoteBreach -> SUCCESS (action: RemoteBreach) (attempt #1)
+[2026-08-10 20:09:48 UTC-05:00] [30104] [2026-08-10 20:09:48] [CE4] Result: SUCCESS (action: RemoteBreach) (attempt #1 on this device)
+[2026-08-10 20:09:56 UTC-05:00] [30104] [2026-08-10 20:09:56] [CE4] ==================================================
+[2026-08-10 20:09:56 UTC-05:00] [30104] [2026-08-10 20:09:56] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:09:56 UTC-05:00] [30104] [2026-08-10 20:09:56] [CE4] Applying [3/3]: Ping -> ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:09:56 UTC-05:00] [30104] [2026-08-10 20:09:56] [CE4] [OK] Ping -> SUCCESS (action: Ping) (attempt #1)
+[2026-08-10 20:09:56 UTC-05:00] [30104] [2026-08-10 20:09:56] [CE4] Result: SUCCESS (action: Ping) (attempt #1 on this device)
+[2026-08-10 20:09:58 UTC-05:00] [30104] [2026-08-10 20:09:58] [CE4] ==================================================
+[2026-08-10 20:09:58 UTC-05:00] [30104] [2026-08-10 20:09:58] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:09:58 UTC-05:00] [30104] [2026-08-10 20:09:58] [CE4] Applying [3/3]: Ping -> ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:09:58 UTC-05:00] [30104] [2026-08-10 20:09:58] [CE4] [OK] Ping -> SUCCESS (action: Ping) (attempt #2)
+[2026-08-10 20:09:58 UTC-05:00] [30104] [2026-08-10 20:09:58] [CE4] Result: SUCCESS (action: Ping) (attempt #2 on this device)
+[2026-08-10 20:10:00 UTC-05:00] [30104] [2026-08-10 20:10:00] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:10:01 UTC-05:00] [30104] [2026-08-10 20:10:01] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:10:02 UTC-05:00] [30104] [2026-08-10 20:10:02] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:10:02 UTC-05:00] [30104] [2026-08-10 20:10:02] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:10:02 UTC-05:00] [30104] [2026-08-10 20:10:02] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:10:03 UTC-05:00] [30104] [2026-08-10 20:10:03] [CE4] Auto-detected 5 quickhacks on ToCName{ hash_lo = 0x533AEC3B, hash_hi = 0x9DEF182F --[[ CleaningMachine --]] }
+[2026-08-10 20:10:04 UTC-05:00] [30104] [2026-08-10 20:10:04] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:10:04 UTC-05:00] [30104] [2026-08-10 20:10:04] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:10:04 UTC-05:00] [30104] [2026-08-10 20:10:04] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:10:04 UTC-05:00] [30104] [2026-08-10 20:10:04] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:10:09 UTC-05:00] [30104] [2026-08-10 20:10:09] [CE4] ==================================================
+[2026-08-10 20:10:09 UTC-05:00] [30104] [2026-08-10 20:10:09] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:10:09 UTC-05:00] [30104] [2026-08-10 20:10:09] [CE4] Applying [1/2]: MalfunctionClassHack -> ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:10:09 UTC-05:00] [30104] [2026-08-10 20:10:09] [CE4] [OK] MalfunctionClassHack -> SUCCESS (action: MalfunctionClassHack) (attempt #1)
+[2026-08-10 20:10:09 UTC-05:00] [30104] [2026-08-10 20:10:09] [CE4] Result: SUCCESS (action: MalfunctionClassHack) (attempt #1 on this device)
+[2026-08-10 20:10:13 UTC-05:00] [30104] [2026-08-10 20:10:13] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:10:14 UTC-05:00] [30104] [2026-08-10 20:10:14] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:10:15 UTC-05:00] [30104] [2026-08-10 20:10:15] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:10:19 UTC-05:00] [30104] [2026-08-10 20:10:19] [CE4] ==================================================
+[2026-08-10 20:10:19 UTC-05:00] [30104] [2026-08-10 20:10:19] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:10:19 UTC-05:00] [30104] [2026-08-10 20:10:19] [CE4] Applying [1/1]: OverloadClassHack -> ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:10:19 UTC-05:00] [30104] [2026-08-10 20:10:19] [CE4] [OK] OverloadClassHack -> SUCCESS (action: OverloadClassHack) (attempt #1)
+[2026-08-10 20:10:19 UTC-05:00] [30104] [2026-08-10 20:10:19] [CE4] Result: SUCCESS (action: OverloadClassHack) (attempt #1 on this device)
+[2026-08-10 20:10:19 UTC-05:00] [30104] [2026-08-10 20:10:19] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:10:21 UTC-05:00] [30104] [2026-08-10 20:10:21] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:10:25 UTC-05:00] [30104] [2026-08-10 20:10:25] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xA1D28DCE, hash_hi = 0x1201BF92 --[[ BillboardDevice --]] }
+[2026-08-10 20:10:26 UTC-05:00] [30104] [2026-08-10 20:10:26] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:10:28 UTC-05:00] [30104] [2026-08-10 20:10:28] [CE4] Auto-detected 4 quickhacks on ToCName{ hash_lo = 0xF54FAFF9, hash_hi = 0x4399C99F --[[ FuseBox --]] }
+[2026-08-10 20:10:28 UTC-05:00] [30104] [2026-08-10 20:10:28] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:10:31 UTC-05:00] [30104] [2026-08-10 20:10:31] [CE4] ==================================================
+[2026-08-10 20:10:31 UTC-05:00] [30104] [2026-08-10 20:10:31] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:10:31 UTC-05:00] [30104] [2026-08-10 20:10:31] [CE4] Applying [5/6]: RemoteBreach -> ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:10:31 UTC-05:00] [30104] [2026-08-10 20:10:31] [CE4] [OK] RemoteBreach -> SUCCESS (action: RemoteBreach) (attempt #1)
+[2026-08-10 20:10:31 UTC-05:00] [30104] [2026-08-10 20:10:31] [CE4] Result: SUCCESS (action: RemoteBreach) (attempt #1 on this device)
+[2026-08-10 20:10:38 UTC-05:00] [30104] [2026-08-10 20:10:38] [CE4] ==================================================
+[2026-08-10 20:10:38 UTC-05:00] [30104] [2026-08-10 20:10:38] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:10:38 UTC-05:00] [30104] [2026-08-10 20:10:38] [CE4] Applying [3/6]: GlitchScreenGrenade -> ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:10:38 UTC-05:00] [30104] [2026-08-10 20:10:38] [CE4] [OK] GlitchScreenGrenade -> SUCCESS (action: GlitchScreenGrenade) (attempt #1)
+[2026-08-10 20:10:38 UTC-05:00] [30104] [2026-08-10 20:10:38] [CE4] Result: SUCCESS (action: GlitchScreenGrenade) (attempt #1 on this device)
+[2026-08-10 20:10:45 UTC-05:00] [30104] [2026-08-10 20:10:45] [CE4] Auto-detected 4 quickhacks on ToCName{ hash_lo = 0xF54FAFF9, hash_hi = 0x4399C99F --[[ FuseBox --]] }
+[2026-08-10 20:10:46 UTC-05:00] [30104] [2026-08-10 20:10:46] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:10:46 UTC-05:00] [30104] [2026-08-10 20:10:46] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:10:47 UTC-05:00] [30104] [2026-08-10 20:10:47] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:10:47 UTC-05:00] [30104] [2026-08-10 20:10:47] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:10:48 UTC-05:00] [30104] [2026-08-10 20:10:48] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:10:51 UTC-05:00] [30104] [2026-08-10 20:10:51] [CE4] ==================================================
+[2026-08-10 20:10:51 UTC-05:00] [30104] [2026-08-10 20:10:51] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:10:51 UTC-05:00] [30104] [2026-08-10 20:10:51] [CE4] Applying [3/3]: Ping -> ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:10:51 UTC-05:00] [30104] [2026-08-10 20:10:51] [CE4] [OK] Ping -> SUCCESS (action: Ping) (attempt #1)
+[2026-08-10 20:10:51 UTC-05:00] [30104] [2026-08-10 20:10:51] [CE4] Result: SUCCESS (action: Ping) (attempt #1 on this device)
+[2026-08-10 20:10:58 UTC-05:00] [30104] [2026-08-10 20:10:58] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:10:58 UTC-05:00] [30104] [2026-08-10 20:10:58] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-10 20:10:59 UTC-05:00] [30104] [2026-08-10 20:10:59] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:11:01 UTC-05:00] [30104] [2026-08-10 20:11:01] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:11:01 UTC-05:00] [30104] [2026-08-10 20:11:01] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:11:01 UTC-05:00] [30104] [2026-08-10 20:11:01] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:11:01 UTC-05:00] [30104] [2026-08-10 20:11:01] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:11:04 UTC-05:00] [30104] [2026-08-10 20:11:04] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xD695E074, hash_hi = 0x5BCB6626 --[[ RoadBlock --]] }
+[2026-08-10 20:11:11 UTC-05:00] [30104] [2026-08-10 20:11:11] [CE4] ==================================================
+[2026-08-10 20:11:11 UTC-05:00] [30104] [2026-08-10 20:11:11] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:11:11 UTC-05:00] [30104] [2026-08-10 20:11:11] [CE4] No quickhack actions on ToCName{ hash_lo = 0xA013F2EF, hash_hi = 0x0F181BB1 --[[ SurveillanceCamera --]] }
+[2026-08-10 20:11:29 UTC-05:00] [30104] [2026-08-10 20:11:29] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:34 UTC-05:00] [30104] [2026-08-10 20:11:34] [CE4] ==================================================
+[2026-08-10 20:11:34 UTC-05:00] [30104] [2026-08-10 20:11:34] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:11:34 UTC-05:00] [30104] [2026-08-10 20:11:34] [CE4] Applying [1/2]: MalfunctionClassHack -> ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:34 UTC-05:00] [30104] [2026-08-10 20:11:34] [CE4] [OK] MalfunctionClassHack -> SUCCESS (action: MalfunctionClassHack) (attempt #1)
+[2026-08-10 20:11:34 UTC-05:00] [30104] [2026-08-10 20:11:34] [CE4] Result: SUCCESS (action: MalfunctionClassHack) (attempt #1 on this device)
+[2026-08-10 20:11:37 UTC-05:00] [30104] [2026-08-10 20:11:37] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:11:38 UTC-05:00] [30104] [2026-08-10 20:11:38] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:39 UTC-05:00] [30104] [2026-08-10 20:11:39] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:40 UTC-05:00] [30104] [2026-08-10 20:11:40] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:43 UTC-05:00] [30104] [2026-08-10 20:11:43] [CE4] ==================================================
+[2026-08-10 20:11:43 UTC-05:00] [30104] [2026-08-10 20:11:43] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:11:43 UTC-05:00] [30104] [2026-08-10 20:11:43] [CE4] Applying [2/2]: OverloadClassHack -> ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:43 UTC-05:00] [30104] [2026-08-10 20:11:43] [CE4] [OK] OverloadClassHack -> SUCCESS (action: OverloadClassHack) (attempt #1)
+[2026-08-10 20:11:43 UTC-05:00] [30104] [2026-08-10 20:11:43] [CE4] Result: SUCCESS (action: OverloadClassHack) (attempt #1 on this device)
+[2026-08-10 20:11:45 UTC-05:00] [30104] [2026-08-10 20:11:45] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:11:46 UTC-05:00] [30104] [2026-08-10 20:11:46] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:11:47 UTC-05:00] [30104] [2026-08-10 20:11:47] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:47 UTC-05:00] [30104] [2026-08-10 20:11:47] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:47 UTC-05:00] [30104] [2026-08-10 20:11:47] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:48 UTC-05:00] [30104] [2026-08-10 20:11:48] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:48 UTC-05:00] [30104] [2026-08-10 20:11:48] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:50 UTC-05:00] [30104] [2026-08-10 20:11:50] [CE4] ==================================================
+[2026-08-10 20:11:50 UTC-05:00] [30104] [2026-08-10 20:11:50] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:11:50 UTC-05:00] [30104] [2026-08-10 20:11:50] [CE4] Applying [1/2]: MalfunctionClassHack -> ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:50 UTC-05:00] [30104] [2026-08-10 20:11:50] [CE4] [OK] MalfunctionClassHack -> SUCCESS (action: MalfunctionClassHack) (attempt #1)
+[2026-08-10 20:11:50 UTC-05:00] [30104] [2026-08-10 20:11:50] [CE4] Result: SUCCESS (action: MalfunctionClassHack) (attempt #1 on this device)
+[2026-08-10 20:11:51 UTC-05:00] [30104] [2026-08-10 20:11:51] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:52 UTC-05:00] [30104] [2026-08-10 20:11:52] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:11:57 UTC-05:00] [30104] [2026-08-10 20:11:57] [CE4] ==================================================
+[2026-08-10 20:11:57 UTC-05:00] [30104] [2026-08-10 20:11:57] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:11:57 UTC-05:00] [30104] [2026-08-10 20:11:57] [CE4] No quickhack actions on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:58 UTC-05:00] [30104] [2026-08-10 20:11:58] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:58 UTC-05:00] [30104] [2026-08-10 20:11:58] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:11:59 UTC-05:00] [30104] [2026-08-10 20:11:59] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:02 UTC-05:00] [30104] [2026-08-10 20:12:02] [CE4] ==================================================
+[2026-08-10 20:12:02 UTC-05:00] [30104] [2026-08-10 20:12:02] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:12:02 UTC-05:00] [30104] [2026-08-10 20:12:02] [CE4] Applying [2/2]: OverloadClassHack -> ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:02 UTC-05:00] [30104] [2026-08-10 20:12:02] [CE4] [OK] OverloadClassHack -> SUCCESS (action: OverloadClassHack) (attempt #1)
+[2026-08-10 20:12:02 UTC-05:00] [30104] [2026-08-10 20:12:02] [CE4] Result: SUCCESS (action: OverloadClassHack) (attempt #1 on this device)
+[2026-08-10 20:12:05 UTC-05:00] [30104] [2026-08-10 20:12:05] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:12:06 UTC-05:00] [30104] [2026-08-10 20:12:06] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:06 UTC-05:00] [30104] [2026-08-10 20:12:06] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:08 UTC-05:00] [30104] [2026-08-10 20:12:08] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:12:09 UTC-05:00] [30104] [2026-08-10 20:12:09] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:12:09 UTC-05:00] [30104] [2026-08-10 20:12:09] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:12:10 UTC-05:00] [30104] [2026-08-10 20:12:10] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:12:10 UTC-05:00] [30104] [2026-08-10 20:12:10] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:12:10 UTC-05:00] [30104] [2026-08-10 20:12:10] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:10 UTC-05:00] [30104] [2026-08-10 20:12:10] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:12:10 UTC-05:00] [30104] [2026-08-10 20:12:10] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:12:10 UTC-05:00] [30104] [2026-08-10 20:12:10] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:13 UTC-05:00] [30104] [2026-08-10 20:12:13] [CE4] ==================================================
+[2026-08-10 20:12:13 UTC-05:00] [30104] [2026-08-10 20:12:13] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:12:13 UTC-05:00] [30104] [2026-08-10 20:12:13] [CE4] Applying [1/1]: OverloadClassHack -> ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:13 UTC-05:00] [30104] [2026-08-10 20:12:13] [CE4] [OK] OverloadClassHack -> SUCCESS (action: OverloadClassHack) (attempt #1)
+[2026-08-10 20:12:13 UTC-05:00] [30104] [2026-08-10 20:12:13] [CE4] Result: SUCCESS (action: OverloadClassHack) (attempt #1 on this device)
+[2026-08-10 20:12:15 UTC-05:00] [30104] [2026-08-10 20:12:15] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:16 UTC-05:00] [30104] [2026-08-10 20:12:16] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:16 UTC-05:00] [30104] [2026-08-10 20:12:16] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:16 UTC-05:00] [30104] [2026-08-10 20:12:16] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:18 UTC-05:00] [30104] [2026-08-10 20:12:18] [CE4] ==================================================
+[2026-08-10 20:12:18 UTC-05:00] [30104] [2026-08-10 20:12:18] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:12:18 UTC-05:00] [30104] [2026-08-10 20:12:18] [CE4] Applying [1/2]: MalfunctionClassHack -> ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:18 UTC-05:00] [30104] [2026-08-10 20:12:18] [CE4] [OK] MalfunctionClassHack -> SUCCESS (action: MalfunctionClassHack) (attempt #1)
+[2026-08-10 20:12:18 UTC-05:00] [30104] [2026-08-10 20:12:18] [CE4] Result: SUCCESS (action: MalfunctionClassHack) (attempt #1 on this device)
+[2026-08-10 20:12:20 UTC-05:00] [30104] [2026-08-10 20:12:20] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:21 UTC-05:00] [30104] [2026-08-10 20:12:21] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:21 UTC-05:00] [30104] [2026-08-10 20:12:21] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:21 UTC-05:00] [30104] [2026-08-10 20:12:21] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:21 UTC-05:00] [30104] [2026-08-10 20:12:21] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:12:22 UTC-05:00] [30104] [2026-08-10 20:12:22] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:23 UTC-05:00] [30104] [2026-08-10 20:12:23] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:24 UTC-05:00] [30104] [2026-08-10 20:12:24] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:12:24 UTC-05:00] [30104] [2026-08-10 20:12:24] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:12:24 UTC-05:00] [30104] [2026-08-10 20:12:24] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0xC12CB10C, hash_hi = 0x15631AA4 --[[ DisposalDevice --]] }
+[2026-08-10 20:12:25 UTC-05:00] [30104] [2026-08-10 20:12:25] [CE4] Auto-detected 4 quickhacks on ToCName{ hash_lo = 0xF54FAFF9, hash_hi = 0x4399C99F --[[ FuseBox --]] }
+[2026-08-10 20:12:25 UTC-05:00] [30104] [2026-08-10 20:12:25] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:27 UTC-05:00] [30104] [2026-08-10 20:12:27] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:27 UTC-05:00] [30104] [2026-08-10 20:12:27] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:27 UTC-05:00] [30104] [2026-08-10 20:12:27] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:27 UTC-05:00] [30104] [2026-08-10 20:12:27] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:27 UTC-05:00] [30104] [2026-08-10 20:12:27] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:27 UTC-05:00] [30104] [2026-08-10 20:12:27] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:12:28 UTC-05:00] [30104] [2026-08-10 20:12:28] [CE4] Auto-detected 9 quickhacks on ToCName{ hash_lo = 0x84258C65, hash_hi = 0x54682B10 --[[ SecurityTurret --]] }
+[2026-08-10 20:12:31 UTC-05:00] [30104] [2026-08-10 20:12:31] [CE4] ==================================================
+[2026-08-10 20:12:31 UTC-05:00] [30104] [2026-08-10 20:12:31] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:12:31 UTC-05:00] [30104] [2026-08-10 20:12:31] [CE4] No device targeted -- look at a hackable device
+[2026-08-10 20:12:32 UTC-05:00] [30104] [2026-08-10 20:12:32] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:32 UTC-05:00] [30104] [2026-08-10 20:12:32] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:32 UTC-05:00] [30104] [2026-08-10 20:12:32] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:33 UTC-05:00] [30104] [2026-08-10 20:12:33] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:12:33 UTC-05:00] [30104] [2026-08-10 20:12:33] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:33 UTC-05:00] [30104] [2026-08-10 20:12:33] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:12:33 UTC-05:00] [30104] [2026-08-10 20:12:33] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:33 UTC-05:00] [30104] [2026-08-10 20:12:33] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:33 UTC-05:00] [30104] [2026-08-10 20:12:33] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:33 UTC-05:00] [30104] [2026-08-10 20:12:33] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:33 UTC-05:00] [30104] [2026-08-10 20:12:33] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:35 UTC-05:00] [30104] [2026-08-10 20:12:35] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:12:35 UTC-05:00] [30104] [2026-08-10 20:12:35] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:35 UTC-05:00] [30104] [2026-08-10 20:12:35] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:39 UTC-05:00] [30104] [2026-08-10 20:12:39] [CE4] ==================================================
+[2026-08-10 20:12:39 UTC-05:00] [30104] [2026-08-10 20:12:39] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:12:39 UTC-05:00] [30104] [2026-08-10 20:12:39] [CE4] Applying [1/1]: ToggleStateClassHack -> ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:12:39 UTC-05:00] [30104] [2026-08-10 20:12:39] [CE4] [OK] ToggleStateClassHack -> SUCCESS (action: ToggleStateClassHack) (attempt #1)
+[2026-08-10 20:12:39 UTC-05:00] [30104] [2026-08-10 20:12:39] [CE4] Result: SUCCESS (action: ToggleStateClassHack) (attempt #1 on this device)
+[2026-08-10 20:12:40 UTC-05:00] [30104] [2026-08-10 20:12:40] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0xAF83E008, hash_hi = 0x09B5FE76 --[[ BlindingLight --]] }
+[2026-08-10 20:12:42 UTC-05:00] [30104] [2026-08-10 20:12:42] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:43 UTC-05:00] [30104] [2026-08-10 20:12:43] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:44 UTC-05:00] [30104] [2026-08-10 20:12:44] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:45 UTC-05:00] [30104] [2026-08-10 20:12:45] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:47 UTC-05:00] [30104] [2026-08-10 20:12:47] [CE4] ==================================================
+[2026-08-10 20:12:47 UTC-05:00] [30104] [2026-08-10 20:12:47] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:12:47 UTC-05:00] [30104] [2026-08-10 20:12:47] [CE4] Applying [2/2]: OverloadClassHack -> ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:47 UTC-05:00] [30104] [2026-08-10 20:12:47] [CE4] [OK] OverloadClassHack -> SUCCESS (action: OverloadClassHack) (attempt #1)
+[2026-08-10 20:12:47 UTC-05:00] [30104] [2026-08-10 20:12:47] [CE4] Result: SUCCESS (action: OverloadClassHack) (attempt #1 on this device)
+[2026-08-10 20:12:47 UTC-05:00] [30104] [2026-08-10 20:12:47] [CE4] Auto-detected 2 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:52 UTC-05:00] [30104] [2026-08-10 20:12:52] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:12:56 UTC-05:00] [30104] [2026-08-10 20:12:56] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:12:56 UTC-05:00] [30104] [2026-08-10 20:12:56] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:59 UTC-05:00] [30104] [2026-08-10 20:12:59] [CE4] ==================================================
+[2026-08-10 20:12:59 UTC-05:00] [30104] [2026-08-10 20:12:59] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:12:59 UTC-05:00] [30104] [2026-08-10 20:12:59] [CE4] Applying [1/1]: OverloadClassHack -> ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-10 20:12:59 UTC-05:00] [30104] [2026-08-10 20:12:59] [CE4] [OK] OverloadClassHack -> SUCCESS (action: OverloadClassHack) (attempt #1)
+[2026-08-10 20:12:59 UTC-05:00] [30104] [2026-08-10 20:12:59] [CE4] Result: SUCCESS (action: OverloadClassHack) (attempt #1 on this device)
+[2026-08-10 20:13:00 UTC-05:00] [30104] [2026-08-10 20:13:00] [CE4] Auto-detected 8 quickhacks on ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-10 20:13:01 UTC-05:00] [30104] [2026-08-10 20:13:01] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:13:01 UTC-05:00] [30104] [2026-08-10 20:13:01] [CE4] Auto-detected 3 quickhacks on ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:13:04 UTC-05:00] [30104] [2026-08-10 20:13:04] [CE4] ==================================================
+[2026-08-10 20:13:04 UTC-05:00] [30104] [2026-08-10 20:13:04] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:13:04 UTC-05:00] [30104] [2026-08-10 20:13:04] [CE4] Applying [3/3]: Ping -> ToCName{ hash_lo = 0x03C5C960, hash_hi = 0xEA6FF70B --[[ forklift --]] }
+[2026-08-10 20:13:04 UTC-05:00] [30104] [2026-08-10 20:13:04] [CE4] [OK] Ping -> SUCCESS (action: Ping) (attempt #1)
+[2026-08-10 20:13:04 UTC-05:00] [30104] [2026-08-10 20:13:04] [CE4] Result: SUCCESS (action: Ping) (attempt #1 on this device)
+[2026-08-10 20:13:07 UTC-05:00] [30104] [2026-08-10 20:13:07] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:13:07 UTC-05:00] [30104] [2026-08-10 20:13:07] [CE4] Auto-detected 1 quickhacks on ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:13:10 UTC-05:00] [30104] [2026-08-10 20:13:10] [CE4] ==================================================
+[2026-08-10 20:13:10 UTC-05:00] [30104] [2026-08-10 20:13:10] [CE4] APPLY RANDOM QUICKHACK
+[2026-08-10 20:13:10 UTC-05:00] [30104] [2026-08-10 20:13:10] [CE4] Applying [1/1]: ToggleStateClassHack -> ToCName{ hash_lo = 0x27F55A13, hash_hi = 0x23795A53 --[[ ActivatedDeviceTrapDestruction --]] }
+[2026-08-10 20:13:10 UTC-05:00] [30104] [2026-08-10 20:13:10] [CE4] [OK] ToggleStateClassHack -> SUCCESS (action: ToggleStateClassHack) (attempt #1)
+[2026-08-10 20:13:10 UTC-05:00] [30104] [2026-08-10 20:13:10] [CE4] Result: SUCCESS (action: ToggleStateClassHack) (attempt #1 on this device)
+[2026-08-10 20:13:11 UTC-05:00] [30104] [2026-08-10 20:13:11] [CE4] Auto-detected 6 quickhacks on ToCName{ hash_lo = 0xA1D28DCE, hash_hi = 0x1201BF92 --[[ BillboardDevice --]] }
+[2026-08-10 20:13:15 UTC-05:00] [30104] [2026-08-10 20:13:15] [CE4] ==================================================
+[2026-08-10 20:13:15 UTC-05:00] [30104] [2026-08-10 20:13:15] [CE4] SPAWN DRONE
+[2026-08-10 20:13:15 UTC-05:00] [30104] [2026-08-10 20:13:15] [CE4] ==================================================
+[2026-08-10 20:13:15 UTC-05:00] [30104] [2026-08-10 20:13:15] [CE4] DESPAWN DRONE
+[2026-08-10 20:13:15 UTC-05:00] [30104] [2026-08-10 20:13:15] [CE4] Drone despawned
+[2026-08-10 20:13:31 UTC-05:00] [30104] [2026-08-10 20:13:31] [CE4] CE4 stopped

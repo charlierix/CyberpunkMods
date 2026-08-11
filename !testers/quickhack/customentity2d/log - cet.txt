@@ -1,0 +1,237 @@
+[2026-08-09 19:09:06 UTC-05:00] [17228] Mod customentity2c loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\customentity2c')
+[2026-08-09 19:09:06 UTC-05:00] [17228] Mod entity scanner loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\entity scanner')
+[2026-08-09 19:09:06 UTC-05:00] [17228] Mod ghost_forward loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\ghost_forward')
+[2026-08-09 19:09:06 UTC-05:00] [17228] Mod grappling_hook loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\grappling_hook')
+[2026-08-09 19:09:06 UTC-05:00] [17228] Mod HeavyMG loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\HeavyMG')
+[2026-08-09 19:09:06 UTC-05:00] [17228] Mod hundred_grand loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hundred_grand')
+[2026-08-09 19:09:06 UTC-05:00] [17228] Mod jetpack loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\jetpack')
+[2026-08-09 19:09:06 UTC-05:00] [17228] Mod low_flying_v loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\low_flying_v')
+[2026-08-09 19:09:06 UTC-05:00] [17228] Mod wall_hang loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\wall_hang')
+[2026-08-09 19:09:19 UTC-05:00] [34712] [EntityScanner] Initialized. Bind the toggle key in Settings > Key Bindings.
+[2026-08-09 19:09:19 UTC-05:00] [34712] [2026-08-09 19:09:19] [CE2c] CE2c initialized -- quickhack clearance fix + action dump
+[2026-08-09 19:09:19 UTC-05:00] [34712] [2026-08-09 19:09:19] [CE2c] Fixes: GetInteractionQuickHackClearance + pcall diagnostic + action dump + fallback
+[2026-08-09 19:09:19 UTC-05:00] [34712] [2026-08-09 19:09:19] [CE2c] API check: GetScriptableSystemsContainer = true
+[2026-08-09 19:09:19 UTC-05:00] [34712] [2026-08-09 19:09:19] [CE2c] API check: GetScriptableSystem = false
+[2026-08-09 19:09:19 UTC-05:00] [34712] [2026-08-09 19:09:19] [CE2c] Bridge loaded via GetScriptableSystemsContainer():Get("OrbHackingBridge")
+[2026-08-09 19:09:19 UTC-05:00] [34712] LuaVM: initialization finished!
+[2026-08-09 19:10:51 UTC-05:00] [17228] [2026-08-09 19:10:51] [CE2c] ==================================================
+[2026-08-09 19:10:51 UTC-05:00] [17228] [2026-08-09 19:10:51] [CE2c] SPAWN DRONE
+[2026-08-09 19:10:51 UTC-05:00] [17228] [2026-08-09 19:10:51] [CE2c] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:10:51 UTC-05:00] [17228] [2026-08-09 19:10:51] [CE2c] Method A SUCCESS: entity ID: userdata: 0x01ea4c5c30a0 (pending...)
+[2026-08-09 19:10:51 UTC-05:00] [17228] [2026-08-09 19:10:51] [CE2c] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 19:10:51 UTC-05:00] [17228] [2026-08-09 19:10:51] [CE2c] DRONE SPAWNED SUCCESSFULLY! Tick: 10, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:10:51 UTC-05:00] [17228] [2026-08-09 19:10:51] [CE2c] Entity: userdata: 0x01ea4c5d3288
+[2026-08-09 19:11:03 UTC-05:00] [17228] [2026-08-09 19:11:03] [CE2c] ==================================================
+[2026-08-09 19:11:03 UTC-05:00] [17228] [2026-08-09 19:11:03] [CE2c] LIST DEVICE ACTIONS
+[2026-08-09 19:11:03 UTC-05:00] [17228] [2026-08-09 19:11:03] [CE2c] Target found with args (true, false)
+[2026-08-09 19:11:03 UTC-05:00] [17228] [2026-08-09 19:11:03] [CE2c] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-08-09 19:11:03 UTC-05:00] [17228] [2026-08-09 19:11:03] [CE2c] Target distance: 4.2 m
+[2026-08-09 19:11:03 UTC-05:00] [17228] [2026-08-09 19:11:03] [CE2c] --- Actions for Player as executor ---
+[2026-08-09 19:11:03 UTC-05:00] [17228] [2026-08-09 19:11:03] [CE2c] Player actions: 6 actions: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack, RemoteBreach, Ping
+[2026-08-09 19:11:03 UTC-05:00] [17228] [2026-08-09 19:11:03] [CE2c] --- Actions for Drone as executor ---
+[2026-08-09 19:11:03 UTC-05:00] [17228] [2026-08-09 19:11:03] [CE2c] Drone actions: 6 actions: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack, RemoteBreach, Ping
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] ==================================================
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] PING QUICKHACK TEST
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] Target found with args (true, false)
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] Target distance: 4.8 m
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] --- PHASE 1: Player as executor ---
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] Available actions: 6 actions: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack, RemoteBreach, Ping
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] Phase 1 result (PingDevice): NO_ACTION (requested: PingDevice, available: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack, RemoteBreach, Ping)
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] Phase 1 PingDevice not found -- trying first available action as fallback
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] Phase 1 fallback result: SUCCESS (action: GlitchScreenSuicide)
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] --- PHASE 2: Drone as executor ---
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] Drone available actions: 6 actions: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack, RemoteBreach, Ping
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] Phase 2 result (PingDevice): NO_ACTION (requested: PingDevice, available: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack, RemoteBreach, Ping)
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] Phase 2 PingDevice not found -- trying first available action as fallback
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] Phase 2 fallback result: SUCCESS (action: GlitchScreenSuicide)
+[2026-08-09 19:11:32 UTC-05:00] [17228] [2026-08-09 19:11:32] [CE2c] Test #1 complete
+[2026-08-09 19:11:58 UTC-05:00] [17228] [2026-08-09 19:11:58] [CE2c] ==================================================
+[2026-08-09 19:11:58 UTC-05:00] [17228] [2026-08-09 19:11:58] [CE2c] SPAWN DRONE
+[2026-08-09 19:11:58 UTC-05:00] [17228] [2026-08-09 19:11:58] [CE2c] ==================================================
+[2026-08-09 19:11:58 UTC-05:00] [17228] [2026-08-09 19:11:58] [CE2c] DESPAWN DRONE
+[2026-08-09 19:11:58 UTC-05:00] [17228] [2026-08-09 19:11:58] [CE2c] Drone despawned
+[2026-08-09 19:11:58 UTC-05:00] [17228] [2026-08-09 19:11:58] [CE2c] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:11:58 UTC-05:00] [17228] [2026-08-09 19:11:58] [CE2c] Method A SUCCESS: entity ID: userdata: 0x01ea4674f668 (pending...)
+[2026-08-09 19:11:58 UTC-05:00] [17228] [2026-08-09 19:11:58] [CE2c] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 19:11:58 UTC-05:00] [17228] [2026-08-09 19:11:58] [CE2c] DRONE SPAWNED SUCCESSFULLY! Tick: 52, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:11:58 UTC-05:00] [17228] [2026-08-09 19:11:58] [CE2c] Entity: userdata: 0x01ea1d782ca0
+[2026-08-09 19:12:08 UTC-05:00] [17228] [2026-08-09 19:12:08] [CE2c] ==================================================
+[2026-08-09 19:12:08 UTC-05:00] [17228] [2026-08-09 19:12:08] [CE2c] SPAWN DRONE
+[2026-08-09 19:12:08 UTC-05:00] [17228] [2026-08-09 19:12:08] [CE2c] ==================================================
+[2026-08-09 19:12:08 UTC-05:00] [17228] [2026-08-09 19:12:08] [CE2c] DESPAWN DRONE
+[2026-08-09 19:12:08 UTC-05:00] [17228] [2026-08-09 19:12:08] [CE2c] Drone despawned
+[2026-08-09 19:12:08 UTC-05:00] [17228] [2026-08-09 19:12:08] [CE2c] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:12:08 UTC-05:00] [17228] [2026-08-09 19:12:08] [CE2c] Method A SUCCESS: entity ID: userdata: 0x01ea1d749698 (pending...)
+[2026-08-09 19:12:08 UTC-05:00] [17228] [2026-08-09 19:12:08] [CE2c] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 19:12:08 UTC-05:00] [17228] [2026-08-09 19:12:08] [CE2c] DRONE SPAWNED SUCCESSFULLY! Tick: 55, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:12:08 UTC-05:00] [17228] [2026-08-09 19:12:08] [CE2c] Entity: userdata: 0x01ea1d74e458
+[2026-08-09 19:12:15 UTC-05:00] [17228] [2026-08-09 19:12:15] [CE2c] ==================================================
+[2026-08-09 19:12:15 UTC-05:00] [17228] [2026-08-09 19:12:15] [CE2c] LIST DEVICE ACTIONS
+[2026-08-09 19:12:15 UTC-05:00] [17228] [2026-08-09 19:12:15] [CE2c] Target found with args (true, false)
+[2026-08-09 19:12:15 UTC-05:00] [17228] [2026-08-09 19:12:15] [CE2c] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-08-09 19:12:15 UTC-05:00] [17228] [2026-08-09 19:12:15] [CE2c] Target distance: 4.6 m
+[2026-08-09 19:12:15 UTC-05:00] [17228] [2026-08-09 19:12:15] [CE2c] --- Actions for Player as executor ---
+[2026-08-09 19:12:15 UTC-05:00] [17228] [2026-08-09 19:12:15] [CE2c] Player actions: 4 actions: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack
+[2026-08-09 19:12:15 UTC-05:00] [17228] [2026-08-09 19:12:15] [CE2c] --- Actions for Drone as executor ---
+[2026-08-09 19:12:15 UTC-05:00] [17228] [2026-08-09 19:12:15] [CE2c] Drone actions: 4 actions: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] ==================================================
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] PING QUICKHACK TEST
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] Target found with args (true, false)
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] Target: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] Target distance: 4.6 m
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] --- PHASE 1: Player as executor ---
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] Available actions: 4 actions: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] Phase 1 result (PingDevice): NO_ACTION (requested: PingDevice, available: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack)
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] Phase 1 PingDevice not found -- trying first available action as fallback
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] Phase 1 fallback result: SUCCESS (action: GlitchScreenSuicide)
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] --- PHASE 2: Drone as executor ---
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] Drone available actions: 4 actions: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] Phase 2 result (PingDevice): NO_ACTION (requested: PingDevice, available: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack)
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] Phase 2 PingDevice not found -- trying first available action as fallback
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] Phase 2 fallback result: SUCCESS (action: GlitchScreenSuicide)
+[2026-08-09 19:12:19 UTC-05:00] [17228] [2026-08-09 19:12:19] [CE2c] Test #2 complete
+[2026-08-09 19:12:40 UTC-05:00] [17228] [2026-08-09 19:12:40] [CE2c] ==================================================
+[2026-08-09 19:12:40 UTC-05:00] [17228] [2026-08-09 19:12:40] [CE2c] SPAWN DRONE
+[2026-08-09 19:12:40 UTC-05:00] [17228] [2026-08-09 19:12:40] [CE2c] ==================================================
+[2026-08-09 19:12:40 UTC-05:00] [17228] [2026-08-09 19:12:40] [CE2c] DESPAWN DRONE
+[2026-08-09 19:12:40 UTC-05:00] [17228] [2026-08-09 19:12:40] [CE2c] Drone despawned
+[2026-08-09 19:12:40 UTC-05:00] [17228] [2026-08-09 19:12:40] [CE2c] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:12:40 UTC-05:00] [17228] [2026-08-09 19:12:40] [CE2c] Method A SUCCESS: entity ID: userdata: 0x01ea1d739f10 (pending...)
+[2026-08-09 19:12:40 UTC-05:00] [17228] [2026-08-09 19:12:40] [CE2c] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 19:12:40 UTC-05:00] [17228] [2026-08-09 19:12:40] [CE2c] DRONE SPAWNED SUCCESSFULLY! Tick: 59, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:12:40 UTC-05:00] [17228] [2026-08-09 19:12:40] [CE2c] Entity: userdata: 0x01ea4677ef88
+[2026-08-09 19:12:43 UTC-05:00] [17228] [2026-08-09 19:12:43] [CE2c] ==================================================
+[2026-08-09 19:12:43 UTC-05:00] [17228] [2026-08-09 19:12:43] [CE2c] LIST DEVICE ACTIONS
+[2026-08-09 19:12:43 UTC-05:00] [17228] [2026-08-09 19:12:43] [CE2c] Target found with args (true, false)
+[2026-08-09 19:12:43 UTC-05:00] [17228] [2026-08-09 19:12:43] [CE2c] Target: ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-09 19:12:43 UTC-05:00] [17228] [2026-08-09 19:12:43] [CE2c] Target distance: 6.5 m
+[2026-08-09 19:12:43 UTC-05:00] [17228] [2026-08-09 19:12:43] [CE2c] --- Actions for Player as executor ---
+[2026-08-09 19:12:43 UTC-05:00] [17228] [2026-08-09 19:12:43] [CE2c] Player actions: 5 actions: RemoteBreach, Ping, OverloadClassHack, RemoteBreach, Ping
+[2026-08-09 19:12:43 UTC-05:00] [17228] [2026-08-09 19:12:43] [CE2c] --- Actions for Drone as executor ---
+[2026-08-09 19:12:43 UTC-05:00] [17228] [2026-08-09 19:12:43] [CE2c] Drone actions: 5 actions: RemoteBreach, Ping, OverloadClassHack, RemoteBreach, Ping
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] ==================================================
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] PING QUICKHACK TEST
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] Target found with args (true, false)
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] Target: ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] Target distance: 6.5 m
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] --- PHASE 1: Player as executor ---
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] Available actions: 5 actions: RemoteBreach, Ping, OverloadClassHack, RemoteBreach, Ping
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] Phase 1 result (PingDevice): NO_ACTION (requested: PingDevice, available: RemoteBreach, Ping, OverloadClassHack, RemoteBreach, Ping)
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] Phase 1 PingDevice not found -- trying first available action as fallback
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] Phase 1 fallback result: SUCCESS (action: RemoteBreach)
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] --- PHASE 2: Drone as executor ---
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] Drone available actions: 5 actions: RemoteBreach, Ping, OverloadClassHack, RemoteBreach, Ping
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] Phase 2 result (PingDevice): NO_ACTION (requested: PingDevice, available: RemoteBreach, Ping, OverloadClassHack, RemoteBreach, Ping)
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] Phase 2 PingDevice not found -- trying first available action as fallback
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] Phase 2 fallback result: SUCCESS (action: RemoteBreach)
+[2026-08-09 19:12:57 UTC-05:00] [17228] [2026-08-09 19:12:57] [CE2c] Test #3 complete
+[2026-08-09 19:13:24 UTC-05:00] [17228] [2026-08-09 19:13:24] [CE2c] ==================================================
+[2026-08-09 19:13:24 UTC-05:00] [17228] [2026-08-09 19:13:24] [CE2c] SPAWN DRONE
+[2026-08-09 19:13:24 UTC-05:00] [17228] [2026-08-09 19:13:24] [CE2c] ==================================================
+[2026-08-09 19:13:24 UTC-05:00] [17228] [2026-08-09 19:13:24] [CE2c] DESPAWN DRONE
+[2026-08-09 19:13:24 UTC-05:00] [17228] [2026-08-09 19:13:24] [CE2c] Drone despawned
+[2026-08-09 19:13:24 UTC-05:00] [17228] [2026-08-09 19:13:24] [CE2c] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:13:24 UTC-05:00] [17228] [2026-08-09 19:13:24] [CE2c] Method A SUCCESS: entity ID: userdata: 0x01ea4c520c90 (pending...)
+[2026-08-09 19:13:24 UTC-05:00] [17228] [2026-08-09 19:13:24] [CE2c] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 19:13:24 UTC-05:00] [17228] [2026-08-09 19:13:24] [CE2c] DRONE SPAWNED SUCCESSFULLY! Tick: 63, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:13:24 UTC-05:00] [17228] [2026-08-09 19:13:24] [CE2c] Entity: userdata: 0x01ea467cf0b0
+[2026-08-09 19:13:27 UTC-05:00] [17228] [2026-08-09 19:13:27] [CE2c] ==================================================
+[2026-08-09 19:13:27 UTC-05:00] [17228] [2026-08-09 19:13:27] [CE2c] LIST DEVICE ACTIONS
+[2026-08-09 19:13:27 UTC-05:00] [17228] [2026-08-09 19:13:27] [CE2c] Target found with args (true, false)
+[2026-08-09 19:13:27 UTC-05:00] [17228] [2026-08-09 19:13:27] [CE2c] Target: ToCName{ hash_lo = 0xA013F2EF, hash_hi = 0x0F181BB1 --[[ SurveillanceCamera --]] }
+[2026-08-09 19:13:27 UTC-05:00] [17228] [2026-08-09 19:13:27] [CE2c] Target distance: 7.3 m
+[2026-08-09 19:13:27 UTC-05:00] [17228] [2026-08-09 19:13:27] [CE2c] --- Actions for Player as executor ---
+[2026-08-09 19:13:27 UTC-05:00] [17228] [2026-08-09 19:13:27] [CE2c] Player actions: 13 actions: RemoteBreach, Ping, MalfunctionClassHack, RemoteBreach, Ping, TakeControlCameraClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, ToggleStateClassHack, RemoteBreach, Ping
+[2026-08-09 19:13:27 UTC-05:00] [17228] [2026-08-09 19:13:27] [CE2c] --- Actions for Drone as executor ---
+[2026-08-09 19:13:27 UTC-05:00] [17228] [2026-08-09 19:13:27] [CE2c] Drone actions: 13 actions: RemoteBreach, Ping, MalfunctionClassHack, RemoteBreach, Ping, TakeControlCameraClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, ToggleStateClassHack, RemoteBreach, Ping
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] ==================================================
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] PING QUICKHACK TEST
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] Target found with args (true, false)
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] Target: ToCName{ hash_lo = 0xA013F2EF, hash_hi = 0x0F181BB1 --[[ SurveillanceCamera --]] }
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] Target distance: 7.3 m
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] --- PHASE 1: Player as executor ---
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] Available actions: 13 actions: RemoteBreach, Ping, MalfunctionClassHack, RemoteBreach, Ping, TakeControlCameraClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, ToggleStateClassHack, RemoteBreach, Ping
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] Phase 1 result (PingDevice): NO_ACTION (requested: PingDevice, available: RemoteBreach, Ping, MalfunctionClassHack, RemoteBreach, Ping, TakeControlCameraClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, ToggleStateClassHack, RemoteBreach, Ping)
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] Phase 1 PingDevice not found -- trying first available action as fallback
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] Phase 1 fallback result: SUCCESS (action: RemoteBreach)
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] --- PHASE 2: Drone as executor ---
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] Drone available actions: 13 actions: RemoteBreach, Ping, MalfunctionClassHack, RemoteBreach, Ping, TakeControlCameraClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, ToggleStateClassHack, RemoteBreach, Ping
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] Phase 2 result (PingDevice): NO_ACTION (requested: PingDevice, available: RemoteBreach, Ping, MalfunctionClassHack, RemoteBreach, Ping, TakeControlCameraClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, OverrideAttitudeClassHack, ToggleStateClassHack, RemoteBreach, Ping)
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] Phase 2 PingDevice not found -- trying first available action as fallback
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] Phase 2 fallback result: SUCCESS (action: RemoteBreach)
+[2026-08-09 19:13:29 UTC-05:00] [17228] [2026-08-09 19:13:29] [CE2c] Test #4 complete
+[2026-08-09 19:14:05 UTC-05:00] [17228] [2026-08-09 19:14:05] [CE2c] ==================================================
+[2026-08-09 19:14:05 UTC-05:00] [17228] [2026-08-09 19:14:05] [CE2c] SPAWN DRONE
+[2026-08-09 19:14:05 UTC-05:00] [17228] [2026-08-09 19:14:05] [CE2c] ==================================================
+[2026-08-09 19:14:05 UTC-05:00] [17228] [2026-08-09 19:14:05] [CE2c] DESPAWN DRONE
+[2026-08-09 19:14:05 UTC-05:00] [17228] [2026-08-09 19:14:05] [CE2c] Drone despawned
+[2026-08-09 19:14:05 UTC-05:00] [17228] [2026-08-09 19:14:05] [CE2c] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:14:05 UTC-05:00] [17228] [2026-08-09 19:14:05] [CE2c] Method A SUCCESS: entity ID: userdata: 0x01ea4c49bde0 (pending...)
+[2026-08-09 19:14:05 UTC-05:00] [17228] [2026-08-09 19:14:05] [CE2c] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 19:14:05 UTC-05:00] [17228] [2026-08-09 19:14:05] [CE2c] DRONE SPAWNED SUCCESSFULLY! Tick: 67, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:14:05 UTC-05:00] [17228] [2026-08-09 19:14:05] [CE2c] Entity: userdata: 0x01ea1d7d6318
+[2026-08-09 19:14:14 UTC-05:00] [17228] [2026-08-09 19:14:14] [CE2c] ==================================================
+[2026-08-09 19:14:14 UTC-05:00] [17228] [2026-08-09 19:14:14] [CE2c] LIST DEVICE ACTIONS
+[2026-08-09 19:14:14 UTC-05:00] [17228] [2026-08-09 19:14:14] [CE2c] Target found with args (true, false)
+[2026-08-09 19:14:14 UTC-05:00] [17228] [2026-08-09 19:14:14] [CE2c] Target: ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] }
+[2026-08-09 19:14:14 UTC-05:00] [17228] [2026-08-09 19:14:14] [CE2c] Target distance: 4.2 m
+[2026-08-09 19:14:14 UTC-05:00] [17228] [2026-08-09 19:14:14] [CE2c] --- Actions for Player as executor ---
+[2026-08-09 19:14:14 UTC-05:00] [17228] [2026-08-09 19:14:14] [CE2c] Player actions: 3 actions: MalfunctionClassHack, RemoteBreach, Ping
+[2026-08-09 19:14:14 UTC-05:00] [17228] [2026-08-09 19:14:14] [CE2c] --- Actions for Drone as executor ---
+[2026-08-09 19:14:14 UTC-05:00] [17228] [2026-08-09 19:14:14] [CE2c] Drone actions: 3 actions: MalfunctionClassHack, RemoteBreach, Ping
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] ==================================================
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] PING QUICKHACK TEST
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] Target found with args (true, false)
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] Target: ToCName{ hash_lo = 0x69DA5882, hash_hi = 0x21767709 --[[ Speaker --]] }
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] Target distance: 4.2 m
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] --- PHASE 1: Player as executor ---
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] Available actions: 3 actions: MalfunctionClassHack, RemoteBreach, Ping
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] Phase 1 result (PingDevice): NO_ACTION (requested: PingDevice, available: MalfunctionClassHack, RemoteBreach, Ping)
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] Phase 1 PingDevice not found -- trying first available action as fallback
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] Phase 1 fallback result: SUCCESS (action: MalfunctionClassHack)
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] --- PHASE 2: Drone as executor ---
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] Drone available actions: 3 actions: MalfunctionClassHack, RemoteBreach, Ping
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] Phase 2 result (PingDevice): NO_ACTION (requested: PingDevice, available: MalfunctionClassHack, RemoteBreach, Ping)
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] Phase 2 PingDevice not found -- trying first available action as fallback
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] Phase 2 fallback result: SUCCESS (action: MalfunctionClassHack)
+[2026-08-09 19:14:15 UTC-05:00] [17228] [2026-08-09 19:14:15] [CE2c] Test #5 complete
+[2026-08-09 19:14:36 UTC-05:00] [17228] [2026-08-09 19:14:36] [CE2c] ==================================================
+[2026-08-09 19:14:36 UTC-05:00] [17228] [2026-08-09 19:14:36] [CE2c] SPAWN DRONE
+[2026-08-09 19:14:36 UTC-05:00] [17228] [2026-08-09 19:14:36] [CE2c] ==================================================
+[2026-08-09 19:14:36 UTC-05:00] [17228] [2026-08-09 19:14:36] [CE2c] DESPAWN DRONE
+[2026-08-09 19:14:36 UTC-05:00] [17228] [2026-08-09 19:14:36] [CE2c] Drone despawned
+[2026-08-09 19:14:36 UTC-05:00] [17228] [2026-08-09 19:14:36] [CE2c] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:14:36 UTC-05:00] [17228] [2026-08-09 19:14:36] [CE2c] Method A SUCCESS: entity ID: userdata: 0x01ea1d735e58 (pending...)
+[2026-08-09 19:14:36 UTC-05:00] [17228] [2026-08-09 19:14:36] [CE2c] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 19:14:36 UTC-05:00] [17228] [2026-08-09 19:14:36] [CE2c] DRONE SPAWNED SUCCESSFULLY! Tick: 72, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 19:14:36 UTC-05:00] [17228] [2026-08-09 19:14:36] [CE2c] Entity: userdata: 0x01ea4c4cbff0
+[2026-08-09 19:14:38 UTC-05:00] [17228] [2026-08-09 19:14:38] [CE2c] ==================================================
+[2026-08-09 19:14:38 UTC-05:00] [17228] [2026-08-09 19:14:38] [CE2c] LIST DEVICE ACTIONS
+[2026-08-09 19:14:38 UTC-05:00] [17228] [2026-08-09 19:14:38] [CE2c] Target found with args (true, false)
+[2026-08-09 19:14:38 UTC-05:00] [17228] [2026-08-09 19:14:38] [CE2c] Target: ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-09 19:14:38 UTC-05:00] [17228] [2026-08-09 19:14:38] [CE2c] Target distance: 4.9 m
+[2026-08-09 19:14:38 UTC-05:00] [17228] [2026-08-09 19:14:38] [CE2c] --- Actions for Player as executor ---
+[2026-08-09 19:14:38 UTC-05:00] [17228] [2026-08-09 19:14:38] [CE2c] Player actions: 6 actions: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack, RemoteBreach, Ping
+[2026-08-09 19:14:38 UTC-05:00] [17228] [2026-08-09 19:14:38] [CE2c] --- Actions for Drone as executor ---
+[2026-08-09 19:14:38 UTC-05:00] [17228] [2026-08-09 19:14:38] [CE2c] Drone actions: 6 actions: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack, RemoteBreach, Ping
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] ==================================================
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] PING QUICKHACK TEST
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] Target found with args (true, false)
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] Target: ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] Target distance: 4.9 m
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] --- PHASE 1: Player as executor ---
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] Available actions: 6 actions: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack, RemoteBreach, Ping
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] Phase 1 result (PingDevice): NO_ACTION (requested: PingDevice, available: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack, RemoteBreach, Ping)
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] Phase 1 PingDevice not found -- trying first available action as fallback
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] Phase 1 fallback result: SUCCESS (action: GlitchScreenSuicide)
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] --- PHASE 2: Drone as executor ---
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] Drone available actions: 6 actions: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack, RemoteBreach, Ping
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] Phase 2 result (PingDevice): NO_ACTION (requested: PingDevice, available: GlitchScreenSuicide, GlitchScreenBlind, GlitchScreenGrenade, MalfunctionClassHack, RemoteBreach, Ping)
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] Phase 2 PingDevice not found -- trying first available action as fallback
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] Phase 2 fallback result: SUCCESS (action: GlitchScreenSuicide)
+[2026-08-09 19:14:39 UTC-05:00] [17228] [2026-08-09 19:14:39] [CE2c] Test #6 complete
+[2026-08-09 19:15:17 UTC-05:00] [17228] [2026-08-09 19:15:17] [CE2c] ==================================================
+[2026-08-09 19:15:17 UTC-05:00] [17228] [2026-08-09 19:15:17] [CE2c] DESPAWN DRONE
+[2026-08-09 19:15:17 UTC-05:00] [17228] [2026-08-09 19:15:17] [CE2c] Drone despawned
+[2026-08-09 19:15:17 UTC-05:00] [17228] [2026-08-09 19:15:17] [CE2c] CE2c stopped

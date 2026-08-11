@@ -1,0 +1,303 @@
+[2026-08-02 08:40:42 UTC-05:00] [20448] [SEDevT3] Status Effect Device Tester 3 initialized
+[2026-08-02 08:40:42 UTC-05:00] [20448] [SEDevT3]   Focus: distract, overload, break chains (devices only)
+[2026-08-02 08:40:42 UTC-05:00] [20448] [SEDevT3]   Two execution methods:
+[2026-08-02 08:40:42 UTC-05:00] [20448] [SEDevT3]     F9  = Full Action Chain (QA)
+[2026-08-02 08:40:42 UTC-05:00] [20448] [SEDevT3]     F10 = Direct PS Handler (QB)
+[2026-08-02 08:40:42 UTC-05:00] [20448] [SEDevT3]   Latch: per-hotkey, cross-check other's latch first
+[2026-08-02 08:40:42 UTC-05:00] [20448] [SEDevT3]   Hotkeys: SE_DEV3_TOGGLE_WINDOW, SE_DEV3_FULL_CHAIN, SE_DEV3_DIRECT_PS
+[2026-08-02 08:40:42 UTC-05:00] [20448] [SEDevT3]   Bind in Settings > Key Bindings > SEDevT3
+[2026-08-02 08:40:42 UTC-05:00] [20448] LuaVM: initialization finished!
+[2026-08-02 09:02:46 UTC-05:00] [15276] [SEDevT3] Info window ON
+[2026-08-02 09:03:36 UTC-05:00] [15276] [SEDevT3] ========================================================
+[2026-08-02 09:03:36 UTC-05:00] [15276] [SEDevT3] === NEW DEVICE TYPE REPORT ===
+[2026-08-02 09:03:36 UTC-05:00] [15276] [SEDevT3]   Name:       <unknown>
+[2026-08-02 09:03:36 UTC-05:00] [15276] [SEDevT3]   Class:      ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-08-02 09:03:36 UTC-05:00] [15276] [SEDevT3]   RecordID:   <unknown>
+[2026-08-02 09:03:36 UTC-05:00] [15276] [SEDevT3]   EntityHash: 5463548320866510991ULL
+[2026-08-02 09:03:36 UTC-05:00] [15276] [SEDevT3]   Distance:   2.09 m
+[2026-08-02 09:03:36 UTC-05:00] [15276] [SEDevT3]   Available quest actions: 0
+[2026-08-02 09:03:36 UTC-05:00] [15276] [SEDevT3] ========================================================
+[2026-08-02 09:03:36 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:03:36 UTC-05:00] [15276] [SEDevT3] No quest actions for this device
+[2026-08-02 09:03:40 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:03:40 UTC-05:00] [15276] [SEDevT3] No quest actions for this device
+[2026-08-02 09:09:34 UTC-05:00] [15276] [SEDevT3] === Final Statistics ===
+[2026-08-02 09:09:34 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:09:34 UTC-05:00] [15276] [SEDevT3] --- QuestForce Actions ---
+[2026-08-02 09:09:34 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:09:34 UTC-05:00] [15276] [SEDevT3] --- Device Types Encountered: 0 ---
+[2026-08-02 09:09:34 UTC-05:00] [15276] [SEDevT3]     ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-08-02 09:09:34 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:09:34 UTC-05:00] [15276] [SEDevT3] === API success != visible effect -- check game ===
+[2026-08-02 09:09:34 UTC-05:00] [15276] [SEDevT3] === End Statistics ===
+[2026-08-02 09:09:34 UTC-05:00] [15276] [SEDevT3] Status Effect Device Tester 3 shut down
+[2026-08-02 09:09:35 UTC-05:00] [15276] [SEDevT3] Status Effect Device Tester 3 initialized
+[2026-08-02 09:09:35 UTC-05:00] [15276] [SEDevT3]   Focus: distract, overload, break chains (devices only)
+[2026-08-02 09:09:35 UTC-05:00] [15276] [SEDevT3]   Two execution methods:
+[2026-08-02 09:09:35 UTC-05:00] [15276] [SEDevT3]     F9  = Full Action Chain (QA)
+[2026-08-02 09:09:35 UTC-05:00] [15276] [SEDevT3]     F10 = Direct PS Handler (QB)
+[2026-08-02 09:09:35 UTC-05:00] [15276] [SEDevT3]   Latch: per-hotkey, cross-check other's latch first
+[2026-08-02 09:09:35 UTC-05:00] [15276] [SEDevT3]   Hotkeys: SE_DEV3_TOGGLE_WINDOW, SE_DEV3_FULL_CHAIN, SE_DEV3_DIRECT_PS
+[2026-08-02 09:09:35 UTC-05:00] [15276] [SEDevT3]   Bind in Settings > Key Bindings > SEDevT3
+[2026-08-02 09:09:35 UTC-05:00] [15276] LuaVM: Reloaded all mods!
+[2026-08-02 09:09:38 UTC-05:00] [15276] [SEDevT3] Info window ON
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3] === Final Statistics ===
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3] --- QuestForce Actions ---
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3] --- Device Types Encountered: 0 ---
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3] === API success != visible effect -- check game ===
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3] === End Statistics ===
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3] Status Effect Device Tester 3 shut down
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3] Status Effect Device Tester 3 initialized
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3]   Focus: distract, overload, break chains (devices only)
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3]   Two execution methods:
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3]     F9  = Full Action Chain (QA)
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3]     F10 = Direct PS Handler (QB)
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3]   Latch: per-hotkey, cross-check other's latch first
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3]   Hotkeys: SE_DEV3_TOGGLE_WINDOW, SE_DEV3_FULL_CHAIN, SE_DEV3_DIRECT_PS
+[2026-08-02 09:11:44 UTC-05:00] [15276] [SEDevT3]   Bind in Settings > Key Bindings > SEDevT3
+[2026-08-02 09:11:44 UTC-05:00] [15276] LuaVM: Reloaded all mods!
+[2026-08-02 09:11:48 UTC-05:00] [15276] [SEDevT3] Info window ON
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3] === Final Statistics ===
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3] --- QuestForce Actions ---
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3] --- Device Types Encountered: 0 ---
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3] === API success != visible effect -- check game ===
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3] === End Statistics ===
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3] Status Effect Device Tester 3 shut down
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3] Status Effect Device Tester 3 initialized
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3]   Focus: distract, overload, break chains (devices only)
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3]   Two execution methods:
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3]     F9  = Full Action Chain (QA)
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3]     F10 = Direct PS Handler (QB)
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3]   Latch: per-hotkey, cross-check other's latch first
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3]   Hotkeys: SE_DEV3_TOGGLE_WINDOW, SE_DEV3_FULL_CHAIN, SE_DEV3_DIRECT_PS
+[2026-08-02 09:12:29 UTC-05:00] [15276] [SEDevT3]   Bind in Settings > Key Bindings > SEDevT3
+[2026-08-02 09:12:29 UTC-05:00] [15276] LuaVM: Reloaded all mods!
+[2026-08-02 09:12:32 UTC-05:00] [15276] [SEDevT3] Info window ON
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3] === Final Statistics ===
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3] --- QuestForce Actions ---
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3] --- Device Types Encountered: 0 ---
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3] === API success != visible effect -- check game ===
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3] === End Statistics ===
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3] Status Effect Device Tester 3 shut down
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3] Status Effect Device Tester 3 initialized
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3]   Focus: distract, overload, break chains (devices only)
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3]   Two execution methods:
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3]     F9  = Full Action Chain (QA)
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3]     F10 = Direct PS Handler (QB)
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3]   Latch: per-hotkey, cross-check other's latch first
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3]   Hotkeys: SE_DEV3_TOGGLE_WINDOW, SE_DEV3_FULL_CHAIN, SE_DEV3_DIRECT_PS
+[2026-08-02 09:13:02 UTC-05:00] [15276] [SEDevT3]   Bind in Settings > Key Bindings > SEDevT3
+[2026-08-02 09:13:02 UTC-05:00] [15276] LuaVM: Reloaded all mods!
+[2026-08-02 09:13:06 UTC-05:00] [15276] [SEDevT3] Info window ON
+[2026-08-02 09:13:17 UTC-05:00] [15276] [SEDevT3] Info window OFF
+[2026-08-02 09:16:14 UTC-05:00] [15276] [SEDevT3] Info window ON
+[2026-08-02 09:16:17 UTC-05:00] [15276] [SEDevT3] ========================================================
+[2026-08-02 09:16:17 UTC-05:00] [15276] [SEDevT3] === NEW DEVICE TYPE REPORT ===
+[2026-08-02 09:16:17 UTC-05:00] [15276] [SEDevT3]   Name:       <unknown>
+[2026-08-02 09:16:17 UTC-05:00] [15276] [SEDevT3]   Class:      ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-08-02 09:16:17 UTC-05:00] [15276] [SEDevT3]   RecordID:   <unknown>
+[2026-08-02 09:16:17 UTC-05:00] [15276] [SEDevT3]   EntityHash: 2431476328969215219ULL
+[2026-08-02 09:16:17 UTC-05:00] [15276] [SEDevT3]   Distance:   2.45 m
+[2026-08-02 09:16:17 UTC-05:00] [15276] [SEDevT3]   Available quest actions: 0
+[2026-08-02 09:16:17 UTC-05:00] [15276] [SEDevT3] ========================================================
+[2026-08-02 09:16:17 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:16:17 UTC-05:00] [15276] [SEDevT3] No quest actions for this device
+[2026-08-02 09:16:19 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:16:19 UTC-05:00] [15276] [SEDevT3] No quest actions for this device
+[2026-08-02 09:16:21 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:16:21 UTC-05:00] [15276] [SEDevT3] No quest actions for this device
+[2026-08-02 09:16:29 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:16:29 UTC-05:00] [15276] [SEDevT3] No quest actions for this device
+[2026-08-02 09:16:33 UTC-05:00] [15276] [SEDevT3] Info window OFF
+[2026-08-02 09:25:56 UTC-05:00] [15276] [SEDevT3] Info window ON
+[2026-08-02 09:25:56 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x5B60AF16, hash_hi = 0x927D059E --[[ EnableInteraction --]] } (class: ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] }, goal: ?, record: )
+[2026-08-02 09:25:56 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x01FA2B59, hash_hi = 0x69CDA804 --[[ DisableInteraction --]] } (class: ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] }, goal: ?, record: )
+[2026-08-02 09:25:56 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } (class: ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }, goal: ?, record: )
+[2026-08-02 09:25:56 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } (class: ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] }, goal: ?, record: )
+[2026-08-02 09:25:56 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] } (class: ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] }, goal: ?, record: )
+[2026-08-02 09:25:56 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } (class: ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, goal: ?, record: )
+[2026-08-02 09:25:56 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x474379C1, hash_hi = 0x2C2D3D69 --[[ QuestEnableInteractivity --]] } (class: ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }, goal: ?, record: )
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3] ========================================================
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3] === NEW DEVICE TYPE REPORT ===
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]   Name:       <unknown>
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]   Class:      ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]   RecordID:   <unknown>
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]   EntityHash: 7633347352757815864ULL
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]   Distance:   2.15 m
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]   Available quest actions: 9
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]     [ 1] ToCName{ hash_lo = 0x5B60AF16, hash_hi = 0x927D059E --[[ EnableInteraction --]] } (class: ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]     [ 2] ToCName{ hash_lo = 0x01FA2B59, hash_hi = 0x69CDA804 --[[ DisableInteraction --]] } (class: ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]     [ 3] ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } (class: ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]     [ 4] ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } (class: ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]     [ 5] ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] } (class: ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]     [ 6] ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } (class: ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]     [ 7] ToCName{ hash_lo = 0xE8E0F5F3, hash_hi = 0xA2DF957A --[[ QuestUnMuteSounds --]] } (class: ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]     [ 8] ToCName{ hash_lo = 0x474379C1, hash_hi = 0x2C2D3D69 --[[ QuestEnableInteractivity --]] } (class: ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]     [ 9] ToCName{ hash_lo = 0x3848912A, hash_hi = 0x24D2D6DC --[[ QuestDisableInteractivity --]] } (class: ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3] ========================================================
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3] === APPLY [FullChain] ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:26:02 UTC-05:00] [15276] [SEDevT3]   Result: SUCCESS: ProcessRPGAction OK
+[2026-08-02 09:26:03 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:26:04 UTC-05:00] [15276] [SEDevT3] [LATCH] Reusing ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } from Chain(F9) latch via ps
+[2026-08-02 09:26:04 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, goal=?) [LATCHED] ===
+[2026-08-02 09:26:04 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3] === Final Statistics ===
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3] --- QuestForce Actions ---
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]   ToCName{ hash_lo = 0x5B60AF16, hash_hi = 0x927D059E --[[ EnableInteraction --]] } (goal: ?) chain:0/0 ps:0/0
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]   ToCName{ hash_lo = 0x01FA2B59, hash_hi = 0x69CDA804 --[[ DisableInteraction --]] } (goal: ?) chain:0/0 ps:0/0
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]   ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } (goal: ?) chain:0/0 ps:0/0
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]   ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } (goal: ?) chain:0/0 ps:0/0
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]   ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] } (goal: ?) chain:0/0 ps:0/0
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]   ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } (goal: ?) chain:1/1 ps:0/1
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]   ToCName{ hash_lo = 0x474379C1, hash_hi = 0x2C2D3D69 --[[ QuestEnableInteractivity --]] } (goal: ?) chain:0/0 ps:0/0
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3] --- Device Types Encountered: 0 ---
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]     ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]     ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3] 
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3] === API success != visible effect -- check game ===
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3] === End Statistics ===
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3] Status Effect Device Tester 3 shut down
+[2026-08-02 09:27:02 UTC-05:00] [15276] Mod entity scanner loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\entity scanner')
+[2026-08-02 09:27:02 UTC-05:00] [15276] Mod GameEntityExaminerTool loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\GameEntityExaminerTool')
+[2026-08-02 09:27:02 UTC-05:00] [15276] Mod ghost_forward loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\ghost_forward')
+[2026-08-02 09:27:02 UTC-05:00] [15276] Mod grappling_hook loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\grappling_hook')
+[2026-08-02 09:27:02 UTC-05:00] [15276] Mod HeavyMG loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\HeavyMG')
+[2026-08-02 09:27:02 UTC-05:00] [15276] Mod hundred_grand loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hundred_grand')
+[2026-08-02 09:27:02 UTC-05:00] [15276] Mod jetpack loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\jetpack')
+[2026-08-02 09:27:02 UTC-05:00] [15276] Mod low_flying_v loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\low_flying_v')
+[2026-08-02 09:27:02 UTC-05:00] [15276] Mod statuseffect_device_tester3 loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\statuseffect_device_tester3')
+[2026-08-02 09:27:02 UTC-05:00] [15276] Mod wall_hang loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\wall_hang')
+[2026-08-02 09:27:02 UTC-05:00] [15276] [EntityScanner] Initialized. Bind the toggle key in Settings > Key Bindings.
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3] Status Effect Device Tester 3 initialized
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]   Focus: distract, overload, break chains (devices only)
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]   Two execution methods:
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]     F9  = Full Action Chain (QA)
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]     F10 = Direct PS Handler (QB)
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]   Latch: per-hotkey, cross-check other's latch first
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]   Hotkeys: SE_DEV3_TOGGLE_WINDOW, SE_DEV3_FULL_CHAIN, SE_DEV3_DIRECT_PS
+[2026-08-02 09:27:02 UTC-05:00] [15276] [SEDevT3]   Bind in Settings > Key Bindings > SEDevT3
+[2026-08-02 09:27:02 UTC-05:00] [15276] LuaVM: Reloaded all mods!
+[2026-08-02 09:27:06 UTC-05:00] [15276] [SEDevT3] Info window ON
+[2026-08-02 09:27:06 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x5B60AF16, hash_hi = 0x927D059E --[[ EnableInteraction --]] } (class: ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] }, goal: ?, record: )
+[2026-08-02 09:27:06 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x01FA2B59, hash_hi = 0x69CDA804 --[[ DisableInteraction --]] } (class: ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] }, goal: ?, record: )
+[2026-08-02 09:27:06 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } (class: ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }, goal: ?, record: )
+[2026-08-02 09:27:06 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } (class: ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] }, goal: ?, record: )
+[2026-08-02 09:27:06 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] } (class: ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] }, goal: ?, record: )
+[2026-08-02 09:27:06 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } (class: ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, goal: ?, record: )
+[2026-08-02 09:27:06 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0x474379C1, hash_hi = 0x2C2D3D69 --[[ QuestEnableInteractivity --]] } (class: ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }, goal: ?, record: )
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3] ========================================================
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3] === NEW DEVICE TYPE REPORT ===
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]   Name:       <unknown>
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]   Class:      ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]   RecordID:   <unknown>
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]   EntityHash: 7633347352757815864ULL
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]   Distance:   2.15 m
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]   Available quest actions: 9
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]     [ 1] ToCName{ hash_lo = 0x5B60AF16, hash_hi = 0x927D059E --[[ EnableInteraction --]] } (class: ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]     [ 2] ToCName{ hash_lo = 0x01FA2B59, hash_hi = 0x69CDA804 --[[ DisableInteraction --]] } (class: ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]     [ 3] ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } (class: ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]     [ 4] ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } (class: ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]     [ 5] ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] } (class: ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]     [ 6] ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } (class: ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]     [ 7] ToCName{ hash_lo = 0xE8E0F5F3, hash_hi = 0xA2DF957A --[[ QuestUnMuteSounds --]] } (class: ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]     [ 8] ToCName{ hash_lo = 0x474379C1, hash_hi = 0x2C2D3D69 --[[ QuestEnableInteractivity --]] } (class: ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]     [ 9] ToCName{ hash_lo = 0x3848912A, hash_hi = 0x24D2D6DC --[[ QuestDisableInteractivity --]] } (class: ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3] ========================================================
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3] === APPLY [FullChain] ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] } -> <unknown> (class=ToCName{ hash_lo = 0x7F2D233A, hash_hi = 0x921B3B72 --[[ QuestDefaultStation --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:27:12 UTC-05:00] [15276] [SEDevT3]   Result: SUCCESS: ProcessRPGAction OK
+[2026-08-02 09:27:17 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:27:17 UTC-05:00] [15276] [SEDevT3] === APPLY [FullChain] ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:27:17 UTC-05:00] [15276] [SEDevT3]   Result: SUCCESS: ProcessRPGAction OK
+[2026-08-02 09:27:19 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:27:19 UTC-05:00] [15276] [SEDevT3] === APPLY [FullChain] ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } -> <unknown> (class=ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:27:19 UTC-05:00] [15276] [SEDevT3]   Result: SUCCESS: ProcessRPGAction OK
+[2026-08-02 09:27:20 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:27:20 UTC-05:00] [15276] [SEDevT3] [LATCH] Reusing ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } from Chain(F9) latch via ps
+[2026-08-02 09:27:20 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] } -> <unknown> (class=ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] }, goal=?) [LATCHED] ===
+[2026-08-02 09:27:20 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0x6679EB4C, hash_hi = 0x1DB78BDA --[[ QuestPreviousStation --]] }
+[2026-08-02 09:27:21 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:27:21 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0x474379C1, hash_hi = 0x2C2D3D69 --[[ QuestEnableInteractivity --]] } -> <unknown> (class=ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:27:21 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }
+[2026-08-02 09:27:23 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:27:23 UTC-05:00] [15276] [SEDevT3] [LATCH] Reusing ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] } from PS(F10) latch via chain
+[2026-08-02 09:27:23 UTC-05:00] [15276] [SEDevT3] === APPLY [FullChain] ToCName{ hash_lo = 0x474379C1, hash_hi = 0x2C2D3D69 --[[ QuestEnableInteractivity --]] } -> <unknown> (class=ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }, goal=?) [LATCHED] ===
+[2026-08-02 09:27:23 UTC-05:00] [15276] [SEDevT3]   Result: SUCCESS: ProcessRPGAction OK
+[2026-08-02 09:27:23 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:27:23 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0x3848912A, hash_hi = 0x24D2D6DC --[[ QuestDisableInteractivity --]] } -> <unknown> (class=ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:27:23 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0xA9E93070, hash_hi = 0x0C2AACE6 --[[ QuestToggleInteractivity --]] }
+[2026-08-02 09:27:24 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:27:24 UTC-05:00] [15276] [SEDevT3] === APPLY [FullChain] ToCName{ hash_lo = 0x01FA2B59, hash_hi = 0x69CDA804 --[[ DisableInteraction --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:27:24 UTC-05:00] [15276] [SEDevT3]   Result: SUCCESS: ProcessRPGAction OK
+[2026-08-02 09:27:25 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:27:25 UTC-05:00] [15276] [SEDevT3] [LATCH] Reusing ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] } from Chain(F9) latch via ps
+[2026-08-02 09:27:25 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0x01FA2B59, hash_hi = 0x69CDA804 --[[ DisableInteraction --]] } -> <unknown> (class=ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] }, goal=?) [LATCHED] ===
+[2026-08-02 09:27:25 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0xF36F90C1, hash_hi = 0x4E3BFF8B --[[ QuestDisableInteraction --]] }
+[2026-08-02 09:27:25 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:27:25 UTC-05:00] [15276] [SEDevT3] === APPLY [FullChain] ToCName{ hash_lo = 0x5B60AF16, hash_hi = 0x927D059E --[[ EnableInteraction --]] } -> <unknown> (class=ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:27:25 UTC-05:00] [15276] [SEDevT3]   Result: SUCCESS: ProcessRPGAction OK
+[2026-08-02 09:27:26 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:27:26 UTC-05:00] [15276] [SEDevT3] [LATCH] Reusing ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] } from Chain(F9) latch via ps
+[2026-08-02 09:27:26 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0x5B60AF16, hash_hi = 0x927D059E --[[ EnableInteraction --]] } -> <unknown> (class=ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] }, goal=?) [LATCHED] ===
+[2026-08-02 09:27:26 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0xC93338AE, hash_hi = 0x5E327B91 --[[ QuestEnableInteraction --]] }
+[2026-08-02 09:27:26 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:27:26 UTC-05:00] [15276] [SEDevT3] === APPLY [FullChain] ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } -> <unknown> (class=ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:27:26 UTC-05:00] [15276] [SEDevT3]   Result: SUCCESS: ProcessRPGAction OK
+[2026-08-02 09:27:27 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:27:27 UTC-05:00] [15276] [SEDevT3] [LATCH] Reusing ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } from Chain(F9) latch via ps
+[2026-08-02 09:27:27 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] } -> <unknown> (class=ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }, goal=?) [LATCHED] ===
+[2026-08-02 09:27:27 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0x17AA1A2C, hash_hi = 0x04DFCE31 --[[ QuestNextStation --]] }
+[2026-08-02 09:27:27 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:27:27 UTC-05:00] [15276] [SEDevT3] === APPLY [FullChain] ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:27:27 UTC-05:00] [15276] [SEDevT3]   Result: SUCCESS: ProcessRPGAction OK
+[2026-08-02 09:27:28 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:27:28 UTC-05:00] [15276] [SEDevT3] [LATCH] Reusing ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } from Chain(F9) latch via ps
+[2026-08-02 09:27:28 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }, goal=?) [LATCHED] ===
+[2026-08-02 09:27:28 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0x1C71DD70, hash_hi = 0x68C64E3B --[[ QuestMuteSounds --]] }
+[2026-08-02 09:27:30 UTC-05:00] [15276] [SEDevT3] Info window OFF
+[2026-08-02 09:28:37 UTC-05:00] [15276] [SEDevT3] Info window ON
+[2026-08-02 09:28:37 UTC-05:00] [15276] [SEDevT3]   [NEW ACTION] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } (class: ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }, goal: ?, record: )
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3] ========================================================
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3] === NEW DEVICE TYPE REPORT ===
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3]   Name:       <unknown>
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3]   Class:      ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3]   RecordID:   <unknown>
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3]   EntityHash: 12490791533839215227ULL
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3]   Distance:   5.41 m
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3]   Available quest actions: 1
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3]     [ 1] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } (class: ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }, goal: ?) [chain:0 ps:0]
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3] ========================================================
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3] >>> METHOD A: Full Action Chain <<<
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3] === APPLY [FullChain] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:28:39 UTC-05:00] [15276] [SEDevT3]   Result: SUCCESS: ProcessRPGAction OK
+[2026-08-02 09:28:58 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:28:58 UTC-05:00] [15276] [SEDevT3] [LATCH] Reusing ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] } from Chain(F9) latch via ps
+[2026-08-02 09:28:58 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }, goal=?) [LATCHED] ===
+[2026-08-02 09:28:58 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }
+[2026-08-02 09:29:00 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:29:00 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:29:00 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }
+[2026-08-02 09:29:01 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:29:01 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:29:01 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }
+[2026-08-02 09:29:02 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:29:02 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:29:02 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }
+[2026-08-02 09:29:02 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:29:02 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }, goal=?) [RANDOM] ===
+[2026-08-02 09:29:02 UTC-05:00] [15276] [SEDevT3]   Result: FAIL: no PS handler for ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }
+[2026-08-02 09:29:03 UTC-05:00] [15276] [SEDevT3] >>> METHOD B: Direct PS Handler <<<
+[2026-08-02 09:29:03 UTC-05:00] [15276] [SEDevT3] === APPLY [DirectPS] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0
+

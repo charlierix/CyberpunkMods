@@ -1,0 +1,35 @@
+[2026-08-03 23:31:53 UTC-05:00] [25948] [SEDevT5] Scanned: ToCName{ hash_lo = 0x2BAACE8B, hash_hi = 0x58875946 --[[ VendingMachine --]] }
+[2026-08-03 23:31:56 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:296: Function GetEffectSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:31:56 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:299: Function GetScriptableSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:31:56 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:301: Function GetScriptableSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:31:56 UTC-05:00] [25948] [SEDevT5] Construction strategies done
+[2026-08-03 23:31:59 UTC-05:00] [25948] [SEDevT5] Execution strategies done
+[2026-08-03 23:32:02 UTC-05:00] [25948] [SEDevT5] TweakDB strategies done
+[2026-08-03 23:46:12 UTC-05:00] [25948] [SEDevT5] Scanned: ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-03 23:46:19 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:296: Function GetEffectSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:46:19 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:299: Function GetScriptableSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:46:19 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:301: Function GetScriptableSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:46:19 UTC-05:00] [25948] [SEDevT5] Construction strategies done
+[2026-08-03 23:46:20 UTC-05:00] [25948] [SEDevT5] Execution strategies done
+[2026-08-03 23:46:22 UTC-05:00] [25948] [SEDevT5] TweakDB strategies done
+[2026-08-03 23:46:30 UTC-05:00] [25948] [SEDevT5] Scanned: ToCName{ hash_lo = 0x8E2EDB57, hash_hi = 0x6F9C6A52 --[[ Reflector --]] }
+[2026-08-03 23:46:33 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:296: Function GetEffectSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:46:33 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:299: Function GetScriptableSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:46:33 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:301: Function GetScriptableSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:46:33 UTC-05:00] [25948] [SEDevT5] Construction strategies done
+[2026-08-03 23:46:34 UTC-05:00] [25948] [SEDevT5] Execution strategies done
+[2026-08-03 23:46:36 UTC-05:00] [25948] [SEDevT5] TweakDB strategies done
+[2026-08-03 23:46:47 UTC-05:00] [25948] [SEDevT5] Scanned: ToCName{ hash_lo = 0x533AEC3B, hash_hi = 0x9DEF182F --[[ CleaningMachine --]] }
+[2026-08-03 23:46:49 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:296: Function GetEffectSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:46:49 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:299: Function GetScriptableSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:46:49 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:301: Function GetScriptableSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:46:49 UTC-05:00] [25948] [SEDevT5] Construction strategies done
+[2026-08-03 23:46:50 UTC-05:00] [25948] [SEDevT5] Execution strategies done
+[2026-08-03 23:46:51 UTC-05:00] [25948] [SEDevT5] TweakDB strategies done
+[2026-08-03 23:55:16 UTC-05:00] [25948] [SEDevT5] Scanned: ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-03 23:55:19 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:296: Function GetEffectSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:55:19 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:299: Function GetScriptableSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:55:19 UTC-05:00] [25948] [SEDevT5] ERR: init.lua:301: Function GetScriptableSystem is not a GameInstance member and is not a global.
+[2026-08-03 23:55:19 UTC-05:00] [25948] [SEDevT5] Construction strategies done
+[2026-08-03 23:55:20 UTC-05:00] [25948] [SEDevT5] Execution strategies done
+[2026-08-03 23:55:22 UTC-05:00] [25948] [SEDevT5] TweakDB strategies done

@@ -1,0 +1,67 @@
+[2026-08-06 16:56:16 UTC-05:00] [23924] Mod customentity1 loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\customentity1')
+[2026-08-06 16:56:16 UTC-05:00] [23924] Mod entity scanner loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\entity scanner')
+[2026-08-06 16:56:16 UTC-05:00] [23924] Mod ghost_forward loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\ghost_forward')
+[2026-08-06 16:56:16 UTC-05:00] [23924] Mod grappling_hook loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\grappling_hook')
+[2026-08-06 16:56:16 UTC-05:00] [23924] Mod HeavyMG loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\HeavyMG')
+[2026-08-06 16:56:16 UTC-05:00] [23924] Mod hundred_grand loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hundred_grand')
+[2026-08-06 16:56:16 UTC-05:00] [23924] Mod jetpack loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\jetpack')
+[2026-08-06 16:56:16 UTC-05:00] [23924] Mod low_flying_v loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\low_flying_v')
+[2026-08-06 16:56:16 UTC-05:00] [23924] Mod statuseffect_device_tester5a loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\statuseffect_device_tester5a')
+[2026-08-06 16:56:16 UTC-05:00] [23924] Mod wall_hang loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\wall_hang')
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1] ============================================================
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1] CUSTOM ENTITY TESTER 1 -- INITIALIZING
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1] ============================================================
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1] Mod: customentity1
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1] Entity paths configured: 7 candidates
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1]   [1] base\_ieee\ieee_03_km.ent
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1]   [2] base\_ieee\ieee_04_km.ent
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1]   [3] base\_ieee\ieee_05_km.ent
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1]   [4] base\_ieee\ieee_06_km.ent
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1]   [5] base\_ieee\ieee_07_km.ent
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1]   [6] base\_ieee\ieee_08_km.ent
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1]   [7] base\_ieee\init_spawner_demo.ent
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1] WARNING: OrbHackingBridge not found. Is REDscript mod installed?
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1] Entity spawning will work but action execution tests will fail.
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1] Initialization complete.
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1] ============================================================
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1] READY
+[2026-08-06 16:56:29 UTC-05:00] [29620] [2026-08-06 16:56:29] [CE1] ============================================================
+[2026-08-06 16:56:29 UTC-05:00] [29620] [EntityScanner] Initialized. Bind the toggle key in Settings > Key Bindings.
+[2026-08-06 16:56:29 UTC-05:00] [29620] [SEDevT5a] Initialized (tester5a with full print logging)
+[2026-08-06 16:56:29 UTC-05:00] [29620] LuaVM: initialization finished!
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] ============================================================
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] SPAWN SHELL ENTITY
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] ============================================================
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Spawn pos: (-636.82, 897.08, 21.75)
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying entity path [1/7]: base\_ieee\ieee_03_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Path not found (returned nil): base\_ieee\ieee_03_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying entity path [2/7]: base\_ieee\ieee_04_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Path not found (returned nil): base\_ieee\ieee_04_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying entity path [3/7]: base\_ieee\ieee_05_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Path not found (returned nil): base\_ieee\ieee_05_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying entity path [4/7]: base\_ieee\ieee_06_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Path not found (returned nil): base\_ieee\ieee_06_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying entity path [5/7]: base\_ieee\ieee_07_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Path not found (returned nil): base\_ieee\ieee_07_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying entity path [6/7]: base\_ieee\ieee_08_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Path not found (returned nil): base\_ieee\ieee_08_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying entity path [7/7]: base\_ieee\init_spawner_demo.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Path not found (returned nil): base\_ieee\init_spawner_demo.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] All entity paths failed with exEntitySpawner.Spawn
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying WorldFunctionalTests.SpawnEntity as fallback...
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying fallback [1/7]: base\_ieee\ieee_03_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Fallback path not found (returned nil): base\_ieee\ieee_03_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying fallback [2/7]: base\_ieee\ieee_04_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Fallback path not found (returned nil): base\_ieee\ieee_04_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying fallback [3/7]: base\_ieee\ieee_05_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Fallback path not found (returned nil): base\_ieee\ieee_05_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying fallback [4/7]: base\_ieee\ieee_06_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Fallback path not found (returned nil): base\_ieee\ieee_06_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying fallback [5/7]: base\_ieee\ieee_07_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Fallback path not found (returned nil): base\_ieee\ieee_07_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying fallback [6/7]: base\_ieee\ieee_08_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Fallback path not found (returned nil): base\_ieee\ieee_08_km.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Trying fallback [7/7]: base\_ieee\init_spawner_demo.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Fallback path not found (returned nil): base\_ieee\init_spawner_demo.ent
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] ERROR: Spawn failed - no entity path worked with any spawn API
+[2026-08-06 16:58:54 UTC-05:00] [23924] [2026-08-06 16:58:54] [CE1] Check that the entity paths exist in your game version

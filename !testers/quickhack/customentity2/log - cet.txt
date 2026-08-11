@@ -1,0 +1,74 @@
+[2026-08-09 15:54:08 UTC-05:00] [30256] Mod customentity2 loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\customentity2')
+[2026-08-09 15:54:08 UTC-05:00] [30256] Mod entity scanner loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\entity scanner')
+[2026-08-09 15:54:08 UTC-05:00] [30256] Mod ghost_forward loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\ghost_forward')
+[2026-08-09 15:54:08 UTC-05:00] [30256] Mod grappling_hook loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\grappling_hook')
+[2026-08-09 15:54:08 UTC-05:00] [30256] Mod HeavyMG loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\HeavyMG')
+[2026-08-09 15:54:08 UTC-05:00] [30256] Mod hundred_grand loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hundred_grand')
+[2026-08-09 15:54:08 UTC-05:00] [30256] Mod jetpack loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\jetpack')
+[2026-08-09 15:54:08 UTC-05:00] [30256] Mod low_flying_v loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\low_flying_v')
+[2026-08-09 15:54:08 UTC-05:00] [30256] Mod wall_hang loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\wall_hang')
+[2026-08-09 15:54:20 UTC-05:00] [8804] [EntityScanner] Initialized. Bind the toggle key in Settings > Key Bindings.
+[2026-08-09 15:54:20 UTC-05:00] [8804] [2026-08-09 15:54:20] [CE2] CE2 initialized -- requires Red4ext + Redscript + CET
+[2026-08-09 15:54:20 UTC-05:00] [8804] [2026-08-09 15:54:20] [CE2] Red4ext plugin: bin/x64/plugins/red4ext/plugins/OrbHackingBridge/OrbHackingBridge.dll
+[2026-08-09 15:54:20 UTC-05:00] [8804] [2026-08-09 15:54:20] [CE2] Redscript: r6/scripts/OrbHackingBridge.reds
+[2026-08-09 15:54:20 UTC-05:00] [8804] LuaVM: initialization finished!
+[2026-08-09 15:55:21 UTC-05:00] [30256] [2026-08-09 15:55:21] [CE2] ==================================================
+[2026-08-09 15:55:21 UTC-05:00] [30256] [2026-08-09 15:55:21] [CE2] SPAWN DRONE
+[2026-08-09 15:55:21 UTC-05:00] [30256] [2026-08-09 15:55:21] [CE2] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 15:55:21 UTC-05:00] [30256] [2026-08-09 15:55:21] [CE2] Method A SUCCESS: entity ID: userdata: 0x017c1c666b58 (pending...)
+[2026-08-09 15:55:21 UTC-05:00] [30256] [2026-08-09 15:55:21] [CE2] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 15:55:21 UTC-05:00] [30256] [2026-08-09 15:55:21] [CE2] DRONE SPAWNED SUCCESSFULLY! Tick: 12, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 15:55:21 UTC-05:00] [30256] [2026-08-09 15:55:21] [CE2] Entity: userdata: 0x017c1c677f50
+[2026-08-09 15:55:36 UTC-05:00] [30256] [2026-08-09 15:55:36] [CE2] ==================================================
+[2026-08-09 15:55:36 UTC-05:00] [30256] [2026-08-09 15:55:36] [CE2] PING QUICKHACK TEST
+[2026-08-09 15:55:36 UTC-05:00] [30256] [2026-08-09 15:55:36] [CE2] NO_TARGET: Player not looking at a device (pos: -1499.7, -1076.2, 9.5) — tried 3 arg combos
+[2026-08-09 15:55:46 UTC-05:00] [30256] [2026-08-09 15:55:46] [CE2] ==================================================
+[2026-08-09 15:55:46 UTC-05:00] [30256] [2026-08-09 15:55:46] [CE2] SPAWN DRONE
+[2026-08-09 15:55:46 UTC-05:00] [30256] [2026-08-09 15:55:46] [CE2] ==================================================
+[2026-08-09 15:55:46 UTC-05:00] [30256] [2026-08-09 15:55:46] [CE2] DESPAWN DRONE
+[2026-08-09 15:55:46 UTC-05:00] [30256] [2026-08-09 15:55:46] [CE2] Drone despawned
+[2026-08-09 15:55:46 UTC-05:00] [30256] [2026-08-09 15:55:46] [CE2] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 15:55:46 UTC-05:00] [30256] [2026-08-09 15:55:46] [CE2] Method A SUCCESS: entity ID: userdata: 0x017c4ca5b5a8 (pending...)
+[2026-08-09 15:55:46 UTC-05:00] [30256] [2026-08-09 15:55:46] [CE2] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 15:55:47 UTC-05:00] [30256] [2026-08-09 15:55:47] [CE2] DRONE SPAWNED SUCCESSFULLY! Tick: 15, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 15:55:47 UTC-05:00] [30256] [2026-08-09 15:55:47] [CE2] Entity: userdata: 0x017c4ca60368
+[2026-08-09 15:55:49 UTC-05:00] [30256] [2026-08-09 15:55:49] [CE2] ==================================================
+[2026-08-09 15:55:49 UTC-05:00] [30256] [2026-08-09 15:55:49] [CE2] SPAWN DRONE
+[2026-08-09 15:55:49 UTC-05:00] [30256] [2026-08-09 15:55:49] [CE2] ==================================================
+[2026-08-09 15:55:49 UTC-05:00] [30256] [2026-08-09 15:55:49] [CE2] DESPAWN DRONE
+[2026-08-09 15:55:49 UTC-05:00] [30256] [2026-08-09 15:55:49] [CE2] Drone despawned
+[2026-08-09 15:55:49 UTC-05:00] [30256] [2026-08-09 15:55:49] [CE2] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 15:55:49 UTC-05:00] [30256] [2026-08-09 15:55:49] [CE2] Method A SUCCESS: entity ID: userdata: 0x017c6afc8de8 (pending...)
+[2026-08-09 15:55:49 UTC-05:00] [30256] [2026-08-09 15:55:49] [CE2] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 15:55:49 UTC-05:00] [30256] [2026-08-09 15:55:49] [CE2] DRONE SPAWNED SUCCESSFULLY! Tick: 18, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 15:55:49 UTC-05:00] [30256] [2026-08-09 15:55:49] [CE2] Entity: userdata: 0x017c6afcea28
+[2026-08-09 16:17:24 UTC-05:00] [30256] [2026-08-09 16:17:24] [CE2] ==================================================
+[2026-08-09 16:17:24 UTC-05:00] [30256] [2026-08-09 16:17:24] [CE2] SPAWN DRONE
+[2026-08-09 16:17:24 UTC-05:00] [30256] [2026-08-09 16:17:24] [CE2] ==================================================
+[2026-08-09 16:17:24 UTC-05:00] [30256] [2026-08-09 16:17:24] [CE2] DESPAWN DRONE
+[2026-08-09 16:17:24 UTC-05:00] [30256] [2026-08-09 16:17:24] [CE2] Drone despawned
+[2026-08-09 16:17:24 UTC-05:00] [30256] [2026-08-09 16:17:24] [CE2] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 16:17:24 UTC-05:00] [30256] [2026-08-09 16:17:24] [CE2] Method A SUCCESS: entity ID: userdata: 0x017c1c4b2628 (pending...)
+[2026-08-09 16:17:24 UTC-05:00] [30256] [2026-08-09 16:17:24] [CE2] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 16:17:24 UTC-05:00] [30256] [2026-08-09 16:17:24] [CE2] DRONE SPAWNED SUCCESSFULLY! Tick: 23, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 16:17:24 UTC-05:00] [30256] [2026-08-09 16:17:24] [CE2] Entity: userdata: 0x017c6af17148
+[2026-08-09 16:17:28 UTC-05:00] [30256] [2026-08-09 16:17:28] [CE2] ==================================================
+[2026-08-09 16:17:28 UTC-05:00] [30256] [2026-08-09 16:17:28] [CE2] PING QUICKHACK TEST
+[2026-08-09 16:17:28 UTC-05:00] [30256] [2026-08-09 16:17:28] [CE2] Target found with args (true, false)
+[2026-08-09 16:17:28 UTC-05:00] [30256] [2026-08-09 16:17:28] [CE2] Target: ToCName{ hash_lo = 0xB5C76B6F, hash_hi = 0x09352207 --[[ TV --]] }
+[2026-08-09 16:17:28 UTC-05:00] [30256] [2026-08-09 16:17:28] [CE2] Target distance: 5.4 m
+[2026-08-09 16:17:28 UTC-05:00] [30256] [2026-08-09 16:17:28] [CE2] WARNING: OrbHackingBridge not found -- check Redscript + Red4ext installation
+[2026-08-09 16:17:41 UTC-05:00] [30256] [2026-08-09 16:17:41] [CE2] ==================================================
+[2026-08-09 16:17:41 UTC-05:00] [30256] [2026-08-09 16:17:41] [CE2] SPAWN DRONE
+[2026-08-09 16:17:41 UTC-05:00] [30256] [2026-08-09 16:17:41] [CE2] ==================================================
+[2026-08-09 16:17:41 UTC-05:00] [30256] [2026-08-09 16:17:41] [CE2] DESPAWN DRONE
+[2026-08-09 16:17:41 UTC-05:00] [30256] [2026-08-09 16:17:41] [CE2] Drone despawned
+[2026-08-09 16:17:41 UTC-05:00] [30256] [2026-08-09 16:17:41] [CE2] Method A: Trying [1/3]: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 16:17:41 UTC-05:00] [30256] [2026-08-09 16:17:41] [CE2] Method A SUCCESS: entity ID: userdata: 0x0158119e78f0 (pending...)
+[2026-08-09 16:17:41 UTC-05:00] [30256] [2026-08-09 16:17:41] [CE2] Drone spawned via Method A (exEntitySpawner)
+[2026-08-09 16:17:41 UTC-05:00] [30256] [2026-08-09 16:17:41] [CE2] DRONE SPAWNED SUCCESSFULLY! Tick: 26, Method: exEntitySpawner, Path: base\vehicles\special\av_zetatech_bombus__basic.ent
+[2026-08-09 16:17:41 UTC-05:00] [30256] [2026-08-09 16:17:41] [CE2] Entity: userdata: 0x017c1c529b20
+[2026-08-09 16:20:41 UTC-05:00] [30256] [2026-08-09 16:20:41] [CE2] ==================================================
+[2026-08-09 16:20:41 UTC-05:00] [30256] [2026-08-09 16:20:41] [CE2] DESPAWN DRONE
+[2026-08-09 16:20:41 UTC-05:00] [30256] [2026-08-09 16:20:41] [CE2] Drone despawned
+[2026-08-09 16:20:41 UTC-05:00] [30256] [2026-08-09 16:20:41] [CE2] CE2 stopped

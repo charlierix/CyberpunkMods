@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\agent zero\!v2b\projects\cyberpunk\testers\quickhack\customentity2\red4ext\build\CMakeFiles\f46fb0efcf722268888f1f107085ceb7\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{B0901309-764E-38A9-930C-BA2CEEECE2A5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

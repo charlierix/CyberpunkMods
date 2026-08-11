@@ -35,3 +35,4 @@ Each subfolder has its own `index.md` with deeper concept breakdowns.
 | Folder | Description | Concepts |
 |---|---|---|
 | [mods](./mods/index.md) | Released mods as references — combat, economy, media, player, systems, UI, world, modding infrastructure patterns | — |
+| [mods_red4ext](./mods_red4ext/index.md) | Another set of mods, with a dependency on red4ext.  about 25% overlap with the other mods folder | — |

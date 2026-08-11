@@ -1,0 +1,49 @@
+[2026-08-01 06:38:43 UTC-05:00] [27328] [SEDevT2] Status Effect Device Tester 2 initialized
+[2026-08-01 06:38:43 UTC-05:00] [27328] [SEDevT2]   Testing TWO unexplored paths:
+[2026-08-01 06:38:43 UTC-05:00] [27328] [SEDevT2]     Path 1: QuestForce Actions (GetQuestActions, requestType=Quest)
+[2026-08-01 06:38:43 UTC-05:00] [27328] [SEDevT2]     Path 2: Direct StatusEffect on Devices (StatusEffectHelper)
+[2026-08-01 06:38:43 UTC-05:00] [27328] [SEDevT2]   Hotkeys: SE_DEV2_TOGGLE_WINDOW, SE_DEV2_APPLY
+[2026-08-01 06:38:43 UTC-05:00] [27328] [SEDevT2]   Bind in Settings > Key Bindings > SEDevT2
+[2026-08-01 06:38:43 UTC-05:00] [27328] [SEDevT2] 
+[2026-08-01 06:38:43 UTC-05:00] [27328] [SEDevT2] Usage: Look at a device, press APPLY for random effect.
+[2026-08-01 06:38:43 UTC-05:00] [27328] [SEDevT2]        Each press randomly picks a path, then a random effect/action,
+[2026-08-01 06:38:43 UTC-05:00] [27328] [SEDevT2]        then a random execution method within that path.
+[2026-08-01 06:38:43 UTC-05:00] [27328] [SEDevT2]        Log analysis after the fact will show what worked.
+[2026-08-01 06:38:43 UTC-05:00] [27328] LuaVM: initialization finished!
+[2026-08-01 06:40:17 UTC-05:00] [5880] [SEDevT2] Info window ON
+[2026-08-01 06:40:17 UTC-05:00] [5880] [SEDevT2]   [NEW QUEST ACTION] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } (class: ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }, record: )
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2] ========================================================
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2] === NEW DEVICE TYPE REPORT ===
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2]   Name:       <unknown>
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2]   Class:      ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2]   RecordID:   <unknown>
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2]   EntityHash: 7939617456268342379ULL
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2]   Distance:   5.01 m
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2]   Available quest actions: 1
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2]     [ 1] ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } (class: ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }, record: ) [attempts: 0]
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2] ========================================================
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2] >>> PATH 1: QuestForce Actions <<<
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2] === APPLY QUEST [1/1]: ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } -> <unknown> (class=ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }) ===
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2]   Result: SUCCESS: ProcessRPGAction OK [QA:FullChain]
+[2026-08-01 06:40:21 UTC-05:00] [5880] [SEDevT2]   QuestForce Coverage: 1/1 tried (100%)
+[2026-08-01 06:40:55 UTC-05:00] [5880] [SEDevT2] Info window OFF
+[2026-08-01 06:42:05 UTC-05:00] [5880] [SEDevT2] Info window ON
+[2026-08-01 06:42:15 UTC-05:00] [5880] [SEDevT2] Info window OFF
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] === Final Statistics ===
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] 
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] --- Path Stats ---
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2]   QuestForce:  1 attempts, 1 API-success
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2]   StatusEffect: 0 attempts, 0 API-success
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] 
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] --- QuestForce Actions ---
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2]   ToCName{ hash_lo = 0xEE37B804, hash_hi = 0x9B6A1A02 --[[ ForceDetonate --]] } (class: ToCName{ hash_lo = 0x1F451ABC, hash_hi = 0x8C9495B3 --[[ QuestForceDetonate --]] }): 1 attempts, 1 success
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] 
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] --- StatusEffect Candidates ---
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] 
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] --- Device Types Encountered: 0 ---
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2]     ToCName{ hash_lo = 0x8A6A235E, hash_hi = 0x0B0C3B32 --[[ ExplosiveDevice --]] }
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] 
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] === IMPORTANT: API success != visible in-game effect ===
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] === Check log + game to see which (if any) produced visible results ===
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] === End Statistics ===
+[2026-08-01 07:07:43 UTC-05:00] [5880] [SEDevT2] Status Effect Device Tester 2 shut down
