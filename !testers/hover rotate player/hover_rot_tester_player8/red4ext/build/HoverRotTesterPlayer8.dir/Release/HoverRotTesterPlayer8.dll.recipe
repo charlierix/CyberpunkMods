@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>D:\agent zero\!v2b\projects\cyberpunk\testers\hover rotate player\hover_rot_tester_player8\red4ext\build\x64\Release\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>D:\agent zero\!v2b\projects\cyberpunk\testers\hover rotate player\hover_rot_tester_player8\red4ext\bin\HoverRotTesterPlayer8.dll</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

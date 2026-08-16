@@ -1,0 +1,177 @@
+[2026-08-14 00:39:30 UTC-05:00] [31860] Mod entity scanner loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\entity scanner')
+[2026-08-14 00:39:30 UTC-05:00] [31860] Mod ghost_forward loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\ghost_forward')
+[2026-08-14 00:39:30 UTC-05:00] [31860] Mod grappling_hook loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\grappling_hook')
+[2026-08-14 00:39:30 UTC-05:00] [31860] Mod HeavyMG loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\HeavyMG')
+[2026-08-14 00:39:30 UTC-05:00] [31860] Mod hover_rot_tester_player7b loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hover_rot_tester_player7b')
+[2026-08-14 00:39:30 UTC-05:00] [31860] Mod hundred_grand loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hundred_grand')
+[2026-08-14 00:39:30 UTC-05:00] [31860] Mod jetpack loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\jetpack')
+[2026-08-14 00:39:30 UTC-05:00] [31860] Mod low_flying_v loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\low_flying_v')
+[2026-08-14 00:39:30 UTC-05:00] [31860] Mod wall_hang loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\wall_hang')
+[2026-08-14 00:39:43 UTC-05:00] [33324] [HoverRotPlayer7B] === onInit ===
+[2026-08-14 00:39:43 UTC-05:00] [33324] [HoverRotPlayer7B] Creating/initializing TweakDB flats...
+[2026-08-14 00:39:44 UTC-05:00] [33324] [HoverRotPlayer7B] TweakDB flat creation: 6 ok, 0 failed
+[2026-08-14 00:39:44 UTC-05:00] [33324] [HoverRotPlayer7B] Readback verification:
+[2026-08-14 00:39:44 UTC-05:00] [33324] [HoverRotPlayer7B]   HoverRotPlayer7_active = 0 (expected: 0, type: Int32)
+[2026-08-14 00:39:44 UTC-05:00] [33324] [HoverRotPlayer7B]   HoverRotPlayer7_pitch = 0 (expected: 0, type: Float)
+[2026-08-14 00:39:44 UTC-05:00] [33324] [HoverRotPlayer7B]   HoverRotPlayer7_yaw = 0 (expected: 0, type: Float)
+[2026-08-14 00:39:44 UTC-05:00] [33324] [HoverRotPlayer7B]   HoverRotPlayer7_roll = 0 (expected: 0, type: Float)
+[2026-08-14 00:39:44 UTC-05:00] [33324] [HoverRotPlayer7B]   HoverRotPlayer7_strategy = 3 (expected: 3, type: Int32)
+[2026-08-14 00:39:44 UTC-05:00] [33324] [HoverRotPlayer7B]   HoverRotPlayer7_red4ext_loaded = 0 (expected: 0, type: Int32)
+[2026-08-14 00:39:44 UTC-05:00] [33324] [HoverRotPlayer7B] CheckRed4extStatus: _red4ext_loaded = 0 -> false
+[2026-08-14 00:39:44 UTC-05:00] [33324] [HoverRotPlayer7B] === onInit complete ===
+[2026-08-14 00:39:44 UTC-05:00] [33324] [EntityScanner] Initialized. Bind the toggle key in Settings > Key Bindings.
+[2026-08-14 00:39:44 UTC-05:00] [33324] LuaVM: initialization finished!
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: Toggle -> ACTIVATE
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B] === ActivateMode ===
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B] ActivateMode: player found
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B] Creating/initializing TweakDB flats...
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B] TweakDB flat creation: 6 ok, 0 failed
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B] Readback verification:
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_active = 0 (expected: 0, type: Int32)
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_pitch = 0 (expected: 0, type: Float)
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_yaw = 0 (expected: 0, type: Float)
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_roll = 0 (expected: 0, type: Float)
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_strategy = 3 (expected: 3, type: Int32)
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_red4ext_loaded = 0 (expected: 0, type: Int32)
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B] CheckRed4extStatus: _red4ext_loaded = 0 -> false
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B] RED4ext loaded: false
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B] Initial orientation written: pitch=0.0 yaw=0.0 roll=0.0 active=1
+[2026-08-14 00:42:01 UTC-05:00] [31860] [HoverRotPlayer7B] === ActivateMode complete ===
+[2026-08-14 00:42:02 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 60 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=311 fails=0 lastOK=true
+[2026-08-14 00:42:02 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:04 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 120 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=611 fails=0 lastOK=true
+[2026-08-14 00:42:04 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:06 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 180 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=911 fails=0 lastOK=true
+[2026-08-14 00:42:06 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:07 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 240 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=1211 fails=0 lastOK=true
+[2026-08-14 00:42:07 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:09 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 300 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=1511 fails=0 lastOK=true
+[2026-08-14 00:42:09 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:10 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: PitchUp -> pitch=2.0
+[2026-08-14 00:42:11 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 360 | pitch=2.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=1811 fails=0 lastOK=true
+[2026-08-14 00:42:11 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=2 yaw=0 roll=0
+[2026-08-14 00:42:11 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: PitchUp -> pitch=4.0
+[2026-08-14 00:42:12 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: YawRight -> yaw=2.0
+[2026-08-14 00:42:12 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: YawRight -> yaw=4.0
+[2026-08-14 00:42:12 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 420 | pitch=4.0 yaw=4.0 roll=0.0 | hover=0.0 | TweakDB: writes=2111 fails=0 lastOK=true
+[2026-08-14 00:42:12 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=4 yaw=4 roll=0
+[2026-08-14 00:42:13 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: YawLeft -> yaw=2.0
+[2026-08-14 00:42:13 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: YawLeft -> yaw=0.0
+[2026-08-14 00:42:13 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: RollRight -> roll=2.0
+[2026-08-14 00:42:13 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: RollRight -> roll=4.0
+[2026-08-14 00:42:14 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: RollRight -> roll=6.0
+[2026-08-14 00:42:14 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: RollLeft -> roll=4.0
+[2026-08-14 00:42:14 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 480 | pitch=4.0 yaw=0.0 roll=4.0 | hover=0.0 | TweakDB: writes=2411 fails=0 lastOK=true
+[2026-08-14 00:42:14 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=4 yaw=0 roll=4
+[2026-08-14 00:42:14 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: RollLeft -> roll=2.0
+[2026-08-14 00:42:15 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: PitchDown -> pitch=2.0
+[2026-08-14 00:42:15 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: PitchUp -> pitch=4.0
+[2026-08-14 00:42:16 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 540 | pitch=4.0 yaw=0.0 roll=2.0 | hover=0.0 | TweakDB: writes=2711 fails=0 lastOK=true
+[2026-08-14 00:42:16 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=4 yaw=0 roll=2
+[2026-08-14 00:42:18 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 600 | pitch=4.0 yaw=0.0 roll=2.0 | hover=0.0 | TweakDB: writes=3011 fails=0 lastOK=true
+[2026-08-14 00:42:18 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=4 yaw=0 roll=2
+[2026-08-14 00:42:18 UTC-05:00] [31860] [HoverRotPlayer7B] === TweakDB State Dump ===
+[2026-08-14 00:42:18 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_active = 1 (expected type: Int32)
+[2026-08-14 00:42:18 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_pitch = 4 (expected type: Float)
+[2026-08-14 00:42:18 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_yaw = 0 (expected type: Float)
+[2026-08-14 00:42:18 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_roll = 2 (expected type: Float)
+[2026-08-14 00:42:18 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_strategy = 3 (expected type: Int32)
+[2026-08-14 00:42:18 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_red4ext_loaded = 0 (expected type: Int32)
+[2026-08-14 00:42:18 UTC-05:00] [31860] [HoverRotPlayer7B]   Writes: 3111 | Fails: 0 | LastOK: true | FlatsCreated: true
+[2026-08-14 00:42:18 UTC-05:00] [31860] [HoverRotPlayer7B] === End Dump ===
+[2026-08-14 00:42:19 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 660 | pitch=4.0 yaw=0.0 roll=2.0 | hover=0.0 | TweakDB: writes=3311 fails=0 lastOK=true
+[2026-08-14 00:42:19 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=4 yaw=0 roll=2
+[2026-08-14 00:42:19 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: Reset -> pitch=0.0 yaw=0.0 roll=0.0
+[2026-08-14 00:42:21 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 720 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=3611 fails=0 lastOK=true
+[2026-08-14 00:42:21 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:23 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 780 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=3911 fails=0 lastOK=true
+[2026-08-14 00:42:23 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:24 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 840 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=4211 fails=0 lastOK=true
+[2026-08-14 00:42:24 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:26 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 900 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=4511 fails=0 lastOK=true
+[2026-08-14 00:42:26 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:28 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 960 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=4811 fails=0 lastOK=true
+[2026-08-14 00:42:28 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:29 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1020 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=5111 fails=0 lastOK=true
+[2026-08-14 00:42:29 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:31 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1080 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=5411 fails=0 lastOK=true
+[2026-08-14 00:42:31 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:33 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1140 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=5711 fails=0 lastOK=true
+[2026-08-14 00:42:33 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:34 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1200 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=6011 fails=0 lastOK=true
+[2026-08-14 00:42:34 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:36 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1260 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=6311 fails=0 lastOK=true
+[2026-08-14 00:42:36 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:37 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: YawRight -> yaw=2.0
+[2026-08-14 00:42:37 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: PitchUp -> pitch=2.0
+[2026-08-14 00:42:38 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: YawLeft -> yaw=0.0
+[2026-08-14 00:42:38 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1320 | pitch=2.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=6611 fails=0 lastOK=true
+[2026-08-14 00:42:38 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=2 yaw=0 roll=0
+[2026-08-14 00:42:38 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: PitchDown -> pitch=0.0
+[2026-08-14 00:42:38 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: RollRight -> roll=2.0
+[2026-08-14 00:42:39 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: PitchDown -> pitch=-2.0
+[2026-08-14 00:42:39 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: YawLeft -> yaw=-2.0
+[2026-08-14 00:42:39 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1380 | pitch=-2.0 yaw=-2.0 roll=2.0 | hover=0.0 | TweakDB: writes=6911 fails=0 lastOK=true
+[2026-08-14 00:42:39 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=-2 yaw=-2 roll=2
+[2026-08-14 00:42:40 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: PitchDown -> pitch=-4.0
+[2026-08-14 00:42:40 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: RollLeft -> roll=0.0
+[2026-08-14 00:42:41 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1440 | pitch=-4.0 yaw=-2.0 roll=0.0 | hover=0.0 | TweakDB: writes=7211 fails=0 lastOK=true
+[2026-08-14 00:42:41 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=-4 yaw=-2 roll=0
+[2026-08-14 00:42:43 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1500 | pitch=-4.0 yaw=-2.0 roll=0.0 | hover=0.0 | TweakDB: writes=7511 fails=0 lastOK=true
+[2026-08-14 00:42:43 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=-4 yaw=-2 roll=0
+[2026-08-14 00:42:44 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1560 | pitch=-4.0 yaw=-2.0 roll=0.0 | hover=0.0 | TweakDB: writes=7811 fails=0 lastOK=true
+[2026-08-14 00:42:44 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=-4 yaw=-2 roll=0
+[2026-08-14 00:42:46 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1620 | pitch=-4.0 yaw=-2.0 roll=0.0 | hover=0.0 | TweakDB: writes=8111 fails=0 lastOK=true
+[2026-08-14 00:42:46 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=-4 yaw=-2 roll=0
+[2026-08-14 00:42:48 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1680 | pitch=-4.0 yaw=-2.0 roll=0.0 | hover=0.0 | TweakDB: writes=8411 fails=0 lastOK=true
+[2026-08-14 00:42:48 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=-4 yaw=-2 roll=0
+[2026-08-14 00:42:50 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1740 | pitch=-4.0 yaw=-2.0 roll=0.0 | hover=0.0 | TweakDB: writes=8711 fails=0 lastOK=true
+[2026-08-14 00:42:50 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=-4 yaw=-2 roll=0
+[2026-08-14 00:42:51 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 1800 | pitch=-4.0 yaw=-2.0 roll=0.0 | hover=0.0 | TweakDB: writes=9011 fails=0 lastOK=true
+[2026-08-14 00:42:51 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=-4 yaw=-2 roll=0
+[2026-08-14 00:42:52 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: Toggle -> DEACTIVATE
+[2026-08-14 00:42:52 UTC-05:00] [31860] [HoverRotPlayer7B] === DeactivateMode ===
+[2026-08-14 00:42:52 UTC-05:00] [31860] [HoverRotPlayer7B] Wrote final state to TweakDB (active=0)
+[2026-08-14 00:42:52 UTC-05:00] [31860] [HoverRotPlayer7B] TweakDB totals: writes=9136 fails=0 lastOK=true
+[2026-08-14 00:42:52 UTC-05:00] [31860] [HoverRotPlayer7B] === DeactivateMode complete ===
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: Toggle -> ACTIVATE
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B] === ActivateMode ===
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B] ActivateMode: player found
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B] Creating/initializing TweakDB flats...
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B] TweakDB flat creation: 6 ok, 0 failed
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B] Readback verification:
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_active = 0 (expected: 0, type: Int32)
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_pitch = 0 (expected: 0, type: Float)
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_yaw = 0 (expected: 0, type: Float)
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_roll = 0 (expected: 0, type: Float)
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_strategy = 3 (expected: 3, type: Int32)
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_red4ext_loaded = 0 (expected: 0, type: Int32)
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B] CheckRed4extStatus: _red4ext_loaded = 0 -> false
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B] RED4ext loaded: false
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B] Initial orientation written: pitch=0.0 yaw=0.0 roll=0.0 active=1
+[2026-08-14 00:42:53 UTC-05:00] [31860] [HoverRotPlayer7B] === ActivateMode complete ===
+[2026-08-14 00:42:55 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 60 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=311 fails=0 lastOK=true
+[2026-08-14 00:42:55 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:55 UTC-05:00] [31860] [HoverRotPlayer7B] === TweakDB State Dump ===
+[2026-08-14 00:42:55 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_active = 1 (expected type: Int32)
+[2026-08-14 00:42:55 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_pitch = 0 (expected type: Float)
+[2026-08-14 00:42:55 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_yaw = 0 (expected type: Float)
+[2026-08-14 00:42:55 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_roll = 0 (expected type: Float)
+[2026-08-14 00:42:55 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_strategy = 3 (expected type: Int32)
+[2026-08-14 00:42:55 UTC-05:00] [31860] [HoverRotPlayer7B]   HoverRotPlayer7_red4ext_loaded = 0 (expected type: Int32)
+[2026-08-14 00:42:55 UTC-05:00] [31860] [HoverRotPlayer7B]   Writes: 336 | Fails: 0 | LastOK: true | FlatsCreated: true
+[2026-08-14 00:42:55 UTC-05:00] [31860] [HoverRotPlayer7B] === End Dump ===
+[2026-08-14 00:42:56 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 120 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=611 fails=0 lastOK=true
+[2026-08-14 00:42:56 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:42:57 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: Reset -> pitch=0.0 yaw=0.0 roll=0.0
+[2026-08-14 00:42:58 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 180 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=911 fails=0 lastOK=true
+[2026-08-14 00:42:58 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:43:00 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 240 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=1211 fails=0 lastOK=true
+[2026-08-14 00:43:00 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:43:02 UTC-05:00] [31860] [HoverRotPlayer7B] Tick 300 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | TweakDB: writes=1511 fails=0 lastOK=true
+[2026-08-14 00:43:02 UTC-05:00] [31860] [HoverRotPlayer7B]   Readback: active=1 pitch=0 yaw=0 roll=0
+[2026-08-14 00:43:03 UTC-05:00] [31860] [HoverRotPlayer7B] Hotkey: Toggle -> DEACTIVATE
+[2026-08-14 00:43:03 UTC-05:00] [31860] [HoverRotPlayer7B] === DeactivateMode ===
+[2026-08-14 00:43:03 UTC-05:00] [31860] [HoverRotPlayer7B] Wrote final state to TweakDB (active=0)
+[2026-08-14 00:43:03 UTC-05:00] [31860] [HoverRotPlayer7B] TweakDB totals: writes=1741 fails=0 lastOK=true
+[2026-08-14 00:43:03 UTC-05:00] [31860] [HoverRotPlayer7B] === DeactivateMode complete ===

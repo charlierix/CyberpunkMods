@@ -1,0 +1,25 @@
+[2026-08-14 21:53:43.092] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotTesterPlayer8] ============================================
+[2026-08-14 21:53:43.092] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotTesterPlayer8] Plugin loaded — native rotation functions
+[2026-08-14 21:53:43.092] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotTesterPlayer8] 3 native functions: ApplyRotation, GetStatus, ReadPlayerOrientation
+[2026-08-14 21:53:43.092] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotTesterPlayer8] Transform write: Entity[0xB0]->IPlacedComponent[0xE0]->WorldTransform[0x10]->Quaternion
+[2026-08-14 21:53:43.092] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotTesterPlayer8] RTTI callbacks registered
+[2026-08-14 21:58:52.425] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation: FIRST CALL SUCCESS
+[2026-08-14 21:58:52.425] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] quat(i=0 j=0 k=0 r=1)
+[2026-08-14 21:58:52.425] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] entity ptr=0000017498516E60 transformComp ptr=0000017091506FB0
+[2026-08-14 21:59:00.515] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #300 | ok=300 fail=0 | quat(i=0 j=0 k=0 r=1)
+[2026-08-14 21:59:08.698] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #600 | ok=600 fail=0 | quat(i=0 j=0 k=0 r=1)
+[2026-08-14 21:59:16.930] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #900 | ok=900 fail=0 | quat(i=0 j=0 k=0 r=1)
+[2026-08-14 21:59:25.195] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #1200 | ok=1200 fail=0 | quat(i=0 j=0 k=0 r=1)
+[2026-08-14 21:59:33.249] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #1500 | ok=1500 fail=0 | quat(i=0 j=0 k=0 r=1)
+[2026-08-14 21:59:41.362] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #1800 | ok=1800 fail=0 | quat(i=0 j=0 k=0 r=1)
+[2026-08-14 21:59:49.428] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #2100 | ok=2100 fail=0 | quat(i=0.0174524 j=0 k=0 r=0.999848)
+[2026-08-14 21:59:57.502] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #2400 | ok=2400 fail=0 | quat(i=0 j=0 k=0 r=1)
+[2026-08-14 22:00:05.738] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #2700 | ok=2700 fail=0 | quat(i=-0.0677964 j=-0.0546078 k=0.0384153 r=0.995463)
+[2026-08-14 22:00:13.097] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #3000 | ok=3000 fail=0 | quat(i=-0.0677964 j=-0.0546078 k=0.0384153 r=0.995463)
+[2026-08-14 22:00:20.156] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #3300 | ok=3300 fail=0 | quat(i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837)
+[2026-08-14 22:00:28.144] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #3600 | ok=3600 fail=0 | quat(i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837)
+[2026-08-14 22:00:36.248] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #3900 | ok=3900 fail=0 | quat(i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837)
+[2026-08-14 22:00:44.468] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #4200 | ok=4200 fail=0 | quat(i=0 j=0 k=0 r=1)
+[2026-08-14 22:00:52.775] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotPlayer8] ApplyRotation #4500 | ok=4500 fail=0 | quat(i=0 j=0 k=0.0174524 r=0.999848)
+[2026-08-14 22:01:22.169] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotTesterPlayer8] Plugin unloading
+[2026-08-14 22:01:22.169] [info    ] [ 22400] [HoverRotTesterPlayer8] [HoverRotTesterPlayer8] Final stats: 4510 calls, 4510 success, 0 fail, 75 reads

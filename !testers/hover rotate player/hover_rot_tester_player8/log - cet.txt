@@ -1,0 +1,314 @@
+[2026-08-14 21:53:49 UTC-05:00] [22400] Mod entity scanner loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\entity scanner')
+[2026-08-14 21:53:49 UTC-05:00] [22400] Mod ghost_forward loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\ghost_forward')
+[2026-08-14 21:53:49 UTC-05:00] [22400] Mod grappling_hook loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\grappling_hook')
+[2026-08-14 21:53:49 UTC-05:00] [22400] Mod HeavyMG loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\HeavyMG')
+[2026-08-14 21:53:49 UTC-05:00] [22400] Mod hover_rot_tester_player8 loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hover_rot_tester_player8')
+[2026-08-14 21:53:49 UTC-05:00] [22400] Mod hundred_grand loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hundred_grand')
+[2026-08-14 21:53:50 UTC-05:00] [22400] Mod jetpack loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\jetpack')
+[2026-08-14 21:53:50 UTC-05:00] [22400] Mod low_flying_v loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\low_flying_v')
+[2026-08-14 21:53:50 UTC-05:00] [22400] Mod wall_hang loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\wall_hang')
+[2026-08-14 21:54:08 UTC-05:00] [29136] [EntityScanner] Initialized. Bind the toggle key in Settings > Key Bindings.
+[2026-08-14 21:54:08 UTC-05:00] [29136] [HoverRotPlayer8] === onInit ===
+[2026-08-14 21:54:08 UTC-05:00] [29136] [HoverRotPlayer8] Crash safeguard: active reset to false
+[2026-08-14 21:54:08 UTC-05:00] [29136] [HoverRotPlayer8] CheckNativeAvailable: native functions AVAILABLE
+[2026-08-14 21:54:08 UTC-05:00] [29136] [HoverRotPlayer8] === onInit complete ===
+[2026-08-14 21:54:08 UTC-05:00] [29136] LuaVM: initialization finished!
+[2026-08-14 21:58:52 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: Toggle -> ACTIVATE
+[2026-08-14 21:58:52 UTC-05:00] [22400] [HoverRotPlayer8] === ActivateMode ===
+[2026-08-14 21:58:52 UTC-05:00] [22400] [HoverRotPlayer8] ActivateMode: player found
+[2026-08-14 21:58:52 UTC-05:00] [22400] [HoverRotPlayer8] CheckNativeAvailable: native functions AVAILABLE
+[2026-08-14 21:58:52 UTC-05:00] [22400] [HoverRotPlayer8] Native functions available: true
+[2026-08-14 21:58:52 UTC-05:00] [22400] [HoverRotPlayer8] === ActivateMode complete ===
+[2026-08-14 21:58:54 UTC-05:00] [22400] [HoverRotPlayer8] Tick 60 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=60 ok=60 fail=0 last=true
+[2026-08-14 21:58:54 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=60 ok=60 fail=0 reads=0 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:58:54 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:58:55 UTC-05:00] [22400] [HoverRotPlayer8] Tick 120 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=120 ok=120 fail=0 last=true
+[2026-08-14 21:58:55 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=120 ok=120 fail=0 reads=1 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:58:55 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:58:57 UTC-05:00] [22400] [HoverRotPlayer8] Tick 180 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=180 ok=180 fail=0 last=true
+[2026-08-14 21:58:57 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=180 ok=180 fail=0 reads=2 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:58:57 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:58:58 UTC-05:00] [22400] [HoverRotPlayer8] Tick 240 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=240 ok=240 fail=0 last=true
+[2026-08-14 21:58:58 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=240 ok=240 fail=0 reads=3 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:58:58 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:00 UTC-05:00] [22400] [HoverRotPlayer8] Tick 300 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=300 ok=300 fail=0 last=true
+[2026-08-14 21:59:00 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=300 ok=300 fail=0 reads=4 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:00 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:02 UTC-05:00] [22400] [HoverRotPlayer8] Tick 360 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=360 ok=360 fail=0 last=true
+[2026-08-14 21:59:02 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=360 ok=360 fail=0 reads=5 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:02 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:03 UTC-05:00] [22400] [HoverRotPlayer8] Tick 420 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=420 ok=420 fail=0 last=true
+[2026-08-14 21:59:03 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=420 ok=420 fail=0 reads=6 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:03 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:05 UTC-05:00] [22400] [HoverRotPlayer8] Tick 480 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=480 ok=480 fail=0 last=true
+[2026-08-14 21:59:05 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=480 ok=480 fail=0 reads=7 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:05 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:07 UTC-05:00] [22400] [HoverRotPlayer8] Tick 540 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=540 ok=540 fail=0 last=true
+[2026-08-14 21:59:07 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=540 ok=540 fail=0 reads=8 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:07 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:08 UTC-05:00] [22400] [HoverRotPlayer8] Tick 600 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=600 ok=600 fail=0 last=true
+[2026-08-14 21:59:08 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=600 ok=600 fail=0 reads=9 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:08 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:10 UTC-05:00] [22400] [HoverRotPlayer8] Tick 660 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=660 ok=660 fail=0 last=true
+[2026-08-14 21:59:10 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=660 ok=660 fail=0 reads=10 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:10 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:11 UTC-05:00] [22400] [HoverRotPlayer8] Tick 720 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=720 ok=720 fail=0 last=true
+[2026-08-14 21:59:11 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=720 ok=720 fail=0 reads=11 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:11 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:13 UTC-05:00] [22400] [HoverRotPlayer8] Tick 780 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=780 ok=780 fail=0 last=true
+[2026-08-14 21:59:13 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=780 ok=780 fail=0 reads=12 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:13 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:15 UTC-05:00] [22400] [HoverRotPlayer8] Tick 840 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=840 ok=840 fail=0 last=true
+[2026-08-14 21:59:15 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=840 ok=840 fail=0 reads=13 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:15 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:16 UTC-05:00] [22400] [HoverRotPlayer8] Tick 900 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=900 ok=900 fail=0 last=true
+[2026-08-14 21:59:16 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=900 ok=900 fail=0 reads=14 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:16 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:18 UTC-05:00] [22400] [HoverRotPlayer8] Tick 960 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=960 ok=960 fail=0 last=true
+[2026-08-14 21:59:18 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=960 ok=960 fail=0 reads=15 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:18 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:20 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1020 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1020 ok=1020 fail=0 last=true
+[2026-08-14 21:59:20 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1020 ok=1020 fail=0 reads=16 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:20 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:21 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1080 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1080 ok=1080 fail=0 last=true
+[2026-08-14 21:59:21 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1080 ok=1080 fail=0 reads=17 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:21 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:23 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1140 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1140 ok=1140 fail=0 last=true
+[2026-08-14 21:59:23 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1140 ok=1140 fail=0 reads=18 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:23 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:25 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1200 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1200 ok=1200 fail=0 last=true
+[2026-08-14 21:59:25 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1200 ok=1200 fail=0 reads=19 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:25 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:26 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1260 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1260 ok=1260 fail=0 last=true
+[2026-08-14 21:59:26 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1260 ok=1260 fail=0 reads=20 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:26 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:28 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1320 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1320 ok=1320 fail=0 last=true
+[2026-08-14 21:59:28 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1320 ok=1320 fail=0 reads=21 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:28 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:30 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1380 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1380 ok=1380 fail=0 last=true
+[2026-08-14 21:59:30 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1380 ok=1380 fail=0 reads=22 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:30 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:31 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1440 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1440 ok=1440 fail=0 last=true
+[2026-08-14 21:59:31 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1440 ok=1440 fail=0 reads=23 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:31 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:33 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1500 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1500 ok=1500 fail=0 last=true
+[2026-08-14 21:59:33 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1500 ok=1500 fail=0 reads=24 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:33 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:34 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1560 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1560 ok=1560 fail=0 last=true
+[2026-08-14 21:59:34 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1560 ok=1560 fail=0 reads=25 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:34 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:36 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1620 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1620 ok=1620 fail=0 last=true
+[2026-08-14 21:59:36 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1620 ok=1620 fail=0 reads=26 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:36 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:38 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1680 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1680 ok=1680 fail=0 last=true
+[2026-08-14 21:59:38 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1680 ok=1680 fail=0 reads=27 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:38 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:38 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: YawRight -> yaw=2.0
+[2026-08-14 21:59:38 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: YawRight -> yaw=4.0
+[2026-08-14 21:59:39 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: YawLeft -> yaw=2.0
+[2026-08-14 21:59:39 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1740 | pitch=0.0 yaw=2.0 roll=0.0 | hover=0.0 | apply: calls=1740 ok=1740 fail=0 last=true
+[2026-08-14 21:59:39 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1740 ok=1740 fail=0 reads=28 lastQ=(0,0,0.0174524,0.999848) err=none
+[2026-08-14 21:59:39 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0.0174524 r=0.999848
+[2026-08-14 21:59:40 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: YawLeft -> yaw=0.0
+[2026-08-14 21:59:41 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1800 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1800 ok=1800 fail=0 last=true
+[2026-08-14 21:59:41 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1800 ok=1800 fail=0 reads=29 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:41 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:42 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1860 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=1860 ok=1860 fail=0 last=true
+[2026-08-14 21:59:42 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1860 ok=1860 fail=0 reads=30 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:42 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:44 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollRight -> roll=2.0
+[2026-08-14 21:59:44 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1920 | pitch=0.0 yaw=0.0 roll=2.0 | hover=0.0 | apply: calls=1920 ok=1920 fail=0 last=true
+[2026-08-14 21:59:44 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1920 ok=1920 fail=0 reads=31 lastQ=(0,0.0174524,0,0.999848) err=none
+[2026-08-14 21:59:44 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0.0174524 k=0 r=0.999848
+[2026-08-14 21:59:44 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollRight -> roll=4.0
+[2026-08-14 21:59:46 UTC-05:00] [22400] [HoverRotPlayer8] Tick 1980 | pitch=0.0 yaw=0.0 roll=4.0 | hover=0.0 | apply: calls=1980 ok=1980 fail=0 last=true
+[2026-08-14 21:59:46 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=1980 ok=1980 fail=0 reads=32 lastQ=(0,0.0348995,0,0.999391) err=none
+[2026-08-14 21:59:46 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0.0348995 k=0 r=0.999391
+[2026-08-14 21:59:46 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollLeft -> roll=2.0
+[2026-08-14 21:59:46 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollLeft -> roll=0.0
+[2026-08-14 21:59:47 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2040 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=2040 ok=2040 fail=0 last=true
+[2026-08-14 21:59:47 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2040 ok=2040 fail=0 reads=33 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:47 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:48 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchUp -> pitch=2.0
+[2026-08-14 21:59:48 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchUp -> pitch=4.0
+[2026-08-14 21:59:49 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchDown -> pitch=2.0
+[2026-08-14 21:59:49 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2100 | pitch=2.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=2100 ok=2100 fail=0 last=true
+[2026-08-14 21:59:49 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2100 ok=2100 fail=0 reads=34 lastQ=(0.0174524,0,0,0.999848) err=none
+[2026-08-14 21:59:49 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0.0174524 j=0 k=0 r=0.999848
+[2026-08-14 21:59:49 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchDown -> pitch=0.0
+[2026-08-14 21:59:51 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2160 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=2160 ok=2160 fail=0 last=true
+[2026-08-14 21:59:51 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2160 ok=2160 fail=0 reads=35 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:51 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:52 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2220 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=2220 ok=2220 fail=0 last=true
+[2026-08-14 21:59:52 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2220 ok=2220 fail=0 reads=36 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:52 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:53 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: Reset -> pitch=0.0 yaw=0.0 roll=0.0
+[2026-08-14 21:59:54 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2280 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=2280 ok=2280 fail=0 last=true
+[2026-08-14 21:59:54 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2280 ok=2280 fail=0 reads=37 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:54 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:55 UTC-05:00] [22400] [HoverRotPlayer8] === Status Dump ===
+[2026-08-14 21:59:55 UTC-05:00] [22400] [HoverRotPlayer8]   active=true pitch=0.0 yaw=0.0 roll=0.0 hover=0.0
+[2026-08-14 21:59:55 UTC-05:00] [22400] [HoverRotPlayer8]   native=true bridgeChecked=true
+[2026-08-14 21:59:55 UTC-05:00] [22400] [HoverRotPlayer8]   apply: calls=2321 ok=2321 fail=0 lastResult=true
+[2026-08-14 21:59:55 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2280 ok=2280 fail=0 reads=37 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:55 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:55 UTC-05:00] [22400] [HoverRotPlayer8] === End Dump ===
+[2026-08-14 21:59:55 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2340 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=2340 ok=2340 fail=0 last=true
+[2026-08-14 21:59:55 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2340 ok=2340 fail=0 reads=38 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:55 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:57 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2400 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=2400 ok=2400 fail=0 last=true
+[2026-08-14 21:59:57 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2400 ok=2400 fail=0 reads=39 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:57 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:59 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2460 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=2460 ok=2460 fail=0 last=true
+[2026-08-14 21:59:59 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2460 ok=2460 fail=0 reads=40 lastQ=(0,0,0,1) err=none
+[2026-08-14 21:59:59 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 21:59:59 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: YawRight -> yaw=2.0
+[2026-08-14 21:59:59 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: YawRight -> yaw=4.0
+[2026-08-14 22:00:00 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: YawRight -> yaw=6.0
+[2026-08-14 22:00:00 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchDown -> pitch=-2.0
+[2026-08-14 22:00:00 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2520 | pitch=-2.0 yaw=6.0 roll=0.0 | hover=0.0 | apply: calls=2520 ok=2520 fail=0 last=true
+[2026-08-14 22:00:00 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2520 ok=2520 fail=0 reads=41 lastQ=(-0.0174285,-0.000913389,0.052328,0.998478) err=none
+[2026-08-14 22:00:00 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0174285 j=-0.000913389 k=0.052328 r=0.998478
+[2026-08-14 22:00:00 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchDown -> pitch=-4.0
+[2026-08-14 22:00:01 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchDown -> pitch=-6.0
+[2026-08-14 22:00:01 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollLeft -> roll=-2.0
+[2026-08-14 22:00:01 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollLeft -> roll=-4.0
+[2026-08-14 22:00:02 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollLeft -> roll=-6.0
+[2026-08-14 22:00:02 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2580 | pitch=-6.0 yaw=6.0 roll=-6.0 | hover=0.0 | apply: calls=2580 ok=2580 fail=0 last=true
+[2026-08-14 22:00:02 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2580 ok=2580 fail=0 reads=42 lastQ=(-0.0494573,-0.0549279,0.0549279,0.995751) err=none
+[2026-08-14 22:00:02 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0494573 j=-0.0549279 k=0.0549279 r=0.995751
+[2026-08-14 22:00:02 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: YawLeft -> yaw=4.0
+[2026-08-14 22:00:02 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchUp -> pitch=-4.0
+[2026-08-14 22:00:03 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchDown -> pitch=-6.0
+[2026-08-14 22:00:03 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollLeft -> roll=-8.0
+[2026-08-14 22:00:03 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2640 | pitch=-6.0 yaw=4.0 roll=-8.0 | hover=0.0 | apply: calls=2640 ok=2640 fail=0 last=true
+[2026-08-14 22:00:03 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2640 ok=2640 fail=0 reads=43 lastQ=(-0.0497455,-0.0714405,0.0384153,0.995463) err=none
+[2026-08-14 22:00:03 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0497455 j=-0.0714405 k=0.0384153 r=0.995463
+[2026-08-14 22:00:04 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollRight -> roll=-6.0
+[2026-08-14 22:00:04 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchDown -> pitch=-8.0
+[2026-08-14 22:00:05 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2700 | pitch=-8.0 yaw=4.0 roll=-6.0 | hover=0.0 | apply: calls=2700 ok=2700 fail=0 last=true
+[2026-08-14 22:00:05 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2700 ok=2700 fail=0 reads=44 lastQ=(-0.0677964,-0.0546078,0.0384153,0.995463) err=none
+[2026-08-14 22:00:05 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0677964 j=-0.0546078 k=0.0384153 r=0.995463
+[2026-08-14 22:00:06 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: HoverUp -> velocity=3.0
+[2026-08-14 22:00:07 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: HoverStop -> velocity=0.0
+[2026-08-14 22:00:07 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2760 | pitch=-8.0 yaw=4.0 roll=-6.0 | hover=0.0 | apply: calls=2760 ok=2760 fail=0 last=true
+[2026-08-14 22:00:07 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2760 ok=2760 fail=0 reads=45 lastQ=(-0.0677964,-0.0546078,0.0384153,0.995463) err=none
+[2026-08-14 22:00:07 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0677964 j=-0.0546078 k=0.0384153 r=0.995463
+[2026-08-14 22:00:08 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2820 | pitch=-8.0 yaw=4.0 roll=-6.0 | hover=0.0 | apply: calls=2820 ok=2820 fail=0 last=true
+[2026-08-14 22:00:08 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2820 ok=2820 fail=0 reads=46 lastQ=(-0.0677964,-0.0546078,0.0384153,0.995463) err=none
+[2026-08-14 22:00:08 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0677964 j=-0.0546078 k=0.0384153 r=0.995463
+[2026-08-14 22:00:10 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchDown -> pitch=-10.0
+[2026-08-14 22:00:10 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2880 | pitch=-10.0 yaw=4.0 roll=-6.0 | hover=0.0 | apply: calls=2880 ok=2880 fail=0 last=true
+[2026-08-14 22:00:10 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2880 ok=2880 fail=0 reads=47 lastQ=(-0.0851637,-0.0551426,0.0392777,0.994064) err=none
+[2026-08-14 22:00:10 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0851637 j=-0.0551426 k=0.0392777 r=0.994064
+[2026-08-14 22:00:10 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollLeft -> roll=-8.0
+[2026-08-14 22:00:11 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchUp -> pitch=-8.0
+[2026-08-14 22:00:11 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchDown -> pitch=-10.0
+[2026-08-14 22:00:11 UTC-05:00] [22400] [HoverRotPlayer8] Tick 2940 | pitch=-10.0 yaw=4.0 roll=-8.0 | hover=0.0 | apply: calls=2940 ok=2940 fail=0 last=true
+[2026-08-14 22:00:11 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=2940 ok=2940 fail=0 reads=48 lastQ=(-0.0844653,-0.072483,0.040758,0.99295) err=none
+[2026-08-14 22:00:11 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0844653 j=-0.072483 k=0.040758 r=0.99295
+[2026-08-14 22:00:12 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollRight -> roll=-6.0
+[2026-08-14 22:00:12 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchUp -> pitch=-8.0
+[2026-08-14 22:00:13 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3000 | pitch=-8.0 yaw=4.0 roll=-6.0 | hover=0.0 | apply: calls=3000 ok=3000 fail=0 last=true
+[2026-08-14 22:00:13 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3000 ok=3000 fail=0 reads=49 lastQ=(-0.0677964,-0.0546078,0.0384153,0.995463) err=none
+[2026-08-14 22:00:13 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0677964 j=-0.0546078 k=0.0384153 r=0.995463
+[2026-08-14 22:00:13 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollRight -> roll=-4.0
+[2026-08-14 22:00:13 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchUp -> pitch=-6.0
+[2026-08-14 22:00:14 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: RollRight -> roll=-2.0
+[2026-08-14 22:00:14 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3060 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3060 ok=3060 fail=0 last=true
+[2026-08-14 22:00:14 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3060 ok=3060 fail=0 reads=50 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:14 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:14 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchUp -> pitch=-4.0
+[2026-08-14 22:00:15 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchDown -> pitch=-6.0
+[2026-08-14 22:00:15 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3120 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3120 ok=3120 fail=0 last=true
+[2026-08-14 22:00:15 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3120 ok=3120 fail=0 reads=51 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:15 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:17 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3180 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3180 ok=3180 fail=0 last=true
+[2026-08-14 22:00:17 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3180 ok=3180 fail=0 reads=52 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:17 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:18 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3240 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3240 ok=3240 fail=0 last=true
+[2026-08-14 22:00:18 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3240 ok=3240 fail=0 reads=53 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:18 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:18 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: HoverStop -> velocity=0.0
+[2026-08-14 22:00:19 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: HoverUp -> velocity=3.0
+[2026-08-14 22:00:20 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3300 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=3.0 | apply: calls=3300 ok=3300 fail=0 last=true
+[2026-08-14 22:00:20 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3300 ok=3300 fail=0 reads=54 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:20 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:20 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: HoverStop -> velocity=0.0
+[2026-08-14 22:00:21 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3360 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3360 ok=3360 fail=0 last=true
+[2026-08-14 22:00:21 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3360 ok=3360 fail=0 reads=55 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:21 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:23 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3420 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3420 ok=3420 fail=0 last=true
+[2026-08-14 22:00:23 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3420 ok=3420 fail=0 reads=56 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:23 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:24 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3480 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3480 ok=3480 fail=0 last=true
+[2026-08-14 22:00:24 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3480 ok=3480 fail=0 reads=57 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:24 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:26 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3540 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3540 ok=3540 fail=0 last=true
+[2026-08-14 22:00:26 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3540 ok=3540 fail=0 reads=58 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:26 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:28 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3600 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3600 ok=3600 fail=0 last=true
+[2026-08-14 22:00:28 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3600 ok=3600 fail=0 reads=59 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:28 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:29 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3660 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3660 ok=3660 fail=0 last=true
+[2026-08-14 22:00:29 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3660 ok=3660 fail=0 reads=60 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:29 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:31 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3720 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3720 ok=3720 fail=0 last=true
+[2026-08-14 22:00:31 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3720 ok=3720 fail=0 reads=61 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:31 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:32 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3780 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3780 ok=3780 fail=0 last=true
+[2026-08-14 22:00:32 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3780 ok=3780 fail=0 reads=62 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:32 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:34 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3840 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3840 ok=3840 fail=0 last=true
+[2026-08-14 22:00:34 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3840 ok=3840 fail=0 reads=63 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:34 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:36 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3900 | pitch=-6.0 yaw=4.0 roll=-2.0 | hover=0.0 | apply: calls=3900 ok=3900 fail=0 last=true
+[2026-08-14 22:00:36 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3900 ok=3900 fail=0 reads=64 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:36 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:36 UTC-05:00] [22400] [HoverRotPlayer8] === Status Dump ===
+[2026-08-14 22:00:36 UTC-05:00] [22400] [HoverRotPlayer8]   active=true pitch=-6.0 yaw=4.0 roll=-2.0 hover=0.0
+[2026-08-14 22:00:36 UTC-05:00] [22400] [HoverRotPlayer8]   native=true bridgeChecked=true
+[2026-08-14 22:00:36 UTC-05:00] [22400] [HoverRotPlayer8]   apply: calls=3901 ok=3901 fail=0 lastResult=true
+[2026-08-14 22:00:36 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3900 ok=3900 fail=0 reads=64 lastQ=(-0.0516879,-0.0192441,0.0357592,0.997837) err=none
+[2026-08-14 22:00:36 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=-0.0516879 j=-0.0192441 k=0.0357592 r=0.997837
+[2026-08-14 22:00:36 UTC-05:00] [22400] [HoverRotPlayer8] === End Dump ===
+[2026-08-14 22:00:37 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: Reset -> pitch=0.0 yaw=0.0 roll=0.0
+[2026-08-14 22:00:37 UTC-05:00] [22400] [HoverRotPlayer8] Tick 3960 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=3960 ok=3960 fail=0 last=true
+[2026-08-14 22:00:37 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=3960 ok=3960 fail=0 reads=65 lastQ=(0,0,0,1) err=none
+[2026-08-14 22:00:37 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 22:00:39 UTC-05:00] [22400] [HoverRotPlayer8] Tick 4020 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=4020 ok=4020 fail=0 last=true
+[2026-08-14 22:00:39 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=4020 ok=4020 fail=0 reads=66 lastQ=(0,0,0,1) err=none
+[2026-08-14 22:00:39 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 22:00:41 UTC-05:00] [22400] [HoverRotPlayer8] Tick 4080 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=4080 ok=4080 fail=0 last=true
+[2026-08-14 22:00:41 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=4080 ok=4080 fail=0 reads=67 lastQ=(0,0,0,1) err=none
+[2026-08-14 22:00:41 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 22:00:42 UTC-05:00] [22400] [HoverRotPlayer8] Tick 4140 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=4140 ok=4140 fail=0 last=true
+[2026-08-14 22:00:42 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=4140 ok=4140 fail=0 reads=68 lastQ=(0,0,0,1) err=none
+[2026-08-14 22:00:42 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 22:00:44 UTC-05:00] [22400] [HoverRotPlayer8] Tick 4200 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=4200 ok=4200 fail=0 last=true
+[2026-08-14 22:00:44 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=4200 ok=4200 fail=0 reads=69 lastQ=(0,0,0,1) err=none
+[2026-08-14 22:00:44 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 22:00:46 UTC-05:00] [22400] [HoverRotPlayer8] Tick 4260 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=4260 ok=4260 fail=0 last=true
+[2026-08-14 22:00:46 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=4260 ok=4260 fail=0 reads=70 lastQ=(0,0,0,1) err=none
+[2026-08-14 22:00:46 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 22:00:47 UTC-05:00] [22400] [HoverRotPlayer8] Tick 4320 | pitch=0.0 yaw=0.0 roll=0.0 | hover=0.0 | apply: calls=4320 ok=4320 fail=0 last=true
+[2026-08-14 22:00:47 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=4320 ok=4320 fail=0 reads=71 lastQ=(0,0,0,1) err=none
+[2026-08-14 22:00:47 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0 r=1
+[2026-08-14 22:00:47 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: YawRight -> yaw=2.0
+[2026-08-14 22:00:48 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchUp -> pitch=2.0
+[2026-08-14 22:00:48 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchDown -> pitch=0.0
+[2026-08-14 22:00:48 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchUp -> pitch=2.0
+[2026-08-14 22:00:49 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: PitchDown -> pitch=0.0
+[2026-08-14 22:00:49 UTC-05:00] [22400] [HoverRotPlayer8] Tick 4380 | pitch=0.0 yaw=2.0 roll=0.0 | hover=0.0 | apply: calls=4380 ok=4380 fail=0 last=true
+[2026-08-14 22:00:49 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=4380 ok=4380 fail=0 reads=72 lastQ=(0,0,0.0174524,0.999848) err=none
+[2026-08-14 22:00:49 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0.0174524 r=0.999848
+[2026-08-14 22:00:51 UTC-05:00] [22400] [HoverRotPlayer8] Tick 4440 | pitch=0.0 yaw=2.0 roll=0.0 | hover=0.0 | apply: calls=4440 ok=4440 fail=0 last=true
+[2026-08-14 22:00:51 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=4440 ok=4440 fail=0 reads=73 lastQ=(0,0,0.0174524,0.999848) err=none
+[2026-08-14 22:00:51 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0.0174524 r=0.999848
+[2026-08-14 22:00:52 UTC-05:00] [22400] [HoverRotPlayer8] Tick 4500 | pitch=0.0 yaw=2.0 roll=0.0 | hover=0.0 | apply: calls=4500 ok=4500 fail=0 last=true
+[2026-08-14 22:00:52 UTC-05:00] [22400] [HoverRotPlayer8]   C++ status: calls=4500 ok=4500 fail=0 reads=74 lastQ=(0,0,0.0174524,0.999848) err=none
+[2026-08-14 22:00:52 UTC-05:00] [22400] [HoverRotPlayer8]   Readback:   i=0 j=0 k=0.0174524 r=0.999848
+[2026-08-14 22:00:53 UTC-05:00] [22400] [HoverRotPlayer8] Hotkey: Toggle -> DEACTIVATE
+[2026-08-14 22:00:53 UTC-05:00] [22400] [HoverRotPlayer8] === DeactivateMode ===
+[2026-08-14 22:00:53 UTC-05:00] [22400] [HoverRotPlayer8] Final stats: applyCalls=4510 ok=4510 fail=0
+[2026-08-14 22:00:53 UTC-05:00] [22400] [HoverRotPlayer8] === DeactivateMode complete ===

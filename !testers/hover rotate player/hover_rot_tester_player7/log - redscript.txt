@@ -1,0 +1,49 @@
+[INFO - Thu, 13 Aug 2026 09:17:31 -0500] Compiling files in D:\SteamLibrary\steamapps\common\Cyberpunk 2077\r6\scripts:
+BrowserExtension\browserController.overrides.reds
+BrowserExtension\BrowserExtension.Classes.reds
+BrowserExtension\BrowserExtension.Config.reds
+BrowserExtension\BrowserExtension.DataStructures.reds
+BrowserExtension\BrowserExtension.System.reds
+BrowserExtension\HomePagePagination.reds
+BrowserExtension\ModSettingsConditional.reds
+cornmilf_cars\db5_007_fakeblinkers_mg.reds
+cornmilf_cars\db5_007_lcp.reds
+CyberwareEx\CyberwareEx.Global.reds
+CyberwareEx\CyberwareEx.reds
+HoverRotPlayer7.reds
+oranje3_militech_legatus\oranje3_militech_legatus.reds
+oranje3_semimaru_nomad\oranje3_semimaru_nomad.reds
+oranje3_timeskip_emperor\oranje3_timeskip_emperor.reds
+SDH0_PorscheSinger911Armed\sdh0_porschesinger911a_meshconfig.reds
+SDH0_PorscheSinger911Armed\sdh0_porschesinger911a_weapon.reds
+VehicleManufacturerFix.reds
+VirtualCarDealer\autofixer\AutofixerItemDataView.reds
+VirtualCarDealer\autofixer\AutofixerItemVirtualController.reds
+VirtualCarDealer\autofixer\AutofixerVirtualController.reds
+VirtualCarDealer\Cheat.reds
+VirtualCarDealer\Config.reds
+VirtualCarDealer\content\CarDealerContentController.reds
+VirtualCarDealer\core\CarDealer-Classes.reds
+VirtualCarDealer\core\CarDealer-Core.reds
+VirtualCarDealer\core\CarDealer-Fields.reds
+VirtualCarDealer\core\CarDealer-Helpers.reds
+VirtualCarDealer\core\CarDealer-ScriptableTweak.reds
+VirtualCarDealer\core\CarDealer-System.reds
+VirtualCarDealer\overrides\DeactivateVehicles.reds
+VirtualCarDealer\overrides\SetupNewSite.reds
+VirtualCarDealer\overrides\SetupNewTab.reds
+VirtualCarDealer\UI\HubButton.reds
+VirtualCarDealer\UI\SellButton.reds
+VirtualCarDealer\Utils.reds
+D:\SteamLibrary\steamapps\common\Cyberpunk 2077\red4ext\plugins\ArchiveXL\Scripts\ArchiveXL.DynamicAppearance.reds
+D:\SteamLibrary\steamapps\common\Cyberpunk 2077\red4ext\plugins\ArchiveXL\Scripts\ArchiveXL.Global.reds
+D:\SteamLibrary\steamapps\common\Cyberpunk 2077\red4ext\plugins\ArchiveXL\Scripts\ArchiveXL.reds
+D:\SteamLibrary\steamapps\common\Cyberpunk 2077\red4ext\plugins\Codeware\Scripts\Codeware.Global.reds
+D:\SteamLibrary\steamapps\common\Cyberpunk 2077\red4ext\plugins\Codeware\Scripts\Codeware.Localization.reds
+D:\SteamLibrary\steamapps\common\Cyberpunk 2077\red4ext\plugins\Codeware\Scripts\Codeware.reds
+D:\SteamLibrary\steamapps\common\Cyberpunk 2077\red4ext\plugins\Codeware\Scripts\Codeware.UI.reds
+D:\SteamLibrary\steamapps\common\Cyberpunk 2077\red4ext\plugins\Codeware\Scripts\Codeware.UI.TextInput.reds
+D:\SteamLibrary\steamapps\common\Cyberpunk 2077\red4ext\plugins\TweakXL\Scripts\TweakXL.Global.reds
+D:\SteamLibrary\steamapps\common\Cyberpunk 2077\red4ext\plugins\TweakXL\Scripts\TweakXL.reds
+[INFO - Thu, 13 Aug 2026 09:17:31 -0500] Compilation complete
+[INFO - Thu, 13 Aug 2026 09:17:32 -0500] Output successfully saved to D:\SteamLibrary\steamapps\common\Cyberpunk 2077\r6\cache\final.redscripts.modded

@@ -1,0 +1,5 @@
+[2026-08-16 09:55:13.218] [info    ] [ 18848] [HoverRotTesterPlayer9_1a] [HoverRotTesterPlayer9_1a] ============================================
+[2026-08-16 09:55:13.218] [info    ] [ 18848] [HoverRotTesterPlayer9_1a] [HoverRotTesterPlayer9_1a] Plugin loaded — diagnostic logging functions
+[2026-08-16 09:55:13.218] [info    ] [ 18848] [HoverRotTesterPlayer9_1a] [HoverRotTesterPlayer9_1a] 4 native functions: DumpComponents, DumpSkeleton, DumpEntityTransform, GetStatus
+[2026-08-16 09:55:13.218] [info    ] [ 18848] [HoverRotTesterPlayer9_1a] [HoverRotTesterPlayer9_1a] Bone access: Entity[0xA0]->components->AnimatedComponent[0x138]->Rig[0x50]->boneNames
+[2026-08-16 09:55:13.219] [info    ] [ 18848] [HoverRotTesterPlayer9_1a] [HoverRotTesterPlayer9_1a] RTTI callbacks registered

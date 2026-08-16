@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\agent zero\!v2b\projects\cyberpunk\testers\hover rotate player\hover_rot_tester_player8\red4ext\build\CMakeFiles\997ffd9125d0f24e4205d678097ea108\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{B2509D52-EDA8-3F98-85E6-D63E409BCEB3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

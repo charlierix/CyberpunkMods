@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\agent zero\!v2b\projects\cyberpunk\testers\hover rotate player\hover_rot_tester_player7\red4ext\src\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\agent zero\!v2b\projects\cyberpunk\testers\hover rotate player\hover_rot_tester_player7\red4ext\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{03B47A9C-012D-37D7-A859-BB56A05DE7D7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

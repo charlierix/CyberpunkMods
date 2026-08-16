@@ -1,0 +1,10 @@
+^D:\AGENT ZERO\!V2B\PROJECTS\CYBERPUNK\TESTERS\HOVER ROTATE PLAYER\HOVER_ROT_TESTER_PLAYER9.1A\RED4EXT\BUILD\CMAKEFILES\77CFEA47BBE7F7D81B04DBC7D8798D95\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SD:/agent zero/!v2b/projects/cyberpunk/testers/hover rotate player/hover_rot_tester_player9.1a/red4ext" "-BD:/agent zero/!v2b/projects/cyberpunk/testers/hover rotate player/hover_rot_tester_player9.1a/red4ext/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "D:/agent zero/!v2b/projects/cyberpunk/testers/hover rotate player/hover_rot_tester_player9.1a/red4ext/build/HoverRotTesterPlayer9_1a.slnx"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

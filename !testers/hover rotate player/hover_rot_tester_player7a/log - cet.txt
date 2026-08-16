@@ -1,0 +1,25 @@
+[2026-08-13 23:38:49 UTC-05:00] [18516] [TweakDB::SetFlat] Type for HoverRotPlayer7_roll is ambiguous, use third parameter to specify the type
+[2026-08-13 23:38:49 UTC-05:00] [18516] [TweakDB::SetFlat] Type for HoverRotPlayer7_strategy is ambiguous, use third parameter to specify the type
+[2026-08-13 23:38:49 UTC-05:00] [18516] [TweakDB::SetFlat] Type for HoverRotPlayer7_active is ambiguous, use third parameter to specify the type
+[2026-08-13 23:38:49 UTC-05:00] [18516] [TweakDB::SetFlat] Type for HoverRotPlayer7_pitch is ambiguous, use third parameter to specify the type
+[2026-08-13 23:38:49 UTC-05:00] [18516] [TweakDB::SetFlat] Type for HoverRotPlayer7_yaw is ambiguous, use third parameter to specify the type
+[2026-08-13 23:38:49 UTC-05:00] [18516] [TweakDB::SetFlat] Type for HoverRotPlayer7_roll is ambiguous, use third parameter to specify the type
+
+(these messages repeat for 14mb)
+
+
+-----
+
+
+[2026-08-13 23:34:23 UTC-05:00] [18516] Mod entity scanner loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\entity scanner')
+[2026-08-13 23:34:23 UTC-05:00] [18516] Mod ghost_forward loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\ghost_forward')
+[2026-08-13 23:34:23 UTC-05:00] [18516] Mod grappling_hook loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\grappling_hook')
+[2026-08-13 23:34:23 UTC-05:00] [18516] Mod HeavyMG loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\HeavyMG')
+[2026-08-13 23:34:23 UTC-05:00] [18516] Mod hover_rot_tester_player7a loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hover_rot_tester_player7a')
+[2026-08-13 23:34:23 UTC-05:00] [18516] Mod hundred_grand loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\hundred_grand')
+[2026-08-13 23:34:23 UTC-05:00] [18516] Mod jetpack loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\jetpack')
+[2026-08-13 23:34:23 UTC-05:00] [18516] Mod low_flying_v loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\low_flying_v')
+[2026-08-13 23:34:23 UTC-05:00] [18516] Mod wall_hang loaded! ('D:\SteamLibrary\steamapps\common\Cyberpunk 2077\bin\x64\plugins\cyber_engine_tweaks\mods\wall_hang')
+[2026-08-13 23:34:37 UTC-05:00] [31476] [EntityScanner] Initialized. Bind the toggle key in Settings > Key Bindings.
+[2026-08-13 23:34:37 UTC-05:00] [31476] LuaVM: initialization finished!
+

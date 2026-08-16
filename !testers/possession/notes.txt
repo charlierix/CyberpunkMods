@@ -1,0 +1,7 @@
+# undefined protocol mod
+https://www.nexusmods.com/cyberpunk2077/mods/28072
+sources - extra\cyberware - quickhack\Undefined Protocol ENG-28072-2-0-1775173835
+
+looks like it might have some projecting the player into npc?  requirements list is long and people complaining about it not working, but worth researching
+
+
